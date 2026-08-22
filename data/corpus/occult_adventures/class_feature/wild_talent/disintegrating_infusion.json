@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Disintegrating Infusion",
+    "name": "Disintegrating Infusion",
+    "class": "Wild Talent",
+    "description": "Element aether; Type substance infusion; Level 6; Burn 4 Associated Blasts force Saving Throw Fortitude partial; see text You can use force to rip your targets apart. Against creatures, your kinetic blast deals double its normal amount of damage, but targets receive a saving throw to reduce the damage to half the blast's normal amount of damage (for a total of 1/4 of the blast's increased damage). Any creature reduced to 0 or fewer hit points by the blast is disintegrated, as the spell disintegrate. You can use the infused blast to destroy force effects or objects as disintegrate, but for each force effect or 10-foot cube of nonliving matter you destroy in this way, you must accept 1 point of burn, which can't be reduced by effects such as infusion specialization or gather power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Disintegrating Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Aether"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type substance infusion; Level 6; Burn 4 Associated Blasts force Saving Throw Fortitude partial; see text You can use force to rip your targets apart. Against creatures, your kinetic blast deals double its normal amount of damage, but targets receive a saving throw to reduce the damage to half the blast's normal amount of damage (for a total of 1/4 of the blast's increased damage). Any creature reduced to 0 or fewer hit points by the blast is disintegrated, as the spell disintegrate. You can use the infused blast to destroy force effects or objects as disintegrate, but for each force effect or 10-foot cube of nonliving matter you destroy in this way, you must accept 1 point of burn, which can't be reduced by effects such as infusion specialization or gather power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 687,
+    "record_key": "Wild Talent ~ Disintegrating Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

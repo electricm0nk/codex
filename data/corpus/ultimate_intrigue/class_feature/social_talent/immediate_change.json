@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ Immediate Change",
+    "name": "Immediate Change",
+    "class": "Social Talent",
+    "description": "The vigilante can change identities as a move action, and he no longer needs to spend extra time to adjust his appearance and persona.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Immediate Change"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Quick Change"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can change identities as a move action, and he no longer needs to spend extra time to adjust his appearance and persona."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 56,
+    "record_key": "Social Talent ~ Immediate Change"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

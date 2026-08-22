@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Nails",
+    "name": "Nails",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Nails",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Nails"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Nails|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchNailsDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Nails"
+      },
+      {
+        "key": "DESC",
+        "value": "Your nails are long and sharp, and count as natural weapons that deal 1d%1 points of damage. These attacks are secondary attacks. If trimmed, your nails regrow to their normal size in 1d4 days.|WitchNailsDieSize"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Nails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Nails|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Nails|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Nails)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchNailsDieSize|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchNailsDieSize|-1|PRESIZEEQ:S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 714,
+    "record_key": "Witch Hex ~ Nails"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flying Blade ~ Flying Blade Training",
+    "name": "Flying Blade Training",
+    "class": "Swashbuckler",
+    "description": "A flying blade gains a +%1 bonus on attack and damage rolls when using daggers or starknives in combat. When a flying blade wields a dagger or starknife, she gains the benefit of the Improved Critical feat with those weapons. Additionally, a flying blade increases the range increment of a thrown dagger or starknife by %2 feet. The increase of range increment stacks with that of precise throw.|FlyingBladeTrainingBonus|FlyingBladeRangeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flying Blade ~ Flying Blade Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flying Blade Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlyingBladeTrainingBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlyingBladeRangeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A flying blade gains a +%1 bonus on attack and damage rolls when using daggers or starknives in combat. When a flying blade wields a dagger or starknife, she gains the benefit of the Improved Critical feat with those weapons. Additionally, a flying blade increases the range increment of a thrown dagger or starknife by %2 feet. The increase of range increment stacks with that of precise throw.|FlyingBladeTrainingBonus|FlyingBladeRangeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "RANGEADD|THROWN|FlyingBladeRangeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlyingBladeTrainingBonus|floor((SwashbucklerLVL-1)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlyingBladeRangeBonus|FlyingBladeTrainingBonus*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dagger|DAMAGE,TOHIT|FlyingBladeTrainingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Starknife|DAMAGE,TOHIT|FlyingBladeTrainingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dagger|CRITRANGEDOUBLE|1|TYPE=NonStackingCrit"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Starknife|CRITRANGEDOUBLE|1|TYPE=NonStackingCrit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3878,
+    "record_key": "Flying Blade ~ Flying Blade Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

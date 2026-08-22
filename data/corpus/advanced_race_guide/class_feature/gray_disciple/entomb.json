@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gray Disciple ~ Entomb",
+    "name": "Entomb",
+    "class": "Monk",
+    "description": "A gray disciple can phase a foe into solid rock, killing it instantly. To use this ability, he expends 1 ki point as part of a bull rush or reposition combat maneuver against a creature adjacent to unworked earth or stone. If the attempt succeeds, the gray disciple pushes his foe inside the rock using his earth glide ability. If the creature succeeds at a Reflex save (DC %1), it is ejected in the nearest open space and takes 5d6 points of damage. If it fails, it dies instantly as its body merges with the surrounding stone. Entomb is usable once per day, but a failed bull rush or reposition attempt does not count as a use of the ability. Entomb has no effect on creatures that can earth glide, are incorporeal, or can otherwise can survive merging with a solid object.|10+MonkLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Disciple ~ Entomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A gray disciple can phase a foe into solid rock, killing it instantly. To use this ability, he expends 1 ki point as part of a bull rush or reposition combat maneuver against a creature adjacent to unworked earth or stone. If the attempt succeeds, the gray disciple pushes his foe inside the rock using his earth glide ability. If the creature succeeds at a Reflex save (DC %1), it is ejected in the nearest open space and takes 5d6 points of damage. If it fails, it dies instantly as its body merges with the surrounding stone. Entomb is usable once per day, but a failed bull rush or reposition attempt does not count as a use of the ability. Entomb has no effect on creatures that can earth glide, are incorporeal, or can otherwise can survive merging with a solid object.|10+MonkLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 838,
+    "record_key": "Gray Disciple ~ Entomb"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

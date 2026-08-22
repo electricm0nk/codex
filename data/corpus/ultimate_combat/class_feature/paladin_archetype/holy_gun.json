@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Holy Gun",
+    "name": "Holy Gun",
+    "class": "Paladin Archetype",
+    "description": "Not all paladins are knights in shining armor. Holy guns roam the world searching for evil. And where they find it, they put it down.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Holy Gun"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinDetectEvil.PaladinSmiteEvil.PaladinDivineBond.PaladinArmorProficiencies.PaladinWeaponProficiencies"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ HOLY GUN],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDetectEvil,TYPE.PaladinSmiteEvil,TYPE.PaladinDivineBond,TYPE.PaladinArmorProficiencies,TYPE.PaladinWeaponProficiencies]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all paladins are knights in shining armor. Holy guns roam the world searching for evil. And where they find it, they put it down."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Gun ~ Weapon and Armor Proficiency|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Gun ~ Have Gun|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Gun ~ Divine Deed|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Gun ~ Smiting Shot|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Gun ~ Divine Bond|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Gun ~ Holy Grit|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Gun ~ Holy Slinger|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1442,
+    "record_key": "Paladin Archetype ~ Holy Gun"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

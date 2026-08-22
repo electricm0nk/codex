@@ -1,25 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "When you cast this spell, you instantly know the direction of north from your current position. The spell is effective in any environment in which \"north\" exists, but it may not work in extraplanar settings. Your knowledge of north is correct at the moment of casting, but you can get lost again within moments if you don't find some external reference point to help you keep track of direction.",
     "key": "Know Direction",
-    "school": "Divination",
     "level": 0,
-    "description": "When you cast this spell, you instantly know the direction of north from your current position. The spell is effective in any environment in which \"north\" exists, but it may not work in extraplanar settings. Your knowledge of north is correct at the moment of casting, but you can get lost again within moments if you don't find some external reference point to help you keep track of direction."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Druid=0"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this spell, you instantly know the direction of north from your current position. The spell is effective in any environment in which \"north\" exists, but it may not work in extraplanar settings. Your knowledge of north is correct at the moment of casting, but you can get lost again within moments if you don't find some external reference point to help you keep track of direction.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this spell, you instantly know the direction of north from your current position.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/knowDirection.html#_know-direction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.304"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 347,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1103,
-    "record_key": "Know Direction.MOD"
+    "record_key": "Know Direction",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

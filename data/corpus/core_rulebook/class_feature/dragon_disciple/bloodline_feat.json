@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Bloodline Feat",
+    "name": "Bloodline Feat",
+    "class": "Dragon Disciple",
+    "description": "Upon reaching 2nd level, and every three levels thereafter, a dragon disciple receives one bonus feat, chosen from the draconic bloodline's bonus feat list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Bloodline Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Dragon Disciple Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon reaching 2nd level, and every three levels thereafter, a dragon disciple receives one bonus feat, chosen from the draconic bloodline's bonus feat list."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineFeatCount|(DragonDiscipleLVL+1)/3|PREABILITY:1,CATEGORY=Blood of Dragons Bloodline,TYPE.SorcererBloodlineChoice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.381"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2967,
+    "record_key": "Dragon Disciple ~ Bloodline Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,25 +1,95 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You utter a single word of power that instantly causes one creature of your choice to become stunned, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 151 or more hit points is unaffected by power word stun. \nHit Points | Duration \n50 or less | 4d4 rounds \n51-100 | 2d4 rounds \n101-150 | 1d4 rounds",
     "key": "Power Word Stun",
-    "school": "Enchantment",
     "level": 8,
-    "description": "You utter a single word of power that instantly causes one creature of your choice to become stunned, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 151 or more hit points is unaffected by power word stun. \nHit Points | Duration \n50 or less | 4d4 rounds \n51-100 | 2d4 rounds \n101-150 | 1d4 rounds"
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "You utter a single word of power that instantly causes one creature of your choice to become stunned, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 151 or more hit points is unaffected by power word stun. &nl;Hit Points &pipe; Duration &nl;50 or less &pipe; 4d4 rounds &nl;51-100 &pipe; 2d4 rounds &nl;101-150 &pipe; 1d4 rounds|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You utter a single word of power that instantly causes one creature of your choice to become stunned, whether the creature can hear the word or not.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "War=8"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/powerWordStun.html#_power-word-stun"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.324"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature with 150 hp or less"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 452,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1204,
-    "record_key": "Power Word Stun.MOD"
+    "record_key": "Power Word Stun",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

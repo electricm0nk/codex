@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Adept Arcana ~ Critical Strike",
+    "name": "Critical Strike",
+    "class": "Adept Arcana",
+    "description": "Whenever you score a critical hit with a melee weapon, you may cast a spell with a range of touch as a swift action, then make a touch with that spell attack against the target of the critical hit as a free action. You can use this ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adept Arcana ~ Critical Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeAdeptArcana.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeAdeptArcanaLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you score a critical hit with a melee weapon, you may cast a spell with a range of touch as a swift action, then make a touch with that spell attack against the target of the critical hit as a free action. You can use this ability once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2400,
+    "record_key": "Adept Arcana ~ Critical Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

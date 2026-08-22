@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master Of Many Styles ~ Perfect Style",
+    "name": "Perfect Style",
+    "class": "Monk",
+    "description": "At 20th level, a master of many styles can have the stances of five style feats active at once, and can change those stances as a free action. This ability replaces perfect self.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Of Many Styles ~ Perfect Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a master of many styles can have the stances of five style feats active at once, and can change those stances as a free action. This ability replaces perfect self."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1096,
+    "record_key": "Master Of Many Styles ~ Perfect Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

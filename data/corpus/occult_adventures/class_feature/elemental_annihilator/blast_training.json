@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Annihilator ~ Blast Training",
+    "name": "Blast Training",
+    "class": "Kineticist",
+    "description": "At 5th level, an elemental annihilator gains a +1 bonus on attack rolls and damage rolls with her devastating infusion form infusion. This bonus increases by 1 at 9th level and every 4 levels thereafter. This ability replaces the 5th-level infusion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Annihilator ~ Blast Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Annihilator Class Feature.Kineticist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, an elemental annihilator gains a +1 bonus on attack rolls and damage rolls with her devastating infusion form infusion. This bonus increases by 1 at 9th level and every 4 levels thereafter. This ability replaces the 5th-level infusion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1333,
+    "record_key": "Elemental Annihilator ~ Blast Training"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

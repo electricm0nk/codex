@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Filidh ~ Natural Magic",
+    "name": "Natural Magic",
+    "class": "Bard",
+    "description": "A filidh casts spells as a bard, but the spells are divine, not arcane, and therefore not subject to arcane spell failure. A filidh must use a holy symbol or a musical instrument as a divine focus when a spell includes such a component. He still uses the bard spell list. This alters the bard's spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Filidh ~ Natural Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FilidhClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "A filidh casts spells as a bard, but the spells are divine, not arcane, and therefore not subject to arcane spell failure. A filidh must use a holy symbol or a musical instrument as a divine focus when a spell includes such a component. He still uses the bard spell list. This alters the bard's spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 266,
+    "record_key": "Filidh ~ Natural Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

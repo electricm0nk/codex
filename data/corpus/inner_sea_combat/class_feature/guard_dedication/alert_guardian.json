@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guard Dedication ~ Alert Guardian",
+    "name": "Alert Guardian",
+    "class": "Guard Dedication",
+    "description": "An Ulfen Guard with this dedication can enter a rage as an immediate action, and can do so even when flat-footed or during a surprise round in which she cannot otherwise act.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Alert Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An Ulfen Guard with this dedication can enter a rage as an immediate action, and can do so even when flat-footed or during a surprise round in which she cannot otherwise act."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 563,
+    "record_key": "Guard Dedication ~ Alert Guardian"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

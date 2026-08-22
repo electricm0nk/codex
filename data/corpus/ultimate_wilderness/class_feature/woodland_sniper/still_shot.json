@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Woodland Sniper ~ Still Shot",
+    "name": "Still Shot",
+    "class": "Slayer",
+    "description": "When he has cover provided by one or more trees, the woodland sniper reduces the penalty on Stealth checks to remain hidden while sniping by %1.|SlayerLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Woodland Sniper ~ Still Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.WoodlandSniperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When he has cover provided by one or more trees, the woodland sniper reduces the penalty on Stealth checks to remain hidden while sniping by %1.|SlayerLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1170,
+    "record_key": "Woodland Sniper ~ Still Shot"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Slow Fall",
+    "name": "Slow Fall",
+    "class": "Monk",
+    "description": "You can use a nearby wall to slow your descent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Slow Fall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Extraordinary.ModifyMovement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlowFall|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlowFallLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use a nearby wall to slow your descent."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFall|floor(SlowFallLVL/2)*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1103,
+    "record_key": "Monk ~ Slow Fall"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

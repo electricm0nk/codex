@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Fearful Gaze",
+    "name": "Fearful Gaze",
+    "class": "Shaman Spirit Hex",
+    "description": "With a single shout, the shaman causes one target creature within 30 feet to become",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Fearful Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Fearful Gaze"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBonesSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFearfulGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With a single shout, the shaman causes one target creature within 30 feet to become"
+      },
+      {
+        "key": "DESC",
+        "value": "shaken|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "frightened|PREMULT:2,[PREVARGTEQ:ShamanSpiritLVL,8],[PREVARLT:ShamanSpiritLVL,16]"
+      },
+      {
+        "key": "DESC",
+        "value": "panicked|PREVARGTEQ:ShamanSpiritLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "for 1 round. A successful Will saving throw (DC %1) negates this effect. This is a mind-affecting fear effect. A creature affected by this hex cannot be affected by it again for 24 hours.|ShamanFearfulGazeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFearfulGazeDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1530,
+    "record_key": "Shaman Spirit Hex ~ Fearful Gaze"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

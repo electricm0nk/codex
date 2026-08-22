@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Hunter ~ Domain",
+    "name": "Domain",
+    "class": "Hunter",
+    "description": "[PARTIALLY IMPLEMENTED] A divine hunter learns to call upon the power of her deity. The divine hunter must select one domain from those available to her deity. She gains the granted powers of this domain, using her hunter level - 2 as her cleric level for determining when the powers are gained and what effects they have. Once she chooses this domain, it cannot be changed. If the divine hunter selects the animal domain, she does not gain a second animal companion upon reaching an effective cleric level of 4th. When the divine hunter would gain that ability, her animal companion instead gains two ability score increases (gaining +1 to two different ability scores or +2 to one ability score). If her animal companion dies or is released, when she gains a new one, it benefits from this ability score increase. In addition, the divine hunter adds the 1st-level domain spell from her domain to her list of spells known. She adds the 2nd-level domain spell at 6th level, the 3rd-level domain spell at 9th level, the 4th-level domain spell at 12th level, the 5th-level domain spell at 15th level, and the 6th-level domain spell at 18th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Hunter ~ Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.HunterTeamworkFeats"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineHunterDomainCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "[PARTIALLY IMPLEMENTED] A divine hunter learns to call upon the power of her deity. The divine hunter must select one domain from those available to her deity. She gains the granted powers of this domain, using her hunter level - 2 as her cleric level for determining when the powers are gained and what effects they have. Once she chooses this domain, it cannot be changed. If the divine hunter selects the animal domain, she does not gain a second animal companion upon reaching an effective cleric level of 4th. When the divine hunter would gain that ability, her animal companion instead gains two ability score increases (gaining +1 to two different ability scores or +2 to one ability score). If her animal companion dies or is released, when she gains a new one, it benefits from this ability score increase. In addition, the divine hunter adds the 1st-level domain spell from her domain to her list of spells known. She adds the 2nd-level domain spell at 6th level, the 3rd-level domain spell at 9th level, the 4th-level domain spell at 12th level, the 5th-level domain spell at 15th level, and the 6th-level domain spell at 18th level."
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|DivineHunterDomainCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineHunterDomainCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|HunterLVL-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3146,
+    "record_key": "Divine Hunter ~ Domain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Defender ~ Shared Defense",
+    "name": "Shared Defense",
+    "class": "Paladin",
+    "description": "At 3rd level, a divine defender can spend one use of her lay on hands ability as a standard action to grant all adjacent allies (including paladins) a bonus. At 3rd level, adjacent allies receive a +1 sacred bonus to their AC and CMD and on their saving throws. These bonuses last for a number of rounds equal to the divine defender's Charisma modifier. At 9th level and 15th level, this bonus increases by +1. At 6th level, these bonuses are granted to all allies within 10 feet, and allies that are at fewer than 0 hit points within this area are automatically stabilized. At 12th level, these bonuses are granted to all allies within 15 feet, and allies within this area are immune to bleed damage. At 18th level, these bonuses are granted to all allies within 20 feet, and allies within this area gain a 25%% chance to negate any sneak attack or critical hit scored against them. This ability does not stack with the chance provided from the light, medium, or heavy fortification armor special abilities. These bonuses are cumulative with each other. Allies only benefit from these bonuses while in the listed area. This ability replaces mercy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Defender ~ Shared Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.PaladinClassFeatures.SpecialQuality.Supernatural.PaladinMercy"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a divine defender can spend one use of her lay on hands ability as a standard action to grant all adjacent allies (including paladins) a bonus. At 3rd level, adjacent allies receive a +1 sacred bonus to their AC and CMD and on their saving throws. These bonuses last for a number of rounds equal to the divine defender's Charisma modifier. At 9th level and 15th level, this bonus increases by +1. At 6th level, these bonuses are granted to all allies within 10 feet, and allies that are at fewer than 0 hit points within this area are automatically stabilized. At 12th level, these bonuses are granted to all allies within 15 feet, and allies within this area are immune to bleed damage. At 18th level, these bonuses are granted to all allies within 20 feet, and allies within this area gain a 25%% chance to negate any sneak attack or critical hit scored against them. This ability does not stack with the chance provided from the light, medium, or heavy fortification armor special abilities. These bonuses are cumulative with each other. Allies only benefit from these bonuses while in the listed area. This ability replaces mercy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2481,
+    "record_key": "Divine Defender ~ Shared Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

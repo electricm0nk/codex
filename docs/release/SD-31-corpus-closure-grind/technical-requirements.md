@@ -2,7 +2,8 @@
 
 ## Pre-loop prerequisites
 
-- `tranche/10` checked out, `git pull --ff-only` clean.
+- `tranche/11` checked out, `git pull --ff-only` clean (cut from `tranche/10`'s tip 2026-08-15,
+  `decisions.md §6`).
 - The PCGen oracle checkout at the pin (`scripts/pcgen-oracle-pin.env`), verified with
   `scripts/verify.sh --only preflight-oracle` (bootstrap with `scripts/fetch-pcgen-oracle.sh` if it
   fails). Resolve via `$PCGEN_CORPUS_ROOT`/`$PCGEN_REPO_DIR`, never a literal local path.

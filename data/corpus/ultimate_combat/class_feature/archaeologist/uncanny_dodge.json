@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Archaeologist ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Bard",
+    "description": "At 2nd level, an Archaeologist gains uncanny dodge, as the rogue class feature of the same name. This ability replaces well-versed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archaeologist ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an Archaeologist gains uncanny dodge, as the rogue class feature of the same name. This ability replaces well-versed."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 393,
+    "record_key": "Archaeologist ~ Uncanny Dodge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

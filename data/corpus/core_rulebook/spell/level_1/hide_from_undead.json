@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Undead cannot see, hear, or smell creatures warded by this spell. Even extraordinary or supernatural sensory capabilities, such as blindsense, blindsight, scent, and tremorsense, cannot detect or locate warded creatures. Nonintelligent undead creatures [such as skeletons or zombies] are automatically affected and act as though the warded creatures are not there. An intelligent undead creature gets a single Will saving throw. If it fails, the subject can't see any of the warded creatures. If it has reason to believe unseen opponents are present, however, it can attempt to find or strike them. If a warded creature attempts to channel positive energy, turn or command undead, touches an undead creature, or attacks any creature [even with a spell], the spell ends for all recipients.",
     "key": "Hide from Undead",
-    "school": "Abjuration",
     "level": 1,
-    "description": "Undead cannot see, hear, or smell creatures warded by this spell. Even extraordinary or supernatural sensory capabilities, such as blindsense, blindsight, scent, and tremorsense, cannot detect or locate warded creatures. Nonintelligent undead creatures [such as skeletons or zombies] are automatically affected and act as though the warded creatures are not there. An intelligent undead creature gets a single Will saving throw. If it fails, the subject can't see any of the warded creatures. If it has reason to believe unseen opponents are present, however, it can attempt to find or strike them. If a warded creature attempts to channel positive energy, turn or command undead, touches an undead creature, or attacks any creature [even with a spell], the spell ends for all recipients."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Undead cannot see, hear, or smell creatures warded by this spell. Even extraordinary or supernatural sensory capabilities, such as blindsense, blindsight, scent, and tremorsense, cannot detect or locate warded creatures. Nonintelligent undead creatures [such as skeletons or zombies] are automatically affected and act as though the warded creatures are not there. An intelligent undead creature gets a single Will saving throw. If it fails, the subject can't see any of the warded creatures. If it has reason to believe unseen opponents are present, however, it can attempt to find or strike them. If a warded creature attempts to channel positive energy, turn or command undead, touches an undead creature, or attacks any creature [even with a spell], the spell ends for all recipients.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Undead cannot see, hear, or smell creatures warded by this spell.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless); see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/hideFromUndead.html#_hide-from-undead"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.296"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 298,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1055,
-    "record_key": "Hide from Undead.MOD"
+    "record_key": "Hide from Undead",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

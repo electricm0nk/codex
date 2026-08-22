@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloody Jake ~ Lose Your Way",
+    "name": "Lose Your Way",
+    "class": "Slayer",
+    "description": "As a standard action, a bloody jake can spend one use of cruel tricks to cause a creature that is within 30 feet and within the bloody jake's favored terrain to become disoriented, taking a -%1 penalty on Survival checks and a -2 penalty on saving throws against fear and illusions. This effect lasts for %1 hours of the bloody jake or for as long as the affected creature remains within the bloody jake's favored terrain, whichever is shorter.|SlayerLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ Lose Your Way"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "BloodyJake_CruelTrick_3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a bloody jake can spend one use of cruel tricks to cause a creature that is within 30 feet and within the bloody jake's favored terrain to become disoriented, taking a -%1 penalty on Survival checks and a -2 penalty on saving throws against fear and illusions. This effect lasts for %1 hours of the bloody jake or for as long as the affected creature remains within the bloody jake's favored terrain, whichever is shorter.|SlayerLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 213,
+    "record_key": "Bloody Jake ~ Lose Your Way"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

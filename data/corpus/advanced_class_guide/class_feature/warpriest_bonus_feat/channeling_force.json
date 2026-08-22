@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Channeling Force",
+    "name": "Channeling Force",
+    "class": "Warpriest Bonus Feat",
+    "description": "You distill your channeled energy into a sheen of force that surrounds your weapon for a limited time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Channeling Force"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.ChannelEnergy"
+      },
+      {
+        "key": "PRESPELLDESCRIPTOR",
+        "value": "1,Force=0"
+      },
+      {
+        "key": "DESC",
+        "value": "You distill your channeled energy into a sheen of force that surrounds your weapon for a limited time."
+      },
+      {
+        "key": "DESC",
+        "value": " A swift action, you can expend one use of channel energy to grant your weapon attacks a bonus on damage rolls equal to the number of dice of your channel energy. This extra damage is force damage. This lasts for your next three weapon attacks or until the end of combat, whichever comes first."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Channeling Force"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4144,
+    "record_key": "Warpriest Bonus Feat ~ Channeling Force"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

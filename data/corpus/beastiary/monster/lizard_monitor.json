@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "2",
@@ -22,6 +20,108 @@
     ],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Lizard Monitor ~ Poison|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=Stealth (In undergrowth)|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|STR/2"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Swim,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Poison,*1,1d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Lizard"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.194",
     "speeds": [
@@ -35,16 +135,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 274,
-    "record_key": "Lizard (Monitor)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 274,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Lizard (Monitor)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

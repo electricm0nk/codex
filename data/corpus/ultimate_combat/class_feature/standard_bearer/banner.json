@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Standard Bearer ~ Banner",
+    "name": "Banner",
+    "class": "Cavalier",
+    "description": "At 1st level, a standard bearer gains the banner ability. This ability is identical to the standard cavalier's banner ability, except that the morale bonuses on saving throws against fear effects and on attack rolls made as part of a charge increase at 5th level, and every five levels thereafter. This ability replaces the standard cavalier's mount ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Standard Bearer ~ Banner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a standard bearer gains the banner ability. This ability is identical to the standard cavalier's banner ability, except that the morale bonuses on saving throws against fear effects and on attack rolls made as part of a charge increase at 5th level, and every five levels thereafter. This ability replaces the standard cavalier's mount ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 514,
+    "record_key": "Standard Bearer ~ Banner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

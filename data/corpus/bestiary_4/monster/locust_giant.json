@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:locust_giant_leap",
@@ -26,6 +24,120 @@
     ],
     "race_subtype": null,
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Racial Traits ~ Locust (Giant)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|18|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|5|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Locust (Giant)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "6"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Climb,20,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Spit,Natural.Ranged.Weapon.Acid,*1,1d3"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Locust (Giant)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vermin"
+      }
+    ],
     "size": "M",
     "source_page": "p.183",
     "speeds": [
@@ -43,16 +155,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 152,
-    "record_key": "Locust (Giant)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 152,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Locust (Giant)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

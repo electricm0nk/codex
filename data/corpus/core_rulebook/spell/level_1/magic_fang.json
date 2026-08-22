@@ -1,25 +1,95 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Magic fang gives one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls. The spell can affect a slam attack, fist, bite, or other natural weapon. The spell does not change an unarmed strike's damage from nonlethal damage to lethal damage. Magic fang can be made permanent with a permanency spell.",
     "key": "Magic Fang",
-    "school": "Transmutation",
     "level": 1,
-    "description": "Magic fang gives one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls. The spell can affect a slam attack, fist, bite, or other natural weapon. The spell does not change an unarmed strike's damage from nonlethal damage to lethal damage. Magic fang can be made permanent with a permanency spell."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Magic fang gives one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls. The spell can affect a slam attack, fist, bite, or other natural weapon. The spell does not change an unarmed strike's damage from nonlethal damage to lethal damage. Magic fang can be made permanent with a permanency spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Magic fang gives one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/magicFang.html#_magic-fang"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Living creature touched"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Natural|WEAPON|TOHIT,DAMAGE|1|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 377,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1131,
-    "record_key": "Magic Fang.MOD"
+    "record_key": "Magic Fang",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

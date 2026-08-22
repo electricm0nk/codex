@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Onmyoji ~ Spiritual Resistance",
+    "name": "Spiritual Resistance",
+    "class": "Spiritualist",
+    "description": "An onmyoji's phantom provides her with protection from supernatural forces. While the phantom is confined within the onmyoji's consciousness (not stranded on the Ethereal Plane or fully manifested), it grants her a +2 bonus on saving throws against the spell-like and supernatural abilities of fey, outsiders, and incorporeal undead. At 6th level and every 6 levels thereafter, this bonus increases by 1 (to a maximum of +5 at 18th level). This ability replaces shared consciousness and fused consciousness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Onmyoji ~ Spiritual Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Onmyoji Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An onmyoji's phantom provides her with protection from supernatural forces. While the phantom is confined within the onmyoji's consciousness (not stranded on the Ethereal Plane or fully manifested), it grants her a +2 bonus on saving throws against the spell-like and supernatural abilities of fey, outsiders, and incorporeal undead. At 6th level and every 6 levels thereafter, this bonus increases by 1 (to a maximum of +5 at 18th level). This ability replaces shared consciousness and fused consciousness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1641,
+    "record_key": "Onmyoji ~ Spiritual Resistance"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

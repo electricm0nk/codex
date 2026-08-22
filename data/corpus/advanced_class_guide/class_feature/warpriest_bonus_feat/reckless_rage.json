@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Reckless Rage",
+    "name": "Reckless Rage",
+    "class": "Warpriest Bonus Feat",
+    "description": "When you use Power Attack while raging or while using raging song, you take an additional -1 penalty on melee attack rolls and combat maneuver checks, and you gain an additional +2 bonus on melee damage rolls. Modify this damage bonus appropriately based on the type of weapon you are using, as normal for Power Attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Reckless Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Power Attack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE=Rage,TYPE=SkaldRagingSong"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use Power Attack while raging or while using raging song, you take an additional -1 penalty on melee attack rolls and combat maneuver checks, and you gain an additional +2 bonus on melee damage rolls. Modify this damage bonus appropriately based on the type of weapon you are using, as normal for Power Attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Reckless Rage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4179,
+    "record_key": "Warpriest Bonus Feat ~ Reckless Rage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

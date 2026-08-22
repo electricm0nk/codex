@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Graceful Faller",
+    "name": "Graceful Faller",
+    "class": "Rogue Talent",
+    "description": "A catfolk rogue with this talent lands on her feet even when she takes lethal damage from a fall. If the catfolk rogue also has the nimble faller racial trait, she takes damage from any fall as if it were 20 feet shorter than it actually is.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Graceful Faller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsCatfolk=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A catfolk rogue with this talent lands on her feet even when she takes lethal damage from a fall. If the catfolk rogue also has the nimble faller racial trait, she takes damage from any fall as if it were 20 feet shorter than it actually is."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 436,
+    "record_key": "Rogue Talent ~ Graceful Faller"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

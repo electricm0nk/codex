@@ -1,25 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Turns you into a Huge elemental.",
     "key": "Elemental Body IV (Fire Only)",
-    "school": "Transmutation",
     "level": 0,
-    "description": "Turns you into a Huge elemental."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Turns you into a Huge elemental."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Fire=7"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/elementalBody.html#_elemental-body-iv"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1441,
-    "record_key": "Elemental Body IV (Fire Only)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Elemental Body IV (Fire Only)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

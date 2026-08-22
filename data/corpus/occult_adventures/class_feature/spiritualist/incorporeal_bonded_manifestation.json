@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Incorporeal Bonded Manifestation",
+    "name": "Incorporeal Bonded Manifestation",
+    "class": "Spiritualist",
+    "description": "When a spiritualist uses this ability and chooses incorporeal form, she becomes shrouded in a haze of insubstantial mist, granting her concealment against ranged attacks. At 8th level, the spiritualist can better affect incorporeal creatures with melee attacks; her unarmed strikes and melee weapon attacks are treated as if they had the ghost touch magic weapon special ability. At 13th level, the spiritualist can take a standard action to become invisible (as the invisibility spell) until the start of her next turn. At 18th level, the spiritualist gains the incorporeal subtype and a fly speed of 30 feet (good) while using this form of bonded manifestation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Incorporeal Bonded Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When a spiritualist uses this ability and chooses incorporeal form, she becomes shrouded in a haze of insubstantial mist, granting her concealment against ranged attacks. At 8th level, the spiritualist can better affect incorporeal creatures with melee attacks; her unarmed strikes and melee weapon attacks are treated as if they had the ghost touch magic weapon special ability. At 13th level, the spiritualist can take a standard action to become invisible (as the invisibility spell) until the start of her next turn. At 18th level, the spiritualist gains the incorporeal subtype and a fly speed of 30 feet (good) while using this form of bonded manifestation."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1281,
+    "record_key": "Spiritualist ~ Incorporeal Bonded Manifestation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

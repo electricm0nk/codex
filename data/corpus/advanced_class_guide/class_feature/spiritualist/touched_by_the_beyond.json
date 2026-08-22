@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Touched by the Beyond",
+    "name": "Touched by the Beyond",
+    "class": "Investigator",
+    "description": "The spiritualist's ability to touch the beyond grants him further protection against the dangers of death and negative energy. The spiritualist becomes immune to death effects, and he takes half damage from negative energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Touched by the Beyond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.Investigator Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spiritualist's ability to touch the beyond grants him further protection against the dangers of death and negative energy. The spiritualist becomes immune to death effects, and he takes half damage from negative energy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|immune to death effects, and he takes half damage from negative energy."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3344,
+    "record_key": "Spiritualist ~ Touched by the Beyond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

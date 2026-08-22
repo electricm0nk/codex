@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fire Master",
+    "name": "Fire Master",
+    "class": null,
+    "description": "You have chosen to master the elemental powers of elemental fire.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.ArcanistArchetype.SpecialQuality.ArcanistElement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to master the elemental powers of elemental fire."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fire Master ~ Elemental Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fire Master ~ Elemental Attack|PREVARGTEQ:FireMasterLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fire Master ~ Powerful Exploit|PREVARGTEQ:FireSchoolLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fire Master ~ Greater Elemental Attack|PREVARGTEQ:FireSchoolLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fire Master ~ Elemental Movement|PREVARGTEQ:FireSchoolLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2457,
+    "record_key": "Fire Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

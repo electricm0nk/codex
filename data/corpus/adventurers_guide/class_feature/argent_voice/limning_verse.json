@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Argent Voice ~ Limning Verse",
+    "name": "Limning Verse",
+    "class": "Bard",
+    "description": "The argent voice can sing a song that causes fiends to glow with an aura of silvery light. Outsiders with the evil subtype within %1 feet of the argent voice are affected as per faerie fire. Any defense that prevents the detection of alignment or evil also prevents limning verse from outlining a creature. The argent voice must use Perform (sing) with this performance.|LimningVerseRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Voice ~ Limning Verse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.ArgentVoiceClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LimningVerseRange|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent voice can sing a song that causes fiends to glow with an aura of silvery light. Outsiders with the evil subtype within %1 feet of the argent voice are affected as per faerie fire. Any defense that prevents the detection of alignment or evil also prevents limning verse from outlining a creature. The argent voice must use Perform (sing) with this performance.|LimningVerseRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LimningVerseRange|10+(10*min(5,BardLVL/4))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 639,
+    "record_key": "Argent Voice ~ Limning Verse"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

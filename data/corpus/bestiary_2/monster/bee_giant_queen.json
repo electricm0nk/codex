@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:giant_queen_bee_poison"
@@ -23,6 +21,92 @@
     ],
     "race_subtype": null,
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability|Giant Bee ~ Vulnerable to Smoke|Giant Queen Bee ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|8|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sting|DAMAGE|max(0,STR/2)"
+      },
+      {
+        "key": "CR",
+        "value": "5"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "6"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:7"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Sting,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Poison,*1,1d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Bee"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      }
+    ],
     "size": "L",
     "source_page": "p.43",
     "speeds": [
@@ -36,16 +120,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 139,
-    "record_key": "Bee (Giant Queen)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 139,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Bee (Giant Queen)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Mind fog produces a bank of thin mist that weakens the mental resistance of those caught in it. Creatures in the mind fog take a -10 penalty on Wisdom checks and Will saves. [A creature that successfully saves against the fog is not affected and need not make further saves even if it remains in the fog.] Affected creatures take the penalty as long as they remain in the fog and for 2d6 rounds thereafter. The fog is stationary and lasts for 30 minutes [or until dispersed by wind]. A moderate wind [11+ mph] disperses the fog in 4 rounds; a strong wind [21+ mph] disperses the fog in 1 round. The fog is thin and does not significantly hamper vision.",
     "key": "Mind Fog",
-    "school": "Enchantment",
     "level": 5,
-    "description": "Mind fog produces a bank of thin mist that weakens the mental resistance of those caught in it. Creatures in the mind fog take a -10 penalty on Wisdom checks and Will saves. [A creature that successfully saves against the fog is not affected and need not make further saves even if it remains in the fog.] Affected creatures take the penalty as long as they remain in the fog and for 2d6 rounds thereafter. The fog is stationary and lasts for 30 minutes [or until dispersed by wind]. A moderate wind [11+ mph] disperses the fog in 4 rounds; a strong wind [21+ mph] disperses the fog in 1 round. The fog is thin and does not significantly hamper vision."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Mind fog produces a bank of thin mist that weakens the mental resistance of those caught in it. Creatures in the mind fog take a -10 penalty on Wisdom checks and Will saves. [A creature that successfully saves against the fog is not affected and need not make further saves even if it remains in the fog.] Affected creatures take the penalty as long as they remain in the fog and for 2d6 rounds thereafter. The fog is stationary and lasts for 30 minutes [or until dispersed by wind]. A moderate wind [11+ mph] disperses the fog in 4 rounds; a strong wind [21+ mph] disperses the fog in 1 round. The fog is thin and does not significantly hamper vision.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Mind fog produces a bank of thin mist that weakens the mental resistance of those caught in it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "30 minutes and 2d6 rounds; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/mindFog.html#_mind-fog"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.313"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Fog spreads in 20-ft. radius, 20 ft. high"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 396,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1150,
-    "record_key": "Mind Fog.MOD"
+    "record_key": "Mind Fog",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

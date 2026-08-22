@@ -1,0 +1,167 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Wilderness Warden",
+    "name": "Wilderness Warden",
+    "class": "Paladin Archetype",
+    "description": "Wilderness wardens are vigilant guardians of natural places of all kinds, from mountain peaks to tangled thickets.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Wilderness Warden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Wilderness Warden],[!PREFACT:1,ABILITIES,Paladin_Archetype_ClassSkills=True,Paladin_Archetype_DivineGrace=True,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_AuraOfCourage=True,Paladin_Archetype_Mercy3=True,Paladin_Archetype_Mercy9=True,Paladin_Archetype_Mercy15=True,Paladin_Archetype_Spells=True,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_AuraOfJustice=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Wilderness wardens are vigilant guardians of natural places of all kinds, from mountain peaks to tangled thickets."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Wilderness Warden ~ Class Skills|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wilderness Warden ~ Natural Defense|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wilderness Warden ~ Smite Evil|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wilderness Warden ~ Aura of Comfort|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wilderness Warden ~ Favored Terrain|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wilderness Warden ~ Spells|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wilderness Warden ~ Aura of Purity|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wilderness Warden ~ Natural Shield|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 865,
+    "record_key": "Paladin Archetype ~ Wilderness Warden"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

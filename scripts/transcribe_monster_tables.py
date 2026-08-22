@@ -313,6 +313,33 @@ def corpus_root() -> str:
     )
 
 
+# `decisions.md §9`: `core_essentials` is not a book. `SD31-ATTRIB-*` re-attributes
+# its units' `book` field to their real book (e.g. `"bestiary"`), but the unit's
+# `source_file` (`ce_abilities_race.lst`, `b4_abilities_races_ce.lst`, ...) is a
+# physical file that never moves -- it stays under `core_essentials`'s own PCGen
+# directory forever, because re-attribution is a reporting-field relabel, not a
+# file move (`SD31-ATTRIB-001`'s own receipt: "zero doneness transitions... book
+# is a pure reporting field"). `resolve_book_file` walked only the book's own
+# root, so a re-attributed unit's `source_file` was unreachable under ANY book's
+# root, confirmed live 2026-08-16 (`SD31-E6-F9-002`): re-running the transcriber
+# for `bestiary` raised `SystemExit("ce_abilities_race.lst is not present
+# anywhere under .../roleplaying_game/bestiary")`, and 108 (`bestiary`
+# `ce_abilities_race.lst` 32, `bestiary_2` 72, `bestiary_3` 4) plus 28 of
+# `bestiary_4`'s own `b4_abilities_races_ce.lst` -- 136 `static`/`derived`
+# `monster_ability` units total -- sat `not-ingested` for exactly this reason,
+# not because they are orphaned.
+_CORE_ESSENTIALS_DIR = "pathfinder/paizo/roleplaying_game/core_essentials"
+
+
+def _find_under(root: str, name: str) -> list[str]:
+    """Every real path named `name` somewhere under `root`, sorted."""
+    candidates = []
+    for dirpath, _dirnames, filenames in os.walk(root):
+        if name in filenames:
+            candidates.append(os.path.join(dirpath, name))
+    return sorted(candidates)
+
+
 def resolve_book_file(root: str, name: str) -> str:
     """The real path of `name` inside a book directory, which is not always its root.
 
@@ -327,23 +354,34 @@ def resolve_book_file(root: str, name: str) -> str:
 
         find ~/workspace/repos/pcgen/data -ipath '*inner_sea_gods*' -name '*races*'
 
-    Both misses would have been LOUD (``FileNotFoundError``), not silent, which
-    is why this is a widening rather than a correction.
+    Nor is a book's own root the ONLY place a re-attributed unit's file can be:
+    if `name` is absent from `root` entirely, this also tries
+    `core_essentials`'s directory (`_CORE_ESSENTIALS_DIR`) -- the one other
+    place `decisions.md §9` re-attribution can have left a unit's real file --
+    unless `root` already IS that directory (no self-fallback: a file genuinely
+    absent from `core_essentials` stays absent, not silently re-searched into a
+    confusing duplicate-candidate error).
+
+    Both misses would have been LOUD (``FileNotFoundError``/``SystemExit``), not
+    silent, which is why this is a widening rather than a correction.
 
     Two failure modes are refused rather than resolved:
 
-    * **Not found anywhere** -- the inventory cites a file this book does not
-      have, so every citation derived from it would be fiction.
+    * **Not found anywhere** -- the inventory cites a file this book (nor, for
+      a re-attributed unit, `core_essentials`) does not have, so every citation
+      derived from it would be fiction.
     * **Found in more than one place** -- a bare basename that matches two real
       files does not identify a row, and picking either one is a coin flip on
-      which rules text ships.  No book in the corpus currently trips this; the
-      check exists so that the first one that does fails here rather than
-      shipping the wrong text.
+      which rules text ships. The book's own root always wins over the
+      `core_essentials` fallback when a name collides in both (checked as two
+      separate passes, never one merged walk) so a book that legitimately owns
+      a same-named file is never redirected to `core_essentials`'s copy.
     """
-    candidates = []
-    for dirpath, _dirnames, filenames in os.walk(root):
-        if name in filenames:
-            candidates.append(os.path.join(dirpath, name))
+    candidates = _find_under(root, name)
+    if not candidates:
+        ce_root = os.path.join(corpus_root(), _CORE_ESSENTIALS_DIR)
+        if os.path.abspath(ce_root) != os.path.abspath(root):
+            candidates = _find_under(ce_root, name)
     if not candidates:
         raise SystemExit(f"{name} is not present anywhere under {root}")
     if len(candidates) > 1:
@@ -498,6 +536,160 @@ def parse_size(row: list[str]) -> str | None:
     return None
 
 
+def parse_stat_adjustments(row: list[str]) -> list[tuple[str, int]]:
+    """`BONUS:STAT|DEX,WIS|4` -> [("DEX", 4), ("WIS", 4)].
+
+    Identical parse to `scripts/transcribe_companion_tables.py`'s function of
+    the same name -- the two chassis kinds carry the same PCGen token, and
+    `monster_chassis::StatAdjustment` (the Rust side) IS
+    `companion_chassis::StatAdjustment`, reused rather than duplicated
+    (SD31-E6-F1-002).
+
+    A multi-ability token is split into one record each, which is what PCGen
+    itself does with it. A token whose amount is not an integer literal (a
+    formula, e.g. `BONUS:STAT|STR|MutagenicMaulerMutagenStatBonus`) is
+    **skipped**, not guessed: this program has no formula interpreter
+    (`decisions.md §24`) and a wrong number in an ability column is worse than
+    an absent one. This is deliberately an ADJUSTMENT, never a final ability
+    score -- PCGen computes the real score at runtime from a base template
+    this ingest does not carry, so serving anything labelled "Strength" here
+    would be the quieter lie (`companion_chassis::StatAdjustment`'s own doc
+    comment, and `OPEN-ISSUES.md` row 26's structural finding: Demon (Balor)'s
+    `BONUS:STAT|STR|24` is a DELTA against a base this book's own row never
+    states).
+    """
+    out: list[tuple[str, int]] = []
+    for field in row:
+        if not field.startswith("BONUS:STAT|"):
+            continue
+        parts = field.split("|")
+        if len(parts) < 3:
+            continue
+        abilities = [a.strip() for a in parts[1].split(",") if a.strip()]
+        try:
+            amount = int(parts[2].strip())
+        except ValueError:
+            continue
+        for ability in abilities:
+            out.append((ability, amount))
+    return out
+
+
+def parse_has_spell_like_abilities(row: list[str]) -> bool:
+    """Whether the row carries a `BONUS:VAR|SLA_CL|<...>` token -- PCGen's
+    encoding of PF1's "Spell-Like Abilities" universal monster rule (caster
+    level = Hit Dice, or an arithmetic wrapper of it).
+
+    A presence check only (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44), and
+    **not** the more general `SPELLS:` token: TDD red/green anchor --
+    Linnorm (Crag) (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and its
+    spell-like effects (`True Seeing ~ Constant`) reach the row only through
+    an `ABILITY:` cross-reference, with NO `SPELLS:` token anywhere on the
+    line at all; gating on `SPELLS:` would have wrongly answered `False` for
+    one of this seam's own 7 already-committed fixtures. Every one of those 7
+    fixtures' `corpus_field` is exactly `BONUS:VAR|SLA_CL|HD`, which is the
+    signal this function keys on.
+    """
+    return any("BONUS:VAR|SLA_CL|" in field for field in row)
+
+
+def parse_sla_cl_token(row: list[str]) -> str | None:
+    """The trailing value of the row's own `BONUS:VAR|SLA_CL|<value>` field,
+    verbatim -- `None` when the row carries none (SD31-E6-F9-003).
+
+    A row may state the generic Universal Monster Rule (`HD` or the
+    equivalent `max(TL,1)`/`(max(TL,1))`) or a monster-specific literal
+    override (Couatl: `9`, against 12 Hit Dice) -- both are corpus fact, and
+    this function transcribes whichever the row states without judging
+    between them; `derived_evaluator_fixture_check::spell_like_ability_
+    caster_level` is what applies the rule.
+
+    A field carrying a further pipe segment after the value (e.g.
+    `BONUS:VAR|SLA_CL|2|PREABILITY:...`) is a conditional/feat-granted
+    ADDITION on top of a base value stated elsewhere on the row, not the base
+    rule itself -- excluded, same as a row carrying the token more than once,
+    both left `None` rather than guessed. Neither shape has been observed on
+    any row this script's own book roster carries as of this pass; refusing
+    outright is cheaper than silently picking the wrong one of two numbers if
+    a future book ever does.
+    """
+    tokens = [field for field in row if field.startswith("BONUS:VAR|SLA_CL|")]
+    if len(tokens) != 1:
+        return None
+    value = tokens[0][len("BONUS:VAR|SLA_CL|") :]
+    if "|" in value:
+        return None
+    return value.strip() or None
+
+
+def parse_spell_like_abilities(row: list[str]) -> list[tuple]:
+    """Every spell the row grants as a spell-like ability, one tuple per SPELL,
+    read from the row's `SPELLS:` tokens.
+
+    PCGen shape::
+
+        SPELLS:<label>|TIMES=<n>|[TIMEUNIT=<unit>|]CASTERLEVEL=<v>|<spell>[,<dc>]|<spell>[,<dc>]
+
+    A single token routinely grants several spells sharing one label,
+    frequency and caster level, so a token expands to N tuples, not one.
+
+    Returns ``(label, times, time_unit, caster_level, spell, save_dc)`` with
+    every element a verbatim substring of the row and ``None`` for a segment
+    the row does not carry.  Nothing is computed: the ``,<dc>`` tail is split
+    off the spell name and handed on unparsed, and
+    ``derived_evaluator_fixture_check::spell_like_ability_save_dc`` is what
+    applies PF1's universal monster rule to it.
+
+    A segment carrying a `PRE`-guard or an unrecognised `<TAG>=` pair is
+    skipped rather than mistaken for a spell name -- guards are conditions,
+    never grants, and a tag this parser does not know is not a spell.
+    """
+    known_tags = ("TIMES=", "TIMEUNIT=", "CASTERLEVEL=", "SPELLBOOK=", "DC=",
+                  "DCBASE=", "CASTERLEVELFORMULA=")
+    out: list[tuple] = []
+    for field in row:
+        if not field.startswith("SPELLS:"):
+            continue
+        segments = field[len("SPELLS:"):].split("|")
+        if not segments:
+            continue
+        label = segments[0].strip()
+        if not label:
+            continue
+        times = time_unit = caster_level = None
+        spells: list[tuple[str, str | None]] = []
+        for segment in segments[1:]:
+            segment = segment.strip()
+            if not segment:
+                continue
+            if segment.startswith("TIMES="):
+                times = segment[len("TIMES="):].strip() or None
+                continue
+            if segment.startswith("TIMEUNIT="):
+                time_unit = segment[len("TIMEUNIT="):].strip() or None
+                continue
+            if segment.startswith("CASTERLEVEL="):
+                caster_level = segment[len("CASTERLEVEL="):].strip() or None
+                continue
+            if segment.startswith("PRE") or segment.startswith("!PRE"):
+                continue
+            if any(segment.startswith(tag) for tag in known_tags):
+                continue
+            if "=" in segment.split(",")[0]:
+                # An unrecognised `<TAG>=<value>` pair. Skipping is the honest
+                # reading: it is certainly not a spell name, and guessing which
+                # tag it is would put a fabricated value on the record.
+                continue
+            name, comma, dc = segment.partition(",")
+            name = name.strip()
+            if not name:
+                continue
+            spells.append((name, dc.strip() or None if comma else None))
+        for name, dc in spells:
+            out.append((label, times, time_unit, caster_level, name, dc))
+    return out
+
+
 def parse_special_ability_refs(row: list[str]) -> list[str]:
     """Keys named by the row's `ABILITY:Special Ability|AUTOMATIC|…` tokens."""
     refs: list[str] = []
@@ -511,6 +703,91 @@ def parse_special_ability_refs(row: list[str]) -> list[str]:
             if name not in refs:
                 refs.append(name)
     return refs
+
+
+# ---------------------------------------------------------------------------
+# The `CATEGORY:Internal` bundle-row hop (SD-29 `decisions.md §62.4`, round
+# 10's `scripts/scan_monster_ability_bundle_rows.py`, sized corpus-wide at
+# 235 units but never wired into this transcriber's own ownership pass).
+#
+# A monster row may name its abilities INDIRECTLY, through a bundle row::
+#
+#     support/isg_races_b4.lst:6            The First Blade
+#         ABILITY:Internal|AUTOMATIC|Race Traits ~ First Blade
+#     support/isg_abilities_races_b4.lst:8  Race Traits ~ First Blade  CATEGORY:Internal
+#         ABILITY:Special Ability|AUTOMATIC|…|First Blade ~ Powerful Blows (Slam)|…
+#
+# `parse_special_ability_refs` and the `<Monster> ~ <Ability>` namespace
+# prefix (both above) never see this: the monster row's own `ABILITY:`
+# token is `Internal`, not `Special Ability`, and the real ability's
+# namespace (`First Blade ~ …`) does not match the monster's own KEY (`The
+# First Blade`). Two functions, mirroring `scan_monster_ability_bundle_rows.
+# py`'s already-proven regex shapes exactly rather than re-deriving them, so
+# the 235-unit count that script already validated against the live oracle
+# is what this pass reproduces, not a new, independently-fallible read of
+# the same tokens.
+_INTERNAL_BUNDLE_REF = re.compile(r"ABILITY:Internal\|AUTOMATIC\|([^\t|]*)")
+_CATEGORY_EQUALS_PREFIX = re.compile(r"^CATEGORY=[^|]*\|")
+
+
+def parse_internal_bundle_refs(row: list[str]) -> list[str]:
+    """Bundle keys named by the row's `ABILITY:Internal|AUTOMATIC|…` tokens.
+
+    The SAME token also names bare (non-namespaced) natural-attack cross
+    references (`parse_natural_attacks`'s own doc comment: `ABILITY:Internal|
+    AUTOMATIC|Bite`) -- this function does not try to tell the two apart by
+    shape; it returns every named entry, and [`transcribe`]'s caller only
+    credits an entry that turns out to resolve to a real `CATEGORY:Internal`
+    bundle ROW in this book's own ability files, which a bare attack name
+    never does. An entry that resolves to nothing is silently not a bundle
+    ref, exactly as it already silently was before this function existed.
+    """
+    refs: list[str] = []
+    for field in row:
+        if not field.startswith("ABILITY:Internal|AUTOMATIC|"):
+            continue
+        for name in field.split("|")[2:]:
+            name = name.strip()
+            if not name or is_prerequisite(name):
+                continue
+            if name not in refs:
+                refs.append(name)
+    return refs
+
+
+def find_internal_bundle_ability_refs(
+    ability_file_paths: list[str], bundle_keys: set[str]
+) -> dict[str, list[str]]:
+    """`bundle_key -> [ability_key, ...]`, read from every `CATEGORY:Internal`
+    row in `ability_file_paths` whose own leading field (`KEY:`-stripped
+    the same way a `.MOD` row's target is: a leading `CATEGORY=<x>|` prefix
+    removed, then everything before a trailing `.MOD` dropped) is one of
+    `bundle_keys`. Byte-identical selection logic to `scan_monster_ability_
+    bundle_rows.py::scan_book`'s own bundle-definition-row match, kept as a
+    second, independent typing of the same already-proven regexes rather
+    than imported, so a bug in one does not silently become a bug in both --
+    the discipline `resolve_book_file`'s own docstring calls "a second
+    spelling" for the same reason.
+    """
+    result: dict[str, list[str]] = {}
+    for path in ability_file_paths:
+        with open(path, encoding="utf-8", errors="replace") as handle:
+            for line in handle:
+                if not line.strip():
+                    continue
+                first_column = line.split("\t", 1)[0]
+                key = _CATEGORY_EQUALS_PREFIX.sub("", first_column).split(".MOD")[0].strip()
+                if key not in bundle_keys:
+                    continue
+                bucket = result.setdefault(key, [])
+                for token_text in re.findall(r"ABILITY:[^\t\n]*", line):
+                    for part in token_text.split("|")[2:]:
+                        part = part.strip()
+                        if not part or is_prerequisite(part):
+                            continue
+                        if part not in bucket:
+                            bucket.append(part)
+    return result
 
 
 def is_prerequisite(entry: str) -> bool:
@@ -615,6 +892,22 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     several `DESC:` tokens -- 34 gated-full, 4 continuation, 1 superset, 1
     variable-bearing, and 14 that remain refused. Not one of the 14 is a row any
     book ships; every one is an orphan or a Product Identity row.
+
+    **CORRECTION (`SD31-E6-F9-002`, `OPEN-ISSUES.md` row 151): the "not one of
+    the 14 ships" claim above was true only because `core_essentials`-origin
+    rows were UNREACHABLE at all (`resolve_book_file` raised before any of
+    them reached this function).** Once that was fixed, 5 more rows in this
+    same refused shape turned out to have a real owning monster: `bestiary`'s
+    `ce_abilities_race.lst:1359`/`:1363`/`:1516` (`Energy Drain`/`Fast
+    Healing`/`Stench`) and `bestiary_2`'s `ce_abilities_race.lst:1955`/`:2043`
+    (`Telepathy ~ Miles`/`Voidworm ~ Change Shape`). All 5 share a FIFTH
+    shape this docstring never enumerated: several `DESC:` tokens gated on a
+    `PREVAREQ`/`PREVARGT` comparison against a `BONUS:VAR`-set value (e.g.
+    singular vs. plural phrasing keyed to whether a variable equals 1 or
+    exceeds it), not the on/off `PRERULE:1,DisplayFullAbility` toggle the
+    "gated-full" branch above resolves. Still refused, deliberately -- picking
+    the right variant needs the value each row's own `BONUS:VAR` sets,
+    verified per record, not guessed generically.
     """
     descs = [f[len("DESC:") :] for f in row if f.startswith("DESC:")]
     if not descs:
@@ -762,6 +1055,7 @@ def transcribe(book: str) -> str:
     monster_ability_keys: dict[str, list[str]] = {}
     external: dict[str, list[str]] = {}
     monster_rows: dict[str, list[str]] = {}
+    internal_bundle_refs: dict[str, list[str]] = {}
     for unit in monsters:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         monster_rows[unit["corpus_key"]] = row
@@ -771,6 +1065,9 @@ def transcribe(book: str) -> str:
         external[unit["corpus_key"]] = [n for n in named if n not in ability_keys]
         for key in mine:
             owners[key].append(unit["corpus_key"])
+        bundle_refs = parse_internal_bundle_refs(row)
+        if bundle_refs:
+            internal_bundle_refs[unit["corpus_key"]] = bundle_refs
     # Iterated in the abilities file's own row order, never over a set: the
     # emitted `ability_keys` slice is compared verbatim by tests and by the
     # generated corpus records, so a set's iteration order would make the
@@ -781,6 +1078,30 @@ def transcribe(book: str) -> str:
             if prefix in monster_keys and prefix not in owners[key]:
                 owners[key].append(prefix)
                 monster_ability_keys[prefix].append(key)
+
+    # ---- Third ownership pass: the `CATEGORY:Internal` bundle-row hop ----
+    #
+    # Deliberately AFTER the two direct passes above (whose ordering nothing
+    # here changes) and BEFORE the Product Identity screen (a bundle-reached
+    # ability must be screened exactly like a directly-owned one, not
+    # exempted by running later). Resolved corpus-wide, not per-monster: two
+    # monsters can legitimately name the same bundle key.
+    if internal_bundle_refs:
+        bundle_keys = {ref for refs in internal_bundle_refs.values() for ref in refs}
+        ability_file_paths = sorted(
+            {resolve_book_file(root, name) for name in {u["source_file"] for u in abilities}}
+        )
+        bundle_defs = find_internal_bundle_ability_refs(ability_file_paths, bundle_keys)
+        # Iterated in monster-row order (never over a dict/set), for the same
+        # run-to-run determinism reason the prefix pass above is.
+        for unit in monsters:
+            for bundle_key in internal_bundle_refs.get(unit["corpus_key"], []):
+                for ability_key in bundle_defs.get(bundle_key, []):
+                    if ability_key not in ability_keys:
+                        continue
+                    if unit["corpus_key"] not in owners[ability_key]:
+                        owners[ability_key].append(unit["corpus_key"])
+                        monster_ability_keys[unit["corpus_key"]].append(ability_key)
 
     # ---- Product Identity screen, applied BEFORE the orphan pass ----
     #
@@ -832,6 +1153,14 @@ def transcribe(book: str) -> str:
             token(row, "SOURCEPAGE:"),
             *(m for m, _ in parse_speeds(row)),
             *(n for n, _ in parse_natural_attacks(row)),
+            # Every value the `spell_like_abilities` field emits. Added with
+            # the field itself (SD31-W15-MONSTER-SLA-001): a spell name, a
+            # spell-book label or a caster-level variable name is emitted text
+            # like any other, and `pi_table_sweep` rejects a Product Identity
+            # term anywhere under `rules_tables/` regardless of which field it
+            # sits in. Omitting these would have opened exactly the silent gap
+            # the `DESCISPI:` comment above exists to say is NOT open.
+            *(v for sla in parse_spell_like_abilities(row) for v in sla if v),
             *monster_ability_keys[unit["corpus_key"]],
             *external[unit["corpus_key"]],
         )
@@ -1039,19 +1368,33 @@ def transcribe(book: str) -> str:
     # ---- cross-table-owner screen, between the `.COPY=` screen and the orphan
     # pass ----
     #
-    # `decisions.md §58.3`'s ruling, executed. A monster row this repo ALREADY
-    # ships out of a different compiled table is not this chassis's to emit: two
-    # records for one creature, under one wire code, in one catalog, is a
-    # duplicate the player sees. So the row is dropped here -- and the drop
-    # cascades exactly as the Product Identity and `.COPY=` drops above it do,
-    # except that the abilities it strands are NOT orphans and must not be
-    # reported as such.
+    # `decisions.md §58.3`'s ruling, executed for the MONSTER half. A monster
+    # row this repo ALREADY ships out of a different compiled table is not this
+    # chassis's to emit: two records for one creature, under one wire code, in
+    # one catalog, is a duplicate the player sees. So the monster row is
+    # dropped here.
+    #
+    # The ABILITY half is different, and `§58.3`'s own text says so: "the 54
+    # become a new named exclusion class: cross-table owner -- well-formed,
+    # owned, and unreachable only because the owner lives in a different
+    # table... a different remedy (widen the other table, or migrate it)."
+    # `SD31-W22-MONSTER-001` scoped that remedy and left it unbuilt for a
+    # dedicated cycle; this is that cycle. A `MonsterAbilityRecord` needs no
+    # `MonsterStatBlock` in THIS table to resolve by key -- `monster_ability_
+    # resolve` and `chassis_monster_ability_keys` (`v06_work_inventory.rs`)
+    # both index `monster_abilities` directly, never through a monster's own
+    # `ability_keys` list. So the row transcribes here, keyed to its REAL
+    # owner (the legacy monster's name, exactly as `MonsterBook::abilities_
+    # owned_by_name` below reads it) rather than to any block in this table's
+    # own `monsters_static()` -- which is also why `abilities_of()` (the
+    # `ability_keys`-driven path used for this table's OWN 234 monsters) never
+    # picks these up and never double-serves them under a `bestiary` block.
     #
     # An orphan is a row nothing in the book owns. A CROSS-TABLE OWNER row is
-    # well-formed and owned; it is unreachable from here only because its owner
-    # lives in the other table, which has no ability family at all. That is a
-    # different remedy (widen the other table, or migrate it), so it is a
-    # different class, counted and cited separately in the header below.
+    # well-formed and owned; only its OWNER's stat block lives in the other
+    # table. Counted and cited separately in the header below, and NOT folded
+    # into the plain "row-named"/"prefix" counts, so a reader can tell a
+    # normal reach from this one.
     cross_table_monsters: list[dict] = []
     cross_table_abilities: list[dict] = []
     other_table_dir = CROSS_TABLE_MONSTER_RECORDS.get(book)
@@ -1064,18 +1407,27 @@ def transcribe(book: str) -> str:
             monster_ability_keys.pop(key, None)
             external.pop(key, None)
         stranded: set[str] = set()
-        for ability_key in owners:
+        for ability_key in list(owners):
             before = owners[ability_key]
             after = [o for o in before if o not in cross_keys]
             if before and not after:
+                # This row's ONLY owner(s) are cross-table monsters. Keep the
+                # REAL owner name(s) (`before`, not the emptied `after`) --
+                # transcribed below with `owners` intact, not dropped, so the
+                # emitted record still says who grants it.
                 stranded.add(ability_key)
+                continue
             owners[ability_key] = after
         cross_table_abilities = [u for u in abilities if u["corpus_key"] in stranded]
-        abilities = [u for u in abilities if u["corpus_key"] not in stranded]
+        # NOT removed from `abilities`: these rows are real, owned, and
+        # transcribed below like every other owned row, through the same
+        # orphan/unscreenable screens that follow. Only their doc-comment
+        # citation (header, below) calls them out as a distinct class.
         print(
-            f"{book}: cross-table screen withheld {len(cross_table_monsters)} monster row(s) "
-            f"already served by `data/corpus/{other_table_dir}/monster` and "
-            f"{len(cross_table_abilities)} ability row(s) owned only by them",
+            f"{book}: cross-table screen found {len(cross_table_monsters)} monster row(s) "
+            f"already served by `data/corpus/{other_table_dir}/monster`; their "
+            f"{len(cross_table_abilities)} ability row(s) transcribe here anyway, keyed to "
+            "that real owner",
             file=sys.stderr,
         )
 
@@ -1100,18 +1452,54 @@ def transcribe(book: str) -> str:
 
     # The deferred half of `UnmodelledDesc`. A row the parser refused is fine
     # only if something else already dropped it; one that reached this point is
-    # on its way into the generated table, and the refusal is now this
-    # transcription's refusal.
-    shipping_unscreenable = [u for u in abilities if u["corpus_key"] in unscreenable]
-    if shipping_unscreenable:
-        raise SystemExit(
-            f"{book}: "
+    # OWNED and would otherwise ship -- but "would ship" and "ships" are not
+    # the same thing.
+    #
+    # **CORRECTED (`SD31-E6-F9-005`): this used to `raise SystemExit`, which
+    # crashed the WHOLE BOOK's transcription over these few rows** -- not just
+    # refusing the ambiguous row, refusing every OTHER genuinely-owned,
+    # cleanly-parseable ability in the same book too. Confirmed live against
+    # the pinned oracle: re-running this script for `bestiary`/`bestiary_2`
+    # (before this fix) raised on exactly the 5 `ce_abilities_race.lst` rows
+    # `OPEN-ISSUES.md` row 157 names and produced ZERO other movement, even
+    # though `classify_monster_ability_rows.py` independently confirms 135
+    # (`bestiary`) + 95 (`bestiary_2`) OTHER not-ingested ability rows are
+    # genuinely row-named/prefix-owned and parse cleanly -- the crash was
+    # silently blocking all of them, not just the 5 unscreenable ones.
+    #
+    # The fix picks the SAME remedy this transcriber already applies to a PI
+    # row or a `.COPY=` row: drop the row that cannot be shipped honestly,
+    # name it precisely in the header and on stderr, and let every OTHER row
+    # this book owns transcribe. This is not a widening of `parse_desc` --
+    # picking the wrong `DESC:` variant under time pressure is exactly the
+    # fabrication risk `OPEN-ISSUES.md` row 157 correctly declined to take,
+    # and this fix still declines it. It only stops that unresolved question
+    # from holding every unrelated, unambiguous record hostage.
+    unscreenable_shipping = [u for u in abilities if u["corpus_key"] in unscreenable]
+    if unscreenable_shipping:
+        unscreenable_keys = {u["corpus_key"] for u in unscreenable_shipping}
+        abilities = [u for u in abilities if u["corpus_key"] not in unscreenable_keys]
+        # Same cleanup the PI-drop pass above already performs, and for the
+        # identical reason: a monster's OWN `ability_keys` field was computed
+        # early (`mine`, before this or any other drop pass ran) and must not
+        # keep naming a key that no longer has a row in `abilities` -- an
+        # un-caught instance of exactly this shape is what
+        # `bestiary::tests::every_ability_key_a_shipped_monster_names_
+        # resolves_here` caught live this cycle (`Demon (Hezrou) names
+        # ability Stench, which this table does not define`) before this
+        # line existed.
+        for key in monster_ability_keys:
+            monster_ability_keys[key] = [
+                a for a in monster_ability_keys[key] if a not in unscreenable_keys
+            ]
+        print(
+            f"{book}: {len(unscreenable_shipping)} owned ability row(s) NOT transcribed "
+            "(parse_desc cannot resolve their multi-DESC: shape without guessing): "
             + "; ".join(
                 f"{u['source_file']}:{u['source_line']} ({u['corpus_key']})"
-                for u in shipping_unscreenable
-            )
-            + " would be transcribed but carry a `DESC:` shape parse_desc refuses. "
-            "Widen it deliberately."
+                for u in unscreenable_shipping
+            ),
+            file=sys.stderr,
         )
 
     # Finalized against whatever `abilities` actually ships after every screen
@@ -1267,21 +1655,37 @@ def transcribe(book: str) -> str:
             "//! book's complement -- emitting them too would put two records for one creature"
         )
         out.append(
-            f"//! under one wire code). {len(cross_table_abilities)} further ability row(s) are"
+            f"//! under one wire code). {len(cross_table_abilities)} further ability row(s) ARE"
         )
         out.append(
-            "//! CROSS-TABLE OWNER rows: well-formed and owned, unreachable from here only"
+            "//! transcribed below despite this (`SD31-W23-MONSTER-001`, `§58.3`'s own deferred"
         )
         out.append(
-            "//! because every monster that names them is one of those rows. They are NOT"
+            "//! 'different remedy'): CROSS-TABLE OWNER rows are well-formed and owned, only by"
         )
         out.append(
-            "//! orphans and their remedy is not the orphans' remedy. Cited by corpus line:"
+            "//! a monster whose STAT BLOCK lives in the other table. An ability record needs no"
         )
+        out.append(
+            "//! stat block of its own to resolve by key, so these ship with their real owner"
+        )
+        out.append(
+            "//! name intact and are read by `MonsterBook::abilities_owned_by_name`, never by"
+        )
+        out.append(
+            "//! `abilities_of()` (which walks a `MonsterStatBlock.ability_keys` this table has"
+        )
+        out.append(
+            "//! none of for these owners) -- so they never double-serve under a `bestiary`"
+        )
+        out.append("//! block. Cited by corpus line:")
         for unit in cross_table_monsters:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` (monster row)")
         for unit in cross_table_abilities:
-            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` (ability row)")
+            out.append(
+                f"//!   * `{unit['source_file']}:{unit['source_line']}` (ability row, "
+                f"owner: {', '.join(owners[unit['corpus_key']])})"
+            )
     if orphans:
         out.append("//!")
         out.append(
@@ -1301,11 +1705,47 @@ def transcribe(book: str) -> str:
         # Product Identity name in its own namespaced key.
         for unit in orphans:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}`")
+    if unscreenable_shipping:
+        out.append("//!")
+        out.append(
+            f"//! {len(unscreenable_shipping)} further ability row(s) of this book ARE owned"
+        )
+        out.append(
+            "//! but are NOT transcribed: each carries several `DESC:` tokens under a gate"
+        )
+        out.append(
+            "//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a"
+        )
+        out.append(
+            "//! `BONUS:VAR`-set value), and picking one by position would risk shipping"
+        )
+        out.append(
+            "//! subtly wrong player-facing text. `not-ingested` is their honest status; widen"
+        )
+        out.append(
+            "//! `parse_desc` deliberately, hand-verified per row, to reach them:"
+        )
+        for unit in unscreenable_shipping:
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({unit['corpus_key']})")
     out.append("")
+    # `MonsterSpellLikeAbility` is imported only when this book actually
+    # constructs one. Four registered books (Monster Codex, both Book of the
+    # Damned volumes, Horror Adventures) carry no `SPELLS:` grant on any
+    # monster row at all, and an unconditional import there is an
+    # `unused_imports` warning in a generated file -- which is noise the next
+    # reader has to re-diagnose, not a harmless extra line.
+    imports = [
+        "MonsterAbilityDelivery",
+        "MonsterAbilityFacet",
+        "MonsterAbilityRecord",
+    ]
+    if any(parse_spell_like_abilities(monster_rows[u["corpus_key"]]) for u in monsters):
+        imports.append("MonsterSpellLikeAbility")
+    imports += ["MonsterStatBlock", "NaturalAttack", "Speed", "StatAdjustment"]
     out.append(
         "use crate::rules_core::rules_tables::monster_chassis::{"
-        "MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, "
-        "NaturalAttack, Speed};"
+        + ", ".join(imports)
+        + "};"
     )
     out.append("")
     out.append(f"/// Every {book} monster stat block ({len(monsters)} rows).")
@@ -1315,6 +1755,9 @@ def transcribe(book: str) -> str:
         row = monster_rows[key]
         speeds = parse_speeds(row)
         attacks = parse_natural_attacks(row)
+        stat_adjustments = parse_stat_adjustments(row)
+        has_spell_like_abilities = parse_has_spell_like_abilities(row)
+        sla_cl_token = parse_sla_cl_token(row)
         out.append("    MonsterStatBlock {")
         out.append(f"        key: {rust_str(key)},")
         out.append(f"        name: {rust_str(unit['name'])},")
@@ -1343,6 +1786,33 @@ def transcribe(book: str) -> str:
             f"        ability_keys: {rust_slice(monster_ability_keys[key])},"
         )
         out.append(f"        external_ability_refs: {rust_slice(external[key])},")
+        out.append(
+            "        stat_adjustments: &["
+            + ", ".join(
+                f"StatAdjustment {{ ability: {rust_str(a)}, amount: {v} }}"
+                for a, v in stat_adjustments
+            )
+            + "],"
+        )
+        out.append(
+            f"        has_spell_like_abilities: {'true' if has_spell_like_abilities else 'false'},"
+        )
+        out.append(f"        sla_cl_token: {rust_opt(sla_cl_token)},")
+        out.append(
+            "        spell_like_abilities: &["
+            + ", ".join(
+                "MonsterSpellLikeAbility { "
+                f"label: {rust_str(label)}, "
+                f"times: {rust_opt(times)}, "
+                f"time_unit: {rust_opt(time_unit)}, "
+                f"caster_level_token: {rust_opt(caster_level)}, "
+                f"spell: {rust_str(spell)}, "
+                f"save_dc_token: {rust_opt(save_dc)} }}"
+                for label, times, time_unit, caster_level, spell, save_dc
+                in parse_spell_like_abilities(row)
+            )
+            + "],"
+        )
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")
@@ -1388,13 +1858,48 @@ def transcribe(book: str) -> str:
     return "\n".join(out)
 
 
+def write_book(book: str) -> str:
+    """Transcribe `book` and write it to its `monster_data.rs`, atomically.
+
+    `transcribe()` can raise partway through a book with real, un-fabricatable
+    problems (an orphan-owning row whose `DESC:` shape `parse_desc` refuses,
+    `SD31-E6-F9-002`'s own `ce_abilities_race.lst:1955`/`:2043` finding) --
+    that is the transcriber correctly REFUSING rather than guessing, not a bug.
+    The bug this guards is orthogonal: `main()` used to `open(path, "w")`
+    *before* calling `transcribe()`, which truncates the target file to 0
+    bytes immediately, so a mid-`transcribe()` raise left the file empty --
+    confirmed live twice in one cycle (`SD31-E6-F9-002`, `bestiary` and
+    `bestiary_2`; both were the committed, unmodified file at the time, so
+    `git checkout --` would have equally recovered them -- a WORKING tree with
+    uncommitted local changes queued for this same book would not have had
+    that luxury). `transcribe()`
+    is computed FIRST, in full, into a string; the file on disk is touched
+    only after that succeeds, and a raise leaves the existing file exactly as
+    it was.
+
+    The write itself is now genuinely atomic too (`SD31-W9-INTEGRATE-001`
+    finding: the word was true of the compute-then-write ordering above but
+    not of the write call itself -- an interruption or disk-full error
+    mid-`handle.write()` could still have left a truncated file on disk,
+    the identical failure mode this docstring's own word promises against).
+    Writes to a same-directory temp file first, then `os.replace()`s it onto
+    the real path -- `os.replace` is a single filesystem rename, so the
+    target either has the OLD complete content or the NEW complete content,
+    never a partial write, on every platform this repo runs on.
+    """
+    path = f"src/rules_core/rules_tables/{book}/monster_data.rs"
+    content = transcribe(book)
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w", encoding="utf-8") as handle:
+        handle.write(content)
+    os.replace(tmp_path, path)
+    return path
+
+
 def main() -> None:
     if len(sys.argv) != 2 or sys.argv[1] not in BOOKS:
         raise SystemExit(f"usage: {sys.argv[0]} <{'|'.join(sorted(BOOKS))}>")
-    book = sys.argv[1]
-    path = f"src/rules_core/rules_tables/{book}/monster_data.rs"
-    with open(path, "w", encoding="utf-8") as handle:
-        handle.write(transcribe(book))
+    path = write_book(sys.argv[1])
     print(f"wrote {path}")
 
 

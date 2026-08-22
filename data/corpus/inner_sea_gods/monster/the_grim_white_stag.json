@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "15",
@@ -22,6 +20,140 @@
     ],
     "race_subtype": "Extraplanar|Good|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Grim White Stag"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Common|Druidic|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In forests|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|28"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|20|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Legs|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|10"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Handle Animal|Knowledge (Nature)|Survival|Swim"
+      },
+      {
+        "key": "DR",
+        "value": "10/Evil"
+      },
+      {
+        "key": "DR",
+        "value": "10/Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LG"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):18"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing,*1,4d6,SPROP=push|Hoof,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,2d8"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar|Good|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "SR",
+        "value": "26"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "C",
     "source_page": "p.286",
     "speeds": [
@@ -31,16 +163,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
-    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
-    "line": 27,
-    "record_key": "The Grim White Stag"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "record_key": "The Grim White Stag",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,23 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "You radiate the unearthly grace of a nereid. If you're not wearing armor, you gain a deflection bonus to your AC and CMD equal to your Charisma bonus (maximum +3). The maximum increases by 1 for every 6 levels you possess (maximum +6 at 18th level).",
     "key": "Nereid's Grace",
-    "school": "Abjuration",
     "level": 1,
-    "description": "You radiate the unearthly grace of a nereid. If you're not wearing armor, you gain a deflection bonus to your AC and CMD equal to your Charisma bonus (maximum +3). The maximum increases by 1 for every 6 levels you possess (maximum +6 at 18th level)."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You radiate the unearthly grace of a nereid. If you're not wearing armor, you gain a deflection bonus to your AC and CMD equal to your Charisma bonus (maximum +3). The maximum increases by 1 for every 6 levels you possess (maximum +6 at 18th level)."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsUndine=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/undines.html#_nereid's-grace"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.179"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 168,
-    "record_key": "Nereid's Grace"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 168,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Nereid's Grace",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",

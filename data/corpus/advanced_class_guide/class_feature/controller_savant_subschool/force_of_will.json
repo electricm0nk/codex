@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Controller Savant Subschool ~ Force of Will",
+    "name": "Force of Will",
+    "class": "Controller Savant Subschool",
+    "description": "You can send thoughts and instructions telepathically to any creature within 60 feet that you have charmed or dominated as though you shared a common language. At 11th level, affected creatures can communicate back to you via the telepathic link as well. At 20th level, any creature that succeeds at a saving throw against an enchantment spell you have just cast is still affected for 1 round if the spell has a duration greater than 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Controller Savant Subschool ~ Force of Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can send thoughts and instructions telepathically to any creature within 60 feet that you have charmed or dominated as though you shared a common language. At 11th level, affected creatures can communicate back to you via the telepathic link as well. At 20th level, any creature that succeeds at a saving throw against an enchantment spell you have just cast is still affected for 1 round if the spell has a duration greater than 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2586,
+    "record_key": "Controller Savant Subschool ~ Force of Will"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

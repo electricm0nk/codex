@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Unsworn Shaman ~ Wandering Spirit",
+    "name": "Wandering Spirit",
+    "class": "Shaman",
+    "description": "The unsworn shaman gains access to the wandering spirit Class Feature.Shaman Class Feature. At 10th level, she gains the abilities listed in the greater version of her wandering spirit. At 18th level, she gains the abilities listed in the true version of her wandering spirit. Additionally, at 6th level, she also gains a second wandering spirit, gaining the abilities listed in the greater version of that spirit at 14th level, and the abilities listed in the true version at 20th level. This ability alters wandering spirit and replaces wandering hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unsworn Shaman ~ Wandering Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unsworn Shaman Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWanderingSpiritGreater|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWanderingSpiritTrue|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SecondaryShamanWanderingSpiritGreater|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SecondaryShamanWanderingSpiritTrue|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The unsworn shaman gains access to the wandering spirit Class Feature.Shaman Class Feature. At 10th level, she gains the abilities listed in the greater version of her wandering spirit. At 18th level, she gains the abilities listed in the true version of her wandering spirit. Additionally, at 6th level, she also gains a second wandering spirit, gaining the abilities listed in the greater version of that spirit at 14th level, and the abilities listed in the true version at 20th level. This ability alters wandering spirit and replaces wandering hex."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Wandering Spirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Secondary Shaman Wandering Spirit|1|PRECLASS:1,Shaman=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWanderingSpiritGreater|1|PRECLASS:1,Shaman=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWanderingSpiritTrue|1|PRECLASS:1,Shaman=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SecondaryShamanWanderingSpiritGreater|1|PRECLASS:1,Shaman=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SecondaryShamanWanderingSpiritTrue|1|PRECLASS:1,Shaman=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3651,
+    "record_key": "Unsworn Shaman ~ Wandering Spirit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aquatic Bloodline ~ Dehydrating Touch",
+    "name": "Dehydrating Touch",
+    "class": "Aquatic Bloodline",
+    "description": "You can make a melee touch attack as a standard action that inflicts 1d6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aquatic Bloodline ~ Dehydrating Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aquatic Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Aquatic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aquatic_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aquatic_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aquatic_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticDehydratingTouch_DamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a melee touch attack as a standard action that inflicts 1d6"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_AquaticDehydratingTouch_DamageBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "points of nonlethal damage and sickens the target for 1 round. Oozes, plants, and creatures with the aquatic or water subtypes suffer lethal damage instead. You can use this ability %1 times per day.|Sorcerer_Aquatic_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticDehydratingTouch_DamageBonus|Sorcerer_Aquatic_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 nonlethal)|Sorcerer_AquaticDehydratingTouch_DamageBonus|Sorcerer_Aquatic_BloodlinePower1Times|PREVARLTEQ:Sorcerer_AquaticDehydratingTouch_DamageBonus,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 nonlethal)|Sorcerer_AquaticDehydratingTouch_DamageBonus|Sorcerer_Aquatic_BloodlinePower1Times|PREVARGT:Sorcerer_AquaticDehydratingTouch_DamageBonus,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Aquatic_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AquaticBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3098,
+    "record_key": "Aquatic Bloodline ~ Dehydrating Touch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

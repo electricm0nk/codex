@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions like magic siege weapon, except it gives an indirect fire siege weapon an enhancement bonus on targeting and damage rolls of +(min(5,floor(CASTERLEVEL/4))). If used on a direct-fire siege weapon, this spell functions as greater magic weapon.",
+    "key": "Magic Siege Engine (Greater)",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Inquisitor,Paladin,Sorcerer,Wizard=4|Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Siege engine gains +(min(5,floor(CASTERLEVEL/4))) on targeting and damage rolls.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like magic siege weapon, except it gives an indirect fire siege weapon an enhancement bonus on targeting and damage rolls of +(min(5,floor(CASTERLEVEL/4))). If used on a direct-fire siege weapon, this spell functions as greater magic weapon.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(black powder)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/magicSiegeEngine.html#_magic-siege-engine,-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one siege engine touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Magic Siege Engine (Greater)",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

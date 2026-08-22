@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Elemental Grip",
+    "name": "Elemental Grip",
+    "class": "Wild Talent",
+    "description": "Element universal; Type utility (Sp); Level 3; Burn 0 Saving Throw Will negates; Spell Resistance yes You use your element to halt a creature associated with your element, as hold monster except it requires concentration to maintain, and it works only on creatures with a subtype matching one of your elements (for example, a pyrokineticist could use it on creatures of the fire subtype). At any time, you can accept 1 point of burn to remove the need to concentrate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Elemental Grip"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Universal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type utility (Sp); Level 3; Burn 0 Saving Throw Will negates; Spell Resistance yes You use your element to halt a creature associated with your element, as hold monster except it requires concentration to maintain, and it works only on creatures with a subtype matching one of your elements (for example, a pyrokineticist could use it on creatures of the fire subtype). At any time, you can accept 1 point of burn to remove the need to concentrate."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 744,
+    "record_key": "Wild Talent ~ Elemental Grip"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Bloodrager Bloodline ~ Quickling Bloodrage",
+    "name": "Quickling Bloodrage",
+    "class": "Fey Bloodrager Bloodline",
+    "description": "While bloodraging you're treated as if you are under the effects of haste.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Bloodrager Bloodline ~ Quickling Bloodrage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Fey Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Fey"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Fey_BloodlineProgressionLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While bloodraging you're treated as if you are under the effects of haste."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|FeyBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 828,
+    "record_key": "Fey Bloodrager Bloodline ~ Quickling Bloodrage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sohei ~ Bonus Feat",
+    "name": "Bonus Feats",
+    "class": "Monk",
+    "description": "A sohei may select mounted combat feats as bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sohei ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sohei may select mounted combat feats as bonus feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sohei Bonus Feat|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1352,
+    "record_key": "Sohei ~ Bonus Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

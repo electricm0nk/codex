@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Green Dragon ~ Awaken Treants",
+    "delivery": "Supernatural",
+    "description": "A great wyrm dragon can call on the forest itself to aid it, animating a number of trees to serve as treants to protect it. These treants can be called from any Huge or larger living tree. A green dragon can create a single treant as a standard action, up to a total of 4 treants per day. These treants remain animated for up to 1 hour, at which time they revert to being ordinary trees.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:green_dragon_awaken_treants",
+    "name": "Awaken Treants",
+    "owners": [
+      "beastiary:monster:dragon_green"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A great wyrm dragon can call on the forest itself to aid it, animating a number of trees to serve as treants to protect it. These treants can be called from any Huge or larger living tree. A green dragon can create a single treant as a standard action, up to a total of 4 treants per day. These treants remain animated for up to 1 hour, at which time they revert to being ordinary trees."
+      },
+      {
+        "key": "KEY",
+        "value": "Green Dragon ~ Awaken Treants"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.97",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 425,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Green Dragon ~ Awaken Treants",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

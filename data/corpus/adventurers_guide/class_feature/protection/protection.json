@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Protection ~ HK",
+    "name": "Protection",
+    "class": "Protection",
+    "description": "Your faith is your greatest source of protection, and you can use that faith to defend others. In addition, you receive a +1 resistance bonus on saving throws. This bonus increases by 1 for every 5 levels you possess.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protection ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Domain.HKDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your faith is your greatest source of protection, and you can use that faith to defend others. In addition, you receive a +1 resistance bonus on saving throws. This bonus increases by 1 for every 5 levels you possess."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Resistant Touch|PREVARGTEQ:HellknightLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Aura of Protection|PREVARGTEQ:HellknightLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|(DomainProtectionLVL/5)+1|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionLVL|HellknightLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionDC|HKDisciplineDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionTimes|HKDiscipline"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 276,
+    "record_key": "Protection ~ HK"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Fortune",
+    "name": "Fortune",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Fortune",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Fortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchFortuneRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Fortune|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Fortune"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch can grant a creature within 30 feet a  bit of good luck for %1 round. The target can call upon this good luck once per round,  allowing  him  to reroll any ability check, attack roll, saving throw, or skill check, taking the better result.|WitchFortuneRounds"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Fortune"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Fortune|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Fortune|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Fortune)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchFortuneRounds|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchFortuneRounds|1|PREVARGTEQ:WitchHexAbilityLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 893,
+    "record_key": "Witch Hex ~ Fortune"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

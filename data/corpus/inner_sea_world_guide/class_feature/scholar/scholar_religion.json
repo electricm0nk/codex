@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scholar ~ Religion",
+    "name": "Scholar ~ Religion",
+    "class": "Scholar",
+    "description": "You gain a +%1 bonus on Knowledge (Religion).|ScholarReBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Scholar"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScholarReBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Religion).|ScholarReBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Religion)|ScholarReBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScholarReBonus|if(skillinfo(\"TOTALRANK\",\"Knowledge (Religion)\")>=10,4,2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 212,
+    "record_key": "Scholar ~ Religion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

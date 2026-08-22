@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Archetype ~ Elementalist Shifter",
+    "name": "Elementalist Shifter",
+    "class": "Shifter Archetype",
+    "description": "Rather than drawing power from bestial aspects, elementalist shifters channel power from the Inner Sphere and can take on powerful elemental forms at the cost of the greater diversity available to traditional shifters. Although the elementalist shifter's powers seem more outlandish and supernatural than those of others of their kind, they remain equally immersed in the druidic traditions; their focus is simply rooted in expressions of nature found in extraplanar regions: the planes of Air, Earth, Fire, and Water.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Archetype ~ Elementalist Shifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShifterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shifter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shifter Archetype ~ Elementalist Shifter],[!PREFACT:1,ABILITIES,Shifter_Archetype_BonusLanguages=True,Shifter_Archetype_ShifterAspect=True,Shifter_Archetype_WildEmpathy=True,Shifter_Archetype_ShifterClaws=True,Shifter_Archetype_WildShape=True,Shifter_Archetype_ChimericAspect=True,Shifter_Archetype_GreaterChimericAspect=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than drawing power from bestial aspects, elementalist shifters channel power from the Inner Sphere and can take on powerful elemental forms at the cost of the greater diversity available to traditional shifters. Although the elementalist shifter's powers seem more outlandish and supernatural than those of others of their kind, they remain equally immersed in the druidic traditions; their focus is simply rooted in expressions of nature found in extraplanar regions: the planes of Air, Earth, Fire, and Water."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Shifter ~ Languages|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Shifter ~ Elemental Aspect|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Shifter ~ Elemental Speech|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Shifter ~ Elemental Strike|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Shifter ~ Elemental Form|PRECLASS:1,Shifter=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Shifter ~ Omnielementalist|PRECLASS:1,Shifter=9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_BonusLanguages|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_GreaterChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_GreaterChimericAspect|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1033,
+    "record_key": "Shifter Archetype ~ Elementalist Shifter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

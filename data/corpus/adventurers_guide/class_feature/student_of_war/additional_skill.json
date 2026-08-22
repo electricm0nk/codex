@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of War ~ Additional Skill",
+    "name": "Additional Skill",
+    "class": "Student of War",
+    "description": "At 1st level and every 2 levels thereafter, you gain a new class skill of your choice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of War ~ Additional Skill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of War Class Feature.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level and every 2 levels thereafter, you gain a new class skill of your choice."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Student of War Skill|(SoWLvl+1)/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 521,
+    "record_key": "Student of War ~ Additional Skill"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

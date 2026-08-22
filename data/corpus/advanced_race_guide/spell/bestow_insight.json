@@ -1,23 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "When casting this spell, choose a single skill that you have at least one rank in. The target gains a insight bonus on skill checks with this skill and is considered trained in that skill. Furthermore, once before the spell's duration, the target can choose to roll two checks and take the greater result. Doing so ends the spell's other effects.",
     "key": "Bestow Insight",
-    "school": "Enchantment",
     "level": 2,
-    "description": "When casting this spell, choose a single skill that you have at least one rank in. The target gains a insight bonus on skill checks with this skill and is considered trained in that skill. Furthermore, once before the spell's duration, the target can choose to roll two checks and take the greater result. Doing so ends the spell's other effects."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Inquisitor,Sorcerer,Witch,Wizard=2|Cleric=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting this spell, choose a single skill that you have at least one rank in. The target gains a +%1 insight bonus on skill checks with this skill and is considered trained in that skill. Furthermore, once before the spell's duration, the target can choose to roll two checks and take the greater result. Doing so ends the spell's other effects.|min(6,2+CASTERLEVEL/4)"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsHuman=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/coreRaces/humans.html#_bestow-insight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Enchantment"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 60,
-    "record_key": "Bestow Insight"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 60,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Bestow Insight",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Crane Riposte",
+    "name": "Crane Riposte",
+    "class": "Warpriest Bonus Feat",
+    "description": "You use your defensive abilities to make overpowering counterattacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Crane Riposte"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Crane Style,Crane Wing,Dodge,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:8],[PREVARGTEQ:WarpriestBonusFeatBAB,8]],[PREVARGTEQ:MonkFeatQualify,7]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FightingDefensivelyAttackPenalty|-1"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your defensive abilities to make overpowering counterattacks."
+      },
+      {
+        "key": "DESC",
+        "value": " You take only a -1 penalty on attack rolls for fighting defensively. Whenever you are fighting defensively, and you use Crane Wing to add a dodge bonus against one attack, that attack provokes an attack of opportunity from you if it misses. In addition, when you deflect an attack using Crane Wing while taking the total defense action, you may make an attack of opportunity against that opponent (even though you could not normally do so while taking the total defense action)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Crane Riposte"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4540,
+    "record_key": "Warpriest Bonus Feat ~ Crane Riposte"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

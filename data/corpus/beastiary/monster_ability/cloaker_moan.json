@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Cloaker ~ Moan",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:cloaker"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Moan"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|MoanDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MoanDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MoanDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Moan)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MoanDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cloaker can emit an infrasonic moan as a standard action, with one of four effects. Fear; All creatures in a 30-foot spread must save (Will negates) or become panicked for 2 rounds. Nausea; All creatures in a 30-foot cone must save (Fortitude negates) or fall prone and be nauseated for 1d4+1 rounds. Stupor; A single creature within 30 feet is affected by hold monster for 5 rounds (Will negates). Unnerve; Anyone within a 60-foot spread automatically takes a -2 penalty on attack and damage rolls. Those in the area for more than 6 consecutive rounds must save (Will negates) or enter a trance, helpless until the moaning stops. Cloakers are immune to these sonic, mind-affecting attacks. A creature that successfully saves against the cloaker's fear, nausea, or unnerve moans cannot be affected by that same moan effect from that cloaker for 24 hours. All of the save DCs against a cloaker's moan are DC %1.|MoanDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Cloaker ~ Moan"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.47",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 225,
-    "record_key": "Cloaker ~ Moan"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 225,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Cloaker ~ Moan",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

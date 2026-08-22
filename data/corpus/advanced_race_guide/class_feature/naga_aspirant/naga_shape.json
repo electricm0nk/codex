@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Naga Aspirant ~ Naga Shape",
+    "name": "Naga Shape",
+    "class": "Druid",
+    "description": "The naga aspirant can use her wild shape ability (gained at 4th level, as normal) to assume the form of a true naga. This effect functions in a similar manner to a shapechange spell with the following exception. The druid's true naga form is unique, representing her personal evolution. When taking naga form, the nagaji's body transforms into that of a large serpent, though she keeps her own head. The naga aspirant loses her limbs and her size increases by one category, granting her a +4 size bonus to Strength and Constitution, a -2 penalty to Dexterity, and a +2 enhancement bonus to her natural armor bonus. She gains a +10 enhancement bonus to land speed and a bite attack that deals 1d6 points of damage. She can cast verbal spells in this form, but cannot cast spells with other components without metamagic or feats such as Natural Spell. This otherwise works like and replaces wild shape.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naga Aspirant ~ Naga Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The naga aspirant can use her wild shape ability (gained at 4th level, as normal) to assume the form of a true naga. This effect functions in a similar manner to a shapechange spell with the following exception. The druid's true naga form is unique, representing her personal evolution. When taking naga form, the nagaji's body transforms into that of a large serpent, though she keeps her own head. The naga aspirant loses her limbs and her size increases by one category, granting her a +4 size bonus to Strength and Constitution, a -2 penalty to Dexterity, and a +2 enhancement bonus to her natural armor bonus. She gains a +10 enhancement bonus to land speed and a bite attack that deals 1d6 points of damage. She can cast verbal spells in this form, but cannot cast spells with other components without metamagic or feats such as Natural Spell. This otherwise works like and replaces wild shape."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 917,
+    "record_key": "Naga Aspirant ~ Naga Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

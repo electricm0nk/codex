@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Sapping Offensive",
+    "name": "Sapping Offensive",
+    "class": "Investigator",
+    "description": "When the investigator damages a studied target, that creature cannot make attacks of opportunity for 1 round. * Only one of these talents can be applied to an individual attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Sapping Offensive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "When the investigator damages a studied target, that creature cannot make attacks of opportunity for 1 round. * Only one of these talents can be applied to an individual attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1302,
+    "record_key": "Investigator ~ Sapping Offensive"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

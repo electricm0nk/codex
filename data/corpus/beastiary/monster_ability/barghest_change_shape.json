@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Barghest ~ Change Shape",
     "delivery": "Supernatural",
@@ -14,19 +12,47 @@
       "beastiary:monster:barghest",
       "beastiary:monster:barghest_greater"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(goblin or wolf, polymorph)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A Barghest has the ability to assume the appearance of a goblin or wolf, but retains most of its own physical qualities. This ability functions as a polymorph spell, but the Barghest does not adjust its ability scores (although it gains any other abilities of the creature it mimics)."
+      },
+      {
+        "key": "KEY",
+        "value": "Barghest ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.27",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 141,
-    "record_key": "Barghest ~ Change Shape"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 141,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Barghest ~ Change Shape",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

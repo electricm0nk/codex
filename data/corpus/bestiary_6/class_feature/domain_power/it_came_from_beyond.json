@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ It Came From Beyond",
+    "name": "It Came From Beyond",
+    "class": "Domain Power",
+    "description": "Once per day when you cast a summoning spell, any one creature you summon is more powerful than normal. The creature gains the advanced creature simple template. If you summon more than one creature with a spell, only one of the summoned creatures gains the advanced creature simple template. A summoned creature that gains the advanced creature simple template in this manner looks unusually deformed or hideous. This ability only works on spells you cast as a cleric-it does not work on spellcasting ability gained from any other spellcasting classes you might have. This ability replaces the Guarded Mind ability of the Void domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ It Came From Beyond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day when you cast a summoning spell, any one creature you summon is more powerful than normal. The creature gains the advanced creature simple template. If you summon more than one creature with a spell, only one of the summoned creatures gains the advanced creature simple template. A summoned creature that gains the advanced creature simple template in this manner looks unusually deformed or hideous. This ability only works on spells you cast as a cleric-it does not work on spellcasting ability gained from any other spellcasting classes you might have. This ability replaces the Guarded Mind ability of the Void domain."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.316"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 16,
+    "record_key": "Domain Power ~ It Came From Beyond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

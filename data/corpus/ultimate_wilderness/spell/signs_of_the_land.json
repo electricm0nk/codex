@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as commune with nature except it reveals up to three details about the territory you currently occupy from the following list - bodies of water, features, minerals, or plants. For each feature you learn about, you automatically know the skills you can use to discover that feature and you gain 1d6 Discovery Points toward finding it (see page 124).",
+    "key": "Signs of the Land",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger,Shaman=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Learn up to three details about the surrounding territory.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as commune with nature except it reveals up to three details about the territory you currently occupy from the following list - bodies of water, features, minerals, or plants. For each feature you learn about, you automatically know the skills you can use to discover that feature and you gain 1d6 Discovery Points toward finding it (see page 124).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 45,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Signs of the Land",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

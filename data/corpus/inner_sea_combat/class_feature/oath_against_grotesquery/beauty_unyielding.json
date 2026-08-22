@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against Grotesquery ~ Beauty Unyielding",
+    "name": "Beauty Unyielding",
+    "class": "Paladin",
+    "description": "At 3rd level, a paladin gains spell resistance equal to 11 + her paladin level, but only against non-harmless transmutation effects. This spell resistance can be lowered as a standard action. Additionally, whenever the paladin would take Charisma damage or suffer Charisma drain, she reduces the amount of damage or drain by 1 (minimum 0). This ability replaces divine health.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Grotesquery ~ Beauty Unyielding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a paladin gains spell resistance equal to 11 + her paladin level, but only against non-harmless transmutation effects. This spell resistance can be lowered as a standard action. Additionally, whenever the paladin would take Charisma damage or suffer Charisma drain, she reduces the amount of damage or drain by 1 (minimum 0). This ability replaces divine health."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 490,
+    "record_key": "Oath against Grotesquery ~ Beauty Unyielding"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

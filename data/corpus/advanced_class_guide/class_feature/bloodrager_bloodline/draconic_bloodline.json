@@ -1,0 +1,228 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Bloodline ~ Draconic",
+    "name": "Draconic Bloodline",
+    "class": "Bloodrager Bloodline",
+    "description": "At some point in your family's history, a dragon interbred with your bloodline. Now, its ancient power fuels your bloodrage.|PREVAREQ:Bloodrager_Draconic_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.SpecialQuality.ClassSpecialization.Bloodrager Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineSpellsLvl1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineSpellsLvl2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineSpellsLvl3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlineSpellsLvl4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_Description|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDraconicBloodline_Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDraconicBloodline_Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDraconicBloodline_Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDraconicBloodline_Fire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDraconicBloodline_BW_Line|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerDraconicBloodline_BW_Cone|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At some point in your family's history, a dragon interbred with your bloodline. Now, its ancient power fuels your bloodrage.|PREVAREQ:Bloodrager_Draconic_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Draconic Bloodrager Bloodline ~ Bonus Spells|PREVARGTEQ:Bloodrager_Draconic_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Draconic Bloodrager Bloodline ~ Bloodline Powers|PREVARGTEQ:Bloodrager_Draconic_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Draconic Bloodrager Bloodline ~ Power LVL 01|PREVARGTEQ:Bloodrager_Draconic_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Draconic Bloodrager Bloodline ~ Power LVL 04|PREVARGTEQ:Bloodrager_Draconic_BloodlinePower4,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Draconic Bloodrager Bloodline ~ Power LVL 08|PREVARGTEQ:Bloodrager_Draconic_BloodlinePower8,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Draconic Bloodrager Bloodline ~ Power LVL 12|PREVARGTEQ:Bloodrager_Draconic_BloodlinePower12,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Draconic Bloodrager Bloodline ~ Power LVL 16|PREVARGTEQ:Bloodrager_Draconic_BloodlinePower16,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Draconic Bloodrager Bloodline ~ Power LVL 20|PREVARGTEQ:Bloodrager_Draconic_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodrager Draconic Bloodline Type|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower1LVL|Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower4LVL|Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower4LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower8LVL|Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower8LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower12LVL|Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower12LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower16LVL|Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower16LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_BloodlinePower20LVL|Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bloodrager Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 699,
+    "record_key": "Bloodrager Bloodline ~ Draconic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

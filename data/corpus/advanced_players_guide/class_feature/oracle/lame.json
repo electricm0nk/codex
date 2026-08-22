@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle ~ Lame",
+    "name": "Lame",
+    "class": "Oracle",
+    "description": "One of your legs is permanently wounded, reducing your base land speed by %1 feet. Your speed is never reduced due to encumbrance.|OracleLameEffect|PREVARLT:OracleCurseLVL,5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Lame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleCurse"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLameEffect|0"
+      },
+      {
+        "key": "DESC",
+        "value": "One of your legs is permanently wounded, reducing your base land speed by %1 feet. Your speed is never reduced due to encumbrance.|OracleLameEffect|PREVARLT:OracleCurseLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|-OracleLameEffect"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLameEffect|10|PREMOVE:1,Walk=30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLameEffect|5|!PREMOVE:1,Walk=30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "HeavyLoad"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 495,
+    "record_key": "Oracle ~ Lame"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

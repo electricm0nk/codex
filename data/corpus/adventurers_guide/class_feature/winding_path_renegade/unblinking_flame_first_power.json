@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Winding Path Renegade ~ Unblinking Flame First Power",
+    "name": "Unblinking Flame First Power",
+    "class": "Brawler",
+    "description": "The winding path renegade increases her land speed by 10 feet (this is treated as an enhancement bonus). If she uses her monk moves class ability to gain fast movement, the abilities stack with each other.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winding Path Renegade ~ Unblinking Flame First Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.WindingPathRenegadeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "The winding path renegade increases her land speed by 10 feet (this is treated as an enhancement bonus). If she uses her monk moves class ability to gain fast movement, the abilities stack with each other."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|10|TYPE=Enhancement.STACK"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 735,
+    "record_key": "Winding Path Renegade ~ Unblinking Flame First Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

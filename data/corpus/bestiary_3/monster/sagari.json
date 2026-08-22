@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "1/2",
@@ -24,6 +22,108 @@
     ],
     "race_subtype": null,
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Sagari"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d4"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tentacle,Natural.Melee.Finesseable.Weapon,*1,1d4"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ],
     "size": "T",
     "source_page": "p.233",
     "speeds": [
@@ -37,16 +137,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 233,
-    "record_key": "Sagari"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 233,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Sagari",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

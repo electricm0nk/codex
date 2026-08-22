@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Bloodrager Bloodline ~ Bonus Spells",
+    "name": "Verdant Bloodrager Bloodline ~ Bonus Spells",
+    "class": "Verdant Bloodrager Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=1|Entangle|PREVAREQ:Bloodrager_CF_BloodlineSpell1,0|PREVARGTEQ:BloodragerBloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=2|Greensight|PREVAREQ:Bloodrager_CF_BloodlineSpell2,0|PREVARGTEQ:BloodragerBloodlineCasterLVL,10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Burst of Nettles|PREVAREQ:Bloodrager_CF_BloodlineSpell3,0|PREVARGTEQ:BloodragerBloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=4|Command Plants|PREVAREQ:Bloodrager_CF_BloodlineSpell4,0|PREVARGTEQ:BloodragerBloodlineCasterLVL,16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 304,
+    "record_key": "Verdant Bloodrager Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against Chaos ~ Detect Chaos",
+    "name": "Detect Chaos",
+    "class": "Paladin",
+    "description": "This ability works like the standard paladin ability to detect evil, except as detect chaos instead of detect evil. This ability replaces detect evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Chaos ~ Detect Chaos"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability works like the standard paladin ability to detect evil, except as detect chaos instead of detect evil. This ability replaces detect evil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 483,
+    "record_key": "Oath against Chaos ~ Detect Chaos"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

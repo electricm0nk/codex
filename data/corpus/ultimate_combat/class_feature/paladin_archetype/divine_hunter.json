@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Divine Hunter",
+    "name": "Divine Hunter",
+    "class": "Paladin Archetype",
+    "description": "Most paladins rush into battle, meeting evil toe-to-toe. The divine hunter prefers to engage evil from afar, striking down her foes before they can threaten her allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Divine Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinArmorProficiencyHeavy.PaladinAuraOfCourage.PaladinDivineBond.PaladinMercy6.PaladinAuraOfResolve.PaladinAuraOfFaith.PaladinAuraOfJustice"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ DIVINE HUNTER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinArmorProficiencyHeavy,TYPE.PaladinAuraOfCourage,TYPE.PaladinDivineBond,TYPE.PaladinMercy6,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfFaith,TYPE.PaladinAuraOfJustice]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most paladins rush into battle, meeting evil toe-to-toe. The divine hunter prefers to engage evil from afar, striking down her foes before they can threaten her allies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Hunter ~ Precise Shot|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Hunter ~ Shared Precision|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Hunter ~ Divine Bond|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Hunter ~ Distant Mercy|PRECLASS:1,Paladin=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Hunter ~ Aura of Care|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Hunter ~ Hunter's Blessing|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Hunter ~ Righteous Hunter|PRECLASS:1,Paladin=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1440,
+    "record_key": "Paladin Archetype ~ Divine Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

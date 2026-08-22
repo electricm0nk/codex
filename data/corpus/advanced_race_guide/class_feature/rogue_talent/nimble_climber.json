@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Nimble Climber",
+    "name": "Nimble Climber",
+    "class": "Rogue Talent",
+    "description": "A catfolk rogue with this talent gains a +4 bonus on Climb checks. If she has the climber racial trait, she can take 10 on her Climb checks even when in immediate danger or distracted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Nimble Climber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsCatfolk=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A catfolk rogue with this talent gains a +4 bonus on Climb checks. If she has the climber racial trait, she can take 10 on her Climb checks even when in immediate danger or distracted."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 437,
+    "record_key": "Rogue Talent ~ Nimble Climber"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

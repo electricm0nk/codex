@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "11",
@@ -18,6 +16,104 @@
     ],
     "race_subtype": "Earth|Extraplanar",
     "race_type": "Ooze",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Carnivorous Crystal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In rocky areas|5|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|5|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|12|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "11"
+      },
+      {
+        "key": "DR",
+        "value": "10/-"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Ooze:16"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Climb,10"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*1,7d8"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Earth|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Ooze"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ooze"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsight (120')"
+      }
+    ],
     "size": "M",
     "source_page": "p.44",
     "speeds": [
@@ -31,16 +127,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 45,
-    "record_key": "Carnivorous Crystal"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 45,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Carnivorous Crystal",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

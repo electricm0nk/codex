@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sea Singer ~ World Traveler",
+    "name": "World Traveler",
+    "class": "Bard",
+    "description": "A sea singer gains a bonus equal to half his bard level on Knowledge (geography), Knowledge (local), Knowledge (nature), and Linguistics checks. He can reroll a check against one of these skills, but must take the result of the second roll even if it is worse. He can reroll one additional time per day at 5th level and every five levels thereafter. This ability replaces bardic knowledge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sea Singer ~ World Traveler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardBardicKnowledge"
+      },
+      {
+        "key": "DESC",
+        "value": "A sea singer gains a bonus equal to half his bard level on Knowledge (geography), Knowledge (local), Knowledge (nature), and Linguistics checks. He can reroll a check against one of these skills, but must take the result of the second roll even if it is worse. He can reroll one additional time per day at 5th level and every five levels thereafter. This ability replaces bardic knowledge."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Geography),Knowledge (Local),Knowledge (Nature),Linguistics|min(1,BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1722,
+    "record_key": "Sea Singer ~ World Traveler"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

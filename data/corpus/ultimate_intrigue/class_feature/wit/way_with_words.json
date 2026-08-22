@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wit ~ Way with Words",
+    "name": "Way with Words",
+    "class": "Bard",
+    "description": "A wit gains a +%1 bonus on Bluff, Diplomacy, Intimidate, Linguistics, and Sense Motive checks. He also gains %1 edges at the beginning of any verbal duel (see Ultimate Intrigue pages 176-181).|WitWayWithWordsBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wit ~ Way with Words"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.WitClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitWayWithWordsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A wit gains a +%1 bonus on Bluff, Diplomacy, Intimidate, Linguistics, and Sense Motive checks. He also gains %1 edges at the beginning of any verbal duel (see Ultimate Intrigue pages 176-181).|WitWayWithWordsBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Intimidate,Linguistics,Sense Motive|WitWayWithWordsBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitWayWithWordsBonus|1+(BardLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 256,
+    "record_key": "Wit ~ Way with Words"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

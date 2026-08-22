@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Ratfolk ~ Languages",
+    "name": "Languages",
+    "race_key": "Ratfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ratfolk Racial Trait",
+      "Ratfolk Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Ratfolk_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Ratfolk begin play speaking Common. Ratfolk with high Intelligence scores can choose from the following languages: Aklo, Draconic, Dwarven, Gnoll, Gnome, Goblin, Halfling, Orc, and Undercommon.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ratfolk ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ratfolk_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ratfolk begin play speaking Common. Ratfolk with high Intelligence scores can choose from the following languages: Aklo, Draconic, Dwarven, Gnoll, Gnome, Goblin, Halfling, Orc, and Undercommon."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aklo|Bonus Language ~ Draconic|Bonus Language ~ Dwarven|Bonus Language ~ Gnoll|Bonus Language ~ Gnome|Bonus Language ~ Goblin|Bonus Language ~ Halfling|Bonus Language ~ Orc|Bonus Language ~ Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
+    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3",
+    "line": 22,
+    "record_key": "Ratfolk ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metamorph ~ Mutagen",
+    "name": "Mutagen",
+    "class": "Alchemist",
+    "description": "A metamorph gains mutagen as a normal alchemist. She can take mutagen and cognatogen discoveries despite not possessing the alchemy class feature that normally grants mutagen.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamorph ~ Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MetamorphClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A metamorph gains mutagen as a normal alchemist. She can take mutagen and cognatogen discoveries despite not possessing the alchemy class feature that normally grants mutagen."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 178,
+    "record_key": "Metamorph ~ Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

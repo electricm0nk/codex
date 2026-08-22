@@ -1,0 +1,90 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 400.0,
+    "description": "Entangles target on a successful critical.",
+    "key": "Slaver's Crossbow (Heavy)",
+    "name": "Slaver's Crossbow, Heavy",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slaver's Crossbow (Heavy)"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Slaver's Crossbow (Heavy)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Bludgeoning.Container.Projectile.Crossbow"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|BolaBolt"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood.Special Quality ~ Nonlethal.Special Quality ~ Trip"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHandsOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "80"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPROP",
+        "value": "Entangles target on a successful critical."
+      }
+    ],
+    "weight_lbs": 12.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_arms_armor.lst",
+    "record_key": "Slaver's Crossbow (Heavy)",
+    "sha256": "1b087b1736f67a8911bc7a4a88066980df2c0dec017f2c6a6aa48a5244952c4a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

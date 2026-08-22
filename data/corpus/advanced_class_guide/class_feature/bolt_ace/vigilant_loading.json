@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bolt Ace ~ Vigilant Loading",
+    "name": "Vigilant Loading",
+    "class": "Gunslinger",
+    "description": "As long as a bolt ace has at least 1 grit point, she does not provoke attacks of opportunity when loading a crossbow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Vigilant Loading"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as a bolt ace has at least 1 grit point, she does not provoke attacks of opportunity when loading a crossbow."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3111,
+    "record_key": "Bolt Ace ~ Vigilant Loading"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

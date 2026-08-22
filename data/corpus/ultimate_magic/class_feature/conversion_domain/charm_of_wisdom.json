@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Conversion Domain ~ Charm of Wisdom",
+    "name": "Charm of Wisdom",
+    "class": "Conversion Domain",
+    "description": "You use your Wisdom modifier instead of your Charisma modifier when making Bluff, Diplomacy, and Intimidate checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conversion Domain ~ Charm of Wisdom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your Wisdom modifier instead of your Charisma modifier when making Bluff, Diplomacy, and Intimidate checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Intimidate|WIS-CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 351,
+    "record_key": "Conversion Domain ~ Charm of Wisdom"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

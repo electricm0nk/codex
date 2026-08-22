@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcanist Archetype ~ Spell Specialist",
+    "name": "Spell Specialist",
+    "class": "Arcanist Archetype",
+    "description": "Where most arcanists are broad in their study of magic, a spell specialist has her power focused in a few spells. Spell specialists are able to warp and twist the magic of their signature spells in ways other casters cannot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist Archetype ~ Spell Specialist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ArcanistArchetype.ArcanistExploit1.ArcanistExploit7.ArcanistExploit13.ArcanistExploit19"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Arcanist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Spell Specialist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistExploit1,TYPE.ArcanistExploit7,TYPE.ArcanistExploit13,TYPE.ArcanistExploit19]"
+      },
+      {
+        "key": "DESC",
+        "value": "Where most arcanists are broad in their study of magic, a spell specialist has her power focused in a few spells. Spell specialists are able to warp and twist the magic of their signature spells in ways other casters cannot."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Spell Specialist ~ Signature Spells|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Spell Specialist ~ Dismiss|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Spell Specialist ~ Spell Bender|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Spell Specialist ~ Spellwarp|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Arcanist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2380,
+    "record_key": "Arcanist Archetype ~ Spell Specialist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

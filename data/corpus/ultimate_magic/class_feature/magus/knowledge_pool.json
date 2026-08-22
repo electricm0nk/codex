@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus ~ Knowledge Pool",
+    "name": "Knowledge Pool",
+    "class": "Magus",
+    "description": "When you prepare your magus spells, you can decide to expend 1 or more points from your arcane pool, up to your Intelligence bonus. For each point you expend, you can treat any one spell from the magus spell list as if it were in your spellbook and can prepare that spell as normal that day. If you do not cast spells prepared in this way before the next time you prepares spells, you lose those spells. You can also cast spells added in this way using your spell recall ability, but only until you prepares spells again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus ~ Knowledge Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you prepare your magus spells, you can decide to expend 1 or more points from your arcane pool, up to your Intelligence bonus. For each point you expend, you can treat any one spell from the magus spell list as if it were in your spellbook and can prepare that spell as normal that day. If you do not cast spells prepared in this way before the next time you prepares spells, you lose those spells. You can also cast spells added in this way using your spell recall ability, but only until you prepares spells again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 48,
+    "record_key": "Magus ~ Knowledge Pool"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

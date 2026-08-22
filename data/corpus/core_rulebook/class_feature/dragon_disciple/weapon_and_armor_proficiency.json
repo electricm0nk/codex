@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Dragon Disciple",
+    "description": "Dragon disciples gain no proficiency with any weapon or armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Dragon Disciple Class Feature.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Dragon disciples gain no proficiency with any weapon or armor."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2962,
+    "record_key": "Dragon Disciple ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Archetype ~ Fiendflesh Shifter",
+    "name": "Fiendflesh Shifter",
+    "class": "Shifter Archetype",
+    "description": "By forging dark pacts with extraplanar forces, fiendflesh shifters invoke sinister powers to assume the strengths of daemons, demons, or devils. Fiendflesh shifters care nothing for the natural world and are instead consumed by an ever-growing lust for power at any price. To other shifters, the fiendflesh shifter is often viewed as a monster herself-an intrusion into the natural order of things and a foe who must be sought out and destroyed. Very few druids will ever willingly ally with fiendflesh shifters; this leaves these outcasts to live bitter, lonely lives or to seek out fiendish cults or other abhorrent faiths for support and companionship.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Archetype ~ Fiendflesh Shifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShifterArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shifter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shifter Archetype ~ Fiendflesh Shifter],[!PREFACT:1,ABILITIES,Shifter_Archetype_ShifterClaws=True,Shifter_Archetype_WildShape=True,Shifter_Archetype_ShifterAspect=True,Shifter_Archetype_DefensiveInstinct=True,Shifter_Archetype_ChimericAspect=True,Shifter_Archetype_GreaterChimericAspect=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "By forging dark pacts with extraplanar forces, fiendflesh shifters invoke sinister powers to assume the strengths of daemons, demons, or devils. Fiendflesh shifters care nothing for the natural world and are instead consumed by an ever-growing lust for power at any price. To other shifters, the fiendflesh shifter is often viewed as a monster herself-an intrusion into the natural order of things and a foe who must be sought out and destroyed. Very few druids will ever willingly ally with fiendflesh shifters; this leaves these outcasts to live bitter, lonely lives or to seek out fiendish cults or other abhorrent faiths for support and companionship."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendflesh Shifter ~ Alignment|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendflesh Shifter ~ Infernal Claws|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendflesh Shifter ~ Fiendish Aspect|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendflesh Shifter ~ Fiendish Resilience|PRECLASS:1,Shifter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendflesh Shifter ~ Chimeric Fiend|PRECLASS:1,Shifter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendflesh Shifter ~ Greater Chimeric Fiend|PRECLASS:1,Shifter=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_GreaterChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_GreaterChimericAspect|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1034,
+    "record_key": "Shifter Archetype ~ Fiendflesh Shifter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

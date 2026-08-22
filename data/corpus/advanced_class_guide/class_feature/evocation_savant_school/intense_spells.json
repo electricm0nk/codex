@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Evocation Savant School ~ Intense Spells",
+    "name": "Intense Spells",
+    "class": "Evocation Savant School",
+    "description": "Whenever you cast an evocation spell that deals hit point damage, add +%1 to the damage. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. This bonus damage is not increased by Empower Spell or similar effects. This damage is of the same type as the spell.|EvocationIntenseSpellsBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evocation Savant School ~ Intense Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialAttack.Supernatural.ArcanistSavantSchoolPower.AttackOption.ArcanistExploit1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EvocationIntenseSpellsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast an evocation spell that deals hit point damage, add +%1 to the damage. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. This bonus damage is not increased by Empower Spell or similar effects. This damage is of the same type as the spell.|EvocationIntenseSpellsBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast an evocation spell you can roll twice to penetrate a creature's spell resistance and take the better result.|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvocationIntenseSpellsBonus|max(1,ArcanistSavantSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2565,
+    "record_key": "Evocation Savant School ~ Intense Spells"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

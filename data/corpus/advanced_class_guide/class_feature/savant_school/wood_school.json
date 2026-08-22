@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant School ~ Wood",
+    "name": "Wood School",
+    "class": "Savant School",
+    "description": "You have chosen to specialize in water spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant School ~ Wood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.VoidSavantSchool.SavantElementalSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSavantSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in water spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Savant Wood School ~ Flexible Enhancement|Savant Wood School ~ Splintered Spear|Savant Wood School ~ Wood Magic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Savant Wood School ~ Cooperative Defense|PREVARGTEQ:ArcanistSavantSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wood Opposition School Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2527,
+    "record_key": "Savant School ~ Wood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Assassin ~ Quiet Death",
+    "name": "Quiet Death",
+    "class": "Assassin",
+    "description": "At 6th level, whenever an assassin kills a creature using his death attack during a surprise round, he can also make a Stealth check, opposed by Perception checks of those in the vicinity to prevent them from identifying him as the assailant. If successful, those nearby might not even notice that the target is dead for a few moments, allowing the assassin to avoid detection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Assassin ~ Quiet Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AssassinClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, whenever an assassin kills a creature using his death attack during a surprise round, he can also make a Stealth check, opposed by Perception checks of those in the vicinity to prevent them from identifying him as the assailant. If successful, those nearby might not even notice that the target is dead for a few moments, allowing the assassin to avoid detection."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.380"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2951,
+    "record_key": "Assassin ~ Quiet Death"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Earthquake Blessing ~ Stone's Base",
+    "name": "Stone's Base",
+    "class": "Earthquake Blessing",
+    "description": "You can touch an ally to bless it with the stalwart resilience of stone. For 1 minute, the creature gains a +4 bonus to its CMD against maneuvers that would move the ally or knock it prone.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Earthquake Blessing ~ Stone's Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch an ally to bless it with the stalwart resilience of stone. For 1 minute, the creature gains a +4 bonus to its CMD against maneuvers that would move the ally or knock it prone."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1232,
+    "record_key": "Earthquake Blessing ~ Stone's Base"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

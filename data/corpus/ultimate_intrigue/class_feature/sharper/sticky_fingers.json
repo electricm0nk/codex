@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sharper ~ Sticky Fingers",
+    "name": "Sticky Fingers",
+    "class": "Rogue",
+    "description": "A sharper receives Improved Steal as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sharper ~ Sticky Fingers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.SharperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sharper receives Improved Steal as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": " She receives Greater Steal as a bonus feat.|PRECLASS:1,Rogue=6"
+      },
+      {
+        "key": "DESC",
+        "value": " She also receives Quick Steal as a bonus feat.|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "DESC",
+        "value": " The sharper gains these feats even if she doesn't meet the prerequisites."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Steal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Steal|PRECLASS:1,Rogue=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Quick Steal|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 756,
+    "record_key": "Sharper ~ Sticky Fingers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

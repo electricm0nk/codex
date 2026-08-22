@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist ~ Glib Lie",
+    "name": "Glib Lie",
+    "class": "Mesmerist",
+    "description": "A mesmerist can deceive truth-detecting magic. A creature using this sort of magic against the mesmerist must succeed at a caster level check against a DC of %1 to succeed (as if the mesmerist were under the effect of a glibness spell); failure means the magic doesn't detect the mesmerist's lies or force him to speak only the truth. This ability does not give the mesmerist the glibness spell's bonus on Bluff checks.|GlibLieDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Glib Lie"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GlibLieDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A mesmerist can deceive truth-detecting magic. A creature using this sort of magic against the mesmerist must succeed at a caster level check against a DC of %1 to succeed (as if the mesmerist were under the effect of a glibness spell); failure means the magic doesn't detect the mesmerist's lies or force him to speak only the truth. This ability does not give the mesmerist the glibness spell's bonus on Bluff checks.|GlibLieDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GlibLieDC|15+MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 928,
+    "record_key": "Mesmerist ~ Glib Lie"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

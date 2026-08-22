@@ -38,6 +38,28 @@ export interface SpellCatalogEntryDto {
   level: number | null;
   /** `null` for the 12 APG records ingested without description text. */
   description: string | null;
+  /**
+   * The corpus's own `DURATION:` formula, rendered as literal text ("N
+   * <unit> per caster level") when it matches a caster-level-LINEAR shape
+   * (SD31-E6-F2-006). `null` both for a flat/instantaneous/permanent
+   * duration (most records) and for a formula this catalog does not
+   * attempt (`min(`/`max(`/an additive term) — never a resolved live
+   * number, since a spell's actual duration depends on the casting
+   * character's caster level, which this reference catalog has no
+   * character context for.
+   */
+  duration: string | null;
+  /**
+   * The corpus's own `RANGE:` keyword, rendered as literal text ("N ft. +
+   * N ft. per [N] caster level(s)") when it names one of the three PF1
+   * caster-level-linear range keywords — `Close`, `Medium`, `Long`
+   * (SD31-E6-F2-008). `null` both for a range that is not one of those
+   * three keywords (`Personal`, `Touch`, a literal distance, "See text",
+   * ...) and — same posture as `duration` above — never a resolved live
+   * number, since the casting character's actual range in feet depends on
+   * a caster level this reference catalog has no character context for.
+   */
+  range: string | null;
 }
 
 export interface SpellCatalogResponse {

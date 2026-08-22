@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist ~ Metakinesis",
+    "name": "Metakinesis",
+    "class": "Kineticist",
+    "description": "A kineticist gains the ability to alter her kinetic blasts as if with metamagic feats by accepting burn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Metakinesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A kineticist gains the ability to alter her kinetic blasts as if with metamagic feats by accepting burn."
+      },
+      {
+        "key": "DESC",
+        "value": "By accepting 1 point of burn, she can empower her kinetic blast (as if using Empower Spell).|PREMULT:2,[PREVARGTEQ:KineticistLVL,5],[PREVAREQ:Kineticist_CF_EmpowerMetakinesis,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "By accepting 2 points of burn, she can maximize her kinetic blast as if using Maximize Spell.|PREMULT:2,[PREVARGTEQ:KineticistLVL,9],[PREVAREQ:Kineticist_CF_MaximizeMetakinesis,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "By accepting 3 points of burn, she can quicken her kinetic blast as if using Quicken Spell.|PREMULT:2,[PREVARGTEQ:KineticistLVL,13],[PREVAREQ:Kineticist_CF_QuickenMetakinesis,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "By accepting 4 points of burn, the kineticist can use her kinetic blast twice with the same standard action, or swift action if she also uses metakinesis to quicken the blast. When she uses a double kinetic blast, all modifications, such as metakinesis and infusions, apply to both of the blasts, but the kineticist needs to pay the burn cost only once.|PREMULT:2,[PREVARGTEQ:KineticistLVL,17],[PREVAREQ:Kineticist_CF_DualBlastMetakinesis,1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 549,
+    "record_key": "Kineticist ~ Metakinesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

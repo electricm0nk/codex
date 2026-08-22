@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abyssal Bloodrager Bloodline ~ Claws",
+    "name": "Claws",
+    "class": "Abyssal Bloodrager Bloodline",
+    "description": "You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full-attack action using your full base attack bonus.|PREVARLT:Bloodrager_Abyssal_BloodlineLVL,5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodrager Bloodline ~ Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Abyssal Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Abyssal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Abyssal_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Abyssal_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Abyssal_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_GenericClaws_SizeBase|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_GenericClaws_SizeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full-attack action using your full base attack bonus.|PREVARLT:Bloodrager_Abyssal_BloodlineLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": " You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full attack action using your full base attack bonus. Your claws are considered magic weapons for the purpose of overcoming DR.|PREVARGTEQ:Bloodrager_Abyssal_BloodlineLVL,5|PREVARLT:Bloodrager_Abyssal_BloodlineLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": " You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full attack action using your full base attack bonus. Your claws are considered magic weapons for the purpose of overcoming DR and are flaming weapons, dealing an additional 1d6 points of fire damage on a successful hit.|PREVARGTEQ:Bloodrager_Abyssal_BloodlineLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_GenericClaws_SizeBase|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_GenericClaws_SizeBonus|1|TYPE=Base|PREVARGTEQ:Bloodrager_Abyssal_BloodlineLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|DAMAGESIZE|Bloodrager_GenericClaws_SizeBonus|PREVARGTEQ:Bloodrager_Abyssal_BloodlineLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|DAMAGESIZE|Bloodrager_GenericClaws_SizeBase"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Bloodrager_Abyssal_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 607,
+    "record_key": "Abyssal Bloodrager Bloodline ~ Claws"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

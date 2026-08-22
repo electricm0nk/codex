@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Tranquility ~ Calming Presence",
+    "name": "Calming Presence",
+    "class": "Psychic",
+    "description": "At 5th level, you become a calming force. You can use calm emotions as a spell-like ability a number of times per day equal to your Wisdom modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Tranquility ~ Calming Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, you become a calming force. You can use calm emotions as a spell-like ability a number of times per day equal to your Wisdom modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1258,
+    "record_key": "Psychic Discipline Tranquility ~ Calming Presence"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

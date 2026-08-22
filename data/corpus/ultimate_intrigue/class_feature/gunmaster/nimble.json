@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunmaster ~ Nimble",
+    "name": "Nimble",
+    "class": "Vigilante",
+    "description": "A gunmaster gains a +1 dodge bonus to AC while wearing light or no armor. Anything that causes the gunmaster to lose her Dexterity bonus to AC also causes the gunmaster to lose this dodge bonus.|GunmasterDodgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunmaster ~ Nimble"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.GunmasterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GunmasterDodgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A gunmaster gains a +1 dodge bonus to AC while wearing light or no armor. Anything that causes the gunmaster to lose her Dexterity bonus to AC also causes the gunmaster to lose this dodge bonus.|GunmasterDodgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|GunmasterDodgeBonus|TYPE=Dodge|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.IS.MEDIUM]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunmasterDodgeBonus|min(3,(VigilanteLVL+2)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1013,
+    "record_key": "Gunmaster ~ Nimble"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Gearsman ~ Adaptive Learning",
     "delivery": "Extraordinary",
@@ -13,19 +11,51 @@
     "owners": [
       "inner_sea_bestiary:monster:robot_gearsman"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILLPOINTS|NUMBER|2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Craft|TYPE=Profession"
+      },
+      {
+        "key": "DESC",
+        "value": "A gearsman has a number of bonus skill ranks equal to its Hit Dice that can be reprogrammed to apply to any skill-these ranks cannot be split among multiple skills and must all apply to one skill. Rather than spend these bonus ranks on a skill, a gearsman can choose to devote them to weapon knowledge, gaining proficiency with a single weapon instead."
+      },
+      {
+        "key": "KEY",
+        "value": "Gearsman ~ Adaptive Learning"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.44",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 297,
-    "record_key": "Gearsman ~ Adaptive Learning"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 297,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Gearsman ~ Adaptive Learning",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

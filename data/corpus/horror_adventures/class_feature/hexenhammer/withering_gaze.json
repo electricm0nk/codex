@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hexenhammer ~ Withering Gaze",
+    "name": "Withering Gaze",
+    "class": "Inquisitor",
+    "description": "Hexenhammers study the effects of a witch's evil eye, and can use this dark magic to steel their gaze in a similar manner. Whenever a hexenhammer successfully demoralizes a creature as a standard action, instead of applying the shaken condition, she can apply the effects of the witch evil eye hex as if she were a 1st-level witch (save DC %1).|10+InquisitorLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hexenhammer ~ Withering Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "DESC",
+        "value": "Hexenhammers study the effects of a witch's evil eye, and can use this dark magic to steel their gaze in a similar manner. Whenever a hexenhammer successfully demoralizes a creature as a standard action, instead of applying the shaken condition, she can apply the effects of the witch evil eye hex as if she were a 1st-level witch (save DC %1).|10+InquisitorLVL/2+WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 127,
+    "record_key": "Hexenhammer ~ Withering Gaze"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

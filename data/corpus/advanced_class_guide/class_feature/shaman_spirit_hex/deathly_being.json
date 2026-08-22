@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Deathly Being",
+    "name": "Deathly Being",
+    "class": "Shaman Spirit Hex",
+    "description": "If the shaman is a living creature, she reacts to positive and negative energy as if she were undead-positive energy harms her, while negative energy heals her. If she's an undead creature or a creature with the negative energy affinity ability, she gains a +%1 bonus to her channel resistance.|ShamanDeathlyBeingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Deathly Being"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Deathly Being"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBonesSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanDeathlyBeingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If the shaman is a living creature, she reacts to positive and negative energy as if she were undead-positive energy harms her, while negative energy heals her. If she's an undead creature or a creature with the negative energy affinity ability, she gains a +%1 bonus to her channel resistance.|ShamanDeathlyBeingBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "If she's a living creature she gains a +4 bonus on saves against death effects and effects that drain energy.|PREVARGTEQ:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "If the shaman a living creature, she takes no penalties from energy drain effects, though she can still be killed if she accrues more negative levels than she has Hit Dice. Furthermore, after 24 hours any negative levels the shaman has are removed without requiring her to succeed at an additional saving throw.|PREVARGTEQ:ShamanSpiritLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanDeathlyBeingBonus|1+min(2,ShamanSpiritLVL/8)+(ShamanSpiritLVL>=16)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1529,
+    "record_key": "Shaman Spirit Hex ~ Deathly Being"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

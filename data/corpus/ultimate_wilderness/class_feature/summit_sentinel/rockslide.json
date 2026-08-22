@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summit Sentinel ~ Rockslide",
+    "name": "Rockslide",
+    "class": "Ranger",
+    "description": "Once per day as a standard action, a summit sentinel can create a rushing wave of earth and stone. The summit sentinel chooses a point on the ground or floor within 30 feet. Rippling waves of earth and stone emanate from the chosen point in a 25-foot cone in a direction of the summit sentinel's choice. Each creature in the area takes 4d6 points of bludgeoning damage and is pushed to the end of the cone. A target that succeeds at a Reflex save (DC %1) takes half damage and is not pushed.|10+RangerLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summit Sentinel ~ Rockslide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.SummitSentinelClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a summit sentinel can create a rushing wave of earth and stone. The summit sentinel chooses a point on the ground or floor within 30 feet. Rippling waves of earth and stone emanate from the chosen point in a 25-foot cone in a direction of the summit sentinel's choice. Each creature in the area takes 4d6 points of bludgeoning damage and is pushed to the end of the cone. A target that succeeds at a Reflex save (DC %1) takes half damage and is not pushed.|10+RangerLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 925,
+    "record_key": "Summit Sentinel ~ Rockslide"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

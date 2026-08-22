@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Discovery ~ Combine Extracts",
+    "name": "Combine Extracts",
+    "class": "Investigator",
+    "description": "When you create an extract, you can place two formulae into one extract. When the extract is consumed, both formulae take effect. This extract has a level two levels higher than the highest-level formulae placed in the extract.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Discovery ~ Combine Extracts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorAlchemistDiscovery.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When you create an extract, you can place two formulae into one extract. When the extract is consumed, both formulae take effect. This extract has a level two levels higher than the highest-level formulae placed in the extract."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1317,
+    "record_key": "Investigator ~ Discovery ~ Combine Extracts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

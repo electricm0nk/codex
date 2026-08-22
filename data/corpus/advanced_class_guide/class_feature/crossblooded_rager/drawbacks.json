@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Crossblooded Rager ~ Drawbacks",
+    "name": "Drawbacks",
+    "class": "Bloodrager",
+    "description": "The furious mix of arcane power inside a crossblooded rager forces him to constantly expend mental effort to remain focused on his current situation and needs. This leaves him with less mental resolve available to deal with external threats. A crossblooded rager takes a -2 penalty to all Will saving throws at all times, and does not gain the +2 morale bonus on Will saving throws while bloodraging--though he does gain a +1 morale bonus on Will saving throws when he gains the greater bloodrage class feature, which increases to a +2 morale bonus when he gains the mighty bloodrage class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crossblooded Rager ~ Drawbacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Crossblooded Rager Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The furious mix of arcane power inside a crossblooded rager forces him to constantly expend mental effort to remain focused on his current situation and needs. This leaves him with less mental resolve available to deal with external threats. A crossblooded rager takes a -2 penalty to all Will saving throws at all times, and does not gain the +2 morale bonus on Will saving throws while bloodraging--though he does gain a +1 morale bonus on Will saving throws when he gains the greater bloodrage class feature, which increases to a +2 morale bonus when he gains the mighty bloodrage class feature."
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageSaveBonus|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2748,
+    "record_key": "Crossblooded Rager ~ Drawbacks"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

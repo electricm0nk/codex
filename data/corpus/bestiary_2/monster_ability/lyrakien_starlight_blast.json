@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lyrakien ~ Starlight Blast",
+    "delivery": "Supernatural",
+    "description": "As a standard action once every 1d4 rounds, a lyrakien can tap into the divine power of Elysium, unleashing a blast of holy starlight in a 5-foot burst.  All creatures in this area take 1d4 points of holy damage, plus 1 point for each step their alignment deviates from chaotic good.  For example, a chaotic neutral or neutral good creature would take 1d4+1 points of damage, a neutral creature would take 1d4+2 points of damage, and a lawful evil creature would take 1d4+4 points of damage.  A DC %1 Reflex save negates this damage.  Chaotic good creatures are unaffected by this ability.",
+    "description_variables": [
+      "LyrakienStarlightBlastDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:lyrakien_starlight_blast",
+    "name": "Starlight Blast",
+    "owners": [
+      "bestiary_2:monster:azata_lyrakien"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Starlight Blast"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LyrakienStarlightBlastDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LyrakienStarlightBlastDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Starlight Blast)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LyrakienStarlightBlastDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action once every 1d4 rounds, a lyrakien can tap into the divine power of Elysium, unleashing a blast of holy starlight in a 5-foot burst.  All creatures in this area take 1d4 points of holy damage, plus 1 point for each step their alignment deviates from chaotic good.  For example, a chaotic neutral or neutral good creature would take 1d4+1 points of damage, a neutral creature would take 1d4+2 points of damage, and a lawful evil creature would take 1d4+4 points of damage.  A DC %1 Reflex save negates this damage.  Chaotic good creatures are unaffected by this ability.|LyrakienStarlightBlastDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Lyrakien ~ Starlight Blast"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.38",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2156,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Lyrakien ~ Starlight Blast",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

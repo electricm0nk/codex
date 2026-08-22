@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "10",
@@ -26,6 +24,128 @@
     ],
     "race_subtype": "Aquatic|Div|Evil|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Div (Ghawwas)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Aquan|Celestial|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "10"
+      },
+      {
+        "key": "DR",
+        "value": "10/cold iron and good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KEY",
+        "value": "Div (Ghawwas)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Knowledge (Geography)|Survival"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):14"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Swim,80"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*2,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Sting,Natural.Melee.Finesseable.Weapon,*1,1d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic|Div|Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Div"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "SR",
+        "value": "21"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ],
     "size": "L",
     "source_page": "p.87",
     "speeds": [
@@ -39,16 +159,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 85,
-    "record_key": "Div (Ghawwas)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 85,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Div (Ghawwas)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

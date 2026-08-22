@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Power of Nature",
+    "name": "Power of Nature",
+    "class": "Inquisitor",
+    "description": "The Green Faith marshal gains one domain selected from the animal and terrain domains. The 1st- though 6th- level bonus spells from this domain are added to the Green Faith marshal's spell list [This last NOT IMPLEMENTED].",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Power of Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.GreenFaithMarshalClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPowerTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The Green Faith marshal gains one domain selected from the animal and terrain domains. The 1st- though 6th- level bonus spells from this domain are added to the Green Faith marshal's spell list [This last NOT IMPLEMENTED]."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Green Faith Marshal Domain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPowerTimes|3+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAbilityTriggerLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 769,
+    "record_key": "Green Faith Marshal ~ Power of Nature"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

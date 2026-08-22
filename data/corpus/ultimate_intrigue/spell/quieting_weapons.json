@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The target weapons and any ammunition they fire make no sound as part of their normal functions as a weapon. For instance, a firearm's firing would not make an explosive sound, but if you cast this spell on a creature's bite attack, it would not prevent it from vocalizing from its mouth. The first time a creature is struck by a weapon affected by this spell, it must succeed at a Will save (SR applies to this effect) or it becomes unable to make noise louder than a whisper (Perception DC 10 to hear) whether vocally or by other means for the duration of the effect. Because the creature can still whisper, this doesn't interfere with verbal spell components. Whether it succeeds or fails its saving throw, the creature is immune to further effects from this casting of quieting weapons.|PRERULE:1,DisplayFullSpell",
+    "key": "Quieting Weapons",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=3|Bard,Cleric,Inquisitor,Magus,Occultist,Psychic,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "The target weapons and any ammunition they fire make no sound as part of their normal functions as a weapon. For instance, a firearm's firing would not make an explosive sound, but if you cast this spell on a creature's bite attack, it would not prevent it from vocalizing from its mouth. The first time a creature is struck by a weapon affected by this spell, it must succeed at a Will save (SR applies to this effect) or it becomes unable to make noise louder than a whisper (Perception DC 10 to hear) whether vocally or by other means for the duration of the effect. Because the creature can still whisper, this doesn't interfere with verbal spell components. Whether it succeeds or fails its saving throw, the creature is immune to further effects from this casting of quieting weapons.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Weapons make no sound and quiet their victims.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Quieting Weapons"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to (CASTERLEVEL/3) natural or manufactured weapons"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 91,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Quieting Weapons",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Boreal Bloodline ~ Icewalker",
+    "name": "Icewalker",
+    "class": "Boreal Bloodline",
+    "description": "You gain resist cold %1 and can move across snow and icy surfaces without penalty and without leaving tracks.|Sorcerer_BorealIcewalker_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boreal Bloodline ~ Icewalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Boreal Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Boreal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Boreal_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BorealIcewalker_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resist cold %1 and can move across snow and icy surfaces without penalty and without leaving tracks.|Sorcerer_BorealIcewalker_ResistanceBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You can climb icy surfaces as if using spider climb.|PREVARGTEQ:Sorcerer_Boreal_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BorealIcewalker_ResistanceBonus|min(floor((Sorcerer_Boreal_BloodlinePower3LVL+3)/6),2)*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|Sorcerer_BorealIcewalker_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You can move across snow and icy surfaces without penalty and without leaving tracks.|PREVARLT:Sorcerer_Boreal_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You can move across snow and icy surfaces without penalty and without leaving tracks and can climb icy surfaces as if using spider climb.|PREVARGTEQ:Sorcerer_Boreal_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|BorealBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3119,
+    "record_key": "Boreal Bloodline ~ Icewalker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

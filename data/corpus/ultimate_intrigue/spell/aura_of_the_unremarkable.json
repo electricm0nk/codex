@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "An invisible sphere of magic surrounds you, clouding the minds of creatures in the area so they regard even the strangest actions as innocuous. For example, if you and your allies are beating a member of the city guard for information, creatures within the area don't think this is unusual or cause for alarm; if your ally is aiming a crossbow at the queen from a balcony, the affected creatures accept this as normal and unworthy of concern. Any hostile actions by you or your allies against a creature or its allies break the effect of the spell for that creature. When the spell ends (or when the affected creatures move outside of the range of the emanation), observers see things normally but altered perceptions from the earlier events remain. Each mention of the events as noteworthy (such as being questioned about them by an authority figure) allows the target another Will save to break the effect and remember things normally.|PRERULE:1,DisplayFullSpell",
+    "key": "Aura of the Unremarkable",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=2|Bard,Mesmerist,Psychic=3|Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "An invisible sphere of magic surrounds you, clouding the minds of creatures in the area so they regard even the strangest actions as innocuous. For example, if you and your allies are beating a member of the city guard for information, creatures within the area don't think this is unusual or cause for alarm; if your ally is aiming a crossbow at the queen from a balcony, the affected creatures accept this as normal and unworthy of concern. Any hostile actions by you or your allies against a creature or its allies break the effect of the spell for that creature. When the spell ends (or when the affected creatures move outside of the range of the emanation), observers see things normally but altered perceptions from the earlier events remain. Each mention of the events as noteworthy (such as being questioned about them by an authority figure) allows the target another Will save to break the effect and remember things normally.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Make actions seem mundane to nearby creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D] and instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Aura of the Unremarkable"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Non-allied creatures within a 30-ft. emanation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Aura of the Unremarkable",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

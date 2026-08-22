@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Sentinel",
+    "name": "Sentinel",
+    "class": "Ranger Archetype",
+    "description": "A sentinel specializes in heightening all of her senses to expose spies and those who work for opposing factions, rooting out all who attempt to slip past her ever-vigilant watch. Her uncanny skills are in ready demand by city guards, business owners, and even criminal organizations that desire to keep the authorities out of their disreputable affairs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Sentinel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Sentinel],[!PREFACT:1,ABILITIES,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_WoodlandStride=True,Ranger_Archetype_CombatStyleFeat6=True,Ranger_Archetype_CombatStyleFeat=True,Ranger_Archetype_Quarry=True,Ranger_Archetype_ImprovedQuarry=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A sentinel specializes in heightening all of her senses to expose spies and those who work for opposing factions, rooting out all who attempt to slip past her ever-vigilant watch. Her uncanny skills are in ready demand by city guards, business owners, and even criminal organizations that desire to keep the authorities out of their disreputable affairs."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sentinel ~ Mugshot|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sentinel ~ Uncanny Alertness|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sentinel ~ Sense Intruder|PRECLASS:1,Ranger=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sentinel ~ Mugshot Quarry|PRECLASS:1,Ranger=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat6|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 638,
+    "record_key": "Ranger Archetype ~ Sentinel"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

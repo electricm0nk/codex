@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Domain ~ Serpent",
+    "name": "Serpent",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Serpent"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Animal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.DruidAnimalTerrainDomain.DruidAnimalDomain.SpecialQuality"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidSerpentAllowed,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "DruidAnimalTerrainDomainNotAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Charm Animal|Druid=2|Animal Trance|Druid=3|Poison|Druid=4|Strong Jaw|Druid=5|Snake Staff|Druid=6|Charm Monster|Druid=7|Animal Shapes (Reptiles and Snakes Only)|Druid=8|Scintillating Pattern|Druid=9|Crushing Hand"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 253,
+    "record_key": "Druid Domain ~ Serpent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

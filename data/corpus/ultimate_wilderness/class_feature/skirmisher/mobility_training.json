@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skirmisher ~ Mobility Training",
+    "name": "Mobility Training",
+    "class": "Fighter",
+    "description": "A skirmisher learns to be more maneuverable while wearing light or no armor. He gains a +1 dodge bonus to AC while wearing light or no armor and while carrying no more than a light load. Anything that causes the skirmisher to lose his Dexterity bonus to AC also causes the skirmisher to lose this dodge bonus.|(FighterLVL+1)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirmisher ~ Mobility Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Features.SkirmisherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkirmisherMoveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A skirmisher learns to be more maneuverable while wearing light or no armor. He gains a +1 dodge bonus to AC while wearing light or no armor and while carrying no more than a light load. Anything that causes the skirmisher to lose his Dexterity bonus to AC also causes the skirmisher to lose this dodge bonus.|(FighterLVL+1)/4"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition, a skirmisher gains an enhancement bonus of +%1 feet to his base speed. This benefit applies only when he is wearing no armor or light armor, and when he is carrying no more than a light load.|SkirmisherMoveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|(FighterLVL+1)/4|TYPE=DODGE|PREVARLT:ENCUMBERANCE,1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|SkirmisherMoveBonus|PREVARLT:ENCUMBERANCE,1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkirmisherMoveBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkirmisherMoveBonus|5|PRECLASS:1,Fighter=7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 579,
+    "record_key": "Skirmisher ~ Mobility Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

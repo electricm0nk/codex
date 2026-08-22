@@ -1,27 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Silent Table",
-    "school": "Illusion",
-    "level": 2,
     "description": "You protect an area against casual eavesdropping. Sounds and sonic effects that originate inside the area are muffled for anyone outside the area; Perception DCs to hear or understand sounds leaving the area increase by 20, and any saving throw DCs of these effects decrease by 2. The spell does not affect sounds that enter the area or the Perception checks of creatures inside it.",
-    "full_text": true
+    "full_text": true,
+    "key": "Silent Table",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Give yourself privacy by muffling sound leaving the area.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You protect an area against casual eavesdropping. Sounds and sonic effects that originate inside the area are muffled for anyone outside the area; Perception DCs to hear or understand sounds leaving the area increase by 20, and any saving throw DCs of these effects decrease by 2. The spell does not affect sounds that enter the area or the Perception checks of creatures inside it.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/silentTable.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.192"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no (object)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "5-ft.-diameter emanation centered on an object or a point in space"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 107,
-    "record_key": "Silent Table"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Silent Table",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

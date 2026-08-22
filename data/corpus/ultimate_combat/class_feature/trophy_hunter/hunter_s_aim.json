@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Trophy Hunter ~ Hunter's Aim",
+    "name": "Hunter's Aim",
+    "class": "Ranger",
+    "description": "At 4th level, a trophy hunter gains a specific understanding of the weaknesses and vulnerabilities of his favored enemies, and his careful study of these enemies reveals the best way to hurt them. When the trophy hunter makes a firearm attack against a favored enemy, he can target touch AC in the first two range increments of his firearm. This ability stacks with other effects that increase the range increments to target touch AC, adding one range increment to the effect. This ability replaces hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trophy Hunter ~ Hunter's Aim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a trophy hunter gains a specific understanding of the weaknesses and vulnerabilities of his favored enemies, and his careful study of these enemies reveals the best way to hurt them. When the trophy hunter makes a firearm attack against a favored enemy, he can target touch AC in the first two range increments of his firearm. This ability stacks with other effects that increase the range increments to target touch AC, adding one range increment to the effect. This ability replaces hunter's bond."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1564,
+    "record_key": "Trophy Hunter ~ Hunter's Aim"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

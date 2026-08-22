@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hateful Rager ~ Favored Enemy",
+    "name": "Favored Enemy",
+    "class": "Barbarian",
+    "description": "A hateful rager selects a favored enemy. This ability works identically to the ranger ability of the same name.  While raging, the hateful rager makes every effort to fight a favored enemy rather than other opponents. If aware of the presence of a favored enemy, the hateful rager must make a DC 20 Will save each round to attack another creature; failure means the barbarian must attack the favored enemy or move closer to that enemy. She may freely attack creatures preventing her from reaching that favored enemy (regardless of whether they are actively trying to prevent her attacks or merely in the way). She can avoid harmful obstacles normally in her attempts to reach the target and is not forced to take the shortest route.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hateful Rager ~ Favored Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hateful rager selects a favored enemy. This ability works identically to the ranger ability of the same name.  While raging, the hateful rager makes every effort to fight a favored enemy rather than other opponents. If aware of the presence of a favored enemy, the hateful rager must make a DC 20 Will save each round to attack another creature; failure means the barbarian must attack the favored enemy or move closer to that enemy. She may freely attack creatures preventing her from reaching that favored enemy (regardless of whether they are actively trying to prevent her attacks or merely in the way). She can avoid harmful obstacles normally in her attempts to reach the target and is not forced to take the shortest route."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ranger ~ Favored Enemy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerFavoredEnemyLVL|1+(BarbarianLVL-2)/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 260,
+    "record_key": "Hateful Rager ~ Favored Enemy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

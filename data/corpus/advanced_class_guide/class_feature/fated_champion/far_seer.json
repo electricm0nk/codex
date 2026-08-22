@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fated Champion ~ Far Seer",
+    "name": "Far Seer",
+    "class": "Skald",
+    "description": "A fated champion learns a method of spell kenning that is especially suited for divining and understanding the future, but not for directly harming opponents. For the purpose of determining what level spell slot he expends when using spell kenning, the skald treats the spell level of spells that predict the future (such as augury and divination) as one spell level lower (minimum spell level 1st), and treats the spell level of spells that deal damage as one spell level higher. This alters the spell kenning class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fated Champion ~ Far Seer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fated Champion Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A fated champion learns a method of spell kenning that is especially suited for divining and understanding the future, but not for directly harming opponents. For the purpose of determining what level spell slot he expends when using spell kenning, the skald treats the spell level of spells that predict the future (such as augury and divination) as one spell level lower (minimum spell level 1st), and treats the spell level of spells that deal damage as one spell level higher. This alters the spell kenning class feature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3682,
+    "record_key": "Fated Champion ~ Far Seer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

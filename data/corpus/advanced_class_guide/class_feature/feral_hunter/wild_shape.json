@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Hunter ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Hunter",
+    "description": "A feral hunter gains the ability to change shape. This ability functions like the druid wild shape ability, except the hunter can take only animal forms (not elemental or plant forms). The hunter's effective druid level is equal to her class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Hunter ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Supernatural.HunterBonusTricks.HunterImprovedEmpathicLink.HunterGreaterEmpathicLink.HunterMasterOfTheWild.HunterRaiseAnimalCompanion"
+      },
+      {
+        "key": "DESC",
+        "value": "A feral hunter gains the ability to change shape. This ability functions like the druid wild shape ability, except the hunter can take only animal forms (not elemental or plant forms). The hunter's effective druid level is equal to her class level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3155,
+    "record_key": "Feral Hunter ~ Wild Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

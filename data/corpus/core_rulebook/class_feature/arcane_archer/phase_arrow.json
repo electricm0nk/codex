@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Archer ~ Phase Arrow",
+    "name": "Phase Arrow",
+    "class": "Arcane Archer",
+    "description": "At 6th level, an arcane archer can launch an arrow %1 per day at a target known to him within range, and the arrow travels to the target in a straight path, passing through any nonmagical barrier or wall in its way. (Any magical barrier stops the arrow.) This ability negates cover, concealment, armor, and shield modifiers, but otherwise the attack is rolled normally. Using this ability is a standard action (and shooting the arrow is part of the action).|PhaseArrowTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Archer ~ Phase Arrow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhaseArrowTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, an arcane archer can launch an arrow %1 per day at a target known to him within range, and the arrow travels to the target in a straight path, passing through any nonmagical barrier or wall in its way. (Any magical barrier stops the arrow.) This ability negates cover, concealment, armor, and shield modifiers, but otherwise the attack is rolled normally. Using this ability is a standard action (and shooting the arrow is part of the action).|PhaseArrowTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhaseArrowTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.376"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|PhaseArrowTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2926,
+    "record_key": "Arcane Archer ~ Phase Arrow"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

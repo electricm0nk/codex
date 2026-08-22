@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Zelekhut ~ Chains",
     "delivery": "Extraordinary",
@@ -13,21 +11,49 @@
     "owners": [
       "bestiary_2:monster:inevitable_zelekhut"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1d6 electricity,trip)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A zelehut's arms end in long lengths of barbed metal.  These chains deal slashing damage and 1d6 points of electricity damage with each hit."
+      },
+      {
+        "key": "KEY",
+        "value": "Zelekhut ~ Chains"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": ".167"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": ".167",
     "traits": [
       "SpecialQuality"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 719,
-    "record_key": "Zelekhut ~ Chains"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 719,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Zelekhut ~ Chains",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

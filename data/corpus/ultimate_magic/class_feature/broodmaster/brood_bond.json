@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Broodmaster ~ Brood Bond",
+    "name": "Brood Bond",
+    "class": "Summoner",
+    "description": "At 14th level, your life becomes linked to your brood. This functions as the life bond ability, except you can only transfer damage to one eidolon in the brood at a time. If that eidolon takes enough damage to send it back to its home plane, all excess damage remains with you, killing you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Broodmaster ~ Brood Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, your life becomes linked to your brood. This functions as the life bond ability, except you can only transfer damage to one eidolon in the brood at a time. If that eidolon takes enough damage to send it back to its home plane, all excess damage remains with you, killing you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1830,
+    "record_key": "Broodmaster ~ Brood Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Storyteller ~ Versatile Surge",
+    "name": "Versatile Surge",
+    "class": "Medium",
+    "description": "A storyteller's spirit surge can be used after the storyteller fails any ability check, skill check, or saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storyteller ~ Versatile Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicPerformanceDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicPerformanceLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A storyteller's spirit surge can be used after the storyteller fails any ability check, skill check, or saving throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1444,
+    "record_key": "Storyteller ~ Versatile Surge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

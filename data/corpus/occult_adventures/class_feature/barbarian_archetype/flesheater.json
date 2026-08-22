@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Flesheater",
+    "name": "Flesheater",
+    "class": "Barbarian Archetype",
+    "description": "A flesheater eats flesh to create a spiritual bond between herself and the consumed creature, allowing her to take on aspects of the creature that served as the meal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Flesheater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Flesheater],[!PREFACT:1,ABILITIES,Barbarian_Archetype_Rage=true,Barbarian_Archetype_MightyRage=true,Barbarian_Archetype_RagePower14=true,Barbarian_Archetype_GreaterRage=true,Barbarian_Archetype_UncannyDodge=true,Barbarian_Archetype_ImprovedUncannyDodge=true,Barbarian_Archetype_RagePower2=true,Barbarian_Archetype_RagePower8=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "A flesheater eats flesh to create a spiritual bond between herself and the consumed creature, allowing her to take on aspects of the creature that served as the meal."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Flesheater ~ Rage|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Flesheater ~ One Flesh|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Flesheater ~ Unbound Rage|PRECLASS:1,Barbarian=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Flesheater ~ Feast|PRECLASS:1,Barbarian=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Flesheater ~ Unbound Form|PRECLASS:1,Barbarian=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_MightyRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_GreaterRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_MightyRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_GreaterRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower8|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1667,
+    "record_key": "Barbarian Archetype ~ Flesheater"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

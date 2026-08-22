@@ -1,23 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "You transform the target half-orc into a full-blooded orc. The target loses all of its half-orc racial traits and gains the orc racial traits.",
     "key": "Half-Blood Extraction",
-    "school": "Transmutation",
     "level": 5,
-    "description": "You transform the target half-orc into a full-blooded orc. The target loses all of its half-orc racial traits and gains the orc racial traits."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 hour"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Cleric,Druid,Sorcerer,Witch,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You transform the target half-orc into a full-blooded orc. The target loses all of its half-orc racial traits and gains the orc racial traits."
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsHalfOrc=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/coreRaces/halfOrcs.html#_half-blood-extraction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Willing half-orc touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 41,
-    "record_key": "Half-Blood Extraction"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Half-Blood Extraction",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

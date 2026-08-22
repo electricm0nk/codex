@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Oceanid ~ Waveglide",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:oceanid"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An oceanid can create waves and currents to double or halve the speed of creatures or objects traveling on the surface of the water, affecting up to 100 contiguous 5-foot squares in a shapeable area (typically enough for one warship or two small sailing ships). This ability has a range of 1,000 feet, requires line of effect to some part of the area, and lasts as long as the oceanid concentrates. An unwilling target can ignore the effect for 1 round by succeeding at a DC %1 Will saving throw.14+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Oceanid ~ Waveglide"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1142,
-    "record_key": "Oceanid ~ Waveglide"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1142,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Oceanid ~ Waveglide",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

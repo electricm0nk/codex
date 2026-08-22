@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T14:58:45Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Familiar (Seal)",
@@ -18,6 +16,96 @@
     ],
     "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Seal|Bite"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "1/3"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Seal"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Swim,60"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Familiar|Augmented Magical Beast|FamiliarBase"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Animal"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -56,16 +144,18 @@
       "Animal"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
-    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
-    "line": 30,
-    "record_key": "Familiar (Seal)"
-  },
+  "ingested_at": "2026-08-12T14:58:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+    "record_key": "Familiar (Seal)",
+    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

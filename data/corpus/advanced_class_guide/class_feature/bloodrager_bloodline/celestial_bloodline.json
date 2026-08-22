@@ -1,0 +1,200 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Bloodline ~ Celestial",
+    "name": "Celestial Bloodline",
+    "class": "Bloodrager Bloodline",
+    "description": "By way of either a celestial ancestor or due to divine intervention, the blood of angels runs though the veins of you and your kin. It grants majestic powers when you bloodrage.|PREVAREQ:Bloodrager_Celestial_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bloodline ~ Celestial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.SpecialQuality.ClassSpecialization.Bloodrager Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlineSpellsLvl1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlineSpellsLvl2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlineSpellsLvl3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlineSpellsLvl4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "By way of either a celestial ancestor or due to divine intervention, the blood of angels runs though the veins of you and your kin. It grants majestic powers when you bloodrage.|PREVAREQ:Bloodrager_Celestial_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Celestial Bloodrager Bloodline ~ Bonus Spells|PREVARGTEQ:Bloodrager_Celestial_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Celestial Bloodrager Bloodline ~ Bloodline Powers|PREVARGTEQ:Bloodrager_Celestial_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Celestial Bloodrager Bloodline ~ Power LVL 01|PREVARGTEQ:Bloodrager_Celestial_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Celestial Bloodrager Bloodline ~ Power LVL 04|PREVARGTEQ:Bloodrager_Celestial_BloodlinePower4,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Celestial Bloodrager Bloodline ~ Power LVL 08|PREVARGTEQ:Bloodrager_Celestial_BloodlinePower8,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Celestial Bloodrager Bloodline ~ Power LVL 12|PREVARGTEQ:Bloodrager_Celestial_BloodlinePower12,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Celestial Bloodrager Bloodline ~ Power LVL 16|PREVARGTEQ:Bloodrager_Celestial_BloodlinePower16,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Celestial Bloodrager Bloodline ~ Power LVL 20|PREVARGTEQ:Bloodrager_Celestial_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_BloodlinePower1LVL|Bloodrager_Celestial_BloodlineLVL+BloodragerBloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_BloodlinePower4LVL|Bloodrager_Celestial_BloodlineLVL+BloodragerBloodlinePower4LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_BloodlinePower8LVL|Bloodrager_Celestial_BloodlineLVL+BloodragerBloodlinePower8LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_BloodlinePower12LVL|Bloodrager_Celestial_BloodlineLVL+BloodragerBloodlinePower12LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_BloodlinePower16LVL|Bloodrager_Celestial_BloodlineLVL+BloodragerBloodlinePower16LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_BloodlinePower20LVL|Bloodrager_Celestial_BloodlineLVL+BloodragerBloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Celestial"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bloodrager Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 643,
+    "record_key": "Bloodrager Bloodline ~ Celestial"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

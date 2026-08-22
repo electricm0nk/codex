@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Zomok ~ Forest Step",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:zomok"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A zomok in a forest area may teleport up to 120 feet by moving the essence of its being to another forested area. The zomok is cured of 60 points of damage when it does this. It may use this ability once every 1d6+1 rounds but no more than three times per day. If the zomok has swallowed a foe, the foe is left behind when the zomok teleports."
+      },
+      {
+        "key": "KEY",
+        "value": "Zomok ~ Forest Step"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1491,
-    "record_key": "Zomok ~ Forest Step"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1491,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Zomok ~ Forest Step",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

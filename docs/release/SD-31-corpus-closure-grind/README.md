@@ -3,8 +3,8 @@ canonical: true
 owner: god-emporer
 status: planning-ready (SD-32 absorbed, epics re-sequenced, operator ruling 2026-08-15)
 date: 2026-08-15
-canonical_branch: tranche/10 (unchanged, inherited from SD-30)
-build_version_target: 0.10.<build> (shared with SD-30 for the remainder of the tranche/10 program)
+canonical_branch: tranche/11
+build_version_target: 0.11.<build> (decisions.md §6, operator ruling 2026-08-15)
 companion_to: ./scope-draft.md, ./decisions.md
 split_from: SD-30-class-feature-archetype-bundle (decisions.md §51)
 absorbed: SD-32-engine-capability-builds (decisions.md §2, 2026-08-15)
@@ -176,8 +176,10 @@ Reach the 100 % dashboard mandate, in dependency order:
   (`kanban.md` "Cross-SD gate discipline").
 - **Contains its own prerequisites.** As of `decisions.md §2` there is no sibling package holding
   capability this one needs. That was the defect the merge fixed.
-- **Blocks:** nothing external. The `tranche/10` promotion PR (#363) is SD-30's and is open; the
-  operator holds sole merge authority.
+- **Blocks:** nothing external. `tranche/11` was cut from `tranche/10`'s tip (`decisions.md §6`,
+  operator ruling 2026-08-15) because `tranche/10`'s promotion PR (#363, SD-30's) is still open — so
+  `tranche/11` carries SD-30's full history and the operator's eventual merge of #363 is expected to be
+  a clean no-op on top of it. The operator holds sole merge authority over both.
 
 ## Exit statement
 

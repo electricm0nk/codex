@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Artifice Domain",
+    "name": "Artifice",
+    "class": "Forbidden Rites Domain",
+    "description": "You can repair damage to objects, animate objects with life, and create objects from nothing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Artifice Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.ArtificeDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can repair damage to objects, animate objects with life, and create objects from nothing."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Artificer's Touch|PREDOMAIN:1,Artifice|PREVARGTEQ:DomainArtificeAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dancing Weapons|PREDOMAIN:1,Artifice|PREVARGTEQ:DomainArtificeAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeDC|10+(DomainArtificeLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Animate Rope|Cleric=2|Wood Shape|Cleric=3|Stone Shape|Cleric=4|Minor Creation|Cleric=5|Fabricate|Cleric=6|Major Creation|Cleric=7|Wall of Iron|Cleric=8|Instant Summons|Cleric=9|Prismatic Sphere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1029,
+    "record_key": "Forbidden Rites Domain ~ Artifice Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

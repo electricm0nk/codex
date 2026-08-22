@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Bleeding Attack",
+    "name": "Bleeding Attack",
+    "class": "Ninja Trick",
+    "description": "* A ninja with this trick can cause living opponents to bleed by hitting them with a sneak attack. This attack causes the target to take 1 additional point of damage each round for each die of the ninja's sneak attack. Bleeding creatures take that amount of damage every round at the start of each of their turns. The bleeding can be stopped by a DC 15 Heal check or the application of any effect that heals hit point damage. Bleed damage from this ability does not stack with itself. Bleed damage bypasses any DR the creature might possess.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Bleeding Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly.AttackOption"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "* A ninja with this trick can cause living opponents to bleed by hitting them with a sneak attack. This attack causes the target to take 1 additional point of damage each round for each die of the ninja's sneak attack. Bleeding creatures take that amount of damage every round at the start of each of their turns. The bleeding can be stopped by a DC 15 Heal check or the application of any effect that heals hit point damage. Bleed damage from this ability does not stack with itself. Bleed damage bypasses any DR the creature might possess."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 125,
+    "record_key": "Ninja Trick ~ Bleeding Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cutthroat ~ Opportune Target",
+    "name": "Opportune Target",
+    "class": "Slayer",
+    "description": "A cutthroat who catches a foe by surprise can quickly study that foe to find its weaknesses. If a cutthroat can act in the surprise round, once during that surprise round he can study a foe as a free action (instead of a move action) and select it as his studied target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cutthroat ~ Opportune Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cutthroat Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A cutthroat who catches a foe by surprise can quickly study that foe to find its weaknesses. If a cutthroat can act in the surprise round, once during that surprise round he can study a foe as a free action (instead of a move action) and select it as his studied target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3747,
+    "record_key": "Cutthroat ~ Opportune Target"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

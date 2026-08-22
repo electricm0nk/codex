@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undead Lord ~ Unlife Healer",
+    "name": "Unlife Healer",
+    "class": "Cleric",
+    "description": "Your spells, spell-like abilities, and supernatural abilities used to heal undead are Empowered.|!PRECLASS:1,Cleric=16",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Lord ~ Unlife Healer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your spells, spell-like abilities, and supernatural abilities used to heal undead are Empowered.|!PRECLASS:1,Cleric=16"
+      },
+      {
+        "key": "DESC",
+        "value": "The undead lord's spells, spell-like abilities, and supernatural abilities used to heal undead are Empowered and Maximized.|PRECLASS:1,Cleric=16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1084,
+    "record_key": "Undead Lord ~ Unlife Healer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

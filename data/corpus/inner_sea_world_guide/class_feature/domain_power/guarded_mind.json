@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Guarded Mind",
+    "name": "Guarded Mind",
+    "class": "Domain Power",
+    "description": "You gain a +2 insight bonus on saving throws against all mind-affecting effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Guarded Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 insight bonus on saving throws against all mind-affecting effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 insight vs. mind-affecting effects"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 31,
+    "record_key": "Domain Power ~ Guarded Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

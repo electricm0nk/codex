@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Final Embrace Master",
+    "name": "Final Embrace Master",
+    "class": "Warpriest Bonus Feat",
+    "description": "Few creatures can survive the crushing horror of your Final Embrace.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Final Embrace Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Ability Focus (constrict),Final Embrace,Final Embrace Horror"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Naga,Serpentfolk],[PREABILITY:1,CATEGORY=Special Ability,Constrict]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,STR=17,INT=3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FEMConstrictBaseDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Few creatures can survive the crushing horror of your Final Embrace."
+      },
+      {
+        "key": "DESC",
+        "value": " Double the number of damage dice for your constrict special attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Final Embrace Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4450,
+    "record_key": "Warpriest Bonus Feat ~ Final Embrace Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

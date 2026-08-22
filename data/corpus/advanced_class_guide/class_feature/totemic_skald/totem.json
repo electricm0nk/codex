@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Totemic Skald ~ Totem",
+    "name": "Totem",
+    "class": "Skald",
+    "description": "The totemic skald chooses one animal from the hunter's animal focus list (see page 27). Once selected, this choice cannot be changed. This animal becomes the skald's personal totem animal and influences his later abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Totemic Skald ~ Totem"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Totemic Skald Class Feature.Skald Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The totemic skald chooses one animal from the hunter's animal focus list (see page 27). Once selected, this choice cannot be changed. This animal becomes the skald's personal totem animal and influences his later abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3700,
+    "record_key": "Totemic Skald ~ Totem"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

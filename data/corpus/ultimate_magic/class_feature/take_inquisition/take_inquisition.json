@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Take Inquisition ~ Cleric",
+    "name": "Take Inquisition",
+    "class": "Take Inquisition",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Take Inquisition ~ Cleric"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AltClassInquisition.ClericInquisition"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Inquisition|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 11,
+    "record_key": "Take Inquisition ~ Cleric"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

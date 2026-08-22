@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wilderness Warden ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "Paladin",
+    "description": "A wilderness warden selects a favored terrain, as per the ranger class feature. Every 6 levels after 3rd, she selects an additional favored terrain; each time she does so, the bonuses she gains in her previous favored terrain or terrains increase by 2.[This is set up to be done manually as PCGen cannot do this automatically]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Warden ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.WildernessWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildernessWardenFavoredTerrainLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A wilderness warden selects a favored terrain, as per the ranger class feature. Every 6 levels after 3rd, she selects an additional favored terrain; each time she does so, the bonuses she gains in her previous favored terrain or terrains increase by 2.[This is set up to be done manually as PCGen cannot do this automatically]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Common Favored Terrain"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Terrain Bonus|1|PRECLASS:1,Paladin=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPool|(WildernessWardenFavoredTerrainLVL+3)/6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildernessWardenFavoredTerrainLVL|PaladinLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 889,
+    "record_key": "Wilderness Warden ~ Favored Terrain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

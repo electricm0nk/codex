@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "An undetectable alignment spell conceals the alignment of an object or a creature from all forms of divination.",
     "key": "Undetectable Alignment",
-    "school": "Abjuration",
     "level": 1,
-    "description": "An undetectable alignment spell conceals the alignment of an object or a creature from all forms of divination."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=1|Cleric,Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "An undetectable alignment spell conceals the alignment of an object or a creature from all forms of divination.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "An undetectable alignment spell conceals the alignment of an object or a creature from all forms of divination.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "24 hours"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/undetectableAlignment.html#_undetectable-alignment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.363"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature or object"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 644,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1393,
-    "record_key": "Undetectable Alignment.MOD"
+    "record_key": "Undetectable Alignment",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Hypnalis ~ Phasing",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:hypnalis"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hypnalis can shift from the Ethereal Plane to the Material Plane as a free action and shift back again as a move action (or part of a move action). The ability is otherwise identical to ethereal jaunt (CL 15th)."
+      },
+      {
+        "key": "KEY",
+        "value": "Hypnalis ~ Phasing"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 882,
-    "record_key": "Hypnalis ~ Phasing"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 882,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Hypnalis ~ Phasing",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",

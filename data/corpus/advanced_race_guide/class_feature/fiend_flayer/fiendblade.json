@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fiend Flayer ~ Fiendblade",
+    "name": "Fiendblade",
+    "class": "Fiend Flayer",
+    "description": "As a swift action, as long as the fiend flayer used infernal mortification that day to increase his arcane pool, he can conjure forth a weapon using this arcana. Doing so costs 2 points from his arcane pool. The weapon can take the form of any single one-handed melee weapon the fiend flayer is proficient with. This weapon has a +%1 enhancement bonus and lasts for 1 minute. At 5th level, these bonuses can be used to add any of the following weapon properties to the fiendblade: anarchic, axiomatic, dancing, flaming, burst, frost, icy burst, keen, shock, shocking burst, speed, or unholy. These bonuses and properties are decided when the arcane pool points are spent and cannot be changed until the next time the fiend flayer uses this arcana. Another creature cannot wield the fiendblade; if it leaves the hand of the fiend flayer, it dissipates in a wisp of red smoke that smells of burning blood. A fiend flayer can only have one fiendblade in existence at a time. If he uses this ability again, the first fiendblade disappears.|1+(MagusLVL-3)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiend Flayer ~ Fiendblade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Fiend Flayer ~ Magus Arcana"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, as long as the fiend flayer used infernal mortification that day to increase his arcane pool, he can conjure forth a weapon using this arcana. Doing so costs 2 points from his arcane pool. The weapon can take the form of any single one-handed melee weapon the fiend flayer is proficient with. This weapon has a +%1 enhancement bonus and lasts for 1 minute. At 5th level, these bonuses can be used to add any of the following weapon properties to the fiendblade: anarchic, axiomatic, dancing, flaming, burst, frost, icy burst, keen, shock, shocking burst, speed, or unholy. These bonuses and properties are decided when the arcane pool points are spent and cannot be changed until the next time the fiend flayer uses this arcana. Another creature cannot wield the fiendblade; if it leaves the hand of the fiend flayer, it dissipates in a wisp of red smoke that smells of burning blood. A fiend flayer can only have one fiendblade in existence at a time. If he uses this ability again, the first fiendblade disappears.|1+(MagusLVL-3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 783,
+    "record_key": "Fiend Flayer ~ Fiendblade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

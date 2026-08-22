@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Boaster ~ Greater Endurance",
+    "name": "Greater Endurance",
+    "class": "Skald",
+    "description": "The boaster gains a bonus feat that he qualifies for. The feat must have Endurance as a prerequisite (such as Diehard or Fast Healer (APG)).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boaster ~ Greater Endurance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BoasterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The boaster gains a bonus feat that he qualifies for. The feat must have Endurance as a prerequisite (such as Diehard or Fast Healer (APG))."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1131,
+    "record_key": "Boaster ~ Greater Endurance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

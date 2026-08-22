@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Sudden Disguise",
+    "name": "Sudden Disguise",
+    "class": "Ninja Trick",
+    "description": "As a swift action, a ninja can change her appearance for 1 minute per level. This ability functions as disguise self. Each use of this ability uses up 1 ki point.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Sudden Disguise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Supernatural.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a ninja can change her appearance for 1 minute per level. This ability functions as disguise self. Each use of this ability uses up 1 ki point."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 148,
+    "record_key": "Ninja Trick ~ Sudden Disguise"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

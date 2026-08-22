@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Guileful Polyglot Language Selection",
+    "name": "Guileful Polyglot",
+    "class": "Investigator",
+    "description": "An investigator with this talent who has at least one rank in Linguistics gains four additional languages. An investigator with this talent who does not have any ranks in Linguistics gains two additional languages. If the investigator later gains ranks in Linguistics, she gains two additional languages, to a total of four additional languages above those granted by the Linguistics skill itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Guileful Polyglot Language Selection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.GuilefulPolygotLang"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator with this talent who has at least one rank in Linguistics gains four additional languages. An investigator with this talent who does not have any ranks in Linguistics gains two additional languages. If the investigator later gains ranks in Linguistics, she gains two additional languages, to a total of four additional languages above those granted by the Linguistics skill itself."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "LANG|!PC,QUALIFIED"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1352,
+    "record_key": "Investigator ~ Guileful Polyglot Language Selection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

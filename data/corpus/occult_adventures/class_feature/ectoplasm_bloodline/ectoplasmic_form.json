@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ectoplasm Bloodline ~ Ectoplasmic Form",
+    "name": "Ectoplasmic Form",
+    "class": "Ectoplasm Bloodline",
+    "description": "You can transform into a cloud of ectoplasm. Treat this as gaseous form, except that you can fly at a speed of 30 feet, and you can solidify your form sufficiently to carry small objects, though fine manipulation is impossible. You can use this ability for %1 minutes per day. These minutes need not be consecutive, but must be used in 1-minute increments.|Sorcerer_EctoplasmEctoplasmicForm_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectoplasm Bloodline ~ Ectoplasmic Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Ectoplasm Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Ectoplasm"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Ectoplasm_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EctoplasmEctoplasmicForm_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can transform into a cloud of ectoplasm. Treat this as gaseous form, except that you can fly at a speed of 30 feet, and you can solidify your form sufficiently to carry small objects, though fine manipulation is impossible. You can use this ability for %1 minutes per day. These minutes need not be consecutive, but must be used in 1-minute increments.|Sorcerer_EctoplasmEctoplasmicForm_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EctoplasmEctoplasmicForm_Duration|Sorcerer_Ectoplasm_BloodlinePower9LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1 minutes/day|Sorcerer_EctoplasmEctoplasmicForm_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_EctoplasmEctoplasmicForm_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|EctoplasmBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1865,
+    "record_key": "Ectoplasm Bloodline ~ Ectoplasmic Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

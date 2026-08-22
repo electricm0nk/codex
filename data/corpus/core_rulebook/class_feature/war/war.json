@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "War Domain",
+    "name": "War",
+    "class": null,
+    "description": "You are a crusader for your god, always ready and willing to fight to defend your faith.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "War Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a crusader for your god, always ready and willing to fight to defend your faith."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Battle Rage|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (War)|PREVARGTEQ:DomainWarAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Weapon Master|PREVARGTEQ:DomainWarAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWarLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWarDC|10+(DomainWarLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWarTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWarAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|War=1|Magic Weapon|War=2|Spiritual Weapon|War=3|Magic Vestment|War=4|Divine Power|War=5|Flame Strike|War=6|Blade Barrier|War=7|Power Word Blind|War=8|Power Word Stun|War=9|Power Word Kill"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 681,
+    "record_key": "War Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

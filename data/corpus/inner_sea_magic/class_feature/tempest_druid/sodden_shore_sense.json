@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tempest Druid ~ Sodden Shore Sense",
+    "name": "Sodden Shore Sense",
+    "class": "Tempest Druid",
+    "description": "A tempest druid gains a +4 bonus on Knowledge (nature) and Survival checks in coastal and marshy lands.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Sodden Shore Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality.Extraordinary.DruidNatureSense"
+      },
+      {
+        "key": "DESC",
+        "value": "A tempest druid gains a +4 bonus on Knowledge (nature) and Survival checks in coastal and marshy lands."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Knowledge (Nature)=In coastal or marshy lands,Survival=In coastal or marshy lands|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 240,
+    "record_key": "Tempest Druid ~ Sodden Shore Sense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

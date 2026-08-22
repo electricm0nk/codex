@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner ~ Shield Ally",
+    "name": "Shield Ally",
+    "class": "Summoner",
+    "description": "Whenever you are within your eidolon's reach, you receive a +2 shield bonus to your Armor Class and a +2 circumstance bonus on your saving throws. This bonus does not apply if your eidolon is grappled, helpless, paralyzed, stunned, or unconscious.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Shield Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Extraordinary.Shield Ally"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you are within your eidolon's reach, you receive a +2 shield bonus to your Armor Class and a +2 circumstance bonus on your saving throws. This bonus does not apply if your eidolon is grappled, helpless, paralyzed, stunned, or unconscious."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 799,
+    "record_key": "Summoner ~ Shield Ally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

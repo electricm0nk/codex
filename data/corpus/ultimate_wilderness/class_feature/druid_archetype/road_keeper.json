@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Road Keeper",
+    "name": "Road Keeper",
+    "class": "Druid Archetype",
+    "description": "Guardians of the lonely paths between cities, road keepers protect the wild from travelers, and travelers from the wild.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Road Keeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Road Keeper],[!PREFACT:1,ABILITIES,Druid_Archetype_SpontaneousCasting=True,Druid_Archetype_NatureBond=True,Druid_Archetype_WildEmpathy=True,Druid_Archetype_WoodlandStride=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_WildShape=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Guardians of the lonely paths between cities, road keepers protect the wild from travelers, and travelers from the wild."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Road Keeper ~ One with the Road|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Road Keeper ~ Road Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Road Keeper ~ Take the High Road|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Road Keeper ~ Trodden Path|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Road Keeper ~ Road Less Traveled|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 498,
+    "record_key": "Druid Archetype ~ Road Keeper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

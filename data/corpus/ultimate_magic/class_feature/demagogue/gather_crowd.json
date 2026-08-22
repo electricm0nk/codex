@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Demagogue ~ Gather Crowd",
+    "name": "Gather Crowd",
+    "class": "Bard",
+    "description": "You are skilled at drawing an audience to your performances. If you are in a settlement or populated area, you can shout, sing, or otherwise make yourself noticed in order to attract an audience to your impromptu stage. The size of the crowd depends on the local population, but typically is a number of people equal to %1 times the result of your Perform check. The crowd gathers over the next 1d10 rounds. If you fail to engage the crowd (such as by performing, kissing babies, trying to use fascinate, and so on), it disperses over the next 1d10 rounds.|classlevel(\"Bard\")/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demagogue ~ Gather Crowd"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.BardicPerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at drawing an audience to your performances. If you are in a settlement or populated area, you can shout, sing, or otherwise make yourself noticed in order to attract an audience to your impromptu stage. The size of the crowd depends on the local population, but typically is a number of people equal to %1 times the result of your Perform check. The crowd gathers over the next 1d10 rounds. If you fail to engage the crowd (such as by performing, kissing babies, trying to use fascinate, and so on), it disperses over the next 1d10 rounds.|classlevel(\"Bard\")/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 961,
+    "record_key": "Demagogue ~ Gather Crowd"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

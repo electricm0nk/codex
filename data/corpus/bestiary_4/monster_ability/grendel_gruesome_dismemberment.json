@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Grendel ~ Gruesome Dismemberment",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:grendel"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When Grendel successfully holds a creature he has grappled, he may expend one use of mythic power to attempt to dismember that creature. He attempts a grapple check; if successful, his target takes double his normal claw damage and the attack pulls off one of the target's legs or arms. The target is sickened until it receives magical healing (or until it recovers to full hit points by natural means), and takes 2d6 points of bleed damage each round. A creature with only one an arm cannot perform actions requiring two arms or two hands. A bipedal creature with one leg missing cannot walk or run; it can crawl or hop, but is denied its Dexterity bonus against all opponents. A quadrupedal creature with one leg missing is reduced to half normal speed. At the GM's discretion, creatures with more than four legs affected by this attack may be able to move at normal speed."
+      },
+      {
+        "key": "KEY",
+        "value": "Grendel ~ Gruesome Dismemberment"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 838,
-    "record_key": "Grendel ~ Gruesome Dismemberment"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 838,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Grendel ~ Gruesome Dismemberment",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

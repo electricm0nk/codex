@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Life Link",
+    "name": "Life Link",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman creates a bond between herself and another creature within 30 feet. Each round at the start of the shaman's turn, if the bonded creature is wounded for 5 or more hit points below its maximum hit points, it heals 5 hit points and the shaman takes 5 points of damage. The shaman can have %1 bonds active. The bond continues until the bonded creature dies, the shaman dies, the distance between her and the bonded creature exceeds 100 feet, or the shaman ends it as an immediate action. If the shaman has multiple bonds active, she can end as many as she wants with the same immediate action.|ShamanLifeLinkBonds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Life Link"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanLifeHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Life Link"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanLifeSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanLifeLinkBonds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman creates a bond between herself and another creature within 30 feet. Each round at the start of the shaman's turn, if the bonded creature is wounded for 5 or more hit points below its maximum hit points, it heals 5 hit points and the shaman takes 5 points of damage. The shaman can have %1 bonds active. The bond continues until the bonded creature dies, the shaman dies, the distance between her and the bonded creature exceeds 100 feet, or the shaman ends it as an immediate action. If the shaman has multiple bonds active, she can end as many as she wants with the same immediate action.|ShamanLifeLinkBonds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanLifeLinkBonds|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1591,
+    "record_key": "Shaman Spirit Hex ~ Life Link"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

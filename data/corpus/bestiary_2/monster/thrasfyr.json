@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:thrasfyr_entangling_chains",
@@ -39,6 +37,164 @@
     ],
     "race_subtype": "Fire",
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Air Walk ~ Constant|Breath Weapon ~ Cone of Fire|Immunity to Fire|Immunity to Sonic|Powerful Charge|Regeneration ~ Acid/Cold|Resistance to Electricity|See Invisibility ~ Constant|Thrasfyr ~ Entangling Chains|Thrasfyr ~ Master's Bond|Thrasfyr ~ Planar Acclimation"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|23|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponCone|80"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDamageDie|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeBonusDamage|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDice|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|60"
+      },
+      {
+        "key": "CR",
+        "value": "17"
+      },
+      {
+        "key": "DR",
+        "value": "15/cold iron and slashing"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "6"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:18"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50,Climb,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*2,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing,*4,1d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing,*1,2d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Fire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=18|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "28"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "H",
     "source_page": "p.263",
     "speeds": [
@@ -52,16 +208,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 839,
-    "record_key": "Thrasfyr"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 839,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Thrasfyr",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

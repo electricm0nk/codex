@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bouncer ~ Drunk Handler",
+    "name": "Drunk Handler",
+    "class": "Brawler",
+    "description": "A bouncer gains a +2 circumstance bonus on Intimidate and Sense Motive checks against foes that are tipsy or worse. In addition, when in a bar fight, she ignores damage reduction against nonlethal damage her targets have from being drunk or worse.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bouncer ~ Drunk Handler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "A bouncer gains a +2 circumstance bonus on Intimidate and Sense Motive checks against foes that are tipsy or worse. In addition, when in a bar fight, she ignores damage reduction against nonlethal damage her targets have from being drunk or worse."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 25,
+    "record_key": "Bouncer ~ Drunk Handler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

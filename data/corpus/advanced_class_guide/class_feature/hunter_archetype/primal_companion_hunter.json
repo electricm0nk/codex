@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Primal Companion Hunter",
+    "name": "Primal Companion Hunter",
+    "class": "Hunter Archetype",
+    "description": "Most hunters are skilled at awakening the primal beasts inside themselves. However, some can instead activate the primal essence within their animal companion. These primal companion hunters bestow upon their companions the ability to suddenly manifest new and terrifying powers-throwbacks to long-extinct beasts, bizarre mutations from extreme environments, or new abilities crafted from generations of selective breeding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Primal Companion Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype.HunterAnimalFocus.HunterSecondAnimalFocus.HunterMasterHunter"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Primal Companion Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterAnimalFocus,TYPE.HunterSecondAnimalFocus,TYPE.HunterMasterHunter]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most hunters are skilled at awakening the primal beasts inside themselves. However, some can instead activate the primal essence within their animal companion. These primal companion hunters bestow upon their companions the ability to suddenly manifest new and terrifying powers-throwbacks to long-extinct beasts, bizarre mutations from extreme environments, or new abilities crafted from generations of selective breeding."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Primal Companion Hunter ~ Primal Transformation|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Primal Companion Hunter ~ Primal Surge|PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Primal Companion Hunter ~ Primal Master|PRECLASS:1,Hunter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Hunter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3141,
+    "record_key": "Hunter Archetype ~ Primal Companion Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,27 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Contingent Action",
-    "school": "Evocation",
-    "level": 3,
     "description": "The target gains an extra action that becomes available when a condition which you dictate is met. At the time of casting, you dictate the condition, and the target specifies a readied action that occurs when triggered by this condition. The condition needed to trigger the readied action must be clear, although it can be general. If a complicated or convoluted condition is prescribed, the whole combination might fail when triggered. For example, suppose the trigger and the action are stated as \"If the target is attacked while he is not holding a weapon, he draws a weapon.\" If the target has no weapon to draw when the trigger occurs, the action fails. If the trigger and the action are \"If an ally within 20 feet falls unconscious, the target moves to a space adjacent to that ally\" but the target is chained to a wall when the trigger occurs and can't reach the unconscious ally, the action fails. The readied action must be a standard, move, or swift action-it cannot be used to cast a spell or use a supernatural ability. This action counts as a readied action and doesn't count toward the number of actions the creature can take in a round. When the condition occurs, the target can decide not to use the readied action. Once the condition is triggered, the spell is discharged-whether or not the target uses the readied action or the action is successful. This spell counts as a contingency spell for the purpose of having multiple contingent effects on a creature at the same time.",
-    "full_text": true
+    "full_text": true,
+    "key": "Contingent Action",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Set the condition for triggering a target's readied standard, move, or swift action.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The target gains an extra action that becomes available when a condition which you dictate is met. At the time of casting, you dictate the condition, and the target specifies a readied action that occurs when triggered by this condition. The condition needed to trigger the readied action must be clear, although it can be general. If a complicated or convoluted condition is prescribed, the whole combination might fail when triggered. For example, suppose the trigger and the action are stated as \"If the target is attacked while he is not holding a weapon, he draws a weapon.\" If the target has no weapon to draw when the trigger occurs, the action fails. If the trigger and the action are \"If an ally within 20 feet falls unconscious, the target moves to a space adjacent to that ally\" but the target is chained to a wall when the trigger occurs and can't reach the unconscious ally, the action fails. The readied action must be a standard, move, or swift action-it cannot be used to cast a spell or use a supernatural ability. This action counts as a readied action and doesn't count toward the number of actions the creature can take in a round. When the condition occurs, the target can decide not to use the readied action. Once the condition is triggered, the spell is discharged-whether or not the target uses the readied action or the action is successful. This spell counts as a contingency spell for the purpose of having multiple contingent effects on a creature at the same time.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D] or until discharged"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/contingentAction.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.178"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one willing creature"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 40,
-    "record_key": "Contingent Action"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Contingent Action",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

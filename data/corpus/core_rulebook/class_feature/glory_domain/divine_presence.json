@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Glory Domain ~ Divine Presence",
+    "name": "Divine Presence",
+    "class": "Glory Domain",
+    "description": "You can emit a 30-foot aura of divine presence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Glory Domain ~ Divine Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Aura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GloryDivinePresenceRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura of divine presence."
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura of divine presence for %1 rounds. All allies within this aura are treated as if under the effects of a Sanctuary spell with a DC of %2. These rounds do not need to be consecutive. Activating this ability is a standard action. If an ally leaves the area or makes an attack, the effect ends for that ally. If you make an attack, the effect ends for you and your allies.|GloryDivinePresenceRounds|DomainGloryDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GloryDivinePresenceRounds|DomainGloryLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainGloryLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3218,
+    "record_key": "Glory Domain ~ Divine Presence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

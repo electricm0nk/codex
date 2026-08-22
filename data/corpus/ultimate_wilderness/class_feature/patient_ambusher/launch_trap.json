@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Patient Ambusher ~ Launch Trap",
+    "name": "Launch Trap",
+    "class": "Hunter",
+    "description": "A patient ambusher can affix a magical ranger trap to an arrow, a crossbow bolt, or a thrown weapon, allowing her to set the trap remotely or use it as a direct attack. Attaching the trap to the projectile is part of the full-round action to create a new trap. The trapped projectile is fired or thrown in the normal manner. If fired at a square, the trap is treated as if the hunter had set the trap in that square, except the DC is 5 lower than normal. If the trap is fired at a creature, the target takes damage from the ranged weapon and is treated as if it had triggered the trap (attempting a saving throw, if any). The attack has a maximum range of 60 feet, and penalties from range increments apply on the attack roll. The duration of the trap starts when it is created, not when it is triggered.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Patient Ambusher ~ Launch Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PatientAmbusherClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A patient ambusher can affix a magical ranger trap to an arrow, a crossbow bolt, or a thrown weapon, allowing her to set the trap remotely or use it as a direct attack. Attaching the trap to the projectile is part of the full-round action to create a new trap. The trapped projectile is fired or thrown in the normal manner. If fired at a square, the trap is treated as if the hunter had set the trap in that square, except the DC is 5 lower than normal. If the trap is fired at a creature, the target takes damage from the ranged weapon and is treated as if it had triggered the trap (attempting a saving throw, if any). The attack has a maximum range of 60 feet, and penalties from range increments apply on the attack roll. The duration of the trap starts when it is created, not when it is triggered."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 673,
+    "record_key": "Patient Ambusher ~ Launch Trap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

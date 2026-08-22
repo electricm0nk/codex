@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "corpus_key": "Crocodile ~ Tail Slap",
     "delivery": null,
@@ -14,6 +12,60 @@
     "owners": [
       "core_rulebook:companion:companion_crocodile_alligator"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalAttacks|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TailSlapAttacks|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|DAMAGE|floor(STR/2)-STR|PREMULT:1,[PREABILITY:1,CATEGORY=Internal,TYPE.NaturalAttackPrimary],[PREABILITY:2,CATEGORY=Internal,TYPE.NaturalAttackSecondary],[PREVAREQ:UseWeaponsWithNaturalAttacks,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|DAMAGE|max(floor(STR/2),0)|PREVAREQ:NaturalAttacks,1|!PREVAREQ:UseWeaponsWithNaturalAttacks,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|TOHIT|-5|PREMULT:1,[PREABILITY:1,CATEGORY=Internal,TYPE.NaturalAttackPrimary],[PREABILITY:2,CATEGORY=Internal,TYPE.NaturalAttackSecondary],[PREVAREQ:UseWeaponsWithNaturalAttacks,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|WIELDCATEGORY|SizeIncrease"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TailSlapAttacks|0"
+      },
+      {
+        "key": "KEY",
+        "value": "Crocodile ~ Tail Slap"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail Slap,Weapon.Natural.NaturalSecondary.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,1d8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "NaturalAttack.NaturalAttackSecondary.Secondary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.301",
     "stat_adjustments": [],
@@ -23,16 +75,18 @@
       "Secondary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 191,
-    "record_key": "Crocodile ~ Tail Slap"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 191,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Crocodile ~ Tail Slap",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

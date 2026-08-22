@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guildbreaker ~ Read the City",
+    "name": "Read the City",
+    "class": "Ranger",
+    "description": "A guildbreaker spends most of his time in cities and large population centers. As a result, he gains an innate sense of comings and goings in the hustle around him. When in an urban environment, a guildbreaker can use the Survival skill to gather information, but only about the movements of creatures and what sort of people (races, social classes, predominant professions, and the like) occupy the community. Unlike with the normal way to gather information, the guildbreaker studies the signs of the city instead of asking around, so it doesn't spread word about the nature of his questions to others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guildbreaker ~ Read the City"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.GuildbreakerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guildbreaker spends most of his time in cities and large population centers. As a result, he gains an innate sense of comings and goings in the hustle around him. When in an urban environment, a guildbreaker can use the Survival skill to gather information, but only about the movements of creatures and what sort of people (races, social classes, predominant professions, and the like) occupy the community. Unlike with the normal way to gather information, the guildbreaker studies the signs of the city instead of asking around, so it doesn't spread word about the nature of his questions to others."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 659,
+    "record_key": "Guildbreaker ~ Read the City"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

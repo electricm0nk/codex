@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ley Line Guardian ~ Ley Line Powered",
+    "name": "Ley Line Powered",
+    "class": "Witch",
+    "description": "Instead of preparing her spells, a ley line guardian draws the power casting spells directly from ley lines. A ley line guardian is a spontaneous spellcaster. She knows the same number of spells and receives the same number of spell slots per day as a sorcerer of her witch level. Bonus spells granted by a ley line guardian's patron are added to the ley line guardian's total spells known at the appropriate levels. This ability alters the witch's spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ley Line Guardian ~ Ley Line Powered"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ley Line Guardian Class Feature.Witch Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of preparing her spells, a ley line guardian draws the power casting spells directly from ley lines. A ley line guardian is a spontaneous spellcaster. She knows the same number of spells and receives the same number of spell slots per day as a sorcerer of her witch level. Bonus spells granted by a ley line guardian's patron are added to the ley line guardian's total spells known at the appropriate levels. This ability alters the witch's spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1921,
+    "record_key": "Ley Line Guardian ~ Ley Line Powered"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

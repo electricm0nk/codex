@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Silver",
+    "name": "Silver",
+    "class": null,
+    "description": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select one of the chromatic or metallic dragon types (see the Pathfinder RPG Bestiary). This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your dragon type. Silver dragons are associated with the cold energy type and have a 30-foot cone breath shape.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Draconic Mutagen Choice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicMutagenChoice_Silver|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicBreathWeapon_Cone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_DraconicDamageType_Cold|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select one of the chromatic or metallic dragon types (see the Pathfinder RPG Bestiary). This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your dragon type. Silver dragons are associated with the cold energy type and have a 30-foot cone breath shape."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_DraconicMutagenChoice_Silver|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_DraconicBreathWeapon_Cone|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_DraconicDamageType_Cold|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1396,
+    "record_key": "Silver"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

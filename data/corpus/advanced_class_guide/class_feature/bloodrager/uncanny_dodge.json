@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager ~ Uncanny Dodge Tracker",
+    "name": "Uncanny Dodge",
+    "class": "Bloodrager",
+    "description": "At 2nd level, a bloodrager can react to danger before his senses would normally allow him to do so. He cannot be caught flat-footed, nor does he lose his Dexterity bonus to AC if the attacker is invisible. He still loses his Dexterity bonus to AC if immobilized. A bloodrager with this ability can still lose his Dexterity bonus to AC if an opponent successfully uses the feint action against him.&nl;If a bloodrager already possesses uncanny dodge from a different class, he automatically gains improved uncanny dodge (see below) instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Uncanny Dodge Tracker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Internal"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a bloodrager can react to danger before his senses would normally allow him to do so. He cannot be caught flat-footed, nor does he lose his Dexterity bonus to AC if the attacker is invisible. He still loses his Dexterity bonus to AC if immobilized. A bloodrager with this ability can still lose his Dexterity bonus to AC if an opponent successfully uses the feint action against him.&nl;If a bloodrager already possesses uncanny dodge from a different class, he automatically gains improved uncanny dodge (see below) instead."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1|PREVARGTEQ:BloodragerLVL,2|PREVAREQ:Bloodrager_CF_UncannyDodge,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeFlankingLevel|BloodragerLVL|TYPE=EachClass.REPLACE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 335,
+    "record_key": "Bloodrager ~ Uncanny Dodge Tracker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

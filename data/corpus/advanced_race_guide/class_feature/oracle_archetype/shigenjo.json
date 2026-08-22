@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle Archetype ~ Shigenjo",
+    "name": "Shigenjo",
+    "class": "Oracle Archetype",
+    "description": "The shigenjo walks the path of enlightenment and transcendence by seeking oneness with the celestial spirits. In doing so, she unlocks the martial potential of her own spiritual power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Shigenjo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleMysterySpell2.OracleMysterySpell4.OracleMysterySpell8.OracleMysterySpell12.OracleMysterySpell14.OracleRevelation7.OracleRevelation15.OracleRevelation20"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "NG,TN,NE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Shigenjo],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell14,TYPE.OracleRevelation7,TYPE.OracleRevelation15,TYPE.OracleRevelation20]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsTengu=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The shigenjo walks the path of enlightenment and transcendence by seeking oneness with the celestial spirits. In doing so, she unlocks the martial potential of her own spiritual power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Class Skills|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Alignment|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Recommended Mysteries|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Bonus Spells|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Ki Pool|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Ki Magic|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Ki Curse|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Ki Insight|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Quivering Palm|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shigenjo ~ Final Revelation|PRECLASS:1,Oracle=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Oracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 747,
+    "record_key": "Oracle Archetype ~ Shigenjo"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

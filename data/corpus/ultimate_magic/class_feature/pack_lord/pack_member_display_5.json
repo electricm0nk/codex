@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pack Lord ~ Pack Member 5 Display",
+    "name": "Pack Member Display 5",
+    "class": "Pack Lord",
+    "description": "You have %1 levels in pack member 5.|PackMember5LVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Lord ~ Pack Member 5 Display"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Pack Member Display 05"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pack Member 5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PackMember5LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have %1 levels in pack member 5.|PackMember5LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PackMember5LVL|count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"NAME=Pack Member 5\")"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Pack Member 5|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Pack Member 5|RACETYPE=Companion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1144,
+    "record_key": "Pack Lord ~ Pack Member 5 Display"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cave Druid ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Cave Druid",
+    "description": "A cave druid gains this ability at 6th level, except that her effective druid level for this ability is equal to her druid level - 2. She cannot use wild shape to adopt a plant form. At 10th level, the cave druid can assume the form of a Small or Medium ooze as if using beast shape III, and at 12th level that of a Tiny or Large ooze as if using beast shape IV (treating the ooze as if it were a magical beast without a natural armor bonus). When in ooze form, the cave druid has no discernible anatomy and is immune to poison, sneak attacks, and critical hits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cave Druid ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeCaveDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoPlantShape|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cave druid gains this ability at 6th level, except that her effective druid level for this ability is equal to her druid level - 2. She cannot use wild shape to adopt a plant form. At 10th level, the cave druid can assume the form of a Small or Medium ooze as if using beast shape III, and at 12th level that of a Tiny or Large ooze as if using beast shape IV (treating the ooze as if it were a magical beast without a natural armor bonus). When in ooze form, the cave druid has no discernible anatomy and is immune to poison, sneak attacks, and critical hits."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Druid ~ Wild Shape"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoPlantShape|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1948,
+    "record_key": "Cave Druid ~ Wild Shape"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

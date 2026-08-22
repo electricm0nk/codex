@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Prophet ~ Spirit Guide",
+    "name": "Spirit Guide",
+    "class": "Rage Prophet",
+    "description": "Every rage prophet possesses a spirit guide, an insubstantial phantom that speaks to his mind, watches over him, and lends him its strength and wisdom. Whenever the rage prophet rages, he gains the benefit of a single guidance spell from his spirit guide; this bonus can be used at any time during his rage. The spirit guide also allows the rage prophet to use dancing lights, ghost sound, and mage hand as spell-like abilities once per day each (caster level equal to the rage prophet's class level). The DCs are Charisma-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Prophet ~ Spirit Guide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "Every rage prophet possesses a spirit guide, an insubstantial phantom that speaks to his mind, watches over him, and lends him its strength and wisdom. Whenever the rage prophet rages, he gains the benefit of a single guidance spell from his spirit guide; this bonus can be used at any time during his rage. The spirit guide also allows the rage prophet to use dancing lights, ghost sound, and mage hand as spell-like abilities once per day each (caster level equal to the rage prophet's class level). The DCs are Charisma-based."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1439,
+    "record_key": "Rage Prophet ~ Spirit Guide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

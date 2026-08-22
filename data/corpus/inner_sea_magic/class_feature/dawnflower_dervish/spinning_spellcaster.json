@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dawnflower Dervish ~ Spinning Spellcaster",
+    "name": "Spinning Spellcaster",
+    "class": "Bard",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dawnflower Dervish ~ Spinning Spellcaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.ArchetypeAbility.SpecialQuality.BardLoreMaster"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 179,
+    "record_key": "Dawnflower Dervish ~ Spinning Spellcaster"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

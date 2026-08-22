@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Iconoclast ~ Negating Critical",
+    "name": "Negating Critical",
+    "class": "Inquisitor",
+    "description": "At 14th level, when an iconoclast confirms a critical hit, the creature she hit must succeed at a Fortitude save at DC 10 + 1/2 the iconoclast's caster level + the iconoclast's Wisdom modifier for each non-artifact magic item the target is wearing or carrying. On a failed saving throw, the target of the critical hit can neither use nor gain benefit from any minor magic item for 1d4 rounds. This ability can be used in conjunction with critical feats. This ability replaces exploit weakness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iconoclast ~ Negating Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, when an iconoclast confirms a critical hit, the creature she hit must succeed at a Fortitude save at DC 10 + 1/2 the iconoclast's caster level + the iconoclast's Wisdom modifier for each non-artifact magic item the target is wearing or carrying. On a failed saving throw, the target of the critical hit can neither use nor gain benefit from any minor magic item for 1d4 rounds. This ability can be used in conjunction with critical feats. This ability replaces exploit weakness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 879,
+    "record_key": "Iconoclast ~ Negating Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

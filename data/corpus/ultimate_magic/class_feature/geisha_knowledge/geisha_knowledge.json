@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Geisha Knowledge Choice",
+    "name": "Geisha Knowledge",
+    "class": null,
+    "description": "You add +%1 on Craft (calligraphy) checks, Diplomacy checks, Knowledge (nobility) checks, and one type of Perform check (act, dance, oratory, percussion, string instruments, or sing); you may make checks with these skills untrained.|GeishaKnowledgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geisha Knowledge Choice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GeishaKnowledgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 on Craft (calligraphy) checks, Diplomacy checks, Knowledge (nobility) checks, and one type of Perform check (act, dance, oratory, percussion, string instruments, or sing); you may make checks with these skills untrained.|GeishaKnowledgeBonus"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|Perform (Act)|Perform (Dance)|Perform (Oratory)|Perform (Percussion Instruments)|Perform (Sing)|Perform (String Instruments)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Calligraphy),Diplomacy,Knowledge (Nobility)|GeishaKnowledgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|%LIST|GeishaKnowledgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GeishaKnowledgeBonus|max(1,classlevel(\"Bard\")/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 983,
+    "record_key": "Geisha Knowledge Choice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

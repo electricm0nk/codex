@@ -1,28 +1,98 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Agile Breastplate",
     "category": "ArmsArmor",
-    "name": "Agile Breastplate",
     "cost_gp": 400.0,
-    "weight": 25.0,
-    "description": "A breastplate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to only -1 instead of -4."
+    "description": "A breastplate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to only -1 instead of -4.",
+    "key": "Agile Breastplate",
+    "name": "Agile Breastplate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=When Jumping",
+          "min(-ARMORACCHECK,3)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Climb",
+          "min(-ARMORACCHECK,3)"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Agile Breastplate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "25"
+      }
+    ],
+    "weight": 25.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Agile Breastplate",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

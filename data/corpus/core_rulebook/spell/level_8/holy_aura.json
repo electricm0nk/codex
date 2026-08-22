@@ -1,25 +1,103 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "A brilliant divine radiance surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by evil creatures, and causing evil creatures to become blinded when they strike the subjects. This abjuration has four effects. First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike protection from evil, this benefit applies against all attacks, not just against attacks by evil creatures. Second, each warded creature gains spell resistance 25 against evil spells and spells cast by evil creatures. Third, the abjuration protects the recipient from possession and mental influence, just as protection from evil does. Finally, if an evil creature succeeds on a melee attack against a creature warded by a holy aura, the offending attacker is blinded [Fortitude save negates, as blindness/deafness, but against holy aura's save DC].",
     "key": "Holy Aura",
-    "school": "Abjuration",
     "level": 8,
-    "description": "A brilliant divine radiance surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by evil creatures, and causing evil creatures to become blinded when they strike the subjects. This abjuration has four effects. First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike protection from evil, this benefit applies against all attacks, not just against attacks by evil creatures. Second, each warded creature gains spell resistance 25 against evil spells and spells cast by evil creatures. Third, the abjuration protects the recipient from possession and mental influence, just as protection from evil does. Finally, if an evil creature succeeds on a melee attack against a creature warded by a holy aura, the offending attacker is blinded [Fortitude save negates, as blindness/deafness, but against holy aura's save DC]."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "A brilliant divine radiance surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by evil creatures, and causing evil creatures to become blinded when they strike the subjects. This abjuration has four effects. First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike protection from evil, this benefit applies against all attacks, not just against attacks by evil creatures. Second, each warded creature gains spell resistance 25 against evil spells and spells cast by evil creatures. Third, the abjuration protects the recipient from possession and mental influence, just as protection from evil does. Finally, if an evil creature succeeds on a melee attack against a creature warded by a holy aura, the offending attacker is blinded [Fortitude save negates, as blindness/deafness, but against holy aura's save DC].|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "A brilliant divine radiance surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by evil creatures, and causing evil creatures to become blinded when they strike the subjects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Glory,Good=8"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "20 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "See text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/holyAura.html#_holy-aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures in a 20-ft.-radius burst centered on you"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|4|TYPE=Deflection"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|ALL|4|TYPE=Resistance"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants a +4 deflection bonus to AC and a +4 resistance bonus on saves"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 306,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1063,
-    "record_key": "Holy Aura.MOD"
+    "record_key": "Holy Aura",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

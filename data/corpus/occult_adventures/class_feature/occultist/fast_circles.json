@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist ~ Fast Circles",
+    "name": "Fast Circles",
+    "class": "Occultist",
+    "description": "The occultist learns to draw magic circles very quickly. He can draw a magic circle as a full-round action, but any circle drawn in this way has a duration of %1 minutes (unless it's drawn in conjunction with the outside contact class feature, in which case it lasts for 10 minutes as normal). If he draws a binding circle in this way, its duration is %1 rounds.|OccultistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Fast Circles"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The occultist learns to draw magic circles very quickly. He can draw a magic circle as a full-round action, but any circle drawn in this way has a duration of %1 minutes (unless it's drawn in conjunction with the outside contact class feature, in which case it lasts for 10 minutes as normal). If he draws a binding circle in this way, its duration is %1 rounds.|OccultistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 993,
+    "record_key": "Occultist ~ Fast Circles"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

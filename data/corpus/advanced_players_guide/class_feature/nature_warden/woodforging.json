@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Warden ~ Woodforging",
+    "name": "Woodforging",
+    "class": "Nature Warden",
+    "description": "At 6th level, a nature warden can manufacture wooden items which she may use with surpassing skill. Once per day, she may use wood shape as a spell-like ability with a caster level equal to her nature warden level. In her hands, items created with this ability are treated as masterwork items under the effect of an ironwood spell; in the hands of others, they are merely ordinary wooden items of the appropriate type. If the warden uses this ability to create armor or weapons, she may craft them into magic items as if she had the Craft Magic Arms and Armor feat (though they are merely magical wood in the hands of others, and only ironwood when she uses them).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Woodforging"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a nature warden can manufacture wooden items which she may use with surpassing skill. Once per day, she may use wood shape as a spell-like ability with a caster level equal to her nature warden level. In her hands, items created with this ability are treated as masterwork items under the effect of an ironwood spell; in the hands of others, they are merely ordinary wooden items of the appropriate type. If the warden uses this ability to create armor or weapons, she may craft them into magic items as if she had the Craft Magic Arms and Armor feat (though they are merely magical wood in the hands of others, and only ironwood when she uses them)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1430,
+    "record_key": "Nature Warden ~ Woodforging"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "PaDFE Ooze",
+    "name": "Favored Enemy (Ooze)",
+    "class": null,
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against constructs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredOoze",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "PaDFE Ooze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredOoze|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against constructs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredOoze"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "PFCR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredOoze"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 391,
+    "record_key": "PaDFE Ooze"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

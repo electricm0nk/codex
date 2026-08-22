@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Purifier ~ Sin Eater",
+    "name": "Sin Eater",
+    "class": "Oracle",
+    "description": "The purifier can consume a curse, enchantment, or emotion effect by touch as a full-round action. She can do this %1 times per day, and must make a Charisma check with a bonus equal of %2 against a DC of 11 + the caster level of the effect (or the Hit Dice of the creator for a supernatural effect). If the check succeeds, the effect is negated; however, the purifier is sickened for 1d4 rounds. If the target is possessed (such as by a magic jar effect or a ghost's malevolence ability), the possessor is forced out on a successful check. Whether the check succeeds or fails, the possessor is sickened for 2d4 rounds.|CHA|OracleLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ Sin Eater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The purifier can consume a curse, enchantment, or emotion effect by touch as a full-round action. She can do this %1 times per day, and must make a Charisma check with a bonus equal of %2 against a DC of 11 + the caster level of the effect (or the Hit Dice of the creator for a supernatural effect). If the check succeeds, the effect is negated; however, the purifier is sickened for 1d4 rounds. If the target is possessed (such as by a magic jar effect or a ghost's malevolence ability), the possessor is forced out on a successful check. Whether the check succeeds or fails, the possessor is sickened for 2d4 rounds.|CHA|OracleLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 421,
+    "record_key": "Purifier ~ Sin Eater"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

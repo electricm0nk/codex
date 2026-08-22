@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": "epic weapon, +1d6 acid (additional +2d10 on crit), Heal 1/min by striking living tree",
+    "key": "Blackaxe",
+    "name": "Blackaxe",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greataxe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.TwoHanded.Martial.Standard.Slashing.Axe.Artifact.Major.Epic"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "50"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "4d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Adamantine ~ Weapon.Special Ability ~ Bane ~ Weapon|Plant Bane.Special Ability ~ +5 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Blackaxe|TIMES=1|TIMEUNIT=min|CASTERLEVEL=20|Heal,19"
+      },
+      {
+        "key": "SPROP",
+        "value": "epic weapon, +1d6 acid (additional +2d10 on crit), Heal 1/min by striking living tree"
+      }
+    ],
+    "weight_lbs": 50.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst",
+    "record_key": "Blackaxe",
+    "sha256": "552092581f8480ce2a536d5358ebd3049ccb2f93a7e65a10a6287acbff6e50fa"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,6 +1,7 @@
-import { buildClassFeatureSurface } from './classFeaturesModel';
+import { buildClassFeatureSurface, matchesCorpusFeature } from './classFeaturesModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import type { ClassFeatureDescriptionDto } from '../boundary/loadClassFeatureDescriptions';
 import type { HeldClass } from './characterProgression';
 
 const ROGUE: HeldClass[] = [{ classId: 'class:rogue', classLabel: 'Rogue', level: 11 }];
@@ -275,6 +276,170 @@ function verifiesTheUnnamespacedIdsKeepTheirExistingAttribution() {
   assertEqual(surface.features[1].label, 'Sneak Attack', 'label unchanged');
 }
 
+// --- SD31-D7-PROSE-003: the corpus-description join ------------------------
+
+function descriptionDto(
+  classSlug: string,
+  featureSlug: string,
+  description: string
+): ClassFeatureDescriptionDto {
+  return {
+    book: 'core_rulebook',
+    classSlug,
+    featureSlug,
+    key: `${classSlug} ~ ${featureSlug}`,
+    name: featureSlug,
+    description,
+  };
+}
+
+const SNEAK_ATTACK_DESC =
+  'This is exactly like the rogue ability of the same name, except that the attack must be made ' +
+  'with a sneak attack from hiding or while the target is denied its Dexterity bonus.';
+
+function verifiesMatchesCorpusFeatureRequiresTheClassSegmentAndTheTrailingSlug() {
+  assert(
+    matchesCorpusFeature('class_chassis.rogue.sneak_attack', 'rogue', 'sneak_attack'),
+    'a plain single-segment id must match its own class and feature slug'
+  );
+  assert(
+    matchesCorpusFeature(
+      'class_feature.pu.unchained_summoner.corpus_record.bond_senses_rounds_per_day',
+      'unchained_summoner',
+      'bond_senses_rounds_per_day'
+    ),
+    'a book-namespaced id with a corpus_record segment still matches by suffix'
+  );
+  assert(
+    !matchesCorpusFeature('class_chassis.cleric.sneak_attack', 'rogue', 'sneak_attack'),
+    'a different class segment must not match'
+  );
+  assert(
+    !matchesCorpusFeature('class_chassis.rogue.evasion', 'rogue', 'sneak_attack'),
+    'a different trailing feature slug must not match'
+  );
+}
+
+function verifiesARealClassFeatureRowJoinsToItsMatchingCorpusDescription() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6, SNEAK_ATTACK_DETAIL)],
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+
+  assertEqual(
+    surface.features[0].corpusDescription,
+    SNEAK_ATTACK_DESC,
+    'the real corpus description must join onto the matching row, byte for byte'
+  );
+  assertEqual(
+    surface.features[0].detail,
+    SNEAK_ATTACK_DETAIL,
+    'the engine detail is untouched by the new field'
+  );
+}
+
+/** PROVE THE JOIN CAN FAIL, case 1: no candidate at all (empty description population). */
+function verifiesNoMatchingCandidateLeavesCorpusDescriptionNull() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6)],
+    ROGUE,
+    []
+  );
+  assertEqual(surface.features[0].corpusDescription, null, 'no candidate means no description');
+}
+
+/**
+ * PROVE THE JOIN CAN FAIL, case 2 (description not matching the corpus
+ * row): a candidate that shares the feature slug but belongs to a
+ * DIFFERENT class must never attach -- the exact `decisions.md §10` shared-
+ * NAME hazard the join's own class-segment check exists to prevent.
+ */
+function verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6)],
+    ROGUE,
+    [descriptionDto('ninja', 'sneak_attack', 'A ninja ability of the same name.')]
+  );
+  assertEqual(
+    surface.features[0].corpusDescription,
+    null,
+    'a same-named feature under a different class must never attach'
+  );
+}
+
+/**
+ * PROVE THE JOIN CAN FAIL, case 3: a chassis record with no class token
+ * (`classToken === null`) never attaches a description, even when a
+ * same-named candidate exists -- there is no `classSlug` to gate the match,
+ * and matching by feature slug alone is the shared-NAME hazard.
+ */
+function verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.base_attack_bonus', 5)],
+    ROGUE,
+    [descriptionDto('rogue', 'base_attack_bonus', 'Some unrelated rogue feature.')]
+  );
+  assertEqual(surface.features[0].classToken, null, 'no held class matched this id');
+  assertEqual(
+    surface.features[0].corpusDescription,
+    null,
+    'a chassis record with no class token must never guess a description'
+  );
+}
+
+/**
+ * SD-31 wave 29 (THE-BOX.md §2.1 F1, load-bearing negative finding, RE-
+ * CONFIRMED against this file rather than assumed): a `ClassFeatureDescriptionDto`
+ * the corpus-description catalog (`class_feature_descriptions.rs`) can render
+ * for a record does NOT, by itself, put that record on the character sheet.
+ * `buildClassFeatureSurface` only ever creates a `features`/`notComputed` row
+ * by iterating `explanations` (see the `for (const explanation of
+ * explanations)` loop above) -- `descriptions` is consulted only as
+ * enrichment on a row that already exists. A record with no matching
+ * `ExplanationDto` (exactly what `v06_work_inventory.rs`'s G1/G2 groups are)
+ * produces ZERO rows, no matter how permissive `classify()`'s eligibility
+ * check becomes or how many corpus descriptions the catalog can render for
+ * it.
+ *
+ * This pins the reason wave 29's F1 widening (crediting `class_feature`
+ * `text-complete` off `class_feature_descriptions.rs`'s render catalog alone,
+ * the same way `class_feature_pool_catalog_holds` already credits pool
+ * members) was correctly declined: unlike
+ * `ClassFeaturePoolReferenceSection` (`CharacterSheet.tsx`), which renders
+ * `loadClassFeaturePoolOptions()`'s FULL catalog independent of
+ * `props.explanations`, there is no equivalent browsable reference surface
+ * for `loadClassFeatureDescriptions()` -- it is wired ONLY as the
+ * `corpusDescription` join inside this function. Widening `classify()` to
+ * treat the catalog's presence as proof-of-holds without first building that
+ * surface would credit `done` for a description no player screen ever
+ * shows -- the exact gap Decision 7 condition 3 / DoD-8 forbid crediting on.
+ *
+ * If a future cycle builds that reference surface, THIS test's assertion
+ * flips (0 -> a real row count) and should be revisited alongside it, not
+ * deleted quietly.
+ */
+function verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardlessOfHowManyDescriptionsExist() {
+  const surface = buildClassFeatureSurface(
+    [], // no engine explanations at all -- exactly the G1/G2 shape
+    ROGUE,
+    [
+      descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC),
+      descriptionDto('rogue', 'evasion', 'Some other real rogue feature description.'),
+    ]
+  );
+  assertEqual(
+    surface.features.length,
+    0,
+    'a description with no matching explanation must not manufacture a feature row'
+  );
+  assertEqual(
+    surface.notComputed.length,
+    0,
+    'a description with no matching explanation must not manufacture a not-computed notice either'
+  );
+}
+
 async function main() {
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
   verifiesTheDetailTextIsNeverRewritten();
@@ -290,6 +455,12 @@ async function main() {
   verifiesABookNamespacedIdForAnUnheldClassStillGetsNoGuessedOwner();
   verifiesTheNamespaceScanIsBoundedToOneSegment();
   verifiesTheUnnamespacedIdsKeepTheirExistingAttribution();
+  verifiesMatchesCorpusFeatureRequiresTheClassSegmentAndTheTrailingSlug();
+  verifiesARealClassFeatureRowJoinsToItsMatchingCorpusDescription();
+  verifiesNoMatchingCandidateLeavesCorpusDescriptionNull();
+  verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug();
+  verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription();
+  verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardlessOfHowManyDescriptionsExist();
 }
 
 main().catch((error: unknown) => {

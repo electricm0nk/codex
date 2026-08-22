@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Divine Hunter",
+    "name": "Divine Hunter",
+    "class": "Hunter Archetype",
+    "description": "While most hunters heed the call of nature and fight to protect its bounty, some are inspired to serve a higher power. These divine hunters use faith to aid them in their struggles, and their faith infuses their animal companions, making these companions champions of their deities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Divine Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype.HunterClassSkills.HunterTeamworkFeats.HunterHunterTactics"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PREDEITYALIGN:LE],[PREALIGN:LE,LN,NE]],[PREMULT:2,[PREDEITYALIGN:LN],[PREALIGN:LN,LE,LG,TN]],[PREMULT:2,[PREDEITYALIGN:LG],[PREALIGN:LG,NG,LN]],[PREMULT:2,[PREDEITYALIGN:NE],[PREALIGN:NE,LE,CE,TN]],[PREMULT:2,[PREDEITYALIGN:TN],[PREALIGN:TN,LN,CN,NG,NE]],[PREMULT:2,[PREDEITYALIGN:NG],[PREALIGN:NG,TN,LG,CG]],[PREMULT:2,[PREDEITYALIGN:CE],[PREALIGN:CE,NE,CN]],[PREMULT:2,[PREDEITYALIGN:CN],[PREALIGN:CN,TN,CG,CE]],[PREMULT:2,[PREDEITYALIGN:CG],[PREALIGN:CG,CN,NG]]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Divine Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterClassSkills,TYPE.HunterTeamworkFeats,TYPE.HunterHunterTactics]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most hunters heed the call of nature and fight to protect its bounty, some are inspired to serve a higher power. These divine hunters use faith to aid them in their struggles, and their faith infuses their animal companions, making these companions champions of their deities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Divine Hunter ~ Class Skills"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Divine Hunter ~ Domain|PRECLASS:1,Hunter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Divine Hunter ~ Otherworldly Companion|PRECLASS:1,Hunter=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Hunter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3138,
+    "record_key": "Hunter Archetype ~ Divine Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

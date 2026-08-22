@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of War ~ Telling Blow",
+    "name": "Telling Blow",
+    "class": "Student of War",
+    "description": "You can aim your blows at the weakest point in a studied foe's defense, ignoring up to 5 points of damage reduction. This does not apply to damage reduction without a type, and cannot be used against creatures that are immune to critical hits or otherwise lack discernible weak points. This ability stacks with the Penetrating Strike feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of War ~ Telling Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of War Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "DESC",
+        "value": "You can aim your blows at the weakest point in a studied foe's defense, ignoring up to 5 points of damage reduction. This does not apply to damage reduction without a type, and cannot be used against creatures that are immune to critical hits or otherwise lack discernible weak points. This ability stacks with the Penetrating Strike feat."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 525,
+    "record_key": "Student of War ~ Telling Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

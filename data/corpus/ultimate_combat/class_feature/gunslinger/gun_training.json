@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger ~ Gun Training",
+    "name": "Gun Training",
+    "class": "Gunslinger",
+    "description": "Starting at 5th level, a gunslinger can select one specific type of firearm (such as an axe musket, blunderbuss, musket, or pistol). She gains a bonus equal to her Dexterity modifier on damage rolls when firing that type of firearm. Furthermore, when she misfires with that type of firearm, the misfire value of that firearm increases by 2 instead of 4. Every four levels thereafter (9th, 13th, and 17th), the gunslinger picks up another type of firearm, gaining these bonuses for those types as well.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Gun Training"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GunTrainingSelection|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 5th level, a gunslinger can select one specific type of firearm (such as an axe musket, blunderbuss, musket, or pistol). She gains a bonus equal to her Dexterity modifier on damage rolls when firing that type of firearm. Furthermore, when she misfires with that type of firearm, the misfire value of that firearm increases by 2 instead of 4. Every four levels thereafter (9th, 13th, and 17th), the gunslinger picks up another type of firearm, gaining these bonuses for those types as well."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gun Training Choice|GunTrainingSelection"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunTrainingSelection|(GunslingerLVL-1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 43,
+    "record_key": "Gunslinger ~ Gun Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

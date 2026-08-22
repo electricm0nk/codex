@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Argent Voice ~ Devilbane Refrain",
+    "name": "Devilbane Refrain",
+    "class": "Bard",
+    "description": "The argent voice learns how to mimic aspects of the magical \"Song of Silver\" with his performance, enhancing his allies' ability to combat devils and similar fiends. To be affected, a creature must be able to hear the argent voice's singing and be within 30 feet of him. Natural and manufactured weapons wielded by affected allies are treated as though they were silver for the purpose of bypassing damage reduction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Voice ~ Devilbane Refrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.ArgentVoiceClassFeatures.SpecialQuality.Extraordinary.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent voice learns how to mimic aspects of the magical \"Song of Silver\" with his performance, enhancing his allies' ability to combat devils and similar fiends. To be affected, a creature must be able to hear the argent voice's singing and be within 30 feet of him. Natural and manufactured weapons wielded by affected allies are treated as though they were silver for the purpose of bypassing damage reduction."
+      },
+      {
+        "key": "DESC",
+        "value": "Allies' natural and manufactured weapons also gain the benefit of the evil outsider bane weapon special ability.|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent voice must use Perform (sing) with this performance."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 641,
+    "record_key": "Argent Voice ~ Devilbane Refrain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

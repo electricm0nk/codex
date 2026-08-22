@@ -1,0 +1,79 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Intelligent Item Alignment (LN)",
+    "name": "Intelligent Item Alignment (LN)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1+var(\"IntItemNegativeLevel\")",
+          "!PREALIGN:LN,LG,LE"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Alignment / Lawful Neutral"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "ItemAlign"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Alignment / Chaotic Good,Intelligent Item ~ Alignment / Chaotic Neutral,Intelligent Item ~ Alignment / Chaotic Evil,Intelligent Item ~ Alignment / Neutral Evil,Intelligent Item ~ Alignment / Lawful Evil,Intelligent Item ~ Alignment / Lawful Good,Intelligent Item ~ Alignment / Neutral Good,Intelligent Item ~ Alignment / True Neutral"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item ~ Align (LN)"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 863,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Intelligent Item Alignment (LN)",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like lesser planar ally, except that you may call a single creature of 18 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 18. The creatures agree to help you and request your return payment together.",
     "key": "Planar Ally (Greater)",
-    "school": "Conjuration",
     "level": 8,
-    "description": "This spell functions like lesser planar ally, except that you may call a single creature of 18 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 18. The creatures agree to help you and request your return payment together."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like lesser planar ally, except that you may call a single creature of 18 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 18. The creatures agree to help you and request your return payment together.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like lesser planar ally, except that you may call a single creature of 18 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 18.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/planarAlly.html#_planar-ally-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.320"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Calling"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to three called outsiders, totaling no more than 18 HD, no two of which can be more than 30 ft. apart when they appear."
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 435,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1187,
-    "record_key": "Planar Ally (Greater).MOD"
+    "record_key": "Planar Ally (Greater)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

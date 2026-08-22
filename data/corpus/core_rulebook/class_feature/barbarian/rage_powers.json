@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian ~ Rage Powers",
+    "name": "Rage Powers",
+    "class": "Barbarian",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian ~ Rage Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.Internal.ClassFeatures.Rage Powers"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersPrereqLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|RagePowersLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersPrereqLVL|RagePowersLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersLVL|BarbarianLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 422,
+    "record_key": "Barbarian ~ Rage Powers"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

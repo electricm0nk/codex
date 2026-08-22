@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Bloodline ~ Rooting",
+    "name": "Rooting",
+    "class": "Verdant Bloodline",
+    "description": "As a move action, you can extend roots into the ground. Your speed is reduced to 5 feet, but you gain a +4 bonus to natural armor and a +10 bonus to CMD against bull rush, overrun, reposition, and trip maneuvers. You also gain tremorsense 30 feet and fast healing 1. You can use this power for %1 minutes per day. This duration need not be consecutive, but it must be used in 1-minute increments.|Sorcerer_VerdantRooting_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Bloodline ~ Rooting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Verdant Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Verdant_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VerdantRooting_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can extend roots into the ground. Your speed is reduced to 5 feet, but you gain a +4 bonus to natural armor and a +10 bonus to CMD against bull rush, overrun, reposition, and trip maneuvers. You also gain tremorsense 30 feet and fast healing 1. You can use this power for %1 minutes per day. This duration need not be consecutive, but it must be used in 1-minute increments.|Sorcerer_VerdantRooting_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VerdantRooting_Duration|Sorcerer_Verdant_BloodlinePower15LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 minutes)|Sorcerer_VerdantRooting_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_VerdantRooting_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|VerdantBloodlinePowers"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|MOVEADD|TYPE.Walk|-(MOVE[Walk]-5)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|AC_Natural_Armor|4|TYPE=Base.STACK"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMD_BullRush,CMD_Overrun,CMD_Reposition,CMD_Trip|10"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|TremorsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|FastHealingRate|1|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3265,
+    "record_key": "Verdant Bloodline ~ Rooting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

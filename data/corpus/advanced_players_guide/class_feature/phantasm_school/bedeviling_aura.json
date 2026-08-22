@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phantasm School ~ Bedeviling Aura",
+    "name": "Bedeviling Aura",
+    "class": "Phantasm School",
+    "description": "At 8th level, you can emit a 30- foot aura that bedevils your enemies with phantasmal assailants. Enemies within this aura move at half speed, are unable to take attacks of opportunity, and are considered to be flanked. This is a mind-affecting effect. You can use this ability for %1 rounds per day. These rounds do not need to be consecutive.|PhantasmBedevilingAuraRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantasm School ~ Bedeviling Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantasmBedevilingAuraRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can emit a 30- foot aura that bedevils your enemies with phantasmal assailants. Enemies within this aura move at half speed, are unable to take attacks of opportunity, and are considered to be flanked. This is a mind-affecting effect. You can use this ability for %1 rounds per day. These rounds do not need to be consecutive.|PhantasmBedevilingAuraRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantasmBedevilingAuraRounds|IllusionSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PhantasmBedevilingAuraRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3374,
+    "record_key": "Phantasm School ~ Bedeviling Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

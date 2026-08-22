@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 30000.0,
+    "description": "1/day use crisis of breath on all creatures within 20 ft. (Will DC 17); chokes wearer for duration of effect",
+    "key": "Suffocating Collar",
+    "name": "Suffocating Collar",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "30000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.424"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day use crisis of breath on all creatures within 20 ft. (Will DC 17); chokes wearer for duration of effect"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 382,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Suffocating Collar",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

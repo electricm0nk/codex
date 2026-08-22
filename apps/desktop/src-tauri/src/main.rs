@@ -6,6 +6,9 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_feature_descriptions;
+mod class_feature_feat_bridge;
+mod class_feature_pool_picker;
 mod class_spell_levels;
 mod corpus_fixtures;
 mod corpus_full;
@@ -14,6 +17,7 @@ mod equipment_catalog;
 mod feat_catalog;
 mod authoring_workbench;
 mod companion_catalog;
+mod intelligent_item_catalog;
 mod monster_catalog;
 mod pf1_adapter;
 mod race_catalog;
@@ -51,11 +55,15 @@ use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use class_feature_descriptions::list_class_feature_descriptions;
+use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
+use class_feature_pool_picker::list_class_feature_pool_options;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
 use companion_catalog::list_companion_catalog;
+use intelligent_item_catalog::list_intelligent_item_catalog;
 use monster_catalog::list_monster_catalog;
 use race_catalog::list_race_catalog;
 use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
@@ -198,6 +206,30 @@ fn main() {
             // reached no surface at all until this catalog landed.
             list_monster_catalog,
             list_companion_catalog,
+            // SD31-W18: the intelligent/legendary item build system's own
+            // ability scores, Ego and alignment components -- reached no
+            // screen at all before this catalog landed.
+            list_intelligent_item_catalog,
+            // SD31-D7-PROSE-003: real corpus `DESC:` text for class
+            // features, joined to the character sheet's own explanation ids
+            // -- `ClassFeatureRow.detail` renders the engine's COMPUTED
+            // derivation, never the rulebook prose, so this is a second,
+            // additive field, not a replacement.
+            list_class_feature_descriptions,
+            // SD31-W29-CLASSFEATURE-FEATBRIDGE-001 (THE-BOX §2.1 F2): a
+            // class_feature record whose entire content is a grant of an
+            // already-separately-modelled feat carries no local
+            // description of its own -- this serves the matched feat's
+            // own already-verified text through the SAME DTO shape, a
+            // second, additive population `class_feature_descriptions.rs`
+            // never covers (disjoint by construction; see that module's
+            // own doc comment).
+            list_class_feature_feat_bridge_descriptions,
+            // SD31-W22-POOLMEMBER-001: the browsable option-pool reference
+            // catalog (Rogue Talents today) -- a menu of every real record,
+            // regardless of selection, modelled on
+            // `list_alternate_racial_traits`'s own precedent.
+            list_class_feature_pool_options,
             list_equipment,
             list_spells,
             list_feats,

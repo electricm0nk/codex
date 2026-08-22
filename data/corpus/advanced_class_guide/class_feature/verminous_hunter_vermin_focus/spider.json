@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verminous Hunter Vermin Focus ~ Spider",
+    "name": "Spider",
+    "class": "Verminous Hunter Vermin Focus",
+    "description": "Get +%1 competence bonus on Stealth checks, saving throws against web effects (magical or otherwise), and checks to break free of webs|HunterVerminFocusSpiderBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter Vermin Focus ~ Spider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterVerminFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterVerminFocusSpiderBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1 competence bonus on Stealth checks, saving throws against web effects (magical or otherwise), and checks to break free of webs|HunterVerminFocusSpiderBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|HunterVerminFocusSpiderBonus|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusSpiderBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusSpiderBonus|2|PREVARGTEQ:HunterVerminFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusSpiderBonus|2|PREVARGTEQ:HunterVerminFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 competence bonus on saves against web effects|HunterVerminFocusSpiderBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3273,
+    "record_key": "Verminous Hunter Vermin Focus ~ Spider"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Animist ~ Exorcism",
+    "name": "Exorcism",
+    "class": "Shaman",
+    "description": "The animist can attempt to end effects that control a creature or object, such as magic jar, possess object, dominate person, and dominate monster, or possessing entities such as ghosts. This is a full-round action that requires the animist to touch the target. The possessing or dominating creature must attempt a Will save with a DC of %1. Failure means that the controlling effect ends or the entity is immediately cast out of the target, as appropriate. If the possessing entity is exorcised, it cannot attempt to dominate or possess that target again for 24 hours. The animist can exorcise the same entity out of different targets, but once the entity successfully saves against the animist's exorcism, it cannot be affected by this ability again for 24 hours.|10+floor(ShamanLVL/2)+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animist ~ Exorcism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animist Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The animist can attempt to end effects that control a creature or object, such as magic jar, possess object, dominate person, and dominate monster, or possessing entities such as ghosts. This is a full-round action that requires the animist to touch the target. The possessing or dominating creature must attempt a Will save with a DC of %1. Failure means that the controlling effect ends or the entity is immediately cast out of the target, as appropriate. If the possessing entity is exorcised, it cannot attempt to dominate or possess that target again for 24 hours. The animist can exorcise the same entity out of different targets, but once the entity successfully saves against the animist's exorcism, it cannot be affected by this ability again for 24 hours.|10+floor(ShamanLVL/2)+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3598,
+    "record_key": "Animist ~ Exorcism"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

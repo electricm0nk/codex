@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Camel",
     "delivery": null,
@@ -13,6 +11,32 @@
     "name": "Companion Advancement (Camel)",
     "owners": [
       "core_rulebook:companion:companion_camel"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Camel"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Camel)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -30,19 +54,20 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 104,
-    "record_key": "Companion Advancement ~ Camel"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Camel",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:bonus"
+    "computed:pre_guard"
   ]
 }

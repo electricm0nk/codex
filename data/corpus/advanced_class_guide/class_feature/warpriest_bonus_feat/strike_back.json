@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Strike Back",
+    "name": "Strike Back",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can strike at foes that attack you using their superior reach, by targeting their limbs or weapons as they come at you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Strike Back"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:11],[PREVARGTEQ:WarpriestBonusFeatBAB,11]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can strike at foes that attack you using their superior reach, by targeting their limbs or weapons as they come at you."
+      },
+      {
+        "key": "DESC",
+        "value": " You can ready an action to make a melee attack against any foe that attacks you in melee, even if the foe is outside of your reach."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Strike Back"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4291,
+    "record_key": "Warpriest Bonus Feat ~ Strike Back"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Synthesist ~ Evasion",
+    "name": "Evasion",
+    "class": "Summoner",
+    "description": "You can avoid damage from many area-effect attacks. If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Synthesist ~ Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Evasion|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can avoid damage from many area-effect attacks. If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Evasion|PREVARGTEQ:MasterLevel,2|PREVAREQ:FusedEidolonActive,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1888,
+    "record_key": "Synthesist ~ Evasion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

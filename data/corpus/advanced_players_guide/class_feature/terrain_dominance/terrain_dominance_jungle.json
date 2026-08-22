@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Terrain Dominance ~ Jungle",
+    "name": "Terrain Dominance (Jungle)",
+    "class": "Terrain Dominance",
+    "description": "The horizon walker gains charm monster as a spell-like ability a number of times per day equal to 3 + the character's Wisdom modifier (caster level equal to the character's level). This charm only affects animals, magical beasts, and creatures primarily found in the jungle.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Dominance ~ Jungle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainDominance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery ~ Jungle"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Terrain Dominance|TIMES=3+WIS|CASTERLEVEL=TL|Charm Monster,14+WIS"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker gains charm monster as a spell-like ability a number of times per day equal to 3 + the character's Wisdom modifier (caster level equal to the character's level). This charm only affects animals, magical beasts, and creatures primarily found in the jungle."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1342,
+    "record_key": "Terrain Dominance ~ Jungle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

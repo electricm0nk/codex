@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shield Champion Brawler ~ Champion Defense",
+    "name": "Champion Defense",
+    "class": "Brawler",
+    "description": "%1 times per day when she would be reduced to 0 or fewer hit points by damage in combat from a weapon, unarmed, or natural attack, the shield champion can attempt to absorb all the damage with her shield. To use this ability, the shield champion must attempt a Fortitude saving throw, with the DC equal to the damage dealt. If it succeeds, she takes only half damage from the blow; otherwise, she takes full damage. She must be aware of the attack and able to react to it in order to use this ability-if she is denied her Dexterity bonus to AC, she can't use this ability.|ChampionDefenseTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shield Champion Brawler ~ Champion Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Shield Champion Class Feature.SpecialQuality.Extraordinary.BrawlerManeuverTraining"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChampionDefenseTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day when she would be reduced to 0 or fewer hit points by damage in combat from a weapon, unarmed, or natural attack, the shield champion can attempt to absorb all the damage with her shield. To use this ability, the shield champion must attempt a Fortitude saving throw, with the DC equal to the damage dealt. If it succeeds, she takes only half damage from the blow; otherwise, she takes full damage. She must be aware of the attack and able to react to it in order to use this ability-if she is denied her Dexterity bonus to AC, she can't use this ability.|ChampionDefenseTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChampionDefenseTimes|1+(BrawlerLVL>18)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ChampionDefenseTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2895,
+    "record_key": "Shield Champion Brawler ~ Champion Defense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

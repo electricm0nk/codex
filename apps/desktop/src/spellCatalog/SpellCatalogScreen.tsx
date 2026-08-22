@@ -35,11 +35,16 @@ export const BOOK_LABELS: Record<string, string> = {
   ACG: 'Advanced Class Guide',
   ARG: 'Advanced Race Guide',
   UI: 'Ultimate Intrigue',
+  UM: 'Ultimate Magic',
+  OA: 'Occult Adventures',
+  UC: 'Ultimate Combat',
+  ISG: 'Inner Sea Gods',
+  UW: 'Ultimate Wilderness',
 };
 
 /**
  * The served books in the order `spell_catalog.rs`'s `build_spell_catalog`
- * chains them (CRB -> APG -> ACG -> ARG -> UI, now via
+ * chains them (CRB -> APG -> ACG -> ARG -> UI -> UM, via
  * `spell_resolver::spell_catalog_rows()`), so the filter row reads in the
  * same order the rows themselves arrive.
  *
@@ -48,9 +53,13 @@ export const BOOK_LABELS: Record<string, string> = {
  * filter row whose chips summed to 1185, and named four books in its own
  * copy while serving five. Nothing failed — the frontend test's oracle was
  * a copy of this constant rather than a statement about the backend. See
- * `SpellCatalogScreen.test.ts`'s header.
+ * `SpellCatalogScreen.test.ts`'s header. UM (SD31-E6-F2-002), OA
+ * (SD31-E6-F2-003), UC (SD31-E6-F2-004) and ISG (SD31-E6-F10-001) are added
+ * here deliberately, in the same edit as their respective Rust widenings,
+ * to not reproduce that exact defect a second time. UW (SD-31 wave-19,
+ * `ultimate_wilderness` lane) is added the same way.
  */
-export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG', 'UI'] as const;
+export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC', 'ISG', 'UW'] as const;
 
 /**
  * Renders book codes as a prose list of their display labels, so the
@@ -65,9 +74,10 @@ export function formatBookList(codes: readonly string[]): string {
 }
 
 /**
- * Full spell catalog browser — every real corpus record across all five
- * ingested books (CRB 652, APG 297, ACG 144, ARG 92, UI 101; 1286 in total), not a
- * per-character sample. Counts are pinned Rust-side by
+ * Full spell catalog browser — every real corpus record across all eight
+ * ingested books (CRB 652, APG 297, ACG 144, ARG 92, UI 101, UM 269, OA 144,
+ * UC 146; 1845 in total), not a per-character sample. Counts are pinned
+ * Rust-side by
  * `the_catalog_serves_every_ingested_book_not_only_crb` in
  * `spell_catalog.rs`. Distinct from the Character Sheet's Spells tab, which
  * only shows what one character has selected.
@@ -261,6 +271,37 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
                 >
                   {entry.description ?? 'No description in the corpus for this record.'}
                 </p>
+                {/* Only rendered when the corpus's own DURATION token
+                    parses as a caster-level-linear formula (SD31-E6-F2-006)
+                    — most records carry no such line, and nothing is shown
+                    in its place for those. */}
+                {entry.duration !== null ? (
+                  <p
+                    style={{
+                      color: 'var(--color-text-muted)',
+                      fontSize: '0.72rem',
+                      margin: '0.15rem 0 0',
+                    }}
+                  >
+                    Duration: {entry.duration}
+                  </p>
+                ) : null}
+                {/* Only rendered when the corpus's own RANGE token names one
+                    of the three PF1 caster-level-linear range keywords —
+                    Close/Medium/Long (SD31-E6-F2-008) — most records carry
+                    a flat range (Personal/Touch/a literal distance) and
+                    nothing is shown in its place for those. */}
+                {entry.range !== null ? (
+                  <p
+                    style={{
+                      color: 'var(--color-text-muted)',
+                      fontSize: '0.72rem',
+                      margin: '0.15rem 0 0',
+                    }}
+                  >
+                    Range: {entry.range}
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>

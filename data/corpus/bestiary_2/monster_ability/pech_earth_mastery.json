@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Pech ~ Earth Mastery",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:pech"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A pech gains a +1 bonus on attack and damage rolls if both it and its foes are touching the ground.  In an opponent is airborne or waterborne, the peck takes a -4 penalty on attack and damage rolls.  These modifiers are not precalculated into the statistics here."
+      },
+      {
+        "key": "KEY",
+        "value": "Pech ~ Earth Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.206",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 929,
-    "record_key": "Pech ~ Earth Mastery"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 929,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Pech ~ Earth Mastery",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

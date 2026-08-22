@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stalwart Defender ~ Intercept",
+    "name": "Intercept",
+    "class": "Stalwart Defender",
+    "description": "Once a round as an immediate action, when a melee or ranged weapon would successfully strike an adjacent ally, the stalwart defender can choose to have the weapon strike him instead of the intended target. The attack automatically hits the stalwart defender, regardless his AC or any miss chance in effect, and he suffers the normal consequences of the attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stalwart Defender ~ Intercept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower"
+      },
+      {
+        "key": "DESC",
+        "value": "Once a round as an immediate action, when a melee or ranged weapon would successfully strike an adjacent ally, the stalwart defender can choose to have the weapon strike him instead of the intended target. The attack automatically hits the stalwart defender, regardless his AC or any miss chance in effect, and he suffers the normal consequences of the attack."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1461,
+    "record_key": "Stalwart Defender ~ Intercept"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

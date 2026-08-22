@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wizard Archetype ~ Elder Mythos Scholar",
+    "name": "Elder Mythos Scholar",
+    "class": "Wizard Archetype",
+    "description": "Elder Mythos scholars risk their sanity to seek knowledge of alien and awful entities from beyond the stars.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Elder Mythos Scholar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcaneSchoolPowerTimes,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "DESC",
+        "value": "Elder Mythos scholars risk their sanity to seek knowledge of alien and awful entities from beyond the stars."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Elder Mythos Scholar],[!PREFACT:1,ABILITIES,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_SchoolPower1=True,Wizard_Archetype_SpellBook=True,Wizard_Archetype_ScribeScroll=True,Wizard_Archetype_BonusFeat5=True,Wizard_Archetype_BonusFeat10=True,Wizard_Archetype_SchoolPower8=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Scholar ~ Arcane Bond|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Scholar ~ Eldritch Knowledge|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Scholar ~ Eldritch Grimoire|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Scholar ~ Talisman|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Scholar ~ Eldritch Infusion|PRECLASS:1,Wizard=8"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_SchoolPower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_SpellBook|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_SchoolPower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_SchoolPower8|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 297,
+    "record_key": "Wizard Archetype ~ Elder Mythos Scholar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

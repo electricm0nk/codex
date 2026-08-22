@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Shifter ~ Animal Focus",
+    "name": "Animal Focus",
+    "class": "Druid",
+    "description": "As a swift action, a feral shifter can take on the aspect of an animal, gaining a bonus or special ability based on the type of animal emulated. This functions as the hunter's animal focus class feature (see page 27). The feral shifter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. She can emulate only one animal at a time.|DruidLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Shifter ~ Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Feral Shifter Class Feature.Druid Class Feature.SpecialQuality.Supernatural.DruidNatureBond.Animal Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a feral shifter can take on the aspect of an animal, gaining a bonus or special ability based on the type of animal emulated. This functions as the hunter's animal focus class feature (see page 27). The feral shifter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. She can emulate only one animal at a time.|DruidLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3026,
+    "record_key": "Feral Shifter ~ Animal Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

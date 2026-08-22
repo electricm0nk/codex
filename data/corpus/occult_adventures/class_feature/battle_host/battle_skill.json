@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Host ~ Battle Skill",
+    "name": "Battle Skill",
+    "class": "Occultist",
+    "description": "At 2nd level, a battle host's magic item skill ability applies only on checks with weapons, armor, and shields. This ability alters magic item skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Host ~ Battle Skill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Battle Host Class Feature.Occultist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a battle host's magic item skill ability applies only on checks with weapons, armor, and shields. This ability alters magic item skill."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1527,
+    "record_key": "Battle Host ~ Battle Skill"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

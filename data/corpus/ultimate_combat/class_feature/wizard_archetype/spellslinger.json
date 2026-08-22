@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wizard Archetype ~ Spellslinger",
+    "name": "Spellslinger",
+    "class": "Wizard Archetype",
+    "description": "While few contest the seductive allure of commanding arcane and occult powers, there are those wizards who become obsessed with the natural mysteries of black powder. Combining this emerging technology with their considerable arcane skills, they transform firearms into a powerful focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Spellslinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype.WizardArcaneBond.WizardScribeScroll.WizardCantrips.WizardArcaneSchool"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Spellslinger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond,TYPE.WizardScribeScroll,TYPE.WizardCantrips,TYPE.WizardArcaneSchool]"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DisallowWizardArcaneSchoolArchetype,0"
+      },
+      {
+        "key": "DESC",
+        "value": "While few contest the seductive allure of commanding arcane and occult powers, there are those wizards who become obsessed with the natural mysteries of black powder. Combining this emerging technology with their considerable arcane skills, they transform firearms into a powerful focus."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|No Cantrips ~ Wizard|Spellslinger ~ Arcane Gun|Spellslinger ~ Gunsmith|Spellslinger ~ Mage Bullets|Spellslinger ~ School of the Gun|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Wizard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1740,
+    "record_key": "Wizard Archetype ~ Spellslinger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

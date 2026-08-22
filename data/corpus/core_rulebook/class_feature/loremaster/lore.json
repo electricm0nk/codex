@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Loremaster ~ Lore",
+    "name": "Lore",
+    "class": "Loremaster",
+    "description": "At 2nd level, a loremaster adds half his level to all Knowledge skill checks and may make such checks untrained. The bonuses gained from this ability stack with those gained from Bardic Knowledge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Loremaster ~ Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.LoremasterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a loremaster adds half his level to all Knowledge skill checks and may make such checks untrained. The bonuses gained from this ability stack with those gained from Bardic Knowledge."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Knowledge|LoreMasterLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.386"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3020,
+    "record_key": "Loremaster ~ Lore"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

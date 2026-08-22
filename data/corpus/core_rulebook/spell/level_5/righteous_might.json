@@ -1,25 +1,163 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Your height immediately doubles, and your weight increases by a factor of eight. This increase changes your size category to the next larger one. You gain a +4 size bonus to Strength and Constitution and take a -2 penalty to your Dexterity. You gain a +2 enhancement bonus to your natural armor. You gain DR 5/evil [if you normally channel positive energy] or DR 5/good [if you normally channel negative energy]. At 15th level, this DR becomes 10/evil or 10/good [the maximum]. Your size modifier for AC and attacks changes as appropriate to your new size category. This spell doesn't change your speed. Determine space and reach as appropriate to your new size. If insufficient room is available for the desired growth, you attain the maximum possible size and may make a Strength check [using your increased Strength] to burst any enclosures in the process [see Additional Rules for rules on breaking objects]. If you fail, you are constrained without harm by the materials enclosing you-the spell cannot crush you by increasing your size. All equipment you wear or carry is similarly enlarged by the spell. Melee weapons deal more damage. Other magical properties are not affected by this spell. Any enlarged item that leaves your possession [including a projectile or thrown weapon] instantly returns to its normal size. This means that thrown and projectile weapons deal their normal damage. Magical effects that increase size do not stack.",
     "key": "Righteous Might",
-    "school": "Transmutation",
     "level": 5,
-    "description": "Your height immediately doubles, and your weight increases by a factor of eight. This increase changes your size category to the next larger one. You gain a +4 size bonus to Strength and Constitution and take a -2 penalty to your Dexterity. You gain a +2 enhancement bonus to your natural armor. You gain DR 5/evil [if you normally channel positive energy] or DR 5/good [if you normally channel negative energy]. At 15th level, this DR becomes 10/evil or 10/good [the maximum]. Your size modifier for AC and attacks changes as appropriate to your new size category. This spell doesn't change your speed. Determine space and reach as appropriate to your new size. If insufficient room is available for the desired growth, you attain the maximum possible size and may make a Strength check [using your increased Strength] to burst any enclosures in the process [see Additional Rules for rules on breaking objects]. If you fail, you are constrained without harm by the materials enclosing you-the spell cannot crush you by increasing your size. All equipment you wear or carry is similarly enlarged by the spell. Melee weapons deal more damage. Other magical properties are not affected by this spell. Any enlarged item that leaves your possession [including a projectile or thrown weapon] instantly returns to its normal size. This means that thrown and projectile weapons deal their normal damage. Magical effects that increase size do not stack."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Your height immediately doubles, and your weight increases by a factor of eight. This increase changes your size category to the next larger one. You gain a +4 size bonus to Strength and Constitution and take a -2 penalty to your Dexterity. You gain a +2 enhancement bonus to your natural armor. You gain DR 5/evil [if you normally channel positive energy] or DR 5/good [if you normally channel negative energy]. At 15th level, this DR becomes 10/evil or 10/good [the maximum]. Your size modifier for AC and attacks changes as appropriate to your new size category. This spell doesn't change your speed. Determine space and reach as appropriate to your new size. If insufficient room is available for the desired growth, you attain the maximum possible size and may make a Strength check [using your increased Strength] to burst any enclosures in the process [see Additional Rules for rules on breaking objects]. If you fail, you are constrained without harm by the materials enclosing you-the spell cannot crush you by increasing your size. All equipment you wear or carry is similarly enlarged by the spell. Melee weapons deal more damage. Other magical properties are not affected by this spell. Any enlarged item that leaves your possession [including a projectile or thrown weapon] instantly returns to its normal size. This means that thrown and projectile weapons deal their normal damage. Magical effects that increase size do not stack.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your height immediately doubles, and your weight increases by a factor of eight.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Glory,Strength=5"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/righteousMight.html#_righteous-might"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.335"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-1|TYPE=NaturalArmorEnhancement.STACK|PRESIZEGTEQ:H"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-1|TYPE=NaturalArmorEnhancement|PRESIZEGTEQ:C"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-1|TYPE=NaturalArmorEnhancement|PRESIZEGTEQ:G"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-2|TYPE=NaturalArmorEnhancement.STACK|PRESIZEGTEQ:L"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|2|TYPE=NaturalArmorEnhancement.STACK"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|DR|Evil|10|TYPE=Temporary|PREVARGTEQ:var(\"CL=Cleric\")+var(\"BL=Cleric\"),15"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|DR|Evil|5|TYPE=Temporary"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|DR|Good|10|TYPE=Temporary|PREVARGTEQ:var(\"CL=Cleric\")+var(\"BL=Cleric\"),15"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|DR|Good|5|TYPE=Temporary"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|CON|-2|TYPE=Size.STACK|PRESIZEGTEQ:L"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|CON|-2|TYPE=Size.STACK|PRESIZEGTEQ:M"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|CON|4|TYPE=Size.STACK"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|DEX|2|TYPE=Size|PRESIZEGTEQ:G"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR|-2|TYPE=Size.STACK|PRESIZEGTEQ:S"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR|-2|TYPE=Size.STACK|PRESIZEGTEQ:T"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR|-4|TYPE=Size.STACK|PRESIZEGTEQ:L"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR|4|TYPE=Size.STACK"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|WEAPONPROF=TYPE.Exotic|DAMAGESIZE|1|TYPE=Size"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|WEAPONPROF=TYPE.Martial|DAMAGESIZE|1|TYPE=Size"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|WEAPONPROF=TYPE.Simple|DAMAGESIZE|1|TYPE=Size"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 506,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1257,
-    "record_key": "Righteous Might.MOD"
+    "record_key": "Righteous Might",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

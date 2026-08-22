@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Sense Spirit Magic",
-    "school": "Divination",
-    "level": 1,
     "description": "You gain greater sensitivity to magic associated with your primary spirit and wandering spirits (any spells on the spirit magic spell lists for these spirits, as well as spell-like abilities that duplicate the effects of those spells). You gain a +10 circumstance bonus on Spellcraft checks to identify these spells if they are cast within the area, and a +2 circumstance bonus on saving throws to resist the effects of such spells. If any of these spells require an attack roll, you are never considered flat-footed against such attacks.",
-    "full_text": true
+    "full_text": true,
+    "key": "Sense Spirit Magic",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain bonuses on identifying and resisting spells associated with your spirits.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain greater sensitivity to magic associated with your primary spirit and wandering spirits (any spells on the spirit magic spell lists for these spirits, as well as spell-like abilities that duplicate the effects of those spells). You gain a +10 circumstance bonus on Spellcraft checks to identify these spells if they are cast within the area, and a +2 circumstance bonus on saving throws to resist the effects of such spells. If any of these spells require an attack roll, you are never considered flat-footed against such attacks.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "24 hours"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/senseSpiritMagic.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "you"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 102,
-    "record_key": "Sense Spirit Magic"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Sense Spirit Magic",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deed ~ Silence Is Golden",
+    "name": "Silence Is Golden",
+    "class": "Swashbuckler",
+    "description": "When a daring infiltrator with at least 1 panache point succeeds at a trip or grapple combat maneuver check, the target is rendered mute for 1 round. For every 5 by which the result of the combat maneuver check exceeds the opponent's CMD, the target remains mute for an additional round. A mute creature cannot speak, use language-dependent effects or verbal components, or use command words. This deed replaces menacing swordplay.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Silence Is Golden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Infiltrator Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a daring infiltrator with at least 1 panache point succeeds at a trip or grapple combat maneuver check, the target is rendered mute for 1 round. For every 5 by which the result of the combat maneuver check exceeds the opponent's CMD, the target remains mute for an additional round. A mute creature cannot speak, use language-dependent effects or verbal components, or use command words. This deed replaces menacing swordplay."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3855,
+    "record_key": "Deed ~ Silence Is Golden"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

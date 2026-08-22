@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Mystery ~ Spirit of Nature",
+    "name": "Spirit of Nature",
+    "class": "Nature Mystery",
+    "description": "When in a natural setting, whenever you are reduced to negative hit points, you automatically stabilize. At 5th level, you gain fast healing 1 for 1d4 rounds whenever you are reduced to negative hit points. At 10th level, the ability works everywhere, even in civilized or wholly artificial realms. At 15th level, you gain fast healing 3 for 1d4 rounds when reduced to negative hit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Mystery ~ Spirit of Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.NatureRevelation.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When in a natural setting, whenever you are reduced to negative hit points, you automatically stabilize. At 5th level, you gain fast healing 1 for 1d4 rounds whenever you are reduced to negative hit points. At 10th level, the ability works everywhere, even in civilized or wholly artificial realms. At 15th level, you gain fast healing 3 for 1d4 rounds when reduced to negative hit points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 661,
+    "record_key": "Nature Mystery ~ Spirit of Nature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

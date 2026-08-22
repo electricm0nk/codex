@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Rod Wielder",
+    "name": "Rod Wielder",
+    "class": "Magus Arcana",
+    "description": "The magus adds his Intelligence bonus (minimum 0) on caster level checks made to overcome spell resistance when using a spell contained within a rod or when making a spellstrike attack channeled through a rod.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Rod Wielder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The magus adds his Intelligence bonus (minimum 0) on caster level checks made to overcome spell resistance when using a spell contained within a rod or when making a spellstrike attack channeled through a rod."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 919,
+    "record_key": "Magus Arcana ~ Rod Wielder"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

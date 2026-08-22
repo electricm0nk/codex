@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "ability_keys": [
       "ultimate_wilderness:companion:gourd_leshy_ensnare",
@@ -26,6 +24,136 @@
     ],
     "race_subtype": "Familiar|Augmented|Leshy|Shapechanger",
     "race_type": "Plant",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Leshy (Gourd)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Druidic|Sylvan|Plantspeech (gourds)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=On plains,Stealth=Undergrowth,Survival=Plains,Survival=Undergrowth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|2"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Gourd Leshy"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Plant:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Seed,Natural.Ranged.Weapon,*1,1"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*1,1d3"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Familiar|Augmented|Leshy|Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Bestiary 3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "B3 p.177"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "B3"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Plant"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -68,16 +196,18 @@
       "Plant"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
-    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
-    "line": 306,
-    "record_key": "Familiar (Gourd Leshy)"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 306,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "record_key": "Familiar (Gourd Leshy)",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

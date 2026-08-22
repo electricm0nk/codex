@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist Primary Element ~ Aether",
+    "name": "Aether",
+    "class": "Kineticist Primary Element",
+    "description": "Kineticists who focus on the element of aether-a rare substance formed when elemental energy affects the Ethereal Plane-are called telekineticists. Telekineticists use strands of aether to move objects with their minds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Primary Element ~ Aether"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Kineticist Element.Element ~ Aether"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementTracker_Aether|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Aether|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Kineticists who focus on the element of aether-a rare substance formed when elemental energy affects the Ethereal Plane-are called telekineticists. Telekineticists use strands of aether to move objects with their minds."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Class Skills: A telekineticist adds Knowledge (engineering) and Sleight of Hand to her list of class skills."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Wild Talents: 1st-basic telekinesis, kinetic cover, kinetic healer, pushing infusion, telekinetic finesse; 2nd- bowling infusion, telekinetic haul; 3rd-foe throw, force hook, self telekinesis, telekinetic invisibility, touchsight; 4th-telekinetic maneuvers; 5th-aether puppet, force barrier, self telekinesis (greater), touchsight (reactive); 6th- disintegrating infusion, suffocate; 7th-spell deflection; 8th-many throw, telekinetic deflection, telekinetic globe."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Element ~ Universal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Utility Wild Talent|AUTOMATIC|Wild Talent ~ Basic Telekinesis|PREVARGTEQ:Kineticist_CFP_Level,1|PREVAREQ:Kineticist_CF_BasicUtilityWildTalent,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementTracker_Aether|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Aether|KineticistLVL_Base|TYPE=Base"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Engineering)|Sleight of Hand"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 587,
+    "record_key": "Kineticist Primary Element ~ Aether"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

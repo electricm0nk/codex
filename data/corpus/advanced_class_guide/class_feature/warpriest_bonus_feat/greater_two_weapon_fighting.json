@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Greater Two-Weapon Fighting",
+    "name": "Greater Two-Weapon Fighting",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are incredibly skilled at fighting with two weapons at the same time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Greater Two-Weapon Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Two-Weapon Fighting,Two-Weapon Fighting"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:11],[PREVARGTEQ:WarpriestBonusFeatBAB,11]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,19],[PREVARGTEQ:FeatDexRequirement,19]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are incredibly skilled at fighting with two weapons at the same time."
+      },
+      {
+        "key": "DESC",
+        "value": " You get a third attack with your off-hand weapon, albeit at a -10 penalty."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Two-Weapon Fighting"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4239,
+    "record_key": "Warpriest Bonus Feat ~ Greater Two-Weapon Fighting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

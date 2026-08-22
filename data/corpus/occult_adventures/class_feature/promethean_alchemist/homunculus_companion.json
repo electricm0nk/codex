@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Promethean Alchemist ~ Homunculus Companion",
+    "name": "Homunculus Companion",
+    "class": "Alchemist",
+    "description": "At 1st level, a promethean alchemist gains the service of a homunculus companion. The means for creating this special homunculus are more exotic than normal and require investiture of the promethean alchemist's own life essence into the homunculus. This construct generally resembles a small humanoid or child when first created; the specific appearance is up to its creator, though a homunculus is always humanoid in shape and obviously unnatural on close inspection. While every homunculus companion is absolutely devoted to its master, some homunculi's loyalty borders on the unsettling; such companions jealously protect their masters from threats or construct strange shrines in their masters' honor. A homunculus companion can be of any alignment, even one that is different from its master's. A destroyed homunculus companion can be restored to life by performing a ritual with its corpse that requires 1 pint of its creator's blood per Hit Die of the homunculus and rare materials worth 100 gp per Hit Die of the homunculus. Performing this ritual takes 1 hour (though it may take some time to gather enough blood at higher levels, so many promethean alchemists keep chilled blood samples in storage just in case). A promethean alchemist can't take the mutagen or cognatogen discoveries. This ability replaces bombs and mutagen.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Alchemist ~ Homunculus Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Promethean Alchemist Class Feature.Alchemist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a promethean alchemist gains the service of a homunculus companion. The means for creating this special homunculus are more exotic than normal and require investiture of the promethean alchemist's own life essence into the homunculus. This construct generally resembles a small humanoid or child when first created; the specific appearance is up to its creator, though a homunculus is always humanoid in shape and obviously unnatural on close inspection. While every homunculus companion is absolutely devoted to its master, some homunculi's loyalty borders on the unsettling; such companions jealously protect their masters from threats or construct strange shrines in their masters' honor. A homunculus companion can be of any alignment, even one that is different from its master's. A destroyed homunculus companion can be restored to life by performing a ritual with its corpse that requires 1 pint of its creator's blood per Hit Die of the homunculus and rare materials worth 100 gp per Hit Die of the homunculus. Performing this ritual takes 1 hour (though it may take some time to gather enough blood at higher levels, so many promethean alchemists keep chilled blood samples in storage just in case). A promethean alchemist can't take the mutagen or cognatogen discoveries. This ability replaces bombs and mutagen."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HomunculusMasterLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HomunculusMasterLVL|AlchemistLVL"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Homunculus Companion|Homunculus Companion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1664,
+    "record_key": "Promethean Alchemist ~ Homunculus Companion"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

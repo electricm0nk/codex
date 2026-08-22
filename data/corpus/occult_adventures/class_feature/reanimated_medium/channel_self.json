@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Reanimated Medium ~ Channel Self",
+    "name": "Channel Self",
+    "class": "Medium",
+    "description": "A reanimated medium is essentially a bodiless spirit using influence to possess his own spiritless body. “The reanimated medium” refers to this spirit. Unlike a normal medium, a reanimated medium becomes more powerful the more influence it has over its body. Each day, the reanimated medium can perform a seance at a location as normal to focus on one of his potential future legends. He channels that legendary potential as strongly as possible into his body. The spirit gains 3 points of influence over his body, to a maximum of 6 points. Since he is his own possessing spirit, he doesn't lose control at 5 or more points of influence, though he still suffers the legend's influence penalty as normal at 3 or more points of influence. All effects and abilities that normally increase or decrease influence (such as spirit surge and spirit powers) have the opposite effect on a reanimated medium (for instance, propitiation increases influence by 1 point and spirit surge reduces influence by 1 point); this does not apply to the new abilities from the reanimated medium archetype. A reanimated medium can't choose to channel a weaker spirit to avoid losing influence from using spirit surge. The body of a reanimated medium who reaches 0 points of influence enters a deathlike coma and is helpless for 24 hours, after which the reanimated medium reverts to 1 point of influence if the body is still alive, but can't perform a seance for another 24 hours. &nl; A character who selects the reanimated medium archetype after 1st level can do so only after dying; at the GM's discretion, a dead character of another class with an intact body who has earned enough experience points to level up can take a level in medium and gain the reanimated medium archetype, and a dead medium might be able to gain this archetype. In any case, being revived from gaining the reanimated medium archetype does not impart any negative levels or other ill effects. This ability alters spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reanimated Medium ~ Channel Self"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A reanimated medium is essentially a bodiless spirit using influence to possess his own spiritless body. “The reanimated medium” refers to this spirit. Unlike a normal medium, a reanimated medium becomes more powerful the more influence it has over its body. Each day, the reanimated medium can perform a seance at a location as normal to focus on one of his potential future legends. He channels that legendary potential as strongly as possible into his body. The spirit gains 3 points of influence over his body, to a maximum of 6 points. Since he is his own possessing spirit, he doesn't lose control at 5 or more points of influence, though he still suffers the legend's influence penalty as normal at 3 or more points of influence. All effects and abilities that normally increase or decrease influence (such as spirit surge and spirit powers) have the opposite effect on a reanimated medium (for instance, propitiation increases influence by 1 point and spirit surge reduces influence by 1 point); this does not apply to the new abilities from the reanimated medium archetype. A reanimated medium can't choose to channel a weaker spirit to avoid losing influence from using spirit surge. The body of a reanimated medium who reaches 0 points of influence enters a deathlike coma and is helpless for 24 hours, after which the reanimated medium reverts to 1 point of influence if the body is still alive, but can't perform a seance for another 24 hours. &nl; A character who selects the reanimated medium archetype after 1st level can do so only after dying; at the GM's discretion, a dead character of another class with an intact body who has earned enough experience points to level up can take a level in medium and gain the reanimated medium archetype, and a dead medium might be able to gain this archetype. In any case, being revived from gaining the reanimated medium archetype does not impart any negative levels or other ill effects. This ability alters spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1413,
+    "record_key": "Reanimated Medium ~ Channel Self"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

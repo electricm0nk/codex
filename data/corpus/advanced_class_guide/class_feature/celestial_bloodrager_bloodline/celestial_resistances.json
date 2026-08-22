@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Celestial Bloodrager Bloodline ~ Celestial Resistances",
+    "name": "Celestial Resistances",
+    "class": "Celestial Bloodrager Bloodline",
+    "description": "You gain Resistance %1 to acid and cold.|Bloodrager_Celestial_CelestialResistances_ResistBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodrager Bloodline ~ Celestial Resistances"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Celestial Bloodrager Bloodline ~ Power LVL 04.Bloodrager Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Celestial_BloodlineProgressionLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_CelestialResistances_ResistBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Resistance %1 to acid and cold.|Bloodrager_Celestial_CelestialResistances_ResistBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Acid|Resistance to Cold"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Celestial_CelestialResistances_ResistBonus|5+if(Bloodrager_Celestial_BloodlineLVL>=12,5,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus,ColdResistanceBonus|Bloodrager_Celestial_CelestialResistances_ResistBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 660,
+    "record_key": "Celestial Bloodrager Bloodline ~ Celestial Resistances"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

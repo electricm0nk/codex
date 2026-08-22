@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Animal Speaker ~ Soothing Performance",
+    "name": "Soothing Performance",
+    "class": "Bard",
+    "description": "You can use bardic performance to influence animals. This works like the druid ability wild empathy, except you expend 1 round of bardic performance and make a Perform check. If you already have wild empathy from another class, you add the class levels that provide wild empathy to the result of your Perform check to influence an animal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Speaker ~ Soothing Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.BardicPerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use bardic performance to influence animals. This works like the druid ability wild empathy, except you expend 1 round of bardic performance and make a Perform check. If you already have wild empathy from another class, you add the class levels that provide wild empathy to the result of your Perform check to influence an animal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 947,
+    "record_key": "Animal Speaker ~ Soothing Performance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

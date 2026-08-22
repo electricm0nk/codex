@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metamorph ~ Adaptive Physiology",
+    "name": "Adaptive Physiology",
+    "class": "Alchemist",
+    "description": "A metamorph gains a %1%% chance to negate critical hits and precision damage, similar to the preserve organs discovery.|(1+(AlchemistLVL>=6)+(AlchemistLVL>=18))*25",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamorph ~ Adaptive Physiology"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MetamorphClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A metamorph gains a %1%% chance to negate critical hits and precision damage, similar to the preserve organs discovery.|(1+(AlchemistLVL>=6)+(AlchemistLVL>=18))*25"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 179,
+    "record_key": "Metamorph ~ Adaptive Physiology"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

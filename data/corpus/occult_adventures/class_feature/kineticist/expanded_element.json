@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist ~ Expanded Element",
+    "name": "Expanded Element",
+    "class": "Kineticist",
+    "description": "At 7th level, a kineticist learns to use another element or expands her understanding of her own element. She can choose any element, including her primary element. She gains one of that element's simple blast wild talents that she does not already possess, if any. She also gains all composite blast wild talents whose prerequisites she meets, as well as the basic wild talent of her chosen expanded element (for instance, basic aerokinesis if she chooses air). See Composite Blasts on page 15 for additional rules for and descriptions of composite blasts. She doesn't gain the defense wild talent of the expanded element. If the kineticist's expanded element is different from her primary element, she treats her kineticist level as 4 levels lower for the purpose of determining which wild talents she can learn from her expanded element. If the kineticist chooses to expand her understanding of an element she already has, she gains an additional utility wild talent or infusion of her choice from that element, as if from her infusion or wild talent class feature, as appropriate. At 15th level, the kineticist can either select a new element or expand her understanding of her original element. She can't select the same element she selected at 7th level unless it is her primary element. She gains all the benefits from her new expanded element as listed above. However, if the kineticist selected her primary element as her expanded element at both 7th and 15th levels, her mastery of that element increases. For wild talents of her element, the kineticist gains a +1 bonus on attack rolls and damage rolls, as well as to caster level and DCs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Expanded Element"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_KineticistExpandedElement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a kineticist learns to use another element or expands her understanding of her own element. She can choose any element, including her primary element. She gains one of that element's simple blast wild talents that she does not already possess, if any. She also gains all composite blast wild talents whose prerequisites she meets, as well as the basic wild talent of her chosen expanded element (for instance, basic aerokinesis if she chooses air). See Composite Blasts on page 15 for additional rules for and descriptions of composite blasts. She doesn't gain the defense wild talent of the expanded element. If the kineticist's expanded element is different from her primary element, she treats her kineticist level as 4 levels lower for the purpose of determining which wild talents she can learn from her expanded element. If the kineticist chooses to expand her understanding of an element she already has, she gains an additional utility wild talent or infusion of her choice from that element, as if from her infusion or wild talent class feature, as appropriate. At 15th level, the kineticist can either select a new element or expand her understanding of her original element. She can't select the same element she selected at 7th level unless it is her primary element. She gains all the benefits from her new expanded element as listed above. However, if the kineticist selected her primary element as her expanded element at both 7th and 15th levels, her mastery of that element increases. For wild talents of her element, the kineticist gains a +1 bonus on attack rolls and damage rolls, as well as to caster level and DCs."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist Blast ~ Composite Blasts"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistExpandedElement|1+(KineticistLVL>=15)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 bonus on attack rolls and damage rolls, as well as to caster level and DCs.|PREMULT:1,[PREVAREQ:ElementTracker_Aether,3],[PREVAREQ:ElementTracker_Air,3],[PREVAREQ:ElementTracker_Fire,3],[PREVAREQ:ElementTracker_Earth,3],[PREVAREQ:ElementTracker_Water,3]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 551,
+    "record_key": "Kineticist ~ Expanded Element"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

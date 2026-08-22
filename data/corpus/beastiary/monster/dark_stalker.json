@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:dark_folk_poison_use",
@@ -20,6 +18,108 @@
     "natural_attacks": [],
     "race_subtype": "Dark Folk",
     "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dark Folk ~ Poison Use|Dark Folk ~ See in Darkness|Dark Stalker ~ Death Throes|Light Blindness|Sneak Attack"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Dark Folk|Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Martial|TYPE=Simple"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|3"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Humanoid (Reflex):6"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Dark Folk"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=(max(TL,1))|Deeper Darkness|Detect Magic|Fog Cloud"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.54",
     "speeds": [
@@ -29,16 +129,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 90,
-    "record_key": "Dark Stalker"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Dark Stalker",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

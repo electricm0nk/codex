@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Destined Bloodrager Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Destined Bloodrager Bloodline",
+    "description": "Your future greatness grants you the might to strike your enemies in awe-inspiring ways.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destined Bloodrager Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Special Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "Your future greatness grants you the might to strike your enemies in awe-inspiring ways."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|DestinedBloodragerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 685,
+    "record_key": "Destined Bloodrager Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

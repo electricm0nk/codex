@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Saurian Shaman ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Druid",
+    "description": "Your wild shape ability functions at your druid level - 2. If you take on the form of a reptile or dinosaur, you instead use your druid level +2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saurian Shaman ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural.DruidWildShape"
+      },
+      {
+        "key": "DESC",
+        "value": "Your wild shape ability functions at your druid level - 2. If you take on the form of a reptile or dinosaur, you instead use your druid level +2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1191,
+    "record_key": "Saurian Shaman ~ Wild Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

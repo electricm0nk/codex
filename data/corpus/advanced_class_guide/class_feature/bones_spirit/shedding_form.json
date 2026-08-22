@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bones Spirit ~ Shedding Form",
+    "name": "Shedding Form",
+    "class": "Bones Spirit",
+    "description": "As a standard action, the shaman sheds her body and becomes incorporeal. While in this form, all of her weapon attacks are considered to have the ghost touch weapon special ability. The shaman can use this ability for a %1 rounds, though those rounds do not need to be consecutive.|ShamanSheddingFormRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bones Spirit ~ Shedding Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSheddingFormRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman sheds her body and becomes incorporeal. While in this form, all of her weapon attacks are considered to have the ghost touch weapon special ability. The shaman can use this ability for a %1 rounds, though those rounds do not need to be consecutive.|ShamanSheddingFormRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSheddingFormRounds|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1541,
+    "record_key": "Bones Spirit ~ Shedding Form"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

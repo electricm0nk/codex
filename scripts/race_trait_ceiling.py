@@ -19,13 +19,18 @@ It answers two questions and keeps them separate:
 Two TYPE suffixes are in the ceiling, and the second one is why this script exists
 rather than a one-line grep (§48.2):
 
-* ``TYPE:<Race> Racial Trait`` — the ordinary racial-trait row. 553 corpus-wide.
+* ``TYPE:<Race> Racial Trait`` — the ordinary racial-trait row. 553 corpus-wide
+  under the 18-race roster this figure was first measured against (SD-29 round
+  4); ``IN_SCOPE_RACES`` now tracks ``ingest_race_traits.rs``'s own roster
+  (34 races as of SD31-E6-F4-006, read at import time rather than
+  re-transcribed — see ``read_in_scope_races``'s doc comment), so a fresh run
+  reports the CURRENT total, not this historical one.
 * ``TYPE:<Race> Subrace``      — a *heritage selector*: the row a player picks,
   which grants the replacement rows gated on it. 18 corpus-wide, all in
   ``core_essentials``. These are ``race_trait``-kinded units in the work inventory
-  exactly like the 553 (``file_kind()`` types them by filename), so counting them in
-  the denominator and not in the ceiling made the lane look further from done than
-  it was.
+  exactly like the racial-trait rows (``file_kind()`` types them by filename), so
+  counting them in the denominator and not in the ceiling made the lane look
+  further from done than it was.
 
 Scope
 -----
@@ -44,15 +49,50 @@ import argparse
 import collections
 import json
 import os
+import re
 import sys
 
-# The 18 races the product models (`ingest_race_traits::IN_SCOPE_RACES`,
-# SD-27 `decisions.md §25.3`).
-IN_SCOPE_RACES = {
-    "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling", "Human",
-    "Aasimar", "Drow", "Duergar", "Goblin", "Hobgoblin", "Kobold", "Merfolk",
-    "Orc", "Svirfneblin", "Tengu", "Tiefling",
-}
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def read_in_scope_races(repo_root=REPO_ROOT):
+    """The race roster this ceiling counts, read off `ingest_race_traits.rs`'s
+    own `IN_SCOPE_RACES` declaration -- never hand-transcribed.
+
+    SD-31 wave-21 correction: this used to be an 18-race set pinned to
+    `SD-27 decisions.md §25.3` and never touched again, while the Rust
+    constant it claimed to copy widened three more times (18 -> 24 -> 30 ->
+    34) without this file changing once -- `scripts/tests/
+    test_race_trait_ceiling.py` names all three widenings and the ceiling
+    this drift was silently under-reporting. `scripts/classify_race_trait_
+    rows.py` carries the identical hand-sync pattern and suffered the
+    identical drift (re-synced once at 30, already stale again at 34) --
+    the structural fix is reading the declaration, not re-copying it a
+    fourth time.
+
+    Same contract as `v06_work_inventory::app_race_corpus_books`: an
+    unreadable or unparseable declaration returns an EMPTY set, never a
+    guessed one. This ceiling then reports 0 rather than a stale number,
+    which is the safe direction for an instrument other cards size their
+    workload from.
+    """
+    path = os.path.join(repo_root, "src", "bin", "ingest_race_traits.rs")
+    try:
+        with open(path, encoding="utf-8") as handle:
+            src = handle.read()
+    except OSError:
+        return set()
+    marker = "const IN_SCOPE_RACES:"
+    start = src.find(marker)
+    if start == -1:
+        return set()
+    end = src.find("];", start)
+    if end == -1:
+        return set()
+    return set(re.findall(r'"([^"]+)"', src[start:end]))
+
+
+IN_SCOPE_RACES = read_in_scope_races()
 RACIAL_TRAIT_SUFFIX = " Racial Trait"
 SUBRACE_SUFFIX = " Subrace"
 
@@ -153,8 +193,8 @@ def main():
     per_book = collections.Counter(book for (book, _, _) in found)
 
     print("CEILING")
-    print(f"  TYPE:<one of 18 races> Racial Trait rows : {by_category['racial_trait']}")
-    print(f"  TYPE:<one of 18 races> Subrace rows      : {by_category['subrace']}")
+    print(f"  TYPE:<one of {len(IN_SCOPE_RACES)} races> Racial Trait rows : {by_category['racial_trait']}")
+    print(f"  TYPE:<one of {len(IN_SCOPE_RACES)} races> Subrace rows      : {by_category['subrace']}")
     print(f"  total                                    : {len(found)}")
     print()
     for book, count in sorted(per_book.items(), key=lambda kv: -kv[1]):

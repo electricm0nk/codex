@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Combat Style Feat ~ Two-Weapon Rend",
+    "name": "Two-Weapon Rend",
+    "class": "Ranger Combat Style Feat",
+    "description": "Striking with both your weapons simultaneously, you can use them to deliver devastating wounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style Feat ~ Two-Weapon Rend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Two-Weapon Rend"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Rend,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Striking with both your weapons simultaneously, you can use them to deliver devastating wounds."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Two-Weapon Rend|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1510,
+    "record_key": "Ranger Combat Style Feat ~ Two-Weapon Rend"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

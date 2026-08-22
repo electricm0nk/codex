@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Siege Gunner ~ Deeds",
+    "name": "Deeds",
+    "class": "Gunslinger",
+    "description": "A siege gunner swaps a pair of deeds of her choosing for the following.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege Gunner ~ Deeds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gunslinger Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A siege gunner swaps a pair of deeds of her choosing for the following."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 205,
+    "record_key": "Siege Gunner ~ Deeds"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

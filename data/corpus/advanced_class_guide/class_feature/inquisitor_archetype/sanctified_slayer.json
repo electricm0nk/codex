@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Sanctified Slayer",
+    "name": "Sanctified Slayer",
+    "class": "Inquisitor Archetype",
+    "description": "While all inquisitors root out enemies of the faith, in many orders and churches there's a select group of these religious hunters devoted to one goal, and one goal alone-to terminate the enemies of the faith wherever they can be found. Sometimes these sanctified slayers are given special dispensation to commit ruthless murders for the faith's greater good. Other times, they're simply willing to take the initiative to revel in the zeal of such grisly work.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Sanctified Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype.InquisitorJudgements.InquisitorTrueJudgement"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sanctified Slayer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgements,TYPE.InquisitorTrueJudgement]"
+      },
+      {
+        "key": "DESC",
+        "value": "While all inquisitors root out enemies of the faith, in many orders and churches there's a select group of these religious hunters devoted to one goal, and one goal alone-to terminate the enemies of the faith wherever they can be found. Sometimes these sanctified slayers are given special dispensation to commit ruthless murders for the faith's greater good. Other times, they're simply willing to take the initiative to revel in the zeal of such grisly work."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sanctified Slayer ~ Studied Target|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sanctified Slayer ~ Sneak Attack|PRECLASS:1,Inquisitor=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sanctified Slayer ~ Talented Slayer|PRECLASS:1,Inquisitor=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Inquisitor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3286,
+    "record_key": "Inquisitor Archetype ~ Sanctified Slayer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Primeval Might ~ Zevgavizeb",
+    "name": "Primeval Might",
+    "class": "Primeval Might",
+    "description": "You become infused with primeval power, and gain a +4 profane bonus to Constitution and your natural armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primeval Might ~ Zevgavizeb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You become infused with primeval power, and gain a +4 profane bonus to Constitution and your natural armor."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4|TYPE=Profane"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 199,
+    "record_key": "Primeval Might ~ Zevgavizeb"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

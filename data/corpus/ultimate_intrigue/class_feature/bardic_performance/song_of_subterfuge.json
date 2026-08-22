@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Song of Subterfuge",
+    "name": "Song of Subterfuge",
+    "class": "Bard",
+    "description": "An impervious messenger learns to use his performances to project various thoughts into his own mind to disrupt divination attempts. This acts similarly to distraction, except it only affects the impervious messenger and allows him to use the result of his Perform check in place of saving throws against attempts to read his mind, such as detect thoughts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Song of Subterfuge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ImperviousMessengerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "An impervious messenger learns to use his performances to project various thoughts into his own mind to disrupt divination attempts. This acts similarly to distraction, except it only affects the impervious messenger and allows him to use the result of his Perform check in place of saving throws against attempts to read his mind, such as detect thoughts."
+      },
+      {
+        "key": "DESC",
+        "value": " If the impervious messenger succeeds on a saving throw while using song of subterfuge, the character who attempted the divination effect must succeed on a Will save (DC %1) or else the impervious messenger instantly learns the nature of the effect and can allow the effect to continue, but provide whatever information he chooses to the divining character rather than the true results of the divination effect.|20+CHA|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 230,
+    "record_key": "Bardic Performance ~ Song of Subterfuge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

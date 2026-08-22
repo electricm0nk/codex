@@ -1,27 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Glue Seal",
-    "school": "Conjuration",
-    "level": 1,
     "description": "You cover a solid surface with a layer of sticky glue. Anyone in the area when the spell is cast must attempt a Reflex save. Those who fail become entangled, but can break free by succeeding at a combat maneuver check or an Escape Artist check as a standard action against the DC of this spell. The area of the spell is considered difficult terrain. A creature moving through the glue must succeed at a combat maneuver check or an Escape Artist check as part of its move action (DC = the spell's DC). Creatures that fail lose their movement and become entangled in the first square they enter. The spell can also be used to create a sticky coating on an item. A creature holding a targeted item can attempt a Reflex saving throw against the spell's DC. If the initial saving throw succeeds, the item is unaffected. If it fails, the item is stuck in place. If an affected item is connected to another item (such as a sword in a sheath or a cork in a potion bottle), it cannot be separated from the other item unless the creature succeeds at a combat maneuver check or a Strength check as a move action to free it (DC = the spell's DC). A creature must succeed at saving throw each time it attempts to use the sticky item; otherwise, the item becomes stuck to the creature. Sticky armor or clothing imposes a -10 circumstance penalty on Escape Artist checks and combat maneuver checks to escape a grapple attempted by the wearer, as well as to the wearer's CMD to avoid being grappled.",
-    "full_text": true
+    "full_text": true,
+    "key": "Glue Seal",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Magus,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Makes one 5-ft. square or one object sticky.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cover a solid surface with a layer of sticky glue. Anyone in the area when the spell is cast must attempt a Reflex save. Those who fail become entangled, but can break free by succeeding at a combat maneuver check or an Escape Artist check as a standard action against the DC of this spell. The area of the spell is considered difficult terrain. A creature moving through the glue must succeed at a combat maneuver check or an Escape Artist check as part of its move action (DC = the spell's DC). Creatures that fail lose their movement and become entangled in the first square they enter. The spell can also be used to create a sticky coating on an item. A creature holding a targeted item can attempt a Reflex saving throw against the spell's DC. If the initial saving throw succeeds, the item is unaffected. If it fails, the item is stuck in place. If an affected item is connected to another item (such as a sword in a sheath or a cork in a potion bottle), it cannot be separated from the other item unless the creature succeeds at a combat maneuver check or a Strength check as a move action to free it (DC = the spell's DC). A creature must succeed at saving throw each time it attempts to use the sticky item; otherwise, the item becomes stuck to the creature. Sticky armor or clothing imposes a -10 circumstance penalty on Escape Artist checks and combat maneuver checks to escape a grapple attempted by the wearer, as well as to the wearer's CMD to avoid being grappled.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/glueSeal.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one object or one 5-ft. square"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 62,
-    "record_key": "Glue Seal"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Glue Seal",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

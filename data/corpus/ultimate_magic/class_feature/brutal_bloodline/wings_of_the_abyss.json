@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brutal Bloodline ~ Wings of the Abyss",
+    "name": "Wings of the Abyss",
+    "class": "Brutal Bloodline",
+    "description": "You can sprout leathery wings and fly for %1 minutes per day, with a speed of 60 feet and good maneuverability. This duration does not need to be consecutive, but it must be used in 1-minute increments. This bloodline power replaces strength of the abyss.|Sorcerer_BrutalWingsOfTheAbyss_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brutal Bloodline ~ Wings of the Abyss"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Brutal Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Brutal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Abyssal_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Abyssal_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BrutalWingsOfTheAbyss_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sprout leathery wings and fly for %1 minutes per day, with a speed of 60 feet and good maneuverability. This duration does not need to be consecutive, but it must be used in 1-minute increments. This bloodline power replaces strength of the abyss.|Sorcerer_BrutalWingsOfTheAbyss_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BrutalWingsOfTheAbyss_Duration|Sorcerer_Abyssal_BloodlinePower9LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 minutes/day)|Sorcerer_BrutalWingsOfTheAbyss_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_BrutalWingsOfTheAbyss_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1662,
+    "record_key": "Brutal Bloodline ~ Wings of the Abyss"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

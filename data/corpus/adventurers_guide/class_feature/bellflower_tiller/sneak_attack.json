@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bellflower Tiller ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Bellflower Tiller",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bellflower Tiller ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bellflower Tiller Class Feature.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SneakAttackDice|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|BellflowerTillerLVL/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 96,
+    "record_key": "Bellflower Tiller ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

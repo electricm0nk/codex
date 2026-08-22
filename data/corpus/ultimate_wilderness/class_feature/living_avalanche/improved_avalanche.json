@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Living Avalanche ~ Improved Avalanche",
+    "name": "Improved Avalanche",
+    "class": "Brawler",
+    "description": "If a living avalanche rolls a natural 20 on an overrun combat maneuver check as part of the avalanche ability, she can immediately attempt to confirm the critical hit by attempting another combat maneuver check with the same modifiers as the previous one; if the critical hit is confirmed, the attack deals double damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Living Avalanche ~ Improved Avalanche"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.LivingAvalancheClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If a living avalanche rolls a natural 20 on an overrun combat maneuver check as part of the avalanche ability, she can immediately attempt to confirm the critical hit by attempting another combat maneuver check with the same modifiers as the previous one; if the critical hit is confirmed, the attack deals double damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 373,
+    "record_key": "Living Avalanche ~ Improved Avalanche"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

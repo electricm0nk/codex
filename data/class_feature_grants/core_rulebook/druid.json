@@ -1,0 +1,182 @@
+[
+  {
+    "key": "Druid ~ A Thousand Faces",
+    "class": "Druid",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 233
+    }
+  },
+  {
+    "key": "Druid ~ Nature Bond",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 227
+    }
+  },
+  {
+    "key": "Druid ~ Nature Sense",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 225
+    }
+  },
+  {
+    "key": "Druid ~ Orisons",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 223
+    }
+  },
+  {
+    "key": "Druid ~ Resist Nature's Lure",
+    "class": "Druid",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 231
+    }
+  },
+  {
+    "key": "Druid ~ Spontaneous Casting",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 224
+    }
+  },
+  {
+    "key": "Druid ~ Timeless Body",
+    "class": "Druid",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 234
+    }
+  },
+  {
+    "key": "Druid ~ Trackless Step",
+    "class": "Druid",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 229
+    }
+  },
+  {
+    "key": "Druid ~ Venom Immunity",
+    "class": "Druid",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 232
+    }
+  },
+  {
+    "key": "Druid ~ Wild Empathy",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 226
+    }
+  },
+  {
+    "key": "Druid ~ Wild Shape",
+    "class": "Druid",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 230
+    }
+  },
+  {
+    "key": "Druid ~ Woodland Stride",
+    "class": "Druid",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 228
+    }
+  }
+]

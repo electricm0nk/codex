@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Fleshwarp (Grothlut) ~ Piteous Moan",
     "delivery": "Supernatural",
@@ -15,21 +13,41 @@
     "owners": [
       "bestiary_4:monster:fleshwarp_grothlut"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a grothlut sees another creature, it begins to moan as free action. Anyone within 60 feet who can hear the moan must succeed at a DC %1 Will saving throw or become sickened by the moaning for as long as she can hear it. Every two additional grothluts with the area increase the DC by 1, to a maximum of DC 18. This is a mind- affecting sonic effect.|11+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Fleshwarp (Grothlut) ~ Piteous Moan"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Aura"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 672,
-    "record_key": "Fleshwarp (Grothlut) ~ Piteous Moan"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 672,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fleshwarp (Grothlut) ~ Piteous Moan",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

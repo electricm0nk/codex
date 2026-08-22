@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Mu Spore ~ Spore Cough",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:mu_spore"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Spore Cough"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MuSporeSporeCoughDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MuSporeSporeCoughDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Spore Cough)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MuSporeSporeCoughDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds as a standard action, a mu spore can release a cloud of burrowing spores in a 100-foot cone.  The burrowing spores deal 20d8 points of damage to all creatures and wooden structures in the area, or half damage to any creatures that make a DC %1 Reflex save.  Plants and plant creatures are immune to this damage.|MuSporeSporeCoughDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Mu Spore ~ Spore Cough"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.195",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 857,
-    "record_key": "Mu Spore ~ Spore Cough"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 857,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mu Spore ~ Spore Cough",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

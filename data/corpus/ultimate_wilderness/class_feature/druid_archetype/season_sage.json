@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Season Sage",
+    "name": "Season Sage",
+    "class": "Druid Archetype",
+    "description": "Season sages wander as the seasons change, turning the leaves and transforming nature as they pass and taking pleasure in the transition between seasons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Season Sage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Season Sage],[!PREFACT:1,ABILITIES,Druid_Archetype_WildShape=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Season sages wander as the seasons change, turning the leaves and transforming nature as they pass and taking pleasure in the transition between seasons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Season Sage ~ Season's Touch|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Season Sage ~ Season's Veil|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Season Sage ~ Season Mastery|PRECLASS:1,Druid=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 500,
+    "record_key": "Druid Archetype ~ Season Sage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "1/4",
@@ -22,6 +20,100 @@
     ],
     "race_subtype": null,
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw|Racial Traits ~ Water Strider (Nymph)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Swim|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Water Strider (Nymph)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "6"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,20"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.273"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vermin"
+      }
+    ],
     "size": "S",
     "source_page": "p.273",
     "speeds": [
@@ -35,16 +127,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 245,
-    "record_key": "Water Strider (Nymph)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 245,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Water Strider (Nymph)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

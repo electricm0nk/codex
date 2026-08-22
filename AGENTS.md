@@ -62,6 +62,21 @@ If those fields are missing, stop. Planning-ready is not execution-ready.
    - Every code-bearing cycle runs the four-check audit defined in the skill before marking `complete`. Audit output is captured in the cycle receipt at `programs/codex/requirements/SD-N-<slug>/artifacts/<epic>/<cycle>_cycle_receipt.md`.
    - The doctrine applies to every SD-N bundle launching on or after 2026-07-20. Earlier bundles' stubs are remediated in their next bundle's Wired Integration Cleanup epic.
 
+7. **A proof is only as wide as the cases it covers.**
+   - State explicitly which real shapes your correctness proof does **not** cover. A proof that passes and is too narrow is more dangerous than no proof, because it ends scrutiny.
+   - Earned the hard way: a parser reproduced all 64 hand-curated reference records exactly **and** mutation-proved its own test could fail, and was still fabricating a wrong value for **73.4%** of its output — the reference set never exercised the shapes it got wrong.
+   - When a ground-truth set exists, ask what it does not contain before trusting agreement with it.
+
+8. **A warning is not a control.**
+   - If a failure has recurred, do not write a caution and move on. Build the mechanism that makes it impossible, or say plainly that you are choosing not to.
+   - Earned: `wrong-base-worktree` fired **27 times** despite a warning in every dispatch prompt; the real fix (deleting the branches that could be selected) was one line. `disk-full` fired **120 times** and was treated as a per-run chore for thirty cycles rather than an unbuilt control.
+   - Recurrence is data. `scripts/retro.py summary` clusters it; a key firing more than a handful of times is a missing mechanism, not bad luck.
+
+9. **Every figure you write down carries the command that produced it.**
+   - A number in a brief, receipt, or doc must be accompanied by the command a reader can run to re-derive it. If it cannot be, mark it an estimate **in the text**.
+   - Earned: of 608 recorded corrections, the most frequently wrong artifacts are our own briefs, dispatch prompts, issue rows and package docs — not code and not people. Prose drifts silently because nothing tests it, and a wrong figure propagates into every downstream reader.
+   - Corollary: never state a derived figure as settled before the work that derives it has returned.
+
 ## Read Discipline
 
 Keep context lean. Read additional material only when the task or handoff requires it.

@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist Evocation Implement Focus",
+    "name": "Evocation Implement Focus",
+    "class": null,
+    "description": "Resonant power: +1 evocation spell or focus power damage per 2 points of mental focus invested (max +%1).|1+OccultistLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Evocation Implement Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OccultistMentalFocus"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,OccultistSchool_Evocation=true"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistEvocationFocus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Resonant power: +1 evocation spell or focus power damage per 2 points of mental focus invested (max +%1).|1+OccultistLVL/2"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistEvocationFocus|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|OccultistEvocationFocus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Focus Invested"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Occultist ~ Mental Focus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1011,
+    "record_key": "Occultist Evocation Implement Focus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

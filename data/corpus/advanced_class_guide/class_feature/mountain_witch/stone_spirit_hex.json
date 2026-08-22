@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mountain Witch ~ Stone Spirit Hex",
+    "name": "Stone Spirit Hex",
+    "class": "Witch",
+    "description": "A mountain witch can select hexes from the shaman's stone spirit (see page 44) as if they were witch hexes. She uses her witch level as her shaman level to determine the effect of the hex, and Intelligence instead of Wisdom to determine its DC. This ability alters hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mountain Witch ~ Stone Spirit Hex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mountain Witch Class Feature.Witch Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A mountain witch can select hexes from the shaman's stone spirit (see page 44) as if they were witch hexes. She uses her witch level as her shaman level to determine the effect of the hex, and Intelligence instead of Wisdom to determine its DC. This ability alters hex."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4027,
+    "record_key": "Mountain Witch ~ Stone Spirit Hex"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

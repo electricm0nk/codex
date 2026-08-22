@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor ~ Discern Lies",
+    "name": "Discern Lies",
+    "class": "Inquisitor",
+    "description": "An inquisitor can discern lies, as per the spell, for %1 rounds per day. These rounds do not need to be consecutive. Activating this ability is an immediate action.|InquisitorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor ~ Discern Lies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Inquisitor|TIMES=InquisitorLVL|TIMEUNIT=rounds/day|CASTERLEVEL=InquisitorLVL|Discern Lies,14+WIS"
+      },
+      {
+        "key": "DESC",
+        "value": "An inquisitor can discern lies, as per the spell, for %1 rounds per day. These rounds do not need to be consecutive. Activating this ability is an immediate action.|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 306,
+    "record_key": "Inquisitor ~ Discern Lies"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

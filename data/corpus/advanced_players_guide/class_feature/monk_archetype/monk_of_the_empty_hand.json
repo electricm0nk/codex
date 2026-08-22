@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Monk of the Empty Hand",
+    "name": "Monk of the Empty Hand",
+    "class": "Monk Archetype",
+    "description": "The monk of the empty hand eschews normal weapons in favor of whatever is lying around-rocks, chair legs, flagons of ale, even a simple quill pen all become deadly weapons in the hands of such a monk. A monk of the empty hand draws on his own ki to infuse his improvised weapons with power, and can transform a broken bottle into a magical weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Monk of the Empty Hand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkWeaponProficiencies.MonkStillMind.MonkPurityOfBody.MonkDiamondBody"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Empty Hand],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkWeaponProficiencies,TYPE.MonkStillMind,TYPE.MonkPurityOfBody,TYPE.MonkDiamondBody]"
+      },
+      {
+        "key": "DESC",
+        "value": "The monk of the empty hand eschews normal weapons in favor of whatever is lying around-rocks, chair legs, flagons of ale, even a simple quill pen all become deadly weapons in the hands of such a monk. A monk of the empty hand draws on his own ki to infuse his improvised weapons with power, and can transform a broken bottle into a magical weapon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Empty Hand ~ Weapon and Armor Proficiency|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Empty Hand ~ Flurry of Blows|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Empty Hand ~ Bonus Feat|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Empty Hand ~ Versatile Improvisation|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Empty Hand ~ Ki Pool|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk of the Empty Hand ~ Ki Weapons|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2293,
+    "record_key": "Monk Archetype ~ Monk of the Empty Hand"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

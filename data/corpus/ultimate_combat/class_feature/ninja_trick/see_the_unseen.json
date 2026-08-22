@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ See the Unseen",
+    "name": "See the Unseen",
+    "class": "Ninja Trick",
+    "description": "A ninja with this trick learns how to see that which cannot be seen. As a swift action, the ninja can cast see invisibility, using her level as the caster level. Each use of this ability uses up 1 ki point.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ See the Unseen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NinjaTrickLVL,10],[PREVARGTEQ:RogueTalentLVL,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "A ninja with this trick learns how to see that which cannot be seen. As a swift action, the ninja can cast see invisibility, using her level as the caster level. Each use of this ability uses up 1 ki point."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 169,
+    "record_key": "Ninja Trick ~ See the Unseen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

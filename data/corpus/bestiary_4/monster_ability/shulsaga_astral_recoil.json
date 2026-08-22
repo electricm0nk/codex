@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Shulsaga ~ Astral Recoil",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:shulsaga"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a shulsaga that touches a silver cord (such as that created by the spell astral projection) can cause the cord to recoil. The astral projecting creature must succeed at a DC %1 Will saving throw or be snapped back to its body, ending the spell effect but not harming the spellcaster.|WIS+12"
+      },
+      {
+        "key": "KEY",
+        "value": "Shulsaga ~ Astral Recoil"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1290,
-    "record_key": "Shulsaga ~ Astral Recoil"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1290,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shulsaga ~ Astral Recoil",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

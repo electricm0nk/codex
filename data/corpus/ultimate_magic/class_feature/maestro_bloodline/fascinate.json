@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maestro Bloodline ~ Fascinate",
+    "name": "Fascinate",
+    "class": "Maestro Bloodline",
+    "description": "You gain the ability to use a Perform skill to cause one or more creatures to become fascinated with you. This acts as the fascinate bardic perform ability, except the save DC is %1, and it lasts %2 rounds.|Sorcerer_MaestroFascinate_DC|Sorcerer_MaestroFascinate_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maestro Bloodline ~ Fascinate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Maestro Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Maestro"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Maestro_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Bardic Performance ~ Fascinate"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Maestro_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_MaestroFascinate_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_MaestroFascinate_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_MaestroFascinate_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to use a Perform skill to cause one or more creatures to become fascinated with you. This acts as the fascinate bardic perform ability, except the save DC is %1, and it lasts %2 rounds.|Sorcerer_MaestroFascinate_DC|Sorcerer_MaestroFascinate_Duration"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability once per day.|PREVARGTEQ:Sorcerer_MaestroFascinate_Times,1|PREVARLT:Sorcerer_MaestroFascinate_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability twice per day.|PREVARGTEQ:Sorcerer_MaestroFascinate_Times,2|PREVARLT:Sorcerer_MaestroFascinate_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability three times per day.|PREVARGTEQ:Sorcerer_MaestroFascinate_Times,3|PREVARLT:Sorcerer_MaestroFascinate_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability four times per day.|PREVARGTEQ:Sorcerer_MaestroFascinate_Times,4|PREVARLT:Sorcerer_MaestroFascinate_Times,5"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability %1 times per day.|Sorcerer_MaestroFascinate_Times|PREVARGTEQ:Sorcerer_MaestroFascinate_Times,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_MaestroFascinate_DC|10+(Sorcerer_Maestro_BloodlinePower3LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_MaestroFascinate_Duration|Sorcerer_Maestro_BloodlinePower3LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_MaestroFascinate_Times|floor((Sorcerer_Maestro_BloodlinePower3LVL+2)/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%3/day (DC %1, %2 rounds)|Sorcerer_MaestroFascinate_DC|Sorcerer_MaestroFascinate_Duration|Sorcerer_MaestroFascinate_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_MaestroFascinate_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|MaestroBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 630,
+    "record_key": "Maestro Bloodline ~ Fascinate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

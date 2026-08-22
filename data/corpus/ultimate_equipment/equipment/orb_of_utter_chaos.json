@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 36000.0,
+    "description": "Three times per day, when the bearer holds the orb and casts a spell with the polymorph subtype, chaotic descriptor, or one that gives creatures the confused condition, she may modify her caster level for that spell by 1d6\u00162.",
+    "key": "Orb of Utter Chaos",
+    "name": "Orb of Utter Chaos",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1",
+          "PREALIGN:LG,LN,LE"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMajor"
+      },
+      {
+        "key": "COST",
+        "value": "36000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Negative Levels|PREALIGN:LG,LN,LE"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=1|CASTERLEVEL=10|Aid|Dispel Magic"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=ATWILL|CASTERLEVEL=10|Entropic Shield"
+      },
+      {
+        "key": "SPROP",
+        "value": "Three times per day, when the bearer holds the orb and casts a spell with the polymorph subtype, chaotic descriptor, or one that gives creatures the confused condition, she may modify her caster level for that spell by 1d6\u00162."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1224,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Orb of Utter Chaos",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

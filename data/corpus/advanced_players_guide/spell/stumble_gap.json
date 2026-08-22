@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Stumble Gap",
-    "school": "Conjuration",
-    "level": 1,
     "description": "You create a shallow extradimensional hole perfectly sized to trip anyone who steps within it. This hole occupies a single 5-foot square with a depth of six inches. Any creature occupying the square when you first create the hole, or who later steps into the square containing the hole, must make a Reflex saving throw to avoid falling prone in an adjacent square and taking 1d6 points of damage. A creature that makes its saving throw still stumbles ever so slightly and takes a -1 penalty on all rolls and checks for 1 round. The spell has no effect on creatures adjacent to the square containing the hole.",
-    "full_text": true
+    "full_text": true,
+    "key": "Stumble Gap",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "Small hole trips creatures|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a shallow extradimensional hole perfectly sized to trip anyone who steps within it. This hole occupies a single 5-foot square with a depth of six inches. Any creature occupying the square when you first create the hole, or who later steps into the square containing the hole, must make a Reflex saving throw to avoid falling prone in an adjacent square and taking 1d6 points of damage. A creature that makes its saving throw still stumbles ever so slightly and takes a -1 penalty on all rolls and checks for 1 round. The spell has no effect on creatures adjacent to the square containing the hole.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "((CASTERLEVEL)+1) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(miniature shovel costing 10 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/stumbleGap.html#_stumble-gap-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.247"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "see text"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 234,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2078,
-    "record_key": "Stumble Gap"
+    "record_key": "Stumble Gap",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

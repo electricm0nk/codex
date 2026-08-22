@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Bloodrager Bloodline ~ Verdant Growth",
+    "name": "Verdant Growth",
+    "class": "Verdant Bloodrager Bloodline",
+    "description": "You gain fast healing %1 while bloodraging. If you have a bloodrager class feature that also grants you fast healing (such as the spelleater's blood of life class feature), you can stack up to half of your fast healing from such abilities with the fast healing gained from this ability, but you cannot do so by an amount that exceeds your Charisma bonus (minimum 0).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Bloodrager Bloodline ~ Verdant Growth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Verdant Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Verdant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Verdant_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Verdant_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Verdant_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerdantBloodragerFastHealing|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain fast healing %1 while bloodraging. If you have a bloodrager class feature that also grants you fast healing (such as the spelleater's blood of life class feature), you can stack up to half of your fast healing from such abilities with the fast healing gained from this ability, but you cannot do so by an amount that exceeds your Charisma bonus (minimum 0)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerdantBloodragerFastHealing|min(6,(BloodragerBloodlineLVL+2)/3)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Bloodrager_Verdant_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|VerdantBloodragerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 307,
+    "record_key": "Verdant Bloodrager Bloodline ~ Verdant Growth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

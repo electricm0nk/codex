@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Infiltrator ~ Fey",
+    "name": "Fey",
+    "class": "Infiltrator",
+    "description": "Iron Will, Lightning Reflexes, low-light vision.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Fey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.AdaptationCreature.IronWill.LightningReflexes.LowLightVision"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Favored Enemy ~ Fey"
+      },
+      {
+        "key": "DESC",
+        "value": "Iron Will, Lightning Reflexes, low-light vision."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2747,
+    "record_key": "Infiltrator ~ Fey"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

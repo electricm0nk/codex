@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Countersong",
+    "name": "Countersong",
+    "class": "Bardic Performance",
+    "description": "You can counter magic effects that depend on sound (but not spells that have verbal components). Each round of the countersong you make a Perform (keyboard, percussion, wind, string, or sing) skill check. Any creature within 30 feet (including yourself) that is affected by a sonic or language-dependent magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform check result proves to be higher. If a creature within range of the countersong is already under the effect of a noninstantaneous sonic or language-dependent magical attack, it gains another saving throw against the effect each round it hears the countersong, but it must use your Perform skill check result for the save. Countersong does not work on effects that don't allow saves. Countersong relies on audible components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Countersong"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can counter magic effects that depend on sound (but not spells that have verbal components). Each round of the countersong you make a Perform (keyboard, percussion, wind, string, or sing) skill check. Any creature within 30 feet (including yourself) that is affected by a sonic or language-dependent magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform check result proves to be higher. If a creature within range of the countersong is already under the effect of a noninstantaneous sonic or language-dependent magical attack, it gains another saving throw against the effect each round it hears the countersong, but it must use your Perform skill check result for the save. Countersong does not work on effects that don't allow saves. Countersong relies on audible components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 521,
+    "record_key": "Bardic Performance ~ Countersong"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

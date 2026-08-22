@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Speaker for the Past Time Mystery ~ Knowledge of the Ages",
+    "name": "Knowledge of the Ages",
+    "class": "Speaker for the Past Time Mystery",
+    "description": "You can search through time to recall some bit of forgotten lore or information. You can retry any Knowledge skill check you have made within the past minute, gaining a +%1 insight bonus on the check. You can use this ability %2 times per day.|KnowledgeOfTheAgesBonus|KnowledgeOfTheAgesTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Time Mystery ~ Knowledge of the Ages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.Supernatural.TimeRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KnowledgeOfTheAgesBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KnowledgeOfTheAgesTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can search through time to recall some bit of forgotten lore or information. You can retry any Knowledge skill check you have made within the past minute, gaining a +%1 insight bonus on the check. You can use this ability %2 times per day.|KnowledgeOfTheAgesBonus|KnowledgeOfTheAgesTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnowledgeOfTheAgesBonus|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnowledgeOfTheAgesTimes|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3631,
+    "record_key": "Speaker for the Past Time Mystery ~ Knowledge of the Ages"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

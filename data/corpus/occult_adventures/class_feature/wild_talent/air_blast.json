@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Air Blast",
+    "name": "Air Blast",
+    "class": "Wild Talent",
+    "description": "Element air; Type simple blast (Sp); Level -; Burn 0 Blast Type physical; Damage bludgeoning You batter a single foe with a gust of air.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Air Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Simple Blast.PhysicalBlast"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ElementTracker_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type simple blast (Sp); Level -; Burn 0 Blast Type physical; Damage bludgeoning You batter a single foe with a gust of air."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 625,
+    "record_key": "Wild Talent ~ Air Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Major Amplification ~ Space-rending Spell",
+    "name": "Space-rending Spell",
+    "class": "Major Amplification",
+    "description": "The psychic can warp space with her mind, teleporting herself as she casts her linked spell. She teleports herself 10 feet per point she spends from her phrenic pool (as dimension door). The maximum number of points she can spend in this way is equal to the linked spell's level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Major Amplification ~ Space-rending Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Major Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PsychicLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can warp space with her mind, teleporting herself as she casts her linked spell. She teleports herself 10 feet per point she spends from her phrenic pool (as dimension door). The maximum number of points she can spend in this way is equal to the linked spell's level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1181,
+    "record_key": "Major Amplification ~ Space-rending Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

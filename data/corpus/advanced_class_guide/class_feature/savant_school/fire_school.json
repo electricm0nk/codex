@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant School ~ Fire",
+    "name": "Fire School",
+    "class": "Savant School",
+    "description": "You have chosen to specialize in fire spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant School ~ Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.VoidSavantSchool.SavantElementalSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSavantSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in fire spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Savant Fire School ~ Fire Jet|Savant Fire School ~ Fire Supremacy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Savant Fire School ~ Dancing Flame|PREVARGTEQ:ArcanistSavantSchoolLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2524,
+    "record_key": "Savant School ~ Fire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

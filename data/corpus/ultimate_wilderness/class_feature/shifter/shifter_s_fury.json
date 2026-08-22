@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter ~ Shifter's Fury",
+    "name": "Shifter's Fury",
+    "class": "Shifter",
+    "description": "A shifter gains the ability to make several ferocious attacks with the same natural weapon. Instead of attacking with all her natural weapons, the shifter can choose a single natural weapon and make a full attack with that natural weapon, gaining a second iterative attack at a -5 as if it was a manufactured weapon. When she does so, all her other natural attacks count as secondary attacks and don't benefit from shifter's claws. At 11th level, she gains a third iterative attack at a -10 and at 16th level, she gains a fourth iterative attack at -15.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Shifter's Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A shifter gains the ability to make several ferocious attacks with the same natural weapon. Instead of attacking with all her natural weapons, the shifter can choose a single natural weapon and make a full attack with that natural weapon, gaining a second iterative attack at a -5 as if it was a manufactured weapon. When she does so, all her other natural attacks count as secondary attacks and don't benefit from shifter's claws. At 11th level, she gains a third iterative attack at a -10 and at 16th level, she gains a fourth iterative attack at -15."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 21,
+    "record_key": "Shifter ~ Shifter's Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

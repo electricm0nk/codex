@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:axiomite_crystalline_dust_form",
@@ -24,6 +22,120 @@
     "natural_attacks": [],
     "race_subtype": "Extraplanar|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Axiomite ~ Crystalline Dust Form|Axiomite ~ Summon Inevitable|Flight Maneuverability|Immunity to Disease|Immunity to Electricity|Immunity to Mind-Affecting Effects|Regeneration ~ Chaotic/Magic|Resistance to Cold|Resistance to Fire"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Celestial|Common|Draconic|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,INT,WIS,CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|6|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|5"
+      },
+      {
+        "key": "CR",
+        "value": "8"
+      },
+      {
+        "key": "DR",
+        "value": "10/chaotic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Diplomacy|Spellcraft|Survival"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):10"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,30"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=9|True Seeing"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=9|Dispel Chaos|Empowered Order's Wrath,14+CHA|Haste|Hold Monster,14+CHA|Lightning Bolt,13+CHA|Telekinesis,15+CHA|True Strike"
+      },
+      {
+        "key": "SR",
+        "value": "19"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.36",
     "speeds": [
@@ -37,16 +149,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 114,
-    "record_key": "Axiomite"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 114,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Axiomite",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

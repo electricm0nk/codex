@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Fetchling ~ Shadowy Resistance",
+    "name": "Shadowy Resistance",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "Fetchling Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Fetchling_ReplaceShadowyResistance",
+    "sets_replace_flags": [],
+    "description": "Fetchlings have cold resistance 5 and electricity resistance 5.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fetchling ~ Shadowy Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Fetchling_ReplaceShadowyResistance=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Fetchlings have cold resistance 5 and electricity resistance 5."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ColdResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ElectricityResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_race.lst",
+    "sha256": "9eb9117928a30be812bb51725014116c0318a597f074725243b9b0f8e2860b28",
+    "line": 22,
+    "record_key": "Fetchling ~ Shadowy Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

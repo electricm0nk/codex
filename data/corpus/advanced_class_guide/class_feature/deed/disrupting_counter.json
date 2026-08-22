@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deed ~ Disrupting Counter",
+    "name": "Disrupting Counter",
+    "class": "Swashbuckler",
+    "description": "When an opponent makes a melee attack against her, she can spend 1 panache point to make an attack of opportunity against the attacking foe. This attack of opportunity can be made with either a dagger or a starknife. If the attack hits, the opponent takes a -4 penalty on all attack rolls until the end of its turn. This deed replaces kip-up.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Disrupting Counter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flying Blade Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When an opponent makes a melee attack against her, she can spend 1 panache point to make an attack of opportunity against the attacking foe. This attack of opportunity can be made with either a dagger or a starknife. If the attack hits, the opponent takes a -4 penalty on all attack rolls until the end of its turn. This deed replaces kip-up."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3882,
+    "record_key": "Deed ~ Disrupting Counter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

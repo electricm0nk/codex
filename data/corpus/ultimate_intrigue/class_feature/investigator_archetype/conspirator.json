@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Conspirator",
+    "name": "Conspirator",
+    "class": "Investigator Archetype",
+    "description": "A conspirator uses his knowledge of investigations to make sure he avoids any investigations that his rivals perform, carefully plotting acts of intrigue behind closed doors. Paranoid to a fault, a conspirator always seems to know when someone else is watching him, and he takes numerous precautions to prevent anyone from observing his most illict actions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Conspirator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Conspirator],[!PREFACT:1,ABILITIES,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_Inspiration=True,Investigator_Archetype_TrapSense=True,Investigator_Archetype_Talent7=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A conspirator uses his knowledge of investigations to make sure he avoids any investigations that his rivals perform, carefully plotting acts of intrigue behind closed doors. Paranoid to a fault, a conspirator always seems to know when someone else is watching him, and he takes numerous precautions to prevent anyone from observing his most illict actions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conspirator ~ Underhanded|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Conspirator ~ Watcher Sense|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Inspiration|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent7|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 497,
+    "record_key": "Investigator Archetype ~ Conspirator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

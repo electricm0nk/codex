@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": null,
+    "description": null,
+    "key": "Musical Instrument (Trumpet/Masterwork)",
+    "name": "Musical Instrument, Masterwork Trumpet",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Musical Instrument (Trumpet/Masterwork)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Masterwork Trumpet"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Trumpet (Base)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 323,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Musical Instrument (Trumpet/Masterwork)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

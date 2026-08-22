@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman ~ Manifestation",
+    "name": "Manifestation",
+    "class": "Shaman",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman ~ Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman Manifestation|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman Manifestation|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1392,
+    "record_key": "Shaman ~ Manifestation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

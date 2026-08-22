@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 12500.0,
+    "description": "When a creature with energy drain hits wearer, he receives a save to negate the energy drain (or second save); if successful, attacker automatically hit by force punch (OA) spell. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+    "key": "Talisman (Greater/Ankh)",
+    "name": "Talisman (Greater/Ankh)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Greater Talisman (Ankh)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Necklace"
+      },
+      {
+        "key": "COST",
+        "value": "12500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "SPROP",
+        "value": "When a creature with energy drain hits wearer, he receives a save to negate the energy drain (or second save); if successful, attacker automatically hit by force punch (OA) spell. Only usable 1/day. Up to 3 talismans may be worn at one time."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Talisman (Greater/Ankh)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

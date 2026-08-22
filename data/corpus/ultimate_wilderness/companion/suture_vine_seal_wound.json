@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Suture Vine ~ Seal Wound",
     "delivery": "Extraordinary",
@@ -15,6 +13,28 @@
       "ultimate_wilderness:companion:familiar_suture_vine",
       "ultimate_wilderness:companion:suture_vine"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A suture vine instinctively latches on to a creature that suffers from bleed damage or is at less than half its normal hit point total. When it attempts to seal wounds in this way, it must make a normal vine attack but gains attach as per the universal monster rule. If it successfully attaches to the target (dealing damage as normal), any bleed damage currently suffered by the target immediately ends. The suture vine remains attached for 24 hours, gaining nutrients from sipping at the victim's blood but never enough to cause any further damage. The vine drops off automatically once a target has no hit point damage or 24 hours have passed, whichever comes first. A suture vine can seal wounds in this manner only once per day."
+      },
+      {
+        "key": "KEY",
+        "value": "Suture Vine ~ Seal Wound"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.SutureVineRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.207",
     "stat_adjustments": [],
@@ -24,16 +44,18 @@
       "SutureVineRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 364,
-    "record_key": "Suture Vine ~ Seal Wound"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 364,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Suture Vine ~ Seal Wound",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

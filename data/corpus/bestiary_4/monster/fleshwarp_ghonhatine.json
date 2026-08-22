@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:fleshwarp_ghonhatine_feed",
@@ -31,6 +29,128 @@
     ],
     "race_subtype": null,
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw|Tail Slap|Racial Traits ~ Fleshwarp (Ghonhatine)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=Underground|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|17|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "10"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Fleshwarp (Ghonhatine)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Perception|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:12"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Fleshwarp"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
     "size": "L",
     "source_page": "p.102",
     "speeds": [
@@ -40,16 +160,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 81,
-    "record_key": "Fleshwarp (Ghonhatine)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 81,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Fleshwarp (Ghonhatine)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

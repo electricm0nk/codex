@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monkey Domain ~ Monkey Athletics",
+    "name": "Monkey Athletics",
+    "class": "Monkey Domain",
+    "description": "As a free action, you may add a +%1 competence bonus on one Acrobatics, Climb, Disable Device, or Sleight of Hand check.  You may use this ability %2 times per day.|MonkeyAthleticsBonus|DomainMonkeyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monkey Domain ~ Monkey Athletics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Monkey Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkeyAthleticsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, you may add a +%1 competence bonus on one Acrobatics, Climb, Disable Device, or Sleight of Hand check.  You may use this ability %2 times per day.|MonkeyAthleticsBonus|DomainMonkeyTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkeyAthleticsBonus|max(1,DomainMonkeyLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainMonkeyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 296,
+    "record_key": "Monkey Domain ~ Monkey Athletics"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

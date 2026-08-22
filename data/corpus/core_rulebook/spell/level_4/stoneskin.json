@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "The warded creature gains resistance to blows, cuts, stabs, and slashes. The subject gains DR 10/adamantine. It ignores the first 10 points of damage each time it takes damage from a weapon, though an adamantine weapon bypasses the reduction. Once the spell has prevented a total of 10 points of damage per caster level [maximum 150 points], it is discharged.",
     "key": "Stoneskin",
-    "school": "Abjuration",
     "level": 4,
-    "description": "The warded creature gains resistance to blows, cuts, stabs, and slashes. The subject gains DR 10/adamantine. It ignores the first 10 points of damage each time it takes damage from a weapon, though an adamantine weapon bypasses the reduction. Once the spell has prevented a total of 10 points of damage per caster level [maximum 150 points], it is discharged."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4|Druid=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "The warded creature gains resistance to blows, cuts, stabs, and slashes. The subject gains DR 10/adamantine. It ignores the first 10 points of damage each time it takes damage from a weapon, though an adamantine weapon bypasses the reduction. Once the spell has prevented a total of 10 points of damage per caster level [maximum 150 points], it is discharged.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The warded creature gains resistance to blows, cuts, stabs, and slashes.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Earth,Strength=6"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes or until discharged"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/stoneskin.html#_stoneskin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.349"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|VAR|StoneskinActivate|1"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants DR 10/adamantine for a total of 10 points of damage per caster level (maximum 150 points)."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 578,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1330,
-    "record_key": "Stoneskin.MOD"
+    "record_key": "Stoneskin",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

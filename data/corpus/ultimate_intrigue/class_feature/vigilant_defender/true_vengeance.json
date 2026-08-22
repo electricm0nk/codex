@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilant Defender ~ True Vengeance",
+    "name": "True Vengeance",
+    "class": "Inquisitor",
+    "description": "When a vigilant defender calls true judgment down upon a foe, if the foe has killed one of the vigilant defender's allies (permanent sentient allies, such as fellow party members or cohorts, not summoned monsters, animal companions, pets, or the like), the DC of the target's Fortitude save to avoid death is 2 higher. If the foe has not damaged any of the vigilant defender's allies, the DC to avoid death is instead 2 lower. This ability alters true judgment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilant Defender ~ True Vengeance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a vigilant defender calls true judgment down upon a foe, if the foe has killed one of the vigilant defender's allies (permanent sentient allies, such as fellow party members or cohorts, not summoned monsters, animal companions, pets, or the like), the DC of the target's Fortitude save to avoid death is 2 higher. If the foe has not damaged any of the vigilant defender's allies, the DC to avoid death is instead 2 lower. This ability alters true judgment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 490,
+    "record_key": "Vigilant Defender ~ True Vengeance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

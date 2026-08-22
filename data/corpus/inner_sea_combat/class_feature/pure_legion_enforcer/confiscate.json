@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pure Legion Enforcer ~ Confiscate",
+    "name": "Confiscate",
+    "class": "Pure Legion Enforcer",
+    "description": "At 4th level, the Pure Legion enforcer gains a +2 bonus on combat maneuver checks to disarm or steal (Advanced Players Guide 322) divine paraphernalia and magic items (such as aligned weapons, divine scrolls, holy or unholy symbols, and items affiliated with a specific deity). He can attempt disarm and steal combat maneuvers against such targets without provoking an attack of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pure Legion Enforcer ~ Confiscate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, the Pure Legion enforcer gains a +2 bonus on combat maneuver checks to disarm or steal (Advanced Players Guide 322) divine paraphernalia and magic items (such as aligned weapons, divine scrolls, holy or unholy symbols, and items affiliated with a specific deity). He can attempt disarm and steal combat maneuvers against such targets without provoking an attack of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 539,
+    "record_key": "Pure Legion Enforcer ~ Confiscate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

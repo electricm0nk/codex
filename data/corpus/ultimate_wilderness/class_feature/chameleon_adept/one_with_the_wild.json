@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Chameleon Adept ~ One with the Wild",
+    "name": "One with the Wild",
+    "class": "Hunter",
+    "description": "When the companion is using wild shape to appear as a different type of animal, it counts as being in that animal focus for the purpose of one with the wild.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chameleon Adept ~ One with the Wild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ChameleonAdeptClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the companion is using wild shape to appear as a different type of animal, it counts as being in that animal focus for the purpose of one with the wild."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 655,
+    "record_key": "Chameleon Adept ~ One with the Wild"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vanguard ~ Vanguard's Bond",
+    "name": "Vanguard's Bond",
+    "class": "Slayer",
+    "description": "A vanguard forms a bond with his fighting companions. As a move action, he can choose one of his current studied targets and grant half his studied target bonus against that target to all allies within 30 feet who can see or hear him. This bonus lasts for %1 rounds. This bonus does not stack with any favored enemy or studied target bonuses possessed by his allies; they use whichever bonus is higher.|max(1,INT)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanguard ~ Vanguard's Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vanguard Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A vanguard forms a bond with his fighting companions. As a move action, he can choose one of his current studied targets and grant half his studied target bonus against that target to all allies within 30 feet who can see or hear him. This bonus lasts for %1 rounds. This bonus does not stack with any favored enemy or studied target bonuses possessed by his allies; they use whichever bonus is higher.|max(1,INT)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3774,
+    "record_key": "Vanguard ~ Vanguard's Bond"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

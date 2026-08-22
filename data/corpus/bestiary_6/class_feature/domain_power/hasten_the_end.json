@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Hasten the End",
+    "name": "Hasten the End",
+    "class": "Domain Power",
+    "description": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you reduce the remaining duration of all beneficial magical effects currently affecting the target by I round, minute, hour, or day-whichever measurement is used to determine the duration of each particular magical effect. You can use this ability %1 times per day.|DomainChaosLVL/4-1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Hasten the End"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you reduce the remaining duration of all beneficial magical effects currently affecting the target by I round, minute, hour, or day-whichever measurement is used to determine the duration of each particular magical effect. You can use this ability %1 times per day.|DomainChaosLVL/4-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainChaosLVL/4-1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 15,
+    "record_key": "Domain Power ~ Hasten the End"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

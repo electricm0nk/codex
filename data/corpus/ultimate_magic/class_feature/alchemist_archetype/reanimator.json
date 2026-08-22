@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Reanimator",
+    "name": "Reanimator",
+    "class": "Alchemist Archetype",
+    "description": "A reanimator is an alchemist who has discovered how to infuse a corpse with a semblance of life. Many work in tandem with necromancers to explore the fine border between the worlds of the living and the dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Reanimator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype.AlchemistBombDamageLvl7.AlchemistBombDamageLvl13.AlchemistBombDamageLvl15.AlchemistBombReduction"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Reanimator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistBombDamageLvl7,TYPE.AlchemistBombDamageLvl13,TYPE.AlchemistBombDamageLvl15,TYPE.AlchemistBombReduction]"
+      },
+      {
+        "key": "DESC",
+        "value": "A reanimator is an alchemist who has discovered how to infuse a corpse with a semblance of life. Many work in tandem with necromancers to explore the fine border between the worlds of the living and the dead."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Reanimator ~ Simple Reanimation|PRECLASS:1,Alchemist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Reanimator ~ Create Undead|PRECLASS:1,Alchemist=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Reanimator ~ Create Greater Undead|PRECLASS:1,Alchemist=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombDiceSize|-2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 845,
+    "record_key": "Alchemist Archetype ~ Reanimator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

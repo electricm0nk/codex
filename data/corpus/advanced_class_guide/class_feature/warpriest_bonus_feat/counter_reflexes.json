@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Counter Reflexes",
+    "name": "Counter Reflexes",
+    "class": "Warpriest Bonus Feat",
+    "description": "Opponents with the Mobility feat do not gain the dodge bonus granted by that feat when they provoke attacks of opportunity by moving out of or within your threatened area.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Counter Reflexes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Dodge,Mobility,Anticipate Dodge"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:9],[PREVARGTEQ:MonkFeatQualify,6],[PREVARGTEQ:WarpriestBonusFeatBAB,9]"
+      },
+      {
+        "key": "DESC",
+        "value": "Opponents with the Mobility feat do not gain the dodge bonus granted by that feat when they provoke attacks of opportunity by moving out of or within your threatened area."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Counter Reflexes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4146,
+    "record_key": "Warpriest Bonus Feat ~ Counter Reflexes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

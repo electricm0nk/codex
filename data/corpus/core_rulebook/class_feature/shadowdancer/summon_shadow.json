@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shadowdancer ~ Summon Shadow",
+    "name": "Summon Shadow",
+    "class": "Shadowdancer",
+    "description": "At 3rd level, a shadowdancer can summon a shadow, an undead shade. Unlike a normal shadow, this shadow's alignment matches that of the shadowdancer, and the creature cannot create spawn. The summoned shadow receives a +4 bonus on Will saves made to halve the damage from positive channeled energy and the shadow cannot be turned or commanded. This shadow serves as a companion to the shadowdancer and can communicate intelligibly with the shadowdancer. This shadow has a number of hit points equal to half the shadowdancer's total. The shadow uses the shadowdancer's base attack bonus and base save bonuses. Otherwise, this shadow is identical to the shadow found in the Pathfinder RPG Bestiary. If a shadow companion is destroyed, or the shadowdancer chooses to dismiss it, the shadowdancer must attempt a DC 15 Fortitude save. If the saving throw fails, the shadowdancer gains one permanent negative level. A successful saving throw avoids this negative level. A destroyed or dismissed shadow companion cannot be replaced for 30 days.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowdancer ~ Summon Shadow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShadowdancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowCompanionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a shadowdancer can summon a shadow, an undead shade. Unlike a normal shadow, this shadow's alignment matches that of the shadowdancer, and the creature cannot create spawn. The summoned shadow receives a +4 bonus on Will saves made to halve the damage from positive channeled energy and the shadow cannot be turned or commanded. This shadow serves as a companion to the shadowdancer and can communicate intelligibly with the shadowdancer. This shadow has a number of hit points equal to half the shadowdancer's total. The shadow uses the shadowdancer's base attack bonus and base save bonuses. Otherwise, this shadow is identical to the shadow found in the Pathfinder RPG Bestiary. If a shadow companion is destroyed, or the shadowdancer chooses to dismiss it, the shadowdancer must attempt a DC 15 Fortitude save. If the saving throw fails, the shadowdancer gains one permanent negative level. A successful saving throw avoids this negative level. A destroyed or dismissed shadow companion cannot be replaced for 30 days."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowCompanionLVL|ShadowdancerLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Shadow Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Shadow Companion|Companion (Shadow)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.392"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3070,
+    "record_key": "Shadowdancer ~ Summon Shadow"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

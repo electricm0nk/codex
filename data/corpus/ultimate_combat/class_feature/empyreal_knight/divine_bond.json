@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Empyreal Knight ~ Divine Bond",
+    "name": "Divine Bond",
+    "class": "Paladin",
+    "description": "At 5th level, an empyreal knight forms a bond with a mount, as the standard paladin ability. Her mount gains the celestial template at 8th level. At 12th level, her mount sprouts wings if it cannot already fly, and gains a fly speed of twice its land speed and good maneuverability. If the mount could already fly, its fly speed and maneuverability improve to at least this level. This ability otherwise functions as the paladin ability of the same name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empyreal Knight ~ Divine Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineBondLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineBondTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, an empyreal knight forms a bond with a mount, as the standard paladin ability. Her mount gains the celestial template at 8th level. At 12th level, her mount sprouts wings if it cannot already fly, and gains a fly speed of twice its land speed and good maneuverability. If the mount could already fly, its fly speed and maneuverability improve to at least this level. This ability otherwise functions as the paladin ability of the same name."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Empyreal Knight ~ Special Mount"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1465,
+    "record_key": "Empyreal Knight ~ Divine Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

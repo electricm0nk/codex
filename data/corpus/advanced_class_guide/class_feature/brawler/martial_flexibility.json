@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brawler ~ Martial Flexibility",
+    "name": "Martial Flexibility",
+    "class": "Brawler",
+    "description": "The brawler can use a move action to gain the benefit of a combat feat he doesn't possess. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREVAREQ:BrawlerLVL,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Martial Flexibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerMartialFlexibilityTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlerMartialFlexibilityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Active_Martial_Flexibility|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can use a move action to gain the benefit of a combat feat he doesn't possess. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREVAREQ:BrawlerLVL,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can use a move action to gain the benefit of a combat feat he doesn't possess. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREMULT:2,[PREVARGTEQ:BrawlerLVL,2],[PREVARLT:BrawlerLVL,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can gain the benefit of two combat feats he doesn't possess. He can select one feat as a swift action or two feats as a move action. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREVAREQ:BrawlerLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can gain the benefit of two combat feats he doesn't possess. He can select one feat as a swift action or two feats as a move action. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREMULT:2,[PREVARGTEQ:BrawlerLVL,7],[PREVARLT:BrawlerLVL,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can gain the benefit of three combat feats he doesn't possess. He can select one feat as a free action, two feats as a swift action or three feats as a move action. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREVAREQ:BrawlerLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can gain the benefit of three combat feats he doesn't possess. He can select one feat as a free action, two feats as a swift action or three feats as a move action. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREMULT:2,[PREVARGTEQ:BrawlerLVL,11],[PREVARLT:BrawlerLVL,12]"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can gain the benefit of three combat feats he doesn't possess. He can select one feat as an immediate or free action or three feats as a swift action. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREVAREQ:BrawlerLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can gain the benefit of three combat feats he doesn't possess. He can select one feat as an immediate or free action or three feats as a swift action. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREMULT:2,[PREVARGTEQ:BrawlerLVL,13],[PREVARLT:BrawlerLVL,20]"
+      },
+      {
+        "key": "DESC",
+        "value": "The brawler can gain the benefit of combat feats he doesn't possess. He can select one feat as an immediate or free action or any number of feats as a swift action. This effect lasts for 1 minute. The brawler must otherwise meet all the feat's prerequisites. He can use this ability a number of times per day equal to %1. The brawler can use this ability again before the duration expires in order to replace the previous combat feat with another choice. If a combat feat has a daily use limitation, any uses of that combat feat while using this ability count toward that feat's daily limit. At later levels, when he gains multiple feats through this ability, the brawler can use those feats to meet the prerequisites of other feats he gains with this ability. Doing so means he cannot replace a feat currently fulfilling another's prerequisite without also replacing those feats that require it. Each individual feat selected counts toward his daily uses of this ability.|BrawlerMartialFlexibilityTimes|PREVAREQ:BrawlerLVL,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Martial Flexibility Feat|PREVARGTEQ:Active_Martial_Flexibility,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerMartialFlexibilityLVL|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerMartialFlexibilityTimes|max(1,BrawlerMartialFlexibilityLVL/2)+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BrawlerMartialFlexibilityTimes"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Active_Martial_Flexibility|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 898,
+    "record_key": "Brawler ~ Martial Flexibility"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

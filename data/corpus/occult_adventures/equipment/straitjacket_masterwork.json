@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 50.0,
+    "description": "A creature wearing a straitjacket gains the grappled condition, except it is able to move. Escaping from the straitjacket requires a successful DC 30 Escape Artist check.",
+    "key": "Straitjacket (Masterwork)",
+    "name": "Straitjacket (Masterwork)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "SPROP",
+        "value": "A creature wearing a straitjacket gains the grappled condition, except it is able to move. Escaping from the straitjacket requires a successful DC 30 Escape Artist check."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Straitjacket (Masterwork)",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

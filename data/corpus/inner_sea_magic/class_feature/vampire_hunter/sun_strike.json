@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vampire Hunter ~ Sun Strike",
+    "name": "Sun Strike",
+    "class": "Inquisitor",
+    "description": "A vampire hunter can infuse a single weapon she wields with the purifying light of the sun as a swift action for %1 rounds per day. These rounds do not need to be consecutive. While a weapon is infused with the sun, it deals +1d6 points of damage to any creature that is susceptible or vulnerable to sunlight, including many types of undead (particularly spectres, vampires, and wraiths). This additional damage also applies to oozes and fungus-based monsters. A weapon infused with sun strike sheds illumination as if it were a sunrod.|InquisitorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampire Hunter ~ Sun Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A vampire hunter can infuse a single weapon she wields with the purifying light of the sun as a swift action for %1 rounds per day. These rounds do not need to be consecutive. While a weapon is infused with the sun, it deals +1d6 points of damage to any creature that is susceptible or vulnerable to sunlight, including many types of undead (particularly spectres, vampires, and wraiths). This additional damage also applies to oozes and fungus-based monsters. A weapon infused with sun strike sheds illumination as if it were a sunrod.|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|InquisitorLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 272,
+    "record_key": "Vampire Hunter ~ Sun Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "ability_keys": [
       "bestiary_4:companion:flea_giant_disease",
@@ -21,6 +19,116 @@
     ],
     "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Racial Traits ~ Flea (Giant)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|20|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "DR",
+        "value": "5/Slashing"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Giant Flea"
+      },
+      {
+        "key": "LEGS",
+        "value": "6"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Familiar|Augmented Magical Beast|FamiliarBase"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Vermin"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -59,16 +167,18 @@
       "Vermin"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
-    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
-    "line": 22,
-    "record_key": "Familiar (Giant Flea)"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+    "record_key": "Familiar (Giant Flea)",
+    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

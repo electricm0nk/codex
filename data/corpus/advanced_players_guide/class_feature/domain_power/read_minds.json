@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Read Minds",
+    "name": "Read Minds",
+    "class": "Domain Power",
+    "description": "At 8th level, you can broaden your mental spectrum to encompass those around you. Doing so allows you to read the mind of every creature within 30 feet as if you had cast detect thoughts. This ability allows you to read the surface thoughts of any creature that you are aware of after only 1 round of concentration. Creatures in this area are allowed a Will save to negate the effect. The DC of this Will save is %1. You can use this ability %2 rounds per day. These rounds do not need to be consecutive.|DomainKnowledgeLVL/2+10+WIS|DomainKnowledgeLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Read Minds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can broaden your mental spectrum to encompass those around you. Doing so allows you to read the mind of every creature within 30 feet as if you had cast detect thoughts. This ability allows you to read the surface thoughts of any creature that you are aware of after only 1 round of concentration. Creatures in this area are allowed a Will save to negate the effect. The DC of this Will save is %1. You can use this ability %2 rounds per day. These rounds do not need to be consecutive.|DomainKnowledgeLVL/2+10+WIS|DomainKnowledgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainKnowledgeLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1874,
+    "record_key": "Domain Power ~ Read Minds"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

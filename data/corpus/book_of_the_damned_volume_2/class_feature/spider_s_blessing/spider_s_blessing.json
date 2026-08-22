@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spider's Blessing ~ Mazmezz",
+    "name": "Spider's Blessing",
+    "class": "Spider's Blessing",
+    "description": "You can use poison and vermin shape II 1/day each as spell-like abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spider's Blessing ~ Mazmezz"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Poison,14+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Vermin Shape II,15+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use poison and vermin shape II 1/day each as spell-like abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 157,
+    "record_key": "Spider's Blessing ~ Mazmezz"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Flurry of Blows",
+    "name": "Flurry of Blows",
+    "class": "Monk",
+    "description": "You can make a flurry of blows as a full-attack action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Flurry of Blows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialAttack.Extraordinary.Flurry of Blows"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of blows as a full-attack action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1096,
+    "record_key": "Monk ~ Flurry of Blows"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

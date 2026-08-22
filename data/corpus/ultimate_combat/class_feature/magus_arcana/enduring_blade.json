@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Enduring Blade",
+    "name": "Enduring Blade",
+    "class": "Magus Arcana",
+    "description": "Whenever the magus enchants his weapon using his arcane pool, he may spend 1 additional point from his arcane pool to increase the duration to 1 minute per magus level. The magus must be at least 6th level before selecting this arcana.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Enduring Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the magus enchants his weapon using his arcane pool, he may spend 1 additional point from his arcane pool to increase the duration to 1 minute per magus level. The magus must be at least 6th level before selecting this arcana."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 910,
+    "record_key": "Magus Arcana ~ Enduring Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

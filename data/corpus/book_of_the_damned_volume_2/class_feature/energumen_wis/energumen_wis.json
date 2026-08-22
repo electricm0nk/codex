@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Energumen (Wis)",
+    "name": "Energumen (Wis)",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SaveBonus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DemoniacEnergumenWisApply|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|PREMULT:2,[PREVARGTEQ:DemoniacEnergumenWisApply,1],[PREVAREQ:DemoniacEnergumen,2]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Electricity|Immunity to Poison|PREMULT:2,[PREVARGTEQ:DemoniacEnergumenWisApply,1],[PREVAREQ:DemoniacEnergumen,3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|10|PREMULT:2,[PREVARGTEQ:DemoniacEnergumenWisApply,1],[PREVAREQ:DemoniacEnergumen,2]"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 vs poison|PREMULT:2,[PREVARGTEQ:DemoniacEnergumenWisApply,1],[PREVAREQ:DemoniacEnergumen,2]"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|WIS|DemoniacEnergumen*2|TYPE=Profane"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|DemoniacEnergumenWisApply|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 32,
+    "record_key": "Energumen (Wis)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

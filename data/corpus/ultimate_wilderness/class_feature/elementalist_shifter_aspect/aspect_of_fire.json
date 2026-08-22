@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elementalist Shifter Aspect ~ Fire",
+    "name": "Aspect of Fire",
+    "class": "Elementalist Shifter Aspect",
+    "description": "You take on the power of a fire elemental, becoming a being of living flame that can burn enemies and move with great speed. [Minor Form] You gain a +%1 enhancement bonus to your Dexterity score.|FireAspectDexBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elementalist Shifter Aspect ~ Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ElementalistShifterAspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterFireAspectLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireAspectDexBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You take on the power of a fire elemental, becoming a being of living flame that can burn enemies and move with great speed. [Minor Form] You gain a +%1 enhancement bonus to your Dexterity score.|FireAspectDexBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " [Major Form] Your shape changes to that of a Medium fire elemental (Bestiary p124). While you are in this form, your base speed changes to 50 feet and you gain immunity to fire, vulnerability to cold, and the burn special attack as per the universal monster rule, dealing damage equal to your slam attack whenever a creature fails its Reflex save against that ability.|PREVARGTEQ:ShifterWildShape,1"
+      },
+      {
+        "key": "DESC",
+        "value": " You gain Improved Natural Attack with your slam.|PREVARGTEQ:ShifterWildShape,1|PREVARGTEQ:ShifterFireAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": " You deal fire damage equal to double your slam damage against opponents that fail their saves against your burn ability.|PREVARGTEQ:ShifterWildShape,1|PREVARGTEQ:ShifterFireAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterFireAspectLVL|ShifterAspectLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireAspectDexBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireAspectDexBonus|2|PREVARGTEQ:ShifterFireAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireAspectDexBonus|2|PREVARGTEQ:ShifterFireAspectLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1051,
+    "record_key": "Elementalist Shifter Aspect ~ Fire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

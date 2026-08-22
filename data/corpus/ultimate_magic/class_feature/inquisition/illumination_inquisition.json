@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisition ~ Illumination",
+    "name": "Illumination Inquisition",
+    "class": "Inquisition",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisition ~ Illumination"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain.Inquisition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainIlluminationLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainIlluminationDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainIlluminationTimes|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illumination Domain ~ Illuminating Touch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illumination Domain ~ Aura of Enlightenment|PREVARGTEQ:DomainIlluminationLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainIlluminationLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainIlluminationDC|10+(DomainIlluminationLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainIlluminationTimes|DomainPowerTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 330,
+    "record_key": "Inquisition ~ Illumination"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

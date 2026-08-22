@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Esoteric ~ AC Bonus",
+    "name": "AC Bonus",
+    "class": "Magus",
+    "description": "[not implemented]At 7th level when an esoteric wears light or no armor, he gains a +1 dodge bonus to AC and CMD. This bonus increases by 1 at 13th level. He loses these bonuses while immobilized or helpless, or while wearing medium or heavy armor, using a shield, or carrying a medium or heavy load. This ability replaces medium armor and heavy armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Esoteric ~ AC Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Esoteric Class Feature.Magus Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]At 7th level when an esoteric wears light or no armor, he gains a +1 dodge bonus to AC and CMD. This bonus increases by 1 at 13th level. He loses these bonuses while immobilized or helpless, or while wearing medium or heavy armor, using a shield, or carrying a medium or heavy load. This ability replaces medium armor and heavy armor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|if(MagusLVL>=13,2,1)|TYPE=Dodge|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|if(MagusLVL>=13,2,1)|TYPE=Dodge|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1780,
+    "record_key": "Esoteric ~ AC Bonus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

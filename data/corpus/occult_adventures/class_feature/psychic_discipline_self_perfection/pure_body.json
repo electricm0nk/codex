@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Self-Perfection ~ Pure Body",
+    "name": "Pure Body",
+    "class": "Psychic",
+    "description": "At 13th level, you gain immunity to diseases and poisons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Self-Perfection ~ Pure Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, you gain immunity to diseases and poisons."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1253,
+    "record_key": "Psychic Discipline Self-Perfection ~ Pure Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

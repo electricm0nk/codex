@@ -1,25 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions as beast shape III except that it also allows you to assume the form of a Tiny or Large creature of the magical beast type. If the form you assume has any of the following abilities, you gain the listed ability: burrow 60 feet, climb 90 feet, fly 120 feet [good maneuverability], swim 120 feet, blindsense 60 feet, darkvision 90 feet, low-light vision, scent, tremorsense 60 feet, breath weapon, constrict, ferocity, grab, jet, poison, pounce, rake, rend, roar, spikes, trample, trip, and web. If the creature has immunity or resistance to any elements, you gain resistance 20 to those elements. If the creature has vulnerability to an element, you gain that vulnerability. Tiny magical beast: If the form you take is that of a Tiny magical beast, you gain a -2 penalty to your Strength, a +8 size bonus to your Dexterity, and a +3 natural armor bonus. Large magical beast: If the form you take is that of a Large magical beast, you gain a +6 size bonus to your Strength, a - 2 penalty on your Dexterity, a +2 size bonus to your Constitution, and a +6 natural armor bonus.",
     "key": "Beast Shape IV",
-    "school": "Transmutation",
     "level": 6,
-    "description": "This spell functions as beast shape III except that it also allows you to assume the form of a Tiny or Large creature of the magical beast type. If the form you assume has any of the following abilities, you gain the listed ability: burrow 60 feet, climb 90 feet, fly 120 feet [good maneuverability], swim 120 feet, blindsense 60 feet, darkvision 90 feet, low-light vision, scent, tremorsense 60 feet, breath weapon, constrict, ferocity, grab, jet, poison, pounce, rake, rend, roar, spikes, trample, trip, and web. If the creature has immunity or resistance to any elements, you gain resistance 20 to those elements. If the creature has vulnerability to an element, you gain that vulnerability. Tiny magical beast: If the form you take is that of a Tiny magical beast, you gain a -2 penalty to your Strength, a +8 size bonus to your Dexterity, and a +3 natural armor bonus. Large magical beast: If the form you take is that of a Large magical beast, you gain a +6 size bonus to your Strength, a - 2 penalty on your Dexterity, a +2 size bonus to your Constitution, and a +6 natural armor bonus."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as beast shape III except that it also allows you to assume the form of a Tiny or Large creature of the magical beast type. If the form you assume has any of the following abilities, you gain the listed ability: burrow 60 feet, climb 90 feet, fly 120 feet [good maneuverability], swim 120 feet, blindsense 60 feet, darkvision 90 feet, low-light vision, scent, tremorsense 60 feet, breath weapon, constrict, ferocity, grab, jet, poison, pounce, rake, rend, roar, spikes, trample, trip, and web. If the creature has immunity or resistance to any elements, you gain resistance 20 to those elements. If the creature has vulnerability to an element, you gain that vulnerability. Tiny magical beast: If the form you take is that of a Tiny magical beast, you gain a -2 penalty to your Strength, a +8 size bonus to your Dexterity, and a +3 natural armor bonus. Large magical beast: If the form you take is that of a Large magical beast, you gain a +6 size bonus to your Strength, a - 2 penalty on your Dexterity, a +2 size bonus to your Constitution, and a +6 natural armor bonus.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as beast shape III except that it also allows you to assume the form of a Tiny or Large creature of the magical beast type.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/beastShape.html#_beast-shape-iv"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.247"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 52,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 815,
-    "record_key": "Beast Shape IV.MOD"
+    "record_key": "Beast Shape IV",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

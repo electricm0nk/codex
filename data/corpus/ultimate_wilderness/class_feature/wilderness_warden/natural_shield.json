@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wilderness Warden ~ Natural Shield",
+    "name": "Natural Shield",
+    "class": "Paladin",
+    "description": "A wilderness warden can expend two daily uses of her natural defense ability to grant the benefits of that ability to all nonevil allies within 10 feet for 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Warden ~ Natural Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.WildernessWardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A wilderness warden can expend two daily uses of her natural defense ability to grant the benefits of that ability to all nonevil allies within 10 feet for 1 minute."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 892,
+    "record_key": "Wilderness Warden ~ Natural Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

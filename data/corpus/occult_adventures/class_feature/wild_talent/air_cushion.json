@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Air Cushion",
+    "name": "Air Cushion",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Sp); Level 1; Burn 0 You cushion a fall from any height. You are constantly under the effects of feather fall, and you count as one size category larger for the purpose of determining how you are affected by wind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Air Cushion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Sp); Level 1; Burn 0 You cushion a fall from any height. You are constantly under the effects of feather fall, and you count as one size category larger for the purpose of determining how you are affected by wind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 728,
+    "record_key": "Wild Talent ~ Air Cushion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

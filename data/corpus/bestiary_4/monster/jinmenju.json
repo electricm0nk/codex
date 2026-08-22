@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:jinmenju_enticing_head_fruits",
@@ -22,6 +20,120 @@
     ],
     "race_subtype": null,
     "race_type": "Plant",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Racial Traits ~ Jinmenju"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|18|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamAttacks|1"
+      },
+      {
+        "key": "CR",
+        "value": "11"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Jinmenju"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Perception|Stealth"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Plant:13"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Plant"
+      }
+    ],
     "size": "H",
     "source_page": "p.161",
     "speeds": [
@@ -31,16 +143,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 135,
-    "record_key": "Jinmenju"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Jinmenju",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

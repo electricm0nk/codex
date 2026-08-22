@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Wasteland Meditant",
+    "name": "Wasteland Meditant",
+    "class": "Monk Archetype",
+    "description": "Some monks journey to remote and isolated corners of the world to find serenity and a heightened sense of awareness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Wasteland Meditant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Wasteland Meditant],[!PREFACT:1,ABILITIES,Monk_Archetype_StunningFist=True,Monk_Archetype_Evasion=True,Monk_Archetype_SlowFall=True,Monk_Archetype_ImprovedEvasion=True,Monk_Archetype_QuiveringPalm=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some monks journey to remote and isolated corners of the world to find serenity and a heightened sense of awareness."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wasteland Meditant ~ Dehydrating Strike|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wasteland Meditant ~ Vigor|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wasteland Meditant ~ Desert Strider|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wasteland Meditant ~ Improved Vigor|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wasteland Meditant ~ Pillar of Salt|PRECLASS:1,Monk=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 808,
+    "record_key": "Monk Archetype ~ Wasteland Meditant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

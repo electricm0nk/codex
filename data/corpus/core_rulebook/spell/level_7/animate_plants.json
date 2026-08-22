@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You imbue inanimate plants with mobility and a semblance of life. Each animated plant then immediately attacks whomever or whatever you initially designate as though it were an animated object of the appropriate size category. You may animate one Large or smaller plant, or a number of larger plants as follows: a Huge plant counts as two Large or smaller plants, a Gargantuan plant as four, and a Colossal plant as eight. You can change the designated target or targets as a move action, as if directing an active spell. Use the statistics for animated objects, except that plants smaller than Large don't have hardness. Animate plants cannot affect plant creatures, nor does it affect nonliving vegetable material. Entangle: Alternatively, you may imbue all plants within range with a degree of mobility, which allows them to entwine around creatures in the area. This usage of the spell duplicates the effect of an entangle spell. Spell resistance does not keep creatures from being entangled. This effect lasts 1 hour per caster level.",
     "key": "Animate Plants",
-    "school": "Transmutation",
     "level": 7,
-    "description": "You imbue inanimate plants with mobility and a semblance of life. Each animated plant then immediately attacks whomever or whatever you initially designate as though it were an animated object of the appropriate size category. You may animate one Large or smaller plant, or a number of larger plants as follows: a Huge plant counts as two Large or smaller plants, a Gargantuan plant as four, and a Colossal plant as eight. You can change the designated target or targets as a move action, as if directing an active spell. Use the statistics for animated objects, except that plants smaller than Large don't have hardness. Animate plants cannot affect plant creatures, nor does it affect nonliving vegetable material. Entangle: Alternatively, you may imbue all plants within range with a degree of mobility, which allows them to entwine around creatures in the area. This usage of the spell duplicates the effect of an entangle spell. Spell resistance does not keep creatures from being entangled. This effect lasts 1 hour per caster level."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue inanimate plants with mobility and a semblance of life. Each animated plant then immediately attacks whomever or whatever you initially designate as though it were an animated object of the appropriate size category. You may animate one Large or smaller plant, or a number of larger plants as follows: a Huge plant counts as two Large or smaller plants, a Gargantuan plant as four, and a Colossal plant as eight. You can change the designated target or targets as a move action, as if directing an active spell. Use the statistics for animated objects, except that plants smaller than Large don't have hardness. Animate plants cannot affect plant creatures, nor does it affect nonliving vegetable material. Entangle: Alternatively, you may imbue all plants within range with a degree of mobility, which allows them to entwine around creatures in the area. This usage of the spell duplicates the effect of an entangle spell. Spell resistance does not keep creatures from being entangled. This effect lasts 1 hour per caster level.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue inanimate plants with mobility and a semblance of life.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Plant=7"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or (CASTERLEVEL) hours; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/animatePlants.html#_animate-plants"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One Large plant per three caster levels or all plants within range; see text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 25,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 790,
-    "record_key": "Animate Plants.MOD"
+    "record_key": "Animate Plants",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

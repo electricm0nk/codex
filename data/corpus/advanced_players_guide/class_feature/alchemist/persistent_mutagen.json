@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist ~ Persistent Mutagen",
+    "name": "Persistent Mutagen",
+    "class": "Alchemist",
+    "description": "The effects of your mutagens last for %1 hours.|AlchemistPersistentMutagenDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist ~ Persistent Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistPersistentMutagenLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistPersistentMutagenDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The effects of your mutagens last for %1 hours.|AlchemistPersistentMutagenDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPersistentMutagenDuration|AlchemistPersistentMutagenLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistPersistentMutagenLVL|AlchemistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 99,
+    "record_key": "Alchemist ~ Persistent Mutagen"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Snoop ~ Uncanny Snoop",
+    "name": "Uncanny Snoop",
+    "class": "Rogue",
+    "description": "A snoop gains a +%1 bonus on Intimidate checks when trying to force an opponent to give her information (or Bluff and Diplomacy checks for the same purpose if she has the coax information rogue talent). She also gains a +%1 bonus on Sense Motive checks to tell if someone's information is false.|UncannySnoopBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Snoop ~ Uncanny Snoop"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.SnoopClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UncannySnoopBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A snoop gains a +%1 bonus on Intimidate checks when trying to force an opponent to give her information (or Bluff and Diplomacy checks for the same purpose if she has the coax information rogue talent). She also gains a +%1 bonus on Sense Motive checks to tell if someone's information is false.|UncannySnoopBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannySnoopBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannySnoopBonus|2|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 763,
+    "record_key": "Snoop ~ Uncanny Snoop"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

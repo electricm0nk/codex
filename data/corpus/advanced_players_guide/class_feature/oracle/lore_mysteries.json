@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle ~ Lore Mystery",
+    "name": "Lore Mysteries",
+    "class": "Oracle",
+    "description": "You draw upon the divine mystery of Lore to grant your spells and powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Lore Mystery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleMystery"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LoreMysteriesQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw upon the divine mystery of Lore to grant your spells and powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lore Mystery ~ Final Revelation|PREMULT:2,[PRECLASS:1,Oracle=20],[PREVAREQ:Oracle_CF_FinalRevelation,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lore Mysteries Class Skills|PREVAREQ:Oracle_CF_MysterySkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Lore Mystery Revelation|OracleMysteryLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LoreMysteriesQualify|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|Identify|PREMULT:2,[PRECLASS:1,Oracle=2],[PREVAREQ:Oracle_CF_MysterySpell2,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Tongues|PREMULT:2,[PRECLASS:1,Oracle=4],[PREVAREQ:Oracle_CF_MysterySpell4,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Locate Object|PREMULT:2,[PRECLASS:1,Oracle=6],[PREVAREQ:Oracle_CF_MysterySpell6,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Legend Lore|PREMULT:2,[PRECLASS:1,Oracle=8],[PREVAREQ:Oracle_CF_MysterySpell8,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|Contact Other Plane|PREMULT:2,[PRECLASS:1,Oracle=10],[PREVAREQ:Oracle_CF_MysterySpell10,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=6|Owl's Wisdom (Mass)|PREMULT:2,[PRECLASS:1,Oracle=12],[PREVAREQ:Oracle_CF_MysterySpell12,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=7|Vision|PREMULT:2,[PRECLASS:1,Oracle=14],[PREVAREQ:Oracle_CF_MysterySpell14,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Moment of Prescience|PREMULT:2,[PRECLASS:1,Oracle=16],[PREVAREQ:Oracle_CF_MysterySpell16,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Time Stop|PREMULT:2,[PRECLASS:1,Oracle=18],[PREVAREQ:Oracle_CF_MysterySpell18,0]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 527,
+    "record_key": "Oracle ~ Lore Mystery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

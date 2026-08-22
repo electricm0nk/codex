@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Tactician ~ Masterful Presence",
+    "name": "Masterful Presence",
+    "class": "Paladin",
+    "description": "At 20th level, a tactician gains the ability to grant a different bonus feat to each ally affected by her battlefield presence. In addition, all critical threats made by her and her allies against creatures affected by her weal's champion ability are automatically confirmed (no confirmation roll is needed). This ability replaces holy champion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Tactician ~ Masterful Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a tactician gains the ability to grant a different bonus feat to each ally affected by her battlefield presence. In addition, all critical threats made by her and her allies against creatures affected by her weal's champion ability are automatically confirmed (no confirmation roll is needed). This ability replaces holy champion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1488,
+    "record_key": "Holy Tactician ~ Masterful Presence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

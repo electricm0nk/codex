@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Charnel Colossus ~ Mind Feed",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "inner_sea_bestiary:monster:charnel_colossus"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "On successful Grapple, victim must make DC 38 Will save each round or take 1d6 Wis damage. If victim's Wis is reduced to 0, they are subsumed into the Charnel Colossus."
+      },
+      {
+        "key": "KEY",
+        "value": "Charnel Colossus ~ Mind Feed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.10",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 68,
-    "record_key": "Charnel Colossus ~ Mind Feed"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Charnel Colossus ~ Mind Feed",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

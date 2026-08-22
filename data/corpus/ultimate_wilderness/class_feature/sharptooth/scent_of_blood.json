@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sharptooth ~ Scent of Blood",
+    "name": "Scent of Blood",
+    "class": "Barbarian",
+    "description": "A sharptooth gains scent as per the universal monster rule.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sharptooth ~ Scent of Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.SharptoothClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sharptooth gains scent as per the universal monster rule."
+      },
+      {
+        "key": "DESC",
+        "value": "She also gains keen scent as per universal monster rule.|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Keen Scent|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 218,
+    "record_key": "Sharptooth ~ Scent of Blood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

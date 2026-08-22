@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "wielder can spend 1 panache point when confirming critical to attempt disarm, reposition, sunder, or trip, as an immediate action with no attack of opportunity provoked, with a bonus equal to the weapon's enhancement bonus",
+    "key": "Confounding_AMF",
+    "name": "Confounding_AMF",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Confounding ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Amulet of Mighty Fists Base"
+      },
+      {
+        "key": "SPROP",
+        "value": "wielder can spend 1 panache point when confirming critical to attempt disarm, reposition, sunder, or trip, as an immediate action with no attack of opportunity provoked, with a bonus equal to the weapon's enhancement bonus"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 119,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Confounding_AMF",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

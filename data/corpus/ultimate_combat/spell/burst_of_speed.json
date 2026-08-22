@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Until the end of your turn, you gain a +20-foot bonus to speed (or +10-foot bonus if you are wearing Medium or Heavy armor), your movement does not provoke attacks of opportunity, and you can move through the space of creatures that are larger than you are, but you cannot end your movement this round in a space occupied by a creature.",
+    "key": "Burst of Speed",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Antipaladin,Inquisitor,Magus,Paladin,Ranger=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Until the end of your turn, you gain a +20-foot bonus to speed (or +10-foot bonus if you are wearing Medium or Heavy armor), your movement does not provoke attacks of opportunity, and you can move through the space of creatures that are larger than you are, but you cannot end your movement this round in a space occupied by a creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain increased speed, and your movement ignores attacks of opportunity and allows you to move through the space of creatures larger than you are.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/burstOfSpeed.html#_burst-of-speed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Burst of Speed",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

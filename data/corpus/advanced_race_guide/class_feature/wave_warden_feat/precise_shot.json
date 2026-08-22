@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wave Warden Feat ~ Precise Shot",
+    "name": "Precise Shot",
+    "class": "Wave Warden Feat",
+    "description": "You are adept at firing ranged attacks into melee.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden Feat ~ Precise Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WaveWardenBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Precise Shot"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=2"
+      },
+      {
+        "key": "DESC",
+        "value": "You are adept at firing ranged attacks into melee."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Precise Shot|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 899,
+    "record_key": "Wave Warden Feat ~ Precise Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Transmutation School ~ Change Shape",
+    "name": "Change Shape",
+    "class": "Transmutation School",
+    "description": "You can change your shape for %1 rounds per day. These rounds do not need to be consecutive.|TransmutationChangeShapeRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transmutation School ~ Change Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike.ArcaneSchoolPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationChangeShapeRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change your shape for %1 rounds per day. These rounds do not need to be consecutive.|TransmutationChangeShapeRounds"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability otherwise functions like Beast Shape II or Elemental Body I.|PREVARLT:TransmutationProgressionSchoolLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability otherwise functions like Beast Shape III or elemental body II.|PREVARGTEQ:TransmutationProgressionSchoolLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationChangeShapeRounds|TransmutationSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TransmutationChangeShapeRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2690,
+    "record_key": "Transmutation School ~ Change Shape"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

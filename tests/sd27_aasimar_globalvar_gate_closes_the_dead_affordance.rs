@@ -314,10 +314,13 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 282,
+        checked, 357,
         "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 67 + Horror Adventures' 41 \
          + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
-         §47, §49). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
+         §47, §49) + SD-31 Epic 1-F2's 48 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, \
+         2026-08-15) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
+         SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch). The \
+         158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
          corpus"
     );
 }
@@ -359,6 +362,23 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
         }
     }
 
-    assert_eq!(from_row, 166, "rows whose own !PREFACT declares the gate");
+    assert_eq!(
+        from_row,
+        354,
+        "rows whose own !PREFACT declares the gate (166 -> 223: SD-31 Epic 1-F2's 57 new \
+         standard rows, 2026-08-15, all of which declare their own !PREFACT; 223 -> 232: the \
+         Skinwalker follow-on batch's 9 standard rows, all of which also declare their own \
+         !PREFACT; 232 -> 290: SD-31-E6-F4-002's Advanced Race Guide batch of 58 standard \
+         rows, 2026-08-16, same shape, all self-gated; 290 -> 328: SD31-E6-F4-004's \
+         Advanced Race Guide follow-on batch of 38 standard rows, 2026-08-17, same shape, \
+         all self-gated; 328 -> 346: SD31-E6-F4-007's Advanced Race Guide follow-on batch of \
+         18 standard rows (Changeling, Samsaran), 2026-08-17, closing arg_races.lst's full \
+         37-row playable-race roster, same shape, all self-gated -- including Samsaran's \
+         `Shards of the Past`, whose own row carries `!PREFACT:1,ABILITIES,Samsaran_\
+         ReplaceShardsOfThePast=True` even though its SECOND gate statement in the globalvar \
+         file is a `BONUS:ABILITYPOOL` grant rather than an `ABILITY:` one -- see \
+         `ingest_races.rs`'s `globalvar_prevareq_flags`; 346 -> 354: SD-31 wave-24's \
+         Rougarou (Bestiary 6, 2026-08-20), 8 standard rows, same shape, all self-gated)"
+    );
     assert_eq!(from_globalvar, 9, "Aasimar's nine, whose only declaration is the globalvar file");
 }

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Moonlight Stalker Master",
+    "name": "Moonlight Stalker Master",
+    "class": "Warpriest Bonus Feat",
+    "description": "You leave your opponents swinging at shadows while you slide elusively through the darkness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Moonlight Stalker Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.RacialVision,TYPE.Racial Vision"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Darkvision,Low-Light Vision"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "5,CATEGORY=FEAT,Blind-Fight,Combat Expertise,Improved Feint,Moonlight Stalker,Moonlight Stalker Feint"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Bluff=9"
+      },
+      {
+        "key": "DESC",
+        "value": "You leave your opponents swinging at shadows while you slide elusively through the darkness."
+      },
+      {
+        "key": "DESC",
+        "value": " While you have concealment, your opponents' miss chance against you increases by 10%%. If an opponent misses you due to your concealment, you can spend an immediate action to move 5 feet, this movement does not provoke attacks of opportunity and does not count as a 5-foot step."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Moonlight Stalker Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4545,
+    "record_key": "Warpriest Bonus Feat ~ Moonlight Stalker Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

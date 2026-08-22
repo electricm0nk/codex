@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wildblooded ~ Pit-Touched",
+    "name": "Pit-Touched",
+    "class": "Wildblooded",
+    "description": "Your diabolic corruption is from a source in the deepest parts of Hell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildblooded ~ Pit-Touched"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildblooded Bloodline"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Infernal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Infernal_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your diabolic corruption is from a source in the deepest parts of Hell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pit-Touched Bloodline ~ Bloodline Arcana|Pit-Touched Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pit-Touched Bloodline ~ Tough as Hell|PREVARGTEQ:Sorcerer_Infernal_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Infernal_Description|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower9|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1718,
+    "record_key": "Wildblooded ~ Pit-Touched"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

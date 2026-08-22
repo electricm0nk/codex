@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Magician",
+    "name": "Magician",
+    "class": "Bard Archetype",
+    "description": "A magician dabbles in performance, but sees it as a means to tap into universal energies and channel them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Magician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardInspireCourage.BardDirgeOfDoom.BardFrighteningTune.BardCounterSong.BardWellVersed.BardVersatilePerformance.BardLoreMaster.BardJackOfAllTrades.BardBardicKnowledge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Magician],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardDirgeOfDoom,TYPE.BardFrighteningTune,TYPE.BardCounterSong,TYPE.BardWellVersed,TYPE.BardVersatilePerformance,TYPE.BardLoreMaster,TYPE.BardJackOfAllTrades]"
+      },
+      {
+        "key": "DESC",
+        "value": "A magician dabbles in performance, but sees it as a means to tap into universal energies and channel them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Counterspell|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Dweomercraft|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Spell Suppression|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Metamagic Mastery|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Magical Talent|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Extended Performance|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Expanded Repertoire|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Arcane Bond|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Magician ~ Wand Mastery|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1622,
+    "record_key": "Bard Archetype ~ Magician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

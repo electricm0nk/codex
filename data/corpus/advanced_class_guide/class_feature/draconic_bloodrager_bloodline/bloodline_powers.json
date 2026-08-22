@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodrager Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Draconic Bloodrager Bloodline",
+    "description": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select a chromatic or metallic dragon type. Once chosen, this type cannot be changed. A number of your bloodline powers deal damage and grant resistances based on your dragon type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodrager Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Special Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select a chromatic or metallic dragon type. Once chosen, this type cannot be changed. A number of your bloodline powers deal damage and grant resistances based on your dragon type."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|DraconicBloodragerBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 713,
+    "record_key": "Draconic Bloodrager Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

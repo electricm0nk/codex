@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Awesome Blow",
+    "name": "Improved Awesome Blow",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are skilled at sending your opponents flying.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Awesome Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Power Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Brawler ~ Awesome Blow,TYPE.AwesomeBlow],[PREABILITY:1,CATEGORY=FEAT,Awesome Blow]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at sending your opponents flying."
+      },
+      {
+        "key": "DESC",
+        "value": " You receive a +2 bonus on checks to perform an awesome blow combat maneuver. You also gain a +2 bonus to your combat maneuver defense whenever an opponent tries to perform an awesome blow combat maneuver against you. Whenever you successfully perform an awesome blow combat maneuver, your opponent's movement provokes attacks of opportunity from all your allies (but not you).&nl; Normal: Creatures moved by awesome blow do not provoke attacks of opportunity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Awesome Blow"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4162,
+    "record_key": "Warpriest Bonus Feat ~ Improved Awesome Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

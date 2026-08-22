@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell makes a lock or other small mechanism seem to be trapped to anyone who can detect traps. You place the spell upon any small mechanism or device, such as a lock, hinge, hasp, cork, cap, or ratchet. Any character able to detect traps, or who uses any spell or device enabling trap detection, is certain a real trap exists. Of course, the effect is illusory and nothing happens if the trap is \"sprung\"; its primary purpose is to frighten away thieves or make them waste precious time. If another phantom trap is active within 50 feet when the spell is cast, the casting fails.",
     "key": "Phantom Trap",
-    "school": "Illusion",
     "level": 2,
-    "description": "This spell makes a lock or other small mechanism seem to be trapped to anyone who can detect traps. You place the spell upon any small mechanism or device, such as a lock, hinge, hasp, cork, cap, or ratchet. Any character able to detect traps, or who uses any spell or device enabling trap detection, is certain a real trap exists. Of course, the effect is illusory and nothing happens if the trap is \"sprung\"; its primary purpose is to frighten away thieves or make them waste precious time. If another phantom trap is active within 50 feet when the spell is cast, the casting fails."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell makes a lock or other small mechanism seem to be trapped to anyone who can detect traps. You place the spell upon any small mechanism or device, such as a lock, hinge, hasp, cork, cap, or ratchet. Any character able to detect traps, or who uses any spell or device enabling trap detection, is certain a real trap exists. Of course, the effect is illusory and nothing happens if the trap is \"sprung\"; its primary purpose is to frighten away thieves or make them waste precious time. If another phantom trap is active within 50 feet when the spell is cast, the casting fails.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell makes a lock or other small mechanism seem to be trapped to anyone who can detect traps.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/phantomTrap.html#_phantom-trap"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.320"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Object touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 432,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1184,
-    "record_key": "Phantom Trap.MOD"
+    "record_key": "Phantom Trap",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Haunted Gnome Assault",
+    "name": "Haunted Gnome Assault",
+    "class": "Warpriest Bonus Feat",
+    "description": "Discharging your disturbing glamer as you strike a telling blow, you haunt a foe with lingering fear.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Haunted Gnome Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gnome ~ Gnome Magic"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Haunted Gnome"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (arcana)=3"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Discharging your disturbing glamer as you strike a telling blow, you haunt a foe with lingering fear."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain one use of your gnome magic that is independent of your gnome magic spell-like abilities. When you wish to cast a gnome magic spell-like ability for which you have no daily uses remaining, you can expend this independent use to do so. Further, while you are under the effect of haunted fey aspect (page 230), you can discharge that spell as a free action after you hit an opponent with a charge attack or score a critical hit against an opponent. If you do, that opponent becomes shaken for 1 round."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Haunted Gnome Assault"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4458,
+    "record_key": "Warpriest Bonus Feat ~ Haunted Gnome Assault"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

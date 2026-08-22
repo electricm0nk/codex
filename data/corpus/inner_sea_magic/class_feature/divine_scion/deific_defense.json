@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Scion ~ Deific Defense",
+    "name": "Deific Defense",
+    "class": "Divine Scion",
+    "description": "A divine scion gains DR %1, bypassed by attacks with the alignment subtype of her opposition alignment.|DeificDefenseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ Deific Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeificDefenseBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine scion gains DR %1, bypassed by attacks with the alignment subtype of her opposition alignment.|DeificDefenseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeificDefenseBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 32,
+    "record_key": "Divine Scion ~ Deific Defense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

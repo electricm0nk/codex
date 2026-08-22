@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Nascent Demon Lord Traits",
     "delivery": null,
@@ -13,19 +11,51 @@
     "owners": [
       "inner_sea_bestiary:monster:nightripper"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Charm|Immunity to Compulsion|Immunity to Death Effects|Immunity to Electricity|Immunity to Poison|Resistance to Acid|Resistance to Cold|Resistance to Fire|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus,ColdResistanceBonus,FireResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|300"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, Nightripper can summon any demon or combination of demons whose total combined CR is 20 or lower. This ability always works, and is equivalent to a 9th-level spell. Nightripper's natural weapons, as well as any weapon he wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
     "source_page": "p.34",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 235,
-    "record_key": "Nascent Demon Lord Traits"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 235,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Nascent Demon Lord Traits",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

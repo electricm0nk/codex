@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Haunt Channeler",
+    "name": "Haunt Channeler",
+    "class": "Medium",
+    "description": "A medium can use his familiarity with spirits to assist him when dealing with haunts. He can always act on the surprise round against a haunt, and his touch funnels a portion of the haunt into himself, dealing %1d6 points of damage to the haunt as if via positive energy and allowing the medium to ask the haunt a single question. The haunt can answer the question however it chooses. Additionally, the medium can forgo his saving throw against a haunt's effects to funnel the haunt entirely into himself. If he does so, the medium suffers the haunt's full effect, but the haunt doesn't affect anyone else (even if it normally would). The haunt then gains control of the medium's body for 24 hours. Once per minute, the medium can attempt to end this possession early by succeeding at a Will save (DC %2).|HauntChannelDice|HauntChannelDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Haunt Channeler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HauntChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HauntChannelDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium can use his familiarity with spirits to assist him when dealing with haunts. He can always act on the surprise round against a haunt, and his touch funnels a portion of the haunt into himself, dealing %1d6 points of damage to the haunt as if via positive energy and allowing the medium to ask the haunt a single question. The haunt can answer the question however it chooses. Additionally, the medium can forgo his saving throw against a haunt's effects to funnel the haunt entirely into himself. If he does so, the medium suffers the haunt's full effect, but the haunt doesn't affect anyone else (even if it normally would). The haunt then gains control of the medium's body for 24 hours. Once per minute, the medium can attempt to end this possession early by succeeding at a Will save (DC %2).|HauntChannelDice|HauntChannelDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntChannelDice|MediumLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntChannelDC|20+MediumLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 817,
+    "record_key": "Medium ~ Haunt Channeler"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

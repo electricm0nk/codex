@@ -1,4 +1,5 @@
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import type { ClassFeatureDescriptionDto } from '../boundary/loadClassFeatureDescriptions';
 import type { HeldClass } from './characterProgression';
 
 /**
@@ -77,6 +78,17 @@ export interface ClassFeatureRow {
   value: number;
   /** The engine's corpus-cited derivation, verbatim. */
   detail: string;
+  /**
+   * The real rulebook `DESC:` text for this feature, or `null`.
+   *
+   * SD31-D7-PROSE-003. A SEPARATE field from `detail`: `detail` is the
+   * engine's own computed derivation (may be a bare magnitude with no prose
+   * at all), this is the corpus row's actual rules text, joined via
+   * {@link matchesCorpusFeature}. `null` when no `classToken`-scoped
+   * description candidate's `(classSlug, featureSlug)` matches this row's
+   * own `id` — never a guess, never the nearest match.
+   */
+  corpusDescription: string | null;
 }
 
 export interface ClassFeatureNotice {
@@ -163,9 +175,56 @@ function splitId(id: string, heldTokens: Set<string>): { classToken: string | nu
   return { classToken: null, label: humanise(afterPrefix) };
 }
 
+/**
+ * Whether a `ClassFeatureDescriptionDto` candidate is the SAME record a
+ * class-feature explanation id names.
+ *
+ * Reuses, verbatim, the join `v06_work_inventory.rs`'s `Kind::ClassFeature`
+ * classify arm already trusts to decide `grounded` evidence:
+ * `id.contains(".{owner}.") && id.ends_with(&feature_slug)`. This is
+ * DELIBERATE reuse, not a second invented rule — the frontend's own join can
+ * never be more permissive than the join the board's own doneness
+ * measurement already relies on. `endsWith`, never exact equality: some ids
+ * carry an extra `corpus_record` segment ahead of the feature slug
+ * (`RECORD_FAMILY_SEGMENTS`).
+ */
+export function matchesCorpusFeature(
+  id: string,
+  classSlug: string,
+  featureSlug: string
+): boolean {
+  return id.includes(`.${classSlug}.`) && id.endsWith(featureSlug);
+}
+
+/**
+ * Looks up the corpus description for one class-feature row, or `null` when
+ * no candidate matches — a near-miss is refused, never guessed.
+ *
+ * `classToken === null` (the pre-namespacing `class_chassis.*` family, which
+ * names no class at all) always refuses: there is no `classSlug` to match
+ * against, and matching by `featureSlug` alone would be exactly the
+ * shared-NAME hazard `decisions.md §10`'s first guard exists to prevent
+ * (`corpus_record ~ ...` names collide far more than `(class, feature)`
+ * pairs do).
+ */
+function findCorpusDescription(
+  id: string,
+  classToken: string | null,
+  descriptions: readonly ClassFeatureDescriptionDto[]
+): string | null {
+  if (classToken === null) {
+    return null;
+  }
+  const match = descriptions.find(
+    (d) => d.classSlug === classToken && matchesCorpusFeature(id, d.classSlug, d.featureSlug)
+  );
+  return match?.description ?? null;
+}
+
 export function buildClassFeatureSurface(
   explanations: readonly ExplanationDto[],
-  heldClasses: readonly HeldClass[]
+  heldClasses: readonly HeldClass[],
+  descriptions: readonly ClassFeatureDescriptionDto[] = []
 ): ClassFeatureSurface {
   // Token -> the held class's own label, so an attributed row can render the
   // name the character already uses instead of the raw id segment.
@@ -201,6 +260,7 @@ export function buildClassFeatureSurface(
       label,
       value: explanation.value,
       detail: explanation.detail,
+      corpusDescription: findCorpusDescription(explanation.id, classToken, descriptions),
     });
   }
 

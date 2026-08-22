@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fire Blessing ~ Armor of Flame",
+    "name": "Armor of Flame",
+    "class": "Fire Blessing",
+    "description": "You can touch an ally to wreath it in flames. This works as fire shield (warm shield only) with a duration of 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fire Blessing ~ Armor of Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch an ally to wreath it in flames. This works as fire shield (warm shield only) with a duration of 1 minute."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2248,
+    "record_key": "Fire Blessing ~ Armor of Flame"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

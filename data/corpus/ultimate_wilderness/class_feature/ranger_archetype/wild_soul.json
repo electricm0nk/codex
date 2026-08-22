@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Wild Soul",
+    "name": "Wild Soul",
+    "class": "Ranger Archetype",
+    "description": "Hailing from primitive roots in the wild, some rangers venture to more civilized lands and learn their ways. Wild souls carry these more refined teachings back to the frontier lands of their birth, and they employ that knowledge in defense of their homes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Wild Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wild Soul],[!PREFACT:1,ABILITIES,Ranger_Archetype_FavoredEnemy=True,Ranger_Archetype_SwiftTracker=True,Ranger_Archetype_Quarry=True,Ranger_Archetype_ImprovedQuarry=True,Ranger_Archetype_MasterHunter=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Hailing from primitive roots in the wild, some rangers venture to more civilized lands and learn their ways. Wild souls carry these more refined teachings back to the frontier lands of their birth, and they employ that knowledge in defense of their homes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Soul ~ Unfettered Soul|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Soul ~ Nemesis|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Soul ~ Nemesis Defense|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Soul ~ Break the Interloper|PRECLASS:1,Ranger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Soul ~ Dizzying Onslaught|PRECLASS:1,Ranger=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Soul ~ Nemesis Slayer|PRECLASS:1,Ranger=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_MasterHunter|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_MasterHunter|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 904,
+    "record_key": "Ranger Archetype ~ Wild Soul"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

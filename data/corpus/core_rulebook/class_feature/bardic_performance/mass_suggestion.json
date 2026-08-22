@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Mass Suggestion",
+    "name": "Mass Suggestion",
+    "class": "Bardic Performance",
+    "description": "You use your performance to make a Suggestion (as per the spell) to any number of creatures you have already fascinated. Using this ability does not disrupt the Fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the Fascinate effect). You can use this ability more than once against an individual creature during an individual performance. Making a Mass Suggestion does not count against your daily use of Bardic Performance. A Will saving throw (DC %1) negates the effect. Mass Suggestion is an enchantment (compulsion), mind affecting, language-dependent ability that relies on audible components.|MassSuggestionDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Mass Suggestion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MassSuggestionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your performance to make a Suggestion (as per the spell) to any number of creatures you have already fascinated. Using this ability does not disrupt the Fascinate effect, but it does require a standard action to activate (in addition to the free action to continue the Fascinate effect). You can use this ability more than once against an individual creature during an individual performance. Making a Mass Suggestion does not count against your daily use of Bardic Performance. A Will saving throw (DC %1) negates the effect. Mass Suggestion is an enchantment (compulsion), mind affecting, language-dependent ability that relies on audible components.|MassSuggestionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MassSuggestionDC|10+(BardicPerformanceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 532,
+    "record_key": "Bardic Performance ~ Mass Suggestion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisition ~ Clandestine",
+    "name": "Clandestine Inquisition",
+    "class": "Inquisition",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisition ~ Clandestine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain.Inquisition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainClandestineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainClandestineDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainClandestineTimes|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Clandestine Domain ~ Disappear"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Clandestine Domain ~ Blessed Secrecy|PREVARGTEQ:DomainClandestineLVL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Clandestine Domain ~ Delayed Spells|PREVARGTEQ:DomainClandestineLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainClandestineLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainClandestineDC|10+(DomainClandestineLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainClandestineTimes|DomainPowerTimes"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Sleight of Hand"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 73,
+    "record_key": "Inquisition ~ Clandestine"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

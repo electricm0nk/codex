@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guard Dedication ~ Rage Power",
+    "name": "Rage Power",
+    "class": "Guard Dedication",
+    "description": "The Ulfen Guard can select a barbarian rage power for which she qualifies, adding her Ulfen Guard level to her barbarian level to determine access. This guard dedication can be chosen up to three times.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Rage Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersPrereqLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The Ulfen Guard can select a barbarian rage power for which she qualifies, adding her Ulfen Guard level to her barbarian level to determine access. This guard dedication can be chosen up to three times."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=3|NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersPrereqLVL|Ulfen_GuardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 569,
+    "record_key": "Guard Dedication ~ Rage Power"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

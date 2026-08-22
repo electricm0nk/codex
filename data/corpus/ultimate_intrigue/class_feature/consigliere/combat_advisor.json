@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Consigliere ~ Combat Advisor",
+    "name": "Combat Advisor",
+    "class": "Rogue",
+    "description": "Whenever a consigliere misses with a melee attack against an opponent, he can designate an ally within 30 feet of the target to receive a +%1 insight bonus on her next attack roll against that opponent before the consigliere's next turn.|ConsigliereCombatAdvisorBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Consigliere ~ Combat Advisor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.ConsigliereClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConsigliereCombatAdvisorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a consigliere misses with a melee attack against an opponent, he can designate an ally within 30 feet of the target to receive a +%1 insight bonus on her next attack roll against that opponent before the consigliere's next turn.|ConsigliereCombatAdvisorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConsigliereCombatAdvisorBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConsigliereCombatAdvisorBonus|1|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 726,
+    "record_key": "Consigliere ~ Combat Advisor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

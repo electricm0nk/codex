@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Child ~ Native Fortitude",
+    "name": "Native Fortitude",
+    "class": "Druid",
+    "description": "A feral child gains a +1 bonus on saving throws against disease, exhaustion, fatigue, fear, and poison. When she is in her favored terrain, she instead applies her favored terrain bonus on such saving throws. She also recovers from ability damage, exhaustion, and fatigue at twice the normal rate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Child ~ Native Fortitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A feral child gains a +1 bonus on saving throws against disease, exhaustion, fatigue, fear, and poison. When she is in her favored terrain, she instead applies her favored terrain bonus on such saving throws. She also recovers from ability damage, exhaustion, and fatigue at twice the normal rate."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 375,
+    "record_key": "Feral Child ~ Native Fortitude"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

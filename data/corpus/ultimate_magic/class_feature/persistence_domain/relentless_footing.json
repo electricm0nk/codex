@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Persistence Domain ~ Relentless Footing",
+    "name": "Relentless Footing",
+    "class": "Persistence Domain",
+    "description": "As a swift action, you can add 10 feet to your land speed. This increase counts as an enhancement bonus, and it affects your jumping distance as normal for increased speed. You can use this ability %1 times per day.|DomainPersistenceTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Persistence Domain ~ Relentless Footing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can add 10 feet to your land speed. This increase counts as an enhancement bonus, and it affects your jumping distance as normal for increased speed. You can use this ability %1 times per day.|DomainPersistenceTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|MOVEADD|TYPE.Walk|10|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 388,
+    "record_key": "Persistence Domain ~ Relentless Footing"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

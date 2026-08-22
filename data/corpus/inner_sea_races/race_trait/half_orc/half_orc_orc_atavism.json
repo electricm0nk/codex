@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:47:16Z",
+  "ingested_at": "2026-08-15T21:52:14Z",
   "data": {
     "key": "Half-Orc ~ Orc Atavism",
     "name": "Orc Atavism",
@@ -115,7 +115,6 @@
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:choice",
-    "computed:pre_guard",
-    "derived:bonus"
+    "computed:pre_guard"
   ]
 }

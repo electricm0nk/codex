@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create a fine wooden carriage with whatever cosmetic embellishments you desire. It is well constructed, although not exceptionally ostentatious. The carriage can carry up to six Medium or Small passengers. When conjured, the carriage comes with a team of two quasi-real light horses, which are already harnessed to the carriage. At your command, an invisible coachman similar to an unseen servant can assume the role of driver and direct the carriage, although it can't perform any complex or dangerous driving, and fails any checks made to drive the carriage in such conditions. At the end of the spell's duration, the carriage, horses, and coachman disappear into nothingness, depositing everything on or in it on the ground in its space.|PRERULE:1,DisplayFullSpell",
+    "key": "Conjure Carriage",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Magus,Sorcerer,Summoner,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a fine carriage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a fine wooden carriage with whatever cosmetic embellishments you desire. It is well constructed, although not exceptionally ostentatious. The carriage can carry up to six Medium or Small passengers. When conjured, the carriage comes with a team of two quasi-real light horses, which are already harnessed to the carriage. At your command, an invisible coachman similar to an unseen servant can assume the role of driver and direct the carriage, although it can't perform any complex or dangerous driving, and fails any checks made to drive the carriage in such conditions. At the end of the spell's duration, the carriage, horses, and coachman disappear into nothingness, depositing everything on or in it on the ground in its space.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Conjure Carriage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One quasi-real carriage, horses, and driver"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Conjure Carriage",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

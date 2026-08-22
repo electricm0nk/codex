@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist Trick ~ Compel Alacrity",
+    "name": "Compel Alacrity",
+    "class": "Mesmerist Trick",
+    "description": "A dash of mental speed lets the subject push past her physical limits to avoid an enemy. The mesmerist can trigger this trick when the subject begins her turn within an enemy's reach. The subject can move %1 feet as a free action without provoking attacks of opportunity. The subject can't move farther than her speed in this way. The movement from this trick doesn't count against the subject's movement speed for that round.|10+5*floor(MesmeristLVL/5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Trick ~ Compel Alacrity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A dash of mental speed lets the subject push past her physical limits to avoid an enemy. The mesmerist can trigger this trick when the subject begins her turn within an enemy's reach. The subject can move %1 feet as a free action without provoking attacks of opportunity. The subject can't move farther than her speed in this way. The movement from this trick doesn't count against the subject's movement speed for that round.|10+5*floor(MesmeristLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 939,
+    "record_key": "Mesmerist Trick ~ Compel Alacrity"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

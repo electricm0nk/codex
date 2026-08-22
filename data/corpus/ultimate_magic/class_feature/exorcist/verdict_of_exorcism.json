@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Exorcist ~ Verdict of Exorcism",
+    "name": "Verdict of Exorcism",
+    "class": "Inquisitor",
+    "description": "While using judgment, you can unleash the verdict of exorcism on a creature. When you do, your judgment ends, but the creature is dazed for 1 round (Will DC %1 negates); if the creature is possessed, the possessing entity must succeed at a Will saving throw (DC %1), or be exorcised and never again allowed in that same body.|VerdictOfExorcismDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exorcist ~ Verdict of Exorcism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerdictOfExorcismDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While using judgment, you can unleash the verdict of exorcism on a creature. When you do, your judgment ends, but the creature is dazed for 1 round (Will DC %1 negates); if the creature is possessed, the possessing entity must succeed at a Will saving throw (DC %1), or be exorcised and never again allowed in that same body.|VerdictOfExorcismDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerdictOfExorcismDC|10+classlevel(\"Inquisitor\")/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1256,
+    "record_key": "Exorcist ~ Verdict of Exorcism"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

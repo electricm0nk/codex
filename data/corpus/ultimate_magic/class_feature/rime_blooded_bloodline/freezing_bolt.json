@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rime-Blooded Bloodline ~ Freezing Bolt",
+    "name": "Freezing Bolt",
+    "class": "Rime-Blooded Bloodline",
+    "description": "You can cause the air to erupt in freezing sleet. This 10-foot-radius burst does %1d6 points of cold damage (Reflex half). The DC of this save is %2.|Sorcerer_RimeBloodedFreezingBolt_Dice|Sorcerer_RimeBloodedFreezingBolt_DC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rime-Blooded Bloodline ~ Freezing Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Rime-Blooded Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Rime-Blooded"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Boreal_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_RimeBloodedFreezingBolt_Dice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_RimeBloodedFreezingBolt_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_RimeBloodedFreezingBolt_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause the air to erupt in freezing sleet. This 10-foot-radius burst does %1d6 points of cold damage (Reflex half). The DC of this save is %2.|Sorcerer_RimeBloodedFreezingBolt_Dice|Sorcerer_RimeBloodedFreezingBolt_DC"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_RimeBloodedFreezingBolt_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_RimeBloodedFreezingBolt_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_RimeBloodedFreezingBolt_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_RimeBloodedFreezingBolt_Times|PREVARGTEQ:Sorcerer_RimeBloodedFreezingBolt_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "This power has a range of 60 feet. This bloodline power replaces snow shroud."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_RimeBloodedFreezingBolt_Dice|Sorcerer_Boreal_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_RimeBloodedFreezingBolt_DC|10+(Sorcerer_Boreal_BloodlinePower9LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_RimeBloodedFreezingBolt_Times|max(floor((Sorcerer_Boreal_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%3/day (%1d6 cold, DC %2)|Sorcerer_RimeBloodedFreezingBolt_Dice|Sorcerer_RimeBloodedFreezingBolt_DC|Sorcerer_RimeBloodedFreezingBolt_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_RimeBloodedFreezingBolt_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|BorealBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1745,
+    "record_key": "Rime-Blooded Bloodline ~ Freezing Bolt"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist ~ Mental Potency",
+    "name": "Mental Potency",
+    "class": "Mesmerist",
+    "description": "The mesmerist can affect more powerful creatures or a greater number of creatures than normal with his mental effects. Both the HD limit and the total number of HD affected with each enchantment and illusion spell he casts increase by %1. For enchantment and illusion spells he casts that target a number of creatures greater than one, the number of creatures affected also increases by %1 (so a spell that targets one creature per level would be affected, but a spell that targets only one creature would not be).|MentalPotencyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Mental Potency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MentalPotencyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The mesmerist can affect more powerful creatures or a greater number of creatures than normal with his mental effects. Both the HD limit and the total number of HD affected with each enchantment and illusion spell he casts increase by %1. For enchantment and illusion spells he casts that target a number of creatures greater than one, the number of creatures affected also increases by %1 (so a spell that targets one creature per level would be affected, but a spell that targets only one creature would not be).|MentalPotencyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MentalPotencyBonus|min(MesmeristLVL/5,4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 927,
+    "record_key": "Mesmerist ~ Mental Potency"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

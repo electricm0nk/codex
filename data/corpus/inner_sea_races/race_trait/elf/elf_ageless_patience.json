@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:47:16Z",
+  "ingested_at": "2026-08-15T19:20:15Z",
   "data": {
     "key": "Elf ~ Ageless Patience",
     "name": "Ageless Patience",
@@ -44,11 +44,11 @@
       },
       {
         "key": "DESC",
-        "value": "Some families of elves have been strongly influenced by rigidly honorable non-elven cultures, such as Forlorn elves raised in nations such as Taldor and the elves of Jinin influenced by Tian-Min travelers. This attitude, combined with elven longevity, produces elves of extraordinary patience, who can produce better results when taking their time than they could under time constraints. These elves gain a +2 racial bonus when taking 20 on skill checks."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This racial trait replaces elven magic and keen senses.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Ageless Patience"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

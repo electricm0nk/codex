@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Stalker ~ Strong Senses",
+    "name": "Strong Senses",
+    "class": "Ranger",
+    "description": "At 1st level, a wild stalker's life among the wild has sharpened his senses. He gains low-light vision and a +1 bonus on Perception checks. If he already has low-light vision, he gains a +2 bonus on Perception checks instead. This bonus increases by +1 for every four levels after 1st (to a maximum of +6 at 20th level, or +7 if the character did not gain low-light vision from this ability). This ability replaces the ranger's first favored enemy ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Stalker ~ Strong Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildStalkerPerceptionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a wild stalker's life among the wild has sharpened his senses. He gains low-light vision and a +1 bonus on Perception checks. If he already has low-light vision, he gains a +2 bonus on Perception checks instead. This bonus increases by +1 for every four levels after 1st (to a maximum of +6 at 20th level, or +7 if the character did not gain low-light vision from this ability). This ability replaces the ranger's first favored enemy ability."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "WILD STALKER Strong Senses"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|WildStalkerPerceptionBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildStalkerPerceptionBonus|1+(RangerLvl/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1574,
+    "record_key": "Wild Stalker ~ Strong Senses"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

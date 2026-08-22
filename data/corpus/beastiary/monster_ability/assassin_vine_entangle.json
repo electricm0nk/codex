@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Assassin Vine ~ Entangle",
+    "delivery": "Supernatural",
+    "description": "An assassin vine can, as a free action, cause plants within 30 feet of it to animate and grasp at foes. This ability is otherwise similar to entangle %1.",
+    "description_variables": [
+      "EntangleDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:assassin_vine_entangle",
+    "name": "Entangle",
+    "owners": [
+      "beastiary:monster:assassin_vine"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Entangle"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|EntangleDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EntangleDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EntangleDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Entangle)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EntangleDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An assassin vine can, as a free action, cause plants within 30 feet of it to animate and grasp at foes. This ability is otherwise similar to entangle %1.|EntangleDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Assassin Vine ~ Entangle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.22",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 125,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Assassin Vine ~ Entangle",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

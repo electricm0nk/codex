@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bone Mystery ~ Undead Servitude",
+    "name": "Undead Servitude",
+    "class": "Bone Mystery",
+    "description": "You can channel negative energy %1 per day, but only to use Command Undead. You can command up to %2 hit dice of undead.  The will save DC of this ability is %3.|UndeadServitudeTimes|UndeadServitudeHD|UndeadServitudeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bone Mystery ~ Undead Servitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.BoneRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Channel Negative Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadServitudeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadServitudeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadServitudeHD|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UndeadServitudeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel negative energy %1 per day, but only to use Command Undead. You can command up to %2 hit dice of undead.  The will save DC of this ability is %3.|UndeadServitudeTimes|UndeadServitudeHD|UndeadServitudeDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Command Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadServitudeLVL|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadServitudeTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadServitudeHD|UndeadServitudeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadServitudeDC|10+(UndeadServitudeLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|UndeadServitudeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 586,
+    "record_key": "Bone Mystery ~ Undead Servitude"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

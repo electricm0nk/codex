@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler ~ Targeted Strike",
+    "name": "Targeted Strike",
+    "class": "Swashbuckler",
+    "description": "At 7th level, as a full-round action the swashbuckler can spend 1 panache point to make an attack with a single light or one-handed piercing melee weapon that cripples part of a foe's body. The swashbuckler chooses a part of the body to target. If the attack succeeds, in addition to the attack's normal damage, the target suffers one of the following effects based on the part of the body targeted. If a creature doesn't have one of the listed body locations, that body part cannot be targeted. Creatures that are immune to sneak attacks are also immune to targeted strikes. Items or abilities that protect a creature from critical hits also protect a creature from targeted strikes. &nl;Arms - On a hit, the target takes no damage from the hit but drops one carried item of the swashbuckler's choice, even if the item is wielded with two hands. Items held in a locked gauntlet are not dropped on a hit. &nl;Head - On a hit, the target is damaged normally, and is also confused for 1 round. This is a mind-affecting effect. &nl;Legs - On a hit, the target is damaged normally and knocked prone. Creatures that have four or more legs or that are immune to trip attacks are immune to this effect. &nl;Torso or Wings - The target is staggered for one round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Targeted Strike"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL07"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL7.DeedHasCost.Extraordinary.AttackOption"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SwashbucklerDeedQualifyLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, as a full-round action the swashbuckler can spend 1 panache point to make an attack with a single light or one-handed piercing melee weapon that cripples part of a foe's body. The swashbuckler chooses a part of the body to target. If the attack succeeds, in addition to the attack's normal damage, the target suffers one of the following effects based on the part of the body targeted. If a creature doesn't have one of the listed body locations, that body part cannot be targeted. Creatures that are immune to sneak attacks are also immune to targeted strikes. Items or abilities that protect a creature from critical hits also protect a creature from targeted strikes. &nl;Arms - On a hit, the target takes no damage from the hit but drops one carried item of the swashbuckler's choice, even if the item is wielded with two hands. Items held in a locked gauntlet are not dropped on a hit. &nl;Head - On a hit, the target is damaged normally, and is also confused for 1 round. This is a mind-affecting effect. &nl;Legs - On a hit, the target is damaged normally and knocked prone. Creatures that have four or more legs or that are immune to trip attacks are immune to this effect. &nl;Torso or Wings - The target is staggered for one round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2083,
+    "record_key": "Swashbuckler ~ Targeted Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

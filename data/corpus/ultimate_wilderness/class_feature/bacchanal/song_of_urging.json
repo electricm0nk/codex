@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bacchanal ~ Song of Urging",
+    "name": "Song of Urging",
+    "class": "Skald",
+    "description": "The bacchanal's raging song can wordlessly influence creatures of the wild. This raging song functions just like a Diplomacy check to make a simple request or an Intimidate check but can influence only animals. The bacchanal rolls 1d20 and adds his skald level and his Charisma modifier to determine the urging check's result. Bonuses and penalties that apply to wild empathy checks apply to these urging checks. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. The song can influence plants or magical beasts with Intelligence scores of 1 or 2 as well as drunken creatures of any Intelligence (even without sharing a language), but against these nonanimals, the bacchanal takes a -4 penalty on this check. The bacchanal must continue to perform the song for the entire time required for the check; otherwise, its effect is wasted, but only 1 round of raging song is expended regardless of how long the check takes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bacchanal ~ Song of Urging"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BacchanalClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The bacchanal's raging song can wordlessly influence creatures of the wild. This raging song functions just like a Diplomacy check to make a simple request or an Intimidate check but can influence only animals. The bacchanal rolls 1d20 and adds his skald level and his Charisma modifier to determine the urging check's result. Bonuses and penalties that apply to wild empathy checks apply to these urging checks. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. The song can influence plants or magical beasts with Intelligence scores of 1 or 2 as well as drunken creatures of any Intelligence (even without sharing a language), but against these nonanimals, the bacchanal takes a -4 penalty on this check. The bacchanal must continue to perform the song for the entire time required for the check; otherwise, its effect is wasted, but only 1 round of raging song is expended regardless of how long the check takes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1122,
+    "record_key": "Bacchanal ~ Song of Urging"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

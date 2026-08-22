@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Bloodrager Bloodline ~ Fury of the Fey",
+    "name": "Fury of the Fey",
+    "class": "Fey Bloodrager Bloodline",
+    "description": "When you enter a bloodrage, you can choose one type of creature (and subtype for humanoid and outsider) that can be affected by the bane magic weapon special ability. You may not choose animals, fey, magical beasts, or plants. All of your melee attacks are considered to have that bane ability of that type. This ability doesn't stack with other forms of the bane ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Bloodrager Bloodline ~ Fury of the Fey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Fey Bloodrager Bloodline ~ Power LVL 20.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Fey"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Fey_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you enter a bloodrage, you can choose one type of creature (and subtype for humanoid and outsider) that can be affected by the bane magic weapon special ability. You may not choose animals, fey, magical beasts, or plants. All of your melee attacks are considered to have that bane ability of that type. This ability doesn't stack with other forms of the bane ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|FeyBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 830,
+    "record_key": "Fey Bloodrager Bloodline ~ Fury of the Fey"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

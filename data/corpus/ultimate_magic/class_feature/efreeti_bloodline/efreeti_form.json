@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Efreeti Bloodline ~ Efreeti Form",
+    "name": "Efreeti Form",
+    "class": "Efreeti Bloodline",
+    "description": "You gain the ability to assume the form of an efreeti once per day. This acts like the spell giant form I, except you only use it to become an efreeti and its duration is %1 rounds. While in this form, you also gain an efreeti's heat ability.|Sorcerer_EfreetiEfreetiForm_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Efreeti Bloodline ~ Efreeti Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Efreeti Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Efreeti"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Efreeti_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Efreeti_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EfreetiEfreetiForm_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EfreetiEfreetiForm_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to assume the form of an efreeti once per day. This acts like the spell giant form I, except you only use it to become an efreeti and its duration is %1 rounds. While in this form, you also gain an efreeti's heat ability.|Sorcerer_EfreetiEfreetiForm_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EfreetiEfreetiForm_Times|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EfreetiEfreetiForm_Duration|Sorcerer_Efreeti_BloodlinePower9LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds, %2/day)|Sorcerer_EfreetiEfreetiForm_Duration|Sorcerer_EfreetiEfreetiForm_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_EfreetiEfreetiForm_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|EfreetiBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 613,
+    "record_key": "Efreeti Bloodline ~ Efreeti Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

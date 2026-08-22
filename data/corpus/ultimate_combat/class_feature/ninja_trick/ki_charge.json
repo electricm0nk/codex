@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Ki Charge",
+    "name": "Ki Charge",
+    "class": "Ninja Trick",
+    "description": "A ninja with this trick can invest a portion of her ki into a single thrown weapon, such as a shuriken, and throw it as a standard action. The thrown weapon explodes on impact in a 5-foot burst, dealing %1d6 points of fire damage. Creatures caught in the blast receive a Reflex save to halve the damage. The DC of this save is %2. If the thrown weapon hits a creature, that creature takes a -2 penalty on the saving throw. If the thrown weapon misses, treat it as a thrown splash weapon. Using this ability expends 1 ki point from her ki pool.|1+(NinjaTrickLVL-2)/4|10+NinjaTrickLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Ki Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Supernatural.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A ninja with this trick can invest a portion of her ki into a single thrown weapon, such as a shuriken, and throw it as a standard action. The thrown weapon explodes on impact in a 5-foot burst, dealing %1d6 points of fire damage. Creatures caught in the blast receive a Reflex save to halve the damage. The DC of this save is %2. If the thrown weapon hits a creature, that creature takes a -2 penalty on the saving throw. If the thrown weapon misses, treat it as a thrown splash weapon. Using this ability expends 1 ki point from her ki pool.|1+(NinjaTrickLVL-2)/4|10+NinjaTrickLVL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 138,
+    "record_key": "Ninja Trick ~ Ki Charge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

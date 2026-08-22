@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Undine Adept",
+    "name": "Undine Adept",
+    "class": "Druid Archetype",
+    "description": "An undine adept dedicates herself to preserving the knowledge of the first undines and ensuring her people's ancient connections to the natural world remain undisturbed. They serve as the keepers of the roots of the undine people and as their protectors.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Undine Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidWoodlandStride.DruidTracklessStep.DruidResistNaturesLure.DruidWildShape.DruidVenomImmunity"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREDOMAIN",
+        "value": "1,Community,Water"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Undine Adept],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidVenomImmunity]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsUndine=true"
+      },
+      {
+        "key": "DESC",
+        "value": "An undine adept dedicates herself to preserving the knowledge of the first undines and ensuring her people's ancient connections to the natural world remain undisturbed. They serve as the keepers of the roots of the undine people and as their protectors."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undine Adept ~ Domains|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undine Adept ~ Amphibious|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undine Adept ~ Augment Summoning|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undine Adept ~ Resist Water's Call|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undine Adept ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undine Adept ~ Commune with Water Spirits|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 798,
+    "record_key": "Druid Archetype ~ Undine Adept"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

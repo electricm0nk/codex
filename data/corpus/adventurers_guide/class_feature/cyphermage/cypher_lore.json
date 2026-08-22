@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cyphermage ~ Cypher Lore",
+    "name": "Cypher Lore",
+    "class": "Cyphermage",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cyphermage ~ Cypher Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Cyphermage Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cypher Lore Choice|min(9,CyphermageLVL)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 103,
+    "record_key": "Cyphermage ~ Cypher Lore"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

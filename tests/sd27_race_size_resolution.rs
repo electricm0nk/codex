@@ -132,6 +132,41 @@ const SIZE_TRUTH: &[(&str, &str, SizeCategory, SizeCategory)] = &[
     ("race:svirfneblin", "Svirfneblin", SizeCategory::Small, SizeCategory::Small),
     ("race:tengu", "Tengu", SizeCategory::Medium, SizeCategory::Medium),
     ("race:tiefling", "Tiefling", SizeCategory::Small, SizeCategory::Medium),
+    // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15). Chassis and trait agree
+    // for every one of them (none carries an Aasimar/Tiefling-shaped
+    // chassis/trait disagreement).
+    ("race:fetchling", "Fetchling", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:grippli", "Grippli", SizeCategory::Small, SizeCategory::Small),
+    ("race:ifrit", "Ifrit", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:oread", "Oread", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:sylph", "Sylph", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:undine", "Undine", SizeCategory::Medium, SizeCategory::Medium),
+    // Bestiary 5's 1, the Skinwalker follow-on batch (2026-08-15). Same
+    // chassis/trait disagreement shape as Aasimar/Tiefling: chassis
+    // `FACT:BaseSize|S`, `~ Size` row `TEMPLATE:SIZE_M`.
+    ("race:skinwalker", "Skinwalker", SizeCategory::Small, SizeCategory::Medium),
+    // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16). Chassis and
+    // trait agree for every one of them (none carries an Aasimar/Tiefling/
+    // Skinwalker-shaped disagreement).
+    ("race:catfolk", "Catfolk", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:kitsune", "Kitsune", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:ratfolk", "Ratfolk", SizeCategory::Small, SizeCategory::Small),
+    ("race:strix", "Strix", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:suli", "Suli", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:wayang", "Wayang", SizeCategory::Small, SizeCategory::Small),
+    // Advanced Race Guide's 4-race follow-on, SD31-E6-F4-004 (2026-08-17).
+    // Chassis and trait agree for every one of them (none carries an
+    // Aasimar/Tiefling/Skinwalker-shaped disagreement).
+    ("race:gillman", "Gillman", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:nagaji", "Nagaji", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:vanara", "Vanara", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:vishkanya", "Vishkanya", SizeCategory::Medium, SizeCategory::Medium),
+    // Advanced Race Guide's 2-race follow-on, SD31-E6-F4-007 (2026-08-17),
+    // closing `arg_races.lst`'s full 37-row playable-race roster. Chassis
+    // and trait agree for both (`FACT:BaseSize|M` / `TEMPLATE:SIZE_M`, no
+    // Aasimar/Tiefling/Skinwalker-shaped disagreement).
+    ("race:changeling", "Changeling", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:samsaran", "Samsaran", SizeCategory::Medium, SizeCategory::Medium),
 ];
 
 fn all_books() -> RaceCorpus {
@@ -142,6 +177,10 @@ fn all_books() -> RaceCorpus {
             book_id: "advanced_race_guide",
             dir: Path::new("data/corpus/advanced_race_guide"),
         },
+        // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15).
+        BookCorpusRoot { book_id: "bestiary_2", dir: Path::new("data/corpus/bestiary_2") },
+        // Bestiary 5, the Skinwalker follow-on batch (2026-08-15).
+        BookCorpusRoot { book_id: "bestiary_5", dir: Path::new("data/corpus/bestiary_5") },
     ];
     let corpus = load_race_corpus(&roots);
     assert!(corpus.diagnostics().is_empty(), "clean load expected: {:?}", corpus.diagnostics());
@@ -155,8 +194,15 @@ fn all_books() -> RaceCorpus {
 #[test]
 fn the_expected_table_covers_all_eighteen_races_and_matches_the_on_disk_chassis_tokens() {
     let corpus = all_books();
-    assert_eq!(SIZE_TRUTH.len(), 18, "18 in-scope races: CRB 7 + Bestiary 1's 11");
-    assert_eq!(corpus.race_keys().len(), 18, "and the corpus must carry all 18");
+    assert_eq!(
+        SIZE_TRUTH.len(),
+        37,
+        "37 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2) + \
+         Bestiary 5's 1 (Skinwalker follow-on batch) + Advanced Race Guide's 12 \
+         (SD-31-E6-F4-002, 2026-08-16 + SD31-E6-F4-004 + SD31-E6-F4-007, both 2026-08-17) -- \
+         the full `arg_races.lst` 37-row playable-race roster, closed"
+    );
+    assert_eq!(corpus.race_keys().len(), 37, "and the corpus must carry all 37");
 
     for (_, key, chassis_size, _) in SIZE_TRUTH {
         let chassis = corpus.chassis(key).unwrap_or_else(|| panic!("{key} must have a chassis"));
@@ -293,7 +339,12 @@ fn goblin_kobold_and_svirfneblin_are_small_not_a_defaulted_medium() {
         .filter(|(token, _, _, _)| race_size_for_race_token(token) == Some(SizeCategory::Small))
         .map(|(_, key, _, _)| *key)
         .collect();
-    assert_eq!(small, vec!["Gnome", "Halfling", "Goblin", "Kobold", "Svirfneblin"]);
+    assert_eq!(
+        small,
+        vec!["Gnome", "Halfling", "Goblin", "Kobold", "Svirfneblin", "Grippli", "Ratfolk", "Wayang"],
+        "Grippli added by SD-31 Epic 1-F2 (2026-08-15); Ratfolk and Wayang added by \
+         SD-31-E6-F4-002's Advanced Race Guide batch (2026-08-16)"
+    );
 }
 
 /// Token matching accepts the shapes real inputs carry, and refuses

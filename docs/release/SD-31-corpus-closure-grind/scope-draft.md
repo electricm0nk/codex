@@ -3,10 +3,10 @@ canonical: true
 owner: god-emporer
 status: planning-ready (SD-32 absorbed, epics re-sequenced, operator ruling 2026-08-15)
 date: 2026-08-15
-canonical_branch: tranche/10
+canonical_branch: tranche/11
 companion_to: ./README.md
 mirror_of: ./README.md
-build_version_target: 0.10.<build>
+build_version_target: 0.11.<build>
 ---
 
 # SD-31 — Corpus Closure: the Grind and the Capability Builds, scope

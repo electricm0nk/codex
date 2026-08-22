@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:giant_mantis_lunge",
@@ -30,6 +28,104 @@
     ],
     "race_subtype": null,
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability|Giant Mantis ~ Lunge|Giant Mantis ~ Mandibles|Giant Mantis ~ Sudden Strike|Grab|Immunity to Mind-Affecting Effects"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In forests|12|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*2,1d6|Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Mantis"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      }
+    ],
     "size": "L",
     "source_page": "p.200",
     "speeds": [
@@ -47,16 +143,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 281,
-    "record_key": "Mantis (Giant)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 281,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Mantis (Giant)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

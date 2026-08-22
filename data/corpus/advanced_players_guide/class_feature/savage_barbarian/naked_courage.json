@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savage Barbarian ~ Naked Courage",
+    "name": "Naked Courage",
+    "class": "Barbarian",
+    "description": "At 3rd level, the savage barbarian gains a +%1 dodge bonus to AC and a +%1 morale bonus on saving throws against fear when wearing no armor (shields are allowed). This bonus increases by +1 for every six levels after 3rd. This ability replaces trap sense.|NakedCourageDodgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savage Barbarian ~ Naked Courage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NakedCourageDodgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the savage barbarian gains a +%1 dodge bonus to AC and a +%1 morale bonus on saving throws against fear when wearing no armor (shields are allowed). This bonus increases by +1 for every six levels after 3rd. This ability replaces trap sense.|NakedCourageDodgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|NakedCourageDodgeBonus|TYPE=Dodge|!PREEQUIP:1,TYPE=Armor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NakedCourageDodgeBonus|((BarbarianLVL+3)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 morale bonus on saving throws against fear when wearing no armor|NakedCourageDodgeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1599,
+    "record_key": "Savage Barbarian ~ Naked Courage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

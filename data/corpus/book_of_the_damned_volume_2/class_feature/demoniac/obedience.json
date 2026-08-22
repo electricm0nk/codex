@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Demoniac ~ Obedience",
+    "name": "Obedience",
+    "class": "Demoniac",
+    "description": "In order to maintain your demoniac abilities, you must indulge in a daily obedience to your chosen demon lord. This ceremony is incorporated into whatever method you use to regain spellcasting abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demoniac ~ Obedience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DemoniacBoon|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In order to maintain your demoniac abilities, you must indulge in a daily obedience to your chosen demon lord. This ceremony is incorporated into whatever method you use to regain spellcasting abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 12,
+    "record_key": "Demoniac ~ Obedience"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

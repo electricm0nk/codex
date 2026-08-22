@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forgemaster ~ Artificer",
+    "name": "Artificer",
+    "class": "Cleric",
+    "description": "A forgemaster gains only one domain, which must be the Artifice domain (not including subdomains). If she worships a deity, it must grant the Artifice domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgemaster ~ Artificer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A forgemaster gains only one domain, which must be the Artifice domain (not including subdomains). If she worships a deity, it must grant the Artifice domain."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 61,
+    "record_key": "Forgemaster ~ Artificer"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Rogue Talent",
+    "name": "Rogue Talent",
+    "class": "Ninja Trick",
+    "description": "The ninja can select a rogue talent in place of a ninja trick. The ninja cannot select a rogue talent that has the same name as a ninja trick. The ninja can select this talent multiple times.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Rogue Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.NinjaTrick"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "The ninja can select a rogue talent in place of a ninja trick. The ninja cannot select a rogue talent that has the same name as a ninja trick. The ninja can select this talent multiple times."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 141,
+    "record_key": "Ninja Trick ~ Rogue Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

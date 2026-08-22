@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Patient Ambusher",
+    "name": "Patient Ambusher",
+    "class": "Hunter Archetype",
+    "description": "Wandering the wilds, some hunters eschew the bond of innate teamwork with their animal companions. Instead, these hunters master the creation and deployment of intricate ranger traps, often using themselves or their animal companions to lure foes into their snares.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Patient Ambusher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Patient Ambusher],[!PREFACT:1,ABILITIES,Hunter_Archetype_ClassSkills=True,Hunter_Archetype_NatureTraining=True,Hunter_Archetype_WildEmpathy=True,Hunter_Archetype_HunterTactics=True,Hunter_Archetype_TeamworkFeats=True,Hunter_Archetype_RaiseAnimalCompanion=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Wandering the wilds, some hunters eschew the bond of innate teamwork with their animal companions. Instead, these hunters master the creation and deployment of intricate ranger traps, often using themselves or their animal companions to lure foes into their snares."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Patient Ambusher ~ Class Skills|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Patient Ambusher ~ Trapfinding|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Patient Ambusher ~ Snare Trap|PRECLASS:1,Hunter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Patient Ambusher ~ Additional Traps|PRECLASS:1,Hunter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Patient Ambusher ~ Launch Trap|PRECLASS:1,Hunter=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_NatureTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_NatureTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_RaiseAnimalCompanion|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 643,
+    "record_key": "Hunter Archetype ~ Patient Ambusher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

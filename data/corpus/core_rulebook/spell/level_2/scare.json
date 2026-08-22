@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like cause fear, except that it causes all targeted creatures of less than 6 HD to become frightened.",
     "key": "Scare",
-    "school": "Necromancy",
     "level": 2,
-    "description": "This spell functions like cause fear, except that it causes all targeted creatures of less than 6 HD to become frightened."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like cause fear, except that it causes all targeted creatures of less than 6 HD to become frightened.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like cause fear, except that it causes all targeted creatures of less than 6 HD to become frightened.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fear|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or 1 round; see text for cause fear"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/scare.html#_scare"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.336"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL/3) living creatures, no two of which can be more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 513,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1263,
-    "record_key": "Scare.MOD"
+    "record_key": "Scare",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

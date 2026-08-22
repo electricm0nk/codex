@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist Primary Element ~ Water",
+    "name": "Water",
+    "class": "Kineticist Primary Element",
+    "description": "Kineticists who focus on the element of water are called hydrokineticists. Hydrokineticists master the flow of water or the numbing chill of cold, and they are known for their versatility and flowing forms, like the ever-changing currents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Primary Element ~ Water"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Kineticist Element.Element ~ Water"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementTracker_Water|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Water|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Kineticists who focus on the element of water are called hydrokineticists. Hydrokineticists master the flow of water or the numbing chill of cold, and they are known for their versatility and flowing forms, like the ever-changing currents."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Class Skills: A hydrokineticist adds Knowledge (nature) and Swim to her list of class skills."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Wild Talents: 1st-basic hydrokinesis, cold adaptation, heat adaptation, icewalker, kinetic cover, kinetic healer, pushing infusion, quenching infusion, slick; 2nd-entangling infusion, veil of mists; 3rd-cold snap, impale, torrent, water manipulator, waterdancer; 4th-ice sculptor, spray, watersense; 5th-chilling infusion, shimmering mirage, waterdancer (greater); 6th-ice path, suffocate; 7th-cloud, fragmentation; 9th-tidal wave."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Element ~ Universal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Utility Wild Talent|AUTOMATIC|Wild Talent ~ basic hydrokinesis|PREVARGTEQ:Kineticist_CFP_Level,1|PREVAREQ:Kineticist_CF_BasicUtilityWildTalent,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementTracker_Water|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Water|KineticistLVL_Base|TYPE=Base"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (nature)|Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 591,
+    "record_key": "Kineticist Primary Element ~ Water"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

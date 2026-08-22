@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 8395.0,
+    "description": "Level 13 Diviner; Opposition Schools - Conjuration, transmutation; Spells - 7.greater arcane sight(S), greater scrying(S), prismatic spray; 6.chain lightning, contingency, eyebite, legend lore(S), true seeing(S); 5.dominate person, fire snake, prying eyes(S), teleport(OP), telepathic bond(S); 4.arcane eye(S), confusion, detect scrying(S), fear, ice storm, wall of fire; 3.clairaudience/clairvoyance(S), dispel magic, displacement, greater magic weapon(OP), hydraulic torrent, lightning bolt, seek thoughts, tongues(S); 2.arcane lock, false life, fox's cunning(OP), locate object(S), resist energy, scorching ray, see invisibility(S), touch of idiocy; 1.alarm, charm person, comprehend languages(S), color spray, detect secret doors(S), expeditious excavation(OP), floating disk, protection from evil, shield, true strike(S), ventriloquism; Preparation Ritual - Travel Sage",
+    "key": "Quest Eternal",
+    "name": "Quest Eternal",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "NUMPAGES",
+        "value": "200"
+      },
+      {
+        "key": "COST",
+        "value": "8395"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Travel Sage"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 13 Diviner"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Conjuration, transmutation"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 7.greater arcane sight(S), greater scrying(S), prismatic spray; 6.chain lightning, contingency, eyebite, legend lore(S), true seeing(S); 5.dominate person, fire snake, prying eyes(S), teleport(OP), telepathic bond(S); 4.arcane eye(S), confusion, detect scrying(S), fear, ice storm, wall of fire; 3.clairaudience/clairvoyance(S), dispel magic, displacement, greater magic weapon(OP), hydraulic torrent, lightning bolt, seek thoughts, tongues(S); 2.arcane lock, false life, fox's cunning(OP), locate object(S), resist energy, scorching ray, see invisibility(S), touch of idiocy; 1.alarm, charm person, comprehend languages(S), color spray, detect secret doors(S), expeditious excavation(OP), floating disk, protection from evil, shield, true strike(S), ventriloquism"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Travel Sage"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Quest Eternal",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

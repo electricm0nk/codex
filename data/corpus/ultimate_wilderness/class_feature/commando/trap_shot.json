@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Commando ~ Trap Shot",
+    "name": "Trap Shot",
+    "class": "Gunslinger",
+    "description": "The commando can spend 1 point of grit and target a 5-foot square with her firearm. If she succeeds at an attack against an AC of 10, she triggers a single trap within that 5-foot square, even if she is unaware of the trap. If there are multiple traps within the same 5-foot square, the commando must declare which trap she is triggering; otherwise it is determined randomly. If a creature is occupying the same square as the triggered trap, the trap affects the creature as if it had triggered the trap.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Commando ~ Trap Shot"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL03"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL3.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The commando can spend 1 point of grit and target a 5-foot square with her firearm. If she succeeds at an attack against an AC of 10, she triggers a single trap within that 5-foot square, even if she is unaware of the trap. If there are multiple traps within the same 5-foot square, the commando must declare which trap she is triggering; otherwise it is determined randomly. If a creature is occupying the same square as the triggered trap, the trap affects the creature as if it had triggered the trap."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 629,
+    "record_key": "Commando ~ Trap Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

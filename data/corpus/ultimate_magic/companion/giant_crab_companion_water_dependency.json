@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Giant Crab Companion ~ Water Dependency",
     "delivery": "Extraordinary",
@@ -16,6 +14,28 @@
     "owners": [
       "ultimate_magic:companion:companion_crab_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Survive out of water for %1 hours, after which it begins to suffocate as if it were drowning.|CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Crab Companion ~ Water Dependency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Weakness"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.36",
     "stat_adjustments": [],
@@ -25,16 +45,18 @@
       "Weakness"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
-    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
-    "line": 26,
-    "record_key": "Giant Crab Companion ~ Water Dependency"
-  },
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Giant Crab Companion ~ Water Dependency",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

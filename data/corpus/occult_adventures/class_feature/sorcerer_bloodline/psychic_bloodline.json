@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Psychic",
+    "name": "Psychic Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "Psychic power runs thorough your blood, whether it be from a familial predisposition to psychic power or exposure to a powerful psychic phenomenon. Whatever the source of this power, your mind is a dangerous weapon.|PREVAREQ:Sorcerer_Psychic_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Psychic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic power runs thorough your blood, whether it be from a familial predisposition to psychic power or exposure to a powerful psychic phenomenon. Whatever the source of this power, your mind is a dangerous weapon.|PREVAREQ:Sorcerer_Psychic_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Sense Motive|PREVARGTEQ:Sorcerer_Psychic_BloodlineClassSkill1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Psychic_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Psychic_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Psychic_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Psychic Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Psychic_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Psychic Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Psychic_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Psychic Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Psychic_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Psychic Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Psychic_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Psychic Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Psychic_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Psychic_BloodlinePower1LVL|Sorcerer_Psychic_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Psychic_BloodlinePower3LVL|Sorcerer_Psychic_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Psychic_BloodlinePower9LVL|Sorcerer_Psychic_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Psychic_BloodlinePower15LVL|Sorcerer_Psychic_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Psychic_BloodlinePower20LVL|Sorcerer_Psychic_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Psychic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1871,
+    "record_key": "Sorcerer Bloodline ~ Psychic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

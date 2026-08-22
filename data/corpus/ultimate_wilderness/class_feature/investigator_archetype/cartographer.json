@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Cartographer",
+    "name": "Cartographer",
+    "class": "Investigator Archetype",
+    "description": "Cartographers are eager trailblazers who explore uncharted terrain, study landmarks, and find new paths through the wilderness. They record this information meticulously so that those who follow in their footsteps can travel swiftly and safely within the studied area. Rather than studying poisons like many investigators do, cartographers use their alchemical expertise to create better inks that allow them to draw maps with incredible level of detail.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Cartographer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Cartographer],[!PREFACT:1,ABILITIES,Investigator_Archetype_PoisonLore=True,Investigator_Archetype_PoisonResistance=True,Investigator_Archetype_KeenRecollection=True,Investigator_Archetype_SwiftAlchemy=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Cartographers are eager trailblazers who explore uncharted terrain, study landmarks, and find new paths through the wilderness. They record this information meticulously so that those who follow in their footsteps can travel swiftly and safely within the studied area. Rather than studying poisons like many investigators do, cartographers use their alchemical expertise to create better inks that allow them to draw maps with incredible level of detail."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cartographer ~ Studied Terrain|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cartographer ~ Geographic Lore|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cartographer ~ Swift Travels|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_KeenRecollection|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_KeenRecollection|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 731,
+    "record_key": "Investigator Archetype ~ Cartographer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

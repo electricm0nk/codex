@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Whenever a creature you can see that threatens you makes an attack against one of your allies, as an immediate action, you can compel that creature to attack you instead. When you compel a creature to attack you, you must first overcome that creature's spell resistance, and the creature can attempt a Will saving throw to ignore the compulsion. A summoner casting this spell can choose his eidolon as the target of the spell.",
+    "key": "Compel Hostility",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Inquisitor,Paladin,Ranger,Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Compels opponents to attack you instead of your allies.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a creature you can see that threatens you makes an attack against one of your allies, as an immediate action, you can compel that creature to attack you instead. When you compel a creature to attack you, you must first overcome that creature's spell resistance, and the creature can attempt a Will saving throw to ignore the compulsion. A summoner casting this spell can choose his eidolon as the target of the spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a drop of your blood)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/compelHostility.html#_compel-hostility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "see text"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Compel Hostility",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

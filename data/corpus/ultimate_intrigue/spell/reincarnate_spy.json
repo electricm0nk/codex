@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as reincarnate except that you can cause the new body to resemble a particular creature, matching its age category and sex and rerolling any race result that would be the wrong size category. The subject further gains a +5 bonus on Disguise checks to impersonate the chosen creature due to similar features, although it might take a penalty for being the wrong race. The spell automatically leaves you with a small piece of the creature's new body, typically a lock of hair (useful for scrying and other such spells). Material component; oils worth 2,500 gp and a possession or piece of the body of the creature to resemble.|PRERULE:1,DisplayFullSpell",
+    "key": "Reincarnate Spy",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Shaman=6|Witch=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M,DF"
+      },
+      {
+        "key": "DESC",
+        "value": "As reincarnate, but creating a body similar to that of a chosen creature, and you secretly keep part of the body.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as reincarnate except that you can cause the new body to resemble a particular creature, matching its age category and sex and rerolling any race result that would be the wrong size category. The subject further gains a +5 bonus on Disguise checks to impersonate the chosen creature due to similar features, although it might take a penalty for being the wrong race. The spell automatically leaves you with a small piece of the creature's new body, typically a lock of hair (useful for scrying and other such spells). Material component; oils worth 2,500 gp and a possession or piece of the body of the creature to resemble.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Reincarnate Spy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Dead creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 93,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Reincarnate Spy",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

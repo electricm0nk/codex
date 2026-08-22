@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Horse Lord",
+    "name": "Horse Lord",
+    "class": "Ranger Archetype",
+    "description": "Rangers of the plains use horses or other riding beasts to hunt their lands, forging a near-mystical relationship with their mounts. Horse lords are unparalleled mounted combatants, the envy of even the most dedicated cavalier. Though called \"horse lords\" as a generic term, these rangers are not restricted to horses for their animal companions- any creature the ranger can ride is included in these abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Horse Lord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerHuntersBond.RangerCamouflage.RangerHideInPlainSight"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Horse Lord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerHuntersBond,TYPE.RangerCamouflage,TYPE.RangerHideInPlainSight]"
+      },
+      {
+        "key": "DESC",
+        "value": "Rangers of the plains use horses or other riding beasts to hunt their lands, forging a near-mystical relationship with their mounts. Horse lords are unparalleled mounted combatants, the envy of even the most dedicated cavalier. Though called \"horse lords\" as a generic term, these rangers are not restricted to horses for their animal companions- any creature the ranger can ride is included in these abilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Horse Lord ~ Combat Style Feat|PRECLASS:1,Ranger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Horse Lord ~ Mounted Bond|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Horse Lord ~ Strong Bond|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Horse Lord ~ Spiritual Bond|PRECLASS:1,Ranger=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2666,
+    "record_key": "Ranger Archetype ~ Horse Lord"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

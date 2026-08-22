@@ -848,6 +848,22 @@ fn main() {
             // the arm exists for exhaustiveness, as `B4`'s above does.
             RuleSetId::Isb => "inner_sea_bestiary",
             RuleSetId::Isg => "inner_sea_gods",
+            // SD31-E6-F2-003. Occult Adventures has no feats file this repo
+            // compiles either; the arm exists for exhaustiveness, exactly as
+            // `Isg`'s and `Isb`'s above do -- `all_feat_tables()` never
+            // yields an `Oa` table.
+            RuleSetId::Oa => "occult_adventures",
+            // SD31-E6-F2-007 -- this book's first compiled rule set of any
+            // kind. Unlike `Oa` above, `all_feat_tables()` DOES yield a
+            // `Mythic` table (358 gap rows from `ma_feats.lst`), so this arm
+            // is real, not exhaustiveness-only.
+            RuleSetId::Mythic => "mythic_adventures",
+            // SD-31 wave-29 (`lane5-book-onboard` lane). Adventurer's Guide
+            // has no feats file this repo compiles yet (its first record
+            // family is `spell_list`, not a feat table); the arm exists
+            // for exhaustiveness only, exactly as `Oa`'s above does --
+            // `all_feat_tables()` never yields an `AdventurersGuide` table.
+            RuleSetId::AdventurersGuide => "adventurers_guide",
         };
         let records = table.entries.len();
         let wired_here = table

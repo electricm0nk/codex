@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Arcane",
+    "name": "Arcane Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "Your family has always been skilled in the eldritch art of magic. While many of your relatives were accomplished wizards, your powers developed without the need for study and practice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Arcane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your family has always been skilled in the eldritch art of magic. While many of your relatives were accomplished wizards, your powers developed without the need for study and practice."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Arcane_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Arcane_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Arcane_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Arcane_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Arcane_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Arcane_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Arcane_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Arcane_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Knowledge Class Skill|1|PREVARGTEQ:Sorcerer_Arcane_BloodlineClassSkill1,1|PREVAREQ:Sorcerer_Arcane_Description,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Arcane_BloodlinePower1LVL|Sorcerer_Arcane_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Arcane_BloodlinePower3LVL|Sorcerer_Arcane_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Arcane_BloodlinePower9LVL|Sorcerer_Arcane_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Arcane_BloodlinePower15LVL|Sorcerer_Arcane_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Arcane_BloodlinePower20LVL|Sorcerer_Arcane_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Arcane"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2369,
+    "record_key": "Sorcerer Bloodline ~ Arcane"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

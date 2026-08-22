@@ -115,8 +115,22 @@ fn wiring_class_for_source(
 ) -> (String, Vec<String>) {
     match wiring_citation(source) {
         Some((path, line, record_key)) => {
-            let file = wiring_class_file_arg(index.book_id(), path);
-            index.wiring_class_for(lines, &file, line, record_key, record_key)
+            // `SD31-E6-F9-005`: a citation whose own `source.path` names
+            // `core_essentials`'s directory was NOT read out of `index`'s
+            // primary book directory (`load_corpus_file_rel_with_fallback`
+            // already fell back there to build the citation itself) -- route
+            // the wiring-class lookup to the SAME fallback directory
+            // (`build_with_extra`/`wiring_class_for_book`), keyed
+            // `"core_essentials"`, rather than always the primary `book_id`,
+            // which does not contain this file and would silently stamp
+            // `ambiguous`/`no_corpus_line` regardless of the row's real shape.
+            let ce_prefix = format!("{CORE_ESSENTIALS_RELATIVE}/");
+            if let Some(file) = path.strip_prefix(&ce_prefix) {
+                index.wiring_class_for_book(lines, "core_essentials", file, line, record_key, record_key)
+            } else {
+                let file = wiring_class_file_arg(index.book_id(), path);
+                index.wiring_class_for(lines, &file, line, record_key, record_key)
+            }
         }
         None => ("ambiguous".to_string(), vec!["no_corpus_line".to_string()]),
     }
@@ -226,7 +240,10 @@ fn load_corpus_file(root: &Path, file_name: &str) -> CorpusFile {
 /// generator function share this loader without hardcoding PU's own
 /// `BOOK_RELATIVE` const.
 /// The real location of `file_name` inside a book directory, which is not
-/// always its root, expressed as a path relative to `root`.
+/// always its root, expressed as a path relative to `root` -- or `None` on
+/// zero matches, so a caller can try a fallback root
+/// (`load_corpus_file_rel_with_fallback` is that caller) before deciding the
+/// file is genuinely absent.
 ///
 /// A unit's `source_file` is a BARE BASENAME -- that is what
 /// `v06_work_inventory` records, and it is what both `MonsterStatBlock` and
@@ -236,17 +253,19 @@ fn load_corpus_file(root: &Path, file_name: &str) -> CorpusFile {
 /// rows and 16 ability rows under `support/`, and `occult_adventures` its one
 /// monster row; joining onto the root there fails outright.
 ///
-/// Two failure modes are refused rather than resolved, matching
-/// `transcribe_monster_tables.py::resolve_book_file` term for term so that the
-/// transcriber and the generator cannot disagree about which file a citation
-/// names:
+/// Two failure modes, matching `transcribe_monster_tables.py::resolve_book_file`
+/// term for term so that the transcriber and the generator cannot disagree
+/// about which file a citation names:
 ///
-/// * **Not found** -- the citation names a file this book does not have.
-/// * **Found more than once** -- a bare basename matching two real files does
-///   not identify a row, and picking either is a coin flip on which rules text
-///   ships. No book trips this today; the check is what makes the first one
-///   that does fail here rather than ship the wrong text.
-fn resolve_book_file(root: &Path, file_name: &str) -> String {
+/// * **Not found under THIS root** -- returns `None`, not a panic: the
+///   `core_essentials` fallback (`SD31-E6-F9-005`) means "absent here" is not
+///   yet "absent everywhere," matching the Python sibling's own two-directory
+///   search.
+/// * **Found more than once under THIS root** -- panics regardless of what a
+///   fallback root might also hold: a bare basename matching two real files
+///   does not identify a row, and picking either is a coin flip on which
+///   rules text ships.
+fn try_resolve_book_file(root: &Path, file_name: &str) -> Option<String> {
     fn walk(dir: &Path, file_name: &str, prefix: &str, found: &mut Vec<String>) {
         let entries = match fs::read_dir(dir) {
             Ok(e) => e,
@@ -266,8 +285,8 @@ fn resolve_book_file(root: &Path, file_name: &str) -> String {
     walk(root, file_name, "", &mut found);
     found.sort();
     match found.len() {
-        0 => panic!("{file_name} is not present anywhere under {root:?}"),
-        1 => found.remove(0),
+        0 => None,
+        1 => Some(found.remove(0)),
         n => panic!(
             "{file_name} resolves to {n} files under {root:?} ({}) -- a bare \
              basename that names two real files does not identify a row",
@@ -276,16 +295,68 @@ fn resolve_book_file(root: &Path, file_name: &str) -> String {
     }
 }
 
+/// `pathfinder/paizo/roleplaying_game/core_essentials`, the one other place a
+/// `decisions.md §9`-re-attributed unit's physical file can live: re-attribution
+/// moves the reporting `book` field, never the file. Mirrors
+/// `transcribe_monster_tables.py`'s `_CORE_ESSENTIALS_DIR` term for term, so the
+/// Python transcriber and this Rust generator can never disagree about which
+/// file a citation names -- confirmed live (`SD31-E6-F9-005`): before this
+/// fallback existed, re-running the Python transcriber for `bestiary`/
+/// `bestiary_2` newly reached 168 real, owned `ce_abilities_race.lst`-origin
+/// ability rows that this generator then could not cite at all, panicking with
+/// "not in this book's MonsterBookSpec::abilities_lsts" the instant it tried.
+const CORE_ESSENTIALS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/core_essentials";
+
 fn load_corpus_file_rel(root: &Path, book_relative: &str, file_name: &str) -> CorpusFile {
-    let resolved = resolve_book_file(root, file_name);
-    let full = root.join(&resolved);
+    load_corpus_file_rel_with_fallback(root, book_relative, None, file_name)
+}
+
+/// Same as [`load_corpus_file_rel`], but when `file_name` is absent from
+/// `root` entirely, also tries `core_essentials`'s directory -- computed from
+/// `corpus_data_root` (the directory ABOVE `pathfinder/...`, i.e. the same
+/// root `root` itself was joined onto `book_relative` under), unless `root`
+/// already IS that directory (no self-fallback, matching the Python sibling's
+/// own "core essentials does not fall back to itself" rule). The citation's
+/// `relative_path` reflects whichever directory the file was ACTUALLY found
+/// under -- re-attribution changes the reporting `book` field, never where the
+/// bytes the sha256 was taken over actually live.
+fn load_corpus_file_rel_with_fallback(
+    root: &Path,
+    book_relative: &str,
+    corpus_data_root: Option<&Path>,
+    file_name: &str,
+) -> CorpusFile {
+    let (used_root, used_book_relative, resolved) = match try_resolve_book_file(root, file_name) {
+        Some(found) => (root.to_path_buf(), book_relative.to_string(), found),
+        None => {
+            let data_root = corpus_data_root.unwrap_or_else(|| {
+                panic!(
+                    "{file_name} is not present anywhere under {root:?} (no core_essentials \
+                     fallback root was supplied for this call)"
+                )
+            });
+            let ce_root = data_root.join(CORE_ESSENTIALS_RELATIVE);
+            if ce_root == root {
+                panic!("{file_name} is not present anywhere under {root:?}");
+            }
+            match try_resolve_book_file(&ce_root, file_name) {
+                Some(found) => (ce_root, CORE_ESSENTIALS_RELATIVE.to_string(), found),
+                None => panic!(
+                    "{file_name} is not present anywhere under {root:?} or {ce_root:?}"
+                ),
+            }
+        }
+    };
+    let full = used_root.join(&resolved);
     let bytes = fs::read(&full).unwrap_or_else(|e| panic!("failed to read corpus file {full:?}: {e}"));
     let sha256 = sha256_hex(&bytes);
     let text = String::from_utf8_lossy(&bytes).to_string();
     CorpusFile {
-        // The RESOLVED sub-path, not the bare basename: a record's `path`
-        // citation must lead a reader to the file the sha256 was taken over.
-        relative_path: format!("{book_relative}/{resolved}"),
+        // The RESOLVED sub-path under whichever root ACTUALLY held the file,
+        // not the bare basename and not necessarily the originally-requested
+        // book: a record's `path` citation must lead a reader to the file the
+        // sha256 was taken over.
+        relative_path: format!("{used_book_relative}/{resolved}"),
         sha256,
         lines: text.lines().map(|s| s.to_string()).collect(),
     }
@@ -339,6 +410,25 @@ fn arg_build_line_index(file: &CorpusFile) -> ArgLineIndex<'_> {
 
 fn arg_find_citation_line(index: &ArgLineIndex<'_>, wanted_key: &str) -> Option<u32> {
     index.by_key.get(wanted_key).copied().or_else(|| index.by_identity.get(wanted_key).copied())
+}
+
+/// Like `arg_find_citation_line`, but also returns the literal corpus
+/// identity string the matched row actually declares -- for a plain match
+/// that is just `wanted_key`, but for a `.COPY=<wanted_key>` racial
+/// spell-like-ability variant (decisions.md §15, 2026-08-17) it is the
+/// full `<parent>.COPY=<wanted_key>` string, so the record's `source`
+/// cites the row that actually declares it rather than a byte-match that
+/// does not exist on this row.
+fn arg_find_citation_line_with_identity(index: &ArgLineIndex<'_>, wanted_key: &str) -> Option<(u32, String)> {
+    if let Some(line) = arg_find_citation_line(index, wanted_key) {
+        return Some((line, wanted_key.to_string()));
+    }
+    let copy_suffix = format!(".COPY={wanted_key}");
+    index
+        .by_identity
+        .iter()
+        .find(|(identity, _)| identity.ends_with(&copy_suffix))
+        .map(|(identity, line)| (*line, identity.to_string()))
 }
 
 /// Every real `*.json` record under `book_dir`, counted directly from disk
@@ -577,6 +667,7 @@ fn gen_pathfinder_unchained() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let path = out_root.join("feat").join(format!("{}.json", slugify(entry.key)));
                 write_record(&path, &record);
@@ -630,6 +721,7 @@ fn gen_pathfinder_unchained() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let base_slug = slugify(entry.name);
                 let count = used_slugs.entry(base_slug.clone()).or_insert(0);
@@ -731,8 +823,8 @@ fn gen_advanced_race_guide() {
     let mut spell_unattributed: Vec<String> = Vec::new();
     let mut spell_slugs_used: std::collections::HashSet<String> = std::collections::HashSet::new();
     for entry in advanced_race_guide::spell_list::SPELL_LIST {
-        match arg_find_citation_line(&spells_index, entry.key) {
-            Some(line_no) => {
+        match arg_find_citation_line_with_identity(&spells_index, entry.key) {
+            Some((line_no, record_key)) => {
                 let rendered = render_player_facing_description(entry.key, entry.description);
                 let (license, pi_field, pi_marker, stored_desc) = classify_field("description", &rendered);
                 let data = advanced_race_guide::json_cache::SpellCacheData {
@@ -745,7 +837,7 @@ fn gen_advanced_race_guide() {
                     path: spells_file.relative_path.clone(),
                     sha256: spells_file.sha256.clone(),
                     line: line_no,
-                    record_key: entry.key.to_string(),
+                    record_key,
                 };
                 let (wiring_class, wiring_class_signals) =
                     wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
@@ -760,6 +852,7 @@ fn gen_advanced_race_guide() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let base = slugify(entry.key);
                 let slug = if spell_slugs_used.insert(base.clone()) {
@@ -866,6 +959,7 @@ fn gen_advanced_race_guide() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let used = equipment_slugs_used.entry(category_slug).or_default();
                 let base = slugify(entry.key);
@@ -943,6 +1037,7 @@ fn gen_advanced_race_guide() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let used = feat_slugs_used.entry(category_slug).or_default();
                 let base = slugify(entry.key);
@@ -1080,25 +1175,71 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
     // (`wiring-class-mismatch`), because the class describes what the ROW does
     // -- `Water Naga ~ Poison` carries a `BONUS:VAR` and is `derived`, most
     // ability rows carry no magnitude token at all and are `display`.
-    let wiring_index = WiringClassIndex::build(book_id, &root);
+    // `SD31-E6-F9-005`: also index `core_essentials`'s own directory under
+    // its own book key, `"core_essentials"` -- a `decisions.md §9`-re-attributed
+    // ability's wiring-class citation needs it (`wiring_class_for_source`
+    // below routes to it when the citation's own `source.path` names that
+    // directory), and without it every such record silently stamps
+    // `wiring_class: "ambiguous"` regardless of its real corpus shape.
+    let wiring_data_root = monster_book_corpus_data_root(spec);
+    let wiring_index = match &wiring_data_root {
+        Some(data_root) => {
+            let ce_dir = data_root.join(CORE_ESSENTIALS_RELATIVE);
+            if ce_dir == root {
+                WiringClassIndex::build(book_id, &root)
+            } else {
+                WiringClassIndex::build_with_extra(book_id, &root, "core_essentials", &ce_dir)
+            }
+        }
+        None => WiringClassIndex::build(book_id, &root),
+    };
     let mut wiring_lines = wiring_index.lines();
 
-    // Clear only what THIS generator owns, which for eight of the ten
-    // registered books is the whole directory and for Bestiary 1 is not.
+    // Clear only what is GENUINELY STALE: a file this generator owns (its
+    // `data.key` is namespaced to this book and kind) whose key is no longer
+    // in the table's CURRENT membership.
     //
-    // `data/corpus/beastiary/monster/` holds 46 records SD-22 wrote, in the
-    // pre-`key` Shape B v1 shape (`data.id`, no `data.key`), beside the 284 this
-    // chassis writes (`decisions.md §58.3`). A `remove_dir_all` here would
-    // delete a shipped, grounded, player-visible family every time this
-    // generator ran on the book -- silently, because the next run of the OTHER
-    // generator would put it back and nothing in between would say so.
+    // **CORRECTED (`SD31-E6-F9-005`): this used to remove EVERY owned file
+    // unconditionally, regardless of whether its key was still in the table**
+    // -- confirmed live against this repo's own checked-in corpus: every one
+    // of `beastiary`/`bestiary_2`'s already-shipped `monster`/`monster_ability`
+    // records carries a `data.raw_tokens` array a LATER, SEPARATE enrichment
+    // pass wrote (`enrich_monster_raw_tokens.rs`/
+    // `enrich_monster_ability_raw_tokens.rs` -- neither field exists on
+    // `MonsterStatBlock`/`MonsterAbilityRecord` at all, so this generator can
+    // never reconstruct it). The unconditional clear-then-rewrite silently
+    // regenerated every one of those 724 already-enriched records in the
+    // narrower un-enriched base shape the instant this generator ran again --
+    // "Do NOT regenerate `data/corpus/` wholesale" the hard way, and exactly
+    // the "generated artifacts mutated post-hoc" hazard this program has
+    // already named once (`docs/retro/tranche-*`).
     //
-    // The rule is the record shape, not a book name: a file is this generator's
-    // to remove when its `data.key` is namespaced to the book and kind it sits
-    // under. A stale chassis record dropped from the table is still swept, which
-    // is what the old `remove_dir_all` was for; a foreign-shaped record is left
-    // exactly where its own lane put it.
-    for sub in ["monster", "monster_ability"] {
+    // `data/corpus/beastiary/monster/` ALSO holds 46 records SD-22 wrote, in
+    // the pre-`key` Shape B v1 shape (`data.id`, no `data.key`), beside the
+    // 280+ this chassis writes (`decisions.md §58.3`) -- those are excluded by
+    // the SAME `data.key`-prefix ownership test as before, unchanged.
+    //
+    // The new rule: a file this generator owns is removed ONLY when its key is
+    // ABSENT from the table this run just computed -- a real deletion (a
+    // record dropped from the source `.lst`, or newly PI-excluded), never a
+    // record that is merely about to be rewritten with the same key. See the
+    // write loops below for the matching half: a file whose key IS present is
+    // left COMPLETELY untouched (not rewritten in the base shape either),
+    // preserving whatever a later enrichment pass added.
+    let current_monster_keys: std::collections::HashSet<String> = table
+        .monsters
+        .iter()
+        .map(|m| format!("{book_id}:monster:{}", slugify(m.key)))
+        .collect();
+    let current_ability_keys: std::collections::HashSet<String> = table
+        .monster_abilities
+        .iter()
+        .map(|a| format!("{book_id}:monster_ability:{}", slugify(a.key)))
+        .collect();
+    for (sub, current_keys) in [
+        ("monster", &current_monster_keys),
+        ("monster_ability", &current_ability_keys),
+    ] {
         let dir = out_root.join(sub);
         if !dir.exists() {
             continue;
@@ -1109,38 +1250,77 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             if path.extension().and_then(|e| e.to_str()) != Some("json") {
                 continue;
             }
-            let owned = fs::read_to_string(&path)
+            let key = fs::read_to_string(&path)
                 .ok()
                 .and_then(|raw| serde_json::from_str::<serde_json::Value>(&raw).ok())
-                .and_then(|v| {
-                    v.get("data")?.get("key")?.as_str().map(|k| k.starts_with(&prefix))
-                })
-                .unwrap_or(false);
-            if owned {
+                .and_then(|v| v.get("data")?.get("key")?.as_str().map(str::to_string));
+            let Some(key) = key else { continue };
+            if key.starts_with(&prefix) && !current_keys.contains(&key) {
                 fs::remove_file(&path).expect("clear stale generated record");
             }
         }
     }
 
+    // `SD31-E6-F9-005`: a `decisions.md §9`-re-attributed unit's `source_file`
+    // can name a file that physically lives under `core_essentials`'s own
+    // directory rather than this book's -- see `load_corpus_file_rel_with_fallback`.
+    // Same root the wiring-class index above was built from -- one call, one
+    // answer, never re-derived a second way.
+    let corpus_data_root = wiring_data_root;
     // Keyed by file name, because a record's `source_line` is only meaningful
     // together with its `source_file` -- see `MonsterBookSpec::races_lsts`.
     let races_files: HashMap<&'static str, CorpusFile> = spec
         .races_lsts
         .iter()
-        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .map(|name| {
+            (
+                *name,
+                load_corpus_file_rel_with_fallback(
+                    &root,
+                    spec.book_relative,
+                    corpus_data_root.as_deref(),
+                    name,
+                ),
+            )
+        })
         .collect();
     // Keyed by file name for `races_files`' reason: an ability's `source_line`
     // is only meaningful together with its `source_file`.
     let abilities_files: HashMap<&'static str, CorpusFile> = spec
         .abilities_lsts
         .iter()
-        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .map(|name| {
+            (
+                *name,
+                load_corpus_file_rel_with_fallback(
+                    &root,
+                    spec.book_relative,
+                    corpus_data_root.as_deref(),
+                    name,
+                ),
+            )
+        })
         .collect();
 
     // ---- monsters ----
     let mut monster_written = 0u32;
+    let mut monster_kept = 0u32;
     let mut pi_hits: Vec<String> = Vec::new();
     for block in table.monsters {
+        // **`SD31-E6-F9-005`: a record whose file already exists is left
+        // COMPLETELY untouched** -- not rewritten in the base shape, not
+        // re-citation-verified. See the clear loop above for why: a later
+        // enrichment pass (`raw_tokens`) writes fields this generator's own
+        // `MonsterStatBlock`-shaped `data` object cannot reconstruct, and
+        // rewriting would silently discard them. This means an EXISTING
+        // record's underlying `.lst` citation is not re-verified by this run
+        // -- `v06_corpus_trap_report --audit`'s own citation check covers
+        // that ground independently, on the already-written file, every gate.
+        let out_path = out_root.join("monster").join(format!("{}.json", slugify(block.key)));
+        if out_path.exists() {
+            monster_kept += 1;
+            continue;
+        }
         // The display name, not the key: the first column of a monster row is
         // the display name, and Monster Codex is the first book where they
         // differ (`Sootwing Bat` in column 1, `KEY:Bat (Sootwing)`).
@@ -1166,6 +1346,13 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "natural_attacks": block.natural_attacks.iter().map(|a| serde_json::json!({ "name": a.name, "damage_dice": a.damage_dice })).collect::<Vec<_>>(),
             "ability_keys": block.ability_keys.iter().map(|k| format!("{book_id}:monster_ability:{}", slugify(k))).collect::<Vec<_>>(),
             "external_ability_refs": block.external_ability_refs,
+            // SD31-E6-F1-002: the same `{ability, amount}` shape the
+            // companion generator already emits for `stat_adjustments`
+            // below (search this file for `"stat_adjustments"` on a
+            // `CompanionRecord` for the precedent) -- a delta against a base
+            // this ingest does not carry, never a final ability score.
+            "stat_adjustments": block.stat_adjustments.iter().map(|a| serde_json::json!({ "ability": a.ability, "amount": a.amount })).collect::<Vec<_>>(),
+            "has_spell_like_abilities": block.has_spell_like_abilities,
         });
         pi_hits.extend(monster_record_pi_hits(block.key, &data.to_string()));
         let source = CorpusSource::LstToken {
@@ -1187,17 +1374,25 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
-        write_record(
-            &out_root.join("monster").join(format!("{}.json", slugify(block.key))),
-            &record,
-        );
+        write_record(&out_path, &record);
         monster_written += 1;
     }
 
     // ---- monster abilities ----
     let mut ability_written = 0u32;
+    let mut ability_kept = 0u32;
     for ability in table.monster_abilities {
+        // Same "leave existing files completely alone" rule as the monster
+        // loop above, and the same reason (`raw_tokens`).
+        let out_path = out_root
+            .join("monster_ability")
+            .join(format!("{}.json", slugify(ability.key)));
+        if out_path.exists() {
+            ability_kept += 1;
+            continue;
+        }
         let abilities_file = abilities_files.get(ability.source_file).unwrap_or_else(|| {
             panic!(
                 "{book_id}:{} cites {}, which is not in this book's \
@@ -1239,13 +1434,9 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
-        write_record(
-            &out_root
-                .join("monster_ability")
-                .join(format!("{}.json", slugify(ability.key))),
-            &record,
-        );
+        write_record(&out_path, &record);
         ability_written += 1;
     }
 
@@ -1335,8 +1526,9 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
     fs::write(&license_path, serde_json::to_string_pretty(&license_json).unwrap() + "\n")
         .unwrap_or_else(|e| panic!("failed to write {license_path:?}: {e}"));
     println!(
-        "{book_id} cache generated: {monster_written} monsters, {ability_written} monster abilities; \
-         LICENSE.json records_processed={records_processed}"
+        "{book_id} cache generated: {monster_written} new monsters ({monster_kept} already on disk, \
+         left untouched), {ability_written} new monster abilities ({ability_kept} already on disk, \
+         left untouched); LICENSE.json records_processed={records_processed}"
     );
 }
 
@@ -1364,7 +1556,23 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
     let root = companion_book_corpus_root(spec);
     let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(book_id);
     let ingested_at = ingested_at_now();
-    let wiring_index = WiringClassIndex::build(book_id, &root);
+    // Index `core_essentials`'s own directory under its own book key too, for
+    // the reason `gen_monster_book` states: a `decisions.md §9`-re-attributed
+    // row's citation `path` names that directory, and without the extra index
+    // `wiring_class_for_source` cannot find the row and stamps `ambiguous`
+    // regardless of the row's real corpus shape.
+    let wiring_data_root = companion_book_corpus_data_root(spec);
+    let wiring_index = match &wiring_data_root {
+        Some(data_root) => {
+            let ce_dir = data_root.join(CORE_ESSENTIALS_RELATIVE);
+            if ce_dir == root {
+                WiringClassIndex::build(book_id, &root)
+            } else {
+                WiringClassIndex::build_with_extra(book_id, &root, "core_essentials", &ce_dir)
+            }
+        }
+        None => WiringClassIndex::build(book_id, &root),
+    };
     let mut wiring_lines = wiring_index.lines();
 
     let dir = out_root.join("companion");
@@ -1374,15 +1582,41 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
 
     // Keyed by file name, because a record's `source_line` is only meaningful
     // together with its `source_file` -- see `CompanionRecord::source_file`.
+    //
+    // Loaded through the `core_essentials` fallback: a `decisions.md §9`
+    // re-attributed row reports its real book (`ce_races_familiar_cr.lst` says
+    // `SOURCELONG:Bestiary`, so its rows report `bestiary`) while its physical
+    // file never leaves `core_essentials`' PCGen directory. Same rule, same
+    // term, as `transcribe_companion_tables`'s own resolver.
     let races_files: HashMap<&'static str, CorpusFile> = spec
         .races_lsts
         .iter()
-        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .map(|name| {
+            (
+                *name,
+                load_corpus_file_rel_with_fallback(
+                    &root,
+                    spec.book_relative,
+                    wiring_data_root.as_deref(),
+                    name,
+                ),
+            )
+        })
         .collect();
     let abilities_files: HashMap<&'static str, CorpusFile> = spec
         .abilities_lsts
         .iter()
-        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .map(|name| {
+            (
+                *name,
+                load_corpus_file_rel_with_fallback(
+                    &root,
+                    spec.book_relative,
+                    wiring_data_root.as_deref(),
+                    name,
+                ),
+            )
+        })
         .collect();
 
     let mut pi_hits: Vec<String> = Vec::new();
@@ -1439,6 +1673,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         write_record(
             &out_root.join("companion").join(format!("{}.json", slugify(companion.key))),
@@ -1505,6 +1740,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         write_record(
             &out_root.join("companion").join(format!("{}.json", slugify(ability.key))),
@@ -1702,11 +1938,24 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     // load-bearing: writing `data/corpus/bestiary/` would split the book's
     // corpus in half, giving it a second LICENSE.json and a monster/equipment
     // half the new companion half could never be judged against.
+    //
+    // `SD31-CE-COMPANION-001` added the two `ce_*` files below. They physically
+    // live under `core_essentials/`, and both declare `SOURCELONG:Bestiary` in
+    // their own headers -- so `decisions.md §9` re-attribution reports their 95
+    // rows as this book's, and `v06_work_inventory`'s `SOURCELONG_TO_BOOK` has
+    // said so since 2026-08-16. The filename suffix `_cr` is NOT the signal and
+    // must never be read as one: `ce_races_familiar_cr.lst` means "the Core
+    // Rulebook classes' familiar list", and the stat blocks in it are the
+    // Bestiary's. `load_corpus_file_rel_with_fallback` is what lets a spec name
+    // a file that is not under its own `book_relative`.
     CompanionBookSpec {
         corpus_book: "beastiary",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary",
-        races_lsts: &["b1_races_companion.lst"],
-        abilities_lsts: &["b1_abilities_companion.lst"],
+        races_lsts: &["b1_races_companion.lst", "ce_races_familiar_cr.lst"],
+        abilities_lsts: &[
+            "b1_abilities_companion.lst",
+            "ce_abilities_familiar_race_cr.lst",
+        ],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-004",
@@ -1768,48 +2017,6 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Wilderness, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-007",
     },
-    // SD-29 Epic 7 round 7. Core Essentials.
-    //
-    // The two citation fields below are the ONLY ones in this table that do not
-    // use the "the book's own `<x>.pcc` carries a live COPYRIGHT block plus a
-    // real OGL.txt" formula, and that is deliberate: for this book the formula
-    // is FALSE. `_core_essentials.pcc` has its `ISOGL:YES` (line 16) and every
-    // one of its `COPYRIGHT:` lines (19 onward) prefixed with `#` — commented
-    // out, not absent — and the directory ships no `OGL.txt` at all
-    // (`ls ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/ | grep -i ogl`
-    // → nothing). Read alone the book makes no active declaration.
-    //
-    // What makes it recoverable is the inclusion path, which the race-trait
-    // lane derived and recorded in this book's existing `LICENSE.json`
-    // (`SD29-E6-F2-005`): `core_rulebook.pcc` line 43 unconditionally includes
-    // `_core_essentials.pcc`, and Core Rulebook carries its own live `ISOGL:YES`
-    // and `COPYRIGHT` block. These strings restate that derivation rather than
-    // asserting a stronger one.
-    //
-    // In practice the generator will use NEITHER: `gen_companion_book`
-    // preserves a prior `license_declaration` (`decisions.md §54.4`) and this
-    // book has one. They are written correctly anyway, because a fallback that
-    // is only correct while it stays unreached is how `§59.2`'s `mod_only` half
-    // sat wrong-and-unexercised for two rounds.
-    CompanionBookSpec {
-        corpus_book: "core_essentials",
-        book_relative: "pathfinder/paizo/roleplaying_game/core_essentials",
-        races_lsts: &[
-            "ce_races_familiar_apg.lst",
-            "ce_races_familiar_cr.lst",
-            "ce_races_familiar_um.lst",
-        ],
-        abilities_lsts: &[
-            "ce_abilities_familiar_apg.lst",
-            "ce_abilities_familiar_cr.lst",
-            "ce_abilities_familiar_race_cr.lst",
-            "ce_abilities_familiar_race_um.lst",
-            "ce_abilities_familiar_um.lst",
-        ],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inherited from the including core_rulebook.pcc per docs/governance/license-matrix.md §'Unestablished: 1 of 37'. core_essentials' own _core_essentials.pcc has its ISOGL:YES (line 16) and every COPYRIGHT: line (19 onward) commented out and ships no OGL.txt, so read alone it makes no active declaration; core_rulebook.pcc line 43 includes it unconditionally and carries a live declaration of its own.",
-        product_identity_source: "Paizo Pathfinder Roleplaying Game Core Rulebook, OGL §15 Product Identity section (core_essentials is distributed as part of that book's data set)",
-        classified_by_cycle: "SD29-E7-F2-008",
-    },
     // SD-29 Epic 7 round 8. Core Rulebook.
     //
     // Back to the standard formula, and CHECKED rather than assumed after
@@ -1848,11 +2055,17 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     // they are written correctly anyway, per `§63`'s note that a fallback which
     // is only correct while it stays unreached is how `§59.2`'s `mod_only` half
     // sat wrong for two rounds.
+    // The two `ce_*` files below both declare `SOURCELONG:Ultimate Magic` in
+    // their own headers (`SD31-CE-COMPANION-001`); see `beastiary`'s row above
+    // for why the header, never the filename, decides.
     CompanionBookSpec {
         corpus_book: "ultimate_magic",
         book_relative: "pathfinder/paizo/roleplaying_game/ultimate_magic",
-        races_lsts: &["um_races_companion.lst"],
-        abilities_lsts: &["um_abilities_companion.lst"],
+        races_lsts: &["um_races_companion.lst", "ce_races_familiar_um.lst"],
+        abilities_lsts: &[
+            "um_abilities_companion.lst",
+            "ce_abilities_familiar_race_um.lst",
+        ],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own ultimate_magic.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game Ultimate Magic, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-010",
@@ -1866,10 +2079,15 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game Advanced Race Guide, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-010",
     },
+    // `ce_races_familiar_apg.lst` declares `SOURCELONG:Advanced Player's Guide`
+    // for the block its 8 transcribed rows sit in (`SD31-CE-COMPANION-001`).
+    // Adding those 8 familiars also gave five previously-orphan
+    // `apg_abilities_companion.lst` rows an owner, which is why this book's
+    // shipped table moved 4 -> 17 and not 4 -> 12.
     CompanionBookSpec {
         corpus_book: "advanced_players_guide",
         book_relative: "pathfinder/paizo/roleplaying_game/advanced_players_guide",
-        races_lsts: &["apg_races_companion.lst"],
+        races_lsts: &["apg_races_companion.lst", "ce_races_familiar_apg.lst"],
         abilities_lsts: &["apg_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own advanced_players_guide.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game Advanced Player's Guide, OGL §15 Product Identity section",
@@ -1901,6 +2119,23 @@ fn companion_book_corpus_root(spec: &CompanionBookSpec) -> PathBuf {
     let home = std::env::var("HOME")
         .expect("HOME must be set to locate the default PCGen corpus checkout");
     PathBuf::from(home).join("workspace/repos/pcgen/data").join(spec.book_relative)
+}
+
+/// The directory ABOVE `pathfinder/...` for a companion book, i.e. the base the
+/// `core_essentials` fallback in [`load_corpus_file_rel_with_fallback`] is
+/// computed from. `None` when a per-book `PCGEN_CORPUS_ROOT_<BOOK>` override is
+/// in effect, because an override points at a book directory directly and the
+/// data root above it is not derivable -- the same rule and the same shape as
+/// [`monster_book_corpus_data_root`], which the monster lane added in
+/// `SD31-E6-F9-005` for exactly this reason.
+fn companion_book_corpus_data_root(spec: &CompanionBookSpec) -> Option<PathBuf> {
+    let override_var = format!("PCGEN_CORPUS_ROOT_{}", spec.corpus_book.to_uppercase());
+    if std::env::var(&override_var).is_ok() {
+        return None;
+    }
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen corpus checkout");
+    Some(PathBuf::from(home).join("workspace/repos/pcgen/data"))
 }
 
 /// Where one monster book's two `.lst` files live and what its OGL notice
@@ -1987,9 +2222,15 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_2",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_2",
         races_lsts: &["b2_races.lst"],
-        abilities_lsts: &["b2_abilities_race.lst"],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_2.pcc carries a live COPYRIGHT block plus a real OGL.txt",
-        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 2, OGL §15 Product Identity section",
+        // `ce_abilities_race.lst` added `SD31-E6-F9-005`: 92 `decisions.md §9`
+        // re-attributed ability rows physically live under `core_essentials`'s
+        // own directory, reached via `load_corpus_file_rel_with_fallback`'s
+        // core_essentials fallback -- the citation's own `path` records
+        // `core_essentials/ce_abilities_race.lst`, never a `bestiary_2` path
+        // the file does not exist under.
+        abilities_lsts: &["b2_abilities_race.lst", "ce_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_2.pcc carries a live COPYRIGHT block plus a real OGL.txt. `ce_abilities_race.lst`'s own provenance is `core_essentials`'s -- see that book's own MonsterBookSpec entry -- verified identical (same PCGen `_core_essentials.pcc` OGL declaration governs every file it loads).",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 2, OGL §15 Product Identity section; the 92 `ce_abilities_race.lst`-origin rows are screened by this generator's own PI_BLACKLIST_TERMS scan on every emitted value exactly like every other row (no NAMEISPI:YES hits found, `SD31-E6-F9-005`)",
         classified_by_cycle: "SD29-E5-F2-005",
     },
     MonsterBookSpec {
@@ -2039,9 +2280,14 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "beastiary",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary",
         races_lsts: &["b1_races.lst"],
-        abilities_lsts: &["b1_abilities_race.lst"],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt",
-        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, which is what the blacklist's per-record predicate predicts for a roleplaying_game/ bestiary",
+        // `ce_abilities_race.lst` added `SD31-E6-F9-005`: 76 `decisions.md §9`
+        // re-attributed ability rows physically live under `core_essentials`'s
+        // own directory, reached via `load_corpus_file_rel_with_fallback`'s
+        // core_essentials fallback -- see `bestiary_2`'s matching entry for
+        // the full mechanism.
+        abilities_lsts: &["b1_abilities_race.lst", "ce_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt. `ce_abilities_race.lst`'s own provenance is `core_essentials`'s -- see that book's own MonsterBookSpec entry -- verified identical (same PCGen `_core_essentials.pcc` OGL declaration governs every file it loads).",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, which is what the blacklist's per-record predicate predicts for a roleplaying_game/ bestiary. The 76 `ce_abilities_race.lst`-origin rows are screened by this generator's own PI_BLACKLIST_TERMS scan on every emitted value exactly like every other row (no NAMEISPI:YES hits found, `SD31-E6-F9-005`)",
         classified_by_cycle: "SD29-E5-F2-009",
     },
     // SD-29 Epic 5 extend, round 9. The first book in this registry that needs
@@ -2136,6 +2382,23 @@ fn monster_book_corpus_root(spec: &MonsterBookSpec) -> PathBuf {
     }
     let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
     PathBuf::from(home).join("workspace/repos/pcgen/data").join(spec.book_relative)
+}
+
+/// The PCGen `data/` root ABOVE `pathfinder/...` -- i.e. what
+/// `monster_book_corpus_root` joins `spec.book_relative` onto -- for use as
+/// [`load_corpus_file_rel_with_fallback`]'s core_essentials fallback base.
+/// `None` when a per-book `PCGEN_CORPUS_ROOT_<BOOK>` override is set: that
+/// override names a synthetic/test book directory directly, with no
+/// corpus-wide sibling tree above it for a fallback to reach, matching
+/// [`load_corpus_file_rel_with_fallback`]'s own "no fallback offered" contract
+/// for that case.
+fn monster_book_corpus_data_root(spec: &MonsterBookSpec) -> Option<PathBuf> {
+    let override_var = format!("PCGEN_CORPUS_ROOT_{}", spec.corpus_book.to_uppercase());
+    if std::env::var(&override_var).is_ok() {
+        return None;
+    }
+    let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
+    Some(PathBuf::from(home).join("workspace/repos/pcgen/data"))
 }
 
 /// The table records the line it was transcribed from; this re-reads that line

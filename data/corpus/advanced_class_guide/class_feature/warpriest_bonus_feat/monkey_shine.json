@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Monkey Shine",
+    "name": "Monkey Shine",
+    "class": "Warpriest Bonus Feat",
+    "description": "You combine acrobatics and opportunity to devastating effect against your opponent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Monkey Shine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Improved Unarmed Strike,Monkey Moves,Monkey Style,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Acrobatics=11,Climb=11"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=13"
+      },
+      {
+        "key": "DESC",
+        "value": "You combine acrobatics and opportunity to devastating effect against your opponent."
+      },
+      {
+        "key": "DESC",
+        "value": " While using Monkey Style, if you successfully deliver a Stunning Fist attempt, in addition to the normal effect of Stunning Fist, you can spend a free action to enter a square adjacent to you that is within your opponent's space. This movement does not provoke attacks of opportunity. While you are in your opponent's space, you gain a +4 dodge bonus to AC and a +4 bonus on melee attack rolls against that opponent. If otherwise unhindered, the opponent can move away from you, but if he does, he provokes an attack of opportunity from you even if his choice of movement does not normally do so. &nl; [Normal] You cannot enter an opponent's space."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Monkey Shine"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4492,
+    "record_key": "Warpriest Bonus Feat ~ Monkey Shine"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

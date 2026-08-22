@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Animal Speaker ~ Animal Friend Choice",
+    "name": "Animal Friend",
+    "class": "Animal Speaker",
+    "description": "You select a particular kind of animal, such as apes, badgers, bears, boars, cats, snakes, and so on. You gain a +4 bonus on Handle Animal checks to influence animals of your chosen kind. Animals of this kind have a starting attitude of at least \"indifferent\" toward you and never attack you unless you attack them first. Animal companions and magically controlled animals of the bard's chosen kind can be directed to attack you if the controlling creature wins an opposed Charisma check against you (this check can be made once per round until it succeeds, after which no further checks are needed). Supernatural versions of animals (such as animals with the fiendish template) can attempt an opposed Charisma check against you with a +4 bonus on its roll to overcome this hesitation. This ability has no effect on creatures other than animals.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Speaker ~ Animal Friend Choice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You select a particular kind of animal, such as apes, badgers, bears, boars, cats, snakes, and so on. You gain a +4 bonus on Handle Animal checks to influence animals of your chosen kind. Animals of this kind have a starting attitude of at least \"indifferent\" toward you and never attack you unless you attack them first. Animal companions and magically controlled animals of the bard's chosen kind can be directed to attack you if the controlling creature wins an opposed Charisma check against you (this check can be made once per round until it succeeds, after which no further checks are needed). Supernatural versions of animals (such as animals with the fiendish template) can attempt an opposed Charisma check against you with a +4 bonus on its roll to overcome this hesitation. This ability has no effect on creatures other than animals."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "RACE|RACETYPE=Animal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 944,
+    "record_key": "Animal Speaker ~ Animal Friend Choice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Corpse-Eater Fungus",
     "delivery": null,
@@ -14,6 +12,44 @@
     "owners": [
       "ultimate_wilderness:companion:companion_corpse_eater_fungus"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Corpse-Eater Fungus"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d8,SPROP=plus 1d4 acid"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Spit,Natural.Ranged.Weapon.Touch,*1,0,SPROP=1d8 acid 30-ft. range"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Corpse-Eater Fungus)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -21,16 +57,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 52,
-    "record_key": "Companion Advancement ~ Corpse-Eater Fungus"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 52,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Corpse-Eater Fungus",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

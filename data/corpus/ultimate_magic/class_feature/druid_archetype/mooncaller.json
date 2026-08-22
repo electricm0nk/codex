@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Mooncaller",
+    "name": "Mooncaller",
+    "class": "Druid Archetype",
+    "description": "A mooncaller is bound to the subtle influences of the ever-changing moon and its endless cycles from light to dark and back again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Mooncaller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidWoodlandStride.DruidResistNaturesLure.DruidVenomImmunity.DruidThousandFaces"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mooncaller],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidResistNaturesLure,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces]"
+      },
+      {
+        "key": "DESC",
+        "value": "A mooncaller is bound to the subtle influences of the ever-changing moon and its endless cycles from light to dark and back again."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mooncaller ~ Night Sight|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Mooncaller ~ Resist Call of the Wild|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Mooncaller ~ Purity of Body|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Mooncaller ~ Wolfsbane|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1090,
+    "record_key": "Druid Archetype ~ Mooncaller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

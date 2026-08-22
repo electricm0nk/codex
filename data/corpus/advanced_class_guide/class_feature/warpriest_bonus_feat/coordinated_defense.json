@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Coordinated Defense",
+    "name": "Coordinated Defense",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are adept at working with allies to avoid being tripped, grappled, and subjected to other maneuvers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Coordinated Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "DESC",
+        "value": "You are adept at working with allies to avoid being tripped, grappled, and subjected to other maneuvers."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you are adjacent to an ally who also has this feat, you receive a +2 competence bonus to your Combat Maneuver Defense. This bonus increases to +4 if the creature attempting the maneuver is larger than both you and your ally."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Coordinated Defense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4318,
+    "record_key": "Warpriest Bonus Feat ~ Coordinated Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

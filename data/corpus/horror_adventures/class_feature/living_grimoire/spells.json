@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Living Grimoire ~ Spells",
+    "name": "Spells",
+    "class": "Inquisitor",
+    "description": "A living grimoire must prepare his spells ahead of time, and can know any number of inquisitor spells. He uses Intelligence instead of Wisdom as his key spellcasting ability score (to determine his spell DCs, bonus spells per day, modifier on concentration checks, and so on), and to determine the effects and number of uses of his domain powers. The living grimoire receives the same number of spell slots per day as a warpriest of his inquisitor level, and receives bonus spells per day if he has a high Intelligence score. He must choose and prepare his spells ahead of time by choosing a time each day for 1 hour of quiet contemplation while he studies his holy book. At 1st level, the living grimoire's holy book contains all 0-level inquisitor spells plus three 1st-level inquisitor spells of his choice. He also selects a number of additional 1st-level inquisitor spells equal to his Intelligence modifier to add to his holy book. At each new inquisitor level, he gains two new inquisitor spells of any spell levels he can cast (based on his new inquisitor level) for his holy book. At any time, he can learn inquisitor spells from scrolls or other written sources and add inquisitor spells he finds to his holy book. This ability alters orisons and spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Living Grimoire ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "DESC",
+        "value": "A living grimoire must prepare his spells ahead of time, and can know any number of inquisitor spells. He uses Intelligence instead of Wisdom as his key spellcasting ability score (to determine his spell DCs, bonus spells per day, modifier on concentration checks, and so on), and to determine the effects and number of uses of his domain powers. The living grimoire receives the same number of spell slots per day as a warpriest of his inquisitor level, and receives bonus spells per day if he has a high Intelligence score. He must choose and prepare his spells ahead of time by choosing a time each day for 1 hour of quiet contemplation while he studies his holy book. At 1st level, the living grimoire's holy book contains all 0-level inquisitor spells plus three 1st-level inquisitor spells of his choice. He also selects a number of additional 1st-level inquisitor spells equal to his Intelligence modifier to add to his holy book. At each new inquisitor level, he gains two new inquisitor spells of any spell levels he can cast (based on his new inquisitor level) for his holy book. At any time, he can learn inquisitor spells from scrolls or other written sources and add inquisitor spells he finds to his holy book. This ability alters orisons and spellcasting."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorKnownHack|1000"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;CLASS=Inquisitor|-WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;CLASS=Inquisitor|INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 143,
+    "record_key": "Living Grimoire ~ Spells"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

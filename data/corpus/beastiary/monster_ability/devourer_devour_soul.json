@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Devourer ~ Devour Soul",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:devourer"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Devour Soul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DevourSoulDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevourSoulDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevourSoulDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Devour Soul)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevourSoulDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "By making a touch attack as a standard action, a devourer can deal 12d6+18 points of damage as if using a slay living spell. A DC %1 Fortitude save reduces this damage to 3d6+18. The soul of a creature slain by this attack becomes trapped within the devourer's chest. The creature cannot be brought back to life until the devourer's destruction releases its soul. A devourer can hold only one soul at a time. The trapped essence provides a devourer with 5 essence points for each Hit Die possessed by the soul. A devourer must expend essence points when it uses a spell-like ability equal to the spell's level. At the start of an encounter, a devourer generally has 3d4+3 essence points available. The trapped essence gains one permanent negative level for every 5 points of essence drained--these negative levels remain if the creature is brought back to life (but they do not stack with any negative levels imparted by being brought back to life). A soul that is completely consumed may only be restored to life by a miracle or wish.|DevourSoulDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Devourer ~ Devour Soul"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.82",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 373,
-    "record_key": "Devourer ~ Devour Soul"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 373,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Devourer ~ Devour Soul",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

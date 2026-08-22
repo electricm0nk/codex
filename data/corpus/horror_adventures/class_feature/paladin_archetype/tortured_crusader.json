@@ -1,0 +1,159 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Tortured Crusader",
+    "name": "Tortured Crusader",
+    "class": "Paladin Archetype",
+    "description": "Though tortured crusaders may be beaten and battered, body, mind, and soul, they still somehow continue through torment and hardship. Despite setbacks and impossible odds, they shine like candles even in the darkest times. Somewhere in their minds, they realize that they can't win in the end, but this only strengthens their resolve to fight for what is right, rather than giving in to hopelessness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Tortured Crusader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "Though tortured crusaders may be beaten and battered, body, mind, and soul, they still somehow continue through torment and hardship. Despite setbacks and impossible odds, they shine like candles even in the darkest times. Somewhere in their minds, they realize that they can't win in the end, but this only strengthens their resolve to fight for what is right, rather than giving in to hopelessness."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Tortured Crusader],[!PREFACT:1,ABILITIES,Paladin_Archetype_Spells=True,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_LayOnHands=True,Paladin_Archetype_ClassSkills=True,Paladin_Archetype_DetectEvil=True,Paladin_Archetype_DivineGrace=True,Paladin_Archetype_ChannelPositiveEnergy=True,Paladin_Archetype_DivineBond=True,Paladin_Archetype_AuraOfCourage=True,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_AuraOfFaith=True,Paladin_Archetype_AuraOfRighteousness=True,Paladin_Archetype_Mercy=True,Paladin_Archetype_AuraOfJustice=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tortured Crusader ~ Torment|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tortured Crusader ~ Self-Sufficient|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tortured Crusader ~ All Is Darkness|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tortured Crusader ~ Alone in the Dark|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tortured Crusader ~ Second Chance|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tortured Crusader ~ Last Stand|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_LayOnHands|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DetectEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfFaith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfRighteousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DetectEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_BondedMount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 179,
+    "record_key": "Paladin Archetype ~ Tortured Crusader"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

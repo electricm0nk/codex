@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Universal School ~ Hand of the Apprentice",
+    "name": "Hand of the Apprentice",
+    "class": "Universal School",
+    "description": "You can cause your melee weapon to fly from your grasp and strike a foe before instantly returning to you. As a standard action, you can make a single attack using a melee weapon at a range of 30 feet. This attack is treated as a ranged attack with a thrown weapon, except that you add your Intelligence modifier on the attack roll instead of your Dexterity modifier (damage still relies on Strength). This ability cannot be used to perform a combat maneuver. You can use this ability %1 times per day.|UniversalHandOfTheApprenticeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Universal School ~ Hand of the Apprentice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.Supernatural.ArcaneSchoolPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UniversalHandOfTheApprenticeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause your melee weapon to fly from your grasp and strike a foe before instantly returning to you. As a standard action, you can make a single attack using a melee weapon at a range of 30 feet. This attack is treated as a ranged attack with a thrown weapon, except that you add your Intelligence modifier on the attack roll instead of your Dexterity modifier (damage still relies on Strength). This ability cannot be used to perform a combat maneuver. You can use this ability %1 times per day.|UniversalHandOfTheApprenticeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UniversalHandOfTheApprenticeTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|UniversalHandOfTheApprenticeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2694,
+    "record_key": "Universal School ~ Hand of the Apprentice"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

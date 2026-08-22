@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai ~ Last Stand",
+    "name": "Last Stand",
+    "class": "Samurai",
+    "description": "At 20th level, a samurai can make a last stand once per day whenever he makes a challenge. While this challenge is in effect, all melee and ranged weapons deal the minimum amount of damage to the samurai, unless the attack scored is a critical hit. In addition, the samurai remains conscious and is not staggered while he is below 0 hit points. While using this ability, the samurai cannot be killed by melee or ranged weapons unless they are wielded by the target of his challenge. Attacks made by opponents that are not the target of his challenge deal no damage when samurai has 0 or fewer hit points. This ability has no effect on spells, environmental effects, supernatural abilities, or any other source of damage other than melee and ranged weapons. Such sources of damage affect him normally and can kill him (although they do not cause him to fall unconscious or to become staggered if they reduce his hit points below 0). This effect lasts until the challenge ends or the samurai takes an offensive action against a target other than the target of his challenge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Last Stand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a samurai can make a last stand once per day whenever he makes a challenge. While this challenge is in effect, all melee and ranged weapons deal the minimum amount of damage to the samurai, unless the attack scored is a critical hit. In addition, the samurai remains conscious and is not staggered while he is below 0 hit points. While using this ability, the samurai cannot be killed by melee or ranged weapons unless they are wielded by the target of his challenge. Attacks made by opponents that are not the target of his challenge deal no damage when samurai has 0 or fewer hit points. This ability has no effect on spells, environmental effects, supernatural abilities, or any other source of damage other than melee and ranged weapons. Such sources of damage affect him normally and can kill him (although they do not cause him to fall unconscious or to become staggered if they reduce his hit points below 0). This effect lasts until the challenge ends or the samurai takes an offensive action against a target other than the target of his challenge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 205,
+    "record_key": "Samurai ~ Last Stand"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

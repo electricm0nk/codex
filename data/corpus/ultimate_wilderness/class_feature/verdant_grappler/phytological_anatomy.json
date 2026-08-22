@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Grappler ~ Phytological Anatomy",
+    "name": "Phytological Anatomy",
+    "class": "Brawler",
+    "description": "The verdant grappler transforms partially into a plant. She gains a +2 bonus on saving throws against mind-affecting, paralysis, poison, polymorph, sleep, and stunning effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Grappler ~ Phytological Anatomy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.VerdantGrapplerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The verdant grappler transforms partially into a plant. She gains a +2 bonus on saving throws against mind-affecting, paralysis, poison, polymorph, sleep, and stunning effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 on saves vs. mind-affecting, paralysis, poison, polymorph, sleep, and stunning effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 412,
+    "record_key": "Verdant Grappler ~ Phytological Anatomy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

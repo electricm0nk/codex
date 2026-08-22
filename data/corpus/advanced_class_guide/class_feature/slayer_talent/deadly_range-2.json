@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Talent ~ Deadly Range Output",
+    "name": "Deadly Range",
+    "class": "Slayer Talent",
+    "description": "A slayer with this talent can deal sneak attack damage at %1 feet distance.|DeadlyRangeDistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Deadly Range Output"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeadlyRangeOutput.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A slayer with this talent can deal sneak attack damage at %1 feet distance.|DeadlyRangeDistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadlyRangeDistance|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1878,
+    "record_key": "Slayer Talent ~ Deadly Range Output"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

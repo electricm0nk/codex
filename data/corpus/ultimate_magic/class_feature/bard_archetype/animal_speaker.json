@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Animal Speaker",
+    "name": "Animal Speaker",
+    "class": "Bard Archetype",
+    "description": "An animal speaker focuses not on the ears and minds of humans, but on the creatures of the wild and those in the underbellies of cities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Animal Speaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardFascinate.BardWellVersed.BardInspireCompetence.BardSuggestion.BardMassSuggestion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Animal Speaker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardFascinate,TYPE.BardWellVersed,TYPE.BardInspireCompetence,TYPE.BardSuggestion,TYPE.BardMassSuggestion]"
+      },
+      {
+        "key": "DESC",
+        "value": "An animal speaker focuses not on the ears and minds of humans, but on the creatures of the wild and those in the underbellies of cities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Animal Speaker ~ Animal Friend|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Animal Speaker ~ Nature's Speaker|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Animal Speaker ~ Soothing Performance|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Animal Speaker ~ Attract Rats|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Animal Speaker ~ Summon Nature's Ally|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturesSpeakerNumber|1|PRECLASS:1,Bard=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturesSpeakerNumber|1|PRECLASS:1,Bard=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 932,
+    "record_key": "Bard Archetype ~ Animal Speaker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

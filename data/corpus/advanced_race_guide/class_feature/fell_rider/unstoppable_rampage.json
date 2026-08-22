@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fell Rider ~ Unstoppable Rampage",
+    "name": "Unstoppable Rampage",
+    "class": "Cavalier",
+    "description": "A mounted fell rider can overrun up to four creatures as part of a single overrun combat maneuver. Each attempt made against a creature after the first receives a cumulative -5 penalty (for example, the fourth overrun attempt would be at a -15 penalty). If any overrun attempt fails, the fell rider cannot make further overrun attempts that round. Attacks made by the fell rider or his mount as part of the overrun, such as those provided by the Trample feat or the deadly rampage ability, receive a +4 bonus to hit, and any critical threats from these attacks automatically confirm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fell Rider ~ Unstoppable Rampage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mounted fell rider can overrun up to four creatures as part of a single overrun combat maneuver. Each attempt made against a creature after the first receives a cumulative -5 penalty (for example, the fourth overrun attempt would be at a -15 penalty). If any overrun attempt fails, the fell rider cannot make further overrun attempts that round. Attacks made by the fell rider or his mount as part of the overrun, such as those provided by the Trample feat or the deadly rampage ability, receive a +4 bonus to hit, and any critical threats from these attacks automatically confirm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 576,
+    "record_key": "Fell Rider ~ Unstoppable Rampage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

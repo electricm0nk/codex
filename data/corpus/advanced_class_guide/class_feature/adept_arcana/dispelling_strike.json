@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Adept Arcana ~ Dispelling Strike",
+    "name": "Dispelling Strike",
+    "class": "Adept Arcana",
+    "description": "You can spend 1 or more points from your arcane reservoir as a swift action to imbue your weapon with a special power.  If the weapon strikes a creature within the next minute, that creature is the subject of a targeted Dispel Magic using your level as the caster level, except that this effect cannot dispel a spell of a level higher than the number of arcane reservoir points expended to activate this ability (treat higher-level spells as if they do not exist and apply the dispel attempt to the remaining spells with the highest caster level). Once the strike is made, the power dissipates, even if the dispel attempt is unsuccessful.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adept Arcana ~ Dispelling Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeAdeptArcana.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeAdeptArcanaLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend 1 or more points from your arcane reservoir as a swift action to imbue your weapon with a special power.  If the weapon strikes a creature within the next minute, that creature is the subject of a targeted Dispel Magic using your level as the caster level, except that this effect cannot dispel a spell of a level higher than the number of arcane reservoir points expended to activate this ability (treat higher-level spells as if they do not exist and apply the dispel attempt to the remaining spells with the highest caster level). Once the strike is made, the power dissipates, even if the dispel attempt is unsuccessful."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2401,
+    "record_key": "Adept Arcana ~ Dispelling Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

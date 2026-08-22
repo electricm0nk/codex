@@ -1,25 +1,107 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You imbue a suit of armor or a shield with an enhancement bonus of +1 per four caster levels [maximum +5 at 20th level]. An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell.",
     "key": "Magic Vestment",
-    "school": "Transmutation",
     "level": 3,
-    "description": "You imbue a suit of armor or a shield with an enhancement bonus of +1 per four caster levels [maximum +5 at 20th level]. An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue a suit of armor or a shield with an enhancement bonus of +(min(5,floor(CASTERLEVEL/4))).|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue a suit of armor or a shield with an enhancement bonus of +1 per four caster levels [maximum +5 at 20th level]. An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Nobility,Strength,War=3"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/magicVestment.html#_magic-vestment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.310"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Armor or shield touched"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Armor|COMBAT|AC|min(floor(%CHOICE/4),5)|TYPE=ArmorEnhancement"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Clothing|COMBAT|AC|min(floor(%CHOICE/4),5)|TYPE=ArmorEnhancement"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants a suit of armor with an enhancement bonus of +1 per four caster levels (maximum +5 at 20th level) &lbracket;Use Magic Vestment (Shield use) to enhance a shield&rbracket;"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=5|MAX=20|TITLE=Choose spell caster level"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 383,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1137,
-    "record_key": "Magic Vestment.MOD"
+    "record_key": "Magic Vestment",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

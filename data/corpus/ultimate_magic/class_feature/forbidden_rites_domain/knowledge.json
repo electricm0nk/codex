@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Knowledge Domain",
+    "name": "Knowledge",
+    "class": "Forbidden Rites Domain",
+    "description": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Knowledge Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.KnowledgeDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Lore Keeper|PREDOMAIN:1,Knowledge|PREVARGTEQ:DomainKnowledgeAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Remote Viewing|PREDOMAIN:1,Knowledge|PREVARGTEQ:DomainKnowledgeAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeDC|10+(DomainKnowledgeLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LoreKeeperDomainSkillBonus|-1"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Knowledge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Comprehend Languages|Cleric=2|Detect Thoughts|Cleric=3|Speak With Dead|Cleric=4|Divination|Cleric=5|True Seeing|Cleric=6|Find the Path|Cleric=7|Legend Lore|Cleric=8|Discern Location|Cleric=9|Foresight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1042,
+    "record_key": "Forbidden Rites Domain ~ Knowledge Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

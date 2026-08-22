@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Gray Ooze ~ Transparent",
     "delivery": "Extraordinary",
@@ -15,19 +13,43 @@
       "beastiary:monster:gray_ooze_crystal_ooze",
       "beastiary:monster:gray_ooze_id_ooze"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Due to its lack of vivid coloration, a gray ooze is difficult to discern from its surroundings in most environments. A DC 15 Perception check is required to notice the gray ooze. Any creature that fails to notice a gray ooze and walks into it automatically suffers damage as if struck by the ooze's slam attack and is immediately subject to a grab attempt by the ooze."
+      },
+      {
+        "key": "KEY",
+        "value": "Gray Ooze ~ Transparent"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.166",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 752,
-    "record_key": "Gray Ooze ~ Transparent"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 752,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Gray Ooze ~ Transparent",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

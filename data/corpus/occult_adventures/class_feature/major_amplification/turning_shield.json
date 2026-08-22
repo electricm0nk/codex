@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Major Amplification ~ Turning Shield",
+    "name": "Turning Shield",
+    "class": "Major Amplification",
+    "description": "The psychic can turn her excess spell energy into a barrier that deflects weaker spells. She can spend a number of points from her phrenic pool equal to the linked spell's level to gain the benefit of spell turning for 1 round per psychic level. The number of spell levels she can turn is equal to the level of the linked spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Major Amplification ~ Turning Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Major Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PsychicLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can turn her excess spell energy into a barrier that deflects weaker spells. She can spend a number of points from her phrenic pool equal to the linked spell's level to gain the benefit of spell turning for 1 round per psychic level. The number of spell levels she can turn is equal to the level of the linked spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1184,
+    "record_key": "Major Amplification ~ Turning Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

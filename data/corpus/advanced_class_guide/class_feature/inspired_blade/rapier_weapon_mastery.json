@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inspired Blade ~ Rapier Weapon Mastery",
+    "name": "Rapier Weapon Mastery",
+    "class": "Swashbuckler",
+    "description": "When an inspired blade threatens a critical hit with a rapier, that critical hit is automatically confirmed. Furthermore, the critical threat range increases by 1 (this increase to the critical threat range stacks with the increase from rapier training, to a total threat range of 14-20), and the critical modifier of the weapon increases by 1 (x2 becomes x3, for example). This ability replaces swashbuckler weapon mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Blade ~ Rapier Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When an inspired blade threatens a critical hit with a rapier, that critical hit is automatically confirmed. Furthermore, the critical threat range increases by 1 (this increase to the critical threat range stacks with the increase from rapier training, to a total threat range of 14-20), and the critical modifier of the weapon increases by 1 (x2 becomes x3, for example). This ability replaces swashbuckler weapon mastery."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|CRITMULTADD|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|CRITRANGEADD|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3892,
+    "record_key": "Inspired Blade ~ Rapier Weapon Mastery"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

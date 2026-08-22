@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Code Runner ~ Resist Interrogation",
+    "name": "Resist Interrogation",
+    "class": "Ranger",
+    "description": "A code runner gains a +%1 bonus on saving throws against divination effects.|RangerLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Code Runner ~ Resist Interrogation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.CodeRunnerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A code runner gains a +%1 bonus on saving throws against divination effects.|RangerLVL/2"
+      },
+      {
+        "key": "DESC",
+        "value": " If he succeeds at a saving throw against a divination effect that would grant its caster knowledge or information, the caster is not aware that the saving throw was successful, and the code runner can attempt a Bluff check opposed by the caster's Sense Motive check in order to send false information to the caster.|PRECLASS:1,Ranger=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. divination effects|RangerLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 644,
+    "record_key": "Code Runner ~ Resist Interrogation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

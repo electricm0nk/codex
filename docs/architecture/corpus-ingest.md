@@ -1,7 +1,7 @@
 # Corpus Ingest
 
 > Scope: how real PCGen corpus files (`.pcc` entry files + `.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
+> Last verified: **2026-08-18 against `tranche/11`** for §"Provenance is per-FIELD, not per-record" (SD-31 wave 14, `SD31-W14-INTEGRATE-001`); prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -291,6 +291,54 @@ order:
    `src/pcgen_import/include_resolver.rs`'s LST-reference recognizer —
    otherwise the existing generic `<KIND>:<path>.lst` scan already
    covers it.
+
+## Provenance is per-FIELD, not per-record (new 2026-08-18, SD-31 wave 14)
+
+`shape_b_v1::CorpusRecordV1` carries **two** provenance slots, and they answer
+different questions:
+
+* `source: CorpusSource` — where the RECORD came from. For a repo-resident
+  cache record this is normally `lst_token` (a pinned `path`/`sha256`/`line`
+  into the oracle), or one of the two honest variants
+  `lst_corrected_ingest` / `lst_inherited_copy`.
+* `description_source: Option<CorpusSource>` — where the record's DESCRIPTION
+  came from, when that differs. Populated only where it genuinely differs.
+
+The split exists because SD-26 `decisions.md §11.2` made `source` a
+discriminated union to record the provenance of the FIELD each intake cycle
+was closing, and for 412 already-shipped equipment records that field was the
+description alone: their identity, `cost_gp` and `weight` were generated from
+real `KEY:`/`COST:`/`WT:` tokens, while the prose came from a web second
+source because APG's three equipment `.lst` files carry **zero** `DESC:`
+tokens. Those records were stamped `web_second_source` outright, which put
+them **outside `corpus_literal_sweep`'s population entirely** (it walks
+`lst_token` + `raw_tokens`), so nothing had ever byte-compared them against
+the oracle.
+
+`rules_core::cache_gen::lst_provenance_repair` (driven by
+`bin/repair_lst_provenance`, `--check` for a dry run) narrows such a record:
+it resolves the real row with `equipment_gap::find_citation`, verifies it
+against the closure `corpus_literal_sweep::token_closure` itself builds,
+**refuses** unless every claimed `cost_gp`/`weight` is numerically stated by a
+`COST:`/`WT:` token in that closure, moves the web citation intact to
+`description_source`, and refreshes the record's `wiring_class` from the row
+it has just cited (a record that had no citation legitimately read
+`ambiguous`/`no_corpus_line`; keeping that stamp after narrowing would be a
+self-contradiction). Refusals are reported by name and the record is left
+alone — two records currently refuse (`hammer_ricochet`, whose cited row is a
+`.COPY=` declaration, and `rag_armor_dark_creeper`, whose identity matches no
+row).
+
+**Known gap, and the operating rule that follows from it.** Neither
+`cache_gen::apg::generate_equipment` nor
+`gen_core_rulebook_cache::equipment_source` emits the narrowed shape yet —
+both still stamp `web_second_source` and neither knows the
+`description_source` key — and no `verify.sh` stage runs either generator.
+Re-running one therefore REVERTS the narrowing. `tests/sd31_lst_provenance_
+repair_is_durable.rs` makes that a red gate rather than a silent regression,
+and the standing rule until the generators are taught the shape is: **after
+running either equipment cache generator, re-run
+`cargo run --locked --bin repair_lst_provenance` before committing.**
 
 See [rules-data-tables.md](./rules-data-tables.md) for what happens
 downstream once a corpus record is projected: transcribing its values

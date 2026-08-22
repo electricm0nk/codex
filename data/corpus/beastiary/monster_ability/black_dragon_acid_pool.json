@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Black Dragon ~ Acid Pool",
+    "delivery": "Supernatural",
+    "description": "An ancient or older black dragon can use its breath weapon to create an acid pool as a standard action. This acid pool has a radius of %1 feet. When an acid pool is created, anyone inside its area takes an amount of damage equal to the dragon's breath weapon (Reflex half). Any creature that starts its turn touching this pool takes damage, but can make a Reflex save for half. Each round, the total damage dice of the pool is halved until the result would be less than 1d6. The acid pool floats on water, and deals damage to anything on the surface.",
+    "description_variables": [
+      "DragonAgeCategory*5"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:black_dragon_acid_pool",
+    "name": "Acid Pool",
+    "owners": [
+      "beastiary:monster:dragon_black"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient or older black dragon can use its breath weapon to create an acid pool as a standard action. This acid pool has a radius of %1 feet. When an acid pool is created, anyone inside its area takes an amount of damage equal to the dragon's breath weapon (Reflex half). Any creature that starts its turn touching this pool takes damage, but can make a Reflex save for half. Each round, the total damage dice of the pool is halved until the result would be less than 1d6. The acid pool floats on water, and deals damage to anything on the surface.|DragonAgeCategory*5"
+      },
+      {
+        "key": "KEY",
+        "value": "Black Dragon ~ Acid Pool"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.92",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 403,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Black Dragon ~ Acid Pool",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

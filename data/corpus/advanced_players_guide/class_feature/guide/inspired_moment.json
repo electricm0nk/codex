@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guide ~ Inspired Moment",
+    "name": "Inspired Moment",
+    "class": "Ranger",
+    "description": "At 11th level, the guide can have an inspired moment once per day as a free action. The ranger gains the following benefits until the end of his next turn. His speed increases by 10 feet. He can take an extra move or swift action on his turn. He gains a +4 bonus to AC and on attack rolls, skill checks, or ability checks. Finally, he automatically confirms any critical threat he scores. He can use this ability one additional time per day at 19th level. This ability replaces quarry and improved quarry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guide ~ Inspired Moment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerQuarry.RangerImprovedQuarry"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, the guide can have an inspired moment once per day as a free action. The ranger gains the following benefits until the end of his next turn. His speed increases by 10 feet. He can take an extra move or swift action on his turn. He gains a +4 bonus to AC and on attack rolls, skill checks, or ability checks. Finally, he automatically confirms any critical threat he scores. He can use this ability one additional time per day at 19th level. This ability replaces quarry and improved quarry."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2730,
+    "record_key": "Guide ~ Inspired Moment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

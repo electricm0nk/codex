@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Sacred Huntsmaster",
+    "name": "Sacred Huntsmaster",
+    "class": "Inquisitor Archetype",
+    "description": "Some inquisitors create a strong bond with an animal companion, and they hunt and punish threats to the faith as an awe-inspiring duo. When they work together as one, there are few that dare to stand in their way.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Sacred Huntsmaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype.InquisitorJudgements.InquisitorSoloTactics.InquisitorSecondJudgement.InquisitorThirdJudgement.InquisitorSlayer.InquisitorTrueJudgement"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sacred Huntsmaster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgements,TYPE.InquisitorSoloTactics,TYPE.InquisitorSecondJudgement,TYPE.InquisitorThirdJudgement,TYPE.InquisitorSlayer,TYPE.InquisitorTrueJudgement]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some inquisitors create a strong bond with an animal companion, and they hunt and punish threats to the faith as an awe-inspiring duo. When they work together as one, there are few that dare to stand in their way."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Huntsmaster ~ Animal Companion|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Huntsmaster ~ Hunter Tactics|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Huntsmaster ~ Animal Focus|PRECLASS:1,Inquisitor=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Huntsmaster ~ Improved Empathic Link|PRECLASS:1,Inquisitor=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Huntsmaster ~ Raise Animal Companion|PRECLASS:1,Inquisitor=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Huntsmaster ~ Second Animal Focus|PRECLASS:1,Inquisitor=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Sacred Huntsmaster ~ Greater Empathic Link|PRECLASS:1,Inquisitor=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Inquisitor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3285,
+    "record_key": "Inquisitor Archetype ~ Sacred Huntsmaster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

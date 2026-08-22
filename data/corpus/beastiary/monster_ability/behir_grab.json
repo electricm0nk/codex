@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Behir ~ Grab",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "beastiary:monster:behir"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A behir's grab attack works against creatures of any size category. It can constrict the same round it establishes a hold. On any round thereafter that it maintains its hold, the behir can choose to rake the grappled target or swallow it whole."
+      },
+      {
+        "key": "KEY",
+        "value": "Behir ~ Grab"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.34",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 169,
-    "record_key": "Behir ~ Grab"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 169,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Behir ~ Grab",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Favored Terrain ~ Plane (Ethereal)",
+    "name": "Favored Terrain (Ethereal Plane)",
+    "class": "Favored Terrain",
+    "description": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked on the Ethereal Plane|FavoredTerrainEtherealPlane",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Terrain ~ Plane (Ethereal)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.FavoredTerrain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTerrainEtherealPlane|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked on the Ethereal Plane|FavoredTerrainEtherealPlane"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks when using these skills on the Ethereal Plane. Likewise, you get a +%1 bonus on initiative checks when on this plane. If you desire, you leave no trail on this plane and cannot be tracked.|FavoredTerrainEtherealPlane"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainEtherealPlane|FavoredTerrainBase"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredTerrainEtherealPlane"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1299,
+    "record_key": "Favored Terrain ~ Plane (Ethereal)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

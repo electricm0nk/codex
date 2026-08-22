@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Adept Arcana ~ Hasted Assault",
+    "name": "Hasted Assault",
+    "class": "Adept Arcana",
+    "description": "You can expend 1 point from your arcane reservoir as a swift action to move more quickly. This functions as Haste, but it only targets you and lasts for %1 rounds.|HastedAssaultDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adept Arcana ~ Hasted Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeAdeptArcana.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeAdeptArcanaLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HastedAssaultDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend 1 point from your arcane reservoir as a swift action to move more quickly. This functions as Haste, but it only targets you and lasts for %1 rounds.|HastedAssaultDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HastedAssaultDuration|INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2402,
+    "record_key": "Adept Arcana ~ Hasted Assault"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

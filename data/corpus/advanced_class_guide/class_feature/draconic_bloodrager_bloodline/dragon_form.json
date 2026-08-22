@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodrager Bloodline ~ Dragon Form",
+    "name": "Dragon Form",
+    "class": "Draconic Bloodrager Bloodline",
+    "description": "When you enter a bloodrage, you can choose to take the form of your chosen dragon type (as Form of the Dragon II).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodrager Bloodline ~ Dragon Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Draconic Bloodrager Bloodline ~ Power LVL 16.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Draconic_BloodlineProgressionLVL,16"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you enter a bloodrage, you can choose to take the form of your chosen dragon type (as Form of the Dragon II)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 718,
+    "record_key": "Draconic Bloodrager Bloodline ~ Dragon Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

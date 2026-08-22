@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ True Primitive",
+    "name": "True Primitive",
+    "class": "Barbarian Archetype",
+    "description": "Isolated and xenophobic tribes that dwell in areas untouched by civilization often see anything from cities and organized settlements as strange, dangerous, and decadent. They gain power from their truly primitive nature; their bodies and spirits are hardened by the wild and untainted existence far from the pathetic softness of so-called civilization. Even when forced to mingle with civilization, the true primitive stays apart in both traditions and trappings.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ True Primitive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype.BarbarianFastMovement.BarbarianTrapSense"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ True Primitive],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement,TYPE.BarbarianTrapSense]"
+      },
+      {
+        "key": "DESC",
+        "value": "Isolated and xenophobic tribes that dwell in areas untouched by civilization often see anything from cities and organized settlements as strange, dangerous, and decadent. They gain power from their truly primitive nature; their bodies and spirits are hardened by the wild and untainted existence far from the pathetic softness of so-called civilization. Even when forced to mingle with civilization, the true primitive stays apart in both traditions and trappings."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|True Primitive ~ Weapon and Armor Proficiency|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|True Primitive ~ Illiteracy|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|True Primitive ~ Favored Terrain|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|True Primitive ~ Trophy Fetish|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|True Primitive ~ Rage Powers|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Barbarian"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 307,
+    "record_key": "Barbarian Archetype ~ True Primitive"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

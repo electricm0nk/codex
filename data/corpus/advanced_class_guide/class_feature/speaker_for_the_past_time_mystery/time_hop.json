@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Speaker for the Past Time Mystery ~ Time Hop",
+    "name": "Time Hop",
+    "class": "Speaker for the Past Time Mystery",
+    "description": "As a move action, you can teleport up to %1 feet per day. This teleportation must be used in 5-foot increments. This movement does not provoke attacks of opportunity. You must have line of sight to your destination to use this ability. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought.|TimeHopDistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Time Mystery ~ Time Hop"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.Supernatural.TimeRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TimeHopDistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can teleport up to %1 feet per day. This teleportation must be used in 5-foot increments. This movement does not provoke attacks of opportunity. You must have line of sight to your destination to use this ability. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought.|TimeHopDistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TimeHopDistance|10*classlevel(\"Shaman\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3637,
+    "record_key": "Speaker for the Past Time Mystery ~ Time Hop"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

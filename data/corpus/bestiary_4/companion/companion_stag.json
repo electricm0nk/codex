@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "ability_keys": [
       "bestiary_4:companion:companion_advancement_stag"
@@ -22,6 +20,92 @@
     ],
     "race_subtype": null,
     "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Gore"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Stag|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gore|DAMAGE|max(0,(STR/2))|PREVARLT:MasterLevel,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Stag"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -56,16 +140,18 @@
     ],
     "type_segments": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
-    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
-    "line": 10,
-    "record_key": "Companion (Stag)"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+    "record_key": "Companion (Stag)",
+    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

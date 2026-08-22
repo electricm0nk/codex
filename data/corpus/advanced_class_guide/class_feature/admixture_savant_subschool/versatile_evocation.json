@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Admixture Savant Subschool ~ Versatile Evocation",
+    "name": "Versatile Evocation",
+    "class": "Admixture Savant Subschool",
+    "description": "When you cast an evocation spell that does acid, cold, electricity, or fire damage, you may change the damage dealt to one of the other four energy types. This changes the descriptor of the spell to match the new energy type. Any non-damaging effects remain unchanged unless the new energy type invalidates them (an ice storm that deals fire damage might still provide a penalty on Perception checks due to smoke, but it would not create difficult terrain). Such effects are subject to GM discretion. You can use this ability %1 times per day.|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Admixture Savant Subschool ~ Versatile Evocation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast an evocation spell that does acid, cold, electricity, or fire damage, you may change the damage dealt to one of the other four energy types. This changes the descriptor of the spell to match the new energy type. Any non-damaging effects remain unchanged unless the new energy type invalidates them (an ice storm that deals fire damage might still provide a penalty on Perception checks due to smoke, but it would not create difficult terrain). Such effects are subject to GM discretion. You can use this ability %1 times per day.|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2582,
+    "record_key": "Admixture Savant Subschool ~ Versatile Evocation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -58,7 +58,14 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         key: "Poison (Black Smear)",
         category: EquipmentCategory::General,
         name: "Poison (Black Smear)",
-        cost_gp: Some(0.0),
+        // `cost_gp: None`, corrected `SD31-E6-F5-004` (`OPEN-ISSUES.md`
+        // row 91's typed-field cross-check caught this the first time it
+        // ran): the real corpus row (`b1_equip_general.lst:7`) carries no
+        // `COST:` token at all -- `Some(0.0)` was a transcription error
+        // (0 gp is a stated price, not "unstated"), not this book's
+        // genuine `Rag Armor (Dark Creeper)` `COST:0` shape, which DOES
+        // carry a real `COST:0` token on its own row.
+        cost_gp: None,
         weight_lbs: Some(0.0),
         description: Some(
             "Injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save",

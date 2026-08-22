@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Archetype ~ Mutation Mind",
+    "name": "Mutation Mind",
+    "class": "Psychic Archetype",
+    "description": "Exposure to unintended spell effects, curses, or sources of radiation cause some to manifest psychic powers. When a mutation mind uses her psychic abilities, her physical body changes under the stress, and she risks losing control if she pushes too far.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Archetype ~ Mutation Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Psychic Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Archetype ~ Mutation Mind],[!PREFACT:1,ABILITIES,Psychic_Archetype_MajorAmplifications=true,Psychic_Archetype_PhrenicAmplification1=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Exposure to unintended spell effects, curses, or sources of radiation cause some to manifest psychic powers. When a mutation mind uses her psychic abilities, her physical body changes under the stress, and she risks losing control if she pushes too far."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Mutation Mind ~ Physical Mutation|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Mutation Mind ~ Bodily Mutations|PRECLASS:1,Psychic=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Mutation Mind ~ Phrenic Empowerment|PRECLASS:1,Psychic=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Mutation Mind ~ Improved Bodily Mutations|PRECLASS:1,Psychic=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_MajorAmplifications|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_PhrenicAmplification1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_PhrenicAmplification1|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1554,
+    "record_key": "Psychic Archetype ~ Mutation Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

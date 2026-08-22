@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Honor Bound",
+    "name": "Honor Bound",
+    "class": "Domain Power",
+    "description": "With a touch, you can remind a creature of its duties and responsibilities, granting it a new saving throw against each enchantment (charm) or enchantment (compulsion) effect that currently affects it. If the saving throw is successful, the enchantment effect is ended. This power only affects effects that allow a save. If you fail a save against such an effect, you can use this ability as an immediate action to grant yourself an additional save. Once the target (either you or a touched creature) has made one additional save per effect, this ability has no further effect on that particular enchantment effect. You can use this ability %1 times per day.|DomainGloryTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Honor Bound"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "With a touch, you can remind a creature of its duties and responsibilities, granting it a new saving throw against each enchantment (charm) or enchantment (compulsion) effect that currently affects it. If the saving throw is successful, the enchantment effect is ended. This power only affects effects that allow a save. If you fail a save against such an effect, you can use this ability as an immediate action to grant yourself an additional save. Once the target (either you or a touched creature) has made one additional save per effect, this ability has no further effect on that particular enchantment effect. You can use this ability %1 times per day.|DomainGloryTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainGloryTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1844,
+    "record_key": "Domain Power ~ Honor Bound"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

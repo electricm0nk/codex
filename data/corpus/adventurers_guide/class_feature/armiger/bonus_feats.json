@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Armiger ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Fighter",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armiger ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Feature.ArmigerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Armiger Bonus Feat|FighterLvl/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Armiger Bonus Feat|-1|PREVARGTEQ:FighterLvl,10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 845,
+    "record_key": "Armiger ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

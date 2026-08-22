@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Teamwork Feats",
+    "name": "Teamwork Feats",
+    "class": "Vigilante Talent",
+    "description": "A mounted fury can  select a teamwork feat for which he qualifies in place of a vigilante talent; at 10th level, he gains an additional teamwork feat each time he does so (if he selected any teamwork feats in place of vigilante talents before 10th level, he gains an additional teamwork feat at 10th level for each time he did so).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Teamwork Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Teamwork Feats"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsMountedFury,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A mounted fury can  select a teamwork feat for which he qualifies in place of a vigilante talent; at 10th level, he gains an additional teamwork feat each time he does so (if he selected any teamwork feats in place of vigilante talents before 10th level, he gains an additional teamwork feat at 10th level for each time he did so)."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat|1|PRECLASS:1,Vigilante=10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1029,
+    "record_key": "Vigilante Talent ~ Teamwork Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

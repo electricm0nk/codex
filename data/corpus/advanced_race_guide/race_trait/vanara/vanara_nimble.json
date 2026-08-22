@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Vanara ~ Nimble",
+    "name": "Nimble",
+    "race_key": "Vanara",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vanara Racial Trait",
+      "Vanara Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Vanara_ReplaceNimble",
+    "sets_replace_flags": [],
+    "description": "Vanaras have a +2 racial bonus on Acrobatics and Stealth checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanara ~ Nimble"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Vanara_ReplaceNimble=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Vanaras have a +2 racial bonus on Acrobatics and Stealth checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Acrobatics, +2 Stealth"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Acrobatics,Stealth",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_abilities_race.lst",
+    "sha256": "38a5594d666b86af43216a07d358e640360ecf15e28b3351849680be07ba96b3",
+    "line": 19,
+    "record_key": "Vanara ~ Nimble"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

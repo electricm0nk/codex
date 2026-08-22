@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kobold Bloodline ~ Trap Rune",
+    "name": "Trap Rune",
+    "class": "Kobold Bloodline",
+    "description": "As a standard action, you can sketch a single, nearly invisible magical rune on any 5-foot-square solid surface. When you create a rune, pick one of the following energy types: acid, cold, electricity, or fire. While the rune is active, the next creature other than you who steps on or touches the rune's area causes the rune to explode. The rune's explosion deals 1d8",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kobold Bloodline ~ Trap Rune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Kobold Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Kobold"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Kobold_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_KoboldTrapRune_DamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_KoboldTrapRune_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can sketch a single, nearly invisible magical rune on any 5-foot-square solid surface. When you create a rune, pick one of the following energy types: acid, cold, electricity, or fire. While the rune is active, the next creature other than you who steps on or touches the rune's area causes the rune to explode. The rune's explosion deals 1d8"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_KoboldTrapRune_DamageBonus|PREVARGTEQ:Sorcerer_KoboldTrapRune_DamageBonus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "points of energy damage to anything in its square. A Reflex saving throw halves the damage (DC %1). The rune is considered a magical trap for the purpose of perceiving it or disabling it. The DC for both Perception and Disable Device checks is the same as the Reflex saving throw to halve the damage. You can use this ability %2 times per day. Each rune lasts for 24 hours or until discharged.|Sorcerer_KoboldTrapRune_DC|Sorcerer_Kobold_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_KoboldTrapRune_DamageBonus|Sorcerer_Kobold_BloodlinePower1LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_KoboldTrapRune_DC|10+(Sorcerer_Kobold_BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d8+%2, DC %3)|Sorcerer_Kobold_BloodlinePower1Times|Sorcerer_KoboldTrapRune_DamageBonus|Sorcerer_KoboldTrapRune_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Kobold_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|KoboldBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 640,
+    "record_key": "Kobold Bloodline ~ Trap Rune"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Subdomain ~ Metal Fist",
+    "name": "Metal Fist",
+    "class": "Metal Subdomain",
+    "description": "As a swift action, you can turn your fists into metal for 1 round, allowing you to make unarmed strikes that deal 1d6 points of bludgeoning damage plus your Strength modifier. These unarmed strikes do not provoke attacks of opportunity, but attacking with both uses the two-weapon fighting rules as normal. In addition, these unarmed strikes ignore the hardness of items with a hardness of 10 or less. You can use this ability %1 times per day.|DomainEarthTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Subdomain ~ Metal Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can turn your fists into metal for 1 round, allowing you to make unarmed strikes that deal 1d6 points of bludgeoning damage plus your Strength modifier. These unarmed strikes do not provoke attacks of opportunity, but attacking with both uses the two-weapon fighting rules as normal. In addition, these unarmed strikes ignore the hardness of items with a hardness of 10 or less. You can use this ability %1 times per day.|DomainEarthTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1786,
+    "record_key": "Metal Subdomain ~ Metal Fist"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

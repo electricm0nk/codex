@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Dragon (Time) ~ Read the Threads",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_4:monster:dragon_time"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|DragonAgeCategory|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A time dragon gains a racial bonus on initiative checks equal to its age category. In addition, a time dragon is immune to the staggered condition."
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon (Time) ~ Read the Threads"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 530,
-    "record_key": "Dragon (Time) ~ Read the Threads"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 530,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Dragon (Time) ~ Read the Threads",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

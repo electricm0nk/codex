@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ecclesitheurge ~ Blessing of the Faithful",
+    "name": "Blessing of the Faithful",
+    "class": "Ecclesitheurge",
+    "description": "As a standard action, the ecclesitheurge can bless one ally within close range (%1 ft.). A blessed ally gains a +2 sacred or profane bonus (depending on whether the ecclesitheurge channels positive or negative energy) on attack rolls, skill checks, ability checks, or saving throws or to AC until the ecclesitheurge's next turn. The ecclesitheurge can expend 1 use of channel energy when activating this ability to increase the duration to a number of rounds equal to the number of dice of his channel energy.|25+(floor(ClericLVL/2)*5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ecclesitheurge ~ Blessing of the Faithful"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ecclesitheurge Class Feature.Cleric Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the ecclesitheurge can bless one ally within close range (%1 ft.). A blessed ally gains a +2 sacred or profane bonus (depending on whether the ecclesitheurge channels positive or negative energy) on attack rolls, skill checks, ability checks, or saving throws or to AC until the ecclesitheurge's next turn. The ecclesitheurge can expend 1 use of channel energy when activating this ability to increase the duration to a number of rounds equal to the number of dice of his channel energy.|25+(floor(ClericLVL/2)*5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3012,
+    "record_key": "Ecclesitheurge ~ Blessing of the Faithful"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

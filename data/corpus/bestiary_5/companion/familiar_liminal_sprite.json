@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T14:58:45Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Familiar (Liminal Sprite)",
@@ -13,6 +11,120 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Fey",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Liminal Sprite"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Elven|Common|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DR",
+        "value": "5/Cold Iron"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Liminal Sprite"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Fey:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,60"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "SR",
+        "value": "13"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Fey"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "T",
@@ -59,16 +171,18 @@
       "Fey"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
-    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
-    "line": 35,
-    "record_key": "Familiar (Liminal Sprite)"
-  },
+  "ingested_at": "2026-08-12T14:58:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+    "record_key": "Familiar (Liminal Sprite)",
+    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

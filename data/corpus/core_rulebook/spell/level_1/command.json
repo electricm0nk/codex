@@ -1,25 +1,95 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options. Approach: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal. Drop: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn. Fall: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties. Flee: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal. Halt: The subject stands in place for 1 round. It may not take any actions but is not considered helpless. If the subject can't carry out your command on its next turn, the spell automatically fails.",
     "key": "Command",
-    "school": "Enchantment",
     "level": 1,
-    "description": "You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options. Approach: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal. Drop: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn. Fall: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties. Flee: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal. Halt: The subject stands in place for 1 round. It may not take any actions but is not considered helpless. If the subject can't carry out your command on its next turn, the spell automatically fails."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity. You may select from the following options. Approach: On its turn, the subject moves toward you as quickly and directly as possible for 1 round. The creature may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal. Drop: On its turn, the subject drops whatever it is holding. It can't pick up any dropped item until its next turn. Fall: On its turn, the subject falls to the ground and remains prone for 1 round. It may act normally while prone but takes any appropriate penalties. Flee: On its turn, the subject moves away from you as quickly as possible for 1 round. It may do nothing but move during its turn, and it provokes attacks of opportunity for this movement as normal. Halt: The subject stands in place for 1 round. It may not take any actions but is not considered helpless. If the subject can't carry out your command on its next turn, the spell automatically fails.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/command.html#_command"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.256"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 97,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 859,
-    "record_key": "Command.MOD"
+    "record_key": "Command",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

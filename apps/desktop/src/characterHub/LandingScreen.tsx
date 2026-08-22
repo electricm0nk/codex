@@ -251,6 +251,7 @@ export function LandingScreen(props: {
   onBrowseRaces: () => void;
   onBrowseMonsters: () => void;
   onBrowseCompanions: () => void;
+  onBrowseIntelligentItems: () => void;
   onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
   campaignManagerGate: CampaignManagerAccessGate;
@@ -366,6 +367,20 @@ export function LandingScreen(props: {
           }}
         >
           Browse Companion Catalog
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseIntelligentItems}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Intelligent Item Components
         </button>
         <button
           type="button"

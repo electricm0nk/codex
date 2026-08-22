@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Composite Blast ~ Force Blast",
+    "name": "Force Blast",
+    "class": "Composite Blast",
+    "description": "Element aether; Type composite blast (Sp); Level -; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Composite Blast ~ Force Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Composite Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites primary element (aether), expanded element (aether)"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type composite blast (Sp); Level -; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Blast Type energy; Damage force (see text) You throw a burst of force at a foe. Force blast deals damage as a simple energy blast instead of a composite energy blast."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 661,
+    "record_key": "Composite Blast ~ Force Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

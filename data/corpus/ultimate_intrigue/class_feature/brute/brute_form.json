@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brute ~ Brute Form",
+    "name": "Brute Form",
+    "class": "Vigilante",
+    "description": "Though it is sometimes difficult to maintain, a brute has a measure of control over his abilities. While in his vigilante identity, a brute becomes one size category larger, gaining no ability score adjustments but otherwise gaining all adjustments for his new size, including additional reach, if appropriate. A brute's vigilante identity is savage and dangerous. While in his vigilante identity, the brute takes a -2 penalty to AC, as well as to all ability checks and skill checks that rely on Charisma, Dexterity, or Intelligence. Furthermore, the brute cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). &nl;When a brute is in mortal peril, such as when combat starts, if he is in his social identity, he must succeed at a Will save (DC %1) or enter his vigilante identity. Entering his vigilante identity in this way is a horrifying and painful process that takes 1 full round, during which he is flat-footed, and it typically allows his enemies to see his transformation and learn his identity. The brute's vigilante identity can't always tell friend from foe. While he still attacks enemies preferentially during a battle, when there are no more enemies around, each round he must succeed at a Will save (DC %2) or continue fighting against his allies or bystanders. Allies can use the aid another action to assist this saving throw with skills like Diplomacy, as they attempt to calm him down. On a successful save, he slowly turns back to his social identity over the course of 1 minute (or shorter if he has a social talent that reduces that time). &nl;A brute uses his vigilante level as his base attack bonus, but only while he is in his vigilante identity.|10+VigilanteLVL/2|20+VigilanteLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brute ~ Brute Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BruteMeleeBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteIsBrute|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Though it is sometimes difficult to maintain, a brute has a measure of control over his abilities. While in his vigilante identity, a brute becomes one size category larger, gaining no ability score adjustments but otherwise gaining all adjustments for his new size, including additional reach, if appropriate. A brute's vigilante identity is savage and dangerous. While in his vigilante identity, the brute takes a -2 penalty to AC, as well as to all ability checks and skill checks that rely on Charisma, Dexterity, or Intelligence. Furthermore, the brute cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). &nl;When a brute is in mortal peril, such as when combat starts, if he is in his social identity, he must succeed at a Will save (DC %1) or enter his vigilante identity. Entering his vigilante identity in this way is a horrifying and painful process that takes 1 full round, during which he is flat-footed, and it typically allows his enemies to see his transformation and learn his identity. The brute's vigilante identity can't always tell friend from foe. While he still attacks enemies preferentially during a battle, when there are no more enemies around, each round he must succeed at a Will save (DC %2) or continue fighting against his allies or bystanders. Allies can use the aid another action to assist this saving throw with skills like Diplomacy, as they attempt to calm him down. On a successful save, he slowly turns back to his social identity over the course of 1 minute (or shorter if he has a social talent that reduces that time). &nl;A brute uses his vigilante level as his base attack bonus, but only while he is in his vigilante identity.|10+VigilanteLVL/2|20+VigilanteLVL/2"
+      },
+      {
+        "key": "DESC",
+        "value": "While in his vigilante identity, the brute gains a +%1 bonus on melee attack and damage rolls. He uses his normal base attack bonus to qualify for feats and other abilities, although when in his vigilante identity, he uses his increased base attack bonus to determine the effects of feats (such as Power Attack) and other abilities.|BruteMeleeBonus|PRECLASS:1,Vigilante=5"
+      },
+      {
+        "key": "DESC",
+        "value": "A brute's mundane clothes and armor do not increase in size with him, and any such items he wears while changing into his vigilante identity lose one-quarter of their hit points. Magical clothes and accessories increase in size with the vigilante, however (though his magical armor and weapons initially do not, as normal). &nl;A brute can stay in his vigilante identity for up to 2 hours at a time, for a total of up to 6 hours in a 24-hour period. When threatened in his vigilante identity, he has the potential to damage bystanders or allies. After switching from his vigilante identity to his social identity, he is fatigued for the same amount of time (rounds, minutes, or hours) that he spent in his vigilante identity and cannot remove or ignore this fatigue by any means except by waiting the appropriate amount of time. If he enters his vigilante identity while fatigued, once he switches back to his social identity, he becomes exhausted for the amount of time he just spent in his vigilante identity, and he also can't remove or ignore the exhaustion by any means other than waiting the appropriate length of time. A character with immunity to fatigue or exhaustion cannot adopt a brute form at all; that immunity prevents the transformation as an effect that would cause fatigue or exhaustion. &nl;An exhausted brute can only enter his vigilante identity for %1 rounds; following these rounds, the brute immediately falls unconscious, or into a stupor if he is somehow prevented from falling unconscious. In this state, a brute can be healed as normal (and, if he has 0 hit points or more, he returns to consciousness after receiving any amount of magical healing or a DC 15 Heal check), but he cannot enter his vigilante identity for 1 hour.|max(1,VigilanteLVL/2)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Temp Bonus ~ Brute Form|PREVAREQ:ActivateBruteForm,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteIsBrute|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BruteMeleeBonus|1+(VigilanteLVL>=13)+(VigilanteLVL>=19)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|ActivateBruteForm|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 981,
+    "record_key": "Brute ~ Brute Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

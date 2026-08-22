@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pure Legion Enforcer ~ Aura Sense",
+    "name": "Aura Sense",
+    "class": "Pure Legion Enforcer",
+    "description": "A Pure Legion enforcer can cast detect chaos/evil/good/law at will as a spell-like ability, though he can detect only auras of moderate or higher power. He can detect only one type of aura at any given time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pure Legion Enforcer ~ Aura Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pure Legion Enforcer Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A Pure Legion enforcer can cast detect chaos/evil/good/law at will as a spell-like ability, though he can detect only auras of moderate or higher power. He can detect only one type of aura at any given time."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 534,
+    "record_key": "Pure Legion Enforcer ~ Aura Sense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

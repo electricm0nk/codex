@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Phalanx Soldier ~ Deft Shield",
+    "name": "Deft Shield",
+    "class": "Fighter",
+    "description": "At 7th level, the armor check penalty from a shield and the attack roll penalty are reduced by -1 for a phalanx soldier using a tower shield. At 11th level, these penalties are reduced by -2. This ability replaces armor training 2 and 3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Phalanx Soldier ~ Deft Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining1.FighterArmorTraining2"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, the armor check penalty from a shield and the attack roll penalty are reduced by -1 for a phalanx soldier using a tower shield. At 11th level, these penalties are reduced by -2. This ability replaces armor training 2 and 3."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2172,
+    "record_key": "Fighter Phalanx Soldier ~ Deft Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

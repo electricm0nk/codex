@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Rapid Reload",
+    "name": "Rapid Reload",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can reload your chosen type of crossbow quickly.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Rapid Reload"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DESC",
+        "value": "You can reload your chosen type of crossbow quickly."
+      },
+      {
+        "key": "DESC",
+        "value": " The time required for you to reload your chosen type of crossbow is reduced to a free action (for a hand or light crossbow) or a move action (for a heavy crossbow). Reloading a crossbow still provokes an attack of opportunity. If you have selected this feat for hand crossbow or light crossbow, you may fire that weapon as many times in a full-attack action as you could attack if you were using a bow."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|Crossbow (Hand)|Crossbow (Heavy)|Crossbow (Light)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Rapid Reload (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4273,
+    "record_key": "Warpriest Bonus Feat ~ Rapid Reload"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

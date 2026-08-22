@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nobility ~ HK",
+    "name": "Nobility",
+    "class": "Nobility",
+    "description": "You are a great leader, an inspiration to all who follow the teachings of your faith.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nobility ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Domain.HKDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNobilityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNobilityDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNobilityTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a great leader, an inspiration to all who follow the teachings of your faith."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Inspiring Word|PREVARGTEQ:HellknightLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Leadership|PREVARGTEQ:HellknightLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainNobilityLVL|HellknightLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainNobilityDC|HKDisciplineDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainNobilityTimes|HKDiscipline"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 275,
+    "record_key": "Nobility ~ HK"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

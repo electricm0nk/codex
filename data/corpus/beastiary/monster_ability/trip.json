@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Trip",
+    "delivery": "Extraordinary",
+    "description": "You can attempt to trip your opponent as a free action without provoking an attack of opportunity if you hit with the specified attack. If the attempt fails, you are not tripped in return.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:trip",
+    "name": "Trip",
+    "owners": [
+      "beastiary:monster:cat_cheetah",
+      "beastiary:monster:crocodile_dire",
+      "beastiary:monster:dinosaur_stegosaurus",
+      "beastiary:monster:dog_riding",
+      "beastiary:monster:hyena_dire",
+      "beastiary:monster:wolf_dire",
+      "beastiary:monster:worg_winter_wolf",
+      "beastiary:monster:yeth_hound"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to trip your opponent as a free action without provoking an attack of opportunity if you hit with the specified attack. If the attempt fails, you are not tripped in return."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.305"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.305",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1537,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Trip",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

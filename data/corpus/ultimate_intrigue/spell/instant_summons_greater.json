@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as instant summons, except that you can target multiple objects. You must use a separate sapphire worth 1,000 gp for each one. For each item you target, you can touch a creature, granting that creature the ability to speak the special word for that item (each item has its own special word) while crushing the matched gem to call the item to hand. Only you or the touched creature can activate the gem or see the arcane mark upon it.|PRERULE:1,DisplayFullSpell",
+    "key": "Instant Summons (Greater)",
+    "level": 8,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psychic,Sorcerer,Witch,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "As instant summons, but for multiple objects and creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as instant summons, except that you can target multiple objects. You must use a separate sapphire worth 1,000 gp for each one. For each item you target, you can touch a creature, granting that creature the ability to speak the special word for that item (each item has its own special word) while crushing the matched gem to call the item to hand. Only you or the touched creature can activate the gem or see the arcane mark upon it.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent until discharged"
+      },
+      {
+        "key": "RANGE",
+        "value": "See text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Instant Summons, Greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Summoning"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to (CASTERLEVEL/3) objects, each weighing 10 lbs. or less whose longest dimension is 6 ft. or less"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 69,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Instant Summons (Greater)",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

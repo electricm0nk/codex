@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 5.0,
+    "description": "DC 15 Craft (alchemy) or Sleight of Hand check to fill with one dose of alchemical splash weapon (like alchemist fire).",
+    "key": "Bullet (Sling/Alchemical)",
+    "name": "Bullet, Sling (Alchemical)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bullet (Sling/Alchemical)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Standard.Bullet"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "MODS",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      },
+      {
+        "key": "SPROP",
+        "value": "DC 15 Craft (alchemy) or Sleight of Hand check to fill with one dose of alchemical splash weapon (like alchemist fire)."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_arms_armor.lst",
+    "record_key": "Bullet (Sling/Alchemical)",
+    "sha256": "1b087b1736f67a8911bc7a4a88066980df2c0dec017f2c6a6aa48a5244952c4a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

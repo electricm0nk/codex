@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "ability_keys": [
       "inner_sea_gods:monster_ability:ataxian_possession",
@@ -27,6 +25,136 @@
     ],
     "race_subtype": "Chaotic|Extraplanar|Good",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Ataxian"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Common|Dwarven|Elven|Halfling"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Handle Animal|Knowledge (Local)|Knowledge (Religion)"
+      },
+      {
+        "key": "DR",
+        "value": "5/Evil or Lawful"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CG"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Ray,Weapon.Natural.Weapon Group Natural.Ranged.Touch.Cold,*1,1d6,SPROP=cold plus staggered"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,1d2"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Extraplanar|Good"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "SR",
+        "value": "15"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "T",
     "source_page": "p.283",
     "speeds": [
@@ -40,16 +168,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
-    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
-    "line": 19,
-    "record_key": "Ataxian"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "record_key": "Ataxian",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

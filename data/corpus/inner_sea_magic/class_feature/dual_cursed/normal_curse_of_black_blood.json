@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dual-Cursed ~ Curse of Black Blood ~ Primary",
+    "name": "Normal Curse of Black Blood",
+    "class": "Dual-Cursed",
+    "description": "All black-blooded oracles effectively share the same curse-the curse of black blood. The material affects these oracles physically and mentally, altering both physiology and mystic powers. The blood of a black-blooded oracle actually runs black, and wounds she suffers are infected by her own power and are difficult to heal. She is immune to the effects (both beneficial and destructive) of black blood. Positive and negative energy affect a black-blooded oracle as if she were undead-positive energy harms her, while negative energy heals her (this aspect of the curse has no effect if the oracle is undead). The curse also dulls the oracle's coordination somewhat, imparting a -4 penalty on all Dexterity-based skill checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual-Cursed ~ Curse of Black Blood ~ Primary"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.Supernatural.DualBlackBloodedCurse"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleCurseLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "All black-blooded oracles effectively share the same curse-the curse of black blood. The material affects these oracles physically and mentally, altering both physiology and mystic powers. The blood of a black-blooded oracle actually runs black, and wounds she suffers are infected by her own power and are difficult to heal. She is immune to the effects (both beneficial and destructive) of black blood. Positive and negative energy affect a black-blooded oracle as if she were undead-positive energy harms her, while negative energy heals her (this aspect of the curse has no effect if the oracle is undead). The curse also dulls the oracle's coordination somewhat, imparting a -4 penalty on all Dexterity-based skill checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|STAT.DEX|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleCurseLVL|OracleLVL+((TL-OracleLVL)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 297,
+    "record_key": "Dual-Cursed ~ Curse of Black Blood ~ Primary"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

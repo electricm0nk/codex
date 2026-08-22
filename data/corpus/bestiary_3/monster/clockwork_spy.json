@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "1/2",
@@ -20,6 +18,112 @@
     ],
     "race_subtype": "Clockwork",
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Initiative|Lightning Reflexes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Clockwork (Spy)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Stealth|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork (Spy)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*1,1d2"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Clockwork"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "TYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "size": "T",
     "source_page": "p.57",
     "speeds": [
@@ -33,16 +137,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 57,
-    "record_key": "Clockwork (Spy)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Clockwork (Spy)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

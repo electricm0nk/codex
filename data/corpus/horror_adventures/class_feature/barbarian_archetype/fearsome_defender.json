@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Fearsome Defender",
+    "name": "Fearsome Defender",
+    "class": "Barbarian Archetype",
+    "description": "Dark overlords frequently recruit their most bloodthirsty followers to serve as brutal bodyguards. These savage slaves feel little pain and exist only to rain terror down on the enemies of their pitiless masters.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Fearsome Defender"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "Dark overlords frequently recruit their most bloodthirsty followers to serve as brutal bodyguards. These savage slaves feel little pain and exist only to rain terror down on the enemies of their pitiless masters."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Fearsome Defender],[!PREFACT:1,ABILITIES,Barbarian_Archetype_FastMovement=True,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_TrapSense=True,Barbarian_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fearsome Defender ~ Intractable|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fearsome Defender ~ Off the Leash|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fearsome Defender ~ Silent Threat|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fearsome Defender ~ Bloodlust|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 29,
+    "record_key": "Barbarian Archetype ~ Fearsome Defender"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

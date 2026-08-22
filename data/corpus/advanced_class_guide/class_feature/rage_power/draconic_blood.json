@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Draconic Blood",
+    "name": "Draconic Blood",
+    "class": "Rage Power",
+    "description": "Choose an energy type from the following: acid, cold, fire, or electricity. While raging, the barbarian gains resistance 5 against the chosen energy type and a +1 natural armor bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Draconic Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageMiddle"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Draconic Blood (Lesser)"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,6"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageMiddle],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Draconic Blood]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodRage Fire|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose an energy type from the following: acid, cold, fire, or electricity. While raging, the barbarian gains resistance 5 against the chosen energy type and a +1 natural armor bonus."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodRage %LIST|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2664,
+    "record_key": "Rage Power ~ Draconic Blood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

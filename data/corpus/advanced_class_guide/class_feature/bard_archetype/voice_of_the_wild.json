@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Voice of the Wild",
+    "name": "Voice of the Wild",
+    "class": "Bard Archetype",
+    "description": "Most bards are inspired by the art of civilization, yet the voice of the wild's muse is the grandeur and beauty of nature. The voice of the wild has discovered some of nature's magical secrets, and can use his performance to bring out the bestial side in his allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Voice of the Wild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardBardicKnowledge.BardCountersong.BardVersatilePerformance.BardJackOfAllTrades.BardInspireCompetence.BardDirgeOfDoom.BardInspireHeroics"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Voice of the Wild],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicKnowledge,TYPE.BardCountersong,TYPE.BardVersatilePerformance,TYPE.BardJackOfAllTrades,TYPE.BardInspireCompetence,TYPE.BardDirgeOfDoom,TYPE.BardInspireHeroics]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most bards are inspired by the art of civilization, yet the voice of the wild's muse is the grandeur and beauty of nature. The voice of the wild has discovered some of nature's magical secrets, and can use his performance to bring out the bestial side in his allies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Voice of the Wild ~ Wild Knowledge|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Voice of the Wild ~ Nature Magic|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Voice of the Wild ~ Song of the Wild|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2685,
+    "record_key": "Bard Archetype ~ Voice of the Wild"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oozemorph ~ Ooze Empathy",
+    "name": "Ooze Empathy",
+    "class": "Shifter",
+    "description": "An oozemorph gains the shifter's wild empathy class feature, but she can use it only to influence the attitude of oozes with an Intelligence score of 2 or lower. An oozemorph can use this ability on mindless oozes; when she does so, she imparts a modicum of intellect to the ooze to allow it to respond to her commands. This alters wild empathy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oozemorph ~ Ooze Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.OozemorphClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An oozemorph gains the shifter's wild empathy class feature, but she can use it only to influence the attitude of oozes with an Intelligence score of 2 or lower. An oozemorph can use this ability on mindless oozes; when she does so, she imparts a modicum of intellect to the ooze to allow it to respond to her commands. This alters wild empathy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1088,
+    "record_key": "Oozemorph ~ Ooze Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

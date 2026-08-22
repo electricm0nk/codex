@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wilderness Warden ~ Aura of Comfort",
+    "name": "Aura of Comfort",
+    "class": "Paladin",
+    "description": "A wilderness warden is comfortable in nearly any climate, as if she were affected by a constant endure elements spell, and she and allies within 10 feet of her gain a +4 bonus on Constitution checks and saving throws to resist fatigue; exhaustion; and the effects of hunger, thirst, and hot or cold climates (including from magical effects).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Warden ~ Aura of Comfort"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.WildernessWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wilderness warden is comfortable in nearly any climate, as if she were affected by a constant endure elements spell, and she and allies within 10 feet of her gain a +4 bonus on Constitution checks and saving throws to resist fatigue; exhaustion; and the effects of hunger, thirst, and hot or cold climates (including from magical effects)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 888,
+    "record_key": "Wilderness Warden ~ Aura of Comfort"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

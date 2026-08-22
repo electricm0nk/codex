@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 5000.0,
+    "description": "slides under object; only 1/10 of weight for dragging",
+    "key": "Rug of Object Sliding (2500 lbs.)",
+    "name": "Rug of Object Sliding (2500 lbs.)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.422"
+      },
+      {
+        "key": "SPROP",
+        "value": "slides under object; only 1/10 of weight for dragging"
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 355,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Rug of Object Sliding (2500 lbs.)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

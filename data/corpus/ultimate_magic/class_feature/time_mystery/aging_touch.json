@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Time Mystery ~ Aging Touch",
+    "name": "Aging Touch",
+    "class": "Time Mystery",
+    "description": "Your touch ages living creatures and objects. As a melee touch attack, you can deal %1 points of Strength damage to living creatures. Against objects or constructs, you can deal %2d6 points of damage. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver. You can use this ability %3/day.|AgingTouchStrDamage|AgingTouchDamageDice|AgingTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Time Mystery ~ Aging Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.TimeRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AgingTouchStrDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AgingTouchDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AgingTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch ages living creatures and objects. As a melee touch attack, you can deal %1 points of Strength damage to living creatures. Against objects or constructs, you can deal %2d6 points of damage. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver. You can use this ability %3/day.|AgingTouchStrDamage|AgingTouchDamageDice|AgingTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AgingTouchStrDamage|floor(classlevel(\"Oracle\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AgingTouchDamageDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AgingTouchTimes|1+floor(classlevel(\"Oracle\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 498,
+    "record_key": "Time Mystery ~ Aging Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

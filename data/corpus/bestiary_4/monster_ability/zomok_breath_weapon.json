@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Zomok ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -15,19 +13,43 @@
     "owners": [
       "bestiary_4:monster:zomok"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60-ft. cone, 18d6 bludgeoning plus entangle, Reflex DC %1 partial, usable every 1d4 rounds)|10+(HD/2)+CON"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A zomok's breath weapon is a cone of flying dirt, bark, stones, and moss, which takes root as soon as it touches the ground. Creatures may attempt a saving throw for half damage. Any creature that fails its save and is touching the ground is entangled for 1d6 rounds by this material. A creature can break free with a DC %1 Strength or Escape Artist check.|CON+18"
+      },
+      {
+        "key": "KEY",
+        "value": "Zomok ~ Breath Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1490,
-    "record_key": "Zomok ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1490,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Zomok ~ Breath Weapon",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

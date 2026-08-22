@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald Versatile Performance ~ String Instruments",
+    "name": "Skald Versatile Performance (String Instruments)",
+    "class": "Skald Versatile Performance",
+    "description": "You can use your Perform (String) skill instead of Bluff and Diplomacy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Versatile Performance ~ String Instruments"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SpecialQuality.Extraordinary.SkaldVersatilePerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your Perform (String) skill instead of Bluff and Diplomacy."
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff (Perform (String Instruments))|var(\"SKILL.Perform (String Instruments).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy (Perform (String Instruments))|var(\"SKILL.Perform (String Instruments).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Bluff (Perform (String Instruments))|skillinfo(\"TOTALRANK\", \"Perform (String Instruments)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Skald Versatile Performance ~ String Instruments"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Diplomacy (Perform (String Instruments))|skillinfo(\"TOTALRANK\", \"Perform (String Instruments)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Skald Versatile Performance ~ String Instruments"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1750,
+    "record_key": "Skald Versatile Performance ~ String Instruments"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

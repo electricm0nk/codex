@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Greater Combat Inspiration",
+    "name": "Greater Combat Inspiration",
+    "class": "Investigator",
+    "description": "Choose a single weapon type (such as sword cane or short sword). As long as the investigator has at least 1 inspiration point in his inspiration pool, he no longer has to expend a use of inspiration to use that ability with attacks made with this weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Greater Combat Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PREVARGTEQ:InvestigatorTalentLVL,19],[PREABILITY:1,CATEGORY=Special Ability,Investigator ~ Combat Inspiration]"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose a single weapon type (such as sword cane or short sword). As long as the investigator has at least 1 inspiration point in his inspiration pool, he no longer has to expend a use of inspiration to use that ability with attacks made with this weapon."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|EQUIPMENT|TYPE=Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1291,
+    "record_key": "Investigator ~ Greater Combat Inspiration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

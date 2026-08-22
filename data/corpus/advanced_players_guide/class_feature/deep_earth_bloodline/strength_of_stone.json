@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deep Earth Bloodline ~ Strength of Stone",
+    "name": "Strength of Stone",
+    "class": "Deep Earth Bloodline",
+    "description": "Your flesh becomes as hard as stone, giving you DR 10/adamantine, and you become immune to petrification. You suffer no penalties while squeezing through tight spaces and are immune to bull rush, drag, grapple, reposition, and trip maneuvers, and to push and pull effects as long as you are standing on the ground.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Earth Bloodline ~ Strength of Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Deep Earth Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Deep Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_DeepEarth_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarth_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your flesh becomes as hard as stone, giving you DR 10/adamantine, and you become immune to petrification. You suffer no penalties while squeezing through tight spaces and are immune to bull rush, drag, grapple, reposition, and trip maneuvers, and to push and pull effects as long as you are standing on the ground."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Petrification"
+      },
+      {
+        "key": "DR",
+        "value": "10/adamantine"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Immune to bull rush, drag, grapple, reposition, and trip, and to push and pull effects as long as you are standing on the ground."
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DeepEarthBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3140,
+    "record_key": "Deep Earth Bloodline ~ Strength of Stone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Diabolist ~ Imp Companion",
+    "name": "Imp Companion",
+    "class": "Diabolist",
+    "description": "You form a close bond with a particular imp, similar to a druid's bond with an animal companion. The imp is loyal to you (though ultimately loyal to Hell). If the imp is slain or you release it from your service, you may gain a new one by performing a ceremony requiring a 24-hour ritual to conjure and bind the new imp to yourself. (Imp Companion Level %1)|ImpCompanionLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Diabolist ~ Imp Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImpCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImpCompHighestCasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You form a close bond with a particular imp, similar to a druid's bond with an animal companion. The imp is loyal to you (though ultimately loyal to Hell). If the imp is slain or you release it from your service, you may gain a new one by performing a ceremony requiring a 24-hour ritual to conjure and bind the new imp to yourself. (Imp Companion Level %1)|ImpCompanionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompanionLVL|classlevel(\"Diabolist\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompanionLVL|ImpCompHighestCasterLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Imp Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Imp Companion|Companion (Imp)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_class.lst",
+    "sha256": "a5a8d7ac42951ac0052504a8eda6087015e8f6147164243afe9515e7cac2f588",
+    "line": 8,
+    "record_key": "Diabolist ~ Imp Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

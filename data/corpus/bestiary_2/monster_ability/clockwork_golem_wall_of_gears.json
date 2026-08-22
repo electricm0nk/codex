@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Clockwork Golem ~ Wall of Gears",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:golem_clockwork"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Wall of Gears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClockworkGolemWallOfGearsDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClockworkGolemWallOfGearsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Wall of Gears)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClockworkGolemWallOfGearsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a clockwork golem can fold into a whirling wall of grinding gears measuring 10 feet by 10 feet or 5 feet by 20 feet.  Anyone passing through the wall takes 15d6 points of slashing damage.  If the wall appears in a creature's space, that creature can attempt a DC %1 Reflex save to leap to one side and avoid the damage entirely.  The clockwork golem can take no actions while in this form except to resume its normal form as a move action.  A clockwork golem's AC and immunities remain the same while it is in this form.|ClockworkGolemWallOfGearsDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Golem ~ Wall of Gears"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.137",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 609,
-    "record_key": "Clockwork Golem ~ Wall of Gears"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 609,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Clockwork Golem ~ Wall of Gears",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

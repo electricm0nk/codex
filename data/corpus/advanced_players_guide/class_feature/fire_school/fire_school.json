@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fire School",
+    "name": "Fire School",
+    "class": null,
+    "description": "The fire elementalist sees a world around him that is made to burn, and he can bring that fire to consume his foes. He has also learned that fire can purify and protect, if properly controlled.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireSchoolProgressionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The fire elementalist sees a world around him that is made to burn, and he can bring that fire to consume his foes. He has also learned that fire can purify and protect, if properly controlled."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fire School ~ Fire Jet|Fire School ~ Fire Supremacy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fire School ~ Dancing Flame|PREVARGTEQ:FireSchoolProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireSchoolLVL|WizardSchoolLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireSchoolProgressionLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3277,
+    "record_key": "Fire School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

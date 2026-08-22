@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Fang ~ Studied Target",
+    "name": "Studied Target",
+    "class": "Druid",
+    "description": "A nature fang gains the slayer's studied target class feature. A nature fang can study an opponent to gain a +%1 bonus on Bluff, Knowledge, and Sense Motive; a +%1 bonus on Perception, and Survival checks attempted against that opponent; and a +%1 bonus on weapon attack and damage rolls against it. The DCs of nature fang class abilities against that opponent increase by %1. If a slayer deals sneak attack damage to a target, he can study that target as an immediate action, allowing him to apply his studied target bonuses against that target (including to the normal weapon damage roll). A nature fang can only maintain these bonuses against one opponents at a time; these bonuses remain in effect until either the opponent is dead or the nature fang studies a new target. The nature fang may discard this connection to a studied target as a free action, allowing him to study another target in its place.|NatureFangStudiedTargetBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Fang ~ Studied Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Nature Fang Class Feature.Druid Class Feature.SpecialQuality.Extraordinary.DruidNatureSense.DruidWildEmpathy.DruidWoodlandStride"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NatureFangStudiedTargetLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NatureFangStudiedTargetBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A nature fang gains the slayer's studied target class feature. A nature fang can study an opponent to gain a +%1 bonus on Bluff, Knowledge, and Sense Motive; a +%1 bonus on Perception, and Survival checks attempted against that opponent; and a +%1 bonus on weapon attack and damage rolls against it. The DCs of nature fang class abilities against that opponent increase by %1. If a slayer deals sneak attack damage to a target, he can study that target as an immediate action, allowing him to apply his studied target bonuses against that target (including to the normal weapon damage roll). A nature fang can only maintain these bonuses against one opponents at a time; these bonuses remain in effect until either the opponent is dead or the nature fang studies a new target. The nature fang may discard this connection to a studied target as a free action, allowing him to study another target in its place.|NatureFangStudiedTargetBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NatureFangStudiedTargetLVL|DruidLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NatureFangStudiedTargetBonus|NatureFangStudiedTargetLVL/5+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3030,
+    "record_key": "Nature Fang ~ Studied Target"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

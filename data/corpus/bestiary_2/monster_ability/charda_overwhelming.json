@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Charda ~ Overwhelming",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_2:monster:charda"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_BullRush,CMB_Trip|8|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A charda gains a +8 racial bonus on bull rush and trip attempts."
+      },
+      {
+        "key": "KEY",
+        "value": "Charda ~ Overwhelming"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.55",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 242,
-    "record_key": "Charda ~ Overwhelming"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 242,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Charda ~ Overwhelming",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

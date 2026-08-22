@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Ferocious Trample",
+    "name": "Ferocious Trample",
+    "class": "Rage Power",
+    "description": "While raging and mounted, the barbarian's mount gains the trample special attack (Pathfinder RPG Bestiary 305). This attack inflicts 1d8 points of damage for a Medium mount, 2d6 for a Large mount, or 2d8 for a Huge mount, plus 1-1/2 times the mount's Strength modifier. A successful Reflex save (DC 10 + 1/2 the barbarian's level + the mount's Strength modifier) halves this damage. Creatures in the mount's path or that threaten squares it passes through may make attacks of opportunity against either the barbarian or the mount, but not both.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Ferocious Trample"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Ferocious Mount"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging and mounted, the barbarian's mount gains the trample special attack (Pathfinder RPG Bestiary 305). This attack inflicts 1d8 points of damage for a Medium mount, 2d6 for a Large mount, or 2d8 for a Huge mount, plus 1-1/2 times the mount's Strength modifier. A successful Reflex save (DC 10 + 1/2 the barbarian's level + the mount's Strength modifier) halves this damage. Creatures in the mount's path or that threaten squares it passes through may make attacks of opportunity against either the barbarian or the mount, but not both."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1506,
+    "record_key": "Rage Power ~ Ferocious Trample"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

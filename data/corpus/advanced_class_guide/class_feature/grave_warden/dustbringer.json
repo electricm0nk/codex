@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Grave Warden ~ Dustbringer",
+    "name": "Dustbringer",
+    "class": "Slayer",
+    "description": "A grave warden can slay a studied undead opponent. This functions as the assassinate slayer talent, except it requires a successful Will saving throw instead of a successful Fortitude save, affects only undead, and destroys the target instead of killing it. If the target succeeds at its saving throw, it becomes immune to that grave warden's dustbringer ability for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grave Warden ~ Dustbringer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Grave Warden Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A grave warden can slay a studied undead opponent. This functions as the assassinate slayer talent, except it requires a successful Will saving throw instead of a successful Fortitude save, affects only undead, and destroys the target instead of killing it. If the target succeeds at its saving throw, it becomes immune to that grave warden's dustbringer ability for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3759,
+    "record_key": "Grave Warden ~ Dustbringer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

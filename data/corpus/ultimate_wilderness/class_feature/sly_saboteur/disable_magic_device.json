@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sly Saboteur ~ Disable Magic Device",
+    "name": "Disable Magic Device",
+    "class": "Rogue",
+    "description": "A sly saboteur can use Disable Device to rig a magic item to fail as if it were an extremely complex device. If the item's effect is instantaneous, the effect is countered the next time the item is activated, but the activation still consumes a charge or use. If the item's effect is continuous or has a duration, the effect fails after 1d4 rounds or minutes of use (sly saboteur's choice). This ends the duration or suppresses a continuous effect for 1d4 rounds (as the spell dispel magic). This ability cannot be used on artifacts. If this ability is combined with the catastrophic failure ability, the resulting damage is untyped magic and is not reduced by damage reduction or energy resistance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sly Saboteur ~ Disable Magic Device"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.SlySaboteurClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sly saboteur can use Disable Device to rig a magic item to fail as if it were an extremely complex device. If the item's effect is instantaneous, the effect is countered the next time the item is activated, but the activation still consumes a charge or use. If the item's effect is continuous or has a duration, the effect fails after 1d4 rounds or minutes of use (sly saboteur's choice). This ends the duration or suppresses a continuous effect for 1d4 rounds (as the spell dispel magic). This ability cannot be used on artifacts. If this ability is combined with the catastrophic failure ability, the resulting damage is untyped magic and is not reduced by damage reduction or energy resistance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 992,
+    "record_key": "Sly Saboteur ~ Disable Magic Device"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

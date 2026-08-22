@@ -1171,7 +1171,14 @@ pub fn equipment_tables() -> &'static [EquipmentTableEntry] {
     EquipmentTableEntry { key: "Mask of the Krenshar", category: EquipmentCategory::MagicItems, name: "Mask of the Krenshar", cost_gp: Some(7200.0), weight_lbs: Some(1.0), description: None }, // ue_equip_magic_items.lst:710
     EquipmentTableEntry { key: "Maw of the Wyrm", category: EquipmentCategory::MagicItems, name: "Maw of the Wyrm", cost_gp: Some(18000.0), weight_lbs: Some(3.0), description: None }, // ue_equip_magic_items.lst:712
     EquipmentTableEntry { key: "Medusa Mask", category: EquipmentCategory::MagicItems, name: "Medusa Mask", cost_gp: Some(10000.0), weight_lbs: Some(1.0), description: Some("The mask grants protection against visual effects, including gaze attacks and sight-based illusions.; Once per day as a standard action, the wearer can cause the central gemstone to glow with pale green light, at which point she may target any one creature within 30 feet. The targeted creature must succeed at a DC 15 Fortitude save or be petrified for 1 minute, as if by flesh to stone.") }, // ue_equip_magic_items.lst:713
-    EquipmentTableEntry { key: "Miser's Mask", category: EquipmentCategory::MagicItems, name: "Miser's Mask", cost_gp: Some(18000.0), weight_lbs: Some(2.0), description: None }, // ue_equip_magic_items.lst:714
+    // `SD31-W3-INTEGRATE-001` fix: `ue_equip_magic_items.lst:714` is two
+    // items glued onto one line by a missing newline (see the
+    // `misers_mask_ships_its_own_item_s_cost_and_weight_not_the_glued_second_item_s`
+    // test below). This entry now carries only Miser's Mask's OWN tokens
+    // (COST:3000/WT:1/p.246); the row's second item, "Mitre of the
+    // Hierophant" (COST:18000/WT:2/p.247), is not yet a separate catalog
+    // entry (`OPEN-ISSUES.md` row 40).
+    EquipmentTableEntry { key: "Miser's Mask", category: EquipmentCategory::MagicItems, name: "Miser's Mask", cost_gp: Some(3000.0), weight_lbs: Some(1.0), description: None }, // ue_equip_magic_items.lst:714
     EquipmentTableEntry { key: "Plague Mask", category: EquipmentCategory::MagicItems, name: "Plague Mask", cost_gp: Some(7500.0), weight_lbs: Some(2.0), description: None }, // ue_equip_magic_items.lst:715
     EquipmentTableEntry { key: "Stalker's Mask", category: EquipmentCategory::MagicItems, name: "Stalker's Mask", cost_gp: Some(3500.0), weight_lbs: Some(1.0), description: None }, // ue_equip_magic_items.lst:716
     EquipmentTableEntry { key: "Steel-Mind Cap", category: EquipmentCategory::MagicItems, name: "Steel-Mind Cap", cost_gp: Some(33600.0), weight_lbs: Some(3.0), description: None }, // ue_equip_magic_items.lst:717
@@ -1687,5 +1694,35 @@ mod tests {
         assert_eq!(eq_keys.len(), equipment_tables().len());
         let mod_keys: std::collections::BTreeSet<&str> = equipmod_tables().iter().map(|e| e.key).collect();
         assert_eq!(mod_keys.len(), equipmod_tables().len());
+    }
+
+    // `SD31-W3-INTEGRATE-001` — adversarial-review CONFIRMED finding:
+    // `ue_equip_magic_items.lst:714` is a corpus row TWO items long, glued
+    // together by a missing newline (the second item's name is even
+    // embedded mid-token inside the first item's `BONUS:SITUATION` value:
+    // `...TYPE=CompetenceMitre of the Hierophant`). PCGen's own last-
+    // token-wins parse would read `COST:18000`/`WT:2` for a key first
+    // matched on `Miser's Mask`, but the real Miser's Mask (p.246) is
+    // COST 3000 / WT 1 — the 18000/2 pair belongs to the row's SECOND,
+    // unshipped item, "Mitre of the Hierophant" (p.247). Verified against
+    // the raw row directly: `sed -n '714p'
+    // $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst
+    // | tr '\t' '\n'` shows `COST:3000`/`WT:1`/`SOURCEPAGE:p.246` BEFORE
+    // the embedded "Mitre of the Hierophant" name, and `COST:18000`/`WT:2`/
+    // `SOURCEPAGE:p.247` after it. Fixed here (the table this record's
+    // `cost_gp`/`weight_lbs` actually render from, per
+    // `apps/desktop/src-tauri/src/equipment_catalog.rs`); a full second
+    // "Mitre of the Hierophant" table entry is a separate follow-on
+    // (`OPEN-ISSUES.md` row 40) — the shared malformed line has no clean
+    // column boundary for a citation resolver to key a second record off
+    // of without a raw-line-splitting change this fix does not make.
+    #[test]
+    fn misers_mask_ships_its_own_item_s_cost_and_weight_not_the_glued_second_item_s() {
+        let e = equipment_tables()
+            .iter()
+            .find(|e| e.key == "Miser's Mask")
+            .expect("Miser's Mask must still be in the catalog");
+        assert_eq!(e.cost_gp, Some(3000.0), "Miser's Mask is 3,000 gp per p.246, not 18,000 gp");
+        assert_eq!(e.weight_lbs, Some(1.0), "Miser's Mask is 1 lb per p.246, not 2 lb");
     }
 }

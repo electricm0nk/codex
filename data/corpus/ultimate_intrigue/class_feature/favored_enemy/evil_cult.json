@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Favored Enemy ~ Evil Cult",
+    "name": "Evil Cult",
+    "class": "Favored Enemy",
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against members of a particular evil cult. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such members. You may make Knowledge Skill checks untrained to identify such individuals.|FavoredEvilCult",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Enemy ~ Evil Cult"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Guildbreaker ~ Favored Organization"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredEvilCult|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against members of a particular evil cult. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such members. You may make Knowledge Skill checks untrained to identify such individuals.|FavoredEvilCult"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredEvilCult|FavoredBaseBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredEvilCult"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against members of a particular evil cult.|FavoredEvilCult"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You gain a +%1 bonus on Attack rolls and Damage rolls against members of a particular evil cult.|FavoredEvilCult"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 665,
+    "record_key": "Favored Enemy ~ Evil Cult"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

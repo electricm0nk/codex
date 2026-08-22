@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Whip Mastery",
+    "name": "Whip Mastery",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your superior expertise with this weapon does not provoke attacks of opportunity from your enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Whip Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus (whip)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:2],[PREVARGTEQ:WarpriestBonusFeatBAB,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your superior expertise with this weapon does not provoke attacks of opportunity from your enemies."
+      },
+      {
+        "key": "DESC",
+        "value": " You no longer provoke attacks of opportunity when attacking with a whip. You can deal lethal damage with a whip, although you can still deal nonlethal damage when you want. Further, you can deal damage with a whip despite a creature's armor bonus or natural armor bonus. &nl; [Normal] Attacking with a whip provokes attacks of opportunity as if you used a ranged weapon. A whip deals no damage to a creature that has an armor bonus of +1 or natural armor bonus of +3."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Whip Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4536,
+    "record_key": "Warpriest Bonus Feat ~ Whip Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

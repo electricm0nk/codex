@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Diabolist ~ Infernal Bargain",
+    "name": "Infernal Bargain",
+    "class": "Diabolist",
+    "description": "If you make use of Planar Ally (or a similar spell), you can make an opposed Charisma check against a called (but not summoned) devil. If you succeed, the devil reduces the price it demands to serve by half.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Diabolist ~ Infernal Bargain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If you make use of Planar Ally (or a similar spell), you can make an opposed Charisma check against a called (but not summoned) devil. If you succeed, the devil reduces the price it demands to serve by half."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_class.lst",
+    "sha256": "a5a8d7ac42951ac0052504a8eda6087015e8f6147164243afe9515e7cac2f588",
+    "line": 11,
+    "record_key": "Diabolist ~ Infernal Bargain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

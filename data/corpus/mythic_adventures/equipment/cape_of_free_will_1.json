@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 1500.0,
+    "description": "The wearer of this brightly colored patchwork cape gains a bonus on all saving throws, as with a cloak of resistance, but the resistance bonus on Will saves is one greater. Furthermore, if the wearer fails a Will saving throw, he can expend one use of mythic power as an immediate action to reroll that saving throw. If the wearer fails the saving throw on the reroll, he can’t use this ability again for 24 hours.",
+    "key": "Cape of Free Will +1",
+    "name": "Cape of Free Will +1",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "Fortitude,Reflex",
+          "1",
+          "TYPE=Resistance"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SAVE",
+          "Will",
+          "2",
+          "TYPE=Resistance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "1500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|7th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|shoulders"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|6,750 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, Mythic crafter, resistance, the creator must have the mythic saves ability"
+      },
+      {
+        "key": "SPROP",
+        "value": "The wearer of this brightly colored patchwork cape gains a bonus on all saving throws, as with a cloak of resistance, but the resistance bonus on Will saves is one greater. Furthermore, if the wearer fails a Will saving throw, he can expend one use of mythic power as an immediate action to reroll that saving throw. If the wearer fails the saving throw on the reroll, he can’t use this ability again for 24 hours."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 65,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "record_key": "Cape of Free Will +1",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wave Warden Feat ~ Spring Attack",
+    "name": "Spring Attack",
+    "class": "Wave Warden Feat",
+    "description": "You can deftly move up to a foe, strike, and withdraw before he can react.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden Feat ~ Spring Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WaveWardenBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Spring Attack"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=6"
+      },
+      {
+        "key": "DESC",
+        "value": "You can deftly move up to a foe, strike, and withdraw before he can react."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Spring Attack|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 907,
+    "record_key": "Wave Warden Feat ~ Spring Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Storm Druid ~ Nature's Bond",
+    "name": "Nature Bond",
+    "class": "Druid",
+    "description": "You may not choose an animal companion. You must choose the Air or Weather domain, or the Cloud, Storm, or Wind subdomain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storm Druid ~ Nature's Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary.NaturesBondAnimalCompanion.NaturesBondDruidDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAnimalTerrainDomainNotAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionNotAllowed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may not choose an animal companion. You must choose the Air or Weather domain, or the Cloud, Storm, or Wind subdomain."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAnimalTerrainDomainNotAllowed|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionNotAllowed|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAirAllowed,DruidWeatherAllowed,DruidCloudSubdomainAllowed,DruidStormsSubdomainAllowed,DruidWindSubdomainAllowed,PreventDruidInquisitions|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1219,
+    "record_key": "Storm Druid ~ Nature's Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

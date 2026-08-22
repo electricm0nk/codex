@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Ledge Walker",
+    "name": "Ledge Walker",
+    "class": "Investigator",
+    "description": "This ability allows you to move along narrow surfaces at full speed using the Acrobatics skill without penalty. In addition, you are not flat-footed when using Acrobatics to move along narrow surfaces.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Ledge Walker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability allows you to move along narrow surfaces at full speed using the Acrobatics skill without penalty. In addition, you are not flat-footed when using Acrobatics to move along narrow surfaces."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1359,
+    "record_key": "Investigator ~ Rogue Talent ~ Ledge Walker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

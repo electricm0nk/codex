@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Zen Archer",
+    "name": "Zen Archer",
+    "class": "Monk Archetype",
+    "description": "Some monks seek to become one with another weapon entirely-the bow. The zen archer takes a weapon most other monks eschew and seeks perfection in the pull of a taut bowstring, the flex of a bow's limbs, and the flight of an arrow fired true.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Zen Archer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Some monks seek to become one with another weapon entirely-the bow. The zen archer takes a weapon most other monks eschew and seeks perfection in the pull of a taut bowstring, the flex of a bow's limbs, and the flight of an arrow fired true."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Weapon and Armor Proficiency|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Flurry of Blows|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Bonus Feats|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Perfect Strike|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Way of the Bow|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Zen Archery|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Point Blank Master|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Ki Pool|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Ki Arrows|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Reflexive Shot|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Trick Shot|PRECLASS:1,Monk=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Zen Archer ~ Ki Focus Bow|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2299,
+    "record_key": "Monk Archetype ~ Zen Archer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

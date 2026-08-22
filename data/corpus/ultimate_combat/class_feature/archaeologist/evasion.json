@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Archaeologist ~ Evasion",
+    "name": "Evasion",
+    "class": "Bard",
+    "description": "At 6th level, an Archaeologist gains evasion, as the rogue ability of the same name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archaeologist ~ Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, an Archaeologist gains evasion, as the rogue ability of the same name."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Evasion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 396,
+    "record_key": "Archaeologist ~ Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

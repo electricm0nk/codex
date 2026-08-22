@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sanguine Angel Discipline ~ Castling",
+    "name": "Castling",
+    "class": "Sanguine Angel Discipline",
+    "description": "When the sanguine angel takes a 5-foot step, she can step into the space of a willing, adjacent ally. If she does, that ally immediately takes a 5-foot step into the sanguine angel's former space without spending an action to do so.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanguine Angel Discipline ~ Castling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SanguineAngelDiscipline.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "DESC",
+        "value": "When the sanguine angel takes a 5-foot step, she can step into the space of a willing, adjacent ally. If she does, that ally immediately takes a 5-foot step into the sanguine angel's former space without spending an action to do so."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 463,
+    "record_key": "Sanguine Angel Discipline ~ Castling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

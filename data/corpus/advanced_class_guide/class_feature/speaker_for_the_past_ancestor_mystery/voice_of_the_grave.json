@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Speaker for the Past Ancestor Mystery ~ Voice of the Grave",
+    "name": "Voice of the Grave",
+    "class": "Speaker for the Past Ancestor Mystery",
+    "description": "You can speak with the dead, as per the spell, for %1 rounds per day. These rounds do not need to be consecutive.  The dead creature you question takea a -%2 penalty on its Will save to resist this effect.|VoiceOfTheGraveRounds|VoiceOfTheGravePenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Ancestor Mystery ~ Voice of the Grave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.Supernatural.AncestorRevelation.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoiceOfTheGraveRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoiceOfTheGravePenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with the dead, as per the spell, for %1 rounds per day. These rounds do not need to be consecutive.  The dead creature you question takea a -%2 penalty on its Will save to resist this effect.|VoiceOfTheGraveRounds|VoiceOfTheGravePenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoiceOfTheGraveRounds|classlevel(\"Shaman\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoiceOfTheGravePenalty|floor(classlevel(\"Shaman\")/5)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3624,
+    "record_key": "Speaker for the Past Ancestor Mystery ~ Voice of the Grave"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

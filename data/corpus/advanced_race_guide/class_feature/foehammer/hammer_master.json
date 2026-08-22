@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Foehammer ~ Hammer Master",
+    "name": "Hammer Master",
+    "class": "Fighter",
+    "description": "Any combat feats a foehammer has learned with any weapon from the hammer weapon training group (e.g., Improved Critical, Weapon Focus) apply to all weapons from that group.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Foehammer ~ Hammer Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Any combat feats a foehammer has learned with any weapon from the hammer weapon training group (e.g., Improved Critical, Weapon Focus) apply to all weapons from that group."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 55,
+    "record_key": "Foehammer ~ Hammer Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

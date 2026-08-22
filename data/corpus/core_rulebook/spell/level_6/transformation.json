@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You become a fighting machine-stronger, tougher, faster, and more skilled in combat. Your mindset changes so that you relish combat and you can't cast spells, even from magic items. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, a +4 natural armor bonus to AC, a +5 competence bonus on Fortitude saves, and proficiency with all simple and martial weapons. Your base attack bonus equals your character level [which may give you multiple attacks]. You lose your spellcasting ability, including your ability to use spell activation or spell completion magic items, just as if the spells were no longer on your class list.",
     "key": "Transformation",
-    "school": "Transmutation",
     "level": 6,
-    "description": "You become a fighting machine-stronger, tougher, faster, and more skilled in combat. Your mindset changes so that you relish combat and you can't cast spells, even from magic items. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, a +4 natural armor bonus to AC, a +5 competence bonus on Fortitude saves, and proficiency with all simple and martial weapons. Your base attack bonus equals your character level [which may give you multiple attacks]. You lose your spellcasting ability, including your ability to use spell activation or spell completion magic items, just as if the spells were no longer on your class list."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a fighting machine--stronger, tougher, faster, and more skilled in combat.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a fighting machine-stronger, tougher, faster, and more skilled in combat. Your mindset changes so that you relish combat and you can't cast spells, even from magic items. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, a +4 natural armor bonus to AC, a +5 competence bonus on Fortitude saves, and proficiency with all simple and martial weapons. Your base attack bonus equals your character level [which may give you multiple attacks]. You lose your spellcasting ability, including your ability to use spell activation or spell completion magic items, just as if the spells were no longer on your class list.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/transformation.html#_transformation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.360"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|4|TYPE=NaturalArmor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|BASEAB|TL|TYPE=Base"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|Fortitude|5|TYPE=Competence"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR,DEX,CON|4|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants +4 to Strength, Dexterity and Constitution, +4 natural armor, +5 to Fortitude saves, and full BAB."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 632,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1381,
-    "record_key": "Transformation.MOD"
+    "record_key": "Transformation",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

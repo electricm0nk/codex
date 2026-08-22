@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Spirit ~ Enemies' Bane",
+    "name": "Enemies' Bane",
+    "class": "Battle Spirit",
+    "description": "As a swift action, the shaman imbues a single weapon she's wielding with the bane weapon special ability, choosing the type of creature affected each time she does. The effect lasts for 1 minute. If the weapon already has the bane weapon special ability of the type chosen, the additional damage dealt by bane increases to 4d6. The shaman can use this ability %1/day.|ShamanEnemiesBaneTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Spirit ~ Enemies' Bane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanEnemiesBaneTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, the shaman imbues a single weapon she's wielding with the bane weapon special ability, choosing the type of creature affected each time she does. The effect lasts for 1 minute. If the weapon already has the bane weapon special ability of the type chosen, the additional damage dealt by bane increases to 4d6. The shaman can use this ability %1/day.|ShamanEnemiesBaneTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEnemiesBaneTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1520,
+    "record_key": "Battle Spirit ~ Enemies' Bane"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

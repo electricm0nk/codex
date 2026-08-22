@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Raven Master ~ Cheat Death",
+    "name": "Cheat Death",
+    "class": "Raven Master",
+    "description": "Once per week, when a raven companion would otherwise be slain by an attack, spell, or effect, it can turn into a figurine of wondrous power as per its mimic figurine ability as an immediate action. Once transformed this way, the raven companion cannot transform back into a raven until the raven master next prepares spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raven Master ~ Cheat Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per week, when a raven companion would otherwise be slain by an attack, spell, or effect, it can turn into a figurine of wondrous power as per its mimic figurine ability as an immediate action. Once transformed this way, the raven companion cannot transform back into a raven until the raven master next prepares spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1004,
+    "record_key": "Raven Master ~ Cheat Death"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tranquil Guardian ~ Serene Strike",
+    "name": "Serene Strike",
+    "class": "Paladin",
+    "description": "When a tranquil guardian confirms a critical hit, she may convert all damage from her attack to nonlethal damage, and when she does, she can activate Touch of Serenity through her weapon or unarmed strike. Using serene strike is a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tranquil Guardian ~ Serene Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a tranquil guardian confirms a critical hit, she may convert all damage from her attack to nonlethal damage, and when she does, she can activate Touch of Serenity through her weapon or unarmed strike. Using serene strike is a free action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 426,
+    "record_key": "Tranquil Guardian ~ Serene Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

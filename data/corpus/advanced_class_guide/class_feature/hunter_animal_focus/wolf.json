@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Animal Focus ~ Wolf",
+    "name": "Wolf",
+    "class": "Hunter Animal Focus",
+    "description": "Get scent with range of %1 feet|HunterAnimalFocusWolfScent",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Animal Focus ~ Wolf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterAnimalFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusWolfScent|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get scent with range of %1 feet|HunterAnimalFocusWolfScent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusWolfScent|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusWolfScent|10|PREVARGTEQ:HunterAnimalFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusWolfScent|10|PREVARGTEQ:HunterAnimalFocusLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScentRange|HunterAnimalFocusWolfScent"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1225,
+    "record_key": "Hunter Animal Focus ~ Wolf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undead Master ~ Corpse Bond",
+    "name": "Corpse Bond",
+    "class": "Wizard",
+    "description": "An undead master can forge an arcane bond with an object, but that object must be made at least partially of bone. Alternatively, he can animate a corpse companion, as per the undead lord cleric archetype (Pathfinder RPG Ultimate Magic 32). He can't gain a familiar. This ability alters arcane bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Master ~ Corpse Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "An undead master can forge an arcane bond with an object, but that object must be made at least partially of bone. Alternatively, he can animate a corpse companion, as per the undead lord cleric archetype (Pathfinder RPG Ultimate Magic 32). He can't gain a familiar. This ability alters arcane bond."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorpseCompanionHD|WizardLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Undead Master Arcane Bond|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 321,
+    "record_key": "Undead Master ~ Corpse Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

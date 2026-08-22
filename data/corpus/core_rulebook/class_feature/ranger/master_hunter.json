@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger ~ Master Hunter",
+    "name": "Master Hunter",
+    "class": "Ranger",
+    "description": "You can always move at full speed while using Survival to follow tracks without penalty. You can, as a standard action, make a single attack against a favored enemy at your full attack bonus. If the attack hits, the target takes damage normally and must make a Fortitude save or die (DC %1). You can choose instead to deal an amount of nonlethal damage equal to the creature's current hit points. A successful save negates this damage. You can use this ability once per day against each favored enemy type you possess, but not against the same creature more than once in a 24-hour period.|MasterHunterDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger ~ Master Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterHunterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterHunterDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can always move at full speed while using Survival to follow tracks without penalty. You can, as a standard action, make a single attack against a favored enemy at your full attack bonus. If the attack hits, the target takes damage normally and must make a Fortitude save or die (DC %1). You can choose instead to deal an amount of nonlethal damage equal to the creature's current hit points. A successful save negates this damage. You can use this ability once per day against each favored enemy type you possess, but not against the same creature more than once in a 24-hour period.|MasterHunterDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterHunterDC|10+(MasterHunterLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterHunterLVL|RangerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1427,
+    "record_key": "Ranger ~ Master Hunter"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Tactician ~ Tactical Acumen",
+    "name": "Tactical Acumen",
+    "class": "Paladin",
+    "description": "At 3rd level, a holy tactician gains a teamwork feat as a bonus feat. She must meet the prerequisites for this feat. She gains an additional bonus feat for every four levels attained after 3rd, to a maximum of five bonus feats at 19th level. This ability replaces divine health and divine bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Tactician ~ Tactical Acumen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a holy tactician gains a teamwork feat as a bonus feat. She must meet the prerequisites for this feat. She gains an additional bonus feat for every four levels attained after 3rd, to a maximum of five bonus feats at 19th level. This ability replaces divine health and divine bond."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat Selection|(PaladinLvl+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1484,
+    "record_key": "Holy Tactician ~ Tactical Acumen"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

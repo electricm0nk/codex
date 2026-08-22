@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -437,6 +437,591 @@ run_producer_selftest() {
     fi
 
     stage_pass producer-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: pi-redaction-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_pi_redaction.py` -- the
+# self-test for `scripts/observer/pi_redaction.py`, Decision 12's declared-PI
+# oracle reader (SD31-D14-PROV-001, 2026-08-17: "withhold the name, keep the
+# row"). Builds scratch pcgen-shaped fixtures (never the real pinned oracle,
+# same posture `groundtruth-guard-selftest` already takes) and mutation-proves
+# the core reader, the ambiguous-name exclusion (a bare word declared PI in
+# one book must not flag an unrelated non-PI record sharing that word
+# elsewhere -- the real false positive this cycle found: an unrelated
+# Spycraft "Teleport" ritual colliding with the Core Rulebook's ordinary
+# "Teleport" spell), and the exact-match leak scanner/redactor
+# `site-dashboard-pi-gate` and the producer both depend on. Cheap (stdlib
+# unittest, no build, no network) -- placed in BOTH stage sets next to
+# `producer-selftest`, same "self-test for a screen that raises on purpose
+# deserves its own gate" reasoning.
+# ---------------------------------------------------------------------------
+
+run_pi_redaction_selftest() {
+    stage_start "pi-redaction-selftest — python3 -m unittest scripts/tests/test_pi_redaction.py"
+    local log="$LOG_DIR/pi-redaction-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_pi_redaction.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail pi-redaction-selftest "self-test script missing at scripts/tests/test_pi_redaction.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail pi-redaction-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail pi-redaction-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass pi-redaction-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: provenance-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_provenance.py` -- the
+# self-test for `scripts/observer/provenance.py`, Decision 14's provenance
+# schema (SD31-D14-PROV-001, 2026-08-17 CONFIRMED ruling). Proves each of
+# the six gate invariants both passes on clean data and fails on
+# deliberately broken data: totality, exactly-one-authoritative-pair,
+# denominator = authoritative + variant (mutation-proven against the real
+# anti-gaming shape -- widening DENOMINATOR_STATUSES to also count
+# `duplicate` fails the test), packaging-artifact trending to zero,
+# descoped-structural requiring a signature, and a provenance change moving
+# zero doneness fields. THIS SCHEMA IS NOT APPLIED TO THE MANDATE
+# DENOMINATOR THIS CYCLE (the Supersession Register rebuild has not landed
+# and race attribution is frozen per `§13`'s amendment) -- this stage
+# guards the schema/gate MACHINERY only. Cheap (stdlib unittest, no build,
+# no network) -- placed in BOTH stage sets next to `pi-redaction-selftest`.
+# ---------------------------------------------------------------------------
+
+run_provenance_selftest() {
+    stage_start "provenance-selftest — python3 -m unittest scripts/tests/test_provenance.py"
+    local log="$LOG_DIR/provenance-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_provenance.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail provenance-selftest "self-test script missing at scripts/tests/test_provenance.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail provenance-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail provenance-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass provenance-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-selftest
+#
+# Runs `bash scripts/tests/test_publish_site_dashboard.sh` -- the detection
+# self-test for `scripts/publish-site-dashboard.sh`'s `--check` mode
+# (SD31-ATTRIB-003, operator request to version the public status feed).
+# Against a tiny FAKE producer (not the real one, so this is cheap and
+# deterministic), it proves `--check` reports "current" on an untouched
+# tree, is stable across repeated runs, catches a genuinely stale committed
+# copy, and never mutates the committed file on disk. Mutation-proven against
+# the real bug this cycle found and fixed: the first version of `--check`
+# rendered into a blank-slate scratch file instead of one seeded from the
+# committed copy, so it reported STALE unconditionally, even with nothing
+# changed -- sabotaging the seeding step reproduces exactly that (3 of 6
+# cases fail). Placed next to `producer-selftest`, same "self-test for a
+# check that raises on purpose deserves its own gate" reasoning.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_selftest() {
+    stage_start "site-dashboard-selftest — bash scripts/tests/test_publish_site_dashboard.sh"
+    local log="$LOG_DIR/site-dashboard-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_publish_site_dashboard.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-selftest "self-test script missing at scripts/tests/test_publish_site_dashboard.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail site-dashboard-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass site-dashboard-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-check
+#
+# Runs `scripts/publish-site-dashboard.sh --check` for real, against the
+# actually-committed `site/dashboard/PF1e-dashboard.json` and the real
+# `scripts/observer/pf1e_dashboard_producer.py` -- the freshness gate the
+# operator asked for so the public site's copy can never silently drift from
+# what `docs/work-inventory.json` currently says. Cheap (reads local repo
+# files only, no pinned oracle, no cargo build), so it sits in both stage
+# sets next to its own selftest. A failure here means: run
+# `./scripts/publish-site-dashboard.sh` and commit the refreshed feed.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_check() {
+    stage_start "site-dashboard-check — scripts/publish-site-dashboard.sh --check"
+    local log="$LOG_DIR/site-dashboard-check.log"
+    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-check "script missing at scripts/publish-site-dashboard.sh"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-check "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q "is current" "$log"; then
+        stage_fail site-dashboard-check "exited 0 without confirming currency — $log"
+        return
+    fi
+
+    stage_pass site-dashboard-check "site/dashboard/PF1e-dashboard.json is current"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-pi-gate
+#
+# Decision 12 (2026-08-17), binding implementation requirement #3: "A gate,
+# proven able to fail. A verify.sh stage must fail when the committed feed or
+# any shard carries a declared-PI name." Runs
+# `scripts/site_dashboard_pi_gate.py` for real against whatever is actually
+# committed under `site/dashboard/` -- the SAFETY NET behind the producer's
+# own two precise, coordinate-based redactions
+# (`build_unit_shards`'s `name` field, `_parse_lst_first_field`'s roster
+# rows) and its blanket exact-match sweep over the whole assembled document.
+# A hand-edit, a reverted redaction, or a future producer change that forgets
+# to call the reader are all real failure modes a generation-time fix alone
+# cannot catch -- `declared-pi-audit` above is this exact same shape applied
+# to `data/corpus/`; this is that shape's `site/dashboard/` counterpart.
+# Cheap (a ~2.5s Paizo-scoped oracle sweep, no build) -- placed in BOTH stage
+# sets next to `site-dashboard-check`.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_pi_gate() {
+    stage_start "site-dashboard-pi-gate — declared-PI names vs. what is committed under site/dashboard/"
+    local log="$LOG_DIR/site-dashboard-pi-gate.log"
+    local script="$REPO_ROOT/scripts/site_dashboard_pi_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-pi-gate "gate script missing at scripts/site_dashboard_pi_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-pi-gate "declared-PI name found, or the oracle could not be read (exit $status) — $log"
+        return
+    fi
+
+    if ! grep -q '^site-dashboard-pi-gate: CLEAN' "$log"; then
+        stage_fail site-dashboard-pi-gate "exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    local summary
+    summary=$(sed -n 's/^site-dashboard-pi-gate: CLEAN — \(.*\)$/\1/p' "$log" | tail -1)
+    stage_pass site-dashboard-pi-gate "${summary:-clean}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: build-public-status-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_build_public_status.py` --
+# SITE-PUBSTATUS-001's own self-test for `scripts/site/build_public_status.py`
+# (PI screening, the public done/partial/not-started doneness bucket
+# mapping, and the standing/denominator wiring). Same shape as
+# `pi-redaction-selftest`/`provenance-selftest` above: a scratch-fixture
+# unit test, no pinned oracle or committed ledger required, cheap enough for
+# both stage sets.
+# ---------------------------------------------------------------------------
+
+run_build_public_status_selftest() {
+    stage_start "build-public-status-selftest — python3 -m unittest scripts/tests/test_build_public_status.py"
+    local log="$LOG_DIR/build-public-status-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_build_public_status.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail build-public-status-selftest "self-test script missing at scripts/tests/test_build_public_status.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail build-public-status-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail build-public-status-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass build-public-status-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-asset-stamp-check
+#
+# `site/styles.css` has a stable filename, so a returning visitor's browser
+# will keep serving its cached copy after a deploy unless the URL changes.
+# On 2026-08-18 that shipped a live page whose HTML was current but whose CSS
+# was not, and it was only caught because the operator looked at it on a
+# phone. `scripts/site/stamp_asset_versions.py` appends `?v=<content-hash>` to
+# every stylesheet reference; this gate fails when the committed stamps no
+# longer match the committed stylesheet. A failure here means: run
+# `python3 scripts/site/stamp_asset_versions.py` and commit the result.
+# ---------------------------------------------------------------------------
+
+run_site_asset_stamp_check() {
+    stage_start "site-asset-stamp-check — scripts/site/stamp_asset_versions.py --check"
+    local log="$LOG_DIR/site-asset-stamp-check.log"
+    local script="$REPO_ROOT/scripts/site/stamp_asset_versions.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-asset-stamp-check "script missing at scripts/site/stamp_asset_versions.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-asset-stamp-check "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q "^OK: " "$log"; then
+        stage_fail site-asset-stamp-check "exited 0 without confirming currency — $log"
+        return
+    fi
+
+    stage_pass site-asset-stamp-check "site/*.html cache-busting stamps match site/styles.css"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-public-status-check
+#
+# Runs `python3 scripts/site/build_public_status.py --check` directly against
+# the actually-committed `site/status-data.json` and `site/status-data/*.json`
+# -- the operator's explicit self-maintaining requirement ("the data set...
+# needs to be a part of our normal process just like it is for our
+# pf1e-dashboard.html"), applied as its own named, directly-invoked gate
+# (rather than only transitively through `site-dashboard-check`'s call into
+# `scripts/publish-site-dashboard.sh --check`, which also reaches this same
+# script — see that script's own trailing step). Cheap (reads local repo
+# files plus one pinned-oracle sweep for the redaction indices, no cargo
+# build), so it sits in both stage sets next to its own selftest and PI
+# gate. A failure here means: run
+# `python3 scripts/site/build_public_status.py` and commit the refreshed
+# projection.
+# ---------------------------------------------------------------------------
+
+run_site_public_status_check() {
+    stage_start "site-public-status-check — scripts/site/build_public_status.py --check"
+    local log="$LOG_DIR/site-public-status-check.log"
+    local script="$REPO_ROOT/scripts/site/build_public_status.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-public-status-check "script missing at scripts/site/build_public_status.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-public-status-check "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q "^OK: " "$log"; then
+        stage_fail site-public-status-check "exited 0 without confirming currency — $log"
+        return
+    fi
+
+    stage_pass site-public-status-check "site/status-data.json and site/status-data/*.json are current"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-public-status-pi-gate
+#
+# Decision 12's binding implementation requirement #3, applied to the
+# PUBLIC status projection specifically (`site-dashboard-pi-gate` above
+# covers the separate `site/dashboard/**` surface): "A verify.sh stage must
+# fail when the committed feed or any shard carries a declared-PI name."
+# Runs `scripts/site_public_status_pi_gate.py` for real against whatever is
+# actually committed under `site/status-data.json` and
+# `site/status-data/*.json` -- the SAFETY NET behind
+# `build_public_status.py`'s own generation-time redaction
+# (`redact_for_display`'s per-book name check plus its `type_facet`
+# substring screen, and the final blanket exact-match sweep over the whole
+# assembled document). Cloudflare Pages deploys `site/**` on push to `main`
+# with no build step, so this gate is the last thing standing between a
+# leaked name and a live page. Cheap (a ~2.5s Paizo-scoped oracle sweep, no
+# build) -- placed in BOTH stage sets next to `site-public-status-check`.
+# ---------------------------------------------------------------------------
+
+run_site_public_status_pi_gate() {
+    stage_start "site-public-status-pi-gate — declared-PI names vs. what is committed under site/status-data*"
+    local log="$LOG_DIR/site-public-status-pi-gate.log"
+    local script="$REPO_ROOT/scripts/site_public_status_pi_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-public-status-pi-gate "gate script missing at scripts/site_public_status_pi_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-public-status-pi-gate "declared-PI name found, or the oracle could not be read (exit $status) — $log"
+        return
+    fi
+
+    if ! grep -q '^site-public-status-pi-gate: CLEAN' "$log"; then
+        stage_fail site-public-status-pi-gate "exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    local summary
+    summary=$(sed -n 's/^site-public-status-pi-gate: CLEAN — \(.*\)$/\1/p' "$log" | tail -1)
+    stage_pass site-public-status-pi-gate "${summary:-clean}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: reachability-audit-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_reachability_audit.py` --
+# SD31-E0-F1's own self-test (`decisions.md §4`). Feeds
+# `scripts/reachability_audit.py` a FABRICATED dead-end (a wiring_class/
+# status pair `_doneness_verdict_uncapped()` has no rule for) and confirms
+# it is both reported and fails the audit's own exit code, per "prove it can
+# fail before it is trusted" (`SD-30 state-goals-and-lessons.md §3.1`).
+# Cheap (stdlib unittest, no build, no network) -- placed in BOTH stage sets
+# next to producer-selftest, the same self-test-for-a-table-that-raises-on-
+# purpose reasoning that stage carries.
+# ---------------------------------------------------------------------------
+
+run_reachability_audit_selftest() {
+    stage_start "reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py"
+    local log="$LOG_DIR/reachability-audit-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_reachability_audit.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail reachability-audit-selftest "self-test script missing at scripts/tests/test_reachability_audit.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail reachability-audit-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail reachability-audit-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass reachability-audit-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: groundtruth-guard-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py
+# scripts/tests/test_sample_ground_truth_units.py` -- the self-tests for
+# `scripts/ground_truth_evidence_guard.py` and
+# `scripts/sample_ground_truth_units.py` (SD31-E2-F1-002). Adversarial
+# review Finding 14 (`SD31-W2-INTEGRATE-001`): ~800 lines of new Python
+# shipped with no gate coverage at all. The guard's own LIVE run against
+# the real ground-truth sample is deliberately kept OUT of this gate --
+# `OPEN-ISSUES.md` rows 14/15 -- because it currently reds on the
+# untouched-45 residual this cycle was barred from repairing, and
+# `verify.sh` has only two stage tiers (no "registered but not default").
+# The SELF-TESTS carry no such dependency (a hermetic fake corpus tree
+# under a temp dir, same pattern as producer-selftest/
+# reachability-audit-selftest above) and pass right now, so wiring them in
+# is zero-risk. Cheap (stdlib unittest, no build, no network).
+# ---------------------------------------------------------------------------
+
+run_groundtruth_guard_selftest() {
+    stage_start "groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py"
+    local log="$LOG_DIR/groundtruth-guard-selftest.log"
+    local script1="$REPO_ROOT/scripts/tests/test_ground_truth_evidence_guard.py"
+    local script2="$REPO_ROOT/scripts/tests/test_sample_ground_truth_units.py"
+
+    if [[ ! -f "$script1" || ! -f "$script2" ]]; then
+        stage_fail groundtruth-guard-selftest "self-test script(s) missing: $script1 / $script2"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script1" "$script2" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail groundtruth-guard-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail groundtruth-guard-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass groundtruth-guard-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: supersession-gate-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_supersession_register_gate.py`
+# -- SD31-D10-REGISTER-001's own self-test. Decision 10 (`decisions.md`) is
+# the FIRST authorization in this package to shrink the mandate denominator,
+# and it is a standing rule a cycle may apply WITHOUT a per-entry operator
+# signature (unlike the Structural Exclusion Register, `decisions.md §3`) --
+# so this gate, not a signature, is the only thing protecting that number.
+# This self-test seeds a bad entry of BOTH refusal shapes the card demands
+# (two records that materially differ; a variant-line book with no
+# `reprint_proof`) plus two structural ones (core_essentials on either side;
+# backwards SOURCEDATE order) and confirms each is refused, then confirms a
+# genuinely clean entry — and a variant-line entry carrying real
+# `reprint_proof` — both pass. Hermetic (a tiny fake corpus tree under a
+# temp dir, same pattern as reachability-audit-selftest/
+# groundtruth-guard-selftest above), no oracle dependency. Cheap, in BOTH
+# stage sets.
+# ---------------------------------------------------------------------------
+
+run_supersession_gate_selftest() {
+    stage_start "supersession-gate-selftest — python3 -m unittest scripts/tests/test_supersession_register_gate.py"
+    local log="$LOG_DIR/supersession-gate-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_supersession_register_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail supersession-gate-selftest "self-test script missing at scripts/tests/test_supersession_register_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail supersession-gate-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail supersession-gate-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass supersession-gate-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: reachability-audit
+#
+# Runs `scripts/reachability_audit.py` against the live `docs/work-inventory.json`
+# (SD31-E0-F1/F2, `decisions.md §4`) -- the standing gate: does a path to
+# `done` exist, given current engine capability, for every unit on the
+# board? Exits non-zero ONLY when a `(wiring_class, status)` cell raises
+# `ValueError` (unmapped -- absent from every rollup) AND carries on-board
+# units; a `no-done-path` dead end (today: `ambiguous`, Decision 4's
+# 2,109-unit gap) is a KNOWN, epic-owned capability gap, reported but not by
+# itself gate-failing, so this stage does not turn permanently red while
+# Epic 1/Epic 2 are still in flight. The reachable-ceiling number itself is
+# read from this stage's own log, not re-derived by the caller.
+# ---------------------------------------------------------------------------
+
+run_reachability_audit() {
+    stage_start "reachability-audit — python3 scripts/reachability_audit.py"
+    local log="$LOG_DIR/reachability-audit.log"
+    local script="$REPO_ROOT/scripts/reachability_audit.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail reachability-audit "script missing at scripts/reachability_audit.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ceiling
+    ceiling=$(sed -n 's/^  REACHABLE CEILING: \([0-9.]*\)%.*$/\1/p' "$log" | tail -1)
+    actual "REACHABILITY_CEILING_PERCENT=${ceiling:-unknown}"
+
+    if (( status != 0 )); then
+        printf '    FAIL: an unmapped (wiring_class, status) cell carries on-board units. From the log:\n'
+        grep -A5 'FAIL: unmapped' "$log" | sed 's/^/        /'
+        stage_fail reachability-audit "exit $status — $log"
+        return
+    fi
+
+    stage_pass reachability-audit "reachable ceiling ${ceiling:-unknown}%"
 }
 
 # ---------------------------------------------------------------------------
@@ -834,6 +1419,39 @@ run_pi_sweep() {
     stage_pass pi-sweep "${summary:-clean}"
 }
 
+# Stage: declared-pi-audit
+#
+# SD31-PI-REPAIR-001 (OPEN-ISSUES rows 38/39). `pi-sweep` above is the
+# heuristic 55-term blacklist over `src/rules_core/rules_tables`; this stage
+# is the corpus's OWN per-record declaration (`NAMEISPI:`/`DESCISPI:`),
+# cross-checked against what actually shipped under `data/corpus/`. Two real
+# defects reached `tranche/11` past every other gate because nothing did
+# this cross-check: `cache_gen::ultimate_equipment.rs` shipped a
+# `NAMEISPI:YES` record's real name unredacted, and `ingest_races.rs`
+# hardcoded `pi_field: None` while a `LICENSE.json` claimed the declared-PI
+# reader ran. Both are now checked directly, and a `LICENSE.json` opting
+# into the structured `declared_pi_reader_verified` claim is verified
+# against its own named writer source, not trusted as prose.
+run_declared_pi_audit() {
+    stage_start "declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped"
+    local log="$LOG_DIR/declared-pi-audit.log"
+
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin declared_pi_shipping_audit ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail declared-pi-audit "unredacted PI-declared record or unverified LICENSE.json claim (exit $status) — $log"
+        return
+    fi
+
+    if ! grep -q '^declared-pi-audit: CLEAN' "$log"; then
+        stage_fail declared-pi-audit "binary exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    stage_pass declared-pi-audit "clean"
+}
+
 # Stage: driver-selftest
 #
 # Runs scripts/tests/test_run_desktop_driver.sh — the self-test for
@@ -1086,6 +1704,59 @@ run_corpus_sweep() {
     stage_pass corpus-sweep "${summary:-clean}"
 }
 
+# ---------------------------------------------------------------------------
+# Stage: supersession-gate
+#
+# Runs `scripts/supersession_register_gate.py` against the committed
+# `docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json`
+# (SD31-D10-REGISTER-001, `decisions.md` Decision 10 + its amendment). For
+# every `objects[]` entry it RE-DERIVES both sides' raw `.lst` row from the
+# pinned oracle (never trusts the register's own cached copy) and refuses
+# the entry if the two are not still field-identical after stripping
+# provenance/pricing tokens — a corpus drift or a hand-edited entry both
+# fail here. It also refuses any entry naming `pathfinder_unchained` or
+# `mythic_adventures` without a `reprint_proof` (default: variant, not a
+# reprint), any entry naming `core_essentials` (Decision 9: not a book),
+# and a backwards SOURCEDATE order. FULL only (needs the pinned oracle),
+# placed immediately after `corpus-sweep`, same dependency.
+# ---------------------------------------------------------------------------
+
+run_supersession_gate() {
+    stage_start "supersession-gate — python3 scripts/supersession_register_gate.py"
+    local log="$LOG_DIR/supersession-gate.log"
+    local script="$REPO_ROOT/scripts/supersession_register_gate.py"
+    local register="$REPO_ROOT/docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail supersession-gate "script missing at scripts/supersession_register_gate.py"
+        return
+    fi
+    if [[ ! -f "$register" ]]; then
+        stage_fail supersession-gate "register missing at docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --register "$register" ) >"$log" 2>&1
+    local status=$?
+
+    local checked
+    checked=$(sed -n 's/^supersession_register_gate: \([0-9]*\) objects checked.*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        printf '    FAIL: at least one register entry was refused. From the log:\n'
+        grep -A20 '  FAIL:' "$log" | sed 's/^/        /'
+        stage_fail supersession-gate "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q '^  OK:' "$log"; then
+        stage_fail supersession-gate "binary exited 0 without reporting OK — $log"
+        return
+    fi
+
+    stage_pass supersession-gate "${checked:-0} objects, all clean"
+}
+
 run_class_dump() {
     stage_start "class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)"
     local log="$LOG_DIR/class-dump.log"
@@ -1159,12 +1830,27 @@ for stage in "${SELECTED[@]}"; do
         preflight-oracle)    run_preflight_oracle ;;
         oracle-pin-selftest) run_oracle_pin_selftest ;;
         producer-selftest)   run_producer_selftest ;;
+        pi-redaction-selftest) run_pi_redaction_selftest ;;
+        provenance-selftest) run_provenance_selftest ;;
+        site-dashboard-selftest) run_site_dashboard_selftest ;;
+        site-dashboard-check) run_site_dashboard_check ;;
+        site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
+        build-public-status-selftest) run_build_public_status_selftest ;;
+        site-asset-stamp-check) run_site_asset_stamp_check ;;
+        site-public-status-check) run_site_public_status_check ;;
+        site-public-status-pi-gate) run_site_public_status_pi_gate ;;
+        reachability-audit-selftest) run_reachability_audit_selftest ;;
+        reachability-audit)  run_reachability_audit ;;
+        groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;
+        supersession-gate-selftest) run_supersession_gate_selftest ;;
         pi-sweep)            run_pi_sweep ;;
+        declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;
         driver-selftest)     run_driver_selftest ;;
         corpus-sweep-selftest) run_corpus_sweep_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
+        supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
         desktop)             run_desktop ;;

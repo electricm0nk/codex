@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger ~ Cheat Death",
+    "name": "Cheat Death",
+    "class": "Gunslinger",
+    "description": "At 19th level, whenever the gunslinger is reduced to 0 or fewer hit points, she can spend all of her remaining grit points (minimum 1) to instead be reduced to 1 hit point.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Cheat Death"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL19"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL19.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, whenever the gunslinger is reduced to 0 or fewer hit points, she can spend all of her remaining grit points (minimum 1) to instead be reduced to 1 hit point."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 77,
+    "record_key": "Gunslinger ~ Cheat Death"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

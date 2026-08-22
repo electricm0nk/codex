@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Ifrit ~ Fire in the Blood",
+    "name": "Fire in the Blood",
+    "race_key": "Ifrit",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ifrit Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Ifrit_ReplaceFireAffinity"
+    ],
+    "description": "Ifrits with this racial trait mimic the healing abilities of the mephits, gaining fast healing 2 for 1 round anytime they take fire damage (whether or not this fire damage gets through their fire resistance). The ifrits can heal up to 2 hit points per level per day with this ability, after which it ceases to function. This racial trait replaces fire affinity.",
+    "source_page": "p.126",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ifrit ~ Fire in the Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ifrit Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Fire in the Blood],[!PREFACT:1,ABILITIES,Ifrit_ReplaceFireAffinity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ifrits with this racial trait mimic the healing abilities of the mephits, gaining fast healing 2 for 1 round anytime they take fire damage (whether or not this fire damage gets through their fire resistance). The ifrits can heal up to 2 hit points per level per day with this ability, after which it ceases to function."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces fire affinity.|!PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Fire in the Blood"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Gain fast healing 2 for 1 round anytime you take fire damage (whether or not this fire damage gets through your fire resistance). You can heal up to %1 hit points per day with this ability, after which it ceases to function.|2*TL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|2*TL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Hit Points per Day"
+      },
+      {
+        "key": "FACT",
+        "value": "Ifrit_ReplaceFireAffinity|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 545,
+    "record_key": "Ifrit ~ Fire in the Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ]
+}

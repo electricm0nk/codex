@@ -1,0 +1,147 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Ghost Rider",
+    "name": "Ghost Rider",
+    "class": "Cavalier Archetype",
+    "description": "Ghost riders are conflicted warriors who use the powers of the phantasmal dead even while seeking out and banishing the corruption of undeath from plagued communities. Their strange abilities mark them as outsiders and stoic loners, and they stay in one place only long enough to help the afflicted before riding off to unknown destinations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Ghost Rider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Ghost Rider],[!PREFACT:1,ABILITIES,Cavalier_Archetype_ExpertTrainer=true,Cavalier_Archetype_Banner=true,Cavalier_Archetype_MightyCharge=true,Cavalier_Archetype_GreaterBanner=true,Cavalier_Archetype_CavaliersCharge=true,Cavalier_Archetype_Tactician=true,Cavalier_Archetype_GreaterTactician=true,Cavalier_Archetype_MasterTactician=true,Cavalier_Archetype_Mount=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghost riders are conflicted warriors who use the powers of the phantasmal dead even while seeking out and banishing the corruption of undeath from plagued communities. Their strange abilities mark them as outsiders and stoic loners, and they stay in one place only long enough to help the afflicted before riding off to unknown destinations."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Ghost Rider ~ Ghost Mount|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Ghost Rider ~ Frightful Gaze|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Ghost Rider ~ Fearless|PRECLASS:1,Cavalier=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Ghost Rider ~ Spirited Mount|PRECLASS:1,Cavalier=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Ghost Rider ~ Ghost Wind|PRECLASS:1,Cavalier=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Mount|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1723,
+    "record_key": "Cavalier Archetype ~ Ghost Rider"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Divine Strategist",
+    "name": "Divine Strategist",
+    "class": "Cleric Archetype",
+    "description": "The divine strategist leads the armies of the faithful, not from the front lines but through her clever strategy and tactical acumen.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Divine Strategist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericDomains.ClericChannelEnergy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Divine Strategist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericDomains]"
+      },
+      {
+        "key": "DESC",
+        "value": "The divine strategist leads the armies of the faithful, not from the front lines but through her clever strategy and tactical acumen."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Divine Strategist ~ Domains|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Divine Strategist ~ Caster Support|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Divine Strategist ~ Master Tactician|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Divine Strategist ~ Tactical Expertise|PRECLASS:1,Cleric=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 529,
+    "record_key": "Cleric Archetype ~ Divine Strategist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

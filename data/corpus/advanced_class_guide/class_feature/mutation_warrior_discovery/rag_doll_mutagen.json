@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mutation Warrior Discovery ~ Rag Doll Mutagen",
+    "name": "Rag Doll Mutagen",
+    "class": "Mutation Warrior Discovery",
+    "description": "When the mutation warrior imbibes a mutagen, his body and bones become rubbery and easy to contort. The mutation warrior gains a bonus equal to his class level on Escape Artist checks, can squeeze through places as if he were one size category smaller, and can make a Reflex save (DC equal to 15 + 1 for every 10 feet fallen) to take half damage from falling. At 10th level, all falling damage is considered nonlethal damage, and the mutation warrior can squeeze through places as if he were two size categories smaller than his size while under the effects of this mutagen.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Warrior Discovery ~ Rag Doll Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Warrior Discovery.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the mutation warrior imbibes a mutagen, his body and bones become rubbery and easy to contort. The mutation warrior gains a bonus equal to his class level on Escape Artist checks, can squeeze through places as if he were one size category smaller, and can make a Reflex save (DC equal to 15 + 1 for every 10 feet fallen) to take half damage from falling. At 10th level, all falling damage is considered nonlethal damage, and the mutation warrior can squeeze through places as if he were two size categories smaller than his size while under the effects of this mutagen."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3088,
+    "record_key": "Mutation Warrior Discovery ~ Rag Doll Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,212 @@
+[
+  {
+    "key": "Gingerbread Witch ~ Cauldron Cook",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 266
+    }
+  },
+  {
+    "key": "Gingerbread Witch ~ Confection Conjuring",
+    "class": "Witch",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 266
+    }
+  },
+  {
+    "key": "Gingerbread Witch ~ Gingerbread Familiar",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 266
+    }
+  },
+  {
+    "key": "Gingerbread Witch ~ Gruesome Gobbler",
+    "class": "Witch",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 266
+    }
+  },
+  {
+    "key": "Gingerbread Witch ~ Horrible Hunger",
+    "class": "Witch",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 266
+    }
+  },
+  {
+    "key": "Gingerbread Witch ~ Tricky Treats Hex",
+    "class": "Witch",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 266
+    }
+  },
+  {
+    "key": "Tatterdemalion ~ Cantrips",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 267
+    }
+  },
+  {
+    "key": "Tatterdemalion ~ Dancing Strings",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 267
+    }
+  },
+  {
+    "key": "Tatterdemalion ~ Lace Weaver",
+    "class": "Witch",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 267
+    }
+  },
+  {
+    "key": "Tatterdemalion ~ Moth-Eaten",
+    "class": "Witch",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 267
+    }
+  },
+  {
+    "key": "Tatterdemalion ~ Sinister Stitching",
+    "class": "Witch",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 267
+    }
+  },
+  {
+    "key": "Tatterdemalion ~ Unravel",
+    "class": "Witch",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 267
+    }
+  },
+  {
+    "key": "Tatterdemalion ~ Weapon Proficiency",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 267
+    }
+  },
+  {
+    "key": "Witch Major Hex ~ Cook People",
+    "class": "Witch",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 271
+    }
+  }
+]

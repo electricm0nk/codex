@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Greater Dirty Trick",
+    "name": "Greater Dirty Trick",
+    "class": "Warpriest Bonus Feat",
+    "description": "When you pull a dirty trick, your foe is truly hindered.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Greater Dirty Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Combat Expertise,Improved Dirty Trick"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_INT,13],[PREVARGTEQ:CombatFeatIntRequirement,13],[PREVARGTEQ:DirtyTricksterIntQualify,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "When you pull a dirty trick, your foe is truly hindered."
+      },
+      {
+        "key": "DESC",
+        "value": " You receive a +2 bonus on checks made to attempt a dirty trick. This bonus stacks with the bonus granted by Improved Dirty Trick. Whenever you successfully perform a dirty trick, the penalty lasts for 1d4 rounds, plus 1 round for every 5 by which your attack exceeds the target's CMD. In addition, removing the condition requires the target to spend a standard action."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Dirty Trick"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4337,
+    "record_key": "Warpriest Bonus Feat ~ Greater Dirty Trick"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

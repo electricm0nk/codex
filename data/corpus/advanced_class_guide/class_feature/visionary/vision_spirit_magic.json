@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Visionary ~ Vision Spirit Magic",
+    "name": "Vision Spirit Magic",
+    "class": "Shaman",
+    "description": "[NOT IMPLEMENTED] The visionary adds the following spells to the list of spells she can cast using spirit magic: see alignment (1st), see invisibility (2nd), clairaudience/ clairvoyance (3rd), detect scrying (4th), prying eyes (5th), legend lore (6th), vision (7th), moment of prescience (8th), foresight (9th). This ability replaces the spirit magic spells gained from the shaman's wandering spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Visionary ~ Vision Spirit Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Visionary Class Feature.Shaman Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] The visionary adds the following spells to the list of spells she can cast using spirit magic: see alignment (1st), see invisibility (2nd), clairaudience/ clairvoyance (3rd), detect scrying (4th), prying eyes (5th), legend lore (6th), vision (7th), moment of prescience (8th), foresight (9th). This ability replaces the spirit magic spells gained from the shaman's wandering spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3661,
+    "record_key": "Visionary ~ Vision Spirit Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

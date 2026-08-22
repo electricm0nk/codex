@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Cunning Feint",
+    "name": "Cunning Feint",
+    "class": "Vigilante Talent",
+    "description": "The vigilante can feint as a move action or in place of his first attack during a full attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Cunning Feint"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Cunning Feint"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can feint as a move action or in place of his first attack during a full attack."
+      },
+      {
+        "key": "DESC",
+        "value": " When the vigilante successfully feints, the opponent is denied its Dexterity bonus to AC against all attacks until the vigilante's next turn.|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 78,
+    "record_key": "Vigilante Talent ~ Cunning Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

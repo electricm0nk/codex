@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychonaut ~ Remote Consciousness",
+    "name": "Remote Consciousness",
+    "class": "Alchemist",
+    "description": "You add Dream, Lesser Astral Projection, Nightmare, Plane Shift, Sending, and Telepathic Bond to your formula book as 4th-level extracts (a Plane Shift extract does not require a focus component).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychonaut ~ Remote Consciousness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You add Dream, Lesser Astral Projection, Nightmare, Plane Shift, Sending, and Telepathic Bond to your formula book as 4th-level extracts (a Plane Shift extract does not require a focus component)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=4|Astral Projection (Lesser),Dream,Nightmare,Plane Shift,Sending,Telepathic Bond"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 908,
+    "record_key": "Psychonaut ~ Remote Consciousness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

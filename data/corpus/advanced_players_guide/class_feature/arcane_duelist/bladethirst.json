@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Duelist ~ Bladethirst",
+    "name": "Bladethirst",
+    "class": "Bard",
+    "description": "An arcane duelist of 6th level or higher may use performance to grant one weapon, one natural weapon, one end of a double weapon, or 50 items of ammunition of the same type within 30 feet a +%1 enhancement bonus. This enhancement bonus increases by +1 for every three levels after 6th (maximum +5 at 18th level). These bonuses stack with existing bonuses and may be used to increase the item's enhancement bonus up to +5 or to add any of the following weapon properties: defending, distance, ghost touch, keen, mighty cleaving, returning, shock, shocking burst, seeking, speed, or wounding (Pathfinder RPG Core Rulebook page 469). If the weapon is not magical, at least a +1 enhancement bonus must be added before adding special abilities. This performance replaces suggestion.|((classlevel(\"Bard\")-3)/3)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Duelist ~ Bladethirst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardSuggestion"
+      },
+      {
+        "key": "DESC",
+        "value": "An arcane duelist of 6th level or higher may use performance to grant one weapon, one natural weapon, one end of a double weapon, or 50 items of ammunition of the same type within 30 feet a +%1 enhancement bonus. This enhancement bonus increases by +1 for every three levels after 6th (maximum +5 at 18th level). These bonuses stack with existing bonuses and may be used to increase the item's enhancement bonus up to +5 or to add any of the following weapon properties: defending, distance, ghost touch, keen, mighty cleaving, returning, shock, shocking burst, seeking, speed, or wounding (Pathfinder RPG Core Rulebook page 469). If the weapon is not magical, at least a +1 enhancement bonus must be added before adding special abilities. This performance replaces suggestion.|((classlevel(\"Bard\")-3)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1633,
+    "record_key": "Arcane Duelist ~ Bladethirst"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

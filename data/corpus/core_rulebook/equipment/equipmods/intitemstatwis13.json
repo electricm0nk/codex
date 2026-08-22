@@ -1,0 +1,81 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 700.0,
+    "description": null,
+    "key": "IntItemStatWIS13",
+    "name": "IntItemStatWIS13",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatWIS",
+          "3"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Ability Score / Wisdom 13"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "700"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Ability Score / Wisdom 11,Intelligent Item ~ Ability Score / Wisdom 12,Intelligent Item ~ Ability Score / Wisdom 14,Intelligent Item ~ Ability Score / Wisdom 15,Intelligent Item ~ Ability Score / Wisdom 16,Intelligent Item ~ Ability Score / Wisdom 17,Intelligent Item ~ Ability Score / Wisdom 18,Intelligent Item ~ Ability Score / Wisdom 19,Intelligent Item ~ Ability Score / Wisdom 20"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item Stat WIS ~ 13"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 824,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "IntItemStatWIS13",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

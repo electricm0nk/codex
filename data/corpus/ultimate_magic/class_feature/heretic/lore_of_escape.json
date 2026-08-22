@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heretic ~ Lore of Escape",
+    "name": "Lore of Escape",
+    "class": "Inquisitor",
+    "description": "You use every trick you know to escape those now pusuing you.  You add your Wisdom modifier on Bluff and Stealth skill checks in addition to the normal ability score modifiers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heretic ~ Lore of Escape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You use every trick you know to escape those now pusuing you.  You add your Wisdom modifier on Bluff and Stealth skill checks in addition to the normal ability score modifiers."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Stealth|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1264,
+    "record_key": "Heretic ~ Lore of Escape"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

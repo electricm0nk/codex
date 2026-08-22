@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Speaker for the Past Ancestor Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Speaker for the Past Ancestor Mystery",
+    "description": "You become one with the spirits of your ancestors. You gain a bonus on Will saving throws equal to your Charisma modifier, blindsense out to a range of 60 feet, and a +4 bonus on your caster level for all divination spells. You can cast astral projection as a spelllike ability once per day without requiring material components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Ancestor Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.FinalAncestorRevelation"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=20|Astral Projection"
+      },
+      {
+        "key": "DESC",
+        "value": "You become one with the spirits of your ancestors. You gain a bonus on Will saving throws equal to your Charisma modifier, blindsense out to a range of 60 feet, and a +4 bonus on your caster level for all divination spells. You can cast astral projection as a spelllike ability once per day without requiring material components."
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Divination|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|CHA"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsense (60')"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3626,
+    "record_key": "Speaker for the Past Ancestor Mystery ~ Final Revelation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

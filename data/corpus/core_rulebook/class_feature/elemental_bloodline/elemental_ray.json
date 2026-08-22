@@ -1,0 +1,140 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Bloodline ~ Elemental Ray",
+    "name": "Elemental Ray",
+    "class": "Elemental Bloodline",
+    "description": "You can unleash an elemental ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Bloodline ~ Elemental Ray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Elemental Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Elemental"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Elemental_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Elemental_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Elemental_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ElementalElementalRay_DamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash an elemental ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d6"
+      },
+      {
+        "key": "DESC",
+        "value": " + %1|Sorcerer_ElementalElementalRay_DamageBonus|PREVARGT:Sorcerer_ElementalElementalRay_DamageBonus,0"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "points of damage. You can use this ability %1 times per day.|Sorcerer_Elemental_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 acid)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARLTEQ:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 cold)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARLTEQ:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 electricity)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARLTEQ:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 fire)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARLTEQ:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 acid)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARGT:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 cold)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARGT:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 electricity)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARGT:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 fire)|Sorcerer_ElementalElementalRay_DamageBonus|Sorcerer_Elemental_BloodlinePower1Times|PREVARGT:Sorcerer_ElementalElementalRay_DamageBonus,0|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Elemental_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ElementalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2485,
+    "record_key": "Elemental Bloodline ~ Elemental Ray"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

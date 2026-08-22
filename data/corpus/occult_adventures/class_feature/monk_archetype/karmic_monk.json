@@ -1,0 +1,155 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Karmic Monk",
+    "name": "Karmic Monk",
+    "class": "Monk Archetype",
+    "description": "A karmic monk contemplates the myriad harmonies that guide existence. He learns to use the disharmony in others against them, and to alter his own inner harmonies to exploit weaknesses in his opponents' defenses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Karmic Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Karmic Monk],[!PREFACT:1,ABILITIES,Monk_Archetype_PerfectSelf=true,Monk_Archetype_Alignment=true,Monk_Archetype_ClassSkills=true,Monk_Archetype_KiPoolAbilities7=true,Monk_Archetype_KiPoolAbilities10=true,Monk_Archetype_StillMind=true,Monk_Archetype_ImprovedEvasion=true,Monk_Archetype_StunningFist=true,Monk_Archetype_SlowFall80=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "A karmic monk contemplates the myriad harmonies that guide existence. He learns to use the disharmony in others against them, and to alter his own inner harmonies to exploit weaknesses in his opponents' defenses."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Alignment|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Class Skills|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Karmic Strike|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Balanced Mind|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Ki Pool|PRECLASS:1,Monk=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Harmony|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Karmic Disruption|PRECLASS:1,Monk=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Karmic Monk ~ Harmonic Self|PRECLASS:1,Monk=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Alignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPoolAbilities7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPoolAbilities10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall80|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Alignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_KiPoolAbilities7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_KiPoolAbilities10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall80|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1792,
+    "record_key": "Monk Archetype ~ Karmic Monk"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

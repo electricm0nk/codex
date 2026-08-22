@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Trap ~ Snare Trap",
+    "name": "Snare Trap",
+    "class": "Ranger Trap",
+    "description": "The trap constricts around a limb or other part of the triggering creature's body (Reflex avoids). The creature cannot move from the location of the trap, unless you included a \"leash\" when setting the trap, in which case the creature is limited to the length of the leash. The trapped creature can escape with an Escape Artist check (DC equal to the trap's DC) as a full round action. The trap or its leash has %1 hit points, or can be burst as a full-round action with a DC 25 Strength check. The trap can hold up to a Medium creature; each extra daily use of the ranger's trap ability spent when the trap is set increases the maximum size of creature the trap can hold. At your option, if there is a tall object or structure nearby, you can have the trap lift the creature.|SnareTrapHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Snare Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Snare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.BasicRangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SnareTrapHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap constricts around a limb or other part of the triggering creature's body (Reflex avoids). The creature cannot move from the location of the trap, unless you included a \"leash\" when setting the trap, in which case the creature is limited to the length of the leash. The trapped creature can escape with an Escape Artist check (DC equal to the trap's DC) as a full round action. The trap or its leash has %1 hit points, or can be burst as a full-round action with a DC 25 Strength check. The trap can hold up to a Medium creature; each extra daily use of the ranger's trap ability spent when the trap is set increases the maximum size of creature the trap can hold. At your option, if there is a tall object or structure nearby, you can have the trap lift the creature.|SnareTrapHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SnareTrapHP|RangerTrapLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1622,
+    "record_key": "Ranger Trap ~ Snare Trap"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Blue Rose ~ Order Abilities",
+    "name": "Order Abilities",
+    "class": "Order of the Blue Rose",
+    "description": "A cavalier belonging to the order of the blue rose gains the following abilities as he increases in level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Blue Rose ~ Order Abilities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier belonging to the order of the blue rose gains the following abilities as he increases in level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 439,
+    "record_key": "Order of the Blue Rose ~ Order Abilities"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

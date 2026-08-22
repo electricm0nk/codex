@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Order ~ Order Of The Eastern Star",
+    "name": "Order Of The Eastern Star",
+    "class": "Cavalier Order",
+    "description": "This cavalier order exists to keep dangerous secrets hidden from the world and secretly protect the world against unimaginable threats from beyond the mortal realms. These cavaliers scout and observe, concerning themselves not with the trivial pursuit of morality, but rather with ensuring the survival of society itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Order ~ Order Of The Eastern Star"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order.Cavalier Order.CavalierOrder"
+      },
+      {
+        "key": "DESC",
+        "value": "This cavalier order exists to keep dangerous secrets hidden from the world and secretly protect the world against unimaginable threats from beyond the mortal realms. These cavaliers scout and observe, concerning themselves not with the trivial pursuit of morality, but rather with ensuring the survival of society itself."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ Edicts|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ Challenge|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ Skills|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ Feats|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ Order Abilities|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ Guarded|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ Pierce the Guard|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order Of The Eastern Star ~ One Purpose|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1700,
+    "record_key": "Cavalier Order ~ Order Of The Eastern Star"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

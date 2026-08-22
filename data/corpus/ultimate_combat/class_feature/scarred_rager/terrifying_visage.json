@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scarred Rager ~ Terrifying Visage",
+    "name": "Terrifying Visage",
+    "class": "Barbarian",
+    "description": "A scarred rager adds 1/2 her barbarian level on Intimidate checks against humanoids who are not members of barbarian tribes (bonus currently +%1). When dealing with barbarians, the scarred rager may choose to add this bonus on Diplomacy checks instead. The DC of any fear effect created by the scarred rager also increases by 1. This ability replaces fast movement.|classlevel(\"Barbarian\")/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Rager ~ Terrifying Visage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A scarred rager adds 1/2 her barbarian level on Intimidate checks against humanoids who are not members of barbarian tribes (bonus currently +%1). When dealing with barbarians, the scarred rager may choose to add this bonus on Diplomacy checks instead. The DC of any fear effect created by the scarred rager also increases by 1. This ability replaces fast movement.|classlevel(\"Barbarian\")/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 322,
+    "record_key": "Scarred Rager ~ Terrifying Visage"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Evangelist",
+    "name": "Evangelist",
+    "class": "Cleric Archetype",
+    "description": "The evangelist is the voice of her religion in the world. Where others nurture the faith among believers, an evangelist proclaims the coming glory of her deific patron and issues the clarion call to all around to heed the truth, or obey the call to war and crusade against the enemies of the church.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Evangelist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericDomains.ClericArmorProficiency.ClericSpontaneousCasting.ClericChannelEnergy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Evangelist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericDomains,TYPE.ClericArmorProficiency,TYPE.ClericSpontaneousCasting,TYPE.ClericChannelEnergy]"
+      },
+      {
+        "key": "DESC",
+        "value": "The evangelist is the voice of her religion in the world. Where others nurture the faith among believers, an evangelist proclaims the coming glory of her deific patron and issues the clarion call to all around to heed the truth, or obey the call to war and crusade against the enemies of the church."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Evangelist ~ Single-Minded|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Evangelist ~ Public Speaker|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Evangelist ~ Sermonic Performance|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Evangelist ~ Spontaneous Casting|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 530,
+    "record_key": "Cleric Archetype ~ Evangelist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 120.0,
+    "description": null,
+    "key": "Fortifying Fertilizer",
+    "name": "Fortifying Fertilizer",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable.Racial.Leshy"
+      },
+      {
+        "key": "COST",
+        "value": "120"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equip_general.lst",
+    "record_key": "Fortifying Fertilizer",
+    "sha256": "372c2ea96d9352ae5d06f115b3f8fbd504b4857145cdae1b51d05e54d9be70c7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

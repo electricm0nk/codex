@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Staff Magus",
+    "name": "Staff Magus",
+    "class": "Magus Archetype",
+    "description": "While most magi use a one-handed weapon as their melee implement of choice, one group of magi uses the quarterstaff instead. These lightly armored magi use staves for both defense and inflicting their spells upon enemies. Skilled in manipulating these weapons with one hand or two, they eventually learn how to use arcane staves as well, and are just as formidable in combat as their sword-swinging brethren.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Staff Magus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusWeaponProficiency.MagusArmorProficiency.MagusFighterTraining"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Staff Magus],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusWeaponProficiency,TYPE.MagusArmorProficiency,TYPE.MagusFighterTraining]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most magi use a one-handed weapon as their melee implement of choice, one group of magi uses the quarterstaff instead. These lightly armored magi use staves for both defense and inflicting their spells upon enemies. Skilled in manipulating these weapons with one hand or two, they eventually learn how to use arcane staves as well, and are just as formidable in combat as their sword-swinging brethren."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Staff Magus ~ Quarterstaff Master|Staff Magus Proficiencies"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Staff Magus ~ Quarterstaff Defense|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Staff Magus ~ Staff Weapon|PRECLASS:1,Magus=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1291,
+    "record_key": "Magus Archetype ~ Staff Magus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

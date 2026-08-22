@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abyssal Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Abyssal Bloodline",
+    "description": "Whenever you cast a spell of the summoning subschool, the creatures summoned gain DR %1/good. This does not stack with any DR the creature might have.|Sorcerer_AbyssalBloodlineArcana_SummonDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AbyssalBloodlineArcana_SummonDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell of the summoning subschool, the creatures summoned gain DR %1/good. This does not stack with any DR the creature might have.|Sorcerer_AbyssalBloodlineArcana_SummonDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AbyssalBloodlineArcana_SummonDR|max(Sorcerer_Abyssal_BloodlineLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(summoned creatures gain DR %1/good)|Sorcerer_AbyssalBloodlineArcana_SummonDR"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2358,
+    "record_key": "Abyssal Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

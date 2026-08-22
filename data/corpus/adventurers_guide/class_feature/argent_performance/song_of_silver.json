@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Argent Performance ~ Song of Silver",
+    "name": "Song of Silver",
+    "class": "Argent Performance",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Performance ~ Song of Silver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Argent Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SongOfSilverRadius|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SongOfSilverRadius|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SongOfSilverRadius|30|PREVARGTEQ:ArgentDramaturgeLVL,5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 27,
+    "record_key": "Argent Performance ~ Song of Silver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

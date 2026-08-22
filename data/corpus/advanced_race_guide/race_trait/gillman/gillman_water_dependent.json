@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Gillman ~ Water Dependent",
+    "name": "Water Dependent",
+    "race_key": "Gillman",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gillman Racial Trait",
+      "Gillman Racial Default",
+      "SpecialQuality",
+      "Weakness",
+      "Special Ability"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Gillman_ReplaceWaterDependent",
+    "sets_replace_flags": [],
+    "description": "A gillman's body requires constant submersion in fresh or salt water. Gillmen who spend more than 1 day without fully submerging themselves in water risk internal organ failure, painful cracking of the skin, and death within 4d6 hours.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gillman ~ Water Dependent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Weakness.Special Ability"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Gillman_ReplaceWaterDependent=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A gillman's body requires constant submersion in fresh or salt water. Gillmen who spend more than 1 day without fully submerging themselves in water risk internal organ failure, painful cracking of the skin, and death within 4d6 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gillman/gillman_abilities_race.lst",
+    "sha256": "01757ac6486f34e8c5cbdf2022354aaa8ef4a12d27e326c1ebe7c7c20260a32c",
+    "line": 21,
+    "record_key": "Gillman ~ Water Dependent"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

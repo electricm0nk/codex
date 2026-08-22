@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Fist ~ Ki Pool",
+    "name": "Ki Pool",
+    "class": "Warpriest",
+    "description": "The sacred fist gains a ki pool. This functions as the monk class feature, using the sacred fist's level - 3 as his monk level when determining the number of points in his pool and bonuses granted to his unarmed strike. Additionally, the sacred fist can as a swift action spend 1 point from his ki pool to grant himself a +1 insight bonus to his AC for 1 minute. (This is in addition the normal ki ability to gain a dodge bonus to AC.) This insight bonus increases by 1 for every 3 levels above 7th (to a maximum of +5 at 19th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Fist ~ Ki Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SacredFistACInsightBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The sacred fist gains a ki pool. This functions as the monk class feature, using the sacred fist's level - 3 as his monk level when determining the number of points in his pool and bonuses granted to his unarmed strike. Additionally, the sacred fist can as a swift action spend 1 point from his ki pool to grant himself a +1 insight bonus to his AC for 1 minute. (This is in addition the normal ki ability to gain a dodge bonus to AC.) This insight bonus increases by 1 for every 3 levels above 7th (to a maximum of +5 at 19th level)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monk ~ Ki Pool"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolLVL|WarpriestLVL-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SacredFistACInsightBonus|(WarpriestLVL-4)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|swift action spend 1 point from ki pool, gain +%1 insight bonus to AC for 1 minute.|SacredFistACInsightBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4010,
+    "record_key": "Sacred Fist ~ Ki Pool"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Mark of Obvious Ethics",
-    "school": "Divination",
-    "level": 3,
     "description": "You mark one creature with a glowing sigil. The target's alignment must be opposite yours on at least one alignment axis-if you are neutral with no other alignment components, the target must have an alignment with no neutral component. Any creature that sees the target can attempt a DC 15 Knowledge (religion) check to discern the target's alignment, even if the mark is covered. You are aware of the direction and distance to the target as long as it remains within 100 miles of you and on the same plane.",
-    "full_text": true
+    "full_text": true,
+    "key": "Mark of Obvious Ethics",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Other creatures can determine the target's alignment.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You mark one creature with a glowing sigil. The target's alignment must be opposite yours on at least one alignment axis-if you are neutral with no other alignment components, the target must have an alignment with no neutral component. Any creature that sees the target can attempt a DC 15 Knowledge (religion) check to discern the target's alignment, even if the mark is covered. You are aware of the direction and distance to the target as long as it remains within 100 miles of you and on the same plane.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Curse"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/markOfObviousEthics.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 80,
-    "record_key": "Mark of Obvious Ethics"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Mark of Obvious Ethics",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

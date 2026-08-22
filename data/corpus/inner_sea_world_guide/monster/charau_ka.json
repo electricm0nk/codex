@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "ability_keys": [
       "inner_sea_world_guide:monster_ability:charau_ka_shrieking_frenzy",
@@ -27,6 +25,100 @@
     ],
     "race_subtype": "Charau-ka",
     "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Charau-ka ~ Shrieking Frenzy|Charau-ka ~ Thrown-Weapon Mastery|Scent"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Polyglot"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Humanoid (Reflex):3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite (Primary),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Slashing.Piercing,*1,1d3|Bite (Weapon equipped),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Slashing.Piercing,*1,1d3"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Charau-ka"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "size": "S",
     "source_page": "p.308",
     "speeds": [
@@ -40,16 +132,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
-    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
-    "line": 12,
-    "record_key": "Charau-ka"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+    "record_key": "Charau-ka",
+    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

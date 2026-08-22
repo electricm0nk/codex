@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Resonant Power ~ Distortion",
+    "name": "Distortion [Illusion]",
+    "class": "Resonant Power",
+    "description": "The implement allows its bearer to distort his form and location, protecting him from harm. As a standard action, the bearer can gain a concealment miss chance equal to 5%% for every point of mental focus invested in the implement (%1%%), to a maximum of %2%% until the next time the bearer makes an attack. If this miss chance reaches 50%%, the bearer gains all the benefits of invisibility. Creatures with see invisibility, true seeing, or similar abilities ignore the miss chance from this ability.|OccultistDistortion|min(5*floor(1+OccultistLVL/2),50)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Resonant Power ~ Distortion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Resonant Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistDistortion|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The implement allows its bearer to distort his form and location, protecting him from harm. As a standard action, the bearer can gain a concealment miss chance equal to 5%% for every point of mental focus invested in the implement (%1%%), to a maximum of %2%% until the next time the bearer makes an attack. If this miss chance reaches 50%%, the bearer gains all the benefits of invisibility. Creatures with see invisibility, true seeing, or similar abilities ignore the miss chance from this ability.|OccultistDistortion|min(5*floor(1+OccultistLVL/2),50)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistDistortion|min(5*OccultistIllusionFocus,min(5*floor(1+OccultistLVL/2),50))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1088,
+    "record_key": "Resonant Power ~ Distortion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

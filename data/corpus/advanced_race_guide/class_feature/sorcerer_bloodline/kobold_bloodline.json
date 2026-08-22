@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Kobold",
+    "name": "Kobold Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "While many kobold sorcerers tout their purely draconic bloodline, over generations of eldritch training, some such spellcasters have created a bloodline that, while tinged with some draconic magic, is the embodiment of the race's virtue distilled into arcane form. Many practitioners of this bloodline go on to lead powerful kobold tribes.|PREVAREQ:Sorcerer_Kobold_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Kobold"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While many kobold sorcerers tout their purely draconic bloodline, over generations of eldritch training, some such spellcasters have created a bloodline that, while tinged with some draconic magic, is the embodiment of the race's virtue distilled into arcane form. Many practitioners of this bloodline go on to lead powerful kobold tribes.|PREVAREQ:Sorcerer_Kobold_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Disable Device|PREVARGTEQ:Sorcerer_Kobold_BloodlineClassSkill1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kobold Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Kobold_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kobold Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Kobold_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kobold Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Kobold_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Kobold Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Kobold_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Kobold Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Kobold_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Kobold Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Kobold_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Kobold Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Kobold_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Kobold Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Kobold_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Kobold_BloodlinePower1LVL|Sorcerer_Kobold_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Kobold_BloodlinePower3LVL|Sorcerer_Kobold_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Kobold_BloodlinePower9LVL|Sorcerer_Kobold_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Kobold_BloodlinePower15LVL|Sorcerer_Kobold_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Kobold_BloodlinePower20LVL|Sorcerer_Kobold_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Kobold"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 630,
+    "record_key": "Sorcerer Bloodline ~ Kobold"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

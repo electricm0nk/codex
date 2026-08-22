@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Elder Mythos Cultist",
+    "name": "Elder Mythos Cultist",
+    "class": "Cleric Archetype",
+    "description": "Typically grasping, secretive, and thoroughly mad, Elder Mythos cultists open their bodies and minds to horrifying realities not meant for the sane as they strive to prepare the world for the eventual return of their alien masters.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Elder Mythos Cultist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,PANTHEON.Great Old Ones,PANTHEON.Outer Gods"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CN,CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "Typically grasping, secretive, and thoroughly mad, Elder Mythos cultists open their bodies and minds to horrifying realities not meant for the sane as they strive to prepare the world for the eventual return of their alien masters."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Elder Mythos Cultist],[!PREFACT:1,ABILITIES,Cleric_Archetype_Domains=True,Cleric_Archetype_ChannelEnergy=True,Cleric_Archetype_SpontaneousCasting=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Cultist ~ Domains|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Cultist ~ Forbidden Knowledge|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Cultist ~ Unhinged Mind|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Cultist ~ Channel the Void|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elder Mythos Cultist ~ Maddening Gaze|PRECLASS:1,Cleric=5"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_SpontaneousCasting|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 70,
+    "record_key": "Cleric Archetype ~ Elder Mythos Cultist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

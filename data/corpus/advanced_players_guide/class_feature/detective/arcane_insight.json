@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Detective ~ Arcane Insight",
+    "name": "Arcane Insight",
+    "class": "Bard",
+    "description": "At 2nd level, a detective can find and disable magical traps, like a rogue's trapfinding ability. In addition, he gains a +4 bonus on saving throws made against illusions and a +4 bonus on caster level checks and saving throws to see through disguises and protections against divination (such as magic aura, misdirection, and nondetection). This ability replaces well-versed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Detective ~ Arcane Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardWellVersed"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a detective can find and disable magical traps, like a rogue's trapfinding ability. In addition, he gains a +4 bonus on saving throws made against illusions and a +4 bonus on caster level checks and saving throws to see through disguises and protections against divination (such as magic aura, misdirection, and nondetection). This ability replaces well-versed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1664,
+    "record_key": "Detective ~ Arcane Insight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

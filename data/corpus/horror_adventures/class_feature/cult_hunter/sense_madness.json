@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Hunter ~ Sense Madness",
+    "name": "Sense Madness",
+    "class": "Investigator",
+    "description": "A cult hunter adds a +%1 bonus on Sense Motive checks, or double that bonus to determine whether a creature suffers from natural or magical insanity.|max(1,InvestigatorLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Hunter ~ Sense Madness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult hunter adds a +%1 bonus on Sense Motive checks, or double that bonus to determine whether a creature suffers from natural or magical insanity.|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Sense Motive=Notice natural or magical insanity|max(1,InvestigatorLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 157,
+    "record_key": "Cult Hunter ~ Sense Madness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

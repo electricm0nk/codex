@@ -1,0 +1,69 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 4500.0,
+    "description": null,
+    "key": "Shifter's Headband (INT) +2",
+    "name": "Shifter's Headband (INT) +2",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Headband of Intellect Skill Choice",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "SUBSCHOOL.Polymorph",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "INT",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headband.Intelligence.GreaterMinor"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.253"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 772,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Shifter's Headband (INT) +2",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

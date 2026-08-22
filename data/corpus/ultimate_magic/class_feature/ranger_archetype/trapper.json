@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Trapper",
+    "name": "Trapper",
+    "class": "Ranger Archetype",
+    "description": "A trapper is a ranger who focuses exclusively on traps, rather than learning conventional magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Trapper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerSpells"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Trapper],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerSpells]"
+      },
+      {
+        "key": "DESC",
+        "value": "A trapper is a ranger who focuses exclusively on traps, rather than learning conventional magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Trapper ~ Trapfinding"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Trapper ~ Trap|PRECLASS:1,Ranger=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Trapper ~ Launch Trap|PRECLASS:1,Ranger=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|No Spellcasting ~ Ranger"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingLVL|RangerLVL"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Disable Device"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1604,
+    "record_key": "Ranger Archetype ~ Trapper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You create an invisible magical sensor that sends you visual information. You can create the arcane eye at any point you can see, but it can then travel outside your line of sight without hindrance. An arcane eye travels at 30 feet per round [300 feet per minute] if viewing an area ahead as a human would [primarily looking at the floor] or 10 feet per round [100 feet per minute] if examining the ceiling and walls as well as the floor ahead. It sees exactly as you would see if you were there. The eye can travel in any direction as long as the spell lasts. Solid barriers block its passage, but it can pass through a hole or space as small as 1 inch in diameter. The eye can't enter another plane of existence, even through a gate or similar magical portal. You must concentrate to use an arcane eye. If you do not concentrate, the eye is inert until you again concentrate.",
     "key": "Arcane Eye",
-    "school": "Divination",
     "level": 4,
-    "description": "You create an invisible magical sensor that sends you visual information. You can create the arcane eye at any point you can see, but it can then travel outside your line of sight without hindrance. An arcane eye travels at 30 feet per round [300 feet per minute] if viewing an area ahead as a human would [primarily looking at the floor] or 10 feet per round [100 feet per minute] if examining the ceiling and walls as well as the floor ahead. It sees exactly as you would see if you were there. The eye can travel in any direction as long as the spell lasts. Solid barriers block its passage, but it can pass through a hole or space as small as 1 inch in diameter. The eye can't enter another plane of existence, even through a gate or similar magical portal. You must concentrate to use an arcane eye. If you do not concentrate, the eye is inert until you again concentrate."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You create an invisible magical sensor that sends you visual information. You can create the arcane eye at any point you can see, but it can then travel outside your line of sight without hindrance. An arcane eye travels at 30 feet per round [300 feet per minute] if viewing an area ahead as a human would [primarily looking at the floor] or 10 feet per round [100 feet per minute] if examining the ceiling and walls as well as the floor ahead. It sees exactly as you would see if you were there. The eye can travel in any direction as long as the spell lasts. Solid barriers block its passage, but it can pass through a hole or space as small as 1 inch in diameter. The eye can't enter another plane of existence, even through a gate or similar magical portal. You must concentrate to use an arcane eye. If you do not concentrate, the eye is inert until you again concentrate.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create an invisible magical sensor that sends you visual information.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Unlimited"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/arcaneEye.html#_arcane-eye"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Scrying"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Magical sensor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 31,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 796,
-    "record_key": "Arcane Eye.MOD"
+    "record_key": "Arcane Eye",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

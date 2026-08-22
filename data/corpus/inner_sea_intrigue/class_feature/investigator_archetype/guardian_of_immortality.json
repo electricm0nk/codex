@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Guardian of Immortality",
+    "name": "Guardian of Immortality",
+    "class": "Investigator Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Guardian of Immortality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Guardian of Immortality],[!PREFACT:1,ABILITIES,Investigator_Archetype_PoisonLore=True,Investigator_Archetype_PoisonResistance=True,Investigator_Archetype_PoisonImmunity=True,Investigator_Archetype_Talent7=True,Investigator_Archetype_Talent13=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guardian of Immortality ~ Guardian's Gaze|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guardian of Immortality ~ Desert Survivor|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guardian of Immortality ~ Liar's Familiarity|PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guardian of Immortality ~ Orchid's Drop|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guardian of Immortality ~ Teleportation Warden|PRECLASS:1,Investigator=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent13|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 127,
+    "record_key": "Investigator Archetype ~ Guardian of Immortality"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

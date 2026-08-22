@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Attic Whisperer ~ Steal Breath",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:attic_whisperer"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Steal Breath"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AtticWhispererStealBreathDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AtticWhispererStealBreathDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Steal Breath)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AtticWhispererStealBreathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature bit by an attic whisperer must make a DC %1 Will save or become fatigued for 1 hour.  A fatigued creature that is bitten is instead exhausted for 1 hour, and an exhausted creature falls asleep for 1 hour if bitten.  The sleeper can only be roused by killing the attic whisperer or by using dispel magic, remove curse, or similar effects.|AtticWhispererStealBreathDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Attic Whisperer ~ Steal Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.34",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 133,
-    "record_key": "Attic Whisperer ~ Steal Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 133,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Attic Whisperer ~ Steal Breath",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

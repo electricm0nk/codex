@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "5",
@@ -20,6 +18,100 @@
     ],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Megafauna (Archelon)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "CR",
+        "value": "5"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "KEY",
+        "value": "Megafauna (Archelon)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:7"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,15,Swim,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,2d8"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Megafauna"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ],
     "size": "H",
     "source_page": "p.191",
     "speeds": [
@@ -33,16 +125,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 188,
-    "record_key": "Megafauna (Archelon)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 188,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Megafauna (Archelon)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

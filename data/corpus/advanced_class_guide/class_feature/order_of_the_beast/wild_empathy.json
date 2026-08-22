@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Beast ~ Wild Empathy",
+    "name": "Wild Empathy",
+    "class": "Order of the Beast",
+    "description": "At 2nd level, the cavalier can improve the attitude of an animal. This ability functions as the druid ability of the same name. The cavalier uses his level as his effective druid level when using this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Beast ~ Wild Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order of the Beast Class Feature.Cavalier Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, the cavalier can improve the attitude of an animal. This ability functions as the druid ability of the same name. The cavalier uses his level as his effective druid level when using this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2968,
+    "record_key": "Order of the Beast ~ Wild Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

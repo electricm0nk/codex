@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sickness Within ~ Cyth-V'sug",
+    "name": "Sickness Within",
+    "class": "Sickness Within",
+    "description": "Ray of enfeeblement 3/day, warp wood 2/day, or contagion 1/day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sickness Within ~ Cyth-V'sug"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=3|CASTERLEVEL=TL|Ray of Enfeeblement,11+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=2|CASTERLEVEL=TL|Warp Wood,12+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Contagion,13+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "Ray of enfeeblement 3/day, warp wood 2/day, or contagion 1/day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 114,
+    "record_key": "Sickness Within ~ Cyth-V'sug"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist Trick ~ Mesmeric Mirror",
+    "name": "Mesmeric Mirror",
+    "class": "Mesmerist Trick",
+    "description": "An illusory image appears near the subject to throw off attackers. The mesmerist can trigger this trick when the subject is attacked or becomes the target of a spell that requires an attack roll. %1 duplicate(s) of the subject appears, and the attacker must determine randomly which it hits (as mirror image). Each image lasts for %2 minute(s) or until destroyed. This is an illusion (figment) effect.|min(1+MesmeristLVL/5,5)|MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Trick ~ Mesmeric Mirror"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An illusory image appears near the subject to throw off attackers. The mesmerist can trigger this trick when the subject is attacked or becomes the target of a spell that requires an attack roll. %1 duplicate(s) of the subject appears, and the attacker must determine randomly which it hits (as mirror image). Each image lasts for %2 minute(s) or until destroyed. This is an illusion (figment) effect.|min(1+MesmeristLVL/5,5)|MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 947,
+    "record_key": "Mesmerist Trick ~ Mesmeric Mirror"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

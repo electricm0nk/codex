@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Gentle Breeze",
-    "school": "Evocation",
-    "level": 1,
     "description": "You create a light wind that blows only against the target, from a direction of your choice. The breeze grants the target a +2 circumstance bonus on saves against very hot conditions, severe heat, and saves against clouds, vapors, and gases (such as cloudkill, stinking cloud, and inhaled poisons). There must be air present to use this spell.",
-    "full_text": true
+    "full_text": true,
+    "key": "Gentle Breeze",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Shaman,Sorcerer,Witch,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Light wind protects one target from clouds, gases, heat, and vapors.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a light wind that blows only against the target, from a direction of your choice. The breeze grants the target a +2 circumstance bonus on saves against very hot conditions, severe heat, and saves against clouds, vapors, and gases (such as cloudkill, stinking cloud, and inhaled poisons). There must be air present to use this spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 hour [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/gentleBreeze.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Air"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature or object"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 61,
-    "record_key": "Gentle Breeze"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Gentle Breeze",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

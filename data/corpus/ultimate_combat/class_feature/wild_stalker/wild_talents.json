@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Stalker ~ Wild Talents",
+    "name": "Wild Talents",
+    "class": "Ranger",
+    "description": "At 6th level, a wild stalker can either take a rage power, or gains a +2 insight bonus into any one of the following skills - Acrobatics, Climb, Perception, Stealth, Survival, or Swim. The wild stalker can gain one of these two benefits again every five levels after 6th (to a maximum of 4 times at 20th level). This ability replaces the ranger's 6nd-, 10th-, 14th, and 18th-level combat style feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Stalker ~ Wild Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a wild stalker can either take a rage power, or gains a +2 insight bonus into any one of the following skills - Acrobatics, Climb, Perception, Stealth, Survival, or Swim. The wild stalker can gain one of these two benefits again every five levels after 6th (to a maximum of 4 times at 20th level). This ability replaces the ranger's 6nd-, 10th-, 14th, and 18th-level combat style feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|WILD STALKER Wild Talent|(RangerLvl-1)/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1578,
+    "record_key": "Wild Stalker ~ Wild Talents"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

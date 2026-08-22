@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Tentacle",
+    "name": "Tentacle",
+    "class": "Discovery",
+    "description": "You gain a prehensile, arm-length tentacle on your body. The tentacle is fully under your control and cannot be concealed except with magic or bulky clothing. The tentacle does not give you any extra attacks or actions per round, though you can use it to make a tentacle attack (1d4 damage for a Medium alchemist, 1d3 damage for a Small one) with the grab ability (see page 301 of the Pathfinder RPG Bestiary). The tentacle can manipulate or hold items as well as your original arms can (for example, allowing you to use one hand to wield a weapon, the tentacle to hold a potion, and the third hand to throw a bomb). Unlike an arm, the tentacle has no magic item slots.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Tentacle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.AlchemistDiscovery.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a prehensile, arm-length tentacle on your body. The tentacle is fully under your control and cannot be concealed except with magic or bulky clothing. The tentacle does not give you any extra attacks or actions per round, though you can use it to make a tentacle attack (1d4 damage for a Medium alchemist, 1d3 damage for a Small one) with the grab ability (see page 301 of the Pathfinder RPG Bestiary). The tentacle can manipulate or hold items as well as your original arms can (for example, allowing you to use one hand to wield a weapon, the tentacle to hold a potion, and the third hand to throw a bomb). Unlike an arm, the tentacle has no magic item slots."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Alchemist Tentacle"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 163,
+    "record_key": "Discovery ~ Tentacle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

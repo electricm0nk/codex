@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Masked Performer",
+    "name": "Masked Performer",
+    "class": "Bard Archetype",
+    "description": "Not merely a entertainer in a disguise, the masked performer takes on the persona represented by the likeness she wears. Her alter ego might be a theatrical archetype, a legendary hero, or a revered spirit. Masked performers are often the stars of religious plays and festivals, and aficionados easily recognize them and associate them with their most famous role.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Masked Performer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Masked Performer],[!PREFACT:1,ABILITIES,Bard_Archetype_BardicKnowledge=True,Bard_Archetype_CounterSong=True,Bard_Archetype_InspireCompetence=True,Bard_Archetype_Suggestion=True,Bard_Archetype_MassSuggestion=True,Bard_Archetype_VersatilePerformance=True,Bard_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not merely a entertainer in a disguise, the masked performer takes on the persona represented by the likeness she wears. Her alter ego might be a theatrical archetype, a legendary hero, or a revered spirit. Masked performers are often the stars of religious plays and festivals, and aficionados easily recognize them and associate them with their most famous role."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masked Performer ~ Dual Identity|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Seamless Guise|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masked Performer ~ Social Grace|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Exaggerated Pose|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masked Performer ~ Masked Talents|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Stage Combat|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Multiplicity of Masks|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 221,
+    "record_key": "Bard Archetype ~ Masked Performer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

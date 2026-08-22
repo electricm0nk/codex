@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Wild Lore",
+    "name": "Wild Lore",
+    "class": "Inquisitor",
+    "description": "The Green Faith marshal adds her Wisdom modifier on Knowledge (nature) skill checks, in addition to her Intelligence modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Wild Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.GreenFaithMarshalClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The Green Faith marshal adds her Wisdom modifier on Knowledge (nature) skill checks, in addition to her Intelligence modifier."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nature)|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 770,
+    "record_key": "Green Faith Marshal ~ Wild Lore"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

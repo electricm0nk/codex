@@ -1,0 +1,38 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": null,
+    "key": "Serpent-Necked Flail",
+    "name": "Serpent-Necked Flail",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_arms_armor.lst",
+    "record_key": "Serpent-Necked Flail",
+    "sha256": "1b087b1736f67a8911bc7a4a88066980df2c0dec017f2c6a6aa48a5244952c4a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

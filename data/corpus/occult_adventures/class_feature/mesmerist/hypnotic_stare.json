@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist ~ Hypnotic Stare",
+    "name": "Hypnotic Stare",
+    "class": "Mesmerist",
+    "description": "A mesmerist can focus his stare on one creature within 30 feet as a swift action. That creature takes a -%1 penalty on Will saving throws. A mesmerist can maintain his stare against only one opponent at a time; it remains in effect until the mesmerist stares at a new target, the opponent dies, the opponent moves farther than 30 feet away, or the mesmerist falls unconscious or dies. The mesmerist can remove the memory of his stare from the target's mind; the creature doesn't remember that it was affected (nor does it realize that it is currently being affected) unless the mesmerist allows it. The hypnotic stare is a psychic effect, and relies more on the mesmerist's focus than the target's perception of his stare. The penalties from multiple mesmerists' stares don't stack, nor do they stack with penalties from witches' evil eye hexes. This is a mind-affecting effect.|HypnoticStarePenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Hypnotic Stare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HypnoticStarePenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A mesmerist can focus his stare on one creature within 30 feet as a swift action. That creature takes a -%1 penalty on Will saving throws. A mesmerist can maintain his stare against only one opponent at a time; it remains in effect until the mesmerist stares at a new target, the opponent dies, the opponent moves farther than 30 feet away, or the mesmerist falls unconscious or dies. The mesmerist can remove the memory of his stare from the target's mind; the creature doesn't remember that it was affected (nor does it realize that it is currently being affected) unless the mesmerist allows it. The hypnotic stare is a psychic effect, and relies more on the mesmerist's focus than the target's perception of his stare. The penalties from multiple mesmerists' stares don't stack, nor do they stack with penalties from witches' evil eye hexes. This is a mind-affecting effect.|HypnoticStarePenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HypnoticStarePenalty|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HypnoticStarePenalty|1|PREVARGTEQ:MesmeristLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 917,
+    "record_key": "Mesmerist ~ Hypnotic Stare"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

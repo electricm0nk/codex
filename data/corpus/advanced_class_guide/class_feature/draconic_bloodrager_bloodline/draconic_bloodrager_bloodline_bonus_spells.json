@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodrager Bloodline ~ Bonus Spells",
+    "name": "Draconic Bloodrager Bloodline ~ Bonus Spells",
+    "class": "Draconic Bloodrager Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=1|Shield|PREVAREQ:Bloodrager_CF_BloodlineSpell1,0|PREVARGTEQ:Bloodrager_Draconic_BloodlineSpellLvl1,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=2|Resist Energy|PREVAREQ:Bloodrager_CF_BloodlineSpell2,0|PREVARGTEQ:Bloodrager_Draconic_BloodlineSpellLvl2,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Fly|PREVAREQ:Bloodrager_CF_BloodlineSpell3,0|PREVARGTEQ:Bloodrager_Draconic_BloodlineSpellLvl3,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=4|Fear|PREVAREQ:Bloodrager_CF_BloodlineSpell4,0|PREVARGTEQ:Bloodrager_Draconic_BloodlineSpellLvl4,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 711,
+    "record_key": "Draconic Bloodrager Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

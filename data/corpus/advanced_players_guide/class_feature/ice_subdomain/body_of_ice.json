@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ice Subdomain ~ Body of Ice",
+    "name": "Body of Ice",
+    "class": "Ice Subdomain",
+    "description": "At 8th level, you can transmute your body and equipment to ice for a period of time. It takes a standard action to take on the form of ice, and you can end the transmutation with a free action on your turn. When you take on the form of ice, you are immune to cold and have DR 5/-, but you take twice the normal amount of damage from fire. You can take on the form of ice %1 rounds per day. The rounds need not be consecutive.|DomainWaterLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ice Subdomain ~ Body of Ice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can transmute your body and equipment to ice for a period of time. It takes a standard action to take on the form of ice, and you can end the transmutation with a free action on your turn. When you take on the form of ice, you are immune to cold and have DR 5/-, but you take twice the normal amount of damage from fire. You can take on the form of ice %1 rounds per day. The rounds need not be consecutive.|DomainWaterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1775,
+    "record_key": "Ice Subdomain ~ Body of Ice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

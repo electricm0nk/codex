@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Green ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "Order of the Green",
+    "description": "An order of the Green cavalier chooses a favored terrain from the list of ranger favored terrains. He gains this as a favored terrain, as the ranger ability of the same name. Every 6 levels, he selects another favored terrain. In addition, at each such interval, the skill bonus in any one favored terrain (including the one just selected, if so desired) increases by 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Green ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CavalierFavoredTerrainLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the Green cavalier chooses a favored terrain from the list of ranger favored terrains. He gains this as a favored terrain, as the ranger ability of the same name. Every 6 levels, he selects another favored terrain. In addition, at each such interval, the skill bonus in any one favored terrain (including the one just selected, if so desired) increases by 2."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Common Favored Terrain"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPool|(CavalierFavoredTerrainLVL+4)/6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CavalierFavoredTerrainLVL|CavalierLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 460,
+    "record_key": "Order of the Green ~ Favored Terrain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

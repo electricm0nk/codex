@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Trickster Skill Choice",
+    "name": "Trickster Skill Choice",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TricksterSkill"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|ANY"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|%LIST|MediumLVL"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 905,
+    "record_key": "Trickster Skill Choice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

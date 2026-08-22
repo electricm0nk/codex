@@ -1,6 +1,6 @@
 {
   "book": "advanced_players_guide",
-  "classified_at": "2026-08-13T09:20:39Z",
+  "classified_at": "2026-08-18T22:35:20Z",
   "classified_by_cycle": "SD29-E7-F2-010",
   "license_declaration": {
     "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2",
@@ -12,7 +12,7 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 646,
+  "records_processed": 2748,
   "records_redacted": 0,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD29-E7-F2-010 (companion lane), 2026-08-13T09:20:39Z: every field of the 4 records this run wrote (1 companion creatures + 3 companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 646: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "RECONCILED SD31-W4-INTEGRATE-001, 2026-08-16: two independent SD-31 wave-4 lanes (class_feature cache-gen and equipment_gap cache-gen) each wrote this book's LICENSE.json with only their own addition counted; re-derived records_processed from disk at the merged tip (find data/corpus/advanced_players_guide -mindepth 2 -name '*.json' ! -name LICENSE.json -not -path '*/_parity/*' | wc -l) = 2738, then corrected to 2735 after this same integration cycle deleted 3 of those 2738 records: death_pharasma.json (an undeclared NAME PI blacklist hit fixed in cache_gen::class_feature, OPEN-ISSUES.md row 48) plus crrsve_brst_m.json/crrsve_brst_r.json (disabled #-prefixed source rows shipping a raw KEY: token as their name, fixed in cache_gen::equipment_gap, same row). PASS -- SD31-E5-F1-001 (class_feature lane), 2026-08-16T01:41:34Z: every DESCISPI:/NAMEISPI:-declared and blacklist-term field of the class_feature records this run wrote for advanced_players_guide was screened via pi_screening::classify_optional_field_declared (description) and declared_product_identity (name). PASS -- SD29-E7-F2-010 (companion lane), 2026-08-18T22:35:20Z: every field of the 17 records this run wrote (9 companion creatures + 8 companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 2748: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

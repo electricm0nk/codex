@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bolt Ace ~ Stunning Shot",
+    "name": "Stunning Shot",
+    "class": "Gunslinger",
+    "description": "When a bolt ace hits a creature, she can spend 2 grit points to stun the creature for 1 round. The creature must make a Fortitude saving throw (the DC = 10 + 1/2 the bolt ace's level + the bolt ace's Wisdom modifier). If the creature fails, it is stunned for 1 round. Creatures that are immune to critical hits are also immune to this effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Stunning Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a bolt ace hits a creature, she can spend 2 grit points to stun the creature for 1 round. The creature must make a Fortitude saving throw (the DC = 10 + 1/2 the bolt ace's level + the bolt ace's Wisdom modifier). If the creature fails, it is stunned for 1 round. Creatures that are immune to critical hits are also immune to this effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3128,
+    "record_key": "Bolt Ace ~ Stunning Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Nightwalker ~ Fear Gaze",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:nightshade_nightwalker"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Fear Gaze"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwalkerFearGazeDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwalkerFearGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Fear Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NightwalkerFearGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Cower in fear for 1 round, 30 feet, Will DC %1 negates.  This is a mind-affecting fear effect.|NightwalkerFearGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Nightwalker ~ Fear Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.201",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 891,
-    "record_key": "Nightwalker ~ Fear Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 891,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Nightwalker ~ Fear Gaze",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

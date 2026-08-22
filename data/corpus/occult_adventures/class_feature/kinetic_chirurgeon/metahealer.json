@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kinetic Chirurgeon ~ Metahealer",
+    "name": "Metahealer",
+    "class": "Kineticist",
+    "description": "Starting at 5th level, a kinetic chirurgeon can apply any one of the following metahealer abilities to her kinetic healer wild talent instead of using her mercies. At 5th level, she can choose to roll one additional die when using kinetic healer. This increases to two additional dice at 11th level, and to three additional dice at 17th level. At 9th level, she can choose to bring an ally who died within 1 round back from the dead; this functions similarly to the breath of life spell. The ally regains the normal number of hit points from kinetic healer. An ally revived in this way takes 1 additional point of burn, beyond the normal 1 point of burn that either the kinetic chirurgeon or the ally must accept as a cost of the kinetic healer wild talent. At 13th level, a kinetic chirurgeon can choose to use kinetic healer on herself as a swift action. At 17th level, she can choose to heal both herself and another target with the same use of kinetic healer, although in that case, both she and her target must each accept 1 point of burn, instead of only one of them needing to do so as normal for kinetic healer. Regardless of her level, the kinetic chirurgeon can apply only one metahealer ability to a single use of kinetic healer. For instance, she could not bring back a dead ally and also roll extra dice for healing. This ability replaces metakinesis and infusion specialization.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kinetic Chirurgeon ~ Metahealer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kinetic Chirurgeon Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 5th level, a kinetic chirurgeon can apply any one of the following metahealer abilities to her kinetic healer wild talent instead of using her mercies. At 5th level, she can choose to roll one additional die when using kinetic healer. This increases to two additional dice at 11th level, and to three additional dice at 17th level. At 9th level, she can choose to bring an ally who died within 1 round back from the dead; this functions similarly to the breath of life spell. The ally regains the normal number of hit points from kinetic healer. An ally revived in this way takes 1 additional point of burn, beyond the normal 1 point of burn that either the kinetic chirurgeon or the ally must accept as a cost of the kinetic healer wild talent. At 13th level, a kinetic chirurgeon can choose to use kinetic healer on herself as a swift action. At 17th level, she can choose to heal both herself and another target with the same use of kinetic healer, although in that case, both she and her target must each accept 1 point of burn, instead of only one of them needing to do so as normal for kinetic healer. Regardless of her level, the kinetic chirurgeon can apply only one metahealer ability to a single use of kinetic healer. For instance, she could not bring back a dead ally and also roll extra dice for healing. This ability replaces metakinesis and infusion specialization."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1380,
+    "record_key": "Kinetic Chirurgeon ~ Metahealer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

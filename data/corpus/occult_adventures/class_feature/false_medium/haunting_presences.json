@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "False Medium ~ Haunting Presences",
+    "name": "Haunting Presences",
+    "class": "Rogue",
+    "description": "At 3rd level, the false medium exploits his natural talent for deception to convince others of the presence of false supernatural entities. As long as the false medium is in conditions of dim light or darkness, he can use Bluff skill checks to emulate the effects of dancing lights, ghost sound, silent image, or ventriloquism by throwing his voice, subtly misdirecting or convincing subjects, or manipulating light and shadows. The range of these effects is 10 feet from the false medium, plus an additional 5 feet for every 3 rogue levels he possesses beyond 3rd. The effects last for 1 round, though they can be maintained with additional checks. Only one of these effects can be created or maintained in a given round. Observers can attempt either a Perception or Sense Motive check (whichever of their bonuses is higher) to oppose this Bluff check; the GM should roll these checks secretly. This is an extraordinary ability and not an illusion, so if the false medium succeeds at the opposed check, even powerful effects like true seeing don't detect the fakery. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "False Medium ~ Haunting Presences"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "False Medium Class Feature.Rogue Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the false medium exploits his natural talent for deception to convince others of the presence of false supernatural entities. As long as the false medium is in conditions of dim light or darkness, he can use Bluff skill checks to emulate the effects of dancing lights, ghost sound, silent image, or ventriloquism by throwing his voice, subtly misdirecting or convincing subjects, or manipulating light and shadows. The range of these effects is 10 feet from the false medium, plus an additional 5 feet for every 3 rogue levels he possesses beyond 3rd. The effects last for 1 round, though they can be maintained with additional checks. Only one of these effects can be created or maintained in a given round. Observers can attempt either a Perception or Sense Motive check (whichever of their bonuses is higher) to oppose this Bluff check; the GM should roll these checks secretly. This is an extraordinary ability and not an illusion, so if the false medium succeeds at the opposed check, even powerful effects like true seeing don't detect the fakery. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1906,
+    "record_key": "False Medium ~ Haunting Presences"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

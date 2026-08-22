@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Archetype ~ Witch Doctor",
+    "name": "Witch Doctor",
+    "class": "Shaman Archetype",
+    "description": "The witch doctor is a healer who specializes in afflictions of the soul. Often misunderstood, she protects her tribe with healing powers, powerful defensive magic, and her own divine \"witchcraft.\"",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Archetype ~ Witch Doctor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShamanArchetype.ShamanHex4.ShamanHex12.ShamanHex8.ShamanHex10"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Witch Doctor],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanHex4,TYPE.ShamanHex12,TYPE.ShamanHex8,TYPE.ShamanHex10]"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch doctor is a healer who specializes in afflictions of the soul. Often misunderstood, she protects her tribe with healing powers, powerful defensive magic, and her own divine \"witchcraft.\""
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Witch Doctor ~ Alignment|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Witch Doctor ~ Channel Energy|PRECLASS:1,Shaman=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Witch Doctor ~ Counter Curse|PRECLASS:1,Shaman=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Witch Doctor ~ Countering Hex|PRECLASS:1,Shaman=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Shaman"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3592,
+    "record_key": "Shaman Archetype ~ Witch Doctor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

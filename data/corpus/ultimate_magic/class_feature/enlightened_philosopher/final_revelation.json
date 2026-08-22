@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Enlightened Philosopher ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Oracle",
+    "description": "You achieve true enlightenment and become one with the universe. You receive a +%1 bonus on all saving throws. You become immune to confusion, exhaustion, fatigue, nausea, and sickened effects. You can take 20 on all Knowledge skill checks. Should you die, you are reborn 3 days later as a living example of the summoning of your chosen philosophy (treat as the reincarnate spell).|EnlightenedPhilosopherFinalRevelationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enlightened Philosopher ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalEnlightenedPhilosopherRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnlightenedPhilosopherFinalRevelationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You achieve true enlightenment and become one with the universe. You receive a +%1 bonus on all saving throws. You become immune to confusion, exhaustion, fatigue, nausea, and sickened effects. You can take 20 on all Knowledge skill checks. Should you die, you are reborn 3 days later as a living example of the summoning of your chosen philosophy (treat as the reincarnate spell).|EnlightenedPhilosopherFinalRevelationBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Exhaustion|Immunity to Fatigue"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|EnlightenedPhilosopherFinalRevelationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnlightenedPhilosopherFinalRevelationBonus|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1486,
+    "record_key": "Enlightened Philosopher ~ Final Revelation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

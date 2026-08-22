@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heresy Domain ~ Word of Anathema",
+    "name": "Word of Anathema",
+    "class": "Heresy Domain",
+    "description": "Once per day, you can speak a word of anathema against a single creature within 60 feet (Will DC %1 negates). This acts as bestow curse and lasts for 1 minute, giving the target a -4 penalty on attack rolls, saves, ability checks, and skill checks.|WordOfAnathemaDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heresy Domain ~ Word of Anathema"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WordOfAnathemaDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can speak a word of anathema against a single creature within 60 feet (Will DC %1 negates). This acts as bestow curse and lasts for 1 minute, giving the target a -4 penalty on attack rolls, saves, ability checks, and skill checks.|WordOfAnathemaDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Word of Anathema"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WordOfAnathemaDC|DomainHeresyDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHeresyDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Word of Anathema)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 365,
+    "record_key": "Heresy Domain ~ Word of Anathema"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

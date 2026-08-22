@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Shredskin ~ Control Body",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:shredskin"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A shredskin can wrap itself around a corpse (or a corporeal undead it controls using command undead). When wrapping a host body in this way, the shredskin gains Strength 14 or the host body's Strength, whichever is higher, but cannot use its grab or enshroud abilities which doing so. Attacks targeted at the shredskin deal half damage to it and half damage to the host body; area attacks deal normal damage to both the shredskin and its host. If the host is destroyed, the shredskin unwraps itself as a free action on its next turn. A typical Medium corpse has 15 hit points for this purpose, while a Small corpse has 10 hit points. A shredskin can only use this ability on a generally humanoid-shaped creature (two arms, one head, humanoid torso) of Medium or Small size."
+      },
+      {
+        "key": "KEY",
+        "value": "Shredskin ~ Control Body"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1280,
-    "record_key": "Shredskin ~ Control Body"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1280,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shredskin ~ Control Body",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

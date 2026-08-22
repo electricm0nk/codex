@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Variant Channeling - Monsters",
+    "name": "Variant Channeling - Monsters",
+    "class": null,
+    "description": "Heal - The healing effect is enhanced (see page 28) for aberrations, dragons, magical beasts, and monstrous humanoids. Harm - Creatures gain a -%1 channel penalty on attack and damage rolls against summoned and called creatures.|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - The healing effect is enhanced (see page 28) for aberrations, dragons, magical beasts, and monstrous humanoids. Harm - Creatures gain a -%1 channel penalty on attack and damage rolls against summoned and called creatures.|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 220,
+    "record_key": "Variant Channeling - Monsters"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

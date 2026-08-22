@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Critical hit or sneak attack causes victim to lose all memory of previous 1d6 minutes and become flat-footed until its next turn (DC 16 Fort negates)",
+    "key": "Special Ability ~ Obliviating ~ Melee",
+    "name": "Obliviating",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Obliviating ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Bludgeoning"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "4,WeaponEnhancement,Weapon,Melee,Bludgeoning"
+      },
+      {
+        "key": "SPROP",
+        "value": "Critical hit or sneak attack causes victim to lose all memory of previous 1d6 minutes and become flat-footed until its next turn (DC 16 Fort negates)"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equipmods.lst",
+    "record_key": "Special Ability ~ Obliviating ~ Melee",
+    "sha256": "5f4c34436e4443113d22c449a3163df2dbc6094ff0dd1c1339a1b9ee2fbf9fd6"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

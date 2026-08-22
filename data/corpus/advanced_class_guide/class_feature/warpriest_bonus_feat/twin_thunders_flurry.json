@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Twin Thunders Flurry",
+    "name": "Twin Thunders Flurry",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your dual bludgeoning strikes are especially deadly when you are fighting giants.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Twin Thunders Flurry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dwarf ~ Defensive Training,Gnome ~ Defensive Training"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Twin Thunders,Weapon Focus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:2,CATEGORY=FEAT,Improved Two-Weapon Fighting,Two-Weapon Fighting],[PREABILITY:1,CATEGORY=Special Ability,Flurry of Blows]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true,IsGnome=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Your dual bludgeoning strikes are especially deadly when you are fighting giants."
+      },
+      {
+        "key": "DESC",
+        "value": " You can trip a creature with the giant subtype of up to Huge size, and you gain a +2 bonus on damage rolls against creatures of the giant subtype. Further, each time you hit a creature of the giant subtype with your offhand weapon after you hit that creature with your primary weapon, you can deal the extra off-hand weapon damage Twin Thunders grants you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Twin Thunders Flurry"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4569,
+    "record_key": "Warpriest Bonus Feat ~ Twin Thunders Flurry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Hexcrafter",
+    "name": "Hexcrafter",
+    "class": "Magus Archetype",
+    "description": "A hexcrafter magus has uncovered the secret of using his arcane pool to recreate witch hexes. These magi can hex friend and foe, curse those they strike, and expand their spell selection to include many curses and harmful spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Hexcrafter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpellRecall.MagusArcana"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "DESC",
+        "value": "A hexcrafter magus has uncovered the secret of using his arcane pool to recreate witch hexes. These magi can hex friend and foe, curse those they strike, and expand their spell selection to include many curses and harmful spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Hexcrafter ~ Hex Magus|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Hexcrafter ~ Hex Arcana|Hexcrafter ~ Spells"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1289,
+    "record_key": "Magus Archetype ~ Hexcrafter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

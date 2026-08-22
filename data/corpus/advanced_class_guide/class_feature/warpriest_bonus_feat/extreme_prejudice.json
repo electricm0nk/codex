@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Extreme Prejudice",
+    "name": "Extreme Prejudice",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your hatred of a particular type of creature has honed your killer instinct.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Extreme Prejudice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Seething Hatred"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Slayer ~ Studied Target"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SneakAttackDice,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Your hatred of a particular type of creature has honed your killer instinct."
+      },
+      {
+        "key": "DESC",
+        "value": " When you succeed at a sneak attack against a creature you selected as the target of your Seething Hatred feat, you use d8s to roll sneak attack damage instead of d6s."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Extreme Prejudice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4154,
+    "record_key": "Warpriest Bonus Feat ~ Extreme Prejudice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

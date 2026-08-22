@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Vindicator ~ Divine Judgment",
+    "name": "Divine Judgment",
+    "class": "Holy Vindicator",
+    "description": "At 7th level, when a vindicator's melee attack reduces a creature to -1 or fewer hit points, he may sacrifice a prepared 2nd-level spell or available 2ndlevel spell slot to invoke death knell upon the target as an immediate action (using the vindicator's caster level). As vindicators mete out divine judgment, this is not an evil act. The save DC increases by +2 if his weapon has a x3 critical multiplier, or by +4 if it is x4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Vindicator ~ Divine Judgment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, when a vindicator's melee attack reduces a creature to -1 or fewer hit points, he may sacrifice a prepared 2nd-level spell or available 2ndlevel spell slot to invoke death knell upon the target as an immediate action (using the vindicator's caster level). As vindicators mete out divine judgment, this is not an evil act. The save DC increases by +2 if his weapon has a x3 critical multiplier, or by +4 if it is x4."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1284,
+    "record_key": "Holy Vindicator ~ Divine Judgment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

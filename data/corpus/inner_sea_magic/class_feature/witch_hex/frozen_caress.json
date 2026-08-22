@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Frozen Caress",
+    "name": "Frozen Caress",
+    "class": "Witch Hex",
+    "description": "Whenever the winter witch casts a touch spell, she can infuse the magic with cold as a swift action. This grants the spell the cold descriptor, and adds 1d4 points of cold damage to the spell's effect. If the touch spell allows a saving throw, a successful save negates this additional cold damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Frozen Caress"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Witch Archetype ~ Winter Witch"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the winter witch casts a touch spell, she can infuse the magic with cold as a swift action. This grants the spell the cold descriptor, and adds 1d4 points of cold damage to the spell's effect. If the touch spell allows a saving throw, a successful save negates this additional cold damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 398,
+    "record_key": "Witch Hex ~ Frozen Caress"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

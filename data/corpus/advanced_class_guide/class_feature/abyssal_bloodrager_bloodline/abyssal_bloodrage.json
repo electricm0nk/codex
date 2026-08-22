@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abyssal Bloodrager Bloodline ~ Abyssal Bloodrage",
+    "name": "Abyssal Bloodrage",
+    "class": "Abyssal Bloodrager Bloodline",
+    "description": "The bonus to Strength from bloodraging increases by %1, but the penalty to AC becomes -4 instead of -2.|Bloodrager_Abyssal_AbyssalBloodrage_BloodrageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodrager Bloodline ~ Abyssal Bloodrage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Abyssal Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Abyssal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Abyssal_BloodlineProgressionLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Abyssal_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Abyssal_AbyssalBloodrage_BloodrageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The bonus to Strength from bloodraging increases by %1, but the penalty to AC becomes -4 instead of -2.|Bloodrager_Abyssal_AbyssalBloodrage_BloodrageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Abyssal_AbyssalBloodrage_BloodrageBonus|2+if(Bloodrager_Abyssal_BloodlineLVL>=16,2,0)+if(Bloodrager_Abyssal_BloodlineLVL>=20,2,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodRageStrBonus,BloodRageConBonus|Bloodrager_Abyssal_AbyssalBloodrage_BloodrageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodRageACPenalty|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 610,
+    "record_key": "Abyssal Bloodrager Bloodline ~ Abyssal Bloodrage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

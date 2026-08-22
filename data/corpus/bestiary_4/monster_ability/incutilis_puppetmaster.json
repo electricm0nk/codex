@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Incutilis ~ Puppetmaster",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:incutilis"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, an incutilis can drive its lesser tendrils into any helpless Small or Medium creature occupying the same square and pump the victim full of poison and chemicals. The victim is killed instantly, and becomes a zombie-like creature under the incutilis's control. This zombie isn't treated as being undead, and is immune to spells and effects that affect only undead (including damage from positive energy). The incutilis is attached to this zombie-typically by the head-occupying the same square and moving along with it. The incutilis can make attacks with its tentacles independently of the zombie's slam. It can also retract its tendrils as a move action, but doing so causes the zombie to collapse and revert to a normal corpse. The incutilis must retract its tendrils before it can move away from a zombie it's attached to. Any attack that deals damage to the zombie also deals 1 point of damage to the incutilis, regardless of how much damage is dealt to the zombie. Area-affecting spells affect both the puppeteer and zombie. A character can attempt to attack just the incutilis, but takes a -4 penalty on the attack roll. Killing the incutilis destroys the zombie."
+      },
+      {
+        "key": "KEY",
+        "value": "Incutilis ~ Puppetmaster"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 894,
-    "record_key": "Incutilis ~ Puppetmaster"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 894,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Incutilis ~ Puppetmaster",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

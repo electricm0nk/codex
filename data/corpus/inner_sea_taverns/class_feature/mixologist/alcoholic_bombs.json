@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mixologist ~ Alcoholic Bombs",
+    "name": "Alcoholic Bombs",
+    "class": "Alchemist",
+    "description": "When the mixologist creates a bomb, he can cause the detonation to produce intoxicating fumes. A creature that takes a direct hit from an alcoholic bomb becomes tipsy (see page 54) if it fails a Fortitude saving throw (DC %1). If the creature is already tipsy, it becomes drunk instead. If the creature is already drunk, it becomes soused instead. A soused creature that fails its Fortitude saving throw passes out for 1d3 hours and wakes up with a hangover. This ability counts as a discovery that modifies bombs, so it doesn't stack with other discoveries that modify bombs.|AlchemistDiscoveryDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mixologist ~ Alcoholic Bombs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "When the mixologist creates a bomb, he can cause the detonation to produce intoxicating fumes. A creature that takes a direct hit from an alcoholic bomb becomes tipsy (see page 54) if it fails a Fortitude saving throw (DC %1). If the creature is already tipsy, it becomes drunk instead. If the creature is already drunk, it becomes soused instead. A soused creature that fails its Fortitude saving throw passes out for 1d3 hours and wakes up with a hangover. This ability counts as a discovery that modifies bombs, so it doesn't stack with other discoveries that modify bombs.|AlchemistDiscoveryDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 10,
+    "record_key": "Mixologist ~ Alcoholic Bombs"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

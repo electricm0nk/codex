@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Critical Mastery",
+    "name": "Critical Mastery",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your critical hits cause two additional effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Critical Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Critical Focus"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,TYPE.Critical"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CriticalMasteryQualify,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your critical hits cause two additional effects."
+      },
+      {
+        "key": "DESC",
+        "value": " When you score a critical hit, you can apply the effects of two critical feats in addition to the damage dealt."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Critical Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4215,
+    "record_key": "Warpriest Bonus Feat ~ Critical Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

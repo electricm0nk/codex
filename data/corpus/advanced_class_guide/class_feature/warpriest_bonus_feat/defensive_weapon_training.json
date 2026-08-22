@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Defensive Weapon Training",
+    "name": "Defensive Weapon Training",
+    "class": "Warpriest Bonus Feat",
+    "description": "You know how to defend yourself against a certain class of weaponry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Defensive Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:5],[PREVARGTEQ:WarpriestBonusFeatBAB,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You know how to defend yourself against a certain class of weaponry."
+      },
+      {
+        "key": "DESC",
+        "value": " Choose a weapon group from the fighter's weapon training class ability list (except natural weapons). You gain a +2 dodge bonus on AC when an opponent attacks you using a weapon from that group. If you also have the weapon training class feature in the selected group, your dodge bonus from this feat increases to +3. &nl; [Special]You can select this feat more than once. Its effects do not stack. Each time you select this feat, it applies to a different weapon group."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITY|Special Ability|TYPE=WeaponTraining1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Defensive Weapon Training (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4422,
+    "record_key": "Warpriest Bonus Feat ~ Defensive Weapon Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

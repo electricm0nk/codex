@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Paw ~ Edicts",
+    "name": "Edicts",
+    "class": "Order of the Paw",
+    "description": "The cavalier must strive to protect his community from rampaging monsters and fearsome conquers alike. His first priority is to aid halfling communities, but he also is sworn to protect those who cannot protect themselves from such threats in the wild. He must never take any action that would put a halfling community or an innocent creature in jeopardy. An order of the paw cavalier must take either a wolf or a dog as his mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Paw ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier must strive to protect his community from rampaging monsters and fearsome conquers alike. His first priority is to aid halfling communities, but he also is sworn to protect those who cannot protect themselves from such threats in the wild. He must never take any action that would put a halfling community or an innocent creature in jeopardy. An order of the paw cavalier must take either a wolf or a dog as his mount."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 319,
+    "record_key": "Order of the Paw ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,97 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": "Takes an additional \u00164 penalty on critical confirmation rolls when firing beyond the first range increment.",
+    "key": "Nearfiring Bow",
+    "name": "Nearfiring Bow",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "RANGEPENALTY",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE",
+          "min(STR,0)"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Shortbow"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Cursed.Weapon.Resizable.Martial.Ranged.Standard.Piercing.Container.Projectile.Bow.Shortbow"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Arrow"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "RANGE",
+        "value": "60"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.347"
+      },
+      {
+        "key": "SPROP",
+        "value": "Takes an additional \u00164 penalty on critical confirmation rolls when firing beyond the first range increment."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 614,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Nearfiring Bow",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

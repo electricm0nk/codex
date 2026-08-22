@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Infernal Bloodline ~ Corrupting Touch",
+    "name": "Corrupting Touch",
+    "class": "Infernal Bloodline",
+    "description": "You can cause a creature to become shaken as a melee touch attack. This effect persists for %1 rounds. Creatures shaken by this ability radiate an aura of evil, as if they were an evil outsider. Multiple touches do not stack, but they do add to the duration. You can use this ability %2 times per day.|Sorcerer_InfernalCorruptingTouch_Duration|Sorcerer_Infernal_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Bloodline ~ Corrupting Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Infernal Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Infernal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Infernal_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Infernal_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Infernal_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_InfernalCorruptingTouch_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause a creature to become shaken as a melee touch attack. This effect persists for %1 rounds. Creatures shaken by this ability radiate an aura of evil, as if they were an evil outsider. Multiple touches do not stack, but they do add to the duration. You can use this ability %2 times per day.|Sorcerer_InfernalCorruptingTouch_Duration|Sorcerer_Infernal_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_InfernalCorruptingTouch_Duration|max(Sorcerer_Infernal_BloodlinePower1LVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 round)|Sorcerer_InfernalCorruptingTouch_Duration|PREVARLTEQ:Sorcerer_InfernalCorruptingTouch_Duration,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|Sorcerer_InfernalCorruptingTouch_Duration|PREVARGT:Sorcerer_InfernalCorruptingTouch_Duration,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Infernal_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|InfernalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2535,
+    "record_key": "Infernal Bloodline ~ Corrupting Touch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

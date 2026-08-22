@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Bonded Witch",
+    "name": "Bonded Witch",
+    "class": "Witch Archetype",
+    "description": "While all witches commune with the unknown, the blend of human ingenuity and adept learning mixed with elven blood gives some half-elves a unique conduit to channel the powers of the arcane. Bonded witches forsake familiars as vessels of power in favor of a specific object that grants them powers above and beyond those of their patron alone, as they tap into the powerful magic of the item itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Bonded Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchFamiliar"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Bonded Witch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchFamiliar]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "While all witches commune with the unknown, the blend of human ingenuity and adept learning mixed with elven blood gives some half-elves a unique conduit to channel the powers of the arcane. Bonded witches forsake familiars as vessels of power in favor of a specific object that grants them powers above and beyond those of their patron alone, as they tap into the powerful magic of the item itself."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bonded Witch ~ Bonded Item|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 194,
+    "record_key": "Witch Archetype ~ Bonded Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

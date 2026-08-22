@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Controlled Rage +2 Dexterity",
+    "name": "Controlled Rage +2 Dexterity",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "1b"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Controlled Rage Allocation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControlledDexBonus|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControlledDexBonus|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 372,
+    "record_key": "Controlled Rage +2 Dexterity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

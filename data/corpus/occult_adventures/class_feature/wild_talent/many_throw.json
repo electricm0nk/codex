@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Many Throw",
+    "name": "Many Throw",
+    "class": "Wild Talent",
+    "description": "Element aether; Type form infusion; Level 8; Burn 4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Many Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Aether"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite extended range"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,16"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type form infusion; Level 8; Burn 4"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts telekinesis Saving Throw none You grab a large number of objects and throw them all at once. You can use your telekinetic blast to make attack rolls against a number of targets equal to your kineticist level within 120 feet, but no two targets can be more than 30 feet apart."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 709,
+    "record_key": "Wild Talent ~ Many Throw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

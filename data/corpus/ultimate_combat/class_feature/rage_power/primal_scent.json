@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Primal Scent",
+    "name": "Primal Scent",
+    "class": "Rage Power",
+    "description": "When using her scent rage power, the barbarian adds half her barbarian level on Survival checks made to track by scent and on Perception checks to pinpoint the location of creatures she cannot see. If she pinpoints the location of a creature that has total concealment, she treats it as having concealment. A barbarian must have the scent rage power and be at least 8th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Primal Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Scent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When using her scent rage power, the barbarian adds half her barbarian level on Survival checks made to track by scent and on Perception checks to pinpoint the location of creatures she cannot see. If she pinpoints the location of a creature that has total concealment, she treats it as having concealment. A barbarian must have the scent rage power and be at least 8th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 288,
+    "record_key": "Rage Power ~ Primal Scent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

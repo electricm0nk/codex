@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scholar ~ Planes",
+    "name": "Scholar ~ Planes",
+    "class": "Scholar",
+    "description": "You gain a +%1 bonus on Knowledge (Planes).|ScholarPlBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Scholar"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScholarPlBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Planes).|ScholarPlBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Planes)|ScholarPlBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScholarPlBonus|if(skillinfo(\"TOTALRANK\",\"Knowledge (Planes)\")>=10,4,2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 211,
+    "record_key": "Scholar ~ Planes"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

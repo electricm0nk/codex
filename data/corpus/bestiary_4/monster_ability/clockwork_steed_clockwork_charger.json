@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Clockwork Steed ~ Clockwork Charger",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:clockwork_steed"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Clockwork chargers are constructed to wreak greater mechanized terror on the battlefield. A clockwork charger is specially equipped for enhancing mounted charges or making such charges even without a rider by way of its pivoted lance. A clockwork charger has a pivoted latch large enough to support a lance and allows even those who are not proficient with a lance to use it as if they were. Furthermore, the clockwork charger is proficient with any lance equipped in the pivot and gains the undersized weapon special ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Steed ~ Clockwork Charger"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 393,
-    "record_key": "Clockwork Steed ~ Clockwork Charger"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 393,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Clockwork Steed ~ Clockwork Charger",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

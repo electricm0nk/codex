@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Deep Pockets",
+    "name": "Deep Pockets",
+    "class": "Pathfinder Chronicler",
+    "description": "A Pathfinder chronicler collects items as well as lore, picking up small amounts of this or that throughout her travels. As a result, she may carry unspecified equipment worth up to 100 gp per class level. This can be any kind of gear that can reasonably fit into a backpack, including potions and scrolls (but not any other sort of magic item). As a full-round action, the chronicler may dig through her pockets to retrieve an item she specifies at that time, deducting its value from the allocated amount of cost. This item cannot weigh more than 10 pounds. When the total remaining cost reaches 0, the chronicler can retrieve no more items until she refills her deep pockets by spending a few hours and an amount of gold to bring her total up to 100 gp per class level. In addition, if she takes 1 hour to pack her gear each day, she gains a +4 bonus to Strength to determine her light encumbrance. This does not affect her maximum carrying capacity. The efficient distribution of weight simply encumbers her less than the same amount of weight normally should. Finally, the Pathfinder chronicler gains a +4 bonus on Sleight of Hand checks made to conceal small objects on her person.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Deep Pockets"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A Pathfinder chronicler collects items as well as lore, picking up small amounts of this or that throughout her travels. As a result, she may carry unspecified equipment worth up to 100 gp per class level. This can be any kind of gear that can reasonably fit into a backpack, including potions and scrolls (but not any other sort of magic item). As a full-round action, the chronicler may dig through her pockets to retrieve an item she specifies at that time, deducting its value from the allocated amount of cost. This item cannot weigh more than 10 pounds. When the total remaining cost reaches 0, the chronicler can retrieve no more items until she refills her deep pockets by spending a few hours and an amount of gold to bring her total up to 100 gp per class level. In addition, if she takes 1 hour to pack her gear each day, she gains a +4 bonus to Strength to determine her light encumbrance. This does not affect her maximum carrying capacity. The efficient distribution of weight simply encumbers her less than the same amount of weight normally should. Finally, the Pathfinder chronicler gains a +4 bonus on Sleight of Hand checks made to conceal small objects on her person."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.389"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3050,
+    "record_key": "Pathfinder Chronicler ~ Deep Pockets"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

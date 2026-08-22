@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Lethal Accuracy",
+    "name": "Lethal Accuracy",
+    "class": "Rage Power",
+    "description": "When using her surprise accuracy rage power, the barbarian's critical multiplier for damage increases by 1 (a ?2 multiplier becomes ?3, a 19-20/?2 multiplier becomes 19-20/?3, a x3 multiplier becomes x4, and a x4 multiplier becomes x5). A barbarian must have the surprise accuracy and deadly accuracy rage powers and be 16th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Lethal Accuracy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "When using her surprise accuracy rage power, the barbarian's critical multiplier for damage increases by 1 (a ?2 multiplier becomes ?3, a 19-20/?2 multiplier becomes 19-20/?3, a x3 multiplier becomes x4, and a x4 multiplier becomes x5). A barbarian must have the surprise accuracy and deadly accuracy rage powers and be 16th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 286,
+    "record_key": "Rage Power ~ Lethal Accuracy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

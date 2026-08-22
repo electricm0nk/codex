@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hallowed Necromancer ~ Deathbane",
+    "name": "Deathbane",
+    "class": "Wizard",
+    "description": "A hallowed necromancer's cure spells are maximized when used to damage undead and the save DCs of her spells cast on undead creatures are 1 higher. She can expend 2 uses of positive touch as a swift action to imbue any weapon she wields with the undead-bane or ghost touch weapon special ability for %1 rounds. These effects apply only against undead, and only while the hallowed necromancer wields the weapon. If the weapon is her arcane bond item, this ability costs only 1 use of positive touch.|WizardLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallowed Necromancer ~ Deathbane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "DESC",
+        "value": "A hallowed necromancer's cure spells are maximized when used to damage undead and the save DCs of her spells cast on undead creatures are 1 higher. She can expend 2 uses of positive touch as a swift action to imbue any weapon she wields with the undead-bane or ghost touch weapon special ability for %1 rounds. These effects apply only against undead, and only while the hallowed necromancer wields the weapon. If the weapon is her arcane bond item, this ability costs only 1 use of positive touch.|WizardLVL/5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 312,
+    "record_key": "Hallowed Necromancer ~ Deathbane"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

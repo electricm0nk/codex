@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deep Earth Bloodline ~ Rockseer",
+    "name": "Rockseer",
+    "class": "Deep Earth Bloodline",
+    "description": "You gain the stonecunning trait as a dwarf.|!PREFACT:1,TEMPLATES,IsDwarf=true",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Earth Bloodline ~ Rockseer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Deep Earth Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Deep Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_DeepEarth_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarth_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarthRockseet_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the stonecunning trait as a dwarf.|!PREFACT:1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The bonus from your stonecunning trait improves to +4.|PREFACT:1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain tremorsense 30 feet.|PREVARGTEQ:Sorcerer_DeepEarth_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "You can see through solid objects as if using a ring of x-ray vision for %1 rounds per day. These rounds do not need to be consecutive.|Sorcerer_DeepEarthRockseet_Duration|PREVARGTEQ:Sorcerer_DeepEarth_BloodlinePower3LVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dwarf ~ Stonecunning"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Dwarf_StoneCunning_SkillBonus|2|PREFACT:1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DeepEarthRockseet_Duration|Sorcerer_DeepEarth_BloodlinePower3LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|Sorcerer_DeepEarthRockseet_Duration|PREVARGTEQ:Sorcerer_DeepEarth_BloodlinePower3LVL,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DeepEarthRockseet_Duration|PREVARGTEQ:Sorcerer_DeepEarth_BloodlinePower3LVL,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day|PREVARGTEQ:Sorcerer_DeepEarth_BloodlinePower3LVL,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DeepEarthBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3137,
+    "record_key": "Deep Earth Bloodline ~ Rockseer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

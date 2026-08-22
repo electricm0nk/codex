@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald ~ Master Skald",
+    "name": "Master Skald",
+    "class": "Skald",
+    "description": "At 20th level, a skald's inspired rage no longer gives allies a penalty to AC, nor limits what skills or abilities they can use. Allies with rage class abilities may use features dependent on those abilities without restriction, such as a barbarian's rage powers and a bloodrager's blood casting and bloodline abilities. Finally, when making a full attack, affected allies may make an additional attack each round (as if using a haste effect).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Master Skald"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldMasterSkald.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a skald's inspired rage no longer gives allies a penalty to AC, nor limits what skills or abilities they can use. Allies with rage class abilities may use features dependent on those abilities without restriction, such as a barbarian's rage powers and a bloodrager's blood casting and bloodline abilities. Finally, when making a full attack, affected allies may make an additional attack each round (as if using a haste effect)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1735,
+    "record_key": "Skald ~ Master Skald"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

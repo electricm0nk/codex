@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Resonant Power ~ Intense Focus",
+    "name": "Intense Focus [Evocation]",
+    "class": "Resonant Power",
+    "description": "The implement channels and enhances the effects of damaging evocations. A spellcaster who bears the implement can add the implement as an additional focus component for any of his damaging evocation spells that have an instantaneous duration or focus powers with an instantaneous duration. If he does so, the spell or focus power deals 1 additional point of damage of the same type to each creature for every 2 points of mental focus invested in the implement (+%1), to a maximum of +%2.|OccultistIntenseFocus|1+OccultistLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Resonant Power ~ Intense Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Resonant Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistIntenseFocus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The implement channels and enhances the effects of damaging evocations. A spellcaster who bears the implement can add the implement as an additional focus component for any of his damaging evocation spells that have an instantaneous duration or focus powers with an instantaneous duration. If he does so, the spell or focus power deals 1 additional point of damage of the same type to each creature for every 2 points of mental focus invested in the implement (+%1), to a maximum of +%2.|OccultistIntenseFocus|1+OccultistLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistIntenseFocus|min(OccultistEvocationFocus/2,1+OccultistLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1075,
+    "record_key": "Resonant Power ~ Intense Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

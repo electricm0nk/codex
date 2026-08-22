@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Fur Subdomain",
+    "name": "Fur Subdomain",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Fur Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Fur Subdomain],[PREABILITY:1,CATEGORY=Special Ability,Core Domain ~ Fur Subdomain],[PREVARLT:AnimalDomain,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainFurSubdomain,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fur Subdomain ~ Predator's Grace|PREVARGTEQ:DomainAnimalAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Animal Domain ~ Animal Companion|PREVARGTEQ:DomainAnimalLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalDC|10+(DomainAnimalLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 433,
+    "record_key": "Inquisitor Domain ~ Fur Subdomain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

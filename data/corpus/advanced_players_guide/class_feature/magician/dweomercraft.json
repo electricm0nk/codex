@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magician ~ Dweomercraft",
+    "name": "Dweomercraft",
+    "class": "Bard",
+    "description": "A magician can use performance to manipulate magical energies. Allies of the magician gain a +%1 bonus on caster level checks, concentration checks, and attack rolls with spells and spell-like abilities. This bonus increases by +1 at 5th level and every six levels thereafter. This ability relies on visual and audible components. It replaces inspire courage.|(BardLVL/5)+1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magician ~ Dweomercraft"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardInspireCourage"
+      },
+      {
+        "key": "DESC",
+        "value": "A magician can use performance to manipulate magical energies. Allies of the magician gain a +%1 bonus on caster level checks, concentration checks, and attack rolls with spells and spell-like abilities. This bonus increases by +1 at 5th level and every six levels thereafter. This ability relies on visual and audible components. It replaces inspire courage.|(BardLVL/5)+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1686,
+    "record_key": "Magician ~ Dweomercraft"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

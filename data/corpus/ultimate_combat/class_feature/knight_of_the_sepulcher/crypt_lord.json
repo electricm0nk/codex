@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knight Of The Sepulcher ~ Crypt Lord",
+    "name": "Crypt Lord",
+    "class": "Antipaladin",
+    "description": "At 15th level, a knight of the sepulcher's chance of ignoring critical hits and sneak attacks increases to 75%%, as though he were wearing armor of heavy fortification. He gains immunity to death effects, paralysis, sleep effects, and stunning. He no longer sleeps. The knight of the sepulcher also gains immunity to effects that cause fatigue, and effects that would cause him to become exhausted instead cause him to become fatigued. This ability replaces cruelty.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knight Of The Sepulcher ~ Crypt Lord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, a knight of the sepulcher's chance of ignoring critical hits and sneak attacks increases to 75%%, as though he were wearing armor of heavy fortification. He gains immunity to death effects, paralysis, sleep effects, and stunning. He no longer sleeps. The knight of the sepulcher also gains immunity to effects that cause fatigue, and effects that would cause him to become exhausted instead cause him to become fatigued. This ability replaces cruelty."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1496,
+    "record_key": "Knight Of The Sepulcher ~ Crypt Lord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

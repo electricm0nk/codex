@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spellbinder ~ Spell Bond",
+    "name": "Spell Bond",
+    "class": "Wizard",
+    "description": "The spellbinder selects any one spell that he knows as a bonded spell. As a full-round action, the spellbinder may replace a spell of the same or higher level as his bonded spell with his bonded spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellbinder ~ Spell Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spellbinder selects any one spell that he knows as a bonded spell. As a full-round action, the spellbinder may replace a spell of the same or higher level as his bonded spell with his bonded spell."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bonded Spell Choice|1+(WizardLVL-1)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 130,
+    "record_key": "Spellbinder ~ Spell Bond"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

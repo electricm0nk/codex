@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 150.0,
+    "description": "Gain fire resistance 5 until 20 points of fire damage have been absorbed.",
+    "key": "Fire Ward Gel",
+    "name": "Fire Ward Gel",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "150"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gain fire resistance 5 until 20 points of fire damage have been absorbed."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 622,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Fire Ward Gel",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

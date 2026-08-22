@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Relic Hunter",
+    "name": "Relic Hunter",
+    "class": "Inquisitor Archetype",
+    "description": "Some inquisitors specialize in the use and recovery of long-lost relics of their faiths, drawing forth divine might from the recovered items in order to restore their sanctity and wield these artifacts against the enemies of their gods.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Relic Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Relic Hunter],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Spells=true,Inquisitor_Archetype_Judgment=true,Inquisitor_Archetype_Domains=true,Inquisitor_Archetype_Bane=true,Inquisitor_Archetype_GreaterBane=true,Inquisitor_Archetype_SecondJudgment=true,Inquisitor_Archetype_ThirdJudgment=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some inquisitors specialize in the use and recovery of long-lost relics of their faiths, drawing forth divine might from the recovered items in order to restore their sanctity and wield these artifacts against the enemies of their gods."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Relic Hunter ~ Spells|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Relic Hunter ~ Relics|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Relic Hunter ~ Deific Focus|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_GreaterBane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ThirdJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_GreaterBane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ThirdJudgment|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1748,
+    "record_key": "Inquisitor Archetype ~ Relic Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

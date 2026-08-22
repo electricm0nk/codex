@@ -1,26 +1,72 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Wild ~ Shield",
     "category": "equipmods",
-    "name": "Wild",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "Armor with this special ability usually appears to be made from magically hardened animal pelt. The wearer of a suit of armor or a shield with this ability preserves his armor bonus (and any enhancement bonus) while in a wild shape. Armor and shields with this ability usually appear to be covered in leaf patterns. While the wearer is in a wild shape, the armor cannot be seen."
+    "description": "Armor with this special ability usually appears to be made from magically hardened animal pelt. The wearer of a suit of armor or a shield with this ability preserves his armor bonus (and any enhancement bonus) while in a wild shape. Armor and shields with this ability usually appear to be covered in leaf patterns. While the wearer is in a wild shape, the armor cannot be seen.",
+    "key": "Special Ability ~ Wild ~ Shield",
+    "name": "Wild",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Wild ~ Shield"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.464"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ShieldEnhancement,Shield"
+      },
+      {
+        "key": "SPROP",
+        "value": "preserve shield and enhancment bonus while using Wild Shape"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/wild/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/wild/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 349,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Wild ~ Shield",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

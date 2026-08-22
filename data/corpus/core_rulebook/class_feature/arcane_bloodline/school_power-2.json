@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Bloodline ~ School Power Choice",
+    "name": "School Power",
+    "class": "Arcane Bloodline",
+    "description": "The DC for any spells you cast from the %1 school increases by +2. This bonus stacks with the bonus granted by Spell Focus.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bloodline ~ School Power Choice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Arcane"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Arcane_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The DC for any spells you cast from the %1 school increases by +2. This bonus stacks with the bonus granted by Spell Focus.|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SCHOOLS|ALL"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|SCHOOL.%LIST|2|TYPE=SchoolPower"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+2 DC for %1 spells)|&LIST"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ArcaneBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2383,
+    "record_key": "Arcane Bloodline ~ School Power Choice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

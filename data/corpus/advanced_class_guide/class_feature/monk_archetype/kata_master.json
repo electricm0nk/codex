@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Kata Master",
+    "name": "Kata Master",
+    "class": "Monk Archetype",
+    "description": "The kata master takes the visual aspect of his martial art to its logical extreme, harnessing her flowing movements and skilled maneuvers as a psychological weapon against her enemies. A kata master forsakes the mental discipline of her more contemplative brethren in favor of these flamboyant exhibitions. She often performs in staged fights and tournaments, utilizing stylized forms to amaze the audience and shock and dismay her opponents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Kata Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStunningFist.MonkStillMind.MonkWholenessOfBody.MonkQuiveringPalm"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Kata Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkStillMind,TYPE.MonkWholenessOfBody,TYPE.MonkQuiveringPalm,TYPE.MonkKiPool]"
+      },
+      {
+        "key": "DESC",
+        "value": "The kata master takes the visual aspect of his martial art to its logical extreme, harnessing her flowing movements and skilled maneuvers as a psychological weapon against her enemies. A kata master forsakes the mental discipline of her more contemplative brethren in favor of these flamboyant exhibitions. She often performs in staged fights and tournaments, utilizing stylized forms to amaze the audience and shock and dismay her opponents."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Kata Master ~ Panache|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Kata Master ~ Menacing Swordplay|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Kata Master ~ Ki Pool|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Kata Master ~ Targeted Strike|PRECLASS:1,Monk=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Kata Master ~ Dizzying Defense|PRECLASS:1,Monk=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3436,
+    "record_key": "Monk Archetype ~ Kata Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

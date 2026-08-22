@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cave Druid ~ Nature Bond",
+    "name": "Nature Bond",
+    "class": "Cave Druid",
+    "description": "A cave druid may select the Darkness domain in addition to the choices normally allowed, but may not select the Air or Weather domains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cave Druid ~ Nature Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeCaveDruid.SpecialQuality.NaturesBondDruidDomain.DruidDomain"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Druid Archetype ~ Cave Druid"
+      },
+      {
+        "key": "DESC",
+        "value": "A cave druid may select the Darkness domain in addition to the choices normally allowed, but may not select the Air or Weather domains."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1943,
+    "record_key": "Cave Druid ~ Nature Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

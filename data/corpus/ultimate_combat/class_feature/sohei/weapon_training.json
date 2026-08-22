@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sohei ~ Weapon Training",
+    "name": "Weapon Training",
+    "class": "Monk",
+    "description": "At 6th level, a sohei gains weapon training in one of the following weapon groups, as the fighter class feature (Core Rulebook 56) - bows, crossbows, monk weapons, polearms, spears, or thrown weapons. He may select an additional group of weapons for every six levels after 6th, to a maximum of three at 18th level. A sohei may use flurry of blows and ki strike with any weapon in which he has weapon training. This ability replaces purity of body, diamond body, quivering palm, timeless body, and tongue of sun and moon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sohei ~ Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a sohei gains weapon training in one of the following weapon groups, as the fighter class feature (Core Rulebook 56) - bows, crossbows, monk weapons, polearms, spears, or thrown weapons. He may select an additional group of weapons for every six levels after 6th, to a maximum of three at 18th level. A sohei may use flurry of blows and ki strike with any weapon in which he has weapon training. This ability replaces purity of body, diamond body, quivering palm, timeless body, and tongue of sun and moon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fighter ~ Weapon Training"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sohei Weapon Training I|1|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sohei Weapon Training II|1|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sohei Weapon Training III|1|PRECLASS:1,Monk=18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1357,
+    "record_key": "Sohei ~ Weapon Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

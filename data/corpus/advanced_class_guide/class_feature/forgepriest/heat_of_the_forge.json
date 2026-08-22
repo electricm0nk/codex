@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forgepriest ~ Heat of the Forge",
+    "name": "Heat of the Forge",
+    "class": "Warpriest",
+    "description": "A forgepriest gains fire resistance %1.|ForgepriestFireResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgepriest ~ Heat of the Forge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Forgepriest Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ForgepriestFireResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A forgepriest gains fire resistance %1.|ForgepriestFireResistance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ForgepriestFireResistance|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ForgepriestFireResistance|5|PRECLASS:1,Warpriest=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|ForgepriestFireResistance|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3998,
+    "record_key": "Forgepriest ~ Heat of the Forge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tempest Druid ~ Spontaneous Domain Casting",
+    "name": "Spontaneous Domain Casting",
+    "class": "Tempest Druid",
+    "description": "A tempest druid can channel stored spell energy into domain spells that she has not prepared ahead of time. She can \"lose\" a prepared spell in order to cast any domain spell of the same level or lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Spontaneous Domain Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality.DruidSpontaneousCasting"
+      },
+      {
+        "key": "DESC",
+        "value": "A tempest druid can channel stored spell energy into domain spells that she has not prepared ahead of time. She can \"lose\" a prepared spell in order to cast any domain spell of the same level or lower."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 238,
+    "record_key": "Tempest Druid ~ Spontaneous Domain Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

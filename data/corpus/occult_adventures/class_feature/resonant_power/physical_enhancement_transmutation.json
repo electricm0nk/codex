@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Resonant Power ~ Physical Enhancement",
+    "name": "Physical Enhancement [Transmutation]",
+    "class": "Resonant Power",
+    "description": "The implement enhances its bearer's body. When you invest mental focus in the implement, select a physical ability score. The implement grants a +2 temporary enhancement bonus to that physical ability score for every 3 points of mental focus invested in the implement (+%1), to a maximum of +%2.|OccultistPhysicalEnhancement|2*floor(1+OccultistLVL/6)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Resonant Power ~ Physical Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Resonant Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistPhysicalEnhancement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The implement enhances its bearer's body. When you invest mental focus in the implement, select a physical ability score. The implement grants a +2 temporary enhancement bonus to that physical ability score for every 3 points of mental focus invested in the implement (+%1), to a maximum of +%2.|OccultistPhysicalEnhancement|2*floor(1+OccultistLVL/6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Occultist Physical Enhancement|1|PREVARGT:OccultistPhysicalEnhancement,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistPhysicalEnhancement|min(2*(floor(OccultistTransmutationFocus/3)),2*floor(1+OccultistLVL/6))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1116,
+    "record_key": "Resonant Power ~ Physical Enhancement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

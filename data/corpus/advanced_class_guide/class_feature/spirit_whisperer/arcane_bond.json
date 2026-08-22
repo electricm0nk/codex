@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Whisperer ~ Arcane Bond",
+    "name": "Arcane Bond",
+    "class": "Wizard",
+    "description": "When a spirit whisperer chooses an arcane bond, he must choose the familiar arcane bond, and the familiar gains the spirit animal ability of his selected spirit (see spirit link, below). The spirit whisperer does not need a spellbook, but instead stores and prepares his spell by communing with the familiar as the witch's familiar class feature (Advanced Player's Guide 67). This ability alters arcane bond and replaces the spellbooks class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Whisperer ~ Arcane Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spirit Whisperer Class Feature.Wizard Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a spirit whisperer chooses an arcane bond, he must choose the familiar arcane bond, and the familiar gains the spirit animal ability of his selected spirit (see spirit link, below). The spirit whisperer does not need a spellbook, but instead stores and prepares his spell by communing with the familiar as the witch's familiar class feature (Advanced Player's Guide 67). This ability alters arcane bond and replaces the spellbooks class feature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Arcane Bond ~ Familiar|Wizard ~ Arcane Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Arcane Bond|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4059,
+    "record_key": "Spirit Whisperer ~ Arcane Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

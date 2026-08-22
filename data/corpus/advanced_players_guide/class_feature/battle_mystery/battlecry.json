@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Mystery ~ Battlecry",
+    "name": "Battlecry",
+    "class": "Battle Mystery",
+    "description": "As a standard action, you can unleash an inspiring battlecry. All allies within 100 feet who hear your cry gain a +%1 morale bonus on attack rolls, skill checks, and saving throws for %2 round(s). You can use this ability %3 time(s) per day.|OracleBattlecryBonus|OracleBattlecryDuration|OracleBattlecryTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Mystery ~ Battlecry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BattleRevelation.Extraordinary.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleBattlecryBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleBattlecryDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleBattlecryTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can unleash an inspiring battlecry. All allies within 100 feet who hear your cry gain a +%1 morale bonus on attack rolls, skill checks, and saving throws for %2 round(s). You can use this ability %3 time(s) per day.|OracleBattlecryBonus|OracleBattlecryDuration|OracleBattlecryTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleBattlecryBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleBattlecryBonus|1|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleBattlecryDuration|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleBattlecryTimes|1+classlevel(\"Oracle\")/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 540,
+    "record_key": "Battle Mystery ~ Battlecry"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

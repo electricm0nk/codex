@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Fist ~ Unarmed Strike",
+    "name": "Unarmed Strike",
+    "class": "Warpriest",
+    "description": "A sacred fist gains Improved Unarmed Strike as a bonus feat. He uses his warpriest levels as monk levels for determining the amount of damage dealt with an unarmed strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Fist ~ Unarmed Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A sacred fist gains Improved Unarmed Strike as a bonus feat. He uses his warpriest levels as monk levels for determining the amount of damage dealt with an unarmed strike."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Feat|AUTOMATIC|Improved Unarmed Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk ~ Unarmed Damage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkUnarmedDamageLVL|WarpriestLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4007,
+    "record_key": "Sacred Fist ~ Unarmed Strike"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

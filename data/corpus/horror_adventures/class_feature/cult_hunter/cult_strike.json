@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Hunter ~ Cult Strike",
+    "name": "Cult Strike",
+    "class": "Investigator",
+    "description": "A cult hunter's studied strike uses d8s for the bonus damage against targets that belong to the cult he's studied. Against other targets, his studied strike uses d4s for the bonus damage. This ability alters studied strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Hunter ~ Cult Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.CultHunterClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult hunter's studied strike uses d8s for the bonus damage against targets that belong to the cult he's studied. Against other targets, his studied strike uses d4s for the bonus damage. This ability alters studied strike."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 163,
+    "record_key": "Cult Hunter ~ Cult Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

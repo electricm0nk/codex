@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Master Tricks",
+    "name": "Master Tricks",
+    "class": "Rogue Talent",
+    "description": "The rogue can select a ninja trick from the list of master tricks in place of a rogue talent. The rogue cannot select a ninja trick that has the same name as a rogue talent. The rogue can choose but cannot use tricks that require ki points, unless she has a ki pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Master Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "The rogue can select a ninja trick from the list of master tricks in place of a rogue talent. The rogue cannot select a ninja trick that has the same name as a rogue talent. The rogue can choose but cannot use tricks that require ki points, unless she has a ki pool."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1620,
+    "record_key": "Rogue Talent ~ Master Tricks"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

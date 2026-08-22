@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against Fiends ~ Anchoring Aura",
+    "name": "Anchoring Aura",
+    "class": "Paladin",
+    "description": "Your aura hampers extradimensional travel by evil outsiders. The aura extends 20 feet from you. Evil outsiders attempting to use abilities such as dimension door, plane shift, or teleport to leave or enter the aura must succeed at a Will save (DC %1); failure means the ability does not function, as if the outsider were affected by dimensional anchor. The aura functions only while the paladin is conscious, not if she is unconscious or dead. Alternatively, as an immediate action, the paladin can expend one use of her smite evil ability to target an evil outsider within 30 feet with dimensional anchor. A targeted dimensional anchor persists even if the paladin is unconscious or dead.|AnchoringAuraDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Fiends ~ Anchoring Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialAttack.Supernatural.AnchoringAura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnchoringAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your aura hampers extradimensional travel by evil outsiders. The aura extends 20 feet from you. Evil outsiders attempting to use abilities such as dimension door, plane shift, or teleport to leave or enter the aura must succeed at a Will save (DC %1); failure means the ability does not function, as if the outsider were affected by dimensional anchor. The aura functions only while the paladin is conscious, not if she is unconscious or dead. Alternatively, as an immediate action, the paladin can expend one use of her smite evil ability to target an evil outsider within 30 feet with dimensional anchor. A targeted dimensional anchor persists even if the paladin is unconscious or dead.|AnchoringAuraDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Anchoring Aura"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnchoringAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Anchoring Aura)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnchoringAuraDC|10+classlevel(\"Paladin\")/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1543,
+    "record_key": "Oath against Fiends ~ Anchoring Aura"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

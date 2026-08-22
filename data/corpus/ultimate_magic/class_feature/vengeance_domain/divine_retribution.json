@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vengeance Domain ~ Divine Retribution",
+    "name": "Divine Retribution",
+    "class": "Vengeance Domain",
+    "description": "As a standard action, you can point at one creature within 30 feet to indicate that it is the target of divine wrath. A mishap or an accident appropriate to the environment occurs, such as a branch falling on the creature, rocks falling from the ceiling, or some other nonmagical misfortune; regardless of the cause, the mishap deals 1d6+%1 points of damage (Reflex DC %2 half). The GM decides whether this damage is bludgeoning, piercing, or slashing damage. You can use this ability %3 times per day.|DivineRetributionBonusDamage|DivineRetributionDC|DomainVengeanceTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vengeance Domain ~ Divine Retribution"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineRetributionBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineRetributionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can point at one creature within 30 feet to indicate that it is the target of divine wrath. A mishap or an accident appropriate to the environment occurs, such as a branch falling on the creature, rocks falling from the ceiling, or some other nonmagical misfortune; regardless of the cause, the mishap deals 1d6+%1 points of damage (Reflex DC %2 half). The GM decides whether this damage is bludgeoning, piercing, or slashing damage. You can use this ability %3 times per day.|DivineRetributionBonusDamage|DivineRetributionDC|DomainVengeanceTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Divine Retribution"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineRetributionBonusDamage|DomainVengeanceLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineRetributionDC|DomainVengeanceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineRetributionDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Divine Retribution)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 409,
+    "record_key": "Vengeance Domain ~ Divine Retribution"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

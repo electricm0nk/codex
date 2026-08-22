@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist ~ Elemental Focus",
+    "name": "Elemental Focus",
+    "class": "Kineticist",
+    "description": "At 1st level, a kineticist chooses one primary element on which to focus. This element determines how she accesses the raw power of the Ethereal Plane, and grants her access to specific wild talents (see below) and additional class skills. She can select aether (telekinesis), air (aerokinesis), earth (geokinesis), fire (pyrokinesis), or water (hydrokinesis). She gains her selected element's basic utility wild talent (basic telekinesis, basic aerokinesis, basic geokinesis, basic pyrokinesis, or basic hydrokinesis; see page 23) as a bonus wild talent. See Elements on page 14 for the specific abilities granted by each element.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Elemental Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_KineticistElementalFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Base|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a kineticist chooses one primary element on which to focus. This element determines how she accesses the raw power of the Ethereal Plane, and grants her access to specific wild talents (see below) and additional class skills. She can select aether (telekinesis), air (aerokinesis), earth (geokinesis), fire (pyrokinesis), or water (hydrokinesis). She gains her selected element's basic utility wild talent (basic telekinesis, basic aerokinesis, basic geokinesis, basic pyrokinesis, or basic hydrokinesis; see page 23) as a bonus wild talent. See Elements on page 14 for the specific abilities granted by each element."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistElementalFocus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Base|max(1,KineticistLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 540,
+    "record_key": "Kineticist ~ Elemental Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

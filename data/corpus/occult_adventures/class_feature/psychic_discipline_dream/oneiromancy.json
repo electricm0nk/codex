@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Dream ~ Oneiromancy",
+    "name": "Oneiromancy",
+    "class": "Psychic",
+    "description": "As a standard action, you can tamper with the minds of sleeping creatures. You plant a subconscious thought in a sleeping creature's mind by attempting a Diplomacy or Intimidate check to modify the sleeping creature's attitude or request a service from it. If you succeed, when the creature wakes it behaves in the way you dictated with the normal restrictions for the Diplomacy or Intimidate skill. The target of oneiromancy remains unaware of this manipulation, though if you fail your Diplomacy check the subject might have its starting attitude toward you negatively impacted, as normal. You must be adjacent to the sleeping creature to use this ability. Alternatively, you can use this ability as part of the casting of dream, minor dreamARG, or nightmare. In this case, the oneiromancy effect takes place when the spell is cast. You can use this ability a number of times per day equal to 3 + your Charisma modifier. Creatures that don't dream are immune to this effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Dream ~ Oneiromancy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can tamper with the minds of sleeping creatures. You plant a subconscious thought in a sleeping creature's mind by attempting a Diplomacy or Intimidate check to modify the sleeping creature's attitude or request a service from it. If you succeed, when the creature wakes it behaves in the way you dictated with the normal restrictions for the Diplomacy or Intimidate skill. The target of oneiromancy remains unaware of this manipulation, though if you fail your Diplomacy check the subject might have its starting attitude toward you negatively impacted, as normal. You must be adjacent to the sleeping creature to use this ability. Alternatively, you can use this ability as part of the casting of dream, minor dreamARG, or nightmare. In this case, the oneiromancy effect takes place when the spell is cast. You can use this ability a number of times per day equal to 3 + your Charisma modifier. Creatures that don't dream are immune to this effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1208,
+    "record_key": "Psychic Discipline Dream ~ Oneiromancy"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

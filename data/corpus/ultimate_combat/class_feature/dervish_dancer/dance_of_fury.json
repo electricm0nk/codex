@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dervish Dancer ~ Dance Of Fury",
+    "name": "Dance of Fury",
+    "class": "Dervish Dancer",
+    "description": "At 12th level, a dervish dancer can attack more than once as he moves while performing a battle dance. He can combine a full attack action with a single move, taking the attacks at any point during his movement, but must move at least 5 feet between each attack. This movement provokes attacks of opportunity as normal. This ability replaces soothing performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dervish Dancer ~ Dance Of Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level, a dervish dancer can attack more than once as he moves while performing a battle dance. He can combine a full attack action with a single move, taking the attacks at any point during his movement, but must move at least 5 feet between each attack. This movement provokes attacks of opportunity as normal. This ability replaces soothing performance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 427,
+    "record_key": "Dervish Dancer ~ Dance Of Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

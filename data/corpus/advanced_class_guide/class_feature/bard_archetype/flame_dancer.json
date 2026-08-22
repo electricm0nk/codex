@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Flame Dancer",
+    "name": "Flame Dancer",
+    "class": "Bard Archetype",
+    "description": "A flame dancer studies the movements of fire, adding its grace to his repertoire. He seeks truth in fire's burning essence, and uses his performance to unleash the power of fire against those who dare oppose him.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Flame Dancer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardCountersong.BardInspireCompetence.BardSuggestion.BardDirgeOfDoom"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Flame Dancer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardCountersong,TYPE.BardInspireCompetence,TYPE.BardSuggestion,TYPE.BardDirgeOfDoom]"
+      },
+      {
+        "key": "DESC",
+        "value": "A flame dancer studies the movements of fire, adding its grace to his repertoire. He seeks truth in fire's burning essence, and uses his performance to unleash the power of fire against those who dare oppose him."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Flame Dancer ~ Fire Dance|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Flame Dancer ~ Song of the Fiery Gaze|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Flame Dancer ~ Fire Break|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Flame Dancer ~ Fan the Flames|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2684,
+    "record_key": "Bard Archetype ~ Flame Dancer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

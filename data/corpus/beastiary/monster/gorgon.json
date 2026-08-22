@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:gorgon_breath_weapon"
@@ -27,6 +25,92 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gorgon ~ Breath Weapon|Scent|Trample"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|11|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDieSize|8"
+      },
+      {
+        "key": "CR",
+        "value": "8"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:8"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing,*2,2d8|Hoof,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,1d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.165"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.165",
     "speeds": [
@@ -36,16 +120,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 220,
-    "record_key": "Gorgon"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 220,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Gorgon",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

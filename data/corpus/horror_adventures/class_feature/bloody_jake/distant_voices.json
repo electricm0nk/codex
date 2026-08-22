@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloody Jake ~ Distant Voices",
+    "name": "Distant Voices",
+    "class": "Slayer",
+    "description": "A bloody jake can cause his voice to seem to emanate from somewhere else, as per ventriloquism. This ability doesn't take any other action to activate and can be used as part of speaking (as a free action); it costs one use of cruel tricks to affect his speech for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ Distant Voices"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "BloodyJake_CruelTrick_2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A bloody jake can cause his voice to seem to emanate from somewhere else, as per ventriloquism. This ability doesn't take any other action to activate and can be used as part of speaking (as a free action); it costs one use of cruel tricks to affect his speech for 1 round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 212,
+    "record_key": "Bloody Jake ~ Distant Voices"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

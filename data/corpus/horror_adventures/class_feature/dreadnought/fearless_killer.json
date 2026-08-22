@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dreadnought ~ Fearless Killer",
+    "name": "Fearless Killer",
+    "class": "Barbarian",
+    "description": "A dreadnought becomes implacable in her pursuit of slaughter. While in rage, she is immune to fear effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreadnought ~ Fearless Killer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.DreadnoughtClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreadnought becomes implacable in her pursuit of slaughter. While in rage, she is immune to fear effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 35,
+    "record_key": "Dreadnought ~ Fearless Killer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

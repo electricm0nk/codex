@@ -1,27 +1,57 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Torc of Lionheart Fury",
     "category": "MagicItems",
-    "name": "Torc of Lionheart Fury",
     "cost_gp": 8000.0,
-    "weight": 1.0,
-    "description": "A heavy copper neckpiece bearing lion imagery that grants a +2 morale bonus on saves against fear."
+    "description": "A heavy copper neckpiece bearing lion imagery that grants a +2 morale bonus on saves against fear.",
+    "key": "Torc of Lionheart Fury",
+    "name": "Torc of Lionheart Fury",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Neck"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.310"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rage Power ~ Fearless Rage|PRECLASS:1,Barbarian=12"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 241,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Torc of Lionheart Fury",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

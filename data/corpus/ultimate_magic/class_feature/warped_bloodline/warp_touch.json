@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warped Bloodline ~ Warp Touch",
+    "name": "Warp Touch",
+    "class": "Warped Bloodline",
+    "description": "You create brief, disorienting changes in a creature's physical form. This ability affects one creature within 30 feet, which is dazed for 1 round (Fortitude negates; DC %1). You can use this ability %2 times per day. This bloodline power replaces acidic ray.|Sorcerer_WarpedWarpTouch_DC|Sorcerer_Aberrant_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warped Bloodline ~ Warp Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Warped Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Warped"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aberrant_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aberrant_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aberrant_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_WarpedWarpTouch_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You create brief, disorienting changes in a creature's physical form. This ability affects one creature within 30 feet, which is dazed for 1 round (Fortitude negates; DC %1). You can use this ability %2 times per day. This bloodline power replaces acidic ray.|Sorcerer_WarpedWarpTouch_DC|Sorcerer_Aberrant_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_WarpedWarpTouch_DC|10+(Sorcerer_Aberrant_BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (DC %2)|Sorcerer_Aberrant_BloodlinePower1Times|Sorcerer_WarpedWarpTouch_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Aberrant_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AberrantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1809,
+    "record_key": "Warped Bloodline ~ Warp Touch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

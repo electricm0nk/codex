@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler ~ Dodging Panache",
+    "name": "Dodging Panache",
+    "class": "Swashbuckler",
+    "description": "At 1st level, when an opponent attempts a melee attack against the swashbuckler, the swashbuckler can as an immediate action spend 1 panache point to move 5 feet; doing so grants the swashbuckler a dodge bonus to AC equal to her Charisma modifier (minimum 0) against the triggering attack. This movement doesn't negate the attack, which is still resolved as if the swashbuckler had not moved from the original square. This movement is not a 5-foot step; it provokes attacks of opportunity from creatures other than the one who triggered this deed. The swashbuckler can only perform this deed while wearing light or no armor, and while carrying no heavier than a light load. This deed's cost cannot be reduced by any ability or effect that reduces the number of panache points a deed costs.|DodgingPanacheBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Dodging Panache"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL1.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SwashbucklerDeedQualifyLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DodgingPanacheBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, when an opponent attempts a melee attack against the swashbuckler, the swashbuckler can as an immediate action spend 1 panache point to move 5 feet; doing so grants the swashbuckler a dodge bonus to AC equal to her Charisma modifier (minimum 0) against the triggering attack. This movement doesn't negate the attack, which is still resolved as if the swashbuckler had not moved from the original square. This movement is not a 5-foot step; it provokes attacks of opportunity from creatures other than the one who triggered this deed. The swashbuckler can only perform this deed while wearing light or no armor, and while carrying no heavier than a light load. This deed's cost cannot be reduced by any ability or effect that reduces the number of panache points a deed costs.|DodgingPanacheBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DodgingPanacheBonus|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2066,
+    "record_key": "Swashbuckler ~ Dodging Panache"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

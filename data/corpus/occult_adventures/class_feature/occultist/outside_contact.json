@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist ~ Outside Contact",
+    "name": "Outside Contact",
+    "class": "Occultist",
+    "description": "The occultist learns the true name of %1 particular outsider(s). Such outsiders can have no more than 3 Hit Dice. Whenever the occultist creates a magic circle, he can expend 1 additional point of mental focus to focus the circle inward and lure that outsider to the circle (similar to using lesser planar binding). The outsider is bound for up to 10 minutes. During this time, the occultist can bargain with the outsider for %1 piece(s) of related information. This requires a payment of at least 20 gp (or items of at least that value that are of interest to the outsider). The bargaining requires the occultist to attempt a Diplomacy or Intimidate check opposed by the outsider's Sense Motive check. Succeeding at the check by 5 or more reduces this cost to 10 gp. Failure increases the price to 30 gp, whereas failure by 5 or more allows the outsider to escape without giving any information (or receiving payment). The information gained can be anything that might be learned through a divination spell. The information is always correct but is frequently cryptic. It typically takes the outsider 1d3 hours to gather the information, at which point it returns of its own accord to deliver the information as promised. The outsider always resents being used in this way, even if the occultist and the outsider share an alignment component. After the occultist bargains with the outsider, the magic circle loses all power and the outsider is sent back to its home plane.|OccultistOutsiderNum",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Outside Contact"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistOutsiderNum|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The occultist learns the true name of %1 particular outsider(s). Such outsiders can have no more than 3 Hit Dice. Whenever the occultist creates a magic circle, he can expend 1 additional point of mental focus to focus the circle inward and lure that outsider to the circle (similar to using lesser planar binding). The outsider is bound for up to 10 minutes. During this time, the occultist can bargain with the outsider for %1 piece(s) of related information. This requires a payment of at least 20 gp (or items of at least that value that are of interest to the outsider). The bargaining requires the occultist to attempt a Diplomacy or Intimidate check opposed by the outsider's Sense Motive check. Succeeding at the check by 5 or more reduces this cost to 10 gp. Failure increases the price to 30 gp, whereas failure by 5 or more allows the outsider to escape without giving any information (or receiving payment). The information gained can be anything that might be learned through a divination spell. The information is always correct but is frequently cryptic. It typically takes the outsider 1d3 hours to gather the information, at which point it returns of its own accord to deliver the information as promised. The outsider always resents being used in this way, even if the occultist and the outsider share an alignment component. After the occultist bargains with the outsider, the magic circle loses all power and the outsider is sent back to its home plane.|OccultistOutsiderNum"
+      },
+      {
+        "key": "DESC",
+        "value": "In lieu of asking questions, the occultist can demand that the outsider deliver a message to any one friendly creature that the occultist knows personally. The occultist can also task the outsider to deliver one object weighing no more than 1 pound. Either of these demands requires an opposed check as described above. Delivery typically takes 1d4 hours, but this period is reduced to 1d6 minutes if the recipient is within 1 mile of the occultist (or even less if the recipient is within sight). The occultist must be able to accurately describe the recipient in both name and appearance. This ability can't be used to deliver anything to a location, or to enemies or creatures that are unfriendly to the occultist.|PREVARGTEQ:OccultistLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistOutsiderNum|1+(OccultistLVL-8)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 991,
+    "record_key": "Occultist ~ Outside Contact"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

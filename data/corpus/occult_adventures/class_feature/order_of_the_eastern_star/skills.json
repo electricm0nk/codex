@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order Of The Eastern Star ~ Skills",
+    "name": "Skills",
+    "class": "Cavalier",
+    "description": "A cavalier belonging to the order of the eastern star adds Knowledge (arcana) and Knowledge (planes) to his class skills. He can attempt Knowledge (arcana) and Knowledge (planes) checks untrained. If he has ranks in these skills, as long as a check involves knowledge of the occult or supernatural, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Of The Eastern Star ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order Of The Eastern Star Class Feature.Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier belonging to the order of the eastern star adds Knowledge (arcana) and Knowledge (planes) to his class skills. He can attempt Knowledge (arcana) and Knowledge (planes) checks untrained. If he has ranks in these skills, as long as a check involves knowledge of the occult or supernatural, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1)."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (arcana)|Knowledge (planes)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1707,
+    "record_key": "Order Of The Eastern Star ~ Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

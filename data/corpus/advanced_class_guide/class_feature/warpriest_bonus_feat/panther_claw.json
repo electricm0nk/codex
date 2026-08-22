@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Panther Claw",
+    "name": "Panther Claw",
+    "class": "Warpriest Bonus Feat",
+    "description": "You unleash a rapid series of blows on foes that attempt to attack you when you move.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Panther Claw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Combat Reflexes,Improved Unarmed Strike,Panther Style"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You unleash a rapid series of blows on foes that attempt to attack you when you move."
+      },
+      {
+        "key": "DESC",
+        "value": " While using Panther Style, you can spend a free action, instead of spending a swift action, to make a retaliatory unarmed strike. You can make a number of retaliatory unarmed strikes on your turn equal to your Wisdom modifier."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Panther Claw"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4505,
+    "record_key": "Warpriest Bonus Feat ~ Panther Claw"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

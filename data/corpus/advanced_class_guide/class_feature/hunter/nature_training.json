@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter ~ Nature Training",
+    "name": "Nature Training",
+    "class": "Hunter",
+    "description": "Count as druid or ranger for feats, traits, and options that modify or improve an animal companion. [Not implemented].",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Nature Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterNatureTraining.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Count as druid or ranger for feats, traits, and options that modify or improve an animal companion. [Not implemented]."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1174,
+    "record_key": "Hunter ~ Nature Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

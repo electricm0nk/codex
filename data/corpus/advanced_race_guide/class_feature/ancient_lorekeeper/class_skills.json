@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ancient Lorekeeper ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Oracle",
+    "description": "An ancient lorekeeper adds Knowledge (arcane) and Knowledge (local) to her list of class skills. Whenever she makes a Knowledge check of any kind about a question regarding elves (creatures of the elf subtype), the ancient lorekeeper adds half her class level on her check. This replaces the bonus skills the ancient lorekeeper gains from her mystery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancient Lorekeeper ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient lorekeeper adds Knowledge (arcane) and Knowledge (local) to her list of class skills. Whenever she makes a Knowledge check of any kind about a question regarding elves (creatures of the elf subtype), the ancient lorekeeper adds half her class level on her check. This replaces the bonus skills the ancient lorekeeper gains from her mystery."
+      },
+      {
+        "key": "CSKILL",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Craft|Diplomacy|Heal|Knowledge (History)|Knowledge (Planes)|Knowledge (Religion)|Knowledge (Arcana)|Knowledge (Local)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 112,
+    "record_key": "Ancient Lorekeeper ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

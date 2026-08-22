@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You draw the soul from a newly dead body and imprison it in a black sapphire gem. The subject must have been dead no more than 1 round per caster level. The soul, once trapped in the gem, cannot be returned through clone, raise dead, reincarnation, resurrection, true resurrection, or even a miracle or a wish. Only by destroying the gem or dispelling the spell on the gem can one free the soul [which is then still dead]. The focus for this spell is a black sapphire of at least 1,000 gp value for every HD possessed by the creature whose soul is to be bound. If the gem is not valuable enough, it shatters when the binding is attempted. [While creatures have no concept of level or HD as such, the value of the gem needed to trap an individual can be researched.]",
     "key": "Soul Bind",
-    "school": "Necromancy",
     "level": 9,
-    "description": "You draw the soul from a newly dead body and imprison it in a black sapphire gem. The subject must have been dead no more than 1 round per caster level. The soul, once trapped in the gem, cannot be returned through clone, raise dead, reincarnation, resurrection, true resurrection, or even a miracle or a wish. Only by destroying the gem or dispelling the spell on the gem can one free the soul [which is then still dead]. The focus for this spell is a black sapphire of at least 1,000 gp value for every HD possessed by the creature whose soul is to be bound. If the gem is not valuable enough, it shatters when the binding is attempted. [While creatures have no concept of level or HD as such, the value of the gem needed to trap an individual can be researched.]"
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Wizard=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F (see text)"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw the soul from a newly dead body and imprison it in a black sapphire gem. The subject must have been dead no more than 1 round per caster level. The soul, once trapped in the gem, cannot be returned through clone, raise dead, reincarnation, resurrection, true resurrection, or even a miracle or a wish. Only by destroying the gem or dispelling the spell on the gem can one free the soul [which is then still dead]. The focus for this spell is a black sapphire of at least 1,000 gp value for every HD possessed by the creature whose soul is to be bound. If the gem is not valuable enough, it shatters when the binding is attempted. [While creatures have no concept of level or HD as such, the value of the gem needed to trap an individual can be researched.]|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw the soul from a newly dead body and imprison it in a black sapphire gem.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/soulBind.html#_soul-bind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.345"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Corpse"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 558,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1308,
-    "record_key": "Soul Bind.MOD"
+    "record_key": "Soul Bind",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

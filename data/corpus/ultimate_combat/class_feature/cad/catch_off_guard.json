@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cad ~ Catch Off-Guard",
+    "name": "Catch Off-Guard",
+    "class": "Fighter",
+    "description": "At 3rd level, the cad gains the Catch Off-Guard feat. This ability replaces armor training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cad ~ Catch Off-Guard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the cad gains the Catch Off-Guard feat. This ability replaces armor training 1."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Catch Off-Guard"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 706,
+    "record_key": "Cad ~ Catch Off-Guard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

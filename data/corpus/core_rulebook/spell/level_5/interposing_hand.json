@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Interposing hand creates a Large magic hand that appears between you and one opponent. This floating, disembodied hand then moves to remain between the two of you, regardless of where you move or how the opponent tries to get around it, providing cover [+4 AC] for you against that opponent. Nothing can fool the hand-it sticks with the selected opponent in spite of darkness, invisibility, polymorphing, or any other attempt at hiding or disguise. The hand does not pursue an opponent, however. An interposing hand is 10 feet long and about that wide with its fingers outstretched. It has as many hit points as you do when you're undamaged, and is AC 20 [-1 size, +11 natural]. It takes damage as a normal creature, but most magical effects that don't cause damage do not affect it. The hand never provokes attacks of opportunity from opponents. It cannot push through a wall of force or enter an antimagic field, but it suffers the full effect of a prismatic wall or prismatic sphere. The hand makes saving throws as its caster. Disintegrate or a successful dispel magic destroys it. Any creature weighing 2,000 pounds or less that tries to push past the hand is slowed to half its normal speed. The hand cannot reduce the speed of a creature weighing more than 2,000 pounds, but it still affects the creature's attacks. Directing the spell to a new target is a move action.",
     "key": "Interposing Hand",
-    "school": "Evocation",
     "level": 5,
-    "description": "Interposing hand creates a Large magic hand that appears between you and one opponent. This floating, disembodied hand then moves to remain between the two of you, regardless of where you move or how the opponent tries to get around it, providing cover [+4 AC] for you against that opponent. Nothing can fool the hand-it sticks with the selected opponent in spite of darkness, invisibility, polymorphing, or any other attempt at hiding or disguise. The hand does not pursue an opponent, however. An interposing hand is 10 feet long and about that wide with its fingers outstretched. It has as many hit points as you do when you're undamaged, and is AC 20 [-1 size, +11 natural]. It takes damage as a normal creature, but most magical effects that don't cause damage do not affect it. The hand never provokes attacks of opportunity from opponents. It cannot push through a wall of force or enter an antimagic field, but it suffers the full effect of a prismatic wall or prismatic sphere. The hand makes saving throws as its caster. Disintegrate or a successful dispel magic destroys it. Any creature weighing 2,000 pounds or less that tries to push past the hand is slowed to half its normal speed. The hand cannot reduce the speed of a creature weighing more than 2,000 pounds, but it still affects the creature's attacks. Directing the spell to a new target is a move action."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "Interposing hand creates a Large magic hand that appears between you and one opponent. This floating, disembodied hand then moves to remain between the two of you, regardless of where you move or how the opponent tries to get around it, providing cover [+4 AC] for you against that opponent. Nothing can fool the hand-it sticks with the selected opponent in spite of darkness, invisibility, polymorphing, or any other attempt at hiding or disguise. The hand does not pursue an opponent, however. An interposing hand is 10 feet long and about that wide with its fingers outstretched. It has as many hit points as you do when you're undamaged, and is AC 20 [-1 size, +11 natural]. It takes damage as a normal creature, but most magical effects that don't cause damage do not affect it. The hand never provokes attacks of opportunity from opponents. It cannot push through a wall of force or enter an antimagic field, but it suffers the full effect of a prismatic wall or prismatic sphere. The hand makes saving throws as its caster. Disintegrate or a successful dispel magic destroys it. Any creature weighing 2,000 pounds or less that tries to push past the hand is slowed to half its normal speed. The hand cannot reduce the speed of a creature weighing more than 2,000 pounds, but it still affects the creature's attacks. Directing the spell to a new target is a move action.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Interposing hand creates a Large magic hand that appears between you and one opponent.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Force"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/interposingHand.html#_interposing-hand"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft. hand"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 335,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1091,
-    "record_key": "Interposing Hand.MOD"
+    "record_key": "Interposing Hand",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

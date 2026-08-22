@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dual-Cursed Oracle ~ Second Curse",
+    "name": "Second Curse",
+    "class": "Oracle",
+    "description": "You must choose two curses at 1st level. One of these curses (oracle's choice) never changes its abilities as you gain levels; for example, an oracle with clouded vision never gains darkvision 60 feet, blindsense, or blindsight. The other curse comes with its normal benefits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual-Cursed Oracle ~ Second Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You must choose two curses at 1st level. One of these curses (oracle's choice) never changes its abilities as you gain levels; for example, an oracle with clouded vision never gains darkvision 60 feet, blindsense, or blindsight. The other curse comes with its normal benefits."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Oracle Second Curse|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1464,
+    "record_key": "Dual-Cursed Oracle ~ Second Curse"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

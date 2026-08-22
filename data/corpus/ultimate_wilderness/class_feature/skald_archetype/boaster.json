@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald Archetype ~ Boaster",
+    "name": "Boaster",
+    "class": "Skald Archetype",
+    "description": "Boasters use incredible tales and claims to challenge themselves and their allies to accomplish remarkable feats. With a properly delivered boast, a boaster can inspire listeners to attempt, and more often than not, succeed at stunts or tasks they may not have realized they were capable of doing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Boaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Boaster],[!PREFACT:1,ABILITIES,Skald_Archetype_ScribeScroll=True,Skald_Archetype_UncannyDodge=True,Skald_Archetype_ImprovedUncannyDodge=True,Skald_Archetype_SongOfMarching=True,Skald_Archetype_LoreMaster=True,Skald_Archetype_SongOfTheFallen=True,Skald_Archetype_RagePowers=True,Skald_Archetype_RagePower6=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Boasters use incredible tales and claims to challenge themselves and their allies to accomplish remarkable feats. With a properly delivered boast, a boaster can inspire listeners to attempt, and more often than not, succeed at stunts or tasks they may not have realized they were capable of doing."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Boaster ~ Endurance|PRECLASS:1,Skald=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boaster ~ Song of Endurance|PRECLASS:1,Skald=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boaster ~ Song of Surmounting|PRECLASS:1,Skald=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boaster ~ Frightful Boast|PRECLASS:1,Skald=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Boaster ~ Rage Power|PRECLASS:1,Skald=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boaster ~ Greater Endurance|PRECLASS:1,Skald=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SongOfMarching|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SongOfTheFallen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_RagePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SongOfTheFallen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_RagePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_RagePower6|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1116,
+    "record_key": "Skald Archetype ~ Boaster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

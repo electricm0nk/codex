@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scarred Witch Doctor ~ Hex Scar",
+    "name": "Hex Scar",
+    "class": "Witch",
+    "description": "Whenever a scarred witch doctor learns a hex, she must carve or brand a symbol in her flesh to represent this hex. She can disguise these scars with mundane or magical means, but they cannot be permanently removed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Witch Doctor ~ Hex Scar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a scarred witch doctor learns a hex, she must carve or brand a symbol in her flesh to represent this hex. She can disguise these scars with mundane or magical means, but they cannot be permanently removed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 658,
+    "record_key": "Scarred Witch Doctor ~ Hex Scar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

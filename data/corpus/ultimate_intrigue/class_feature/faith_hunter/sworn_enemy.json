@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Faith Hunter ~ Sworn Enemy",
+    "name": "Sworn Enemy",
+    "class": "Inquisitor",
+    "description": "A faith hunter chooses a single alignment (such as chaotic evil, rather than simply chaotic or evil) that directly opposes her own along either the law/chaos axis or the good/evil axis (so a lawful good faith hunter can choose chaotic good, chaotic neutral, chaotic evil, neutral evil, or lawful evil, whereas a neutral good faith hunter can only choose chaotic evil, neutral evil, or lawful evil). Creatures of this alignment are her sworn enemies. She can detect creatures of that specific alignment at will, functioning as detect evil, except this ability works only on creatures and detects the specific alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Faith Hunter ~ Sworn Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.FaithHunterClassFeatures.SpecialQuality.SpellLike.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A faith hunter chooses a single alignment (such as chaotic evil, rather than simply chaotic or evil) that directly opposes her own along either the law/chaos axis or the good/evil axis (so a lawful good faith hunter can choose chaotic good, chaotic neutral, chaotic evil, neutral evil, or lawful evil, whereas a neutral good faith hunter can only choose chaotic evil, neutral evil, or lawful evil). Creatures of this alignment are her sworn enemies. She can detect creatures of that specific alignment at will, functioning as detect evil, except this ability works only on creatures and detects the specific alignment."
+      },
+      {
+        "key": "DESC",
+        "value": " Once per day|PRECLASS:1,Inquisitor=6|!PRECLASS:1,Inquisitor=10"
+      },
+      {
+        "key": "DESC",
+        "value": " Twice per day|PRECLASS:1,Inquisitor=10|!PRECLASS:1,Inquisitor=14"
+      },
+      {
+        "key": "DESC",
+        "value": " Three times per day|PRECLASS:1,Inquisitor=14|!PRECLASS:1,Inquisitor=18"
+      },
+      {
+        "key": "DESC",
+        "value": " Four times per day|PRECLASS:1,Inquisitor=18"
+      },
+      {
+        "key": "DESC",
+        "value": " as a swift action, a faith hunter can smite one foe she can see. If the foe is of the faith hunter's sworn enemy alignment, the faith hunter gains a +4 sacred bonus on attack rolls against that foe and a +%1 sacred bonus on damage rolls made against the foe. Smites against targets of the faith hunter's sworn enemy alignment automatically bypass any DR the creature might possess. If the faith hunter targets a creature that is not of her sworn enemy alignment, the smite is wasted with no effect. The smite effect remains until the foe is dead or the next time the faith hunter rests and regains her uses of this ability. A faith hunter does not gain the justice or destruction judgments.|InquisitorLVL/2|PRECLASS:1,Inquisitor=6"
+      },
+      {
+        "key": "DESC",
+        "value": " This ability alters judgment."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Faith Hunter Sworn Enemy|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 453,
+    "record_key": "Faith Hunter ~ Sworn Enemy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Beckoning Chill",
+    "name": "Beckoning Chill",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes one creature within 30 feet to become more susceptible to the sapping powers of cold for 1 minute. When a creature takes cold damage while under this effect, it is entangled for 1 round. If the creature takes cold damage while already entangled by beckoning chill, the duration of the entangled condition increases by 1 round. Once affected, the creature cannot be the target of this hex again for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Beckoning Chill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWavesHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Beckoning Chill"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWavesSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes one creature within 30 feet to become more susceptible to the sapping powers of cold for 1 minute. When a creature takes cold damage while under this effect, it is entangled for 1 round. If the creature takes cold damage while already entangled by beckoning chill, the duration of the entangled condition increases by 1 round. Once affected, the creature cannot be the target of this hex again for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1672,
+    "record_key": "Shaman Spirit Hex ~ Beckoning Chill"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

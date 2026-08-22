@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cutthroat ~ Stab and Grab",
+    "name": "Stab and Grab",
+    "class": "Slayer",
+    "description": "As a swift action a cutthroat can attempt a steal combat maneuver against a dead or unconscious target or a studied target he has just confirmed a critical hit against. A dead or unconscious opponent takes a -10 penalty to its CMD against this maneuver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cutthroat ~ Stab and Grab"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cutthroat Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action a cutthroat can attempt a steal combat maneuver against a dead or unconscious target or a studied target he has just confirmed a critical hit against. A dead or unconscious opponent takes a -10 penalty to its CMD against this maneuver."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3748,
+    "record_key": "Cutthroat ~ Stab and Grab"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

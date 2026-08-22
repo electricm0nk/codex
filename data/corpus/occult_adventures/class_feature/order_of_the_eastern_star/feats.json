@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order Of The Eastern Star ~ Feats",
+    "name": "Feats",
+    "class": "Cavalier",
+    "description": "A cavalier of this order gains Psychic Sensitivity as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Of The Eastern Star ~ Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order Of The Eastern Star Class Feature.Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier of this order gains Psychic Sensitivity as a bonus feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1708,
+    "record_key": "Order Of The Eastern Star ~ Feats"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

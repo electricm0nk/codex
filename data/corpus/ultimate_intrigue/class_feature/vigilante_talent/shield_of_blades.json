@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Shield of Blades",
+    "name": "Shield of Blades",
+    "class": "Vigilante Talent",
+    "description": "The vigilante's wild attacks allow him to block his foes' counterattacks. He gains Power Attack as a bonus feat. If he already has the Power Attack feat, he can immediately swap it for another feat for which he qualified at the level he chose Power Attack. When he takes an attack or full attack action, if he uses Power Attack on every attack to make melee attacks that use his Strength bonus on attack rolls, he gains a shield bonus to his AC until his next turn equal to his penalty on attack rolls from Power Attack. This bonus applies only if he actually takes that penalty on at least one of the attack rolls.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Shield of Blades"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Shield of Blades"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's wild attacks allow him to block his foes' counterattacks. He gains Power Attack as a bonus feat. If he already has the Power Attack feat, he can immediately swap it for another feat for which he qualified at the level he chose Power Attack. When he takes an attack or full attack action, if he uses Power Attack on every attack to make melee attacks that use his Strength bonus on attack rolls, he gains a shield bonus to his AC until his next turn equal to his penalty on attack rolls from Power Attack. This bonus applies only if he actually takes that penalty on at least one of the attack rolls."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Power Attack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 102,
+    "record_key": "Vigilante Talent ~ Shield of Blades"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

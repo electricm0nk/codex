@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Renewed Vigor",
+    "name": "Renewed Vigor",
+    "class": "Rage Power",
+    "description": "As a standard action, you heal %1d8+%2 points of damage. This power is can only be used once per day and only while raging.|RenewedVigorDice|RenewedVigorBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Renewed Vigor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RenewedVigorDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RenewedVigorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you heal %1d8+%2 points of damage. This power is can only be used once per day and only while raging.|RenewedVigorDice|RenewedVigorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RenewedVigorDice|min(5,max(1,RagePowersLVL/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RenewedVigorBonus|CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 488,
+    "record_key": "Rage Power ~ Renewed Vigor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

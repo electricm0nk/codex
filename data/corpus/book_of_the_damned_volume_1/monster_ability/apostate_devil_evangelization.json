@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Apostate Devil ~ Evangelization",
     "delivery": "Supernatural",
@@ -25,19 +23,147 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_apostate"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Evangelization"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_CHA_SA|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_CHA_SPELLBASE|10+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_calm_emotions|DC_CHA_SPELLBASE+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_charm_monster|DC_CHA_SPELLBASE+4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_command|DC_CHA_SPELLBASE+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_confusion|DC_CHA_SPELLBASE+4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_crushing_despair|DC_CHA_SPELLBASE+4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_deep_slumber|DC_CHA_SPELLBASE+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_enthrall|DC_CHA_SPELLBASE+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_modify_memory|DC_CHA_SPELLBASE+4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_rage|DC_CHA_SPELLBASE+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DC_suggestion|DC_CHA_SPELLBASE+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Evangelization_DC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Evangelization)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Evangelization_DC|DC_CHA_SA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_CHA_SA|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_calm_emotions|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_charm_monster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_command|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_confusion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_crushing_despair|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_deep_slumber|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_enthrall|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_modify_memory|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_rage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DC_suggestion|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The words of deimaviggas are poison to the mind. Every round a deimavigga speaks (a free action), all non-devils with an Intelligence score of 3 or higher within 30 feet must make a DC %1 Will save or become vulnerable to its blasphemous discourse. The DC of this Will save increases by +1 for each consecutive round a creature has listened to the same deimavigga speak. Creatures must be listening to a deimavigga to be affected by its oration. Deafened creatures and those in combat-either with the deimavigga or other creatures-are not considered to be listening. Victims cannot simply declare they are not listening without taking steps to impede their hearing. Upon failing this save, a victim can be affected by the heretical power of a deimavigga's words. The devil may use its speech to affect a listener in ways that mimic any of the following spells: calm emotions (DC %2), charm monster (DC %3), command (DC %4), confusion (DC %5), crushing despair (DC %6), deep slumber (DC %7), enthrall (DC %8), modify memory (DC %9), rage (DC %10), or suggestion (DC %11). Victims still receive saving throws against these spell effects, but if they fail their saves they are not aware the devil is working its power upon them. A deimavigga can affect multiple victims with different spell effects in the same round. A creature that makes its save against this ability is immune to that particular devil's evangelization for the next 24 hours. This is a sonic mind-affecting effect. The base save DC is Charisma-based.|Evangelization_DC|DC_Calm_Emotions|DC_charm_monster|DC_command|DC_confusion|DC_crushing_despair|DC_deep_slumber|DC_enthrall|DC_modify_memory|DC_rage|DC_suggestion"
+      },
+      {
+        "key": "KEY",
+        "value": "Apostate Devil ~ Evangelization"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.54",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 10,
-    "record_key": "Apostate Devil ~ Evangelization"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Apostate Devil ~ Evangelization",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

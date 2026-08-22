@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Guildbreaker",
+    "name": "Guildbreaker",
+    "class": "Ranger Archetype",
+    "description": "Some rangers aren't the type to put their steel and sweat behind fighting particular kinds of creatures. Instead, these shrewd warriors alter their focus and dedicate their efforts to dismantling enemy organizations. Guildbreakers stoke their enmity for their foes, and they train to track the movements of rival organizations, and even to infiltrate these groups to gather secret intelligence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Guildbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Guildbreaker],[!PREFACT:1,ABILITIES,Ranger_Archetype_ClassSkills=True,Ranger_Archetype_FavoredEnemy=True,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_WoodlandStride=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some rangers aren't the type to put their steel and sweat behind fighting particular kinds of creatures. Instead, these shrewd warriors alter their focus and dedicate their efforts to dismantling enemy organizations. Guildbreakers stoke their enmity for their foes, and they train to track the movements of rival organizations, and even to infiltrate these groups to gather secret intelligence."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Guildbreaker ~ Class Skills|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guildbreaker ~ Favored Organization|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guildbreaker ~ Read the City|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guildbreaker ~ Deep Cover|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guildbreaker ~ Crowd Stride|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 637,
+    "record_key": "Ranger Archetype ~ Guildbreaker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

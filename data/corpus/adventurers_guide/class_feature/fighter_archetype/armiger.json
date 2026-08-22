@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Armiger",
+    "name": "Armiger",
+    "class": "Fighter Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Armiger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Armiger],[!PREFACT:1,ABILITIES,Fighter_Archetype_BonusFeats=True,Fighter_Archetype_ClassSkills=True,Fighter_Archetype_Bravery=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Armiger ~ Bonus Feats|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Armiger ~ Hellknight Order|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Armiger ~ Studious Squire|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Armiger ~ Ardent|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 835,
+    "record_key": "Fighter Archetype ~ Armiger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

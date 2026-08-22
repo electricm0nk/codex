@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Prescient Defense",
+    "name": "Prescient Defense",
+    "class": "Magus Arcana",
+    "description": "The magus can expend 1 point from his arcane pool as an immediate action after hitting a target with a weapon attack, granting him a premonition of his enemy's intentions. The magus gains a bonus to his AC and on Reflex saves equal to his Intelligence modifier (minimum 0) against attacks by that opponent until the beginning of his next turn. The magus must be at least 9th level before selecting this arcana.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Prescient Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "The magus can expend 1 point from his arcane pool as an immediate action after hitting a target with a weapon attack, granting him a premonition of his enemy's intentions. The magus gains a bonus to his AC and on Reflex saves equal to his Intelligence modifier (minimum 0) against attacks by that opponent until the beginning of his next turn. The magus must be at least 9th level before selecting this arcana."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 917,
+    "record_key": "Magus Arcana ~ Prescient Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

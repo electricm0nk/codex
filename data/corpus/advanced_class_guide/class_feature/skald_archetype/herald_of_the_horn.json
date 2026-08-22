@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald Archetype ~ Herald of the Horn",
+    "name": "Herald of the Horn",
+    "class": "Skald Archetype",
+    "description": "Even the loudest voice can often times be drowned out by the din of battle. Whether with the polished metal trumpet of a standing army or the crude curved animal horn of savage raiders, a herald of the horn sounds his raging song with thunderous blasts, which can bolster allies or shatter castle walls.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Herald of the Horn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype.SkaldLoreMaster.SkaldScribeScroll.SkaldSpellKenning.SkaldSpellKenning.SkaldSpellKenning"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Herald of the Horn],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldLoreMaster,TYPE.SkaldScribeScroll,TYPE.SkaldSpellKenning5,TYPE.SkaldSpellKenning11,TYPE.SkaldSpellKenning17]"
+      },
+      {
+        "key": "DESC",
+        "value": "Even the loudest voice can often times be drowned out by the din of battle. Whether with the polished metal trumpet of a standing army or the crude curved animal horn of savage raiders, a herald of the horn sounds his raging song with thunderous blasts, which can bolster allies or shatter castle walls."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Herald of the Horn ~ Arcane Bond|PRECLASS:1,Skald=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Herald of the Horn ~ Rousing Retort|PRECLASS:1,Skald=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Herald of the Horn ~ Horn Call|PRECLASS:1,Skald=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Herald of the Horn ~ Crumbling Blast|PRECLASS:1,Skald=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Skald"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3676,
+    "record_key": "Skald Archetype ~ Herald of the Horn"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

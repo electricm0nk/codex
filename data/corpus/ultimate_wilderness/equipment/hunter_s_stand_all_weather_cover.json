@@ -1,0 +1,54 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 35.0,
+    "description": null,
+    "key": "Hunter's Stand (All-Weather Cover)",
+    "name": "Hunter's Stand (All-Weather Cover)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Hunter's Stand, All-Weather Cover"
+      },
+      {
+        "key": "COST",
+        "value": "35"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      }
+    ],
+    "weight_lbs": 15.0
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equip_general.lst",
+    "record_key": "Hunter's Stand (All-Weather Cover)",
+    "sha256": "372c2ea96d9352ae5d06f115b3f8fbd504b4857145cdae1b51d05e54d9be70c7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

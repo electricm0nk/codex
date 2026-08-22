@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Noqual Golem ~ Spell Absorption",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "inner_sea_bestiary:monster:golem_noqual"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Heals 5 hit points or gains 5 temporary hit points for each spell absorbed. Absorbing a spell gives the golem the benefits of Haste."
+      },
+      {
+        "key": "KEY",
+        "value": "Noqual Golem ~ Spell Absorption"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.18",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 136,
-    "record_key": "Noqual Golem ~ Spell Absorption"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 136,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Noqual Golem ~ Spell Absorption",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 800.0,
+    "description": "Subjects who bask in the filtered light for an 8-hour rest period recover 1 additional hit point per level or 1 additional ability score point if their caregivers succeed at the required Heal check",
+    "key": "Portable Solarium",
+    "name": "Portable Solarium",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "800"
+      },
+      {
+        "key": "WT",
+        "value": "35"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "SPROP",
+        "value": "Subjects who bask in the filtered light for an 8-hour rest period recover 1 additional hit point per level or 1 additional ability score point if their caregivers succeed at the required Heal check"
+      }
+    ],
+    "weight_lbs": 35.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Portable Solarium",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ]
+}

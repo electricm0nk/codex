@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Archetype ~ Velvet Blade",
+    "name": "Velvet Blade",
+    "class": "Slayer Archetype",
+    "description": "Velvet blades specialize in infiltrating the upper echelons of society, mingling with nobles and courtiers, and killing them. Velvet blades are often born into the aristocracy, with an intricate understanding of the inner workings of upper-class society. Though a few velvet blades are unhinged maniacs who enjoy preying on their peers, most of these well-heeled slayers assume a professional demeanor and hire themselves out to other nobles or well-connected criminal organizations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Velvet Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Velvet Blade],[!PREFACT:1,ABILITIES,Slayer_Archetype_ClassSkills=True,Slayer_Archetype_Proficiencies=True,Slayer_Archetype_MediumArmorProficiency=True,Slayer_Archetype_ShieldProficiency=True,Slayer_Archetype_StudiedTarget=True,Slayer_Archetype_Track=True,Slayer_Archetype_SwiftTracker=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Velvet blades specialize in infiltrating the upper echelons of society, mingling with nobles and courtiers, and killing them. Velvet blades are often born into the aristocracy, with an intricate understanding of the inner workings of upper-class society. Though a few velvet blades are unhinged maniacs who enjoy preying on their peers, most of these well-heeled slayers assume a professional demeanor and hire themselves out to other nobles or well-connected criminal organizations."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Velvet Blade ~ Class Skills|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Velvet Blade ~ Studied Socialite|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Velvet Blade ~ Courtly Graces|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Velvet Blade ~ Treacherous Blade|PRECLASS:1,Slayer=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Velvet Blade ~ Silent Dispatch|PRECLASS:1,Slayer=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_StudiedTarget|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_ShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_SwiftTracker|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 930,
+    "record_key": "Slayer Archetype ~ Velvet Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Armor Proficiency (Medium)",
+    "name": "Armor Proficiency (Medium)",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are skilled at wearing medium armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Armor Proficiency (Medium)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Armor Proficiency, Medium"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREPROFWITHARMOR:1,TYPE.Light],[PREABILITY:1,CATEGORY=FEAT,Armor Proficiency (Light)]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at wearing medium armor."
+      },
+      {
+        "key": "DESC",
+        "value": " When you wear a type of armor with which you are proficient, the armor check penalty for that armor applies only to Dexterity- and Strength-based skill checks."
+      },
+      {
+        "key": "AUTO",
+        "value": "ARMORPROF|ARMORTYPE=ArmorProfMedium"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Armor Proficiency (Medium)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4205,
+    "record_key": "Warpriest Bonus Feat ~ Armor Proficiency (Medium)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

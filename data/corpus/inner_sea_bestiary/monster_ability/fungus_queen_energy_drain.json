@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Fungus Queen ~ Energy Drain",
     "delivery": "Supernatural",
@@ -15,19 +13,43 @@
     "owners": [
       "inner_sea_bestiary:monster:fungus_queen"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A Fungus Queen drains energy from a mortal she lures into an act of passion, such as a kiss. An unwilling victim must be grappled before the Fungus Queen can use this ability. The Fungus Queen's kiss bestows one negative level. The kiss also has the effect of a suggestion spell, asking the victim to accept another act of passion from the Fungus Queen. The victim must succeed on a DC %1 Will save to negate the suggestion. The DC is 22 for the Fortitude save to remove a negative level.|10+(HD/2)+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Fungus Queen ~ Energy Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.12",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 76,
-    "record_key": "Fungus Queen ~ Energy Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Fungus Queen ~ Energy Drain",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",

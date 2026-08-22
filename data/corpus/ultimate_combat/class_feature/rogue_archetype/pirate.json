@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ Pirate",
+    "name": "Pirate",
+    "class": "Rogue Archetype",
+    "description": "A pirate breaks from the confines of country and king to commit her crimes upon the high seas. She holds allegiance only to her ship and its captain (if even that much is true), and lives a lawless life upon the waves, plundering ships and shorelines as suits her whim.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Pirate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype.RogueTrapfinding.RogueTrapSense.RogueTalent2"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Pirate],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTrapSense,TYPE.RogueTalent2]"
+      },
+      {
+        "key": "DESC",
+        "value": "A pirate breaks from the confines of country and king to commit her crimes upon the high seas. She holds allegiance only to her ship and its captain (if even that much is true), and lives a lawless life upon the waves, plundering ships and shorelines as suits her whim."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Pirate ~ Sea Legs|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Pirate ~ Swinging Reposition|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Pirate ~ Unflinching|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Pirate ~ Rogue Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Pirate ~ Advanced Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Rogue"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1672,
+    "record_key": "Rogue Archetype ~ Pirate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

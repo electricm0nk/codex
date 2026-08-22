@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Foresight Savant Subschool ~ Prescience",
+    "name": "Prescience",
+    "class": "Foresight Savant Subschool",
+    "description": "At the beginning of your turn, you may, as a free action, roll a single d20. At any point before your next turn, you may use the result of this roll as the result of any d20 roll you are required to make. If you do not use the d20 result before your next turn, it is lost. You can use this ability %1 times per day.|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Foresight Savant Subschool ~ Prescience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "At the beginning of your turn, you may, as a free action, roll a single d20. At any point before your next turn, you may use the result of this roll as the result of any d20 roll you are required to make. If you do not use the d20 result before your next turn, it is lost. You can use this ability %1 times per day.|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2594,
+    "record_key": "Foresight Savant Subschool ~ Prescience"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

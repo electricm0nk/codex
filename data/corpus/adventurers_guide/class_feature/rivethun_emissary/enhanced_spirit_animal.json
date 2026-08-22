@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rivethun Emissary ~ Enhanced Spirit Animal",
+    "name": "Enhanced Spirit Animal",
+    "class": "Rivethun Emissary",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rivethun Emissary ~ Enhanced Spirit Animal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rivethun Emissary Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarEP|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarEP|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarEP|1|PREVARGTEQ:RivethunEmissaryLVL,5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 448,
+    "record_key": "Rivethun Emissary ~ Enhanced Spirit Animal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

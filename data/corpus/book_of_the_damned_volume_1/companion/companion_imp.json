@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T09:20:44Z",
   "data": {
     "ability_keys": [
       "book_of_the_damned_volume_1:companion:imp_companion_poison"
@@ -24,6 +22,116 @@
     ],
     "race_subtype": "Devil|Lawful|Evil",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Detect Good ~ Constant|Detect Magic ~ Constant|Flight Maneuverability|Imp Companion ~ Poison"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Infernal|Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|7"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|6"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Bluff|TYPE=Craft|Fly|Knowledge (Arcana)|Knowledge (Planes)|Perception|Sense Motive|Spellcraft|Stealth"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Imp"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Imp Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Sting,Weapon.Natural.Melee.Finesseable.Piercing.Poison,*1,1d4,SPROP=plus poison"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Imp"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Devil|Lawful|Evil"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=6|Augury|Suggestion,13+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=Week|CASTERLEVEL=12|Commune (six questions)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=6|Invisibility (self only)"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "T",
@@ -58,16 +166,18 @@
     ],
     "type_segments": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_races_companion.lst",
-    "sha256": "99fedb040842aff8bc38b925aad0f2f54a79d281e69222a5ad21c9392a8f9a0f",
-    "line": 6,
-    "record_key": "Companion (Imp)"
-  },
+  "ingested_at": "2026-08-13T09:20:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_races_companion.lst",
+    "record_key": "Companion (Imp)",
+    "sha256": "99fedb040842aff8bc38b925aad0f2f54a79d281e69222a5ad21c9392a8f9a0f"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

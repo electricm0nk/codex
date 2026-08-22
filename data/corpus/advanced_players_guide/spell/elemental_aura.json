@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Elemental Aura",
-    "school": "Evocation",
-    "level": 3,
     "description": "This spell forms an aura of energy around you, damaging all those that come near you. Choose an energy type: acid, cold, electricity, or fire. Creatures adjacent to you when this spell is cast and at the start of your turn take 2d6 points of energy damage of the selected type. This aura has an additional effect, depending upon the type of energy chosen.  Acid: Creatures affected by your aura take 1 point of ongoing acid damage per round for 1 round per three caster levels, and are sickened for the duration of the ongoing acid damage.  Cold: Creatures affected by your aura are fatigued. A creature that is already fatigued suffers no additional effect.  Electricity: Creatures affected by your aura are staggered for 1 round.  Fire: Creatures affected by your aura catch on fire (Core Rulebook 444).  Creatures adjacent to you are allowed a Reflex save to halve the damage and negate the additional effect. The aura's additional effects do not stack if a creature takes damage from your aura multiple times. You may only have one elemental aura in effect at one time. When you cast this spell to deal acid, cold, electricity, or fire damage, it is a spell of that type.",
-    "full_text": true
+    "full_text": true,
+    "key": "Elemental Aura",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates an aura of energy around you.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell forms an aura of energy around you, damaging all those that come near you. Choose an energy type: acid, cold, electricity, or fire. Creatures adjacent to you when this spell is cast and at the start of your turn take 2d6 points of energy damage of the selected type. This aura has an additional effect, depending upon the type of energy chosen.  Acid: Creatures affected by your aura take 1 point of ongoing acid damage per round for 1 round per three caster levels, and are sickened for the duration of the ongoing acid damage.  Cold: Creatures affected by your aura are fatigued. A creature that is already fatigued suffers no additional effect.  Electricity: Creatures affected by your aura are staggered for 1 round.  Fire: Creatures affected by your aura catch on fire (Core Rulebook 444).  Creatures adjacent to you are allowed a Reflex save to halve the damage and negate the additional effect. The aura's additional effects do not stack if a creature takes damage from your aura multiple times. You may only have one elemental aura in effect at one time. When you cast this spell to deal acid, cold, electricity, or fire damage, it is a spell of that type.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds (D)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool|EarthSchool|FireSchool|WaterSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/elementalAura.html#_elemental-aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 95,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1928,
-    "record_key": "Elemental Aura"
+    "record_key": "Elemental Aura",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

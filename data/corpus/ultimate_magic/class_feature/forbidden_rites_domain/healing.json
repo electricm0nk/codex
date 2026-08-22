@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Healing Domain",
+    "name": "Healing",
+    "class": "Forbidden Rites Domain",
+    "description": "Your touch staves off pain and death, and your healing magic is particularly vital and potent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Healing Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.HealingDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch staves off pain and death, and your healing magic is particularly vital and potent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Rebuke Death|PREDOMAIN:1,Healing|PREVARGTEQ:DomainHealingAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Healer's Blessing|PREDOMAIN:1,Healing|PREVARGTEQ:DomainHealingAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingDC|10+(DomainHealingLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Cure Light Wounds|Cleric=2|Cure Moderate Wounds|Cleric=3|Cure Serious Wounds|Cleric=4|Cure Critical Wounds|Cleric=5|Breath of Life|Cleric=6|Heal|Cleric=7|Regenerate|Cleric=8|Cure Critical Wounds (Mass)|Cleric=9|Heal (Mass)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1041,
+    "record_key": "Forbidden Rites Domain ~ Healing Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

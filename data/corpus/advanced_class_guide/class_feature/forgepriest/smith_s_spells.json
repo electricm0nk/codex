@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forgepriest ~ Smith's Spells",
+    "name": "Smith's Spells",
+    "class": "Warpriest",
+    "description": "[NOT IMPLEMENTED] A forgepriest adds the following spells to his spell list: 1st-jury rig, shield; 2nd-heat metal, shatter; 3rd-keen edge, quench, versatile weapon; 4th-wreath of blades; 5th-fabricate, major creation; 6th-mage's sword.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgepriest ~ Smith's Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Forgepriest Class Feature.Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A forgepriest adds the following spells to his spell list: 1st-jury rig, shield; 2nd-heat metal, shatter; 3rd-keen edge, quench, versatile weapon; 4th-wreath of blades; 5th-fabricate, major creation; 6th-mage's sword."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3993,
+    "record_key": "Forgepriest ~ Smith's Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

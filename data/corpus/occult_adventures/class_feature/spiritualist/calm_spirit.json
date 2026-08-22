@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Calm Spirit",
+    "name": "Calm Spirit",
+    "class": "Spiritualist",
+    "description": "At 7th level, a spiritualist gains the ability to use calm spirit (see page 160) as a spell-like ability once per day. At 11th level and every 4 levels thereafter, the spiritualist can use this ability an additional time per day (to a maximum of 4 times per day at 19th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Calm Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a spiritualist gains the ability to use calm spirit (see page 160) as a spell-like ability once per day. At 11th level and every 4 levels thereafter, the spiritualist can use this ability an additional time per day (to a maximum of 4 times per day at 19th level)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1285,
+    "record_key": "Spiritualist ~ Calm Spirit"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Naturalist ~ Second Animal Focus",
+    "name": "Second Animal Focus",
+    "class": "Summoner",
+    "description": "Whenever a naturalist uses animal focus, he may apply two different animal aspects to his eidolon. The eidolon's form gains superficial physical charges appropriate to the chosen aspect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naturalist ~ Second Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Naturalist Class Feature.Summoner Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a naturalist uses animal focus, he may apply two different animal aspects to his eidolon. The eidolon's form gains superficial physical charges appropriate to the chosen aspect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3817,
+    "record_key": "Naturalist ~ Second Animal Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

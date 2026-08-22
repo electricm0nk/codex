@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Defeat/slay non-spellcasters",
+    "key": "Intelligent Item Purpose (Slay NonCasters)",
+    "name": "Intelligent Item Purpose (Slay NonCasters)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2",
+          "TYPE=Purpose"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Purpose / Slay Non-spellcaster"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "DedicatedPurpose"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,EQMOD=Intelligent Item ~ Base,EQMOD=Intelligent Item ~ Purpose"
+      },
+      {
+        "key": "SPROP",
+        "value": "Defeat/slay non-spellcasters"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 889,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Intelligent Item Purpose (Slay NonCasters)",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

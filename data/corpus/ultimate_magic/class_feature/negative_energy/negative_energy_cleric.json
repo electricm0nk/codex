@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Negative Energy ~ Cleric",
+    "name": "Negative Energy ~ Cleric",
+    "class": "Negative Energy",
+    "description": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage.|ClericChannelNegativeEnergyDice|ClericChannelNegativeEnergyDieSize|ClericChannelNegativeEnergyDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Channel Energy.Channel Negative Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage.|ClericChannelNegativeEnergyDice|ClericChannelNegativeEnergyDieSize|ClericChannelNegativeEnergyDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDice|(ClericChannelNegativeEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDC|10+(ClericChannelNegativeEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyLVL|ClericChannelEnergyLVL-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 822,
+    "record_key": "Negative Energy ~ Cleric"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oozemorph ~ Compression",
+    "name": "Compression",
+    "class": "Shifter",
+    "description": "An oozemorph gains compression as per the universal monster rule. This ability can be used regardless of the current form the oozemorph has taken.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oozemorph ~ Compression"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.OozemorphClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An oozemorph gains compression as per the universal monster rule. This ability can be used regardless of the current form the oozemorph has taken."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1085,
+    "record_key": "Oozemorph ~ Compression"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

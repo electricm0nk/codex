@@ -1,0 +1,85 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You call out to nearby nature spirits and grant them temporary plant bodies. These creatures are similar to leshys, except they are Tiny and far more simpleminded. The swarm uses the statistics for a rat swarm, except it does not carry a disease or have scent. The leshy swarm has darkvision with a range of 60 feet and is immune to electricity, mind-affecting effects, paralysis, poison, polymorph, sleep effects, sonic, and stunning. You can direct the leshy swarm to move up to its speed along a path for your choice by spending a standard action to communicate your desires through the spell, or by spending a move action if you can speak to creatures that understand only Druidic and Sylvan. The leshys are confused by their sudden possession of new bodies and assume that nearly any creature you direct them toward is a threat. They attack all creatures within their area except for you and other creatures with the plant type.",
+    "key": "Leshy Swarm",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Druid,Sorcerer,Summoner,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You call out to nearby nature spirits and grant them temporary plant bodies. These creatures are similar to leshys, except they are Tiny and far more simpleminded. The swarm uses the statistics for a rat swarm, except it does not carry a disease or have scent. The leshy swarm has darkvision with a range of 60 feet and is immune to electricity, mind-affecting effects, paralysis, poison, polymorph, sleep effects, sonic, and stunning. You can direct the leshy swarm to move up to its speed along a path for your choice by spending a standard action to communicate your desires through the spell, or by spending a move action if you can speak to creatures that understand only Druidic and Sylvan. The leshys are confused by their sudden possession of new bodies and assume that nearly any creature you direct them toward is a threat. They attack all creatures within their area except for you and other creatures with the plant type."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PRERACE:1,Vine Leshy]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Summoning"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-square swarm of leshys"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 132,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Leshy Swarm",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

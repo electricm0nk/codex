@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Earth Climb",
+    "name": "Earth Climb",
+    "class": "Wild Talent",
+    "description": "Element earth; Type utility (Su); Level 2; Burn 0 You use your connection to earth to meld slightly into stone and earthen surfaces, granting you a climb speed equal to your base land speed when climbing such surfaces.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Earth Climb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Earth,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type utility (Su); Level 2; Burn 0 You use your connection to earth to meld slightly into stone and earthen surfaces, granting you a climb speed equal to your base land speed when climbing such surfaces."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 741,
+    "record_key": "Wild Talent ~ Earth Climb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

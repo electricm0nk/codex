@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shigenjo ~ Recommended Mysteries",
+    "name": "Recommended Mysteries",
+    "class": "Oracle",
+    "description": "ancestor, battle, fire, heavens, lore, metal, nature, stone, time, waves, wood.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shigenjo ~ Recommended Mysteries"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "ancestor, battle, fire, heavens, lore, metal, nature, stone, time, waves, wood."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 751,
+    "record_key": "Shigenjo ~ Recommended Mysteries"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

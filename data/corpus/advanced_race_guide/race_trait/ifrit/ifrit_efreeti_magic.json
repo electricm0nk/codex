@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Ifrit ~ Efreeti Magic",
+    "name": "Efreeti Magic",
+    "race_key": "Ifrit",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ifrit Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Ifrit_ReplaceSpellLikeAbility"
+    ],
+    "description": "Some ifrits inherit an efreeti ancestor's ability to magically change a creature's size. They can cast either enlarge person or reduce person (the ifrit chooses when using this ability) once per day as a spell-like ability (caster level equals the ifrit's level). The ifrit can use this ability to affect other ifrits as though they were humanoid creatures. This racial trait replaces the spell-like ability racial trait.",
+    "source_page": "p.126",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ifrit ~ Efreeti Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ifrit Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Efreeti Magic],[!PREFACT:1,ABILITIES,Ifrit_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some ifrits inherit an efreeti ancestor's ability to magically change a creature's size. They can cast either enlarge person or reduce person (the ifrit chooses when using this ability) once per day as a spell-like ability (caster level equals the ifrit's level). The ifrit can use this ability to affect other ifrits as though they were humanoid creatures."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Efreeti Magic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Enlarge Person|Racial SLA ~ Reduce Person"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "FACT",
+        "value": "Ifrit_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 544,
+    "record_key": "Ifrit ~ Efreeti Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

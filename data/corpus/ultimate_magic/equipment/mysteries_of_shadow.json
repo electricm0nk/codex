@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 15065.0,
+    "description": "Level 16 Illusionist; Protection - Illusory script (Will DC 16; on failure the suggestion is \"Forget the existence of the descriptions and notes\"), phantom trap (opening any of the books seems to set off a trap); Opposition Schools - Divination, evocation; Spells - 8.greater shadow evocation(S), mind blank, scintillating pattern(S), temporal stasis; 7.finger of death, greater shadow conjuration(S), project image(S), simulacrum(S), spell turning; 6.eyebite, guards and wards, limited wish, permanent image(S), programmed image(S), shadow walk(S), symbol of persuasion; 5.cloudkill, mirage arcana(S), mind fog, nightmare(S), seeming(S), shadow evocation(S), telekinesis; 4.black tentacles, dimension door, greater invisibility(S), lesser globe of invulnerability, phantasmal killer(S), remove curse, scrying(OP), shadow conjuration(S); 3.dispel magic, heroism, illusory script(S), magic circle against good, major image(S), phantom steed, shrink item, slow; 2.arcane lock, darkness(OP), false life, glitterdust, magic mouth(S), mirror image(S), obscure object, phantom trap(S), whispering wind; 1.color spray(S), disguise self(S), endure elements, feather fall, grease, magic aura(S), minor image(S), obscuring mist, ray of enfeeblement, silent image(S), ventriloquism(S); Preparation Ritual - Shadow Knowledge",
+    "key": "Mysteries of Shadow",
+    "name": "Mysteries of Shadow",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "NUMPAGES",
+        "value": "300"
+      },
+      {
+        "key": "COST",
+        "value": "15065"
+      },
+      {
+        "key": "WT",
+        "value": "9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Shadow Knowledge"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 16 Illusionist"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - Illusory script (Will DC 16; on failure the suggestion is \"Forget the existence of the descriptions and notes\"), phantom trap (opening any of the books seems to set off a trap)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Divination, evocation"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 8.greater shadow evocation(S), mind blank, scintillating pattern(S), temporal stasis; 7.finger of death, greater shadow conjuration(S), project image(S), simulacrum(S), spell turning; 6.eyebite, guards and wards, limited wish, permanent image(S), programmed image(S), shadow walk(S), symbol of persuasion; 5.cloudkill, mirage arcana(S), mind fog, nightmare(S), seeming(S), shadow evocation(S), telekinesis; 4.black tentacles, dimension door, greater invisibility(S), lesser globe of invulnerability, phantasmal killer(S), remove curse, scrying(OP), shadow conjuration(S); 3.dispel magic, heroism, illusory script(S), magic circle against good, major image(S), phantom steed, shrink item, slow; 2.arcane lock, darkness(OP), false life, glitterdust, magic mouth(S), mirror image(S), obscure object, phantom trap(S), whispering wind; 1.color spray(S), disguise self(S), endure elements, feather fall, grease, magic aura(S), minor image(S), obscuring mist, ray of enfeeblement, silent image(S), ventriloquism(S)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Shadow Knowledge"
+      }
+    ],
+    "weight_lbs": 9.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Mysteries of Shadow",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

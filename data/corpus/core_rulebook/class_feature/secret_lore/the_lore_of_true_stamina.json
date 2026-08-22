@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Secret Lore ~ The Lore of True Stamina",
+    "name": "The Lore of True Stamina",
+    "class": "Secret Lore",
+    "description": "+2 bonus on Fortitude saves",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Lore ~ The Lore of True Stamina"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LoremasterSecret"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "LoremasterSecretsLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 bonus on Fortitude saves"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.387"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3031,
+    "record_key": "Secret Lore ~ The Lore of True Stamina"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 6000.0,
+    "description": " Range (50 ft. min.); Crew 2, Aim 1, Load 3, Speed 10 ft.",
+    "key": "Bombard (Light)",
+    "name": "Bombard (Light)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Bombard (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ranged.SiegeWeapon.SiegeFirearm.Exotic.Bludgeoning.Piercing"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "5d6"
+      },
+      {
+        "key": "RANGE",
+        "value": "100"
+      },
+      {
+        "key": "SPROP",
+        "value": " Range (50 ft. min.)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Crew 2, Aim 1, Load 3, Speed 10 ft."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 162,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Bombard (Light)",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

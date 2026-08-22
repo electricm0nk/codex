@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Hex ~ Fetish",
+    "name": "Fetish",
+    "class": "Shaman Hex",
+    "description": "The shaman receives Craft Wondrous Item as a bonus feat and gains a +4 insight bonus on Spellcraft checks to identify magic items permanently.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Fetish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Fetish"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman receives Craft Wondrous Item as a bonus feat and gains a +4 insight bonus on Spellcraft checks to identify magic items permanently."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Craft Wondrous Item"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Spellcraft=to identify magic item properties|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1431,
+    "record_key": "Shaman Hex ~ Fetish"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

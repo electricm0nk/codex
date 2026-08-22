@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "3",
@@ -21,6 +19,120 @@
     ],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Animal Traits Output|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Blindsense|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|40|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,40"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Bat"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.30",
     "speeds": [
@@ -34,16 +146,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 40,
-    "record_key": "Bat (Dire)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Bat (Dire)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

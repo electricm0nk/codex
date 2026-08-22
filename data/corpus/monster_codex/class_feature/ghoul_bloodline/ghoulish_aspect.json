@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghoul Bloodline ~ Ghoulish Aspect",
+    "name": "Ghoulish Aspect",
+    "class": "Ghoul Bloodline",
+    "description": "You take on aspects of the nature and appearance of ghouls. You no longer feel the need to eat and are immune to hunger (though you are still able to consume flesh if you choose to). You gain immunity to cold, nonlethal damage, paralysis, and sleep. You also gain DR 5/--. Additionally, you gain the stench ability with a radius of 10 feet. Creatures that fail their Fortitude saving throws are sickened for 1d6+4 minutes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Bloodline ~ Ghoulish Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Ghoul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Ghoul_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ghoul_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You take on aspects of the nature and appearance of ghouls. You no longer feel the need to eat and are immune to hunger (though you are still able to consume flesh if you choose to). You gain immunity to cold, nonlethal damage, paralysis, and sleep. You also gain DR 5/--. Additionally, you gain the stench ability with a radius of 10 feet. Creatures that fail their Fortitude saving throws are sickened for 1d6+4 minutes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|Immunity to Nonlethal Damage|Immunity to Paralysis|Immunity to Sleep|Universal Monster Rule ~ Stench"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_Range|-20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_DurationDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_DurationDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_DurationBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_DurationTypeMinutes|1|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Stench_DC|-(HD/2)+(Sorcerer_Ghoul_BloodlinePower20LVL/2)"
+      },
+      {
+        "key": "DR",
+        "value": "5/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|GhoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 145,
+    "record_key": "Ghoul Bloodline ~ Ghoulish Aspect"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

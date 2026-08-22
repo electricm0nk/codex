@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tetori ~ Iron Body",
+    "name": "Iron Body",
+    "class": "Monk",
+    "description": "At 19th level, as a move action, a tetori can make his tissues ultra-dense for 1 minute as the iron body spell (Core Rulebook 302) by spending 3 points from his ki pool. This ability replaces empty body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tetori ~ Iron Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, as a move action, a tetori can make his tissues ultra-dense for 1 minute as the iron body spell (Core Rulebook 302) by spending 3 points from his ki pool. This ability replaces empty body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1404,
+    "record_key": "Tetori ~ Iron Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

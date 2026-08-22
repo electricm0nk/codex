@@ -1,25 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions as elemental body III, except that it also allows you to assume the form of a Huge air, earth, fire, or water elemental. The abilities you gain depend upon the type of elemental into which you change. You are also immune to critical hits and sneak attacks while in elemental form and gain DR 5/-. Air elemental: As elemental body I except that you gain a +4 size bonus to your Strength, +6 size bonus to your Dexterity, and a +4 natural armor bonus. You also gain fly 120 feet [perfect]. Earth elemental: As elemental body I except that you gain a +8 size bonus to your Strength, a -2 penalty on your Dexterity, a +4 size bonus to your Constitution, and a +6 natural armor bonus. Fire elemental: As elemental body I except that you gain a +6 size bonus to your Dexterity, a +4 size bonus to your Constitution, and a +4 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Strength, a -2 penalty on your Dexterity, a +8 size bonus to your Constitution, and a +6 natural armor bonus. You also gain swim 120 feet.",
     "key": "Elemental Body IV",
-    "school": "Transmutation",
     "level": 7,
-    "description": "This spell functions as elemental body III, except that it also allows you to assume the form of a Huge air, earth, fire, or water elemental. The abilities you gain depend upon the type of elemental into which you change. You are also immune to critical hits and sneak attacks while in elemental form and gain DR 5/-. Air elemental: As elemental body I except that you gain a +4 size bonus to your Strength, +6 size bonus to your Dexterity, and a +4 natural armor bonus. You also gain fly 120 feet [perfect]. Earth elemental: As elemental body I except that you gain a +8 size bonus to your Strength, a -2 penalty on your Dexterity, a +4 size bonus to your Constitution, and a +6 natural armor bonus. Fire elemental: As elemental body I except that you gain a +6 size bonus to your Dexterity, a +4 size bonus to your Constitution, and a +4 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Strength, a -2 penalty on your Dexterity, a +8 size bonus to your Constitution, and a +6 natural armor bonus. You also gain swim 120 feet."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as elemental body III, except that it also allows you to assume the form of a Huge air, earth, fire, or water elemental. The abilities you gain depend upon the type of elemental into which you change. You are also immune to critical hits and sneak attacks while in elemental form and gain DR 5/-. Air elemental: As elemental body I except that you gain a +4 size bonus to your Strength, +6 size bonus to your Dexterity, and a +4 natural armor bonus. You also gain fly 120 feet [perfect]. Earth elemental: As elemental body I except that you gain a +8 size bonus to your Strength, a -2 penalty on your Dexterity, a +4 size bonus to your Constitution, and a +6 natural armor bonus. Fire elemental: As elemental body I except that you gain a +6 size bonus to your Dexterity, a +4 size bonus to your Constitution, and a +4 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Strength, a -2 penalty on your Dexterity, a +8 size bonus to your Constitution, and a +6 natural armor bonus. You also gain swim 120 feet.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as elemental body III, except that it also allows you to assume the form of a Huge air, earth, fire, or water elemental.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/elementalBody.html#_elemental-body-iv"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      },
+      {
+        "key": "VARIANTS",
+        "value": "Air|Earth|Fire|Water"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 200,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 960,
-    "record_key": "Elemental Body IV.MOD"
+    "record_key": "Elemental Body IV",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

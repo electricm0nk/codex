@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Leader ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Warpriest",
+    "description": "A cult leader gains the sneak attack ability, as the rogue class feature. If he already has sneak attack from another class, the extra damage from the classes that grant sneak attack stack for the purpose of determining the sneak attack's extra damage dice. This extra damage is %1d6.|SneakAttackDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Leader ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cult Leader Class Feature.Warpriest Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CultLeaderSneakAttackLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult leader gains the sneak attack ability, as the rogue class feature. If he already has sneak attack from another class, the extra damage from the classes that grant sneak attack stack for the purpose of determining the sneak attack's extra damage dice. This extra damage is %1d6.|SneakAttackDice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CultLeaderSneakAttackLVL|WarpriestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|CultLeaderSneakAttackLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3953,
+    "record_key": "Cult Leader ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

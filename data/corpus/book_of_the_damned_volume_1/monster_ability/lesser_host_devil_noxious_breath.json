@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Lesser Host Devil ~ Noxious Breath",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_lesser_host"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Noxious Breath"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoxiousBreathDC|10+CON+(HD/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoxiousBreathDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Noxious Breath)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoxiousBreathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day, a gaav can exhale a breath that reeks of pure corruption upon a creature within 5 feet. The target must make a DC %1 Fortitude save or be sickened for 1d4 rounds. The save DC is Constitution-based. Creatures that successfully save cannot be affected by the same gaav's noxious breath for 24 hours. A delay poison or neutralize poison spell removes the effect from the sickened creature. Creatures with immunity to poison are unaffected, and creatures resistant to poison receive their normal bonus on their saving throws. Once a gaav uses its breath weapon, it can't breathe again until 1d4 rounds later.|NoxiousBreathDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Lesser Host Devil ~ Noxious Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.58",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 30,
-    "record_key": "Lesser Host Devil ~ Noxious Breath"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Lesser Host Devil ~ Noxious Breath",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

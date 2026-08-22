@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heretic ~ Hide Tracks",
+    "name": "Hide Tracks",
+    "class": "Inquisitor",
+    "description": "You are adept at hiding your tracks.  Creatures attempting to track you take a -5 penalty on rolls to find or follow your tracks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heretic ~ Hide Tracks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You are adept at hiding your tracks.  Creatures attempting to track you take a -5 penalty on rolls to find or follow your tracks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1265,
+    "record_key": "Heretic ~ Hide Tracks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wizard Archetype ~ Wind Listener",
+    "name": "Wind Listener",
+    "class": "Wizard Archetype",
+    "description": "The wind listener takes a sylph's natural curiosity to the extreme, enhancing his natural skill at subterfuge and eavesdropping with potent arcane magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Wind Listener"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype.WizardArcaneBond.WizardBonusFeat5.WizardBonusFeat10.WizardBonusFeat15"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Divination Opposition School,Illusion Opposition School"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Wind Listener],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond,TYPE.WizardBonusFeat5,TYPE.WizardBonusFeat10,TYPE.WizardBonusFeat15]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsSylph=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The wind listener takes a sylph's natural curiosity to the extreme, enhancing his natural skill at subterfuge and eavesdropping with potent arcane magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wind Listener ~ Class Skills|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wind Listener ~ Arcane School|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wind Listener ~ Spontaneous Divination|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wind Listener ~ Abjuration Sense|PRECLASS:1,Wizard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wind Listener ~ Wispy Form|PRECLASS:1,Wizard=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wind Listener ~ Listening to the Wind|PRECLASS:1,Wizard=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Wizard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 736,
+    "record_key": "Wizard Archetype ~ Wind Listener"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

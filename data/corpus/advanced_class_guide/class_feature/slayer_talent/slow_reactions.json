@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Talent ~ Slow Reactions",
+    "name": "Slow Reactions*",
+    "class": "Slayer Talent",
+    "description": "Opponents damaged by your sneak attack can't make attacks of opportunity for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Slow Reactions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Opponents damaged by your sneak attack can't make attacks of opportunity for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1845,
+    "record_key": "Slayer Talent ~ Slow Reactions"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Leafshifter Aspect ~ Shrieker",
+    "name": "Aspect of the Shrieker",
+    "class": "Leafshifter Aspect",
+    "description": "You gain darkvision with a range of 60 feet.|ShriekerAspectBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leafshifter Aspect ~ Shrieker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Leafshifter Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShriekerAspectBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain darkvision with a range of 60 feet.|ShriekerAspectBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You also gain blindsense with a range of 10 feet.|PREVARGTEQ:ShifterAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShriekerAspectBonus|30*(2+(ShifterAspectLVL>=8))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|ShriekerAspectBonus|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|10|TYPE=Base|PREVARGTEQ:ShifterAspectLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1079,
+    "record_key": "Leafshifter Aspect ~ Shrieker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

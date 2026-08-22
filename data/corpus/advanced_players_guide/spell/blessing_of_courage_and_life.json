@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Blessing of Courage and Life",
-    "school": "Conjuration",
-    "level": 2,
     "description": "With this prayer you provide long-lasting succor to a wounded creature. For as long as the effect lasts, the target receives a +2 morale bonus on saving throws against fear and death effects.  At any time while the spell is in effect, the target can choose to end the spell as a swift action for a burst of healing energy. The target loses the saving throw bonus, but is healed of 1d8 points of damage +1 point per caster level (maximum +10).",
-    "full_text": true
+    "full_text": true,
+    "key": "Blessing of Courage and Life",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Grants a +2 bonus on saves vs. fear and death.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "With this prayer you provide long-lasting succor to a wounded creature. For as long as the effect lasts, the target receives a +2 morale bonus on saving throws against fear and death effects.  At any time while the spell is in effect, the target can choose to end the spell as a swift action for a burst of healing energy. The target loses the saving throw bonus, but is healed of 1d8 points of damage +1 point per caster level (maximum +10).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes (see below)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/blessingOfCourageAndLife.html#_blessing-of-courage-and-life"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one living creature"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 38,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1865,
-    "record_key": "Blessing of Courage and Life"
+    "record_key": "Blessing of Courage and Life",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

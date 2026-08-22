@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flag of Convenience ~ Low",
+    "name": "Flag of Convenience",
+    "class": "Flag of Convenience",
+    "description": "You are adept at aligning yourself with the winning side, disappearing when convenient, and evading blame without besmirching your reputation. You gain a +2 bonus on all Bluff and Disguise checks, and on Linguistics checks made to create forgeries. You never suffer a penalty to your Leadership score for moving around frequently, aloofness, cruelty, or the loss of prior cohorts or followers, and can replace lost followers in half the normal time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flag of Convenience ~ Low"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You are adept at aligning yourself with the winning side, disappearing when convenient, and evading blame without besmirching your reputation. You gain a +2 bonus on all Bluff and Disguise checks, and on Linguistics checks made to create forgeries. You never suffer a penalty to your Leadership score for moving around frequently, aloofness, cruelty, or the loss of prior cohorts or followers, and can replace lost followers in half the normal time."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Linguistics=Create forgeries|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Disguise|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 133,
+    "record_key": "Flag of Convenience ~ Low"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

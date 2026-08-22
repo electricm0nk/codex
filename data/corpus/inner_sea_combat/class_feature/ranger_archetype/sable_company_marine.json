@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Sable Company Marine",
+    "name": "Sable Company Marine",
+    "class": "Ranger Archetype",
+    "description": "Sable Company marines receive their training at the elite Endrin Military Academy in Korvosa. A large portion of their education is the handling and riding of hippogriffs, the iconic mounts of members of the company.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Sable Company Marine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Sable Company marines receive their training at the elite Endrin Military Academy in Korvosa. A large portion of their education is the handling and riding of hippogriffs, the iconic mounts of members of the company."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Sable Company Marine ~ Hippogriff Companion|PRECLASS:1,Ranger=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 31,
+    "record_key": "Ranger Archetype ~ Sable Company Marine"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

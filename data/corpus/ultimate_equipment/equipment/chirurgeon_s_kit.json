@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 400.0,
+    "description": "This sturdy leather case straps to the waist or thigh, or can be slung over a shoulder. It consists of a leather pouch, a healer's kit, a bottle of strong brandy, a potion of cure light wounds, a vial of smelling salts, and 2 doses each of alchemist's kindness, antiplague, antitoxin, bloodblock, and soothe syrup.",
+    "key": "Chirurgeon's Kit",
+    "name": "Chirurgeon's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "SPROP",
+        "value": "This sturdy leather case straps to the waist or thigh, or can be slung over a shoulder. It consists of a leather pouch, a healer's kit, a bottle of strong brandy, a potion of cure light wounds, a vial of smelling salts, and 2 doses each of alchemist's kindness, antiplague, antitoxin, bloodblock, and soothe syrup."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 582,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Chirurgeon's Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

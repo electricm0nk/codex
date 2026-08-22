@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5400.0,
+    "description": "These black gloves are decorated with images of white bones, as if revealing the bones within the wearer's hands. The left glove can be used once per day to create a Spectral Hand, which makes the bony hand image on that glove slide off and manifest as a ghostly skeletal hand for the duration of the effect. The right glove can be used once per day to deliver an Inflict Moderate Wounds spell, which gives that hand's bones a pale, sickly glow until the touch is delivered or discharged. If the wearer is a living creature, he can also use the right glove on himself to cast Cure Moderate Wounds instead of Inflict Moderate Wounds.",
+    "key": "Gloves Of Bony Power",
+    "name": "Gloves Of Bony Power",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Hands.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "5400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Gloves Of Bony Power|TIMES=1|CASTERLEVEL=3|Spectral Hand|Inflict Moderate Wounds,13"
+      },
+      {
+        "key": "DESC",
+        "value": "These black gloves are decorated with images of white bones, as if revealing the bones within the wearer's hands. The left glove can be used once per day to create a Spectral Hand, which makes the bony hand image on that glove slide off and manifest as a ghostly skeletal hand for the duration of the effect. The right glove can be used once per day to deliver an Inflict Moderate Wounds spell, which gives that hand's bones a pale, sickly glow until the touch is delivered or discharged. If the wearer is a living creature, he can also use the right glove on himself to cast Cure Moderate Wounds instead of Inflict Moderate Wounds."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 196,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Gloves Of Bony Power",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

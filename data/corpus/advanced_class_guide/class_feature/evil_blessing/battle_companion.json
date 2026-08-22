@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Evil Blessing ~ Battle Companion",
+    "name": "Battle Companion",
+    "class": "Evil Blessing",
+    "description": "You can summon a battle companion. This ability functions as summon monster IV with a duration of 1 minute, but for only an evil outsider or an animal with the fiendish creature simple template. This ability can summon only one creature, regardless of the list used. For every 2 levels beyond 10th, the level of the summon monster spell increases by 1 (to a maximum of summon monster IX at 20th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evil Blessing ~ Battle Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a battle companion. This ability functions as summon monster IV with a duration of 1 minute, but for only an evil outsider or an animal with the fiendish creature simple template. This ability can summon only one creature, regardless of the list used. For every 2 levels beyond 10th, the level of the summon monster spell increases by 1 (to a maximum of summon monster IX at 20th level)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2246,
+    "record_key": "Evil Blessing ~ Battle Companion"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

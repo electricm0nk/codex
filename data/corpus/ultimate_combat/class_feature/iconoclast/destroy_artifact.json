@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Iconoclast ~ Destroy Artifact",
+    "name": "Destroy Artifact",
+    "class": "Inquisitor",
+    "description": "At 20th level, an iconoclast has the ability to destroy minor artifacts. The iconoclast must have possession of the minor artifact for at least a week, which she must spend in uninterrupted contemplation of the nature of the artifact. At the end of that week, she makes a DC 30 Spellcraft check to unweave the fabric of the item, and if she is successful, the artifact is destroyed. If the iconoclast fails, she cannot try to destroy the artifact again with this ability, but another iconoclast can. This ability replaces true judgment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iconoclast ~ Destroy Artifact"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, an iconoclast has the ability to destroy minor artifacts. The iconoclast must have possession of the minor artifact for at least a week, which she must spend in uninterrupted contemplation of the nature of the artifact. At the end of that week, she makes a DC 30 Spellcraft check to unweave the fabric of the item, and if she is successful, the artifact is destroyed. If the iconoclast fails, she cannot try to destroy the artifact again with this ability, but another iconoclast can. This ability replaces true judgment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 880,
+    "record_key": "Iconoclast ~ Destroy Artifact"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

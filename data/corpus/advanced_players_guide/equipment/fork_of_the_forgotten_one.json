@@ -1,27 +1,97 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Fork of the Forgotten One",
     "category": "MagicItems",
-    "name": "Fork of the Forgotten One",
     "cost_gp": 0.0,
-    "weight": 12.0,
-    "description": "A magical ranseur that once belonged to an archdevil, granting bonuses to Diplomacy and Intimidate checks and a scorching ray ability; any nonevil creature that touches it must become lawful evil immediately or die."
+    "description": "A magical ranseur that once belonged to an archdevil, granting bonuses to Diplomacy and Intimidate checks and a scorching ray ability; any nonevil creature that touches it must become lawful evil immediately or die.",
+    "key": "Fork of the Forgotten One",
+    "name": "Fork of the Forgotten One",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Diplomacy,Intimidate",
+          "10"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Ranseur"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Artifact.Major.Piercing.Polearm"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Disarm.Special Ability ~ Flaming ~ Weapon.Special Ability ~ +5 ~ Weapon.Material ~ Steel.Special Ability ~ Unholy ~ Weapon.Special Ability ~ Wounding ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Artifact|TIMES=3|CASTERLEVEL=20|Scorching Ray"
+      }
+    ],
+    "weight": 12.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Fork of the Forgotten One",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

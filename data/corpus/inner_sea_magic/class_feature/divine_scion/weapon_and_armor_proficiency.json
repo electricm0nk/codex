@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Scion ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Divine Scion",
+    "description": "A divine scion gains no additional weapon or armor proficiencies. She can select Greater Weapon Focus, Weapon Specialization, and Greater Weapon Specialization as feats once she qualifies for them normally (although she does not have to fulfill the prerequisite of having fighter levels in order to select these feats).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreatWeapFocusQualify|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeapSpecQualify|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreatWeapSpecQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine scion gains no additional weapon or armor proficiencies. She can select Greater Weapon Focus, Weapon Specialization, and Greater Weapon Specialization as feats once she qualifies for them normally (although she does not have to fulfill the prerequisite of having fighter levels in order to select these feats)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreatWeapFocusQualify,WeapSpecQualify,GreatWeapSpecQualify|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 29,
+    "record_key": "Divine Scion ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

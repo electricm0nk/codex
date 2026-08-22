@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant Void Elemental School ~ Void Awareness",
+    "name": "Void Awareness",
+    "class": "Savant Void Elemental School",
+    "description": "Your ability to recognize the void allows your body to react to magical manifestations before you're even aware of them. You gain a +%1 insight bonus on saving throws against spells and spell-like abilities.|VoidAwarenessBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Void Elemental School ~ Void Awareness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoidAwarenessBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your ability to recognize the void allows your body to react to magical manifestations before you're even aware of them. You gain a +%1 insight bonus on saving throws against spells and spell-like abilities.|VoidAwarenessBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you would be affected by a spell or spell-like ability that allows a saving throw, you can roll twice to save against the effect and take the better result.|PREVARGTEQ:VoidAwarenessBonus,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoidAwarenessBonus|2+floor(ArcanistSavantSchoolLVL/5)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 insight bonus against spells and spell-like abilities|VoidAwarenessBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2623,
+    "record_key": "Savant Void Elemental School ~ Void Awareness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Skinwalker ~ Ability Scores",
+    "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
+    "race_key": "Skinwalker",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Skinwalker Racial Trait",
+      "Skinwalker Racial Default",
+      "SpecialQuality",
+      "Racial Ability Scores"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Skinwalker_ReplaceAbilityScores",
+    "sets_replace_flags": [],
+    "description": "Skinwalkers are attuned to the natural order and value passion above reason. Their bestial forms strengthen their bodies in various ways.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Skinwalker_ReplaceAbilityScores=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Skinwalkers are attuned to the natural order and value passion above reason. Their bestial forms strengthen their bodies in various ways."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "WIS",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "INT",
+          "-2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
+    "sha256": "85db848be3900cc747ef7038cb2e8d480f209cc9b9683399fce207d5407516ee",
+    "line": 14,
+    "record_key": "Skinwalker ~ Ability Scores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

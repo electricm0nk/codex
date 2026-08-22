@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Rapport ~ Share Memory",
+    "name": "Share Memory",
+    "class": "Psychic",
+    "description": "At 5th level, you can use share memoryUM at will, but only with a willing target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Rapport ~ Share Memory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, you can use share memoryUM at will, but only with a willing target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1244,
+    "record_key": "Psychic Discipline Rapport ~ Share Memory"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

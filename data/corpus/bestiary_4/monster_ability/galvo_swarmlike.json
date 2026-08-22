@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Galvo ~ Swarmlike",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:galvo"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A galvo has no discernible anatomy, and is not subject to critical hits or flanking. It is also immune to any physical spell or effect that targets a specific number of creatures (including single-target spells such as disintegrate). Mind-affecting effects that target a single creature function normally against a galvo, since the creature's individual components share a hive mind. A galvo takes half again as much damage (+50%%) from damaging area effects such as fireball and splash weapons."
+      },
+      {
+        "key": "KEY",
+        "value": "Galvo ~ Swarmlike"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 740,
-    "record_key": "Galvo ~ Swarmlike"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 740,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Galvo ~ Swarmlike",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

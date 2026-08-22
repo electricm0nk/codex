@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Courtier ~ Fey Contacts",
+    "name": "Fey Contacts",
+    "class": "Bard",
+    "description": "Thanks to his fey contacts and knowledge of the byzantine trade customs of the fey courts, a fey courtier can treat any wilderness area with fey residents as a settlement with a certain base value and purchase limit based on his bard level for the purpose of buying and selling magic items. See page 205 of the GameMastery Guide for rules on settlement base values and purchase limits. The fey courtier can also use these contacts to gather information about the residents, geography, and nearby areas with Diplomacy. [2nd Level 50 gp Base Value 500 gp Purchase Limit; 6th Level 500 gp Base Value 2,500 gp Purchase Limit; 10th Level 2,000 Base Value gp 10,000 gp Purchase Limit; 14th Level 8,000 Base Value gp 50,000 gp Purchase Limit; 18th Level 32,000 Base Value gp 200,000 gp Purchase Limit]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Courtier ~ Fey Contacts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FeyCourtierClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Thanks to his fey contacts and knowledge of the byzantine trade customs of the fey courts, a fey courtier can treat any wilderness area with fey residents as a settlement with a certain base value and purchase limit based on his bard level for the purpose of buying and selling magic items. See page 205 of the GameMastery Guide for rules on settlement base values and purchase limits. The fey courtier can also use these contacts to gather information about the residents, geography, and nearby areas with Diplomacy. [2nd Level 50 gp Base Value 500 gp Purchase Limit; 6th Level 500 gp Base Value 2,500 gp Purchase Limit; 10th Level 2,000 Base Value gp 10,000 gp Purchase Limit; 14th Level 8,000 Base Value gp 50,000 gp Purchase Limit; 18th Level 32,000 Base Value gp 200,000 gp Purchase Limit]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 261,
+    "record_key": "Fey Courtier ~ Fey Contacts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

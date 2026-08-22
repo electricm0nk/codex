@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Giant Vulture",
     "delivery": null,
@@ -13,6 +11,28 @@
     "owners": [
       "monster_codex:companion:companion_giant_vulture"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Giant Vulture"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Giant Vulture)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -20,16 +40,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
-    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff",
-    "line": 14,
-    "record_key": "Companion Advancement ~ Giant Vulture"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Giant Vulture",
+    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

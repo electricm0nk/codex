@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3300.0,
+    "description": "This large bearskin cloak is almost too big for a human to wear comfortably. The wearer gains a +2 competence bonus on Intimidate checks. Once per day, the wearer can use Bless; using this ability causes the hair on the cloak to bristle menacingly. If the stone giant deity Urazra is the wearer's patron, the wearer can use Beast Shape II once per day to transform into a black or brown bear for up to 7 minutes. Some champions of Urazra claim to have more powerful pelts that allow them to take the form of polar bears or even dire bears.",
+    "key": "Bear Pelt Of The Bonebreaker",
+    "name": "Bear Pelt Of The Bonebreaker",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Intimidate",
+          "2",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "3300"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Bear Pelt Of The Bonebreaker|TIMES=1|CASTERLEVEL=7|Bless"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Bear Pelt Of The Bonebreaker|TIMES=1|CASTERLEVEL=7|Beast Shape II (Bear Pelt Of The Bonebreaker)|PREDEITY:1,Urazra"
+      },
+      {
+        "key": "DESC",
+        "value": "This large bearskin cloak is almost too big for a human to wear comfortably. The wearer gains a +2 competence bonus on Intimidate checks. Once per day, the wearer can use Bless; using this ability causes the hair on the cloak to bristle menacingly. If the stone giant deity Urazra is the wearer's patron, the wearer can use Beast Shape II once per day to transform into a black or brown bear for up to 7 minutes. Some champions of Urazra claim to have more powerful pelts that allow them to take the form of polar bears or even dire bears."
+      }
+    ],
+    "weight_lbs": 10.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 174,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Bear Pelt Of The Bonebreaker",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

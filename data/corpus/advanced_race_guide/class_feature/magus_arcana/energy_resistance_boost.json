@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Energy Resistance Boost",
+    "name": "Energy Resistance Boost",
+    "class": "Magus Arcana",
+    "description": "As a swift action, the elemental knight can expend 1 point from his arcane pool or 1 round of elemental assault to increase all of his racial energy resistances by +5 for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Energy Resistance Boost"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Elemental Knight ~ Elemental Arcana"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, the elemental knight can expend 1 point from his arcane pool or 1 round of elemental assault to increase all of his racial energy resistances by +5 for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 967,
+    "record_key": "Magus Arcana ~ Energy Resistance Boost"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Trickery Domain",
+    "name": "Trickery",
+    "class": "Forbidden Rites Domain",
+    "description": "You are a master of illusions and deceptions. Bluff, Disguise, and Stealth are class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Trickery Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.TrickeryDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a master of illusions and deceptions. Bluff, Disguise, and Stealth are class skills."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Copycat|PREDOMAIN:1,Trickery|PREVARGTEQ:DomainTrickeryAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Master's Illusion|PREDOMAIN:1,Trickery|PREVARGTEQ:DomainTrickeryAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryDC|10+(DomainTrickeryLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff|Disguise|Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Disguise Self|Cleric=2|Invisibility|Cleric=3|Nondetection|Cleric=4|Confusion|Cleric=5|False Vision|Cleric=6|Mislead|Cleric=7|Screen|Cleric=8|Invisibility (Mass)|Cleric=9|Time Stop"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1056,
+    "record_key": "Forbidden Rites Domain ~ Trickery Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master Spy ~ Assumption",
+    "name": "Assumption",
+    "class": "Master Spy",
+    "description": "The ultimate ability of the master spy is to take over another persona entirely, making it her own. As a full-round action, the spy can touch a helpless creature and shift her aura to that of her target. This confuses divination effects and spells, even ones as powerful as discern location, such that they register the spy as being the creature she has touched. This ability is not proof against the actions of deities or similarly powerful beings. The assumption of an identity lasts until the master spy ends it (a standard action) or she uses the ability on another creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Spy ~ Assumption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The ultimate ability of the master spy is to take over another persona entirely, making it her own. As a full-round action, the spy can touch a helpless creature and shift her aura to that of her target. This confuses divination effects and spells, even ones as powerful as discern location, such that they register the spy as being the creature she has touched. This ability is not proof against the actions of deities or similarly powerful beings. The assumption of an identity lasts until the master spy ends it (a standard action) or she uses the ability on another creature."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1417,
+    "record_key": "Master Spy ~ Assumption"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

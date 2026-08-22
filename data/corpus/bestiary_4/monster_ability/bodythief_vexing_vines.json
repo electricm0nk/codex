@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Bodythief ~ Vexing Vines",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:bodythief"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Each of the bodythief's tentacle vines plus its bite attack can deliver its own attack of opportunity, giving the bodythief five attacks of opportunity per round. It cannot deliver attacks of opportunity with a portion of its body being used to grapple. The bodythief can give up an attack of opportunity with a tentacle to deflect a missile as though it had the Deflect Arrows feat."
+      },
+      {
+        "key": "KEY",
+        "value": "Bodythief ~ Vexing Vines"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 321,
-    "record_key": "Bodythief ~ Vexing Vines"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 321,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Bodythief ~ Vexing Vines",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

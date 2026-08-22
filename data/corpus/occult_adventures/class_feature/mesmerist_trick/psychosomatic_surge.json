@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist Trick ~ Psychosomatic Surge",
+    "name": "Psychosomatic Surge",
+    "class": "Mesmerist Trick",
+    "description": "Psychic magic soothes the subject, alleviating her wounds temporarily. The mesmerist can trigger this trick when the subject takes damage. The subject gains 1d8",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Trick ~ Psychosomatic Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic magic soothes the subject, alleviating her wounds temporarily. The mesmerist can trigger this trick when the subject takes damage. The subject gains 1d8"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1|MesmeristLVL/2|PREVARGTEQ:MesmeristLVL,2"
+      },
+      {
+        "key": "DESC",
+        "value": " temporary hit points. If the damage from the triggering attack would have reduced the subject to 0 hit points or fewer, this trick grants an additional 1d8 temporary hit points. These temporary hit points last for 1 hour or until discharged."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 950,
+    "record_key": "Mesmerist Trick ~ Psychosomatic Surge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

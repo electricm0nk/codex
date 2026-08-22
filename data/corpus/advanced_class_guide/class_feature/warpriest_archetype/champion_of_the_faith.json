@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Champion of the Faith",
+    "name": "Champion of the Faith",
+    "class": "Warpriest Archetype",
+    "description": "Champions of the faith are crusaders who use the power of their divine patron to annihilate the faith's enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Champion of the Faith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype.WarpriestSacredWeapon.WarpriestBonusFeat3.WarpriestChannelEnergy.CF_WarpriestBonusFeat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Champion of the Faith],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestSacredWeapon,TYPE.WarpriestBonusFeat3,TYPE.WarpriestChannelEnergy,TYPE.CF_WarpriestBonusFeat]"
+      },
+      {
+        "key": "DESC",
+        "value": "Champions of the faith are crusaders who use the power of their divine patron to annihilate the faith's enemies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Champion of the Faith ~ Chosen Alignment|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Champion of the Faith ~ Sacred Weapon|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Champion of the Faith ~ Detect Alignment|PRECLASS:1,Warpriest=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Champion of the Faith ~ Smite|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Warpriest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3930,
+    "record_key": "Warpriest Archetype ~ Champion of the Faith"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

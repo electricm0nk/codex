@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bodily Mutation ~ Slimy",
+    "name": "Slimy",
+    "class": "Bodily Mutation",
+    "description": "The mutation mind exudes a thin layer of oily slime over her body, granting her a +4 bonus to CMD. This ability alters phrenic amplifications.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bodily Mutation ~ Slimy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Mind Class Feature.Bodily Mutation.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation mind exudes a thin layer of oily slime over her body, granting her a +4 bonus to CMD. This ability alters phrenic amplifications."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1597,
+    "record_key": "Bodily Mutation ~ Slimy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

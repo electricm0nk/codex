@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Terrain Dominance ~ Underground",
+    "name": "Terrain Dominance (Underground)",
+    "class": "Terrain Dominance",
+    "description": "The horizon walker gains darkvision with a range of 60 feet. If he already has darkvision 60 feet, its range extends by 60 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Dominance ~ Underground"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainDominance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery ~ Underground"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker gains darkvision with a range of 60 feet. If he already has darkvision 60 feet, its range extends by 60 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|60"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1353,
+    "record_key": "Terrain Dominance ~ Underground"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

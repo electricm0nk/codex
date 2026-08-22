@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sylvan Trickster ~ Wild Empathy",
+    "name": "Wild Empathy",
+    "class": "Rogue",
+    "description": "A sylvan trickster can improve an animal's attitude. This ability functions as the druid ability of the same name, using the sylvan trickster's rogue level as her effective druid level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylvan Trickster ~ Wild Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.SylvanTricksterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sylvan trickster can improve an animal's attitude. This ability functions as the druid ability of the same name, using the sylvan trickster's rogue level as her effective druid level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Empathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildEmpathyLVL|RogueLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 996,
+    "record_key": "Sylvan Trickster ~ Wild Empathy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

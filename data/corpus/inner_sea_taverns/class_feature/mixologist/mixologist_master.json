@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mixologist ~ Mixologist Master",
+    "name": "Mixologist Master",
+    "class": "Alchemist",
+    "description": "A mixologist can have up to two alcoholic extracts for each level of extracts he can prepare as long as he can prepare at least two extracts of that level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mixologist ~ Mixologist Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "A mixologist can have up to two alcoholic extracts for each level of extracts he can prepare as long as he can prepare at least two extracts of that level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 12,
+    "record_key": "Mixologist ~ Mixologist Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

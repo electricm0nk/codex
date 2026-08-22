@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Diabolist ~ Infernal Charisma",
+    "name": "Infernal Charisma",
+    "class": "Diabolist",
+    "description": "You gain a +%1 bonus on all Charisma checks made when interacting with devils.|DiabolistInfernalCharismaBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Diabolist ~ Infernal Charisma"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiabolistInfernalCharismaLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiabolistInfernalCharismaBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on all Charisma checks made when interacting with devils.|DiabolistInfernalCharismaBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiabolistInfernalCharismaBonus|floor((DiabolistInfernalCharismaLVL+2)/3)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_class.lst",
+    "sha256": "a5a8d7ac42951ac0052504a8eda6087015e8f6147164243afe9515e7cac2f588",
+    "line": 9,
+    "record_key": "Diabolist ~ Infernal Charisma"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

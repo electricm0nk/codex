@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Protection",
+    "name": "Protection",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Protection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Protection],[PREABILITY:1,CATEGORY=Special Ability,Core Domain ~ Protection Domain],[PREVARLT:ProtectionDomain,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainProtection,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProtectionDomain|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Protection Domain ~ Resistant Touch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Protection Domain ~ Aura of Protection|PREVARGTEQ:DomainProtectionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|DomainProtectionSaveBonus|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionSaveBonus|(DomainProtectionLVL/5)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionDC|10+(DomainProtectionLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProtectionDomain|1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 391,
+    "record_key": "Inquisitor Domain ~ Protection"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

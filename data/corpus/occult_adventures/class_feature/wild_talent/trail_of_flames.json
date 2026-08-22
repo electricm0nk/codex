@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Trail Of Flames",
+    "name": "Trail Of Flames",
+    "class": "Wild Talent",
+    "description": "Element fire; Type utility (Sp); Level 5; Burn 0 Saving Throw none; Spell Resistance yes When you take the withdraw or run action, you can leave a wall of fire in all squares you exit that lasts for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Trail Of Flames"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Fire"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type utility (Sp); Level 5; Burn 0 Saving Throw none; Spell Resistance yes When you take the withdraw or run action, you can leave a wall of fire in all squares you exit that lasts for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 791,
+    "record_key": "Wild Talent ~ Trail Of Flames"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

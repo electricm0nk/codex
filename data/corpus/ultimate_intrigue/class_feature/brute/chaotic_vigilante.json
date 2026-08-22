@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brute ~ Chaotic Vigilante",
+    "name": "Chaotic Vigilante",
+    "class": "Vigilante",
+    "description": "A brute's vigilante alignment must be chaotic, and his vigilante identity and his social identity must be within one step of each other on the alignment axis. This ability alters dual identity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brute ~ Chaotic Vigilante"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A brute's vigilante alignment must be chaotic, and his vigilante identity and his social identity must be within one step of each other on the alignment axis. This ability alters dual identity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 978,
+    "record_key": "Brute ~ Chaotic Vigilante"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

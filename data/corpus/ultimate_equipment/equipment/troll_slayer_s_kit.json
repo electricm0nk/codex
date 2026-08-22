@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 30.0,
+    "description": "This kit includes 1 vial of alchemist's fire, 1 flask of acid, 10 torches, one tindertwig, and 5 flasks of oil.",
+    "key": "Troll Slayer's Kit",
+    "name": "Troll Slayer's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "30"
+      },
+      {
+        "key": "WT",
+        "value": "17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "SPROP",
+        "value": "This kit includes 1 vial of alchemist's fire, 1 flask of acid, 10 torches, one tindertwig, and 5 flasks of oil."
+      }
+    ],
+    "weight_lbs": 17.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 610,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Troll Slayer's Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

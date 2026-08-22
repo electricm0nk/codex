@@ -1,0 +1,147 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle Archetype ~ Elementalist Oracle",
+    "name": "Elementalist Oracle",
+    "class": "Oracle Archetype",
+    "description": "An elementalist oracle shares an affinity with the elements and elemental creatures. She can communicate with elemental creatures and can eventually become an elemental herself. She sees perfection in manifestations of elemental fury in the natural world, be they the thunderous wrath of the storm, the churning waters of the ocean's tides or a flooding river, the terrain-shaping power of a landslide or earthquake, or the apocalyptic fury of a volcanic eruption.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Elementalist Oracle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Elementalist Oracle],[!PREFACT:1,ABILITIES,Oracle_Archetype_MysterySpell4=True,Oracle_Archetype_MysterySpell6=True,Oracle_Archetype_MysterySpell8=True,Oracle_Archetype_MysterySpell10=True,Oracle_Archetype_MysterySpell12=True,Oracle_Archetype_MysterySpell18=True,Oracle_Archetype_Revelation1=True,Oracle_Archetype_Revelation11=True,Oracle_Archetype_FinalRevelation=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "An elementalist oracle shares an affinity with the elements and elemental creatures. She can communicate with elemental creatures and can eventually become an elemental herself. She sees perfection in manifestations of elemental fury in the natural world, be they the thunderous wrath of the storm, the churning waters of the ocean's tides or a flooding river, the terrain-shaping power of a landslide or earthquake, or the apocalyptic fury of a volcanic eruption."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Elementalist Oracle ~ Bonus Spells|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Oracle ~ Elemental Linguist|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Oracle ~ Elemental Form|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elementalist Oracle ~ Elemental Revelation|PRECLASS:1,Oracle=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_FinalRevelation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_FinalRevelation|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 827,
+    "record_key": "Oracle Archetype ~ Elementalist Oracle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Mad Scientist",
+    "name": "Mad Scientist",
+    "class": "Alchemist Archetype",
+    "description": "The mad scientist's colleagues laughed at her insights, mocked her theories, and hounded her from the halls of academia, simply because they were too weak and frightened to understand her work. They thought she was finished. They were wrong.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Mad Scientist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": "The mad scientist's colleagues laughed at her insights, mocked her theories, and hounded her from the halls of academia, simply because they were too weak and frightened to understand her work. They thought she was finished. They were wrong."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Mad Scientist],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Alchemy=True,Alchemist_Archetype_Discovery2=True,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_Discovery4=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mad Scientist ~ Mad Genius|PRECLASS:1,Alchemist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mad Scientist ~ Mad Mutagen|PRECLASS:1,Alchemist=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery4|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 7,
+    "record_key": "Alchemist Archetype ~ Mad Scientist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

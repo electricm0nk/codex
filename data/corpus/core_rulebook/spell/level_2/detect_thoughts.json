@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You detect surface thoughts. The amount of information revealed depends on how long you study a particular area or subject. 1st Round: Presence or absence of thoughts [from conscious creatures with Intelligence scores of 1 or higher]. 2nd Round: Number of thinking minds and the Intelligence score of each. If the highest Intelligence is 26 or higher [and at least 10 points higher than your own Intelligence score], you are stunned for 1 round and the spell ends. This spell does not let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting. 3rd Round: Surface thoughts of any mind in the area. A target's Will save prevents you from reading its thoughts, and you must cast detect thoughts again to have another chance. Creatures of animal intelligence [Int 1 or 2] have simple, instinctual thoughts. Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.",
     "key": "Detect Thoughts",
-    "school": "Divination",
     "level": 2,
-    "description": "You detect surface thoughts. The amount of information revealed depends on how long you study a particular area or subject. 1st Round: Presence or absence of thoughts [from conscious creatures with Intelligence scores of 1 or higher]. 2nd Round: Number of thinking minds and the Intelligence score of each. If the highest Intelligence is 26 or higher [and at least 10 points higher than your own Intelligence score], you are stunned for 1 round and the spell ends. This spell does not let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting. 3rd Round: Surface thoughts of any mind in the area. A target's Will save prevents you from reading its thoughts, and you must cast detect thoughts again to have another chance. Creatures of animal intelligence [Int 1 or 2] have simple, instinctual thoughts. Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You detect surface thoughts. The amount of information revealed depends on how long you study a particular area or subject. 1st Round: Presence or absence of thoughts [from conscious creatures with Intelligence scores of 1 or higher]. 2nd Round: Number of thinking minds and the Intelligence score of each. If the highest Intelligence is 26 or higher [and at least 10 points higher than your own Intelligence score], you are stunned for 1 round and the spell ends. This spell does not let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting. 3rd Round: Surface thoughts of any mind in the area. A target's Will save prevents you from reading its thoughts, and you must cast detect thoughts again to have another chance. Creatures of animal intelligence [Int 1 or 2] have simple, instinctual thoughts. Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You detect surface thoughts.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Knowledge=2"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration, up to (CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "60 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/detectThoughts.html#_detect-thoughts"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Cone-shaped emanation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 162,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 923,
-    "record_key": "Detect Thoughts.MOD"
+    "record_key": "Detect Thoughts",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

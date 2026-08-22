@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cipher ~ Null Aura",
+    "name": "Null Aura",
+    "class": "Investigator",
+    "description": "A cipher becomes much harder to notice with divinations. He gains a +4 bonus on saving throws against divination spells, spell-like abilities, and effects. Attempts to locate the cipher with scrying and other spells that share the knowledge and connection rules with scrying function only if the caster has firsthand or familiar knowledge of the cipher, or has one of his body parts (not from secondhand knowledge, possession, or a likeness of the cipher). If the caster does not meet these conditions, or if the cipher succeeds at a saving throw to negate such an effect, the spell or effect reveals nothing but darkness as if the target was invalid or did not exist; unlike normal, even if she is using a spell with a single target, the caster of the divination effect does not discover that her target succeeded at a saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cipher ~ Null Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.CipherClassFeatures.SpecialQuality.SpellLike.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A cipher becomes much harder to notice with divinations. He gains a +4 bonus on saving throws against divination spells, spell-like abilities, and effects. Attempts to locate the cipher with scrying and other spells that share the knowledge and connection rules with scrying function only if the caster has firsthand or familiar knowledge of the cipher, or has one of his body parts (not from secondhand knowledge, possession, or a likeness of the cipher). If the caster does not meet these conditions, or if the cipher succeeds at a saving throw to negate such an effect, the spell or effect reveals nothing but darkness as if the target was invalid or did not exist; unlike normal, even if she is using a spell with a single target, the caster of the divination effect does not discover that her target succeeded at a saving throw."
+      },
+      {
+        "key": "DESC",
+        "value": " The cipher benefits from constant nondetection, requiring those who wish to use divinations on him to succeed at a caster level check (DC %1).|InvestigatorLVL+15|PRECLASS:1,Investigator=9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 on saves vs. divination spells, spell-like abilities, and effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 504,
+    "record_key": "Cipher ~ Null Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

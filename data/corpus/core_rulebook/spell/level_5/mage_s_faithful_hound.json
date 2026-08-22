@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You conjure up a phantom watchdog that is invisible to everyone but yourself. It then guards the area where it was conjured [it does not move]. The hound immediately starts barking loudly if any Small or larger creature approaches within 30 feet of it. [Those within 30 feet of the hound when it is conjured may move about in the area, but if they leave and return, they activate the barking.] The hound sees invisible and ethereal creatures. It does not react to figments, but it does react to shadow illusions. If an intruder approaches to within 5 feet of the hound, the dog stops barking and delivers a vicious bite [+10 attack bonus, 2d6+3 points of piercing damage] once per round. The dog also gets the bonuses appropriate to an invisible creature [see invisibility]. The dog is considered ready to bite intruders, so it delivers its first bite on the intruder's turn. Its bite is the equivalent of a magic weapon for the purpose of damage reduction. The hound cannot be attacked, but it can be dispelled. The spell lasts for 1 hour per caster level, but once the hound begins barking, it lasts only 1 round per caster level. If you are ever more than 100 feet distant from the hound, the spell ends.",
     "key": "Mage's Faithful Hound",
-    "school": "Conjuration",
     "level": 5,
-    "description": "You conjure up a phantom watchdog that is invisible to everyone but yourself. It then guards the area where it was conjured [it does not move]. The hound immediately starts barking loudly if any Small or larger creature approaches within 30 feet of it. [Those within 30 feet of the hound when it is conjured may move about in the area, but if they leave and return, they activate the barking.] The hound sees invisible and ethereal creatures. It does not react to figments, but it does react to shadow illusions. If an intruder approaches to within 5 feet of the hound, the dog stops barking and delivers a vicious bite [+10 attack bonus, 2d6+3 points of piercing damage] once per round. The dog also gets the bonuses appropriate to an invisible creature [see invisibility]. The dog is considered ready to bite intruders, so it delivers its first bite on the intruder's turn. Its bite is the equivalent of a magic weapon for the purpose of damage reduction. The hound cannot be attacked, but it can be dispelled. The spell lasts for 1 hour per caster level, but once the hound begins barking, it lasts only 1 round per caster level. If you are ever more than 100 feet distant from the hound, the spell ends."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You conjure up a phantom watchdog that is invisible to everyone but yourself. It then guards the area where it was conjured [it does not move]. The hound immediately starts barking loudly if any Small or larger creature approaches within 30 feet of it. [Those within 30 feet of the hound when it is conjured may move about in the area, but if they leave and return, they activate the barking.] The hound sees invisible and ethereal creatures. It does not react to figments, but it does react to shadow illusions. If an intruder approaches to within 5 feet of the hound, the dog stops barking and delivers a vicious bite [+10 attack bonus, 2d6+3 points of piercing damage] once per round. The dog also gets the bonuses appropriate to an invisible creature [see invisibility]. The dog is considered ready to bite intruders, so it delivers its first bite on the intruder's turn. Its bite is the equivalent of a magic weapon for the purpose of damage reduction. The hound cannot be attacked, but it can be dispelled. The spell lasts for 1 hour per caster level, but once the hound begins barking, it lasts only 1 round per caster level. If you are ever more than 100 feet distant from the hound, the spell ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You conjure up a phantom watchdog that is invisible to everyone but yourself.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours or until discharged, then (CASTERLEVEL) rounds; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/mageSFaithfulHound.html#_mage-s-faithful-hound"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.306"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Phantom watchdog"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 367,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1121,
-    "record_key": "Mage's Faithful Hound.MOD"
+    "record_key": "Mage's Faithful Hound",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

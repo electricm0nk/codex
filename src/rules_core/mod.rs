@@ -3,6 +3,7 @@
 pub mod archetype_resolver;
 pub mod cache_gen;
 pub mod character_input;
+pub mod class_feature_pool_catalog;
 pub mod composed_input;
 pub mod contract;
 pub mod corpus_literal_sweep;
@@ -28,6 +29,7 @@ pub mod pilot_compute;
 pub mod pilot_compute_corpus;
 pub mod pilot_failure;
 pub mod pilot_view_model;
+pub mod race_creation;
 pub mod race_resolver;
 pub mod rules_tables;
 pub mod shape_b_v1;

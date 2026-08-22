@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Charm",
+    "name": "Charm",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Charm",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Charm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchCharmSteps|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Charm|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Charm"
+      },
+      {
+        "key": "DESC",
+        "value": "The hex improves the attitude of the target by %1 step, as if the witch had successfully used the Diplomacy skill.  The effect lasts for %2 rounds. A Will save negates this effect. Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.   This is a mind-affecting charm effect.|WitchCharmSteps|WitchHexStat"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Charm"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Charm|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Charm|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Charm)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchCharmSteps|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchCharmSteps|1|PREVARGTEQ:WitchHexAbilityLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 888,
+    "record_key": "Witch Hex ~ Charm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oheno Liberator ~ Covert Commander",
+    "name": "Covert Commander",
+    "class": "Rogue",
+    "description": "An Okeno liberator grants all allies within 30 feet who are in her line of sight (but not herself) a +i competence bonus on Disguise and Stealth checks. This bonus increases by 1 for every 3 levels beyond 3rd. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oheno Liberator ~ Covert Commander"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An Okeno liberator grants all allies within 30 feet who are in her line of sight (but not herself) a +i competence bonus on Disguise and Stealth checks. This bonus increases by 1 for every 3 levels beyond 3rd. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 154,
+    "record_key": "Oheno Liberator ~ Covert Commander"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

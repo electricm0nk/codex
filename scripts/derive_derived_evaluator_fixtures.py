@@ -105,11 +105,144 @@ SCALARS_SUBSTRING = ("CASTERLEVEL", "CLASSLEVEL", "TOTALLEVELS", "TOTALLEVEL",
                      "PLUSTOTAL", "SPELLLEVEL")
 SCALARS_WORD = ("BAB", "HD", "STR", "DEX", "CON", "INT", "WIS", "CHA", "TL",
                 "CL", "RACESIZE")
-HELD_STATUSES = ("ingested-magnitude", "grounded", "text-complete")
+# SD31-W29-LANE1 (corrected by wave 29 INTEGRATION after adversarial
+# review -- see `todo/defects.md` D7 and `todo/sweeps.md` S6 for the full
+# correction record): the committed fixture's own 94 `entries` reproducibly
+# drop to 0 on a fresh run from the committed state. The dominant cause was
+# the write step rebuilding the whole document from scratch and only
+# preserving a hardcoded `"monster_"` prefix (fixed below, in `main()`,
+# by preserving every key BY EXCLUSION instead) -- that alone accounts for
+# all 2,110 lost rows across all 8 families, INCLUDING every one of this
+# family's own 94 `entries` (83 of which are carried forward rather than
+# freshly re-derived; see `main()`'s carry-forward-merge comment for why).
+#
+# `fixture-verified` (the stamp `apply_done_rung_stamps()`,
+# `src/bin/v06_work_inventory.rs`, writes onto a `derived` unit once THIS
+# fixture already verified it) being missing from this tuple is a SEPARATE,
+# real, independently-necessary bug: without it, a `derived` unit newly
+# verified since the fixture was last regenerated stays permanently
+# invisible to this generator, one that the carry-forward merge alone
+# cannot mask forever (a unit dropped from the LIVE selection because its
+# own status is never recognised is never carried forward either, since
+# carry-forward only preserves rows the PREVIOUS run already wrote). Fixed
+# by adding it back.
+#
+# `literal-verified` was ALSO added here by the original lane 1 fix, on the
+# (wrong) theory that it restored the 83 reclassified-to-`static` `entries`
+# rows. It cannot: `apply_done_rung_stamps()` stamps `literal-verified`
+# ONLY inside its `WiringClass::Static` arm, and this generator's own
+# selection below is gated on `wiring_class == "derived"` -- a
+# `derived`+`literal-verified` unit is therefore structurally impossible
+# (confirmed directly against the live inventory: 0 such units exist), so
+# `literal-verified` in this tuple was unreachable dead configuration.
+# Removed.
+#
+# Reproduced by running this script ONCE from the committed state (the
+# destruction is complete on the very first run -- a SECOND run then diffs
+# clean against the first, which is exactly why a twice-run-diff test
+# cannot catch this class of bug).
+# `scripts/tests/test_derive_derived_evaluator_fixtures.py` pins this as a
+# run-once-vs-committed regression instead; see that file's module
+# docstring for the full twice-run-diff-is-blind argument. It also pins
+# (`at_least_one_entry_is_freshly_derived_this_run_not_merely_carried_
+# forward`) that `fixture-verified` specifically stays in this tuple: the
+# carry-forward merge in `main()` makes a REGRESSION here invisible to
+# every other test in this file (reverting to the original 3-status tuple
+# leaves the committed fixture byte-identical AND every other test green,
+# because the generator derives zero fresh rows and the merge silently
+# absorbs that) -- so this is the one guard load-bearing enough that it is
+# also asserted directly, immediately below.
+HELD_STATUSES = (
+    "ingested-magnitude", "grounded", "text-complete", "fixture-verified",
+)
+assert "fixture-verified" in HELD_STATUSES, (
+    "fixture-verified must stay in HELD_STATUSES -- its absence is silently "
+    "masked by the carry-forward merge in main() and caught by nothing else "
+    "(todo/defects.md D7, todo/sweeps.md S6)"
+)
 
 # The engine reads its equipment records from `data/corpus/<book>/equipment/`.
 # Only `equipment`-family kinds reach `compute_equipment_effects` at all.
 EVALUATED_KINDS = ("equipment", "equipment_modifier")
+
+
+def family_entry_counts(doc):
+    """`{top-level list-valued key: row count}` for a fixture document.
+
+    Every `*_entries` family this script owns or preserves is a JSON list at
+    the top level; every sidecar (`*_token_family`, `*_derivation`, ...) is a
+    string or dict and is ignored here on purpose -- this function answers
+    exactly one question, "how many rows does each family carry," nothing
+    about their content.
+    """
+    return {k: len(v) for k, v in doc.items() if isinstance(v, list)}
+
+
+def shrunk_families(before, after):
+    """Families present in `before` whose row count went DOWN in `after`.
+
+    Returns `{family: (before_count, after_count)}`, empty if none shrank.
+    This is the single invariant the whole self-erasure bug (THE-BOX.md wave
+    28 S3 item #1 / `defects.md` D7) violated: a generated fixture may grow
+    freely across a run, it may never silently shrink. `main()` calls this on
+    every write, unconditionally, over EVERY family (not just the one this
+    script derives) -- so a future bug that corrupts a PRESERVED sibling
+    family some other way is caught by the same gate, not just a repeat of
+    this exact bug shape. `scripts/tests/test_derive_derived_evaluator_
+    fixtures.py` imports this function directly and also reproduces the
+    original defect's exact output shape against it, so the check itself is
+    proven able to fail, not just proven able to pass.
+    """
+    before_counts = family_entry_counts(before)
+    after_counts = family_entry_counts(after)
+    return {
+        k: (n, after_counts.get(k, 0))
+        for k, n in before_counts.items()
+        if after_counts.get(k, 0) < n
+    }
+
+
+def own_document_fields(entries):
+    """This script's own top-level fixture keys, and ONLY those keys.
+
+    SD31-W29-INTEGRATE (adversarial-review CONFIRMED finding, MEDIUM):
+    `main()` used to keep a hand-maintained `OWN_KEYS` set that had to be
+    kept in sync BY EYE with the literal keys in the `document = {...}`
+    dict built further down -- proven able to desync by mutation (removing
+    one key from that set left a stale `preserved` value silently
+    overriding a freshly-derived one, with zero test catching it). Making
+    this function the SINGLE SOURCE for both the exclusion set (`main()`
+    computes `OWN_KEYS = frozenset(own_document_fields([]))`, needing only
+    the key NAMES, not real values) and the actual written document
+    (`main()` builds `{**own_document_fields(entries), **preserved}`)
+    makes a desync structurally impossible: there is only one place the
+    key list is written, ever.
+    """
+    return {
+        "schema": 1,
+        "generated_by": "scripts/derive_derived_evaluator_fixtures.py",
+        "pcgen_corpus_relative_root": CORPUS_RELATIVE_ROOT,
+        "token_family": "BONUS:STAT",
+        "derivation": (
+            "PCGen `BONUS:STAT|<comma-separated ability list>|<integer value>"
+            "[|<extra qualifiers>]`. `expected.abilities` is the ability list "
+            "split on commas; `expected.bonus` is the integer value. Trailing "
+            "qualifiers (`TYPE=Enhancement`, ...) select a stacking type and do "
+            "not change the magnitude. Read straight out of the upstream PCGen "
+            "`.lst` bytes named by `upstream_lst`/`upstream_line`."
+        ),
+        "independence": (
+            "Every value here is a function of the upstream PCGen `.lst` bytes "
+            "alone. The generator imports no engine module, runs no engine "
+            "binary, and opens no file under `data/corpus/` -- which is the "
+            "ingest the engine actually evaluates, and therefore the artifact "
+            "this fixture must stay independent of. `docs/work-inventory.json` "
+            "is read for unit identity and source-line provenance only. This "
+            "fixture is committed before the check that consumes it is written "
+            "(SD-32 E6-F1)."
+        ),
+        "entries": entries,
+    }
 
 
 def pcgen_data_root():
@@ -289,31 +422,142 @@ def main():
     if args.report:
         return
 
-    document = {
-        "schema": 1,
-        "generated_by": "scripts/derive_derived_evaluator_fixtures.py",
-        "pcgen_corpus_relative_root": CORPUS_RELATIVE_ROOT,
-        "token_family": "BONUS:STAT",
-        "derivation": (
-            "PCGen `BONUS:STAT|<comma-separated ability list>|<integer value>"
-            "[|<extra qualifiers>]`. `expected.abilities` is the ability list "
-            "split on commas; `expected.bonus` is the integer value. Trailing "
-            "qualifiers (`TYPE=Enhancement`, ...) select a stacking type and do "
-            "not change the magnitude. Read straight out of the upstream PCGen "
-            "`.lst` bytes named by `upstream_lst`/`upstream_line`."
-        ),
-        "independence": (
-            "Every value here is a function of the upstream PCGen `.lst` bytes "
-            "alone. The generator imports no engine module, runs no engine "
-            "binary, and opens no file under `data/corpus/` -- which is the "
-            "ingest the engine actually evaluates, and therefore the artifact "
-            "this fixture must stay independent of. `docs/work-inventory.json` "
-            "is read for unit identity and source-line provenance only. This "
-            "fixture is committed before the check that consumes it is written "
-            "(SD-32 E6-F1)."
-        ),
-        "entries": entries,
-    }
+    # SD31-W29-LANE1 (was SD31-E6-F11-002): this script only ever derives the
+    # `kind=equipment` `BONUS:STAT` family below -- every OTHER top-level
+    # family in the committed fixture (`monster_entries`, `spell_entries`,
+    # `spell_range_entries`, `companion_entries`, `companion_skill_entries`,
+    # `companion_save_dc_entries`, `class_feature_entries`,
+    # `class_feature_description_entries`, `monster_sla_entries`,
+    # `monster_ability_entries`, `monster_ability_formula_entries`, and their
+    # `*_token_family`/`*_derivation`/`*_independence`/`*_coverage` sidecar
+    # keys) is generated by a SIBLING script and hand-appended or merged
+    # directly into this same committed JSON.
+    #
+    # The previous fix here (`**monster_keys`) special-cased ONLY the
+    # `monster_` prefix and silently dropped every other sibling family on
+    # every write -- 2,015 entries across 7 more families, confirmed by
+    # running this script twice in an isolated worktree and diffing against
+    # the committed baseline (THE-BOX.md wave 28 S3 item #1). The root cause
+    # was never the missing prefix; it was that this is the ONLY one of the
+    # 10 `scripts/derive_*_fixtures.py` generators that reconstructs the
+    # WHOLE fixture document from scratch on every run. Every sibling
+    # generator instead loads the existing committed document and mutates
+    # ONLY the one top-level key it owns (e.g.
+    # `derive_spell_range_fixtures.py`: `doc["spell_range_entries"] =
+    # entries`), which preserves every other family for free with no
+    # allowlist at all. Fixed by adopting that same shape: preserve by
+    # EXCLUDING this script's own keys, not by including a hardcoded prefix,
+    # so a brand-new sibling family added later needs no matching edit here.
+    # `OWN_KEYS` is derived from `own_document_fields()` itself (not a
+    # separately hand-maintained set) so it can never desync from the keys
+    # the write step actually emits -- see that function's own docstring.
+    OWN_KEYS = frozenset(own_document_fields([]))
+    existing = {}
+    if os.path.exists(FIXTURE):
+        with open(FIXTURE, encoding="utf-8") as fh:
+            existing = json.load(fh)
+    preserved = {k: v for k, v in existing.items() if k not in OWN_KEYS}
+    if preserved:
+        family_keys = sorted(
+            k for k in preserved if k.endswith("_entries")
+        )
+        print(
+            f"preserving {len(family_keys)} sibling *_entries famil"
+            f"{'y' if len(family_keys) == 1 else 'ies'} untouched: "
+            + ", ".join(f"{k}={len(preserved[k])}" for k in family_keys)
+        )
+
+    # Never silently shrink this script's own family -- same "a generated
+    # artifact may grow, it may never silently shrink" posture as
+    # `derive_spell_range_fixtures.py`'s "FATAL: this run would drop N
+    # already-covered unit(s)" guard, but MERGED rather than aborted.
+    #
+    # A pure abort is wrong here for a reason specific to this generator: its
+    # live selection (`held_derived`) is filtered on the unit's CURRENT
+    # `wiring_class` in `docs/work-inventory.json`, a field this script does
+    # not own and cannot control -- 83 of the 94 committed `entries` rows are
+    # for units whose `wiring_class` has since moved from `derived` to
+    # `static` (a real, correct reclassification; each now carries its OWN
+    # `static` done-rung stamp, `literal-verified`, from the entirely
+    # independent `corpus_literal_sweep` -- confirmed by joining every
+    # `entries` unit_id against `docs/work-inventory.json`:
+    # 83 static + 11 derived/fixture-verified = 94 exactly -- the 83 carry
+    # their OWN independent `literal-verified` stamp from `corpus_literal_
+    # sweep`, but that stamp plays no role in THIS generator selecting or
+    # preserving them; they survive purely because this merge carries
+    # forward any `entries` row the live `derived`-only selection no
+    # longer covers, regardless of what status the unit now carries).
+    # An abort-on-shrink guard would therefore refuse to ever run again,
+    # permanently, for a condition outside this script's control -- worse
+    # than the bug it replaces. Merging instead keeps every previously
+    # verified row (each is still a true, re-checkable fact about the pinned
+    # PCGen bytes, never a fabricated one) while letting freshly-derived rows
+    # for units still genuinely `derived`+held overwrite their own entry with
+    # up-to-date provenance. The result can only ever grow or refresh, never
+    # shrink -- satisfying THE-BOX.md wave 28 S3 item #1's `len(after) >=
+    # len(before)` invariant by construction, not by refusal.
+    existing_by_id = {e["unit_id"]: e for e in existing.get("entries", [])}
+    fresh_by_id = {e["unit_id"]: e for e in entries}
+    carried_over = sorted(existing_by_id.keys() - fresh_by_id.keys())
+    if carried_over:
+        print(
+            f"carrying forward {len(carried_over)} previously-derived `entries` "
+            "row(s) this run's live selection no longer covers (their unit's "
+            "wiring_class has moved on since) -- never deleted, only ever grown; "
+            f"first 5: {carried_over[:5]}"
+        )
+    entries = sorted(
+        (fresh_by_id.get(uid, existing_by_id.get(uid))
+         for uid in existing_by_id.keys() | fresh_by_id.keys()),
+        key=lambda e: e["unit_id"],
+    )
+
+    # Wave 29 integration: `shrunk_families` (below) cannot see this class
+    # of regression at all -- a `HELD_STATUSES` bug that makes `held_derived`
+    # (and therefore `entries`, the freshly-derived set) empty produces
+    # `fresh_by_id == {}`, which the carry-forward merge above silently
+    # backfills from `existing`, so `entries` (the merged, WRITTEN list)
+    # never shrinks even though the generator has stopped doing its job
+    # entirely. Adversarial review proved this exact blind spot by
+    # reverting `HELD_STATUSES` to its pre-fix 3-status tuple: all 5
+    # pre-existing tests stayed green and the written fixture stayed
+    # byte-identical. Guard the thing `shrunk_families` cannot: if there
+    # was ANY previously-committed `entries` row to derive from, at least
+    # one row must be FRESH this run, not merely carried forward.
+    if existing_by_id and not fresh_by_id:
+        sys.exit(
+            "FATAL: this run derived ZERO fresh `entries` rows even though "
+            f"{len(existing_by_id)} were previously committed -- HELD_STATUSES "
+            "likely regressed (see todo/defects.md D7, todo/sweeps.md S6); "
+            "refusing to write a fixture the carry-forward merge would "
+            "otherwise silently paper over"
+        )
+
+    # `own_document_fields()` is the SAME function `OWN_KEYS` above was
+    # derived from -- the write step and the exclusion set can no longer
+    # desync, by construction (see that function's own docstring).
+    document = {**own_document_fields(entries), **preserved}
+
+    # Final, unconditional safety net -- over EVERY family, not just the one
+    # this run touched. The merge above already makes `entries` itself
+    # monotonic by construction; this catches any OTHER way a write could
+    # shrink something (e.g. a future edit to the preserve-by-exclusion logic
+    # above that regresses back toward an allowlist). See `shrunk_families`'s
+    # own docstring; `scripts/tests/test_derive_derived_evaluator_fixtures.py`
+    # proves this exact check is not vacuous by running it against the real
+    # pre-fix commit's output.
+    violations = shrunk_families(existing, document)
+    if violations:
+        lines = "\n".join(
+            f"  {k}: {before_n} -> {after_n}"
+            for k, (before_n, after_n) in sorted(violations.items())
+        )
+        sys.exit(
+            f"FATAL: this run would shrink {len(violations)} famil"
+            f"{'y' if len(violations) == 1 else 'ies'} relative to the "
+            f"committed fixture -- refusing to write:\n{lines}"
+        )
+
     os.makedirs(os.path.dirname(FIXTURE), exist_ok=True)
     with open(FIXTURE, "w", encoding="utf-8") as fh:
         json.dump(document, fh, indent=2, sort_keys=False)

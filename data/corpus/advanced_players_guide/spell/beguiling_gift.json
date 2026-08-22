@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Beguiling Gift",
-    "school": "Enchantment",
-    "level": 1,
     "description": "You offer an object to an adjacent creature, and entice it into using or consuming the proffered item. If the target fails its Will save, it immediately takes the offered object, dropping an already held object if necessary. On its next turn, it consumes or dons the object, as appropriate for the item in question. For example, an apple would be eaten, a potion consumed, a ring put on a finger, and a sword wielded in a free hand. If the target is physically unable to accept the object, the spell fails. The subject is under no obligation to continue consuming or using the item once the spell's duration has expired, although it may find a cursed item difficult to be rid of.",
-    "full_text": true
+    "full_text": true,
+    "key": "Beguiling Gift",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject immediately accepts an offered item and uses it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You offer an object to an adjacent creature, and entice it into using or consuming the proffered item. If the target fails its Will save, it immediately takes the offered object, dropping an already held object if necessary. On its next turn, it consumes or dons the object, as appropriate for the item in question. For example, an apple would be eaten, a potion consumed, a ring put on a finger, and a sword wielded in a free hand. If the target is physically unable to accept the object, the spell fails. The subject is under no obligation to continue consuming or using the item once the spell's duration has expired, although it may find a cursed item difficult to be rid of.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(the object to be offered)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "5 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/beguilingGift.html#_beguiling-gift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 35,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1862,
-    "record_key": "Beguiling Gift"
+    "record_key": "Beguiling Gift",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Warrior ~ Strike True",
+    "name": "Strike True",
+    "class": "Order of the Warrior",
+    "description": "The order of the warrior samurai can use his years of training and focus to make the perfect strike. When he uses this ability, the samurai makes an attack as normal. If the attack hits, it is a critical threat. The samurai must roll to confirm the critical as normal. The attack deals the maximum amount of damage, although additional dice from weapon qualities, sneak attack, and additional dice from a critical hit are rolled normally. The damage from this attack ignores any damage reduction the target might have and also causes the target to become blinded, deafened, sickened, or staggered for 1d4 rounds (the samurai's choice). Making this attack is a standard action. The samurai can use this ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Warrior ~ Strike True"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Order of the Warrior_4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The order of the warrior samurai can use his years of training and focus to make the perfect strike. When he uses this ability, the samurai makes an attack as normal. If the attack hits, it is a critical threat. The samurai must roll to confirm the critical as normal. The attack deals the maximum amount of damage, although additional dice from weapon qualities, sneak attack, and additional dice from a critical hit are rolled normally. The damage from this attack ignores any damage reduction the target might have and also causes the target to become blinded, deafened, sickened, or staggered for 1d4 rounds (the samurai's choice). Making this attack is a standard action. The samurai can use this ability once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 222,
+    "record_key": "Order of the Warrior ~ Strike True"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Vampire ~ Dominate",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "beastiary:monster:vampire_spawn"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dominate"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DominateSaveDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DominateSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dominate)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DominateSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vampire can crush a humanoid opponent's will as a standard action. Anyone the vampire targets must succeed on a Will save DC %1 or fall instantly under the vampire's influence, as though by a dominate person spell (caster level 12th). The ability has a range of 30 feet. At the GM's discretion, some vampires might be able to affect different creature types with this power.|DominateSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire ~ Dominate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.271",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1214,
-    "record_key": "Vampire ~ Dominate"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1214,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Vampire ~ Dominate",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,23 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "This spell allows the target to cause the ground to rise up beneath him. As a swift action, the target can cause the ground to rise 5 feet, while all adjacent squares are treated as steep slopes. The groundswell precludes flanking from creatures standing at lower elevations than the target. If the target moves after creating a groundswell, the ground returns to its normal elevation at the end of his turn; otherwise, it remains in place until the target moves or uses a swift action to return the ground to normal. A groundswell cannot increase elevation of the ground beyond 5 feet.",
     "key": "Groundswell",
-    "school": "Transmutation",
     "level": 2,
-    "description": "This spell allows the target to cause the ground to rise up beneath him. As a swift action, the target can cause the ground to rise 5 feet, while all adjacent squares are treated as steep slopes. The groundswell precludes flanking from creatures standing at lower elevations than the target. If the target moves after creating a groundswell, the ground returns to its normal elevation at the end of his turn; otherwise, it remains in place until the target moves or uses a swift action to return the ground to normal. A groundswell cannot increase elevation of the ground beyond 5 feet."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Magus,Ranger=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell allows the target to cause the ground to rise up beneath him. As a swift action, the target can cause the ground to rise 5 feet, while all adjacent squares are treated as steep slopes. The groundswell precludes flanking from creatures standing at lower elevations than the target. If the target moves after creating a groundswell, the ground returns to its normal elevation at the end of his turn; otherwise, it remains in place until the target moves or uses a swift action to return the ground to normal. A groundswell cannot increase elevation of the ground beyond 5 feet."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsDwarf=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/coreRaces/dwarves.html#_groundswell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One Creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 11,
-    "record_key": "Groundswell"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Groundswell",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

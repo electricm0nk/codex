@@ -74,7 +74,7 @@
 //!
 //! # A book's own race scope is not this binary's to widen
 //!
-//! [`IN_SCOPE_RACES`] is the 18 races whose chassis this project has ingested.
+//! [`IN_SCOPE_RACES`] is the 34 races whose chassis this project has ingested (widened 18 -> 24 -> 30 -> 34 across SD-31 waves; see the widening comments on the declaration itself).
 //! A row belonging to any other race is **counted and reported, never
 //! written** — Monster Codex's six Ratfolk alternates are the live instance.
 //! Writing them would create the only Ratfolk content in the repo, for a race
@@ -136,13 +136,105 @@ struct BookSource {
 /// candidate whose `race_trait`-kinded rows are genuine *player-race* alternate
 /// racial traits rather than monster or eidolon abilities filed under a
 /// `_abilities_race` filename.
+/// PCGen's physical storage directory for files `decisions.md §9`
+/// re-attribution has moved the REPORTING book of. Re-attribution never moves
+/// the file, so a citation into this directory is normal and permanent; term
+/// for term the same constant `gen_book_cache.rs` carries.
+const CORE_ESSENTIALS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/core_essentials";
+
 const BOOK_SOURCES: &[BookSource] = &[
+    // Advanced Race Guide -- its own `arg_abilities_race.lst`, PLUS Aasimar's
+    // and Tiefling's *heritage* (subrace) files, which PCGen stores under
+    // `core_essentials/races/<race>/`.
+    //
+    // Those four files used to be a `BookSource` of their own, writing to
+    // `data/corpus/core_essentials/race_trait/`. `decisions.md §9` removed that
+    // book id -- Core Essentials is a PCGen packaging bundle, not a Pathfinder
+    // book -- and the 64 records it wrote are now this book's. The variant
+    // Aasimar and Tiefling heritages ARE Advanced Race Guide content, and the
+    // same two races' other ARG alternate-trait rows already write into the
+    // same `advanced_race_guide/race_trait/{aasimar,tiefling}/` directories, so
+    // this is a merge into an existing destination rather than a new one.
+    //
+    // A record's citation `path` still names `core_essentials/...`, because
+    // re-attribution moves the reporting book, never the physical file
+    // (`gen_book_cache.rs`'s `CORE_ESSENTIALS_RELATIVE`,
+    // `transcribe_monster_tables.py`'s `_CORE_ESSENTIALS_DIR`, and
+    // `classify_companion_rows.py`'s own copy of the same rule). That is why
+    // the wiring-class index below is built with the `core_essentials`
+    // directory as an EXTRA book root: without it every heritage record stamps
+    // `wiring_class: "ambiguous"` regardless of its real corpus shape.
+    //
+    // 48 of the 64 rows are the only rows in this lane whose swap is not
+    // declared on the row itself. Each is gated
+    // `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` on a
+    // *selector* row typed `TYPE:<Race> Subrace`, and which standard trait it
+    // replaces is stated in a third file. Both halves are read here: the
+    // selectors become the records a player picks, and [`subrace_grants`]
+    // supplies the replace-flags and the `ABILITY:...|AUTOMATIC|...` grant
+    // links that make the 48 apply.
+    //
+    // Classified before the round that first ingested them committed to them,
+    // per `decisions.md §45.1`:
+    // `python3 scripts/classify_race_trait_rows.py aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst`
+    // -> aasimar: `in-scope rows 18 | alternate 0 | flag_granted 18`;
+    //    tiefling: `in-scope rows 30 | alternate 0 | flag_granted 30`.
+    // Zero of the 48 are self-gating alternates, which is exactly why the
+    // third file is not optional.
+    //
+    // **`races/skinwalker/` is deliberately not listed.** It carries the same
+    // subrace shape, but Skinwalker is not one of the races this project
+    // models, so `IN_SCOPE_RACES` would drop every row and
+    // `RaceCorpus::resolve` would return `None` for the chassis regardless.
     BookSource {
         corpus_book: "advanced_race_guide",
-        lst_relatives: &["pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst"],
-        subrace_globalvar_relatives: &[],
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+        ],
+        subrace_globalvar_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar_subrace.lst",
+        ],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
     },
+    // Advanced Player's Guide -- INVESTIGATED and deliberately NOT added as a
+    // `BookSource`, SD-31 Epic 6-F4 (2026-08-15). `docs/work-inventory.json`
+    // carried 49 of its rows as `evidence ==
+    // "race_trait_absent_from_race_traits"`, which reads as a genuine
+    // not-yet-ingested gap. It is not: `advanced_race_guide` is Paizo's own
+    // compilation reprint of APG's alternate-racial-trait system, and a
+    // corpus-wide KEY scan (`python3 -c` joining every committed
+    // `race_trait` record's `data.key` across books) found **49 of APG's 50
+    // in-scope rows already ingested, byte-mechanically-identical (same
+    // `sets_replace_flags`, cosmetic wording only), under
+    // `advanced_race_guide`** -- e.g. `Dwarf ~ Ancient Enmity`
+    // (`arg_abilities_race.lst:33` reprints `apg_abilities_race.lst:16`
+    // near-verbatim). The 50th, `Half-Orc ~ Plagueborn`, is APG-exclusive
+    // and was ALREADY ingested outside this binary (`SD29-E7-F2-010`,
+    // `data/corpus/advanced_players_guide/race_trait/half_orc/
+    // half_orc_plagueborn.json`) -- already `computed`/`grounded` before
+    // this cycle touched anything. So APG's true, non-duplicate,
+    // not-yet-ingested contribution is **zero**: adding this `BookSource`
+    // was tried and reverted after `race_resolver`'s own test suite proved
+    // the hazard directly -- `RaceCorpus` builds ONE global map keyed by
+    // trait KEY across every book (not book+key), so ingesting APG's 49
+    // reprints alongside ARG's already-committed originals produced
+    // `panicked ... Dwarf: duplicate resolved trait Dwarf ~ Ancient Enmity`
+    // and a picker-population count regression (`the_whole_corpus_
+    // classifies_into_the_four_roles_with_no_leftovers`, 379 -> 330, the
+    // -49 exactly accounting for the duplicates). This is a MEASUREMENT
+    // finding, not a missing-mechanism one: the raw-corpus enumeration
+    // counts each book's row independently, so two books reprinting the
+    // SAME real trait are counted as two distinct not-done units when at
+    // most one can ever ground. Logged to `OPEN-ISSUES.md` for an operator
+    // ruling on how the denominator should treat this shape (a
+    // resolver-side de-dup layer, or a Structural Exclusion Register entry
+    // for the 49 phantom duplicates) rather than silently ingesting a
+    // record set that would either crash the resolver or add zero real
+    // coverage.
+
     BookSource {
         corpus_book: "monster_codex",
         lst_relatives: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst"],
@@ -193,48 +285,34 @@ const BOOK_SOURCES: &[BookSource] = &[
         subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
     },
-    // Core Essentials' Aasimar and Tiefling *heritage* traits, SD-29's
-    // race-trait lane round 4 -- the last of the 553-unit ceiling that is
-    // ordinary content rather than a chassis problem (`decisions.md` 47.8).
-    //
-    // 48 rows across two files, and they are the only rows in this lane whose
-    // swap is not declared on the row itself. Each is gated
-    // `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` on a
-    // *selector* row typed `TYPE:<Race> Subrace`, and which standard trait it
-    // replaces is stated in a third file. Both halves are read here: the
-    // selectors become the records a player picks, and
-    // [`subrace_grants`] supplies the replace-flags and the
-    // `ABILITY:...|AUTOMATIC|...` grant links that make the 48 apply.
-    //
-    // Classified before the round committed to the book, per `decisions.md`
-    // 45.1:
-    // `python3 scripts/classify_race_trait_rows.py aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst`
-    // -> aasimar: `in-scope rows 18 | alternate 0 | flag_granted 18`;
-    //    tiefling: `in-scope rows 30 | alternate 0 | flag_granted 30`.
-    // Zero of the 48 are self-gating alternates, which is exactly why the
-    // third file is not optional.
-    //
-    // **`races/skinwalker/` is deliberately not listed.** It carries the same
-    // subrace shape, but Skinwalker is not one of the 18 races this project
-    // models, so `IN_SCOPE_RACES` would drop every row and
-    // `RaceCorpus::resolve` would return `None` for the chassis regardless.
-    BookSource {
-        corpus_book: "core_essentials",
-        lst_relatives: &[
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
-        ],
-        subrace_globalvar_relatives: &[
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst",
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar_subrace.lst",
-        ],
-        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/core_essentials",
-    },
 ];
 
-/// The 18 in-scope races (`decisions.md §25.3`), spelled exactly as the corpus
+/// The 34 in-scope races (`decisions.md §25.3` plus subsequent SD-31 widenings), spelled exactly as the corpus
 /// spells them in its `TYPE:<Race> Racial Trait` component.
-const IN_SCOPE_RACES: [&str; 18] = [
+// Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6
+// non-heritage races (Dhampir excluded -- see `ingest_races.rs`'s
+// `IN_SCOPE_RACES` doc comment for why). Kept in sync by hand with that
+// binary's own race table; `race_resolver::RaceCorpus::resolve` only
+// resolves a race whose chassis this OTHER binary (`ingest_races`) wrote,
+// so a race added only here and not there would collect alternate-trait
+// rows into a `race_trait/<race>/` directory `RaceCorpus::chassis()` never
+// populates -- loaded but permanently unreachable, not merely incomplete.
+//
+// Widened 24 -> 30 by SD-31-E6-F4-003 (2026-08-16): `ingest_races.rs`'s own
+// SD-31-E6-F4-002 batch gave 6 ARG-native races (Catfolk, Kitsune, Ratfolk,
+// Strix, Suli, Wayang) a real chassis, but this binary's roster was never
+// widened to match, so `arg_abilities_race.lst`'s real
+// `###Block: Alternate Racial Traits` rows for those 6 (confirmed non-`.MOD`
+// content by direct inspection of the pinned oracle -- Catfolk 6, Kitsune 2,
+// Ratfolk 4, Strix 6, Suli 5, Wayang 1 -- Kitsune corrected 2026-08-17,
+// SD31-W9-INTEGRATE-001: the prior "7" summed in Kitsune's 5 `Favored Class
+// Bonus ~ <Class> ~ Kitsune` rows, a DIFFERENT unit kind every other race's
+// own figure in this list already excludes) sat un-ingested. `race_dir` is now
+// SHARED between the two binaries for these 6 races (both write into
+// `advanced_race_guide/race_trait/<race>/`); see
+// `clear_own_alternate_trait_files`'s doc comment for how that clear no
+// longer destroys the sibling binary's files.
+const IN_SCOPE_RACES: [&str; 34] = [
     // Core Rulebook (7)
     "Dwarf",
     "Elf",
@@ -255,6 +333,28 @@ const IN_SCOPE_RACES: [&str; 18] = [
     "Svirfneblin",
     "Tengu",
     "Tiefling",
+    // Bestiary 2 (6), SD-31 Epic 1-F2
+    "Fetchling",
+    "Grippli",
+    "Ifrit",
+    "Oread",
+    "Sylph",
+    "Undine",
+    // Advanced Race Guide native chassis (6), SD-31-E6-F4-002/003
+    "Catfolk",
+    "Kitsune",
+    "Ratfolk",
+    "Strix",
+    "Suli",
+    "Wayang",
+    // Advanced Race Guide follow-on chassis (4), SD31-E6-F4-006 -- standard
+    // tier already ingested by `ingest_races.rs`'s SD31-E6-F4-004 batch;
+    // this widens THIS binary's roster so their real alternate racial
+    // trait rows in `arg_abilities_race.lst` pass the in-scope filter too.
+    "Gillman",
+    "Nagaji",
+    "Vanara",
+    "Vishkanya",
 ];
 
 const RACIAL_TRAIT_TYPE_SUFFIX: &str = " Racial Trait";
@@ -269,6 +369,79 @@ fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
     hasher.update(bytes);
     hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
+}
+
+/// `true` when `path` is a record THIS binary could itself have written --
+/// i.e. its stored `data.is_racial_default` is `false`. Shared by the
+/// scoped clear and the scoped on-disk count below, both of which need the
+/// identical ownership test. See [`clear_own_alternate_trait_files`]'s doc
+/// comment for why this partition is exact, not a guess.
+fn is_own_alternate_trait_record(path: &Path) -> bool {
+    let text = fs::read_to_string(path).unwrap_or_else(|e| panic!("failed to read {path:?} to decide ownership: {e}"));
+    let parsed: serde_json::Value =
+        serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} is not valid JSON, cannot decide ownership safely: {e}"));
+    let is_racial_default = parsed
+        .get("data")
+        .and_then(|d| d.get("is_racial_default"))
+        .and_then(|v| v.as_bool())
+        .unwrap_or_else(|| {
+            panic!(
+                "{path:?} has no boolean data.is_racial_default -- cannot tell whether this \
+                 binary or `ingest_races.rs` wrote it, so ownership refuses to guess"
+            )
+        });
+    !is_racial_default
+}
+
+/// Clears exactly the `.json` files in `race_dir` that THIS binary could
+/// itself have written on a prior run, and leaves every other file alone --
+/// the fix for the mutual-destruction hazard `ingest_book`'s clear-loop doc
+/// comment describes (`SD-31-E6-F4-003`, `advanced_race_guide`'s shared
+/// Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang directories).
+///
+/// This binary never writes an `is_racial_default: true` record (verified
+/// corpus-wide: zero counter-examples across every book it has ever
+/// ingested); `ingest_races.rs` never writes an `is_racial_default: false`
+/// one for these 6 races (see `ingest_races.rs`'s own
+/// `clear_own_standard_trait_files` doc comment). A `.json` file that does
+/// not parse, or is missing that field, belongs to neither binary's known
+/// shape -- refused rather than guessed at, per this repo's no-stub
+/// discipline: a silent guess here is exactly how a sibling binary's real
+/// content gets deleted.
+fn clear_own_alternate_trait_files(race_dir: &Path) {
+    let entries = fs::read_dir(race_dir)
+        .unwrap_or_else(|e| panic!("failed to list {race_dir:?} for a scoped clear: {e}"));
+    for entry in entries {
+        let entry = entry.unwrap_or_else(|e| panic!("failed to read a directory entry under {race_dir:?}: {e}"));
+        let path = entry.path();
+        if path.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue;
+        }
+        if is_own_alternate_trait_record(&path) {
+            fs::remove_file(&path).unwrap_or_else(|e| panic!("failed to remove {path:?} during a scoped clear: {e}"));
+        }
+    }
+}
+
+/// A recursive `.json`-file count, filtered to records this binary could
+/// itself have written (`is_own_alternate_trait_record`). Needed wherever
+/// `advanced_race_guide/race_trait/<race>/` is shared with
+/// `ingest_races.rs` (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang,
+/// `SD-31-E6-F4-003`): an unfiltered count there would count that sibling
+/// binary's preserved files too, turning a correct run into a false
+/// self-check mismatch.
+fn count_own_json(dir: &Path) -> usize {
+    let mut n = 0;
+    for entry in fs::read_dir(dir).unwrap_or_else(|e| panic!("failed to read {dir:?}: {e}")) {
+        let entry = entry.expect("readable dir entry");
+        let path = entry.path();
+        if path.is_dir() {
+            n += count_own_json(&path);
+        } else if path.extension().is_some_and(|e| e == "json") && is_own_alternate_trait_record(&path) {
+            n += 1;
+        }
+    }
+    n
 }
 
 fn ingested_at_now() -> String {
@@ -990,7 +1163,23 @@ fn ingest_book(book: &BookSource) {
         PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(corpus_book).join("race_trait");
     let ingested_at = ingested_at_now();
     let pcgen_book_dir = data_root.join(pcgen_book_relative);
-    let wiring_index = WiringClassIndex::build(corpus_book, &pcgen_book_dir);
+    // A `decisions.md §9`-re-attributed row's citation `path` names
+    // `core_essentials/...`, the directory PCGen physically stores it in, so an
+    // index over this book's own root alone cannot find the row and every such
+    // record silently stamps `wiring_class: "ambiguous"`. Indexing that
+    // directory under its own key is the same fix `gen_book_cache.rs` applies
+    // for the monster and companion chassis (`SD31-E6-F9-005`). Added only when
+    // this book actually cites a file there, so no other book pays for it.
+    let ce_dir = data_root.join(CORE_ESSENTIALS_RELATIVE);
+    let cites_core_essentials = lst_relatives
+        .iter()
+        .chain(subrace_globalvar_relatives.iter())
+        .any(|rel| rel.starts_with(CORE_ESSENTIALS_RELATIVE));
+    let wiring_index = if cites_core_essentials && ce_dir != pcgen_book_dir {
+        WiringClassIndex::build_with_extra(corpus_book, &pcgen_book_dir, "core_essentials", &ce_dir)
+    } else {
+        WiringClassIndex::build(corpus_book, &pcgen_book_dir)
+    };
     let mut wiring_lines = wiring_index.lines();
 
     let in_scope: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
@@ -1126,9 +1315,41 @@ fn ingest_book(book: &BookSource) {
     }
 
     // A stale record from a previous run with different scope would be
-    // indistinguishable from a fresh one, so the output tree is rebuilt.
+    // indistinguishable from a fresh one, so this binary's own output is
+    // rebuilt -- scoped to exactly the race slugs in `IN_SCOPE_RACES`,
+    // not the whole `out_root` directory.
+    //
+    // **Why scoped, not whole-directory, as of SD-31-E6-F4-002 (2026-08-16):**
+    // `advanced_race_guide` is now ALSO written by `ingest_races.rs`, which
+    // filed 6 new races' (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang)
+    // chassis + standard-tier traits into this same `out_root` for the
+    // first time.
+    //
+    // **Widened again, SD-31-E6-F4-003 (2026-08-16): those same 6 races now
+    // carry real ARG alternate-trait content this binary DOES ingest**
+    // (`arg_abilities_race.lst`'s `###Block: Alternate Racial Traits` rows
+    // for Catfolk/Ratfolk/Kitsune/Strix/Suli/Wayang -- confirmed real,
+    // not `.MOD` bookkeeping, by direct inspection of the pinned oracle),
+    // so their race slugs are now IN `IN_SCOPE_RACES` too and a per-slug
+    // `remove_dir_all` on `catfolk/` etc. would delete `ingest_races.rs`'s
+    // already-shipped standard-tier files in the SAME directory every time
+    // this binary runs -- the mutual-destruction hazard the SD-31-E6-F4-002
+    // comment above only avoided by having disjoint race sets, which is no
+    // longer true. The two binaries' records are still disjoint by
+    // *content*, though: `ingest_races.rs` writes only
+    // `is_racial_default: true` (chassis/standard) records and this binary
+    // writes only `is_racial_default: false` ones -- confirmed by scanning
+    // every file either binary has ever shipped (zero counter-examples in
+    // either direction). [`clear_own_alternate_trait_files`] clears by that
+    // real, already-shipped field instead of by directory, so each binary's
+    // rebuild only ever removes files it could itself have written.
     if out_root.exists() {
-        fs::remove_dir_all(&out_root).unwrap_or_else(|e| panic!("failed to clear {out_root:?}: {e}"));
+        for race_name in IN_SCOPE_RACES {
+            let race_dir = out_root.join(slugify(race_name));
+            if race_dir.exists() {
+                clear_own_alternate_trait_files(&race_dir);
+            }
+        }
     }
 
     let mut written = 0usize;
@@ -1170,8 +1391,24 @@ fn ingest_book(book: &BookSource) {
         *per_race.entry(row.race_key.clone()).or_default() += 1;
         *per_race_flags.entry(row.race_key.clone()).or_default() += row.sets_replace_flags.len();
 
-        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+        // Resolve the citation against the book whose directory the file
+        // PHYSICALLY lives in, which for a `decisions.md §9`-re-attributed row
+        // is `core_essentials` and not `corpus_book`. Getting this wrong is not
+        // an error, it is a SILENT wrong answer: `CorpusLines::line` returns
+        // `None` for a file absent from the book root it was handed, and every
+        // such record stamps `wiring_class: "ambiguous"` with a
+        // `no_corpus_line` signal regardless of the row's real token closure.
+        // Caught live this cycle -- the 64 heritage records regressed
+        // `display` -> `ambiguous` on the first re-ingest after the merge, with
+        // the run reporting success.
+        let citation_book = if lst_relative.starts_with(CORE_ESSENTIALS_RELATIVE) {
+            "core_essentials"
+        } else {
+            corpus_book
+        };
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for_book(
             &mut wiring_lines,
+            citation_book,
             lst_basename,
             row.line_number,
             &row.key,
@@ -1199,6 +1436,32 @@ fn ingest_book(book: &BookSource) {
         if declared.description {
             pi_declared_descriptions += 1;
         }
+        // **The raw tokens carry the same prose, and must carry the same
+        // redaction.** `data.description` above is redacted; `data.raw_tokens`
+        // is a verbatim copy of the row, so a redacted record was still
+        // shipping the un-redacted `DESC:` text one field over. That is
+        // precisely the leak `src/bin/declared_pi_shipping_audit.rs` exists to
+        // catch (`a_redacted_description_with_an_unredacted_raw_tokens_desc_is_a_violation`),
+        // and it is why the committed records carry the marker in BOTH places
+        // while a re-run of this binary un-redacted 9 of them.
+        //
+        // Found live, `SD31-CE-COMPANION-001` 2026-08-18, by re-running this
+        // binary after merging the heritage files into the ARG `BookSource`
+        // and diffing the corpus: nine tiefling heritage records lost their
+        // `raw_tokens` `DESC` redaction (Cheliax / Nidal / Tian Xia / Vudra /
+        // Abaddon place names) while the run reported success. The `DESC` key
+        // is the only raw token this record type ever redacts, because
+        // `description` is the only free-text field it screens -- a name is
+        // dropped rather than redacted (see the `NAMEISPI:YES` branch above),
+        // so no raw token can be carrying a redacted name.
+        let mut raw_tokens = row.raw_tokens.clone();
+        if pi_marker.is_some() {
+            for token in raw_tokens.iter_mut() {
+                if token.key == "DESC" {
+                    token.value = codex::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string();
+                }
+            }
+        }
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::Full,
@@ -1214,7 +1477,7 @@ fn ingest_book(book: &BookSource) {
                 sets_replace_flags: row.sets_replace_flags.clone(),
                 description: stored_desc,
                 source_page: row.source_page.clone(),
-                raw_tokens: row.raw_tokens.clone(),
+                raw_tokens,
                 raw_bonus_chains: row.raw_bonus_chains.clone(),
             },
             source: CorpusSource::LstToken {
@@ -1228,6 +1491,7 @@ fn ingest_book(book: &BookSource) {
             pi_marker,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
 
         let path = out_root.join(slugify(&row.race_key)).join(format!("{}.json", slugify(&row.key)));
@@ -1285,7 +1549,26 @@ fn ingest_book(book: &BookSource) {
     }
 
     assert_eq!(written, rows.len(), "every in-scope row must produce exactly one record");
-    let on_disk = count_json(&out_root);
+    // Scoped to this binary's own `IN_SCOPE_RACES` race slugs, not a whole-
+    // directory walk -- for the same reason the clearing step above is
+    // scoped (SD-31-E6-F4-002, 2026-08-16). `advanced_race_guide/
+    // race_trait/` now also holds `ingest_races.rs`'s 6-race batch
+    // (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), which a whole-directory
+    // `count_json` would count as though this run had written them too --
+    // `count_own_json` (SD-31-E6-F4-003) filters those out by the same
+    // ownership test the scoped clear above uses, so the two figures being
+    // compared are both "this binary's own records" on both sides.
+    // A given book only ever touches a subset of the 30 in-scope races
+    // (e.g. `monster_codex` writes for a handful, not all 30), so a race
+    // this book's rows never mentioned has no subdirectory here at all --
+    // that is 0 records, not a missing-directory error.
+    let on_disk: usize = IN_SCOPE_RACES
+        .iter()
+        .map(|race_name| {
+            let race_dir = out_root.join(slugify(race_name));
+            if race_dir.exists() { count_own_json(&race_dir) } else { 0 }
+        })
+        .sum();
     assert_eq!(on_disk, written, "records written to disk must match records emitted");
 
     // Last, and fatal: nothing PCGen-shaped may survive into a served
@@ -1298,19 +1581,6 @@ fn ingest_book(book: &BookSource) {
     }
 }
 
-fn count_json(dir: &Path) -> usize {
-    let mut n = 0;
-    for entry in fs::read_dir(dir).unwrap_or_else(|e| panic!("failed to read {dir:?}: {e}")) {
-        let entry = entry.expect("readable dir entry");
-        let path = entry.path();
-        if path.is_dir() {
-            n += count_json(&path);
-        } else if path.extension().is_some_and(|e| e == "json") {
-            n += 1;
-        }
-    }
-    n
-}
 
 #[cfg(test)]
 mod tests {
@@ -1664,19 +1934,51 @@ mod tests {
         // Per-book expected counts, re-derived on disk by this test itself.
         // Stated as a table so a book whose ingest silently stops writing
         // fails here by name rather than by a total that still adds up.
+        // ARG 156->201 and Inner Sea Races 71->82: SD-31 Epic 1-F2
+        // (2026-08-15) widened `IN_SCOPE_RACES` from 18 to 24 (Bestiary 2's
+        // 6 non-heritage races), so both books' alternate-trait rows for
+        // those 6 races now pass the in-scope filter for the first time.
+        // ARG 201->259: SD-31-E6-F4-002 (2026-08-16) added `ingest_races.rs`'s
+        // own 6-race chassis batch (Catfolk, Kitsune, Ratfolk, Strix, Suli,
+        // Wayang) into this SAME book directory for the first time -- this
+        // test deliberately walks the whole `advanced_race_guide/race_trait/`
+        // tree (a real corpus-wide leak check, not an ownership-scoped
+        // count), so it is supposed to see both binaries' output.
+        // ARG 259->283: SD-31-E6-F4-003 (2026-08-16) widened `IN_SCOPE_RACES`
+        // 24->30 (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), so THIS
+        // binary's own real `arg_abilities_race.lst` alternate-trait rows
+        // for those 6 races (Catfolk 6, Kitsune 2, Ratfolk 4, Strix 6,
+        // Suli 5, Wayang 1 = 24) now pass the in-scope filter for the first
+        // time too, alongside `ingest_races.rs`'s already-shipped 58
+        // standard-tier records in the same directories. Re-derived on
+        // disk, not transcribed: `find data/corpus/advanced_race_guide/
+        // race_trait -name '*.json' | wc -l` -> 283; same for
+        // `inner_sea_races` -> 82.
+        // ARG 321->332: SD31-E6-F4-006 (2026-08-17) widened `IN_SCOPE_RACES`
+        // 30->34 (Gillman/Nagaji/Vanara/Vishkanya) -- their real
+        // `arg_abilities_race.lst` alternate-trait rows (Gillman 5:
+        // Riverfolk/Slime Hunter/Throwback + 2 flag-granted replacement
+        // rows, Nagaji 1: Hypnotic Gaze, Vanara 3: Tree Stranger/Whitecape +
+        // 1 flag-granted replacement row, Vishkanya 2: Sensual/Subtle
+        // Appearance = 11) now pass the in-scope filter for the first time.
+        // Re-derived on disk: `find data/corpus/advanced_race_guide/
+        // race_trait -name '*.json' | wc -l` -> 332.
+        // ARG 332->350: SD31-E6-F4-007 (2026-08-17) added `ingest_races.rs`'s
+        // own 2-race chassis batch (Changeling, Samsaran) into this SAME
+        // book directory -- 18 more standard-tier race_trait records,
+        // closing `arg_races.lst`'s full 37-row playable-race roster.
+        // Neither race has any real ARG alternate-trait content for THIS
+        // binary to ingest (re-derived: `grep -c '^Changeling ~\|^Samsaran
+        // ~' arg_abilities_race.lst` -> 0), so this binary's own in-scope
+        // roster is unchanged this cycle. Re-derived on disk: `find
+        // data/corpus/advanced_race_guide/race_trait -name '*.json' | wc -l`
+        // -> 350.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 156usize),
+                ("advanced_race_guide", 414usize),
                 ("monster_codex", 5),
-                ("inner_sea_races", 71),
+                ("inner_sea_races", 82),
                 ("horror_adventures", 43),
-                // Core Essentials' Aasimar and Tiefling heritage traits
-                // (race-trait lane round 4): 16 heritage selectors + the 48
-                // replacement rows they grant, across the book's two subrace
-                // files. Re-derived on disk rather than transcribed:
-                // `find data/corpus/core_essentials/race_trait -name '*.json'
-                // | wc -l` -> 64.
-                ("core_essentials", 64),
             ]
                 .into_iter()
                 .collect();
@@ -1738,13 +2040,28 @@ mod tests {
         }
         assert_eq!(
             total,
-            339,
-            "156 ARG + 5 Monster Codex + 71 Inner Sea Races + 43 Horror Adventures + 64 Core \
-             Essentials heritage records. This total sits alongside the per-book map above \
-             and must move with it; round 3 moved the map first and this pin caught the \
-             omission, round 4 did the same, and the companion lane hit it a third time in \
-             one cycle -- fixing one assertion reveals the next one below it, which is the \
-             whole reason the test states both"
+            544,
+            "414 ARG (of which 114 are `ingest_races.rs`'s own standard-tier batches: \
+             58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
+             from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004, plus 18 from Changeling/\
+             Samsaran, SD31-E6-F4-007 -- closing arg_races.lst's full 37-row playable-race \
+             roster; the remaining 236 are this binary's own alternate-tier batches, \
+             unchanged this cycle (neither Changeling nor Samsaran has real ARG \
+             alternate-trait content): 201 pre-existing + 24 for the first \
+             6-race batch, SD-31-E6-F4-003, 2026-08-16, plus 11 for the second 4-race \
+             follow-on batch, SD31-E6-F4-006, 2026-08-17) + \
+             5 Monster Codex + 82 Inner Sea Races + \
+             43 Horror Adventures + 64 Core \
+             Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
+             2026-08-15). Advanced Player's Guide was investigated (SD-31 Epic 6-F4,
+             2026-08-15) and deliberately NOT added as a `BookSource` -- see this file's \
+             `BOOK_SOURCES` doc comment: 49 of its 50 in-scope rows are already ingested, \
+             byte-mechanically-identical, via `advanced_race_guide`'s own reprint of them. \
+             This total sits alongside the per-book map above and must move with it; round \
+             3 moved the map first and this pin caught the omission, round 4 did the same, \
+             the companion lane hit it a third time in one cycle, batch four a fourth, and \
+             SD31-E6-F4-004 a fifth, SD31-E6-F4-006 a sixth -- fixing one assertion reveals \
+             the next one below it, which is the whole reason the test states both"
         );
     }
 
@@ -1757,34 +2074,39 @@ mod tests {
     }
 
     #[test]
-    fn in_scope_roster_is_exactly_the_18_races_decisions_25_3_names() {
-        assert_eq!(IN_SCOPE_RACES.len(), 18);
+    fn in_scope_roster_is_exactly_the_34_races_sd31_e6_f4_006_names() {
+        // Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15), 24 -> 30 by
+        // SD-31-E6-F4-003 (2026-08-16), then 30 -> 34 by SD31-E6-F4-006
+        // (2026-08-17: `ingest_races.rs`'s SD31-E6-F4-004 standard-tier
+        // chassis batch already ingested Gillman/Nagaji/Vanara/Vishkanya's
+        // `~ Ability Scores`/`~ Speed`/`~ Vision`/etc rows; this cycle widens
+        // THIS binary's roster so their real ALTERNATE racial trait rows
+        // (`arg_abilities_race.lst`'s `Riverfolk`/`Slime Hunter`/`Throwback`
+        // for Gillman, `Hypnotic Gaze` for Nagaji, `Tree Stranger`/
+        // `Whitecape` for Vanara, `Sensual`/`Subtle Appearance` for
+        // Vishkanya) pass the in-scope filter for the first time too); see
+        // this constant's own doc comment and `ingest_races.rs`'s matching
+        // `IN_SCOPE_RACES` table.
+        assert_eq!(IN_SCOPE_RACES.len(), 34);
         let unique: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
-        assert_eq!(unique.len(), 18, "roster must not repeat a race");
-        // The out-of-scope races decisions.md §25.3 defers to SD-28 must not
-        // have crept in.
-        for deferred in [
-            "Dhampir",
-            "Fetchling",
-            "Grippli",
-            "Ifrit",
-            "Oread",
-            "Sylph",
-            "Undine",
-            "Catfolk",
-            "Ratfolk",
-            "Suli",
-            "Vanara",
-            "Vishkanya",
-            "Changeling",
-            "Kitsune",
-            "Nagaji",
-            "Samsaran",
-            "Wayang",
-            "Gillman",
-            "Strix",
-        ] {
-            assert!(!unique.contains(deferred), "{deferred} is deferred to SD-28 and must not be in scope");
+        assert_eq!(unique.len(), 34, "roster must not repeat a race");
+        // The 6 Bestiary 2 races Epic 1-F2 added must actually be present.
+        for added in ["Fetchling", "Grippli", "Ifrit", "Oread", "Sylph", "Undine"] {
+            assert!(unique.contains(added), "{added} is SD-31 Epic 1-F2's batch and must be in scope");
+        }
+        // The 6 ARG-native races SD-31-E6-F4-003 added must actually be present.
+        for added in ["Catfolk", "Kitsune", "Ratfolk", "Strix", "Suli", "Wayang"] {
+            assert!(unique.contains(added), "{added} is SD-31-E6-F4-003's batch and must be in scope");
+        }
+        // The 4 ARG-follow-on races this cycle added must actually be present.
+        for added in ["Gillman", "Nagaji", "Vanara", "Vishkanya"] {
+            assert!(unique.contains(added), "{added} is SD31-E6-F4-006's batch and must be in scope");
+        }
+        // Still-out-of-scope races (`decisions.md §25.3`'s original deferral,
+        // minus the 16 these three batches moved into scope) must not have
+        // crept in.
+        for deferred in ["Dhampir", "Changeling", "Samsaran"] {
+            assert!(!unique.contains(deferred), "{deferred} is still deferred and must not be in scope");
         }
     }
 }

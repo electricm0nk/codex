@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Neothelid ~ Breath Weapon",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:neothelid"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(50-ft. cone, 14d10 acid, Reflex DC %2 half, once every 1d4 rounds)|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A neothelid can as a standard action unleash a 50-ft. cone of acid every 1d4 rounds dealing 14d10 acid damage. A reflex save (DC %1) halves the damage.|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Neothelid ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.214",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 972,
-    "record_key": "Neothelid ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 972,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Neothelid ~ Breath Weapon",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

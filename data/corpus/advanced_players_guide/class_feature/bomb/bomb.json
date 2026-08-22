@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bomb",
+    "name": "Bomb",
+    "class": null,
+    "description": "[+%1d%2 bonus damage, included in total damage]|AlchemistBombAdditionalDice|AlchemistBombDiceSize|PREVARGT:AlchemistBombAdditionalDice,0",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Natural Attack"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.NaturalAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BombDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BombDamageSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BombAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BombThreatRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BombRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BombCritMult|0"
+      },
+      {
+        "key": "DESC",
+        "value": "[+%1d%2 bonus damage, included in total damage]|AlchemistBombAdditionalDice|AlchemistBombDiceSize|PREVARGT:AlchemistBombAdditionalDice,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombCritMult|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombDamageSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombThreatRange|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombRange|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombAttackBonus|BAB+DEX+SIZEMOD"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackName|Bomb"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackToHit|%1|BombAttackBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackDamage|%1d%2+%3|BombDamageDice+AlchemistBombAdditionalDice|AlchemistBombDiceSize|AlchemistBombDamageBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackReach|%1|BombRange"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackRange|%1|BombRange"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackType|Fire"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackThreatRange|%1|BombThreatRange"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackCritMult|x%1|BombCritMult"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 106,
+    "record_key": "Bomb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

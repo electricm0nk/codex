@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tidal Hunter ~ Aquatic Mastery",
+    "name": "Aquatic Mastery",
+    "class": "Ranger",
+    "description": "A tidal hunter must select water as his favored terrain, and he doesn't gain additional favored terrains. At 8th level and every 5 levels thereafter, the bonus from this favored terrain increases by 2. This alters favored terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tidal Hunter ~ Aquatic Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.TidalHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A tidal hunter must select water as his favored terrain, and he doesn't gain additional favored terrains. At 8th level and every 5 levels thereafter, the bonus from this favored terrain increases by 2. This alters favored terrain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|2|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|2|PRECLASS:1,Ranger=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|2|PRECLASS:1,Ranger=18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 931,
+    "record_key": "Tidal Hunter ~ Aquatic Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

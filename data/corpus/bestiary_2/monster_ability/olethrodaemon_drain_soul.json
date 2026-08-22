@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Olethrodaemon ~ Drain Soul",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:daemon_olethrodaemon"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Drain Soul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OlethrodaemonDrainSoulDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Drain Soul)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OlethrodaemonDrainSoulDC|32"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OlethrodaemonDrainSoulDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature grappled by an olethrodaemon's grab attack from its claws can be transferred to its mouth as a move action requiring no combat maneuver check. As a standard action, an olethrodaemon that begins its turn with an opponent grappled in either of its mouths can swallow the opponent by succeeding on another grapple check.  If successful, the creature is swallowed into one of the olethrodaemon's many stomachs. These stomachs grind their contents and drain the life force from living creatures.  Every round a creature remains in an olethrodaemon's stomach, it takes 4d8+18 points of damage and gains 1d4 negative levels. The creature can attempt to cut its way out of the olethrodaemon's stomach, but it suffers the chance of just cutting into another stomach chamber. An olethrodaemon's stomach is AC 20 and has 40 hit points.  Once a creature deals enough damage to allow escape, it has a 50%% chance to end up in another stomach chamber instead of escaping.  Due to the multiple stomach chambers, an olethrodaemon can house and drain up to four medium creatures at one time. This ability otherwise functions as the swallow whole special attack.  It is a DC %1 Fortitude save to remove negative levels gained in this fashion.|OlethrodaemonDrainSoulDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Olethrodaemon ~ Drain Soul"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.70",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 313,
-    "record_key": "Olethrodaemon ~ Drain Soul"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 313,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Olethrodaemon ~ Drain Soul",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

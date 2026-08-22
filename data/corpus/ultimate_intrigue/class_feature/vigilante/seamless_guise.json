@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante ~ Seamless Guise",
+    "name": "Seamless Guise",
+    "class": "Vigilante",
+    "description": "A vigilante knows how to behave in a way that appears perfectly proper and normal for his current identity. Should anyone suspect him of being anything other than what he appears to be while either in his social or vigilante identity, he can attempt a Disguise check with a +%1 circumstance bonus to appear as his current identity, and not as his other identity.|SeamlessGuiseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante ~ Seamless Guise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeamlessGuiseBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vigilante knows how to behave in a way that appears perfectly proper and normal for his current identity. Should anyone suspect him of being anything other than what he appears to be while either in his social or vigilante identity, he can attempt a Disguise check with a +%1 circumstance bonus to appear as his current identity, and not as his other identity.|SeamlessGuiseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeamlessGuiseBonus|20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 30,
+    "record_key": "Vigilante ~ Seamless Guise"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

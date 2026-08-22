@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dinosaur Druid ~ Primeval Voice",
+    "name": "Primeval Voice",
+    "class": "Druid",
+    "description": "A dinosaur druid gains the ability to speak with dinosaurs (as per speak with animals) at all times. This replaces resist nature's lure.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dinosaur Druid ~ Primeval Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.DinosaurDruidClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A dinosaur druid gains the ability to speak with dinosaurs (as per speak with animals) at all times. This replaces resist nature's lure."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 515,
+    "record_key": "Dinosaur Druid ~ Primeval Voice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

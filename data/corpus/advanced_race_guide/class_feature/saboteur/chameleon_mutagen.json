@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Saboteur ~ Chameleon Mutagen",
+    "name": "Chameleon Mutagen",
+    "class": "Alchemist",
+    "description": "A saboteur discovers how to create a special elixir that he can imbibe in order to heighten his ability to move undetected and his mobility at the cost of his physical might. When consumed, the elixir causes the saboteur's skin to change color to match the background and causes his hands and feet to secrete a sticky residue. This grants him a circumstance bonus on Stealth checks equal to %1, as well as granting him a climb speed of %2, for 10 minutes per saboteur level. In addition, while the chameleon extract is in effect, the saboteur takes a -2 penalty to his Strength. This ability replaces mutagen. A saboteur who drinks an alchemist's mutagen is treated as a non-alchemist. All limitations to mutagens apply to chameleon mutagen as if it were the same ability. The infuse mutagen discovery and persistent mutagen class ability apply to the chameleon mutagen.|1+(AlchemistLVL-2)/2|MOVEBASE/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saboteur ~ Chameleon Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A saboteur discovers how to create a special elixir that he can imbibe in order to heighten his ability to move undetected and his mobility at the cost of his physical might. When consumed, the elixir causes the saboteur's skin to change color to match the background and causes his hands and feet to secrete a sticky residue. This grants him a circumstance bonus on Stealth checks equal to %1, as well as granting him a climb speed of %2, for 10 minutes per saboteur level. In addition, while the chameleon extract is in effect, the saboteur takes a -2 penalty to his Strength. This ability replaces mutagen. A saboteur who drinks an alchemist's mutagen is treated as a non-alchemist. All limitations to mutagens apply to chameleon mutagen as if it were the same ability. The infuse mutagen discovery and persistent mutagen class ability apply to the chameleon mutagen.|1+(AlchemistLVL-2)/2|MOVEBASE/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 179,
+    "record_key": "Saboteur ~ Chameleon Mutagen"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Verdant",
+    "name": "Verdant Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "Your progenitors infused themselves with raw plant life, binding it into their own tissue and passing it down to their literal seed, giving you innate communion with nature.|PREVAREQ:Sorcerer_Verdant_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Verdant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your progenitors infused themselves with raw plant life, binding it into their own tissue and passing it down to their literal seed, giving you innate communion with nature.|PREVAREQ:Sorcerer_Verdant_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Knowledge (Nature)|PREVARGTEQ:Sorcerer_Verdant_BloodlineClassSkill1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Verdant_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Verdant_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Verdant_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Verdant Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Verdant_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Verdant Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Verdant_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Verdant Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Verdant_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Verdant Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Verdant_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Verdant Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Verdant_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Verdant_BloodlinePower1LVL|Sorcerer_Verdant_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Verdant_BloodlinePower3LVL|Sorcerer_Verdant_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Verdant_BloodlinePower9LVL|Sorcerer_Verdant_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Verdant_BloodlinePower15LVL|Sorcerer_Verdant_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Verdant_BloodlinePower20LVL|Sorcerer_Verdant_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Verdant"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3252,
+    "record_key": "Sorcerer Bloodline ~ Verdant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

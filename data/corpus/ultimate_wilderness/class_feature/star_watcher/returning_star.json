@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Star Watcher ~ Returning Star",
+    "name": "Returning Star",
+    "class": "Star Watcher",
+    "description": "Whenever the star watcher uses a starknife as a thrown weapon against a target of his studied combat, the starknife automatically returns as if it had the returning property. The star watcher must have the shooting star investigator talent to select this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Star Watcher ~ Returning Star"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Investigator Archetype ~ Star Watcher"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Star Watcher ~ Shooting Star"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the star watcher uses a starknife as a thrown weapon against a target of his studied combat, the starknife automatically returns as if it had the returning property. The star watcher must have the shooting star investigator talent to select this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 760,
+    "record_key": "Star Watcher ~ Returning Star"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

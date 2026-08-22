@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "An immobile, blazing curtain of shimmering violet fire springs into existence. One side of the wall, selected by you, sends forth waves of heat, dealing 2d4 points of fire damage to creatures within 10 feet and 1d4 points of fire damage to those past 10 feet but within 20 feet. The wall deals this damage when it appears, and to all creatures in the area on your turn each round. In addition, the wall deals 2d6 points of fire damage + 1 point of fire damage per caster level [maximum +20] to any creature passing through it. The wall deals double damage to undead creatures. If you evoke the wall so that it appears where creatures are, each creature takes damage as if passing through the wall. If any 5-foot length of wall takes 20 points or more of cold damage in 1 round, that length goes away. [Do not divide cold damage by 2, as normal for objects.] Wall of fire can be made permanent with a permanency spell. A permanent wall of fire that is extinguished by cold damage becomes inactive for 10 minutes, then reforms at normal strength.",
     "key": "Wall of Fire",
-    "school": "Evocation",
     "level": 4,
-    "description": "An immobile, blazing curtain of shimmering violet fire springs into existence. One side of the wall, selected by you, sends forth waves of heat, dealing 2d4 points of fire damage to creatures within 10 feet and 1d4 points of fire damage to those past 10 feet but within 20 feet. The wall deals this damage when it appears, and to all creatures in the area on your turn each round. In addition, the wall deals 2d6 points of fire damage + 1 point of fire damage per caster level [maximum +20] to any creature passing through it. The wall deals double damage to undead creatures. If you evoke the wall so that it appears where creatures are, each creature takes damage as if passing through the wall. If any 5-foot length of wall takes 20 points or more of cold damage in 1 round, that length goes away. [Do not divide cold damage by 2, as normal for objects.] Wall of fire can be made permanent with a permanency spell. A permanent wall of fire that is extinguished by cold damage becomes inactive for 10 minutes, then reforms at normal strength."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4|Druid=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "An immobile, blazing curtain of shimmering violet fire springs into existence. One side of the wall, selected by you, sends forth waves of heat, dealing 2d4 points of fire damage to creatures within 10 feet and 1d4 points of fire damage to those past 10 feet but within 20 feet. The wall deals this damage when it appears, and to all creatures in the area on your turn each round. In addition, the wall deals 2d6 points of fire damage + 1 point of fire damage per caster level [maximum +20] to any creature passing through it. The wall deals double damage to undead creatures. If you evoke the wall so that it appears where creatures are, each creature takes damage as if passing through the wall. If any 5-foot length of wall takes 20 points or more of cold damage in 1 round, that length goes away. [Do not divide cold damage by 2, as normal for objects.] Wall of fire can be made permanent with a permanency spell. A permanent wall of fire that is extinguished by cold damage becomes inactive for 10 minutes, then reforms at normal strength.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "An immobile, blazing curtain of shimmering violet fire springs into existence.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Fire=4"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration + (CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/wallOfFire.html#_wall-of-fire"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.365"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Opaque sheet of flame up to (CASTERLEVEL*20) ft. long or a ring of fire with a radius of up to ((CASTERLEVEL/2)*5) ft.; either form 20 ft. high"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 658,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1406,
-    "record_key": "Wall of Fire.MOD"
+    "record_key": "Wall of Fire",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

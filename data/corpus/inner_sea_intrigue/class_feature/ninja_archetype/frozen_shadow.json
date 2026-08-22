@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Archetype ~ Frozen Shadow",
+    "name": "Frozen Shadow",
+    "class": "Ninja Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Archetype ~ Frozen Shadow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.NinjaArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ninja=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ninja Archetype ~ Frozen Shadow],[!PREFACT:1,ABILITIES,Ninja_Archetype_ClassSkills=True,Ninja_Archetype_KiPool=True,Ninja_Archetype_UncannyDodge=True,Ninja_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Frozen Shadow ~ Class Skills|PRECLASS:1,Ninja=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frozen Shadow ~ Hardy Killer|PRECLASS:1,Ninja=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frozen Shadow ~ Track Victim|PRECLASS:1,Ninja=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frozen Shadow ~ Swift Tracker|PRECLASS:1,Ninja=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_Archetype_KiPool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_CF_ImprovedUncannyDodge|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 215,
+    "record_key": "Ninja Archetype ~ Frozen Shadow"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

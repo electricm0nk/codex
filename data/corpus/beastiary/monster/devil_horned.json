@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:horned_devil_fear_aura",
@@ -33,6 +31,152 @@
     ],
     "race_subtype": "Devil|Evil|Extraplanar|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability|Horned Devil ~ Fear Aura|Horned Devil ~ Infernal Wound|Horned Devil ~ Stun|Regeneration ~ Good"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Chain (Spiked)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|18|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|5"
+      },
+      {
+        "key": "CR",
+        "value": "16"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Diplomacy|Intimidate|Spellcraft"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "10/Good"
+      },
+      {
+        "key": "DR",
+        "value": "10/Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):15"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing,*1,2d8|Tail,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*2,2d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Devil (Cornugon)"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Devil|Evil|Extraplanar|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=16|Summon Monster VI (Horned Devil)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=16|Fireball,13+CHA|Lightning Bolt,13+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=16|Dispel Chaos,15+CHA|Dispel Good,15+CHA|Magic Circle against Good|Persistent Image,15+CHA|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "27"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.76",
     "speeds": [
@@ -46,16 +190,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 109,
-    "record_key": "Devil (Horned)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Devil (Horned)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

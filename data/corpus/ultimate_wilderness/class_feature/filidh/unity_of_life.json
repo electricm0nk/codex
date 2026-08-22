@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Filidh ~ Unity of Life",
+    "name": "Unity of Life",
+    "class": "Bard",
+    "description": "A filidh can use his performance to interlink the life force of two allies who can hear his performance as though they were affected by shield other, using the filidh's bard level as his caster level. The filidh designates which ally is the warded target and which ally receives half the warded creature's damage. The filidh can switch the targets of this ability (and the effect of the performance the targets receive) as a free action once per round at the start of each turn that he maintains the performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Filidh ~ Unity of Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FilidhClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A filidh can use his performance to interlink the life force of two allies who can hear his performance as though they were affected by shield other, using the filidh's bard level as his caster level. The filidh designates which ally is the warded target and which ally receives half the warded creature's damage. The filidh can switch the targets of this ability (and the effect of the performance the targets receive) as a free action once per round at the start of each turn that he maintains the performance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 271,
+    "record_key": "Filidh ~ Unity of Life"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

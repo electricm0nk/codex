@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Guide ~ Favored Terrain ~ Mercy Replacement",
+    "name": "Holy Guide Favored Terrain",
+    "class": "Holy Guide",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Guide ~ Favored Terrain ~ Mercy Replacement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Holy Guide Class Feature.Internal.Mercy"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPool|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerFavoredTerrainLVL|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3521,
+    "record_key": "Holy Guide ~ Favored Terrain ~ Mercy Replacement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

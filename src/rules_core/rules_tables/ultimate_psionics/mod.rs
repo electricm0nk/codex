@@ -13,13 +13,14 @@
 //! The monster / monster-ability chassis (`corpus-work-channels.md §9.2`), and
 //! the first non-Paizo book in that lane.
 //!
-//! **21 monsters + 13 monster abilities = 34 records**, against corpus unit
-//! counts of 21 and 79. Derived, never assumed:
-//! `python3 scripts/classify_monster_ability_rows.py ultimate_psionics` →
-//! `ultimate_psionics  21  79  3  10  66  0  0`, reachable remainder **34**.
-//! The transcriber independently reports the same 66 orphans, so both screens
-//! agree on composition as well as on the total — unlike `inner_sea_gods`,
-//! where they agreed only on the sum (`decisions.md §62.5`).
+//! **21 monsters + 15 monster abilities = 36 records**, against corpus unit
+//! counts of 21 and 79. 34 shipped before `SD31-W21-MONSTER-001` (below); that
+//! round's `CATEGORY:Internal` bundle-row ownership hop resolved the 2
+//! bundle-owned abilities the "66 orphans" section already named.
+//! `python3 scripts/classify_monster_ability_rows.py ultimate_psionics` still
+//! reports the pre-hop shape (`ultimate_psionics  21  79  3  10  66  0  0`) —
+//! it has no awareness of the bundle hop, same caveat `inner_sea_gods`'s own
+//! module doc now carries.
 //!
 //! # The cheapest registration this lane has done, and why
 //!
@@ -48,23 +49,25 @@
 //! named personae. `decisions.md §57.1` is the correction that made this a
 //! per-record rather than a per-book-location prediction.
 //!
-//! # The 66 orphans, and the 2 of them the corpus does own
+//! # The 66 orphans, and the 2 the bundle hop resolves (`SD31-W21-MONSTER-001`)
 //!
-//! 63 of the 66 are the Astral Construct menu (`Astral_*`) and three
-//! namespaced rows (`Energy Touch ~ …`, `Astral Warrior ~ …`, `Horror ~ …`)
-//! whose namespace is not a monster key of this book. They stay `not-ingested`,
-//! which is their honest status.
+//! 64 of the 66 remain genuinely orphaned: the Astral Construct menu
+//! (`Astral_*`) and three namespaced rows (`Energy Touch ~ …`,
+//! `Astral Warrior ~ …`, `Horror ~ …`) whose namespace is not a monster key of
+//! this book. They stay `not-ingested`, which is their honest status.
 //!
-//! **Two are not orphans in the corpus** — `Naturally Psionic` and
-//! `Psionic Aptitude`. Ten of this book's monster rows carry
-//! `ABILITY:Internal|AUTOMATIC|Racial Traits ~ <Race>`, and those
-//! `CATEGORY:Internal` bundle rows name both abilities. That is exactly the
-//! ownership class `decisions.md §62.4` recorded for `inner_sea_gods` and asked
-//! a successor to scan for; round 10 ran the scan corpus-wide and it is **229
-//! units across six books**, not the 16 §62.4 measured in one file. See
-//! `decisions.md §64.1`. Following the hop is an ownership-pass widening that
-//! changes what five already-registered books ship, so this round did not take
-//! it — the same reasoning §62.4 used, now with the real number attached.
+//! **Two were not orphans in the corpus** — `Naturally Psionic` and
+//! `Psionic Aptitude`, and both now ship. Ten of this book's monster rows
+//! carry `ABILITY:Internal|AUTOMATIC|Racial Traits ~ <Race>`, and those
+//! `CATEGORY:Internal` bundle rows name both abilities — exactly the
+//! ownership class `decisions.md §62.4` recorded for `inner_sea_gods` and
+//! asked a successor to scan for; round 10's scan found it corpus-wide (**229
+//! units across six books**, `decisions.md §64.1`), and
+//! `scripts/transcribe_monster_tables.py::find_internal_bundle_ability_refs`
+//! (`SD31-W21-MONSTER-001`) is that hop, wired: for every monster row's
+//! `ABILITY:Internal|AUTOMATIC|<bundle_key>` reference it finds the
+//! `CATEGORY:Internal` row named `bundle_key` and credits the monster with
+//! every ability that row names.
 
 pub mod archetype_tables;
 pub mod equipment_tables;
@@ -102,14 +105,17 @@ mod monster_tests {
     use super::*;
     use std::collections::HashSet;
 
-    /// What ships is 21 and 13, against corpus unit counts of 21 and 79.
+    /// What ships is 21 and 15, against corpus unit counts of 21 and 79.
     ///
     /// Every corpus monster row of this book ships — no `NAMEISPI:YES`, no
     /// `.COPY=` delta and no `.MOD` overlay reaches the monster side here.
+    ///
+    /// 13 -> 15 (SD31-W21-MONSTER-001, +2): the `CATEGORY:Internal` bundle-row
+    /// ownership hop resolved 2 previously-orphaned ability rows.
     #[test]
     fn the_shipped_counts_are_the_reachable_ones() {
         assert_eq!(monsters().len(), 21, "every corpus monster row of this book ships");
-        assert_eq!(monster_abilities().len(), 13);
+        assert_eq!(monster_abilities().len(), 15);
     }
 
     /// Every record cites one of this book's two `.lst` files, asserted on the
@@ -153,27 +159,29 @@ mod monster_tests {
         }
     }
 
-    /// The `Racial Traits ~` bundle finding, pinned as an executing test rather
-    /// than as prose alone — the countermeasure `decisions.md §62.4` applied to
-    /// its own claim, applied here to this book's share of the same class.
-    ///
-    /// `Naturally Psionic` and `Psionic Aptitude` are owned in the corpus
-    /// through a `CATEGORY:Internal` bundle row that neither ownership pass
-    /// follows. They do not ship. A later round that widens the pass gets a
-    /// failing test telling it this module's header — and the lane's
-    /// REAL-ceiling arithmetic in `decisions.md §64.1` — is now stale.
+    /// The `Racial Traits ~` bundle finding, RESOLVED (`SD31-W21-MONSTER-001`):
+    /// `Naturally Psionic` and `Psionic Aptitude` now ship, owned by all ten
+    /// races the `CATEGORY:Internal` bundle row names. Was `no_internal_
+    /// bundle_ability_ships_yet`, asserting the pre-hop emptiness; now asserts
+    /// both keys ship AND carry the full ten-race owner set, so a future
+    /// regression (a race silently dropped from the bundle row, or the hop
+    /// breaking outright) is caught either way.
     #[test]
-    fn no_internal_bundle_ability_ships_yet() {
-        let shipped: Vec<&str> = monster_abilities()
-            .iter()
-            .filter(|a| matches!(a.key, "Naturally Psionic" | "Psionic Aptitude"))
-            .map(|a| a.key)
-            .collect();
-        assert!(
-            shipped.is_empty(),
-            "`Racial Traits ~` bundle rows now ship ({shipped:?}) -- this module's header \
-             and `decisions.md §64.1`'s 229-unit ceiling arithmetic are stale and must be \
-             rewritten"
-        );
+    fn the_bundle_owned_abilities_ship_with_every_named_race() {
+        let expected_owners: &[&str] = &[
+            "Blue", "Dromite", "Duergar ~ Psionic", "Elan", "Forgeborn", "Half-Giant", "Maenad",
+            "Noral", "Ophiduan", "Xeph",
+        ];
+        for key in ["Naturally Psionic", "Psionic Aptitude"] {
+            let ability = monster_abilities()
+                .iter()
+                .find(|a| a.key == key)
+                .unwrap_or_else(|| panic!("{key} must ship, owned via the `Racial Traits ~` bundle row"));
+            let mut owners = ability.owners.to_vec();
+            owners.sort_unstable();
+            let mut expected = expected_owners.to_vec();
+            expected.sort_unstable();
+            assert_eq!(owners, expected, "{key}'s owner set no longer matches the bundle row");
+        }
     }
 }

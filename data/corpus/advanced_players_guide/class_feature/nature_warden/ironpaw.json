@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Warden ~ Ironpaw",
+    "name": "Ironpaw",
+    "class": "Nature Warden",
+    "description": "At 8th level, a nature warden may grant her animal companion and any creature she summons with summon nature's ally DR/cold iron equal to her class level. In addition, their natural weapons are considered cold iron for the purpose of overcoming damage reduction. This ability does not stack with the silverclaw ability. The warden must decide at the time of summoning whether a summoned creature gains the benefits of silverclaw or ironpaw. She may change which ability applies to her animal companion by spending 1 hour in prayer and meditation with the companion within 100 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Ironpaw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a nature warden may grant her animal companion and any creature she summons with summon nature's ally DR/cold iron equal to her class level. In addition, their natural weapons are considered cold iron for the purpose of overcoming damage reduction. This ability does not stack with the silverclaw ability. The warden must decide at the time of summoning whether a summoned creature gains the benefits of silverclaw or ironpaw. She may change which ability applies to her animal companion by spending 1 hour in prayer and meditation with the companion within 100 feet."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1433,
+    "record_key": "Nature Warden ~ Ironpaw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

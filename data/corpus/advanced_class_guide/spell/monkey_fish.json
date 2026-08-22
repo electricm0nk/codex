@@ -1,26 +1,72 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Monkey Fish",
-    "school": "Transmutation",
-    "level": 1,
     "description": "Your hands and feet alter to make you better at climbing and swimming. You gain a 10 foot climb speed and swim speed. This spell has no effect if you are wearing medium or heavy armor or carrying a medium or heavy load.",
-    "full_text": true
+    "full_text": true,
+    "key": "Monkey Fish",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Druid,Magus,Shaman,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a climb speed and a swim speed of 10 ft. for a time.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your hands and feet alter to make you better at climbing and swimming. You gain a 10 foot climb speed and swim speed. This spell has no effect if you are wearing medium or heavy armor or carrying a medium or heavy load.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/monkeyFish.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "you"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 87,
-    "record_key": "Monkey Fish"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Monkey Fish",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

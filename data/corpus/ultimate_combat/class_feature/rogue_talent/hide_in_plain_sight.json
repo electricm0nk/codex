@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Hide in Plain Sight",
+    "name": "Hide in Plain Sight",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can select a single terrain from the ranger's favored terrain list. She is a master at hiding in that terrain, and while within that terrain, she can use the Stealth skill to hide, even while being observed. A rogue may take this advanced talent more than once, each time selecting a different terrain from the favored terrain list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Hide in Plain Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can select a single terrain from the ranger's favored terrain list. She is a master at hiding in that terrain, and while within that terrain, she can use the Stealth skill to hide, even while being observed. A rogue may take this advanced talent more than once, each time selecting a different terrain from the favored terrain list."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1619,
+    "record_key": "Rogue Talent ~ Hide in Plain Sight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Lockjaw",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You give a creature the ability to use one of its natural attacks to firmly attach itself to an opponent. Choose one of the creature's natural attacks (usually a claw or bite attack).  The creature gains the grab ability with that natural attack, including the +4 bonus on combat maneuver checks to start or maintain a grapple. A creature with multiple natural attacks can strike at its grappled opponent with its other natural attacks, but cannot attack any other creature.",
-    "full_text": true
+    "full_text": true,
+    "key": "Lockjaw",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Gives creature grab ability with a natural attack.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You give a creature the ability to use one of its natural attacks to firmly attach itself to an opponent. Choose one of the creature's natural attacks (usually a claw or bite attack).  The creature gains the grab ability with that natural attack, including the +4 bonus on combat maneuver checks to start or maintain a grapple. A creature with multiple natural attacks can strike at its grappled opponent with its other natural attacks, but cannot attack any other creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(sticky tree gum)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/lockjaw.html#_lockjaw"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 164,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2003,
-    "record_key": "Lockjaw"
+    "record_key": "Lockjaw",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

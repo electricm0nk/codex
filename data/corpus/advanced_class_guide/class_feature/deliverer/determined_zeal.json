@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deliverer ~ Determined Zeal",
+    "name": "Determined Zeal",
+    "class": "Slayer",
+    "description": "A deliverer shrugs off attempts by his moral opposite to control or kill him. On any round in which the deliverer attacks an opponent whose alignment is at least two steps away from his own (such as a lawful good deliverer fighting a chaotic good or lawful evil foe, or a neutral foe with no other alignment components), he gains a +2 bonus on Will saving throws against that opponent's abilities, as well as the benefit of the Diehard feat until the end of his next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deliverer ~ Determined Zeal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Deliverer Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A deliverer shrugs off attempts by his moral opposite to control or kill him. On any round in which the deliverer attacks an opponent whose alignment is at least two steps away from his own (such as a lawful good deliverer fighting a chaotic good or lawful evil foe, or a neutral foe with no other alignment components), he gains a +2 bonus on Will saving throws against that opponent's abilities, as well as the benefit of the Diehard feat until the end of his next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3752,
+    "record_key": "Deliverer ~ Determined Zeal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

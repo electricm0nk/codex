@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Time Mystery ~ Time Sight",
+    "name": "Time Sight",
+    "class": "Time Mystery",
+    "description": "You can peer through the mists of time to see things as they truly are, as if using the true seeing spell.|!PRECLASS:1,Oracle=15",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Time Mystery ~ Time Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.TimeRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TimeSightDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can peer through the mists of time to see things as they truly are, as if using the true seeing spell.|!PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You can peer through the mists of time to see things as they truly are, as if using the moment of prescience spell.|PREMULT:2,[PRECLASS:1,Oracle=15],[!PRECLASS:1,Oracle=18]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can peer through the mists of time to see things as they truly are, as if using the foresight spell.|PRECLASS:1,Oracle=18"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability for %1 minutes per day, but these minutes do not need to be consecutive.|TimeSightDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TimeSightDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 507,
+    "record_key": "Time Mystery ~ Time Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daring Infiltrator ~ Quick-Tongued",
+    "name": "Quick-Tongued",
+    "class": "Swashbuckler",
+    "description": "A daring infiltrator gains a +%1 bonus on Bluff checks.|floor((SwashbucklerLVL+2)/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring Infiltrator ~ Quick-Tongued"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Infiltrator Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A daring infiltrator gains a +%1 bonus on Bluff checks.|floor((SwashbucklerLVL+2)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|floor((SwashbucklerLVL+2)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3851,
+    "record_key": "Daring Infiltrator ~ Quick-Tongued"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

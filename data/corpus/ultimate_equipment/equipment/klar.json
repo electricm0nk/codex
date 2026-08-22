@@ -1,0 +1,69 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 12.0,
+    "description": null,
+    "key": "Klar",
+    "name": "Klar",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Shield (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Light.Standard.Close"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 112,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Klar",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

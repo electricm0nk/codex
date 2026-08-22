@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Stealing Strike",
+    "name": "Stealing Strike",
+    "class": "Investigator",
+    "description": "When the investigator deals damage with studied strike, he can perform a steal combat maneuver as a free action against the creature damaged by studied strike. This steal does not provoke attacks of opportunity. * Only one of these talents can be applied to an individual attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Stealing Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "When the investigator deals damage with studied strike, he can perform a steal combat maneuver as a free action against the creature damaged by studied strike. This steal does not provoke attacks of opportunity. * Only one of these talents can be applied to an individual attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1304,
+    "record_key": "Investigator ~ Stealing Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

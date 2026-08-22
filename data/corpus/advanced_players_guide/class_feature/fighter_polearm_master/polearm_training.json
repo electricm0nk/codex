@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Polearm Master ~ Polearm Training",
+    "name": "Polearm Training",
+    "class": "Fighter",
+    "description": "At 5th level, a polearm master gains a +1 bonus on attack and damage rolls with spears and polearms. The bonus increases by +1 for every four levels beyond 5th. This ability replaces weapon training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Polearm Master ~ Polearm Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining1"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a polearm master gains a +1 bonus on attack and damage rolls with spears and polearms. The bonus increases by +1 for every four levels beyond 5th. This ability replaces weapon training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training I|-1|PREVARGTEQ:FighterWeaponTrainingLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Polearm|TOHIT,DAMAGE|(FighterLVL-1)/4|TYPE=WeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Spear|TOHIT,DAMAGE|(FighterLVL-1)/4|TYPE=WeaponTraining"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2180,
+    "record_key": "Fighter Polearm Master ~ Polearm Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

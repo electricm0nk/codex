@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Court Bard ~ Wide Audience",
+    "name": "Wide Audience",
+    "class": "Bard",
+    "description": "At 5th level, a court bard can choose to affect a %1-foot [60-foot] cone instead of a %2 [30-foot] radius with bardic performances that affect an area. In addition, for every five levels beyond 5th, the area of such powers is increased by 10 feet (radius) or 20 feet (cone). If the power instead affects multiple creatures, it affects one additional creature than normal for every five levels beyond 5th. This does not affect powers that affect only a single creature. This ability replaces lore master and jack of all trades.|WideAudienceCone|WideAudienceRadius",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Court Bard ~ Wide Audience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardLoreMaster.BardJackOfAllTrades"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WideAudienceCone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WideAudienceRadius|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a court bard can choose to affect a %1-foot [60-foot] cone instead of a %2 [30-foot] radius with bardic performances that affect an area. In addition, for every five levels beyond 5th, the area of such powers is increased by 10 feet (radius) or 20 feet (cone). If the power instead affects multiple creatures, it affects one additional creature than normal for every five levels beyond 5th. This does not affect powers that affect only a single creature. This ability replaces lore master and jack of all trades.|WideAudienceCone|WideAudienceRadius"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WideAudienceCone|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WideAudienceRadius|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WideAudienceCone|((BardLVL-5)/5)*10|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WideAudienceRadius|((BardLVL-5)/5)*20|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1657,
+    "record_key": "Court Bard ~ Wide Audience"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

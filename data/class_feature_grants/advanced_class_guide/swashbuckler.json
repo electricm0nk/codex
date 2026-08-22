@@ -1,0 +1,677 @@
+[
+  {
+    "key": "Daring Infiltrator ~ Bonus Feats",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3840
+    }
+  },
+  {
+    "key": "Daring Infiltrator ~ Class Skills",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3840
+    }
+  },
+  {
+    "key": "Daring Infiltrator ~ Deeds",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3840
+    }
+  },
+  {
+    "key": "Daring Infiltrator ~ Quick-Tongued",
+    "class": "Swashbuckler",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3840
+    }
+  },
+  {
+    "key": "Deed ~ Authoritative Bluff",
+    "class": "Swashbuckler",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3840
+    }
+  },
+  {
+    "key": "Deed ~ Bleeding Wound",
+    "class": "Swashbuckler",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3877
+    }
+  },
+  {
+    "key": "Deed ~ Clandestine Expertise",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3840
+    }
+  },
+  {
+    "key": "Deed ~ Disrupting Counter",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3877
+    }
+  },
+  {
+    "key": "Deed ~ Inspired Strike",
+    "class": "Swashbuckler",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3842
+    }
+  },
+  {
+    "key": "Deed ~ Perfect Throw",
+    "class": "Swashbuckler",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3877
+    }
+  },
+  {
+    "key": "Deed ~ Precise Throw",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3877
+    }
+  },
+  {
+    "key": "Deed ~ Silence Is Golden",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3840
+    }
+  },
+  {
+    "key": "Deed ~ Subtle Throw",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3877
+    }
+  },
+  {
+    "key": "Deed ~ Targeted Throw",
+    "class": "Swashbuckler",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3877
+    }
+  },
+  {
+    "key": "Flying Blade ~ Deeds",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3841
+    }
+  },
+  {
+    "key": "Flying Blade ~ Flying Blade Mastery",
+    "class": "Swashbuckler",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3841
+    }
+  },
+  {
+    "key": "Flying Blade ~ Flying Blade Training",
+    "class": "Swashbuckler",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3841
+    }
+  },
+  {
+    "key": "Flying Blade ~ Panache",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3841
+    }
+  },
+  {
+    "key": "Inspired Blade ~ Inspired Finesse",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3842
+    }
+  },
+  {
+    "key": "Inspired Blade ~ Inspired Panache",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3842
+    }
+  },
+  {
+    "key": "Inspired Blade ~ Rapier Training",
+    "class": "Swashbuckler",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3842
+    }
+  },
+  {
+    "key": "Inspired Blade ~ Rapier Weapon Mastery",
+    "class": "Swashbuckler",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3842
+    }
+  },
+  {
+    "key": "Mouser ~ Cat's Charge",
+    "class": "Swashbuckler",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3843
+    }
+  },
+  {
+    "key": "Mouser ~ Deeds",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3843
+    }
+  },
+  {
+    "key": "Mouser ~ Hamstring",
+    "class": "Swashbuckler",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3843
+    }
+  },
+  {
+    "key": "Mouser ~ Quick Steal",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3843
+    }
+  },
+  {
+    "key": "Mouser ~ Underfoot Assault",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3843
+    }
+  },
+  {
+    "key": "Musketeer ~ Musketeer Instruction",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3844
+    }
+  },
+  {
+    "key": "Musketeer ~ Quick Clear",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3844
+    }
+  },
+  {
+    "key": "Musketeer ~ Weapon Proficiency",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3844
+    }
+  },
+  {
+    "key": "Mysterious Avenger ~ Alignment",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3845
+    }
+  },
+  {
+    "key": "Mysterious Avenger ~ Avenger Finesse",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3845
+    }
+  },
+  {
+    "key": "Mysterious Avenger ~ Avenger's Target",
+    "class": "Swashbuckler",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3845
+    }
+  },
+  {
+    "key": "Mysterious Avenger ~ Class Skills",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3845
+    }
+  },
+  {
+    "key": "Mysterious Avenger ~ Greater Charmed Life",
+    "class": "Swashbuckler",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3845
+    }
+  },
+  {
+    "key": "Mysterious Avenger ~ Secret Identity",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3845
+    }
+  },
+  {
+    "key": "Mysterious Avenger ~ Weapon and Armor Proficiency",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3845
+    }
+  },
+  {
+    "key": "Picaroon ~ Deeds",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  },
+  {
+    "key": "Picaroon ~ Gun Feint",
+    "class": "Swashbuckler",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  },
+  {
+    "key": "Picaroon ~ Lightning Reload",
+    "class": "Swashbuckler",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  },
+  {
+    "key": "Picaroon ~ Melee Shooter",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  },
+  {
+    "key": "Picaroon ~ Panache",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  },
+  {
+    "key": "Picaroon ~ Quick Clear",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  },
+  {
+    "key": "Picaroon ~ Two-Weapon Finesse",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  },
+  {
+    "key": "Picaroon ~ Weapon Proficiency",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 3846
+    }
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai ~ Resolute",
+    "name": "Resolute",
+    "class": "Samurai",
+    "description": "Whenever the samurai is required to make a Fortitude or Will save, he can spend one use of his resolve as an immediate action to roll twice and take the better result. He must decide to use this ability before he rolls the saving throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Resolute"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Resolve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SamuraiResolve"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the samurai is required to make a Fortitude or Will save, he can spend one use of his resolve as an immediate action to roll twice and take the better result. He must decide to use this ability before he rolls the saving throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 194,
+    "record_key": "Samurai ~ Resolute"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

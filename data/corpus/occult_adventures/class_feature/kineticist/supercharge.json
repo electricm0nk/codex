@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist ~ Supercharge",
+    "name": "Supercharge",
+    "class": "Kineticist",
+    "description": "At 11th level, when using gather power as a move action, a kineticist can reduce the total burn cost of a single wild talent by 2 points instead of 1. When using gather power for 1 full round, she can reduce the burn cost of a single wild talent by 3 points instead of 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Supercharge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, when using gather power as a move action, a kineticist can reduce the total burn cost of a single wild talent by 2 points instead of 1. When using gather power for 1 full round, she can reduce the burn cost of a single wild talent by 3 points instead of 2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 552,
+    "record_key": "Kineticist ~ Supercharge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

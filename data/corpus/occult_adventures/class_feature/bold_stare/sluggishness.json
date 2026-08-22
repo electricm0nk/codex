@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bold Stare ~ Sluggishness",
+    "name": "Sluggishness",
+    "class": "Bold Stare",
+    "description": "The target of the hypnotic stare has all of its speeds reduced by 5 feet (to a minimum of 5 feet), and the hypnotic stare penalty also applies to the target's Reflex saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bold Stare ~ Sluggishness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BoldStare.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The target of the hypnotic stare has all of its speeds reduced by 5 feet (to a minimum of 5 feet), and the hypnotic stare penalty also applies to the target's Reflex saving throws."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 962,
+    "record_key": "Bold Stare ~ Sluggishness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

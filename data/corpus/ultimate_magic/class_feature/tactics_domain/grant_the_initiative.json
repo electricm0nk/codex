@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tactics Domain ~ Grant the Initiative",
+    "name": "Grant the Initiative",
+    "class": "Tactics Domain",
+    "description": "You and all allies within 30 feet may add +%1 to your initiative checks.|GrantTheInitiativeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactics Domain ~ Grant the Initiative"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrantTheInitiativeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You and all allies within 30 feet may add +%1 to your initiative checks.|GrantTheInitiativeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GrantTheInitiativeBonus|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|INITIATIVE|GrantTheInitiativeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 393,
+    "record_key": "Tactics Domain ~ Grant the Initiative"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

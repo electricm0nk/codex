@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arrow Champion ~ Precise Aim",
+    "name": "Precise Aim",
+    "class": "Swashbuckler",
+    "description": "When attacking with a light or one-handed piercing melee weapon, an arrow champion can add her swashbuckler level to the damage she deals, as the swashbuckler's precise strike deed. She can also add one-quarter of her swashbuckler level to the damage dealt when attacking with a bow, but the target must be within 30 feet of her. As a swift action, an arrow champion can spend 1 panache point to increase the range of the effect to her bow's first range increment. Unlike a normal swashbuckler, an arrow champion cannot spend panache to double the extra damage. This deed alters precise strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arrow Champion ~ Precise Aim"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL03"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL3.AttackOption.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When attacking with a light or one-handed piercing melee weapon, an arrow champion can add her swashbuckler level to the damage she deals, as the swashbuckler's precise strike deed. She can also add one-quarter of her swashbuckler level to the damage dealt when attacking with a bow, but the target must be within 30 feet of her. As a swift action, an arrow champion can spend 1 panache point to increase the range of the effect to her bow's first range increment. Unlike a normal swashbuckler, an arrow champion cannot spend panache to double the extra damage. This deed alters precise strike."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1201,
+    "record_key": "Arrow Champion ~ Precise Aim"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

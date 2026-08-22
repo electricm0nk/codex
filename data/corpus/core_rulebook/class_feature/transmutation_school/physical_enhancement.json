@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Transmutation School ~ Physical Enhancement",
+    "name": "Physical Enhancement",
+    "class": "Transmutation School",
+    "description": "You gain a +%1 enhancement bonus to one physical ability score (Strength, Dexterity, or Constitution). You can change this bonus to a new ability score when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVARLT:TransmutationProgressionSchoolLVL,20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transmutation School ~ Physical Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationPhysicalEnhancementBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationPhysicalEnhancementProgression|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to one physical ability score (Strength, Dexterity, or Constitution). You can change this bonus to a new ability score when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVARLT:TransmutationProgressionSchoolLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to two physical ability scores (Strength, Dexterity, or Constitution). You can change this bonus to new ability scores when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVAREQ:TransmutationProgressionSchoolLVL,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Physical Enhancement ~ Constitution|Physical Enhancement ~ Dexterity|Physical Enhancement ~ Strength"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementProgression|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementProgression|1|PREVARGTEQ:TransmutationProgressionSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementBonus|min(5,(TransmutationSchoolLVL/5)+1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2685,
+    "record_key": "Transmutation School ~ Physical Enhancement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

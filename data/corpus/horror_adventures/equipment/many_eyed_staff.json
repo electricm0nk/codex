@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 32000.0,
+    "description": "+5 bonus on Perception checks while grasping the staff, wielder can see through eyes of summoned spider's or blinded creature's eyes if within 100 ft.",
+    "key": "Many-Eyed Staff",
+    "name": "Many-Eyed Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff"
+      },
+      {
+        "key": "COST",
+        "value": "32000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=1|TIMEUNIT=Charge|CASTERLEVEL=9|Blindness/Deafness (Blindness Only)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=2|TIMEUNIT=Charges|CASTERLEVEL=9|Summon Monster II (giant spider only)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=3|TIMEUNIT=Charges|CASTERLEVEL=9|Prying Eyes"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 bonus on Perception checks while grasping the staff, wielder can see through eyes of summoned spider's or blinded creature's eyes if within 100 ft."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Many-Eyed Staff",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

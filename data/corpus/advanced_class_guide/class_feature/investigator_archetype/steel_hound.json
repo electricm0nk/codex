@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Steel Hound",
+    "name": "Steel Hound",
+    "class": "Investigator Archetype",
+    "description": "Black powder and firearms are a natural extension of the alchemical experimentation that investigators use on a regular basis. Steel hounds are investigators who have taken to using firearms in place of the more mundane weapons their counterparts favor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Steel Hound"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype.InvestigatorWeaponProficiencies.InvestigatorArmorProficiencies.InvestigatorPoisonLore.InvestigatorSwiftAlchemy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Steel Hound],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InvestigatorWeaponProficiencies,TYPE.InvestigatorArmorProficiencies,TYPE.InvestigatorPoisonLore,TYPE.InvestigatorSwiftAlchemy]"
+      },
+      {
+        "key": "DESC",
+        "value": "Black powder and firearms are a natural extension of the alchemical experimentation that investigators use on a regular basis. Steel hounds are investigators who have taken to using firearms in place of the more mundane weapons their counterparts favor."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Steel Hound ~ Weapon and Armor Proficiency|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Steel Hound ~ Packing Heat|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Steel Hound ~ Investigator Talents|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Steel Hound ~ Shot in the Dark|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Deed ~ Blind Shot|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Steel Hound ~ Talented Shot|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Investigator"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3310,
+    "record_key": "Investigator Archetype ~ Steel Hound"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

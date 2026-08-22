@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Giant Mantis Companion ~ Lunge",
     "delivery": "Extraordinary",
@@ -14,6 +12,28 @@
     "owners": [
       "ultimate_magic:companion:companion_mantis_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant mantis's limbs are capable of reaching much farther than normal for a creature of its size. As a full-attack action, it can make a single attack with its claws at double its normal reach. When a giant mantis attacks with a claw in this manner, it gains a +4 bonus on its attack roll. A giant mantis cannot make attacks of opportunity with its lunge."
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Mantis Companion ~ Lunge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.200",
     "stat_adjustments": [],
@@ -22,16 +42,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
-    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
-    "line": 30,
-    "record_key": "Giant Mantis Companion ~ Lunge"
-  },
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Giant Mantis Companion ~ Lunge",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,0 +1,91 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 4000.0,
+    "description": null,
+    "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 18",
+    "name": "Legendary Intelligent Item / Stat Intelligence 18",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemCost",
+          "4000"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatINT",
+          "8"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SpeechBonusLang",
+          "4"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 18"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic.Intelligent.Intelligence Stat"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 11,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 12,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 13,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 14,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 15,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 16,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 17,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 19,Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 20"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Mythic,Intelligent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item Stat INT ~ 18"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 18",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja ~ No Trace",
+    "name": "No Trace",
+    "class": "Ninja",
+    "description": "The ninja learnt to cover her tracks, remain hidden, and conceal her presence. The DC to track a ninja using the Survival skill increases by +%1. In addition, her training gives her a +%1 insight bonus on Disguise skill checks and on opposed Stealth checks whenever she is stationary and does not take any action for at least 1 round.|NoTraceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja ~ No Trace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.ClassFeatures.Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NinjaNoTraceLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTraceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The ninja learnt to cover her tracks, remain hidden, and conceal her presence. The DC to track a ninja using the Survival skill increases by +%1. In addition, her training gives her a +%1 insight bonus on Disguise skill checks and on opposed Stealth checks whenever she is stationary and does not take any action for at least 1 round.|NoTraceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=Stationary for at least one round|NoTraceBonus|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|NoTraceBonus|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTraceBonus|NinjaNoTraceLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NinjaNoTraceLVL|NinjaLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 117,
+    "record_key": "Ninja ~ No Trace"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

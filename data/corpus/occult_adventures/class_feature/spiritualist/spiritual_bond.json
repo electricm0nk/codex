@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Spiritual Bond",
+    "name": "Spiritual Bond",
+    "class": "Spiritualist",
+    "description": "At 14th level, a spiritualist's life force becomes intrinsically linked with the phantom's spiritual essence. As long as the phantom has 1 or more hit points, when the spiritualist takes damage that would reduce her to fewer than 0 hit points, those points of damage are transferred to the phantom instead. This transfer stops after the phantom takes all the points of damage or the phantom is reduced to a negative amount of hit points equal to its Constitution score. In the latter case, points of damage dealt in excess of this limit are dealt to the spiritualist. This ability affects only effects that deal hit point damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Spiritual Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, a spiritualist's life force becomes intrinsically linked with the phantom's spiritual essence. As long as the phantom has 1 or more hit points, when the spiritualist takes damage that would reduce her to fewer than 0 hit points, those points of damage are transferred to the phantom instead. This transfer stops after the phantom takes all the points of damage or the phantom is reduced to a negative amount of hit points equal to its Constitution score. In the latter case, points of damage dealt in excess of this limit are dealt to the spiritualist. This ability affects only effects that deal hit point damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1289,
+    "record_key": "Spiritualist ~ Spiritual Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

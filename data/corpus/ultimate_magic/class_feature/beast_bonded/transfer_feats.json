@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Beast-Bonded ~ Transfer Feats",
+    "name": "Transfer Feats",
+    "class": "Witch",
+    "description": "Whenever you are capable of learning a new feat, you may choose to instead have your familiar learn the feat as a bonus feat. The familiar must meet the prerequisites for any feats that it learns this way. If your familiar is lost or dies, you can reclaim the feat slots and select new feats for yourself, or apply the slots toward your new familiar.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beast-Bonded ~ Transfer Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BeastBondedFeatTransfer|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you are capable of learning a new feat, you may choose to instead have your familiar learn the feat as a bonus feat. The familiar must meet the prerequisites for any feats that it learns this way. If your familiar is lost or dies, you can reclaim the feat slots and select new feats for yourself, or apply the slots toward your new familiar."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1996,
+    "record_key": "Beast-Bonded ~ Transfer Feats"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

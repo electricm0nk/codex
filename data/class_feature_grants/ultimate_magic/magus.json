@@ -1,0 +1,92 @@
+[
+  {
+    "key": "Bladebound ~ Arcane Pool",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1288
+    }
+  },
+  {
+    "key": "Bladebound ~ Black Blade",
+    "class": "Magus",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1288
+    }
+  },
+  {
+    "key": "Hexcrafter ~ Hex Magus",
+    "class": "Magus",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1289
+    }
+  },
+  {
+    "key": "Spellblade ~ Force Athame",
+    "class": "Magus",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1290
+    }
+  },
+  {
+    "key": "Staff Magus ~ Quarterstaff Defense",
+    "class": "Magus",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1291
+    }
+  },
+  {
+    "key": "Staff Magus ~ Staff Weapon",
+    "class": "Magus",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1291
+    }
+  }
+]

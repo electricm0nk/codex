@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Bonded Senses",
+    "name": "Bonded Senses",
+    "class": "Spiritualist",
+    "description": "At 2nd level, as a standard action, a spiritualist can share the senses of her manifested phantom, hearing, seeing, smelling, tasting, and feeling everything her phantom does. She can use this ability a number of rounds per day equal to her spiritualist level, but those rounds do not need to be consecutive. There is no maximum range for this effect, but the phantom and the spiritualist must be on the same plane. The spiritualist can end this effect as a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Bonded Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, as a standard action, a spiritualist can share the senses of her manifested phantom, hearing, seeing, smelling, tasting, and feeling everything her phantom does. She can use this ability a number of rounds per day equal to her spiritualist level, but those rounds do not need to be consecutive. There is no maximum range for this effect, but the phantom and the spiritualist must be on the same plane. The spiritualist can end this effect as a free action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1278,
+    "record_key": "Spiritualist ~ Bonded Senses"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create an image of a pool of water, a group of standing stones, a cove, an island, or another simple land formation over a stretch of flat land or water. The image is purely visual, and structures, equipment, and creatures within the area are not hidden or changed in appearance. Anyone interacting with the illusion can attempt to disbelieve it, and a creature trained in Survival can make a special attempt to disbelieve the illusion. The creature must be within 120 feet of the illusion's area and can attempt a Survival check instead of a Will saving throw. If the result is equal to or greater than the spell's save DC, the creature realizes the mirage is an illusion as if it disbelieved the spell.",
+    "key": "Mirage",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Druid,Mesmerist,Occultist,Psychic,Ranger=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Create illusory terrain.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create an image of a pool of water, a group of standing stones, a cove, an island, or another simple land formation over a stretch of flat land or water. The image is purely visual, and structures, equipment, and creatures within the area are not hidden or changed in appearance. Anyone interacting with the illusion can attempt to disbelieve it, and a creature trained in Survival can make a special attempt to disbelieve the illusion. The creature must be within 120 feet of the illusion's area and can attempt a Survival check instead of a Will saving throw. If the result is equal to or greater than the spell's save DC, the creature realizes the mirage is an illusion as if it disbelieved the spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will disbelief (see below)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Figment"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) 40-ft. cubes [S]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Mirage",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

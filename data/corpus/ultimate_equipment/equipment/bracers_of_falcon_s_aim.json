@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 4000.0,
+    "description": "They continually grant the wearer the benefits of the aspect of the falcon spell, though without the spell's physical transformation.",
+    "key": "Bracers of Falcon's Aim",
+    "name": "Bracers of Falcon's Aim",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Bracer.GreaterMinor"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|SPELL ~ Aspect of the Falcon"
+      },
+      {
+        "key": "SPROP",
+        "value": "They continually grant the wearer the benefits of the aspect of the falcon spell, though without the spell's physical transformation."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 927,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Bracers of Falcon's Aim",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

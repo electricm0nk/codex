@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Chaos Domain",
+    "name": "Chaos",
+    "class": "Forbidden Rites Domain",
+    "description": "Your touch infuses life and weapons with chaos, and you revel in all things anarchic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Chaos Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.ChaosDomainReplacement"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CG,CN,CE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainChaosAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch infuses life and weapons with chaos, and you revel in all things anarchic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Chaos|PREDOMAIN:1,Chaos|PREVARGTEQ:DomainChaosAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Chaos Blade|PREDOMAIN:1,Chaos|PREVARGTEQ:DomainChaosAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosDC|10+(DomainChaosLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainChaosAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Protection from Law|Cleric=2|Align Weapon (Chaos Only)|Cleric=3|Magic Circle against Law|Cleric=4|Chaos Hammer|Cleric=5|Dispel Law|Cleric=6|Animate Objects|Cleric=7|Word of Chaos|Cleric=8|Cloak of Chaos|Cleric=9|Summon Monster IX (Chaos Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1030,
+    "record_key": "Forbidden Rites Domain ~ Chaos Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

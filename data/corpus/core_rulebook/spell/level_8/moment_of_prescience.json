@@ -1,25 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell grants you a sixth sense. Once during the spell's duration, you may choose to use its effect. This spell grants you an insight bonus equal to your caster level [maximum +25] on any single attack roll, combat maneuver check, opposed ability or skill check, or saving throw. Alternatively, you can apply the insight bonus to your AC against a single attack [even if flat-footed]. Activating the effect doesn't take an action; you can even activate it on another character's turn. You must choose to use the moment of prescience before you make the roll it is to modify. Once used, the spell ends. You can't have more than one moment of prescience active on you at the same time.",
     "key": "Moment of Prescience",
-    "school": "Divination",
     "level": 8,
-    "description": "This spell grants you a sixth sense. Once during the spell's duration, you may choose to use its effect. This spell grants you an insight bonus equal to your caster level [maximum +25] on any single attack roll, combat maneuver check, opposed ability or skill check, or saving throw. Alternatively, you can apply the insight bonus to your AC against a single attack [even if flat-footed]. Activating the effect doesn't take an action; you can even activate it on another character's turn. You must choose to use the moment of prescience before you make the roll it is to modify. Once used, the spell ends. You can't have more than one moment of prescience active on you at the same time."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell grants you a sixth sense. Once during the spell's duration, you may choose to use its effect. This spell grants you an insight bonus equal to your caster level [maximum +25] on any single attack roll, combat maneuver check, opposed ability or skill check, or saving throw. Alternatively, you can apply the insight bonus to your AC against a single attack [even if flat-footed]. Activating the effect doesn't take an action; you can even activate it on another character's turn. You must choose to use the moment of prescience before you make the roll it is to modify. Once used, the spell ends. You can't have more than one moment of prescience active on you at the same time.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell grants you a sixth sense.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Luck=8"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours or until discharged"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/momentOfPrescience.html#_moment-of-prescience"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 406,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1160,
-    "record_key": "Moment of Prescience.MOD"
+    "record_key": "Moment of Prescience",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

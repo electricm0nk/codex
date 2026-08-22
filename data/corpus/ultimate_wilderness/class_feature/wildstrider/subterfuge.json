@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wildstrider ~ Subterfuge",
+    "name": "Subterfuge",
+    "class": "Swashbuckler",
+    "description": "A wildstrider adds Stealth to the list of skills to which the derring-do deed applies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildstrider ~ Subterfuge"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL1.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildstrider adds Stealth to the list of skills to which the derring-do deed applies."
+      },
+      {
+        "key": "DESC",
+        "value": "She adds Stealth to the list of skills on which she can take 10 using the swashbuckler's edge deed.|PRECLASS:1,Swashbuckler=15"
+      },
+      {
+        "key": "DESC",
+        "value": "This deed alters derring-do and swashbuckler's edge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1209,
+    "record_key": "Wildstrider ~ Subterfuge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

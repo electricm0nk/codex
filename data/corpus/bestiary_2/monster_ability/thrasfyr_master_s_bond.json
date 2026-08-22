@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Thrasfyr ~ Master's Bond",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:thrasfyr"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A thrasfyr can form a bond with a willing creature by touching that creature.  This allows the thrasfyr to communicate telepathically with the bonded creature with no range restriction (provided the thrasfyr and its master are on the same plane).  Both thrasfyr and master can sense the other's condition as if both were under the effect of a status spell.  A thrasfyr can maintain a bond with only one master at a time."
+      },
+      {
+        "key": "KEY",
+        "value": "Thrasfyr ~ Master's Bond"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.263",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1243,
-    "record_key": "Thrasfyr ~ Master's Bond"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1243,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Thrasfyr ~ Master's Bond",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

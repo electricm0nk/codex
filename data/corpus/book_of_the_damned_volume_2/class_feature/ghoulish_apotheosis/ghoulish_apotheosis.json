@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghoulish Apotheosis ~ Kabriri",
+    "name": "Ghoulish Apotheosis",
+    "class": "Ghoulish Apotheosis",
+    "description": "The next time you die, you rise as a ghoul after 24 hours. Your type changes to undead and you lose all the abilities of your previous race, replacing them with +2 natural armor, darkvision 60 feet, channel resistance +2, and a ghoul's physical attacks. You do not change your total Hit Dice or alter your ability scores. If you achieve this boon when you're already an undead creature, you instead gain a +4 profane bonus to Charisma.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoulish Apotheosis ~ Kabriri"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The next time you die, you rise as a ghoul after 24 hours. Your type changes to undead and you lose all the abilities of your previous race, replacing them with +2 natural armor, darkvision 60 feet, channel resistance +2, and a ghoul's physical attacks. You do not change your total Hit Dice or alter your ability scores. If you achieve this boon when you're already an undead creature, you instead gain a +4 profane bonus to Charisma."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 150,
+    "record_key": "Ghoulish Apotheosis ~ Kabriri"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

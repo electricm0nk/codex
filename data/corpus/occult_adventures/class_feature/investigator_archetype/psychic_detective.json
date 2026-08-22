@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Psychic Detective",
+    "name": "Psychic Detective",
+    "class": "Investigator Archetype",
+    "description": "A psychic detective supplements her keen insight with occult skill to unravel mysteries both ordinary and supernatural.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Psychic Detective"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Psychic Detective],[!PREFACT:1,ABILITIES,Investigator_Archetype_Talent3=true,Investigator_Archetype_PoisonLore=true,Investigator_Archetype_PoisonResistance=true,Investigator_Archetype_SwiftAlchemy=true,Investigator_Archetype_PoisonImmunity=true,Investigator_Archetype_Alchemy=true,Investigator_Archetype_ClassSkills=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychic detective supplements her keen insight with occult skill to unravel mysteries both ordinary and supernatural."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Psychic Detective"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Psychic Detective ~ Class Skills|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Psychic Detective ~ Spells|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Psychic Detective ~ Psychic Detective Spells|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Psychic Detective ~ Psychic Meddler|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Psychic Detective ~ Phrenic Dabbler|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Psychic Detective ~ Investigator Talents|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_ClassSkills|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1755,
+    "record_key": "Investigator Archetype ~ Psychic Detective"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

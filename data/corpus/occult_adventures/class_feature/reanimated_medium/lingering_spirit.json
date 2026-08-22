@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Reanimated Medium ~ Lingering Spirit",
+    "name": "Lingering Spirit",
+    "class": "Medium",
+    "description": "A reanimated medium's spirit lingers for up to 1 round after death before departing if the medium spends 1 point of influence. If the reanimated medium died of hit point damage, healing works on his body during the intervening round and can bring him back to life. Once the spirit departs, the breath of life spell continues to work for 1 additional round, even though the reanimated medium has been dead for more than 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reanimated Medium ~ Lingering Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A reanimated medium's spirit lingers for up to 1 round after death before departing if the medium spends 1 point of influence. If the reanimated medium died of hit point damage, healing works on his body during the intervening round and can bring him back to life. Once the spirit departs, the breath of life spell continues to work for 1 additional round, even though the reanimated medium has been dead for more than 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1416,
+    "record_key": "Reanimated Medium ~ Lingering Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

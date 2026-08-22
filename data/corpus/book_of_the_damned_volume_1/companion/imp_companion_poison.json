@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T09:20:44Z",
   "data": {
     "corpus_key": "Imp Companion ~ Poison",
     "delivery": "Extraordinary",
@@ -16,6 +14,44 @@
     "owners": [
       "book_of_the_damned_volume_1:companion:companion_imp"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|ImpCompPoisonDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompPoisonDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompPoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Imp Companion ~ Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImpCompPoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting - injury; save Fort DC %1; frequency 1/round for 5 minutes; effect 1d2 Dex; cure 1 save.|ImpCompPoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Imp Companion ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.78",
     "stat_adjustments": [],
@@ -24,16 +60,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
-    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9",
-    "line": 8,
-    "record_key": "Imp Companion ~ Poison"
-  },
+  "ingested_at": "2026-08-13T09:20:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
+    "record_key": "Imp Companion ~ Poison",
+    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

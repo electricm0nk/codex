@@ -100,8 +100,9 @@ Reproduced from `SD-30-class-feature-archetype-bundle/decisions.md §47`: hardwa
 45GB RAM / 968GB disk at 19% used, captured 2026-08-14), concurrency cap of three concurrent
 build-capable agents (re-derived empirically per the existing budget discipline), and the cloud
 fan-out rules — every cloud agent works its own branch, never two writers on one branch; the local
-orchestrator owns all merges to `tranche/10`, verified by content not commit count; DoD-8 on-screen
-verification and dashboard-producer work stay local. Governs this package's Epic 6.
+orchestrator owns all merges to `tranche/11` (updated from `tranche/10` by `decisions.md §6`, the
+tranche/11 branch cut), verified by content not commit count; DoD-8 on-screen verification and
+dashboard-producer work stay local. Governs this package's Epic 6.
 
 **Superseded 2026-08-15 (launch-readiness remediation Step 5, drift D2), on two counts, per this
 program's "original text stays visible, correction points forward, dated" convention:**
@@ -458,3 +459,1320 @@ attributed, already is that record.
 
 **Authority:** operator ruling 2026-08-15 (verbatim above, as recorded in the launch-readiness plan);
 figures re-derived the same day by the commands in this section.
+
+## Decision 6 — Release 0.11.<build> on tranche/11 (operator ruling 2026-08-15)
+
+**Status:** New. Operator ruling, 2026-08-15, verbatim: "it goes without saying - SD-31 will be
+release 0.11.xxx. And will be operating against branch tranche/11."
+
+**The cut.** `tranche/11` was cut from `tranche/10`'s tip, commit `1980d6b95` — not from `develop` —
+because `PR #363` (`tranche/10 -> develop`) is still open (the operator holds sole merge authority and
+has not merged it). This mirrors the precedent set at the `tranche/9 -> tranche/10` boundary: `PR #360`
+(`tranche/9 -> develop`) was a true merge commit, and `tranche/10` was cut from `develop` at that
+point, cleanly. Here, with `#363` still open, cutting from `develop` would have missed all of SD-30's
+work; cutting from `tranche/10`'s own tip instead means `tranche/11` carries SD-30's full history. A
+later `git merge origin/develop` into `tranche/11` is expected to be clean once `#363` lands (SD-30's
+work will already be present via the shared history), and the eventual `tranche/11 -> develop` PR will
+show only SD-31's own diff against that merged base.
+
+**This program's rule, restated so Epic 9 does not re-derive it:** the tranche digit bumps only on a
+NEW `tranche/N` branch cut for the next bundle — never automatically at a bundle's own closure while
+still on the same tranche branch (`SD-22 decisions.md §2`, `SD-21 decisions.md §18`). `tranche/11`
+being newly cut (this ruling) is what authorizes the advance from `0.10` to `0.11`; nothing else does.
+
+**First concrete value.** `0.11.<build>`, where `<build>` is the current build-counter state
+(`GITHUB_RUN_NUMBER` on `publish-tester-release.yml`) at the time of cycle close. The last completed
+run of that workflow before this cycle was run `#123` (success, 2026-08-14, `PR #360` merge to
+`develop`); the next publish from this lineage would stamp `0.11.124`. Landed as commit `147f1c2b7`
+on `tranche/11` this cycle (`SD31-E10-F1-001`).
+
+**Closing-PR increment rule** (restated from `SD-30 decisions.md §15` / the 2026-07-17 build-version
+amendment, so this package does not re-derive it): major stays `0` until first main-publish;
+tranche-base is the numeral in the branch name (`11`); build is a monotonic counter that never resets.
+Tranche-promotion increments only on the `tranche/11 -> develop` PR. The closure Epic's (Epic 9's)
+recorded value is `0.11.<last_build>` at the time that PR is opened.
+
+**What this changes in the package**, landed together with this decision: `README.md`,
+`scope-draft.md`, `epic-breakdown.md`, and `kanban.md` frontmatter move `canonical_branch` to
+`tranche/11` and `build_version_target` to `0.11.<build>`; `loop-instruction.md` and
+`technical-requirements.md` update their checkout instructions; `epic-breakdown.md` gains **Epic 10**
+recording the bump itself; `risks-and-open-questions.md` risk 5 is restated for the new shared-history
+shape; historical receipts in `progress.md` that say `tranche/10` are left as written — they were true
+when recorded — with a dated note added at the top instead.
+
+**Authority:** operator ruling, 2026-08-15, verbatim above.
+
+## Decision 7 — The prose done-bar: zero-magnitude units finish, they do not leave the denominator (operator ruling 2026-08-16)
+
+**Asked:** sign a Structural Exclusion Register entry (`§3`) removing the 404-unit
+`ambiguous:prose_scaling_phrase` / `ambiguous:prose_ability_scaling` population from the 100 %
+denominator. Logged as `artifacts/OPEN-ISSUES.md` row 36, proposed by `SD31-E2-F3-001`.
+
+**Ruled, verbatim:**
+
+> "if they are prose only, nothing to compute, and the prose is available to print in the
+> description on the character sheet, then it counts as done"
+
+**The exclusion is DECLINED and a done-bar granted instead.** The 404 units stay in the denominator
+and gain a real path to `done`. Row 36's proposal is answered and closed; nothing leaves the
+mandate. `§3`'s register remains unsigned and empty.
+
+### The bar — three conjunctive conditions
+
+A unit counts `done` under this decision when ALL THREE hold:
+
+1. **Prose only** — the record's content is text, not a mechanic carrying a magnitude.
+2. **Nothing to compute** — no value the engine would have to derive, scale, or apply.
+3. **The prose is available to print in the description on the character sheet.**
+
+**Condition 3 is load-bearing and is not satisfied by a record merely existing.** It is DoD-8
+shaped: the description must be populated from the real corpus row AND the sheet must render it,
+proven on-screen, not inferred from a green code gate. Three compute twins in this program's
+history each passed a code gate while showing nothing on the sheet (`SD-30 decisions.md §28`).
+A unit whose description is empty, placeholder, or unrendered is **not** done under this decision,
+and marking one so is the anti-gaming violation Decision 1(a) forbids.
+
+### Continuity
+
+This restates, for the corpus board, the standing v0.6 ruling of 2026-07-28 — *"you just include
+the feat description. there is no need to calculate anything… all of our feats need to have
+descriptions on the feats tab and on the printed page. that's all you need to do."* That ruling
+unstuck the v0.6 class matrix, which had sat frozen for a week because zero-magnitude features were
+being counted as unbuilt work. Same category error, same correction, wider scope.
+
+### Size — re-derived 2026-08-16 at `89846f5c9`, not transcribed
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d=json.load(open('docs/work-inventory.json'))
+U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+def v(u): return P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind'))
+zero=[u for u in U if u.get('magnitude_token_count')==0]
+nd=[u for u in zero if v(u)!='done']
+print(len(zero), len(nd))
+print(collections.Counter(u.get('kind') for u in nd).most_common())
+print(collections.Counter(u.get('wiring_class') for u in nd).most_common())
+"
+```
+
+- **16,812 of 38,521 units (43.6 %) carry `magnitude_token_count == 0`**; 2,226 are already `done`.
+- **14,586 are not done — 37.9 % of the whole board.**
+- By kind: `class_feature` 8,637 · `monster_ability` 1,958 · `race_trait` 1,769 · `feat` 928 ·
+  `companion` 520 · `spell` 406 · `equipment` 200 · `equipment_modifier` 134.
+- By wiring class: `display` 12,762 · `derived` 1,339 · `ambiguous` 305 · `static` 161 ·
+  `computed` 19.
+
+The 404 that prompted the ruling are a small corner of what its own wording reaches.
+
+### PROXY WARNING — binding, and it must be discharged before any unit is banked
+
+`magnitude_token_count == 0` is **the engine's own token count**, used above as a proxy for
+conditions 1 and 2. It is not the ruling. Per the standing rule to validate a proxy where it makes
+its confident claim (`SD-30`'s instrument-failure record; 8 in one session, all name-shaped), a
+cycle must first hand-verify a stratified sample of zero-magnitude units against their **whole**
+corpus rows and confirm the row genuinely carries no computable magnitude — held to the same
+whole-record standard as Epic 2's ground-truth sample, and for the same reason: this proxy would
+silently decide ~14,586 units and nothing downstream would catch it being wrong. Where the proxy is
+wrong, the ruling still applies — to the units that genuinely meet conditions 1 and 2.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
+
+## Decision 8 — A `done` credit resting on a non-shipping code path is wired, not retracted (operator ruling 2026-08-16)
+
+**Asked:** `SD31-E6-F11-002` (wave 3) moved 7 `monster` units to `done` through a new evaluator
+seam, `spell_like_ability_caster_level()`. The Opus adversarial verifier accepted the evidence as
+clean — every fixture value reproduced byte-for-byte from the pinned `.lst` rows — but found the
+function had **zero production callers anywhere in the tree**, so the credit rested on a code path
+no player could reach (`artifacts/OPEN-ISSUES.md` row 44). Should the 7 be retracted, or wired?
+
+**Ruled, verbatim:**
+
+> "you were right to say wire up the 7 for real."
+
+**Wire it. Do not retract.** The correct response to a `done` credit resting on a non-shipping code
+path is to make the path ship.
+
+**Discharged the same day** by `SD31-E6-F1-002`: `spell_like_ability_caster_level()` is now called
+from `apps/desktop/src-tauri/src/monster_catalog.rs`'s `map_chassis_monster`, serves
+`MonsterCatalogEntryDto.spellLikeAbilityCasterLevel` over the real `list_monster_catalog` Tauri
+command, and renders on `MonsterCatalogScreen.tsx` — proven by two new Rust tests **and a DoD-8
+on-screen screenshot of Demon (Balor) showing "Spell-like abilities CL 20"**. A
+`has_spell_like_abilities` presence gate was added so the function never serves a caster level to a
+monster that has none. Row 44 is closed.
+
+**What does NOT change:** the adversarial finding was correct and the bar it asserted stands — an
+evaluator nothing ships is not a path to `done`. The credit became legitimate when the wiring
+became real and was proven on-screen, not when the ruling was quoted.
+
+### The precedent both of today's rulings set, stated generally
+
+> When a cycle proposes to **remove** something from the mandate — exclude units from the
+> denominator, retract credit, defer a remainder, declare something out of scope — the answer is
+> **"no, finish it properly."** The operator supplies the finish line, not the exit.
+
+Decision 7 declined a 404-unit exclusion and granted a done-bar. Decision 8 declined a 7-unit
+retraction and required the wiring. Neither accepted a reduction in scope. This is consistent with
+what already stands: deferral was struck from this package (`§2` item 5), cost is forbidden as an
+exclusion reason (`§3`), and no scope is too big to just do. **Cycles should stop drafting exclusion
+proposals as a primary deliverable** — build the path, and propose exclusion only for something
+genuinely impossible, never merely expensive.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
+
+### Decision 7 — CORRECTION to this section's own sizing (2026-08-16, `SD31-D7-PROSE-001`)
+
+**The `magnitude_token_count == 0` figures above are wrong, and this section said they might be.**
+Decision 7's PROXY WARNING required a cycle to hand-validate the proxy before any unit rode on it.
+`SD31-D7-PROSE-001` did exactly that and the proxy failed badly:
+
+```
+python3 scripts/sample_ground_truth_units.py --inventory docs/work-inventory.json \
+  --zero-magnitude-only --target-per-cell 4 --seed 31 \
+  --out artifacts/SD31-D7-PROSE-001-proxy-sample-draw.json      # 121 units, 36 cells, 5 wiring classes, 10 kinds
+python3 -c "import json,collections; r=json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001-proxy-sample-evidence.json')); print(collections.Counter(x['hand_genuinely_zero_magnitude'] for x in r))"
+```
+
+- **Raw proxy: 57 of 121 hand-checked units (47 %) genuinely DO carry a magnitude** despite
+  `magnitude_token_count == 0`. The "14,586 not-done zero-magnitude units" figure above is therefore
+  **an upper bound that roughly doubles the real population**, not an estimate of it.
+- **Gated additionally on `wiring_class == display`, the miss rate falls to 9 of 121 (7 %)**, and
+  those 9 are a single named failure mode — flat, non-scaling numerics in `SPROP:`/`BENEFIT:` fields
+  that the wiring-class classifier does not read (`OPEN-ISSUES.md` row 69).
+
+**The ruling is unchanged; only its scope estimate is.** Decision 7's three conditions are the bar;
+`magnitude_token_count` was never the ruling, and this correction is the proxy warning working as
+written. Future cycles size this population as **`wiring_class == display` AND
+`magnitude_token_count == 0`**, and re-derive rather than quoting either figure.
+
+**The orchestrating session stated the 14,586 figure to the operator when reporting Decision 7.
+That statement is corrected here rather than quietly dropped.** `retro.py correction` emitted.
+
+### Decision 7 — the structural blocker the ruling now runs into (2026-08-16, `SD31-E4-F1-001`)
+
+`SD31-E4-F1-001` wired Slayer's three remaining archetype-supersession slots for real (clearance
+table 4/7 → 7/7, 6 new tests green, a real `if let`/`else` branch plus three previously-absent
+archetype records) and **the board did not move by one unit.** Root cause, fully reproduced: the
+dashboard producer's `doneness_verdict()` maps `display` + `grounded` to **`held`**, not `done`.
+
+Under Decision 7 a `display` unit that is prose-only, has nothing to compute, and whose description
+renders on the sheet **is** done. That cell is therefore the single point where the operator's
+ruling is currently blocked from paying out, for `class_feature` and for every other kind.
+
+`SD31-D7-PROSE-001` built the correct mechanism for exactly this — a rung that requires the
+description to be present, to byte-match the corpus row, and to render — and applied it to
+`race_trait` (+146 units, DoD-8 proven on-screen). **Extending that same rung to the
+`display`+`grounded` population generally is the next cycle's headline, and it must be the rung, not
+a table edit**: widening the cell without the description-and-render requirement is precisely the
+Decision 1(a) violation this package forbids, and it is how the 1,060 wrongly-`done` units below
+happened in the first place.
+
+### Decision 7 — what condition 3 caught on its first real application
+
+Building the bar's condition 3 immediately exposed **1,060 units that had been counted `done` with
+an empty or null corpus description** — 836 `equipment_modifier`, 212 `equipment`, 11 `feat`,
+1 `spell` — i.e. marked complete with nothing for a player to see. Condition 3 had never been
+checked before it existed. They are demoted, and the board's headline fell **7,603 → 7,340
+(19.74 % → 19.05 %)** across the wave as a result.
+
+**That decrease is the ruling working, not a regression.** The prior figure was inflated. Recorded
+here so no later cycle "fixes" the drop by reverting the check.
+
+A known, quantified under-claim rides with it: `closure_has_real_description()` reads only the raw
+`.lst` closure and not the already-ingested corpus JSON's `data.description`, so **247 of the 1,060**
+demoted units genuinely do have a real description that the check cannot see (`OPEN-ISSUES.md`
+row 70). The conservative direction was shipped deliberately; recovering those 247 is owed work, not
+a defect to argue about.
+
+## Decision 9 — `core_essentials` is not a book; it leaves scope, but only after its content is re-attributed (operator ruling 2026-08-16)
+
+**Ruled, verbatim:**
+
+> "I did some digging, there is no such book in pathfinder 1e as 'core essentials'   it should be
+> removed from scope and ignored.   If you see one listed in the pcgen corpus, it might be a
+> community construct that just groups together 2 or 3 common books everyone considers essential.
+> we can safely ignore that if we ingest all the real books."
+
+**The operator is right, and the corpus proves it.**
+`$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_essentials/_core_essentials.pcc` declares
+`CAMPAIGN:Core Essentials` — a PCGen *packaging bundle* — and its own `#SOURCELONG:Core Essentials`
+and `#SOURCESHORT:CE` are **commented out**, so it asserts no book identity at all. Its
+`#SOURCEWEB` points at Paizo's free-downloads page and `#SOURCEDATE:2009-08` is the Core Rulebook's
+release month. Meanwhile every `.lst` file inside declares its own real source:
+
+```
+grep -rhoP 'SOURCELONG:[^\t]*' "$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_essentials/" \
+  | sort | uniq -c | sort -rn
+#   53 Core Rulebook     6 Ultimate Magic    5 Ironfang Invasion   2 Bestiary 6/5/4 (each)
+#   19 Bestiary          6 Bestiary 2        3 Bestiary 3          1 Universal Rules
+#                                            3 Advanced Player's Guide
+#                                            1 Pathfinder Player Companion: Blood of the Moon
+```
+
+**~11 real books aggregated under a name that is not one of them.**
+
+### THE CONDITION BINDS: re-attribute first, drop the label second
+
+The ruling's own clause — *"we can safely ignore that if we ingest all the real books"* — is the
+whole safety property. **Adding `core_essentials` to `EXCLUDED_BOOKS` before re-attribution would
+silently delete real content from the denominator**, the shape Decision 1(a) forbids and the
+operator has twice declined. The label must end at **zero units because every unit moved**, never
+because the bucket was excluded. Enforce it with the attribution contract gate `SD31-ATTRIB-001`
+built: a unit stamped `core_essentials` is a gate failure, not a silent label.
+
+### The re-attribution is provable — 92 % resolves mechanically
+
+Re-derived 2026-08-16 at `5d0cd1595` by joining each still-labelled unit's `source_file` to that
+file's own `SOURCELONG` header in the pinned oracle:
+
+| | units |
+|---|---:|
+| still labelled `core_essentials` | **644** (`monster_ability` 378, `race_trait` 258, `race` 8) |
+| **resolved by the file's own `SOURCELONG`** | **591 (92 %)** — `Bestiary` 545, `Core Rulebook` 46 |
+| unresolved (no uncommented `SOURCELONG`) | **53**, across 12 files |
+
+The 53 are four races and their ability files: `aquaticelf` 13+1, `ghoran` 12+1, `android` 11+1,
+`gathlain` 9+1. Next signal for those: each race's own `core_essentials/races/<race>/_race.pcc`,
+which `SD31-ATTRIB-001` already used successfully for its 44-race hand-derived table. **A race that
+still cannot be resolved is left unattributed and said so** — a confidently wrong label is what
+created this defect.
+
+**Watch for books outside the roster.** `Ironfang Invasion`, `Pathfinder Player Companion: Blood of
+the Moon` and `Universal Rules` appear in that census and are not obviously on the 37-book mandate
+roster. A unit resolving to a book we do not carry is **a scope question to log, not a unit to
+delete** — the ruling's condition is "if we ingest all the real books."
+
+**Also noted:** ids still carry a stale `core_essentials:` prefix even where `book` has been
+repaired (e.g. `id=core_essentials:race:catfolk` with `book=bestiary_3`). The id namespace needs the
+same repair, or the fake book survives in every receipt that quotes an id.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
+
+## Decision 10 — the Supersession Register: duplicates do not inflate the denominator; newest printing wins (operator ruling 2026-08-16)
+
+**Ruled, verbatim:**
+
+> "we need to track, in writing, all the superseded objects and the sourcebooks. i dont want
+> duplicates falsely adding to the denominator. if a duplicate is found, the most recent publishing
+> takes precedence and the older one is flagged as supersceded/out of scope."
+
+and, clarifying with a worked example:
+
+> "if catfolk exists as a race in beastiary and advanced race guide - thats a duplicate. most recent
+> publish wins"
+
+### This is a SECOND register, and it must not be conflated with §3
+
+| | Structural Exclusion Register (§3) | **Supersession Register (this decision)** |
+|---|---|---|
+| removes a unit because | finishing it is genuinely **impossible** | it is a **duplicate** of a newer printing |
+| authorization | per-entry **operator signature** | this ruling is a **standing rule** a cycle may apply |
+| bar | impossible, never merely expensive | **proven to be the same object**; newest printing wins |
+| state today | **empty** — twice declined | to be built |
+
+Tracked **in writing**, covering both superseded **objects** and superseded **sourcebooks**.
+Publication order is provable from the PCGen `.pcc` headers' `SOURCEDATE:` — use it; never date a
+book from memory.
+
+### The Catfolk clarification widens this from deletion to ATTRIBUTION
+
+The worked example resolves an ambiguity the first statement left open. Today the corpus ships
+**one** Catfolk race record (`catfolk_races.lst`, whose row carries only `SOURCEPAGE:p.xx`), so
+there is no duplicate *record* to delete — but Catfolk is printed in **Bestiary 3 (2011)** and in
+the **Advanced Race Guide (2012)**, and ARG is the newer printing. **The unit therefore belongs to
+ARG.** So the rule governs attribution wherever multiple books print an object, not only cases where
+we hold two rows.
+
+**This resolves the operator's earlier `advanced_race_guide` observation** ("ARG reports as nearly
+untouched"): ARG shows **1** race unit because its reprinted races are filed to the Bestiary line.
+Under this decision they file to ARG.
+
+**The provable signal, re-derived 2026-08-16:** a book prints a race if that book's own `.lst` files
+carry rows for it — ARG's `arg_abilities_race.lst` carries `Catfolk ~ Cat's Claws`, `Catfolk ~
+Clever Cat`, `Catfolk ~ Climber`, `Catfolk ~ Curiosity`, `Catfolk ~ Nimble Faller`, `Catfolk ~
+Scent`, plus `arg_feats.lst`'s `Catfolk Exemplar` line and `arg_equip_arms_armor.lst`'s
+`Claw Blades (Catfolk)`. Scanning that signal across all books:
+
+> **50 of the 103 `race` units are currently attributed to a book older than another book that also
+> prints them.** Examples: Aasimar (now `bestiary`, also ARG) · Dhampir (now `bestiary_2`, also
+> ARG) · Changeling (now `bestiary_4`, also ARG) · Fetchling, Grippli (now `bestiary_2`, also ARG)
+> · Drow, Duergar, Goblin, Hobgoblin (now `bestiary`, also ARG).
+
+### THE TWO GUARDS — non-optional, both derived the hard way
+
+**1. A shared NAME is not a duplicate.** Matching `(kind, name)` implicates **8,738 units, 22.7 % of
+the board** — and sampling shows most are unrelated: `class_feature` "Flight" is a Witch Hex *and*
+an Aegis power *and* a Psychic power; "Misfortune" is an Elf Shaman Hex *and* a Guecubu monster
+ability; "Outsider (Earth)" is four different favored-enemy contexts. Matching `(kind, corpus_key)`,
+which carries the owning context, gives the defensible figure:
+
+| measure | value |
+|---|---:|
+| objects sharing `(kind, corpus_key)` across books | **748** |
+| units involved | **1,553** (4.0 %) |
+| **redundant excess if only the newest survives** | **805** (2.1 %) |
+
+Confirmed-looking samples: `equipment:bullet_firearm_pitted` (Ultimate Combat → Ultimate
+Equipment) · `equipment:pathfinder_chronicle` (Inner Sea World Guide → Adventurer's Guide) ·
+`race_trait:half_orc_bestial` (APG → ARG).
+
+**2. A later VARIANT is not a reprint.** `core_rulebook` ↔ `mythic_adventures` share **95** objects,
+including `feat:weapon_focus` and `feat:improved_channel`. Mythic Adventures publishes a *mythic
+version* — a different object. Blind "newest wins" there deletes base Core Rulebook feats that are
+unambiguously still in the game. The same hazard applies to `pathfinder_unchained` (Unchained Rage
+Power vs Rage Power) and to the race scan above, where Mythic Adventures over-fires because it adds
+mythic racial traits without printing the race. **Every register entry states the field-level
+evidence that the two records are the SAME object, not merely the same key.**
+
+### Sequencing
+
+**Decision 9's re-attribution runs BEFORE the register is built.** `core_essentials` produces
+phantom collisions — e.g. `monster_ability:kyton_unnerving_gaze` colliding between `bestiary` and
+`core_essentials` — that dissolve once its units move to their real books. (Separately noted: the
+misspelled `beastiary` directory now carries **0** units, so that potential systematic duplicate is
+already gone.)
+
+### Register shape
+
+`artifacts/SUPERSESSION-REGISTER.md` plus a machine-readable JSON the inventory consumes:
+superseded **sourcebooks**; superseded **objects**, one row each carrying `kind`, `corpus_key`, the
+surviving unit id + book + `SOURCEDATE`, the superseded unit id + book + `SOURCEDATE`, the
+same-object evidence, and the command that produced the pairing; and a **gate, proven able to
+fail**, that refuses an entry whose two records differ materially and that recomputes the
+denominator so the reduction is visible and attributable. The denominator change is reported as its
+own number — `§5` defines the mandate denominator and a change to it is never incidental.
+
+**`core_essentials` does NOT belong in this register.** It is not a superseded book; it is not a
+book (Decision 9).
+
+**Authority:** operator rulings, 2026-08-16, both verbatim above.
+
+### Decision 10 — AMENDMENT: variant lines are new content, never supersession (operator ruling 2026-08-16)
+
+**Ruled, verbatim:**
+
+> "good catch with mythic and unchained.  that goes along with the previous ruling that rogue and
+> unchained rogue are two completely different classes - one does not replace the other."
+
+**This promotes the "later variant is not a reprint" guard from a cycle's caution to standing
+doctrine, and it is not new — it restates a ruling this program already holds.**
+
+**The prior ruling, located rather than paraphrased:**
+`SD-28-ultimate-book-content-ingestion/decisions.md:1855-1858` records *"the operator's separate
+ruling that **Unchained variants are distinct classes, not replacements**, at the data layer"* —
+and records that SD-28's own measurement *independently validated* it: Summoner's
+shield-ally / aspect / life-link ground **only** under `pu.unchained_summoner`, never under the base
+APG class the archetype tables target. The engine already models them as two things.
+
+### The rule, stated generally
+
+**A book that publishes a VARIANT of an object publishes a NEW object. It never supersedes the
+original, and the original is never flagged out of scope because the variant exists.** Named
+instances, all in scope for this package:
+
+| line | example | status |
+|---|---|---|
+| **Pathfinder Unchained** | Rogue vs **Unchained** Rogue; Summoner vs Unchained Summoner; Rage Power vs **Unchained** Rage Power | **two objects**, both in the denominator |
+| **Mythic Adventures** | `feat:weapon_focus` vs its mythic version; `feat:improved_channel` | **two objects**, both in the denominator |
+
+A reprint carries the same object forward under a newer book; a variant creates a second object that
+coexists. **Decision 10's "most recent publishing wins" applies ONLY to the first.** Where the two
+are confused, the failure is silent and permanent: the base Rogue, or base Weapon Focus, would be
+struck from the mandate while remaining unambiguously in the game.
+
+### What the corpus already shows, re-derived 2026-08-16
+
+The engine does **not** currently conflate them, and a supersession cycle's risk is *creating* the
+conflation rather than inheriting it:
+
+```
+python3 -c "
+import json, collections
+d=json.load(open('docs/work-inventory.json'))
+u=[x for x in d['units'] if x.get('book')=='pathfinder_unchained']
+print(len(u), collections.Counter(x.get('kind') for x in u).most_common())
+"
+# -> 826 units: class_feature 577, race_trait 127, monster_ability 72, equipment_modifier 42, feat 8
+#    and ZERO `class` units — Unchained content is keyed `Unchained Rogue ~ ...`, distinct by key.
+```
+
+Scanning every rogue-named object for cross-book `corpus_key` collisions returns **exactly one**, and
+it is not a Rogue/Unchained pair at all: `class_feature: Rogue Talent ~ Nimble Climber`
+(`advanced_players_guide` ↔ `advanced_race_guide`) — a genuine reprint candidate of the kind
+Decision 10 *does* govern.
+
+### Binding on the register-building cycle
+
+1. **Blanket-exclude the variant lines from supersession pairing.** No `pathfinder_unchained` or
+   `mythic_adventures` record may be entered as either side of a supersession pair without
+   record-level proof that it is a reprint and not a variant — and the default answer for those two
+   books is **variant**.
+2. The 95 `core_rulebook` ↔ `mythic_adventures` and the `pathfinder_unchained` ↔ `ultimate_combat`
+   collisions counted in Decision 10 are therefore **presumed NOT supersessions**, and the 805
+   redundant-excess figure recorded there is an **upper bound** that will fall once they are removed.
+   Re-derive it after the variant lines are excluded; do not quote 805 as the outcome.
+3. The same caution applies to the race scan: Mythic Adventures over-fires there because it publishes
+   mythic racial traits without printing the race. A book "covers" a race for attribution purposes
+   only if it prints the race, not merely content keyed to it.
+
+**Authority:** operator ruling 2026-08-16, verbatim above, restating and generalizing the operator's
+earlier Unchained-variants ruling recorded at `SD-28 decisions.md:1855-1858`.
+
+## Decision 7 — REFINED: the real axis is universal vs conditional, not flat vs scaling (operator ruling 2026-08-16, `SD31-D7-PROSE-004`)
+
+**Asked:** `OPEN-ISSUES.md` rows 69/87/95/107 all raised the same open interpretive question about
+Decision 7's condition 2 ("nothing to compute") — does it mean (a) no numeric value appears anywhere
+in the prose at all, or (b) no *character-specific SCALING* formula (the bar `wiring_class.rs`'s
+`prose_scaling_phrases` detector already enforces)? At least 856 units rode on the answer across
+`monster_ability`, `equipment`/`equipment_modifier`, `race_trait`, `class_feature` and `feat`.
+
+**Ruled, verbatim:**
+
+> "+1 size bonus to AC means you need to give a +1 on the AC - that's computed. … Now if that +4
+> bonus was ONLY against certain creature types, like with dwarf racial hatred - that's not a
+> universal bump and would just be listed in a description block for the player to add in when
+> appropriate."
+
+and, on damage:
+
+> "if it says acid damage - that's a condition, many things shrug off acid."
+
+**Neither reading (a) nor reading (b) was correct.** The operator's own framing is a THIRD axis,
+orthogonal to "does a number appear" and to "does the number scale": **UNIVERSAL vs CONDITIONAL.**
+
+- **Universal** — a modifier to a value the character sheet computes, that applies UNCONDITIONALLY
+  whenever that value is read (a flat `+1` to AC is exactly as universal as a scaling one). **Must be
+  COMPUTED.** Text alone does not satisfy Decision 7's condition 2 for a universal modifier.
+- **Conditional / situational** — the modifier applies only against a named subset of targets,
+  effects, actions, or circumstances (a creature subtype, a damage type, a specific maneuver, a
+  specific stance, an environmental state, a narrative duration/resource cost). **DESCRIBE it; text
+  is complete.** Flatness is irrelevant — a flat conditional bonus is exactly as done-as-text as a
+  scaling one.
+
+Condition families named by the ruling and confirmed against the corpus this cycle: **damage type**
+(`special_ability_corrosive_weapon`'s `SPROP:+1d6 acid damage`) · **target subtype**
+(`dwarf_hatred`'s "against humanoid creatures of the orc and goblinoid subtypes") · **manoeuvre type
+and stance** (`duergar_stability`'s "against bull rush or trip attempts while standing on the
+ground") · **effect type** (`half_orc_stoic`'s "against emotion and fear effects") · **environmental
+state** (`fetchling_shadow_blending`'s "in dim light"; `devilfish_water_dependency`'s "out of the
+water") · **zero magnitude outright** · **narrative duration** (`monk_empty_body`'s "for 1 minute").
+
+### Sizing and outcome — `SD31-D7-PROSE-004`
+
+Built the real discriminator, `closure_states_universal_sheet_modifier`
+(`src/bin/v06_work_inventory.rs`), over the same raw `.lst` closure text every other rung in that
+file already reads (`DESC:`/`SPROP:`/`BENEFIT:`), and retired the four hand-picked
+`*_FLAT_MAGNITUDE_PENDING_RULING` name-lists (`monster_ability`/`companion`/`class_feature`/`feat`)
+that rows 69/95/107 and wave 7 had built as conservative placeholders pending exactly this ruling.
+
+**Validated on ACCURACY before it moved any count**, per Decision 1(e): a 32-case hand-labelled test
+(30 real corpus records quoted verbatim from the pinned oracle, plus 2 edge cases; 0 misses) proved
+the discriminator against the SAME units rows 69/87/95/107 and the retired lists already named.
+Running the retired-list replacement against the FULL corpus (not only the hand-labelled sample)
+then surfaced **5 false positives** the first draft's broader positive-cue list produced
+(`advanced_race_guide:feat:guardian_of_the_wild`, `core_rulebook:feat:critical_focus`,
+`advanced_race_guide:feat:orc_weapon_expertise_killer`, `ultimate_intrigue:feat:timely_coordination`,
+`advanced_players_guide:feat:greater_blind_fight`) — each genuinely conditional (action-specific,
+terrain-specific, or a phrase appearing inside an outright negation a substring match cannot see).
+Narrowed the universal cue list to `"size bonus"` alone — the one phrase every hand-verified true
+positive shares and no false positive contains — and the corpus-wide re-run came back exactly the
+expected 27-unit diff, zero unexpected movement in either direction.
+
+**Movement, both directions, every unit individually re-derived:**
+
+| direction | count | kinds |
+|---|---:|---|
+| promoted (`held`/`grounded` → `done`) | **21** | `class_feature` 13, `feat` 7, `monster_ability` 1 — every unit the four retired lists had parked, all confirmed conditional |
+| demoted (`done` → `held`/`grounded`) | **6** | `race_trait` 6 — `gnome_size`, `grippli_size`, `halfling_size`, `kobold_size`, `svirfneblin_size`, `goblin_size` |
+
+Board: **9,780 → 9,795 done (25.3887% → 25.4277%)**, net **+15**. Zero denominator change.
+
+**The 6 demotions are a correct, expected outcome of the ruling, not a regression** — the Small-race
+size traits state exactly the "+1 size bonus to AC... +1 size bonus on attack rolls... penalty to
+Combat Maneuver Bonus/Defense... +4 size bonus on Stealth" shape the ruling's own worked example
+names as the paradigm universal case. They remain in the denominator (`race_trait`, not excluded)
+and are a real, un-shipped compute gap for a future cycle's engine-wiring lane, not this cycle's to
+build — Decision 1(a)'s anti-gaming bar forbids counting them `done` on text alone once identified as
+universal, and Decision 8's precedent ("wire it, don't retract the finding") is what governs their
+eventual close, not this decision.
+
+### Correction to this cycle's own dispatch brief
+
+The brief that carried this ruling to the executing cycle mis-classified `goblin_size` as one of "7
+stay text" units, annotated "(grants nothing)". **That annotation is wrong.** The real shipped
+`bestiary:race_trait:goblin_size` row (`data/corpus/beastiary/race_trait/goblin/goblin_size.json`,
+re-attributed from `core_essentials` per Decision 9) states the IDENTICAL universal size-bonus text
+as `gnome_size`/`grippli_size`/`halfling_size`/`kobold_size`/`svirfneblin_size` — verified by direct
+file read before acting, per this program's own standing "verify each against its ACTUAL shipped
+text" rule (the same rule this exact ruling's own history had already violated once). `goblin_size`
+is therefore the 6th demotion, not a 7th text-complete unit; `retro.py correction` emitted.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
+
+## Decision 12 — Public-feed PI redaction: withhold the name, keep the row (operator ruling 2026-08-17)
+
+**Asked:** `artifacts/OPEN-ISSUES.md` rows 141 and 149. The versioned public status feed under
+`site/dashboard/` publishes names their own corpus rows declare as Product Identity —
+**261 unit names** in `site/dashboard/units/*.json`, and **56 class / prestige-class / feat /
+spellbook identities** in the top-level `PF1e-dashboard.json`'s `manifests` roadmap content. Row 149's
+exposure is pre-existing and predates this package's dashboard feature. Three options were put:
+(A) withhold the name and keep the row, (B) drop the record entirely, (C) publish totals only.
+
+**Ruled: A.**
+
+**The rule.** A public artifact may publish that a record exists, and every derived figure about it —
+counts, percentages, kind, book, status — but **never a name its own corpus row declares as Product
+Identity**. The row survives with the name withheld; the counts stay honest and continue to
+reconcile against the internal board.
+
+**Why A rather than B or C.** This is already the treatment `data/corpus/` gives declared-PI records
+(`license: "PI-REDACTED"`, `pi_field`), so A is the existing rule applied to a new surface rather
+than a new special case. B would make the public totals disagree with the internal denominator for a
+reason no reader could see; C would discard the roadmap the feed exists to show.
+
+### Binding implementation requirements
+
+1. **The redaction happens in the PRODUCER, not in a hand-edit.** `site/dashboard/PF1e-dashboard.json`
+   is generated; a trimmed file is silently undone by the next `scripts/publish-site-dashboard.sh`
+   run. `scripts/observer/pf1e_dashboard_producer.py` — including `build_unit_shards` — must apply
+   the rule at generation time.
+2. **The oracle is the authority, not a blacklist.** Row 141's own finding is that
+   `build_unit_shards` has **no oracle cross-reference at all**. Redaction is decided by the record's
+   own declared-PI state (`NAMEISPI:` / `DESCISPI:`, via `SD-30 decisions.md §53.5`'s reader), not by
+   substring matching against a term list. **An exact-substring blacklist is not sufficient evidence
+   of safety** — this program has already shipped deity-name typo variants straight through one
+   (wave 10), and near-miss text has been the live failure mode in four of the last nine waves.
+3. **A gate, proven able to fail.** A `verify.sh` stage must fail when the committed feed or any
+   shard carries a declared-PI name. Mutation-prove it by seeding one, in both the top-level feed and
+   a shard.
+4. **`site/dashboard/units/` stays uncommitted until 1-3 are in place.** It is currently absent from
+   the tree, which is why row 141 reads as fixed-for-now; committing it before the producer redacts
+   would reintroduce all 261.
+5. **Nothing merges to `main` until this lands.** `deploy-site.yml` publishes `site/` to Cloudflare
+   Pages on every push to `main`, and `main` currently has no `site/dashboard/` directory — so the
+   exposure is real but **not live**. That is the whole margin, and it closes on merge.
+
+**Authority:** operator ruling, 2026-08-17, answering rows 141 and 149. Row 197 (Elysian Shield
+cross-book declared-PI propagation) is a related but SEPARATE question and is **not** answered by
+this decision.
+
+## Decision 13 — Supersession direction CORRECTED: identical printings are owned by the FIRST print (operator ruling 2026-08-17)
+
+**Ruled, verbatim:**
+
+> "if they are identical - first print owns it."
+
+**This corrects Decision 10's stated direction.** `§10` recorded the operator's earlier framing as
+*"the most recent publishing takes precedence and the older one is flagged as superseded/out of
+scope"*, and the orchestrating session applied that to attribution — which moved all 7 Core Rulebook
+races to the Advanced Race Guide and left `core_rulebook` reporting **zero** races, the very symptom
+the operator originally raised. The corrected rule resolves that without a carve-out.
+
+### The rule, as a two-branch test
+
+Given the same object printed in two books, **compare the two printings**:
+
+1. **IDENTICAL → it is a duplicate → the FIRST printing owns it.** The later printing is superseded
+   and out of scope. (`§10`'s denominator protection is unchanged; only the direction of the survivor
+   flips — the survivor is now the OLDER book.)
+2. **DIFFERENT → it is not a duplicate at all → BOTH stay**, each owned by its own book. The later
+   book published something new, not a reprint.
+
+Branch 2 is the same principle as `§10`'s AMENDMENT (*"rogue and unchained rogue are two completely
+different classes - one does not replace the other"*), generalised: **the amendment was a special
+case of this test all along.** Pathfinder Unchained and Mythic Adventures are simply the loudest
+instances of "different, therefore both stay".
+
+### What this settles
+
+* **The 7 Core Rulebook races stay with the Core Rulebook.** ARG's core-race chapters add alternate
+  racial traits — they are *not identical* — so branch 2 applies: the CRB owns the base race, ARG
+  owns the material it added. `core_rulebook`'s race count is restored by the rule itself, not by an
+  exception carved out for it.
+* **Bestiary 4's 9 races**: decided per race by the same comparison, not by book. Re-derive.
+* **Catfolk** (the operator's own worked example, `§10`): now decided by comparing Bestiary 3's and
+  ARG's printings rather than by date. If ARG merely reprints the base traits, **Bestiary 3 owns it**
+  — the opposite of `§10`'s recorded outcome. If ARG adds material, both stay. **Compare, do not
+  assume.**
+
+### THE COMPARISON IS THE WHOLE RULE, AND IT IS NOT A DATE CHECK
+
+"Identical" is a claim about the two records' CONTENT, established field by field against the corpus,
+exactly as `§10` already requires same-object evidence. A date ordering alone decides nothing under
+this decision; it only breaks the tie *after* identity is proven. Publication order still comes from
+the `.pcc` headers' `SOURCEDATE:` — never from memory.
+
+### Binding consequences for the Supersession Register
+
+* **Every existing entry's direction must be re-derived.** The register (116 objects, still
+  **PROPOSED, NOT APPLIED**) was built under "newest wins". Under this decision the survivor of an
+  identical pair is the OLDER printing, so each entry's surviving/superseded sides swap — and any
+  pair whose two records are NOT identical **leaves the register entirely**, because it was never a
+  duplicate.
+* Expect the register to SHRINK. `§10`'s already-reduced excess figure is an upper bound again.
+* The register stays PROPOSED until it is re-derived under this rule. **Nothing has left the
+  denominator and nothing may until then.**
+* Race attribution stays FROZEN until the re-derivation lands, then unfreezes under this rule.
+
+**Authority:** operator ruling, 2026-08-17, verbatim above. Supersedes `§10`'s direction; `§10`'s
+guards (a shared NAME is not a duplicate; match on `(kind, corpus_key)`; a later VARIANT is not a
+reprint) all stand unchanged and are reinforced by branch 2.
+
+### Decision 13 — AMENDMENT: "not identical" splits into two cases (operator ruling 2026-08-17)
+
+**Ruled, verbatim:**
+
+> "with race - if they are not identical - there are one of two options - a sub/alt race or a rules
+> update where the newest wins. devil is in the details. without examples of what you found, it's
+> hard for me to give a ruling - but just to put it out there, the core rules might have a dwarf.
+> then the arg maybe has something like a grey dwarf. those are two different things and deserve
+> their own records. if it's just a dwarf and it says they can see 60 feet in the dark, and the later
+> book says 90 feet - go with 90 feet. savvy?"
+
+**Decision 13's branch 2 was too coarse.** "Different, therefore both stay" is right for one of the
+two shapes and wrong for the other. The complete test is **three branches**:
+
+| | the two printings are… | outcome |
+|---|---|---|
+| **1** | **IDENTICAL** | duplicate — **the FIRST printing owns it**, the later is superseded |
+| **2** | **A DIFFERENT THING** — a sub-race, alt-race, or otherwise distinct entity (Dwarf vs **Grey Dwarf**) | not a duplicate — **BOTH stay, each with its own record** |
+| **3** | **THE SAME THING WITH CHANGED VALUES** — a rules update or errata (Dwarf darkvision **60 ft → 90 ft**) | one thing — **the NEWEST value wins** |
+
+Branch 3 is where `§10`'s original "newest wins" was genuinely right, and it is narrower than that
+framing implied: it applies to **the value**, on the same object, not to ownership of a distinct
+record.
+
+**Distinguishing 2 from 3 is a content judgement, not a name check.** A different NAME strongly
+suggests branch 2 (Grey Dwarf is not Dwarf), but the reverse does not hold — the same name with
+changed numbers is branch 3, and the same name with genuinely new sub-entries may be branch 2. The
+`§10` guard stands: **a shared name never implies a shared thing, and a different name never by
+itself proves a different thing.** Compare the records.
+
+**Pathfinder Unchained and Mythic Adventures remain branch 2** — Unchained Rogue is a different class,
+not a re-statement of Rogue's values, per `§10`'s amendment and the operator's own earlier ruling.
+
+### THE OPERATOR HAS NOT RULED ON THE RACE CASES, AND IS WAITING ON EVIDENCE
+
+> *"devil is in the details. without examples of what you found, it's hard for me to give a ruling"*
+
+**This is owed work, and it is a dispatchable card.** No race attribution changes until it lands.
+The deliverable is a per-race **worked-example** table — for each race printed in more than one book,
+the actual differing fields side by side (which book, which value, which line), so the operator can
+classify each as branch 1, 2 or 3 by reading real data rather than a summary. The orchestrating
+session has already handed the operator two wrong race figures; this table is the correction for
+that pattern, not another summary.
+
+Race attribution stays **FROZEN**, and the Supersession Register stays **PROPOSED, NOT APPLIED**,
+until the evidence table exists and the operator rules from it.
+
+**Authority:** operator ruling, 2026-08-17, verbatim above.
+
+## Decision 14 (PROPOSED — awaiting operator) — Provenance status: one fixed classification per (object, book)
+
+**Operator direction, verbatim:**
+
+> "i think each object per book needs a fixed set of status. Origin, Superceded, Duplicate,
+> Descoped-Licensing, perhaps a few more. We should get a well defined set of rules to classify
+> everything"
+
+**This is a NEW AXIS, and keeping it separate from the existing one is the whole safety property.**
+The board already has a *doneness* axis (`wiring_class` × `status` → `not-started` / `held` / `done`,
+`§7`). Provenance answers a different question: **does this (object, book) pair belong in the mandate
+denominator at all, and which book owns it?** Conflating the two would let a provenance edit silently
+move the `done` percentage, which is precisely the Decision 1(a) violation this package forbids.
+**Provenance decides denominator MEMBERSHIP. Doneness measures progress WITHIN it. Neither may be
+derived from the other.**
+
+Recorded as **PROPOSED**. It supersedes nothing until the operator confirms the set.
+
+### The proposed status set
+
+Every `(object, book)` pair gets exactly one:
+
+| status | meaning | in denominator? |
+|---|---|---|
+| **`origin`** | this book is where the object is defined; the owning printing | **YES** |
+| **`duplicate`** | an identical reprint in a later book (`§13` branch 1) | no |
+| **`superseded`** | the same object's values were changed by a later printing (`§13` branch 3) — this pair holds the outdated values | no |
+| **`errata-source`** | the later printing whose changed values win under `§13` branch 3 | *see OPEN QUESTION* |
+| **`variant`** | a distinct derived object sharing a lineage — sub-race, Unchained, Mythic (`§13` branch 2, `§10` amendment). **Its own record; it is an `origin` in its own right and this status records only the lineage.** | **YES** |
+| **`descoped-licensing`** | cannot be shipped for licensing / declared-PI reasons | no |
+| **`descoped-structural`** | the `§3` Structural Exclusion Register — finishing is genuinely impossible, operator-signed | no |
+| **`packaging-artifact`** | the pair names a PCGen packaging directory, not a real book (`§9`, `core_essentials`) — **must be re-attributed, never left** | no (and must reach zero) |
+| **`out-of-roster`** | resolves to a real book outside the 37-book mandate roster (`Ironfang Invasion`, `Blood of the Moon`, `Universal Rules` appeared in `§9`'s census) — **a scope question, not a deletion** | no, pending operator |
+
+### Invariants a gate must enforce, each proven able to fail
+
+1. **Totality.** Every `(object, book)` pair carries exactly one status. No default, no absent value.
+2. **Exactly one `origin` per object.** Zero origins means the object is unowned; two means the
+   supersession test was never applied. Both are gate failures.
+3. **`denominator = origin + variant`**, and nothing else. The published denominator is derived from
+   provenance, never hand-maintained.
+4. **`packaging-artifact` must trend to zero** and is a hard failure once `§9`'s re-attribution
+   completes. It is a transitional state, not a resting place.
+5. **`descoped-structural` requires an operator signature** per `§3`; a cycle may only propose.
+   `descoped-licensing` does not require a signature but requires the declared-PI evidence.
+6. **A provenance change must NEVER change a unit's doneness fields**, and vice versa. Assert it: a
+   provenance-only commit shows zero `doneness_verdict` movement for units that remain in the
+   denominator.
+7. **Any denominator change is reported as its own number** with the count per status — `§5` defines
+   the denominator and a change to it is never incidental.
+
+### OPEN QUESTION — the one thing the operator must settle
+
+**Under `§13` branch 3 (same object, values updated by a later book — darkvision 60 ft → 90 ft),
+which book is `origin`?**
+
+* **(a) `origin` stays with the FIRST printing**, and the later book is `errata-source` supplying the
+  winning values. Keeps "origin = where it was defined", and a book never loses its content to a later
+  errata. The object's live values then come from two pairs, so the value-resolution order must be
+  explicit.
+* **(b) `origin` MOVES to the book holding the current authoritative values**, and the earlier pair
+  becomes `superseded`. One pair is the single source of truth for the object, which is simpler to
+  compute — but the Core Rulebook would stop being the origin of anything later errata touched, which
+  is the shape that produced the `core_rulebook` = 0 races complaint in the first place.
+
+**Recommendation: (a).** It matches the operator's own framing — *"first print owns it"* was stated
+about ownership, while *"go with 90 feet"* was stated about the value. Separating ownership from
+value-resolution honours both sentences without a carve-out, and it keeps `errata-source` from
+hollowing out early books.
+
+### Not yet decided by this proposal
+
+The per-race branch-1/2/3 classification itself. `§13`'s amendment records that the operator is
+waiting on a worked-example evidence table before ruling on the race cases; **this schema is the
+vocabulary for that ruling, not a substitute for it.**
+
+**Status:** PROPOSED 2026-08-17 from operator direction. Race attribution stays FROZEN and the
+Supersession Register stays PROPOSED, NOT APPLIED, until this set is confirmed and the race evidence
+table is ruled on.
+
+### Decision 14 — CONFIRMED, with the origin-flip mechanics (operator ruling 2026-08-17)
+
+**Ruled, verbatim:**
+
+> "in that case, origin becomes superceded and the later book becomes errata-source. Origin is the
+> original publish, all identical values become duplicate. If a later publication comes out with
+> corrected values, origin flips to superseded."
+
+**The status set in Decision 14 is CONFIRMED.** The open question is answered — **neither (a) nor
+(b) as I framed them**, but a cleaner third mechanic:
+
+### The lifecycle of a pair
+
+1. **`origin`** — the original publish. Assigned on first printing, always.
+2. A later book reprinting **identical values** → that later pair is **`duplicate`**. The origin pair
+   is untouched and stays `origin`.
+3. A later book publishing **corrected values** → that later pair becomes **`errata-source`**, **and
+   the origin pair FLIPS to `superseded`.**
+
+So `origin` is not permanent. It is the status of the original publish *until corrected*, at which
+point ownership of the live record moves to the errata.
+
+**With successive errata (A → B → C), only the LATEST is `errata-source`;** every earlier pair,
+including the original publish, is `superseded`. Exactly one `errata-source` per object, or none.
+
+### FORCED CORRECTION to Decision 14's invariants 2 and 3
+
+The proposal said *"exactly one `origin` per object"* and *"denominator = origin + variant"*. **Both
+break under this ruling**: an object with errata has NO `origin` pair at all — it flipped — so it
+would fall out of the denominator entirely and silently vanish from the 100 % mandate. That is
+plainly not the intent (*"i dont want duplicates falsely adding to the denominator"* is about
+accuracy, not disappearance), and it is exactly the class of silent-shrinkage defect this package
+exists to prevent. The invariants are therefore restated:
+
+* **Invariant 2 (restated): exactly one AUTHORITATIVE pair per object**, being its `origin` if no
+  errata exists, or its single `errata-source` if one does. Zero authoritative pairs means the object
+  is unowned; two means the comparison was never applied. Both are gate failures.
+* **Invariant 3 (restated): `denominator = authoritative + variant`**, i.e.
+  `origin + errata-source + variant`. Still derived, never hand-maintained.
+
+The remaining invariants (totality; `packaging-artifact` trending to zero; `descoped-structural`
+needing an operator signature; a provenance change moving zero doneness fields; any denominator
+change reported as its own number) stand unchanged.
+
+### OWED DETAIL — flagged, not assumed
+
+**Does an `errata-source` replace the WHOLE record, or only the fields it corrects?** Real errata
+often restates a single value (darkvision 60 → 90) while the rest of the record stays as first
+printed. Under a whole-record reading, everything the errata omits would be lost; under a
+field-level reading, the live record is the original overlaid with the errata's changed fields.
+**Field-level overlay is the only reading that does not destroy data**, so cycles will implement
+that unless the operator says otherwise — recorded here rather than decided silently, and it should
+be re-confirmed against the first real worked example the race evidence table produces.
+
+**Authority:** operator ruling, 2026-08-17, verbatim above. Decision 14 moves from PROPOSED to
+CONFIRMED with these mechanics. Race attribution stays FROZEN and the Supersession Register stays
+PROPOSED, NOT APPLIED, until the race evidence table exists and is ruled on.
+
+## Decision 15 — The 13 `.COPY=` spell variants: exclusion WITHDRAWN, a real path exists (2026-08-17)
+
+**Operator direction:** *"As for the spells, they stay - i'll look them up for you. i need a list"*,
+then, after the list: *"i understand now why you had problems with those 13 spells. See if you can
+find the path back on those to the parent spell that they copy"*.
+
+**The path exists, it is short, and the exclusion proposal (`OPEN-ISSUES` row 55) is WITHDRAWN.**
+No signature is needed and no unit leaves the denominator.
+
+### The parent is named in the row itself
+
+PCGen's `.COPY=` syntax is `<parent>.COPY=<new name>`, so the parent is the text **before** `.COPY=`:
+
+```
+Speak with Animals.COPY=Speak with Animals (rodents only)   CLASSES:.CLEARALL
+^^^^^^^^^^^^^^^^^^ the parent
+```
+
+All 13 parents were located in the same file as their copy, each carrying real class levels
+(re-derived 2026-08-17 against the pinned oracle):
+
+| copy | parent | parent's levels |
+|---|---|---|
+| Animate Objects (Small or Smaller) | Animate Objects | Bard, Cleric = 6 |
+| Charm Animal (aquatic animals only) | Charm Animal | Druid, Ranger = 1 |
+| Disguise Self (humanoid only) | Disguise Self | Bard, Sorcerer, Wizard = 1 |
+| Nondetection (self only) | Nondetection | Ranger, Sorcerer, Wizard = 3 |
+| Plane Shift (×2 variants) | Plane Shift | Cleric = 5 \| Sorcerer, Wizard = 7 |
+| Speak with Animals (×4 variants) | Speak with Animals | Druid, Ranger = 1 \| Bard = 3 |
+| Summon Monster III (lantern archon only) | Summon Monster III | Bard, Cleric, Sorcerer, Wizard = 3 |
+| Summon Nature's Ally I (dolphins only) | Summon Nature's Ally I | Druid, Ranger = 1 |
+| Fins to Feet (self only) | Fins to Feet | Druid, Sorcerer, Witch, Wizard = 3 |
+
+### `CLASSES:.CLEARALL` is a correct statement, not missing data
+
+Row 55 read the cleared class list as "PCGen declaring this variant has no class, therefore no level
+exists, therefore ingest is impossible". **That reading was wrong.** Every one of the 13 is
+referenced from a `*_abilities_race.lst` file: these are **racial spell-like abilities**, and the
+class list is cleared precisely because *no class grants them* — a race does. Verbatim from the
+corpus:
+
+```
+KEY:Wererat-Kin ~ Spell-Like Ability
+DESC:A nightskulk skinwalker with a Wisdom score of 11 or higher can use speak with animals
+     (rodents only) three times per day as a spell-like ability, using his Wisdom modifier to
+     determine his concentration checks. The caster level for this ability is equal to the
+     skinwalker's character level.
+```
+
+Others confirmed the same way: Fetchling grants *Disguise Self (humanoid only)* and *Plane Shift (to
+Shadow or Material Plane)*; Inner Sea Races grants *Fins to Feet (self only)* and *Summon Nature's
+Ally I (dolphins only)*; Skinwalker/Bestiary 4 races grant the *Speak with Animals* variants.
+
+### The ingest shape
+
+* **Spell properties** (school, range, duration, description) — inherit from the parent record.
+* **Spell level** — the parent's. It is real and present.
+* **Caster level** — from the granting racial ability, which states it in plain text ("equal to the
+  skinwalker's character level").
+* **The consumer** — the race ability that grants it, a genuine player-visible surface, so DoD-8 is
+  achievable rather than blocked.
+
+This is ordinary ingest work under `epic-6-ingest-lanes`, not an exclusion. Any cycle claiming it
+must resolve the parent from the row rather than hardcoding a mapping, and must NOT invent a caster
+level where the granting ability does not state one.
+
+### The lesson, which is this package's most-repeated one
+
+Row 55 did everything the process asks — it re-derived its figure, read the record one level deep,
+and wrote all four `§3` items honestly. It still reached the wrong conclusion, because it read the
+copy and never followed `.COPY=` back to the parent. **The data was complete; the reader stopped one
+hop short.** Same shape as `core_essentials` (`§9`), the corpus-row path join (wave 2), and the pool
+name matcher (wave 11). `retro.py correction` emitted against row 55's "impossible" claim.
+
+**Authority:** operator direction 2026-08-17; finding derived and verified by the orchestrating
+session against the pinned oracle `7f818006e371188e5717fd18d74d18a420747fc6`.
+
+## Decision 16 — Core Essentials residuals not found in print are DELETED, not flagged (operator ruling 2026-08-19)
+
+**Operator, verbatim:** *"for any unit from core essentials that you can not find in printed books
+- remove them completely. dont just flag them as escaped or unmeasurable - delete them. I consider
+them hallucinations until they appear in print."*
+
+Recorded by the orchestrator during wave 15 and folded in here by
+`SD31-W15-INTEGRATE-001`, the designated writer for this file. The full ruling text, its
+four-way split of the 128 residual units and its worked caveats live at
+`artifacts/OPERATOR-RULINGS-2026-08-19.md`; it is quoted rather than restated so the operator's
+own words stay the artifact.
+
+**What it settles.** It supersedes `OPEN-ISSUES.md` row 263's options (b) and (c). Deletion is the
+disposition, and **no Structural Exclusion Register entry is needed for the deleted population**:
+`§3`'s register excludes a REAL unit from the denominator, whereas these are being ruled not to
+exist. The register therefore remains EMPTY and `§3` is untouched.
+
+**"Found in print" is decided by evidence, not memory** (`§10`'s binding rule): does any book OTHER
+than `core_essentials` carry a real race DECLARATION row for it at the pinned oracle? A mention
+inside another book's `PRETEMPLATE:`/prerequisite is NOT a declaration.
+
+| group | units | disposition |
+|---|---|---|
+| Ghoran | 13 | RE-ATTRIBUTE to `ultimate_wilderness` (declared in `uw_races.lst`) |
+| `ce_abilities_race.lst` rows naming a Bestiary | ~28 | RE-ATTRIBUTE per each row's own `SOURCELONG:` |
+| rows under `SOURCELONG:Universal Rules` | ~1 | DELETE — "Universal Rules" is a PCGen construct, not a Paizo book |
+| Android, Aquatic Elf, Gathlain, Lashunta, Monkey Goblin, Syrinx, Triaxian | 86 | DELETE |
+
+Net roughly **87 deleted, 41 rescued**. All 128 are `not-started` and none is `done`, so **no unit
+of credit is lost by any disposition here** and the board percentage can only rise as the
+denominator shrinks.
+
+### NOT EXECUTED BY WAVE 15, and deliberately so
+
+`SD31-W15-INTEGRATE-001` folded this ruling in as a RECORD and did **not** execute it. Reasons,
+stated rather than assumed:
+
+* Wave 15's dispatch carries the standing constraint *"nothing has ever left the denominator and
+  nothing may leave it in this wave"*, and executing `§16` changes the denominator by ~87 units.
+  An integration cycle is not the right writer for that, and the wave's own `+471` movement must
+  be readable against a denominator that did not move underneath it.
+* The ruling itself says **"Execute against re-derived figures, not these"** — the
+  Bestiary-vs-Universal-Rules split inside the 29-row file must be read per row, which is real
+  derivation work with its own receipt, not a fold-in.
+* A deletion is the one board operation that cannot be undone by a later measurement. It gets its
+  own card, its own re-derivation and its own mutation proof that the deletion is confined to the
+  ruled population.
+
+**Owed:** a wave-16 card that (a) re-derives the four groups per row at the pinned oracle,
+(b) re-attributes the ~41 rescued units, (c) deletes the ~87 ruled-not-to-exist units,
+(d) reports the denominator change as its own number per `§14` invariant 7, and (e) confirms the
+`core_essentials` label reaches ZERO, which finally discharges `§9`'s condition. Until it lands,
+`core_essentials` stays OUT of `EXCLUDED_BOOKS` (`OPEN-ISSUES` row 263) even though it is already
+absent from `BOOK_TITLES` and from the published book list.
+
+**Authority:** operator ruling, 2026-08-19, verbatim above and in full at
+`artifacts/OPERATOR-RULINGS-2026-08-19.md`.
+
+### EXECUTED, wave 16 — `core_essentials` residual is now 0; `§9`'s condition discharged
+
+**Every group re-derived per row against the pinned oracle first, rather than trusting this
+section's own estimate** (per this section's own "execute against re-derived figures, not these"
+instruction). Ghoran's 13 units split further than the estimate above: its 12 `race_trait` rows
+resolve via a new `RACE_TRUE_BOOK` entry to `ultimate_wilderness` (its own native declaration in
+`uw_races.lst`), but its 1 `race`-kind chassis row is deliberately WITHHELD rather than
+re-attributed — `ultimate_wilderness:race:ghoran` already exists natively from that same file, so
+re-attributing the `core_essentials` copy too would have silently minted a second unit for one game
+object. `ce_abilities_race.lst`'s 29 rows were read line-by-line against the file's own
+`SOURCELONG:` directive spans: none fall inside a real Bestiary/Bestiary-N directive's span — 23
+precede the file's first directive entirely (a bucket this section's own two-row table never
+named), 6 fall under `SOURCELONG:Universal Rules` (already correctly refused above) — so all 29 are
+deleted, not the ~28-rescued/~1-deleted split estimated above. The other 7 races (Android, Aquatic
+Elf, Gathlain, Lashunta, Monkey Goblin, Syrinx, Triaxian; 86 units) were re-confirmed corpus-wide to
+have no race declaration outside `core_essentials`, matching the estimate exactly, and deleted.
+
+**Net: 12 rescued, 116 deleted** (not the ~41 rescued/~87 deleted estimated above — see above for
+exactly why each group's real count diverged). `python3 -c "import json; print(sum(1 for u in
+json.load(open('docs/work-inventory.json'))['units'] if u.get('book')=='core_essentials'))"` →
+**0**. `core_essentials` no longer appears as a key in `docs/work-inventory.json`'s `books` map at
+all — **`§9`'s condition is discharged.** None of the 128 was `done`-capable (128/128
+`not-ingested`), so zero credit moved; the board denominator dropped 38,521 → 38,405 from this
+decision alone (a further -33 from `§17`'s own execution, below, brings the wave-16 integration tip
+to 38,372 — the two changes are independent and must be read separately, never summed as one
+"denominator fix").
+
+**A gap in this section's own worked table, found by wave-16 adversarial review and disclosed
+rather than silently absorbed:** the 23 pre-directive `ce_abilities_race.lst` rows deleted above
+were never named as their own bucket in this section's two-row RE-ATTRIBUTE/DELETE table — they
+were deleted under the operator's broader verbatim principle ("for any unit ... you cannot find in
+printed books ... I consider them hallucinations until they appear in print"), not under either
+named bucket. Several of these 23 carry real printed-rule prose (Darkvision, Blindsense, Tremorsense
+and similar vision-mode traits; a "Default True Dragon Abilities" block) with no representation
+under any other book in the ledger. Logged as `OPEN-ISSUES.md` row 299 for the operator's awareness
+rather than assumed either way; not reverted, since the verbatim principle is the higher-precedence
+authority and the two-row table was itself only ever an estimate this section already said to
+re-derive.
+
+**Production-path hardening added the same cycle (adversarial review finding):**
+`is_core_essentials_residual` (the predicate `main()`'s classify loop consults to decide what to
+delete) was found unbounded — a widened predicate left the full test suite green while a real
+`main()` run would silently delete thousands of unrelated units, because the existing pinned-baseline
+test only ever walks `core_essentials`'s own book directory and cannot see over-broad deletion of
+units enumerated from elsewhere. `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING = 117` (matching the
+existing test's own pin) is now asserted in `main()` itself, on every real regen, not just
+`cargo test`.
+
+**Where it landed:** `src/bin/v06_work_inventory.rs` (`is_core_essentials_residual`, the
+`RACE_CHASSIS_ALREADY_NATIVE` carve-out for Ghoran, `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`).
+Regenerated via the guarded pipeline (`corpus_literal_sweep` → `derived_evaluator_fixture_check` →
+`v06_work_inventory`), never a hand-edit of the committed JSON. Full derivation, the exact
+per-group counts, and the mutation proof are in `OPEN-ISSUES.md` row 299 and this wave's
+`progress.md` receipt.
+
+**Authority (execution):** this decision's own ruling text, quoted verbatim above, executed wave 16.
+
+## Decision 17 — Duplicate display names: a drill-down defect, with one real double-counted subset (operator ruling 2026-08-19)
+
+**Operator, verbatim:** *"I was looking at the dashboard drill down and noticed some things listed
+twice. ie: core rules class features lists aberrant bloodline twice and not started. this kind of
+duplication could be skewing our numbers if they are not legit"*
+
+Investigated at ruling time; full working at `artifacts/OPERATOR-RULINGS-2026-08-19.md`.
+
+**The headline concern is mostly NOT a counting defect.** Corpus-wide, 2,325 `(book, kind, name)`
+groups hold more than one unit — an excess of 4,266 units, 11.07 % of the denominator. **That
+figure is not the double-count and must never be quoted as one:** **0** of those groups share a
+`corpus_key` and **0** share a `source_file` + `source_line`. Every unit is a distinct printed row.
+`advanced_class_guide` `class_feature` "Bloodline Powers" appears 11 times because eleven different
+bloodlines each print their own row. Collapsing those would destroy real content. This is a
+**drill-down DISPLAY defect** — the page shows a bare `name` that is not unique — and the fix is a
+disambiguator (`type_facet` or corpus key), not a merge.
+
+**The operator's own example is the real subset.** `core_rulebook` `class_feature`
+`cr_abilities_class.lst:2333` = `Sorcerer Bloodline ~ Aberrant` (the feature) and `:2334` =
+`Aberrant Bloodline`, facet `SorcererBloodlineChoice` (the picker entry that selects it). Adjacent
+lines, one file: PCGen's paired feature + chooser shape. Two printed rows, arguably one game
+concept. **Bounded population: 787 units carry a chooser facet; 180 have an adjacent matching
+feature row and are the double-count candidates** (`companion` 108, `class_feature` 70,
+`race_trait` 2). All 180 are `not-started` (121) or `unmeasurable` (59) — **none is `done`** — so
+removing them shrinks the denominator without withdrawing any credit.
+
+**Owed work, not executed by wave 15** (same reasoning as `§16`: a denominator change is not an
+integration cycle's to make): confirm the 180 case by case — adjacency is a heuristic, not proof,
+and a chooser whose paired feature is a genuinely separate mechanic must STAY — then remove the
+confirmed ones from the unit ledger; and separately fix the drill-down to disambiguate same-named
+rows so the page stops looking wrong where it is right.
+
+**Authority:** operator ruling, 2026-08-19, verbatim above.
+
+### EXECUTED, wave 16 — 33 confirmed, not 180; the drill-down disambiguator landed
+
+**The honest answer is smaller than the heuristic bound.** `§17`'s own "owed work" instruction above
+is what this section executes — "confirm the 180 case by case — adjacency is a heuristic, not proof,
+and a chooser whose paired feature is a genuinely separate mechanic must STAY." (Wave-16 adversarial
+review, evidence-provenance lens: the "far fewer than 180 ... a smaller correct number beats a bigger
+wrong one" quote previously attributed here to `§17` does not appear anywhere in
+`artifacts/OPERATOR-RULINGS-2026-08-19.md` or in this file's own pre-wave-16 text — corrected;
+the underlying 33-unit conclusion is unaffected, since `§17`'s real "confirm case by case" instruction
+supports it independently.) Confirming case by case — same book/kind/`source_file`, same display
+`name`, `source_line` within a small radius (32 of the 33 pairs sit within 3 lines; the 33rd,
+`adventurers_guide`'s Enlightened Bloodrager pair below, is 4 lines apart — corrected by wave-16
+adversarial review, which re-derived the stated "within 3" bound and found it did not reproduce the
+shipped list), one side a chooser (`type_facet` carrying `Choice`), the other not — finds real pairs
+in exactly ONE shape:
+the Sorcerer/Bloodrager bloodline chooser-pool idiom, the operator's own worked example, repeated
+systematically across every bloodline in every book that has one:
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+units = d['units']
+by_file = collections.defaultdict(list)
+for u in units:
+    sf = u.get('source_file'); sl = u.get('source_line')
+    if sf and sl is not None: by_file[sf].append(u)
+for sf in by_file: by_file[sf].sort(key=lambda u: u['source_line'])
+chooser = [u for u in units if u.get('type_facet') and 'Choice' in u['type_facet']]
+seen=set(); results=[]
+for c in chooser:
+    lst = by_file.get(c['source_file'], []); idx = lst.index(c); cands=[]
+    for k in range(1,4):
+        if idx-k>=0: cands.append(lst[idx-k])
+        if idx+k<len(lst): cands.append(lst[idx+k])
+    for other in cands:
+        if other.get('name')==c.get('name') and 'Choice' not in (other.get('type_facet') or '') and other.get('kind')==c.get('kind'):
+            key = tuple(sorted([c['id'], other['id']]))
+            if key in seen: continue
+            seen.add(key); results.append((c, other)); break
+print(len(results), collections.Counter(c['kind'] for c,o in results))
+"
+# 33 Counter({'class_feature': 33})
+```
+
+**Zero `companion` or `race_trait` pairs were found**, even widening the search to a 10-line
+radius. Reading a sample of the 262 `companion` and 104 `race_trait` chooser-facet rows explains
+why: they are consecutive PICKER OPTIONS of each other (animal-companion Evolution picks, weapon
+critical-confirmation picks, Companion Advancement variants), not a picker beside its own feature
+row — none shares a display name with a same-book/kind non-chooser neighbor. The 180-unit bound was
+a heuristic upper estimate offered for scrutiny, not a target; scrutiny found 33 real ones.
+
+Every one of the 33 was independently confirmed against its paired feature row's own `corpus_key`/
+`type_facet`/`magnitude_token_count` (not just the name match) before being accepted — e.g.
+`adventurers_guide:class_feature:enlightened_bloodrager_bloodline_feat` (the "Bloodline Feat"
+chooser, `EnlightenedBloodragerFeatChoice`) beside `..._bloodline_feat_ag` (the feature, `corpus_key`
+`Enlightened Bloodrager ~ Bloodline Feat ~ AG`) — the identical shape as the operator's own CRB
+example, four lines apart in `ag_abilities_class.lst`, not a coincidental name collision.
+
+**None of the 33 removed units is `done`-capable** (`status` `unknown` or `not-ingested`/
+`not-started` on every one — verified per-unit, not assumed from the class-wide pattern), so this
+removal withdraws no credit; it only shrinks the denominator, exactly as `§17` requires.
+
+**Where it landed:** `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` in `src/bin/v06_work_inventory.rs`
+(applied in `main()` right after the unit-id-uniqueness check, before any aggregation or stamping,
+so no rollup ever counts a confirmed-duplicate row) — a bounded, evidenced id list rather than a
+live heuristic filter, on purpose: `§17` itself is explicit that adjacency is a heuristic and a
+chooser whose paired feature is a genuinely separate mechanic must STAY, so a generic "same name,
+adjacent line" rule running on every future regen would silently sweep in a collision no human
+reviewed. `apply_duplicate_chooser_removal` hard-fails (`exit(1)`) if the corpus ever drifts under
+one of the 33 listed ids rather than silently removing fewer than expected — proven by two tests
+(`duplicate_chooser_removal_tests`) and, at the production call site itself, by disabling the call
+and re-running the full guarded regen: the reappearing duplicate (`docs/work-inventory.json` total
+38,507 → 38,540, the exact 33-unit swing) is the mutation proof this program's anti-gaming rule
+requires. Regenerated via the guarded pipeline (`corpus_literal_sweep` → `derived_evaluator_fixture_
+check` → `v06_work_inventory`, `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`), never a
+hand-edit of the committed JSON.
+
+**The drill-down disambiguator**, separately: `scripts/site/build_public_status.py`'s
+`add_display_names` (called from `build_book_details`, after `redact_for_display` has already run,
+so it reads only already-PI-screened `name`/`type_facet`) gives every item in a per-(book, kind)
+list a `display_name` — unchanged when the name is unique in that list, disambiguated with the
+item's own `type_facet` on a collision, falling back to a positional suffix if that still collides
+or no `type_facet` exists. `site/status.html` now renders and searches `it.display_name || it.name`.
+Never a merge: every one of the ~4,266 genuine same-name collisions corpus-wide keeps its own row,
+now labeled distinctly. Both the function and the wiring at its call site are covered by tests
+(`DisplayNameDisambiguationTests`, `scripts/tests/test_build_public_status.py`), and the wiring test
+was proven to fail (`KeyError: 'display_name'`) with the call site commented out, then pass again
+restored — the RED/GREEN pair `§17`'s own gate-must-be-able-to-fail bar requires.
+
+**Authority (execution):** this ruling's own text (`§17`'s "owed work" instruction — confirm the 180
+case by case, since adjacency is a heuristic, not proof — quoted in full above), executed wave 16.
+
+
+## Decision 18 — Option pools must show ONLY VALID CHOICES; open vs exclusive pools are not interchangeable (operator ruling 2026-08-21)
+
+**Ruled, verbatim:** *"we need to show only valid choices."*
+
+Folded in from `artifacts/OPERATOR-RULINGS-2026-08-21.md` §18 at wave 25b integration.
+
+Answers the exclusive-choice-pool question wave 24's `BESTIARY-6-LEDGER.md` raised (see row 351 of
+`OPEN-ISSUES.md`): may a Cleric/Inquisitor domain power ride the same "browsable reference regardless
+of selection" pattern `REGISTERED_POOL_GROUPS` already uses for Rogue Talent and Rage Power?
+
+**No, for a structural reason, not a book-specific one.** A domain is an EXCLUSIVE, once-per-
+character choice — once a character takes the Void domain, Scalykind's powers are never available to
+them, so showing every domain's power to every cleric is not "showing valid choices." Rogue Talent and
+Rage Power are genuinely OPEN, repeatable-pick pools — any rogue can eventually take any rogue talent
+— so the reference-catalog pattern IS honest there, and wave 23's +109 units through that pattern
+stand unchanged.
+
+**The general rule, binding on every future pool:** before registering a new pool in
+`REGISTERED_POOL_GROUPS` (or an equivalent reference-catalog pattern), classify it OPEN
+(repeatable pick from a standing list) or EXCLUSIVE (a once-per-character branch). Open pools may use
+the reference-catalog pattern. Exclusive pools may NOT — they need real per-selection grounding (the
+`domain_power` interpreter merged this same wave, see the wave 25b receipt, is exactly that for
+Cleric/Inquisitor domains).
+
+**Also binding, not yet discharged:** this ruling makes prerequisites load-bearing for the two
+shipped open pools too — a pool option whose prerequisites a given character cannot meet is not a
+valid choice FOR THEM, so `REGISTERED_POOL_GROUPS`'s Rogue Talent/Rage Power catalogs must be
+confirmed to honour prerequisite gating rather than listing the pool wholesale. **That check has not
+been done as of this fold-in** — logged as `OPEN-ISSUES.md` follow-on work, not discharged by this
+decision alone.
+
+**Consequence for the three domain-power units `BESTIARY-6-LEDGER.md` flagged as bankable via the
+reference-catalog pattern** (Intense Celebration, It Came From Beyond, The Stars Are Right — Void/
+Scalykind/Dark Tapestry domains): they may **not** be banked that way. They need the same real
+domain-power grounding the merged `domain_power` module now provides for Good/Healing/War/Strength —
+Void, Scalykind, and Dark Tapestry are not yet in `DOMAIN_POWER_CATALOG` (their granting records lack
+the `Domain<X>LVL`/`Domain<X>Times` `BONUS:VAR` chain the catalog depends on, per `domain_power.rs`'s
+own "what this does NOT cover" list) and stay ungrounded, unchanged, pending that ingest gap being
+closed separately.
+
+**Authority:** operator ruling, 2026-08-21, verbatim above (`OPERATOR-RULINGS-2026-08-21.md` §18).
+
+**Update, SD-31 wave 29 integration (2026-08-21):** the prerequisite check named above as
+undischarged has now been done, discharging this decision's own "not yet discharged" clause. A
+narrow `is_archetype_locked()` guard (`src/rules_core/class_feature_pool_catalog.rs`) refuses any
+Rogue Talent/Rage Power record carrying a `PREABILITY` token whose value contains
+`CATEGORY=Archetype` — a permanent, structural exclusion from the pool's base class, not merely a
+level/skill gate every character of that class could eventually satisfy (which stays served; see
+the function's own doc comment for the corrected OPEN-vs-EXCLUSIVE distinction this decision's own
+text already draws, applied here to individual pool OPTIONS rather than whole pools). Corpus-wide:
+6 of 300 Rogue Talent/Rage Power records are archetype-locked; 3 were already correctly excluded
+for an unrelated reason, 3 (`adventurers_guide`'s `giant_stalker_defense`/`topple_giant`/
+`underfoot`) are newly refused by this fix with zero regression to any of the 123 previously-banked
+records through this same catalog. Full account: `docs/release/SD-31-corpus-closure-grind/todo/blocked.md`
+B3 (closed) and `progress.md`'s wave 29 receipt.
+
+---
+
+## Decision 19 — Cross-book verbatim reprints: settled doctrine, close it — CITES §13, NOT §10 (operator ruling 2026-08-21)
+
+**Ruled, verbatim:** *"this is settled doctrine. flag it, mark as complete, move on."*
+
+Folded in from `artifacts/OPERATOR-RULINGS-2026-08-21.md` §19 at wave 25b integration, with one
+citation correction made during the fold-in (see below).
+
+Bestiary 6 ships 2 spells that are byte-identical reprints of spells Ultimate Wilderness already
+ships. `BESTIARY-6-LEDGER.md` raised this as needing a new cross-book-reprint crediting mechanism.
+It does not — this was already settled doctrine before wave 25b, and the ruling's own instruction is
+to stop treating it as an open architectural question.
+
+**Citation correction made at fold-in:** the ruling text as written cites "`decisions.md §10`
+(newest printing wins, older is out of scope)" as the settling authority. `§10` is not the current
+rule — `§13` (2026-08-17, this same file) explicitly **corrected** `§10`'s direction: for identical
+printings, the FIRST print owns the object, not the newest. The two rules happen to reach the SAME
+outcome for this specific pair (Ultimate Wilderness published 2018, before Bestiary 6, so Ultimate
+Wilderness is the first print under `§13` AND the older book under `§10`'s superseded framing — both
+frameworks name Ultimate Wilderness as the survivor), so the ruling's OUTCOME is correct and is
+applied as written. But the next cycle citing this decision should cite `§13`, not `§10` — `§10`'s
+"newest wins" framing is superseded doctrine and must not be reapplied to a pair where the two
+directions disagree.
+
+**Applied:** Bestiary 6's 2 reprinted spells are marked SUPERSEDED under `§13` branch 1 (identical
+printing, first print — Ultimate Wilderness — owns it), reclassified in `v06_work_inventory.rs`'s
+`classify()` from `not-ingested`/WIRING GAP to `text-complete` with real supersession evidence — not
+excluded from the denominator (per `§13`'s "supersession does not inflate/deflate the denominator"
+guard, inherited from `§10`). **A LIMIT surfaced at wave 25b integration, folded in here rather than
+left silent:** "credit as done" is the ruling's intent, but `doneness_verdict()`'s existing lattice
+has no `DONE`-mapped cell for a `derived`-wiring-class unit under `text-complete` (only
+`literal-verified`/`fixture-verified` reach `DONE` for `static`/`derived`; `text-complete` maps to
+`HELD`) — and forcing one open a new cell purely to match this ruling's outcome would be gaming the
+same instrument Decision 1a protects. The applied fix stops treating the reprints as an open
+engineering question (no cross-book-reprint crediting mechanism is to be built, and none was) but
+does not itself move the mandate headline for these 2 units. Whether `doneness_verdict()` should
+gain a genuine supersession-aware `DONE` path — a real doctrine change affecting every future
+supersession case, not just these two — is an open ruling, logged at `OPEN-ISSUES.md` row 358.
+
+**Authority:** operator ruling, 2026-08-21, verbatim above (`OPERATOR-RULINGS-2026-08-21.md` §19).
+
+---
+
+## Decision 20 — §24.1 (`SD-27 decisions.md`) is overturned for this package: build the formula interpreter, gated by fixtures (operator ruling 2026-08-21)
+
+**Ruled, verbatim:** *"I choose thousands. if we need to revisit this, we can do it in the future.
+for now we need to get something in front of the user community."*
+
+Folded in from `artifacts/OPERATOR-RULINGS-2026-08-21.md` §20 at wave 25b integration. This decision
+is recorded in SD-31's own `decisions.md` (this file) because it governs SD-31 packages' construction
+choices going forward, even though the ruling it overturns lives in the separate `SD-27 decisions.md`.
+
+**What was overturned.** `SD-27 decisions.md §24.1` (2026-07-31, operator-pinned): *"No formula
+interpreter. Each feature is a hand-written, corpus-verified pure function."* Its rationale was that
+a misinterpreted token becomes "a plausible number nobody checks," while a wrong hand function is a
+failing test. That property is real, but the checking machinery it assumed absent — a fixture gate
+pinning a computed value against an expected value transcribed from bytes the evaluator never reads —
+now exists (`derived_evaluator_fixture_check`, since wave 13) and is mutation-proven able to fail.
+
+**What is now authorised:** reading PCGen's own formula tokens and evaluating them, instead of
+hand-writing a pure function per feature, FOR THIS PACKAGE.
+
+**What is NOT relaxed — the condition that makes this safe:** every interpreted value banked by a
+consumer must clear `derived_evaluator_fixture_check`. **An interpreted value with no fixture is not
+done.** §24.1's real concern is answered by that gate, not abandoned.
+
+**The correctness bar:** the interpreter must reproduce every one of the roughly 27 classes' worth of
+existing hand-modelled functions (mechanically floor-counted at >=166 by
+`formula_reproduction_harness.rs`, merged this wave). Any disagreement is a finding worth having,
+either side.
+
+**Provenance note, recorded because it is this program's most transferable process lesson from
+wave 25/25b:** wave 25's interpreter-core lane REFUSED to build against this same authorisation the
+first time it was dispatched, because the ruling had been WRITTEN but never COMMITTED — it existed
+only in the orchestrator's own working tree. A lane in a fresh worktree checked every ref, found the
+ruling nowhere in the repo, and correctly declined to reverse a pinned safety ruling (§24.1) on the
+authority of a dispatch prompt alone. **That refusal was correct and is exactly the behaviour this
+program asks for.** The fault was entirely the orchestrator's: dispatching lanes to act on an
+uncommitted file. A ruling is not in force until it is committed to the branch. `§20` was re-dispatched
+in wave 25b only after independently confirming `OPERATOR-RULINGS-2026-08-21.md` was committed at
+`858df7664` (tranche/11 tip) — verified again, independently, at the start of this integration cycle.
+
+**What wave 25b integration found and fixed before banking anything through it:** the interpreter
+module built against this authorisation initially cited the WRONG PCGen engine for several of its
+"oracle-derived" semantic claims, and had one real, latent correctness bug (over-permissive function-
+name case matching) and one real, currently-unfixed gap (`classlevel()` does not verify its class-name
+argument, silently wrong for genuine cross-class formulas). See `OPEN-ISSUES.md` rows 354-357 and the
+wave 25b receipt for the full account. **Zero units have been banked through the interpreter as of
+this fold-in** — the correctness bar above has not yet been cleared by any consumer, consistent with
+"thousands, not tens" being the ruling's ASPIRATION, not yet a delivered number.
+
+**Authority:** operator ruling, 2026-08-21, verbatim above (`OPERATOR-RULINGS-2026-08-21.md` §20,
+overturning `SD-27 decisions.md §24.1`, 2026-07-31).

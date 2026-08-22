@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Relic Channeler ~ Apport Relic",
+    "name": "Apport Relic",
+    "class": "Medium",
+    "description": "A relic channeler can call one of her relics to her once per day as though she had cast apport object on it and was mentally completing the spell. Furthermore, if the relic channeler gains the apport object spell, she can use it to receive her relics without casting it on them in advance in the same way. The range at which the relic channeler can apport her relics (both with this ability and the spell) increases by an additional %1 feet.|5*((MediumLVL-5)/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Relic Channeler ~ Apport Relic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A relic channeler can call one of her relics to her once per day as though she had cast apport object on it and was mentally completing the spell. Furthermore, if the relic channeler gains the apport object spell, she can use it to receive her relics without casting it on them in advance in the same way. The range at which the relic channeler can apport her relics (both with this ability and the spell) increases by an additional %1 feet.|5*((MediumLVL-5)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1424,
+    "record_key": "Relic Channeler ~ Apport Relic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

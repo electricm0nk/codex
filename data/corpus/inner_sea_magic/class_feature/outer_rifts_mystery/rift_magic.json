@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Rift Magic",
+    "name": "Rift Magic",
+    "class": "Outer Rifts Mystery",
+    "description": "Your spells gain a +4 bonus on caster level checks made to overcome the spell resistance of chaotic outsiders and evil outsiders.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Rift Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your spells gain a +4 bonus on caster level checks made to overcome the spell resistance of chaotic outsiders and evil outsiders."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlanarHazeTimes|1+OracleLVL/7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 116,
+    "record_key": "Outer Rifts Mystery ~ Rift Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Primalist ~ Primal Choices",
+    "name": "Primal Choices",
+    "class": "Bloodrager",
+    "description": "At 4th level and every 4 levels thereafter, a primalist can choose to take either his bloodline power or two barbarian rage powers. If the primalist chooses rage powers, those rage powers can be used in conjunction with his bloodrage, and his bloodrager level acts as his barbarian level when determining the effect of those bloodrage powers and any prerequisites. Any other prerequisites for a rage power must be met before a primalist can choose it. This ability does not count as the rage power class feature for determining feat prerequisites and other requirements. This ability alters the bloodline Class Feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primalist ~ Primal Choices"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Primalist Class Feature.Bloodrager Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level and every 4 levels thereafter, a primalist can choose to take either his bloodline power or two barbarian rage powers. If the primalist chooses rage powers, those rage powers can be used in conjunction with his bloodrage, and his bloodrager level acts as his barbarian level when determining the effect of those bloodrage powers and any prerequisites. Any other prerequisites for a rage power must be met before a primalist can choose it. This ability does not count as the rage power class feature for determining feat prerequisites and other requirements. This ability alters the bloodline Class Feature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Primalist ~ Primal Choice 4|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Primalist ~ Primal Choice 8|PRECLASS:1,Bloodrager=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Primalist ~ Primal Choice 12|PRECLASS:1,Bloodrager=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Primalist ~ Primal Choice 16|PRECLASS:1,Bloodrager=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Primalist ~ Primal Choice 20|PRECLASS:1,Bloodrager=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2796,
+    "record_key": "Primalist ~ Primal Choices"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

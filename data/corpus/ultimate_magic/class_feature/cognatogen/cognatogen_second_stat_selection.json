@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cognatogen ~ Stat Selection Second",
+    "name": "Cognatogen (Second Stat Selection)",
+    "class": "Cognatogen",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cognatogen ~ Stat Selection Second"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cognatogen_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Display"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CognatogenSecondAbility|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Cognatogen Intelligence (Second)|PREVAREQ:CognatogenSecondAbility,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Cognatogen Wisdom (Second)|PREVAREQ:CognatogenSecondAbility,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Cognatogen Charisma (Second)|PREVAREQ:CognatogenSecondAbility,3"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CognatogenSecondAbility|%CHOICE"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=3|TITLE=Str is 1, Dex is 2, Con is 3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 131,
+    "record_key": "Cognatogen ~ Stat Selection Second"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

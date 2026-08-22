@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald Archetype ~ Hunt Caller",
+    "name": "Hunt Caller",
+    "class": "Skald Archetype",
+    "description": "Hunt callers are skalds whose songs draw their allies into the animal world. They can invoke the inner beasts of those who observe their supernatural performances-a talent that causes many to mistake the hunt caller and her allies for lycanthropes or other shapechanging creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Hunt Caller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Hunt Caller],[!PREFACT:1,ABILITIES,Skald_Archetype_WellVersed=True,Skald_Archetype_SongOfStrength=True,Skald_Archetype_SongOfTheFallen=True,Skald_Archetype_RagePower18=True,Skald_Archetype_SpellKenning=True,Skald_Archetype_RagePower6=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Hunt callers are skalds whose songs draw their allies into the animal world. They can invoke the inner beasts of those who observe their supernatural performances-a talent that causes many to mistake the hunt caller and her allies for lycanthropes or other shapechanging creatures."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunt Caller ~ Song of the Senses|PRECLASS:1,Skald=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunt Caller ~ Call of the Wild|PRECLASS:1,Skald=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunt Caller ~ Wilderness Magic|PRECLASS:1,Skald=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunt Caller ~ Inspire Scent|PRECLASS:1,Skald=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SongOfStrength|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SongOfTheFallen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_RagePower18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SongOfStrength|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SongOfTheFallen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_RagePower18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_RagePower6|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1117,
+    "record_key": "Skald Archetype ~ Hunt Caller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

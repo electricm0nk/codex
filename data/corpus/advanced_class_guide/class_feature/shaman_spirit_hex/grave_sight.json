@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Grave Sight",
+    "name": "Grave Sight",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman sees the states of life, death, undeath, and general health of those around her. When using this ability, she can tell whether or not creatures within 30 feet that she can see are living, wounded, dying, or dead, as well as determine if any are undead. Lastly, she can tell if those creatures are poisoned or diseased. The shaman can use this ability a %1 rounds/day, but these rounds do not need to be consecutive.|ShamanGraveSightRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Grave Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Grave Sight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBonesSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanGraveSightRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman sees the states of life, death, undeath, and general health of those around her. When using this ability, she can tell whether or not creatures within 30 feet that she can see are living, wounded, dying, or dead, as well as determine if any are undead. Lastly, she can tell if those creatures are poisoned or diseased. The shaman can use this ability a %1 rounds/day, but these rounds do not need to be consecutive.|ShamanGraveSightRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanGraveSightRounds|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1531,
+    "record_key": "Shaman Spirit Hex ~ Grave Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nimble Guardian ~ Guardian Feline",
+    "name": "Guardian Feline",
+    "class": "Monk",
+    "description": "The nimble guardian can transform himself into a feline creature by spending 2 ki points. The effect lasts for 1 hour or until the nimble guardian changes back. Changing form (to animal or back) is a standard action and does not provoke an attack of opportunity. The chosen form must be some form of feline (cheetah, lion, etc.). This ability is otherwise identical to beast shape II. At 9th level, this ability functions as beast shape III.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nimble Guardian ~ Guardian Feline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The nimble guardian can transform himself into a feline creature by spending 2 ki points. The effect lasts for 1 hour or until the nimble guardian changes back. Changing form (to animal or back) is a standard action and does not provoke an attack of opportunity. The chosen form must be some form of feline (cheetah, lion, etc.). This ability is otherwise identical to beast shape II. At 9th level, this ability functions as beast shape III."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 453,
+    "record_key": "Nimble Guardian ~ Guardian Feline"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

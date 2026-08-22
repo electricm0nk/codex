@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weapon Training 1 Spears (Dragoon)",
+    "name": "Weapon Training",
+    "class": null,
+    "description": "Spears to hit +%1, Damage +%2|WeaponTrainingSpears|WeaponTrainingSpears*2|PREVARGT:WeaponTrainingSpears,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon Training 1 Spears (Dragoon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingSpears|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spears to hit +%1, Damage +%2|WeaponTrainingSpears|WeaponTrainingSpears*2|PREVARGT:WeaponTrainingSpears,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Spear|WeaponTrainingSpears|TYPE=WeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Spear|WeaponTrainingSpears*2|TYPE=WeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingBase"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 725,
+    "record_key": "Weapon Training 1 Spears (Dragoon)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

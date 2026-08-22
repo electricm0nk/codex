@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Undine ~ Nereid Fascination",
+    "name": "Nereid Fascination",
+    "race_key": "Undine",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Undine Racial Trait",
+      "SpecialAttack",
+      "Special Attack"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Undine_ReplaceSpellLikeAbility"
+    ],
+    "description": "Some undines can trace their ancestry to nereids as well as to outsiders. Once per day as a standard action, such an undine can create a 20-foot-radius aura that causes humanoids within the aura's range to become fascinated with her for a number of rounds equal to 1/2 the undine's character level (minimum 1). Targets may resist with a Will save (DC 10 + 1/2 the undine's level + the undine's Charisma modifier).&nl;(fascinate rounds, DC ) This is a supernatural ability. This racial trait replaces the spell-like ability racial trait.",
+    "source_page": "p.175",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine ~ Nereid Fascination"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Undine Racial Trait.SpecialAttack.Special Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Undine ~ Nereid Fascination],[!PREFACT:1,ABILITIES,Undine_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Undine_NereidFascination_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Undine_NereidFascination_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Undine_NereidFascination_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Some undines can trace their ancestry to nereids as well as to outsiders. Once per day as a standard action, such an undine can create a 20-foot-radius aura that causes humanoids within the aura's range to become fascinated with her for a number of rounds equal to 1/2 the undine's character level (minimum 1). Targets may resist with a Will save (DC 10 + 1/2 the undine's level + the undine's Charisma modifier).&nl;(fascinate %1 rounds, DC %2)|Undine_NereidFascination_Duration|Undine_NereidFascination_DC"
+      },
+      {
+        "key": "DESC",
+        "value": "This is a supernatural ability. This racial trait replaces the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Undine ~ Nereid Fascination"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (fascinate %2 rounds, DC %3)|Undine_NereidFascination_Times|Undine_NereidFascination_Duration|Undine_NereidFascination_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Undine_NereidFascination_Times"
+      },
+      {
+        "key": "FACT",
+        "value": "Undine_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Undine_NereidFascination_Times",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Undine_NereidFascination_Duration",
+          "max((TL/2),1)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Undine_NereidFascination_DC",
+          "10+(TL/2)+CHA"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 781,
+    "record_key": "Undine ~ Nereid Fascination"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

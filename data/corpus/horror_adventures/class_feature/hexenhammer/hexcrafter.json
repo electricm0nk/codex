@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hexenhammer ~ Hexcrafter",
+    "name": "Hexcrafter",
+    "class": "Inquisitor",
+    "description": "A hexenhammer learns to turn some powers of witches to her own advantage. She learns either the blight, the misfortune, or the slumber hex from the witch's hex list, and can use that hex once per day as a standard action, using her inquisitor level in place of a witch level. If the hex allows a saving throw, the save DC to resist the hex is %1. At 6th level, 12th, and 15th levels, the hexenhammer learns an additional hex from her available hexes. At 9th level and 18th level, the hexenhammer can use any one of her hexes one additional time per day. At 12th level, the hexenhammer adds the agony, nightmares, and retribution major hexes to her list of learnable hexes.|10+InquisitorLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hexenhammer ~ Hexcrafter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexAbilityLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "DESC",
+        "value": "A hexenhammer learns to turn some powers of witches to her own advantage. She learns either the blight, the misfortune, or the slumber hex from the witch's hex list, and can use that hex once per day as a standard action, using her inquisitor level in place of a witch level. If the hex allows a saving throw, the save DC to resist the hex is %1. At 6th level, 12th, and 15th levels, the hexenhammer learns an additional hex from her available hexes. At 9th level and 18th level, the hexenhammer can use any one of her hexes one additional time per day. At 12th level, the hexenhammer adds the agony, nightmares, and retribution major hexes to her list of learnable hexes.|10+InquisitorLVL/2+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hexenhammer Minor Hex Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hexenhammer Minor Hex Choice|1|PRECLASS:1,Inquisitor=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hexenhammer Major Hex Choice|1|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hexenhammer Major Hex Choice|1|PRECLASS:1,Inquisitor=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexAbilityLVL|InquisitorLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 130,
+    "record_key": "Hexenhammer ~ Hexcrafter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

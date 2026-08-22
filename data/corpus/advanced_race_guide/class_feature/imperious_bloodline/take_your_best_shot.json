@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Imperious Bloodline ~ Take Your Best Shot",
+    "name": "Take Your Best Shot",
+    "class": "Imperious Bloodline",
+    "description": "If you are targeted by a harmful spell, spell-like ability, or supernatural ability and suffer no harm from it, whether because of a successful saving throw, spell resistance, the attack missing, or some other protection,",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imperious Bloodline ~ Take Your Best Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Imperious Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Imperious"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Imperious_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Imperious_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If you are targeted by a harmful spell, spell-like ability, or supernatural ability and suffer no harm from it, whether because of a successful saving throw, spell resistance, the attack missing, or some other protection,"
+      },
+      {
+        "key": "DESC",
+        "value": "or succeed at a saving throw to reduce the effects of an attack,|PREVARGTEQ:Sorcerer_Imperious_BloodlinePower9LVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "as an immediate action you can make an Intimidate check to demoralize the creature that produced the effect, but only if the creature that used the harmful effect is within 30 feet and can clearly see and hear you (if no save is allowed, you cannot use this ability)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ImperiousBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 24,
+    "record_key": "Imperious Bloodline ~ Take Your Best Shot"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

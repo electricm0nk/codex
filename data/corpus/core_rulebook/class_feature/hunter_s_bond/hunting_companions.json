@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter's Bond ~ Hunting Companions",
+    "name": "Hunting Companions",
+    "class": "Hunter's Bond",
+    "description": "You form a powerful bond with your companions. You may spend a move action to grant half your favored enemy bonus against a single target to all allies within 30 feet who can see or hear you for %1 rounds. This bonus does not stack with any favored enemy bonuses possessed by your allies; they use whichever bonus is higher.|max(1,WIS)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter's Bond ~ Hunting Companions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary.HuntersBond"
+      },
+      {
+        "key": "DESC",
+        "value": "You form a powerful bond with your companions. You may spend a move action to grant half your favored enemy bonus against a single target to all allies within 30 feet who can see or hear you for %1 rounds. This bonus does not stack with any favored enemy bonuses possessed by your allies; they use whichever bonus is higher.|max(1,WIS)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1439,
+    "record_key": "Hunter's Bond ~ Hunting Companions"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

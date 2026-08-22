@@ -464,6 +464,30 @@ fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
     (prose, args)
 }
 
+/// Whether `chars[i]` (a `'%'`) is part of standard "d%"/"D%" percentile-
+/// dice notation (= d100), a real, resolved shape that must be preserved
+/// literally, never treated as a leak or dropped. `chars` is the FULL text
+/// under scan (or the prose being rendered) — this is a lookbehind only,
+/// never a lookahead, so it composes safely with whatever comes after `%`.
+///
+/// Recognized as: the character immediately before `%` is `d`/`D`, AND the
+/// character before THAT is either a word boundary (start of string or
+/// non-alphabetic) or a DIGIT — so both `"roll d% for..."` and the real
+/// Teleport/Plane Shift/Planar Wanderer corpus shape `"5d% miles"` (a dice
+/// COUNT immediately before the die) match, while a word merely ending in
+/// `d` (`"gold%"`) does not. A digit is deliberately excluded from failing
+/// the word-boundary test — `is_alphabetic`, not `is_alphanumeric` — the
+/// one correction wave-8 integration made to this rule after the first
+/// version flagged `"5d%"` as a leak (`equipment_catalog`'s own
+/// `no_catalog_serves_a_description_carrying_raw_pcgen_syntax` test caught
+/// it against real `spell:Teleport`/`spell:Plane Shift`/`feat:Planar
+/// Wanderer` corpus text).
+fn is_percentile_dice_notation(chars: &[char], i: usize) -> bool {
+    i >= 1
+        && matches!(chars[i - 1], 'd' | 'D')
+        && (i < 2 || !chars[i - 2].is_alphabetic())
+}
+
 /// Renders one raw PCGen `DESC:` token into player-facing prose.
 ///
 /// See the module doc for the full contract. The short version: `%%` becomes
@@ -540,7 +564,35 @@ pub fn render_pcgen_desc_with_values(raw: &str, values: &PcgenDisplayValues) -> 
                 i += 3;
                 continue;
             }
-            out.push('%');
+            // SD31-W8-INTEGRATE-001: a `%%` escape ordinarily collapses to
+            // a literal `%` sign UNCONDITIONALLY here -- correct for the
+            // common case ("20%%." -> "20%.", digit already in `out`) and
+            // for percentile-dice notation ("d%%" -> "d%"). But when the
+            // NUMBER this percent sign belongs to was itself a `%N`
+            // argument reference that had to be dropped moments earlier
+            // (real corpus shape: `ultimate_intrigue:spell:absolution`'s
+            // `"has a %1%% chance"`, where `%1` names a formula this
+            // engine cannot resolve), `out` ends with neither a digit nor
+            // a dice-notation `d`/`D` -- pushing the bare `%` here would
+            // leave exactly the orphaned "a % chance" hole this cycle's
+            // `leaked_pcgen_syntax` widening now (correctly) refuses to
+            // serve. Drop it the same no-fabrication way instead of
+            // rendering a percent sign with no number in front of it.
+            let out_chars: Vec<char> = out.chars().collect();
+            let n = out_chars.len();
+            let preceded_by_digit = n > 0 && out_chars[n - 1].is_ascii_digit();
+            let preceded_by_dice_notation = n > 0
+                && matches!(out_chars[n - 1], 'd' | 'D')
+                && (n < 2 || !out_chars[n - 2].is_alphabetic());
+            if preceded_by_digit || preceded_by_dice_notation {
+                out.push('%');
+            } else {
+                dropped_args.push("%%".to_string());
+                while out.ends_with('+') || out.ends_with('-') {
+                    out.pop();
+                }
+                dropped_any = true;
+            }
             i += 2;
             continue;
         }
@@ -562,6 +614,57 @@ pub fn render_pcgen_desc_with_values(raw: &str, values: &PcgenDisplayValues) -> 
                 }
             }
             i += 2;
+            continue;
+        }
+        // CONFIRMED finding (`SD31-W6-INTEGRATE-001`): a `%<KEYWORD>`
+        // substitution (`%CHOICE`, the only shape any shipped `description:`
+        // text carries -- `%LIST` appears only in `qualifiers` fields today,
+        // covered here on the same general mechanism rather than a
+        // `%CHOICE`-specific special case). PCGen keyword substitutions name
+        // a chargen-time PLAYER SELECTION (e.g. a bloodline/mystery choice)
+        // this engine has no `PcgenDisplayValues` slot for at all -- there is
+        // no resolution path to attempt, unlike `%N`, so this is
+        // unconditionally dropped, never guessed at. Same no-fabrication
+        // treatment as an unresolved `%N`: takes its introducing `+`/`-` with
+        // it, collapses the surrounding whitespace.
+        if chars[i] == '%' && chars.get(i + 1).is_some_and(char::is_ascii_uppercase) {
+            let start = i + 1;
+            let mut end = start;
+            while chars.get(end).is_some_and(char::is_ascii_uppercase) {
+                end += 1;
+            }
+            dropped_args.push(chars[start..end].iter().collect());
+            while out.ends_with('+') || out.ends_with('-') {
+                out.pop();
+            }
+            dropped_any = true;
+            i = end;
+            continue;
+        }
+        // CONFIRMED finding (`SD31-W8-INTEGRATE-001`): a bare '%' --
+        // neither a digit argument reference nor an uppercase keyword
+        // substitution -- previously fell through to the plain
+        // `out.push` below and reached a player's screen unchanged
+        // (`leaked_pcgen_syntax`'s widened check caught this in
+        // DIAGNOSIS; `equipment_catalog`'s own `the_raw_percent_escape_
+        // stops_at_the_catalog_boundary` test went red against 42
+        // served descriptions still carrying it). Same no-fabrication
+        // drop as `%<KEYWORD>` above, with the ONE named exception that
+        // check also carves out: "d%"/"D%" percentile-dice notation
+        // (= d100) at a word boundary is a real, resolved shape and must
+        // be preserved literally.
+        if chars[i] == '%' {
+            if is_percentile_dice_notation(&chars, i) {
+                out.push('%');
+                i += 1;
+                continue;
+            }
+            dropped_args.push("%".to_string());
+            while out.ends_with('+') || out.ends_with('-') {
+                out.pop();
+            }
+            dropped_any = true;
+            i += 1;
             continue;
         }
         out.push(chars[i]);
@@ -637,6 +740,39 @@ pub fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
     for (i, c) in chars.iter().enumerate() {
         if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_digit) {
             return Some("unsubstituted '%N' argument reference");
+        }
+        // CONFIRMED finding (`SD31-W6-INTEGRATE-001`): PCGen also uses
+        // uppercase KEYWORD substitutions (`%CHOICE`, the only one this
+        // corpus's shipped `description:` text carries, re-derived
+        // corpus-wide) that carry no digit at all -- the digit-only check
+        // above never caught them, so `%CHOICE` shipped to the player
+        // verbatim on the equipment render path.
+        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_uppercase) {
+            return Some("unsubstituted '%<KEYWORD>' argument reference");
+        }
+        // CONFIRMED finding (`SD31-W8-INTEGRATE-001`, wave-8 adversarial
+        // review): the two checks above only catch a '%' immediately
+        // followed by a digit or an uppercase letter. 31 real corpus
+        // records ship a hole neither shape catches -- a `%` followed by
+        // a space, punctuation, or a lowercase letter ("Cast % 1/day",
+        // "Darkvision % ft.", "+%d6 additional ectoplasmic damage") --
+        // and read `text-complete`/`done` with the placeholder still
+        // visible. A literal percent SIGN is always immediately preceded
+        // by a digit ("50% chance", "20% of something"); a `%` that is
+        // NOT preceded by a digit has no other legitimate PCGen meaning
+        // in a `DESC:`/`SPROP:` field, so it is always a leak here --
+        // EXCEPT the one named real shape this repo already renders on
+        // purpose: "d%"/"D%" percentile-dice notation (= d100), which a
+        // `%%` escape collapse can legitimately leave behind (see
+        // `a_prose_table_beside_a_real_argument_keeps_the_table_and_loses_
+        // the_tail`'s "roll d% for..." fixture) -- recognized narrowly as
+        // the single letter d/D at a word boundary immediately before
+        // '%', not any word merely ending in 'd'.
+        if *c == '%'
+            && !(i > 0 && chars[i - 1].is_ascii_digit())
+            && !is_percentile_dice_notation(&chars, i)
+        {
+            return Some("unsubstituted bare '%' gap");
         }
         if *c == '|' {
             let left_open = i == 0 || chars[i - 1].is_whitespace();
@@ -767,6 +903,94 @@ mod tests {
         assert_eq!(leaked_pcgen_syntax("trailing pipe |"), None);
     }
 
+    /// SD31-W8-INTEGRATE-001: wave-8 adversarial review CONFIRMED that a
+    /// `%` hole neither followed by a digit nor an uppercase letter slips
+    /// past both existing checks -- 31 real corpus records ship one of
+    /// exactly these shapes (`core_rulebook:equipmods:itempower_castone`
+    /// and siblings, `ultimate_psionics:equipmods:plusn_svs` and
+    /// siblings). A literal percent sign (`"50% of something"`, `"20%
+    /// chance"`) must still pass clean -- the discriminator is "preceded
+    /// by a digit", not "any bare %".
+    #[test]
+    fn a_percent_hole_not_followed_by_a_digit_or_keyword_still_leaks() {
+        assert_eq!(
+            leaked_pcgen_syntax("Cast % 1/day"),
+            Some("unsubstituted bare '%' gap")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("Cast % at will"),
+            Some("unsubstituted bare '%' gap")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("+% enhancement"),
+            Some("unsubstituted bare '%' gap")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("Darkvision % ft."),
+            Some("unsubstituted bare '%' gap")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("Item has 10 ranks in %"),
+            Some("unsubstituted bare '%' gap")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("+%d6 additional ectoplasmic damage"),
+            Some("unsubstituted bare '%' gap")
+        );
+        // Literal percent signs (digit immediately before '%') must never
+        // be flagged by this new arm.
+        assert_eq!(leaked_pcgen_syntax("a 20% chance of failure"), None);
+        assert_eq!(leaked_pcgen_syntax("50%"), None);
+        // Percentile-dice notation ("d%" = d100) is a real, resolved
+        // shape, not a leak -- the named exception this arm must not
+        // regress (`a_prose_table_beside_a_real_argument_keeps_the_table_
+        // and_loses_the_tail` exercises the actual render path that
+        // produces it).
+        assert_eq!(leaked_pcgen_syntax("roll d% for damage"), None);
+        assert_eq!(leaked_pcgen_syntax("roll a D% to determine"), None);
+        // SD31-W8-INTEGRATE-001, second correction: a DICE COUNT
+        // immediately before the die ("5d%") is the SAME real notation,
+        // not a leak -- found against real corpus text
+        // (`spell:Teleport`/`spell:Plane Shift`'s "5d%" and
+        // `feat:Planar Wanderer`'s "5d20 miles ... instead of 5d% miles")
+        // when the first version of this exception (word-boundary only)
+        // flagged all three.
+        assert_eq!(leaked_pcgen_syntax("5d% miles away"), None);
+        assert_eq!(leaked_pcgen_syntax("12d% rounds"), None);
+        // But a lowercase 'd' is not a blanket exception -- only the
+        // named "d%" dice-notation shape at a word boundary OR preceded
+        // by a dice count.
+        assert_eq!(
+            leaked_pcgen_syntax("gold%"),
+            Some("unsubstituted bare '%' gap")
+        );
+    }
+
+    /// CONFIRMED finding (integration-cycle adversarial review, `SD31-W6-
+    /// INTEGRATE-001`): the equipment render path ships the raw PCGen
+    /// substitution token `%CHOICE` verbatim to the player
+    /// (`ultimate_equipment:equipment_modifier:special_ability_defiant_armor`'s
+    /// real shipped description, "+2 enhancement bonus and DR 2/- against
+    /// %CHOICE") because this guard only ever flagged `%` followed by an
+    /// ASCII DIGIT, never `%` followed by an uppercase PCGen keyword.
+    #[test]
+    fn leak_guard_catches_percent_choice_and_other_uppercase_pcgen_substitution_keywords() {
+        assert_eq!(
+            leaked_pcgen_syntax("+2 enhancement bonus and DR 2/- against %CHOICE"),
+            Some("unsubstituted '%<KEYWORD>' argument reference")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("+2d6 damage against foe with %CHOICE bloodline"),
+            Some("unsubstituted '%<KEYWORD>' argument reference")
+        );
+        // Digit case must still be caught by the SAME message it always was
+        // (no regression on the pre-existing shape).
+        assert_eq!(leaked_pcgen_syntax("A +%1 bonus."), Some("unsubstituted '%N' argument reference"));
+        // A literal percent followed by ordinary lowercase prose is not a
+        // PCGen keyword and must not false-positive.
+        assert_eq!(leaked_pcgen_syntax("Clean prose with 50% of something."), None);
+    }
+
     /// The exact ACG `Twinned Feint` token that shipped to the Add Feat
     /// picker. Its prose references no `%N`, so the argument-tail rule never
     /// fired and the `PRE` clause went straight to the player.
@@ -830,6 +1054,147 @@ mod tests {
     fn an_unmatched_percent_n_is_dropped_rather_than_rendered() {
         let rendered = render_pcgen_desc("a bonus of %3 with no tail");
         assert_eq!(rendered.text, "a bonus of with no tail");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// CONFIRMED finding (integration-cycle full-gate run, `SD31-W6-
+    /// INTEGRATE-001`): PCGen also uses uppercase KEYWORD substitutions
+    /// (`%CHOICE`), not only `%N` numeric argument references. This renderer
+    /// previously copied `%CHOICE` through verbatim (its main loop only
+    /// recognized a digit or another `%` after `%`), which is exactly the
+    /// live shape `apps/desktop/src-tauri/src/equipment_catalog.rs`'s own
+    /// pre-existing `no_catalog_serves_a_description_carrying_raw_pcgen_
+    /// syntax` test caught the moment `leaked_pcgen_syntax` was widened to
+    /// detect it (6 real shipped equipment descriptions). There is no
+    /// `PcgenDisplayValues` support for a keyword argument -- an ACG
+    /// bloodline/mystery choice is a chargen-time PLAYER SELECTION this
+    /// engine does not model at all, so `%CHOICE` is unconditionally
+    /// dropped, the same no-fabrication treatment `%N` already gets when
+    /// unresolved: it takes its introducing `+`/`-` with it and the
+    /// surrounding whitespace collapses.
+    #[test]
+    fn a_percent_keyword_argument_is_dropped_the_same_way_an_unresolved_percent_n_is() {
+        let rendered = render_pcgen_desc(
+            "+2 enhancement, +2d6 damage against foe with %CHOICE bloodline",
+        );
+        assert_eq!(rendered.text, "+2 enhancement, +2d6 damage against foe with bloodline");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+        assert_eq!(rendered.dropped_args, vec!["CHOICE".to_string()]);
+    }
+
+    /// SD31-W8-INTEGRATE-001: the render-path counterpart to
+    /// `a_percent_hole_not_followed_by_a_digit_or_keyword_still_leaks`.
+    /// `leaked_pcgen_syntax` alone catching the hole was not enough --
+    /// the render function must actually DROP it, or the catalog keeps
+    /// serving the raw text (confirmed: `equipment_catalog`'s own
+    /// `the_raw_percent_escape_stops_at_the_catalog_boundary` test found
+    /// 42 served descriptions still leaking after only the detector was
+    /// widened). Real corpus shapes, verbatim.
+    #[test]
+    fn a_bare_percent_hole_is_dropped_the_same_way_a_keyword_is() {
+        let rendered = render_pcgen_desc("Cast % 1/day");
+        assert_eq!(rendered.text, "Cast 1/day");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+        assert_eq!(rendered.dropped_args, vec!["%".to_string()]);
+
+        let rendered = render_pcgen_desc("Darkvision % ft.");
+        assert_eq!(rendered.text, "Darkvision ft.");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+
+        let rendered = render_pcgen_desc("+%d6 additional ectoplasmic damage");
+        assert_eq!(rendered.text, "d6 additional ectoplasmic damage");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+
+        let rendered = render_pcgen_desc("Item has 10 ranks in %");
+        assert_eq!(rendered.text, "Item has 10 ranks in");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// SD31-W8-INTEGRATE-001, third correction: a `%%` escape whose
+    /// preceding NUMBER argument was itself dropped (real corpus shape,
+    /// `ultimate_intrigue:spell:absolution`'s `"has a %1%% chance"` where
+    /// `%1` names a formula this engine cannot resolve) must not leave an
+    /// orphaned bare `%` behind -- `equipment_catalog`'s own
+    /// `no_catalog_serves_a_description_carrying_raw_pcgen_syntax` test
+    /// caught exactly this shape once the detector was widened to flag a
+    /// bare `%`.
+    #[test]
+    fn an_escaped_percent_orphaned_by_its_own_dropped_argument_is_dropped_too() {
+        let rendered = render_pcgen_desc("has a %1%% chance of success");
+        assert_eq!(rendered.text, "has a chance of success");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+        // `%1` names argument 1, but this token carries no `|`-delimited
+        // argument tail at all (the real `ultimate_intrigue:spell:
+        // absolution` row's `%1` resolves against its OWN row's tail --
+        // this test isolates just the escaped-`%%`-orphan behavior, so
+        // `args` is empty here and `%1` itself contributes no named
+        // entry to `dropped_args`, only the orphaned `%%` does).
+        assert_eq!(rendered.dropped_args, vec!["%%".to_string()]);
+        // The ordinary case (a digit genuinely precedes the escape) is
+        // UNCHANGED -- must not regress into dropping every `%%`.
+        assert_eq!(render_pcgen_desc("reduced by 20%%.").text, "reduced by 20%.");
+    }
+
+    /// `core_rulebook:spell:teleport`'s real corpus text writes percentile-
+    /// dice notation with a stray space before one of its three `%%`
+    /// occurrences ("Distance off target is d %% of the distance",
+    /// verified against the pinned oracle at `cr_spells.lst:1371`) while
+    /// the other two are tight ("roll d%%"/"rolling d%%"). The tight ones
+    /// must still render "d%"; the spaced one has no digit or dice-letter
+    /// immediately before it in `out` and is honestly dropped rather than
+    /// guessed at -- this is NOT a fabrication regression, it is the same
+    /// no-fabrication policy every other unresolvable shape in this
+    /// function already follows.
+    #[test]
+    fn a_spaced_percentile_dice_escape_with_no_adjacent_d_is_dropped_not_guessed() {
+        let rendered = render_pcgen_desc("roll d%% and consult. rolling d%%, no target. d %% of the distance.");
+        assert_eq!(
+            rendered.text,
+            "roll d% and consult. rolling d%, no target. d of the distance."
+        );
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// The percentile-dice exception must survive at render time too --
+    /// this is the SAME "roll d%% for..." shape
+    /// `a_prose_table_beside_a_real_argument_keeps_the_table_and_loses_
+    /// the_tail` already exercises end to end; this test isolates just
+    /// the bare-`%`-drop branch's own carve-out.
+    #[test]
+    fn a_bare_percent_hole_drop_preserves_percentile_dice_notation() {
+        let rendered = render_pcgen_desc("roll d%% for damage");
+        assert_eq!(rendered.text, "roll d% for damage");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// The trailing-sign-stripping shape (mirrors `an_unmatched_percent_n_
+    /// is_dropped_rather_than_rendered`): a `%CHOICE` at the very end of the
+    /// sentence, preceded by a bare `against`, must not leave a dangling
+    /// leak or a stray trailing space.
+    #[test]
+    fn a_percent_keyword_at_the_end_of_the_sentence_leaves_no_trailing_leak() {
+        let rendered = render_pcgen_desc("+2 enhancement bonus and DR 2/- against %CHOICE");
+        assert_eq!(rendered.text, "+2 enhancement bonus and DR 2/- against");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// A `%CHOICE` at the START of the sentence (`Masterwork Tool`'s real
+    /// shipped shape) must not leave a leading leak either.
+    #[test]
+    fn a_percent_keyword_at_the_start_of_the_sentence_leaves_no_leading_leak() {
+        let rendered = render_pcgen_desc("%CHOICE circumstance Bonus");
+        assert_eq!(rendered.text, "circumstance Bonus");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// A different keyword (`%LIST`, real PCGen syntax used elsewhere in
+    /// this corpus's `qualifiers` fields, though not currently in any
+    /// `description:`) must be caught by the SAME general mechanism, not a
+    /// `%CHOICE`-specific special case.
+    #[test]
+    fn a_different_percent_keyword_is_also_dropped() {
+        let rendered = render_pcgen_desc("a bonus to %LIST checks");
+        assert_eq!(rendered.text, "a bonus to checks");
         assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
     }
 

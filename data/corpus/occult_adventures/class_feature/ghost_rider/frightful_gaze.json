@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghost Rider ~ Frightful Gaze",
+    "name": "Frightful Gaze",
+    "class": "Cavalier",
+    "description": "At 1st level, a ghost rider can use this ability on opponents within 30 feet as a standard action, which acts as a gaze attack until the ghost rider's next turn. Creatures within range that meet the ghost rider's gaze must succeed at a Will saving throw (DC = 10 + 1/2 the ghost rider's class level + the ghost rider's Charisma modifier) or stand paralyzed in fear for 1 round. This is a mind-affecting fear effect. Creatures that successfully save against that ghost rider's frightful gaze are immune to it for 24 hours. At 9th level, this ability can affect creatures that are mindless or immune to mind-affecting effects, though it still counts as a fear effect. The ghost rider can use this ability a number of times each day equal to her Charisma modifier. This ability replaces tactician, greater tactician, and master tactician.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghost Rider ~ Frightful Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ghost Rider Class Feature.Cavalier Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a ghost rider can use this ability on opponents within 30 feet as a standard action, which acts as a gaze attack until the ghost rider's next turn. Creatures within range that meet the ghost rider's gaze must succeed at a Will saving throw (DC = 10 + 1/2 the ghost rider's class level + the ghost rider's Charisma modifier) or stand paralyzed in fear for 1 round. This is a mind-affecting fear effect. Creatures that successfully save against that ghost rider's frightful gaze are immune to it for 24 hours. At 9th level, this ability can affect creatures that are mindless or immune to mind-affecting effects, though it still counts as a fear effect. The ghost rider can use this ability a number of times each day equal to her Charisma modifier. This ability replaces tactician, greater tactician, and master tactician."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1727,
+    "record_key": "Ghost Rider ~ Frightful Gaze"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

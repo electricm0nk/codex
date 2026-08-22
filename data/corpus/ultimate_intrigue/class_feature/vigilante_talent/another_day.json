@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Another Day",
+    "name": "Another Day",
+    "class": "Vigilante Talent",
+    "description": "When the vigilante is dropped unconscious due to hit point damage, he automatically stabilizes, but he can also appear to be dead, unless an examining creature succeeds at a Heal check (DC %1) or, if using magic such as deathwatch, a caster level check with the same DC (the ability to affect spells is supernatural; the rest of the ability is extraordinary). The vigilante counts as having received aid and automatically succeeds at the Constitution check to become conscious after 1 hour (unless he has actually died in the meantime).|20+VigilanteTalentLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Another Day"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Another Day"
+      },
+      {
+        "key": "DESC",
+        "value": "When the vigilante is dropped unconscious due to hit point damage, he automatically stabilizes, but he can also appear to be dead, unless an examining creature succeeds at a Heal check (DC %1) or, if using magic such as deathwatch, a caster level check with the same DC (the ability to affect spells is supernatural; the rest of the ability is extraordinary). The vigilante counts as having received aid and automatically succeeds at the Constitution check to become conscious after 1 hour (unless he has actually died in the meantime).|20+VigilanteTalentLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 72,
+    "record_key": "Vigilante Talent ~ Another Day"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

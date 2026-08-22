@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Domain ~ Mountain",
+    "name": "Mountain",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Mountain"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.DruidAnimalTerrainDomain.DruidTerrainDomain.SpecialQuality"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidMountainAllowed,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "DruidAnimalTerrainDomainNotAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Stone Fist|Druid=2|Stone Call|Druid=3|Cloak of Winds|Druid=4|Stoneskin|Druid=5|Geyser|Druid=6|Suffocation|Druid=7|Flesh to Stone|Druid=8|Reverse Gravity|Druid=9|Clashing Rocks"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 251,
+    "record_key": "Druid Domain ~ Mountain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

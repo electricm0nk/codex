@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterpiece ~ Stone Face",
+    "name": "Stone Face",
+    "class": "Masterpiece",
+    "description": "Your antics can soften even the hardest visage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Stone Face"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DESC",
+        "value": "Your antics can soften even the hardest visage."
+      },
+      {
+        "key": "DESC",
+        "value": " You tell an old and humorous tale about a woman who refused to smile at anything, no matter how funny. Through a series of increasingly unlikely events involving a cart of horse manure, a king, and a flying carpet, her legendary frown broke at last. When you complete the performance, the target is affected by stone to flesh.  Use: 2 bardic performance rounds.  Action: 1 minute."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 181,
+    "record_key": "Masterpiece ~ Stone Face"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

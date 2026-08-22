@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hussar ~ Skillful Rider",
+    "name": "Skillful Rider",
+    "class": "Cavalier",
+    "description": "A hussar and his mount work in tandem to achieve amazing accomplishments of dexterity while riding. As long as the hussar is mounted, whenever he or his mount is required to attempt an Acrobatics, Climb, Escape Artist, Fly, Stealth, or Swim check, he can use his own modifier or his mount's, whichever is higher. Additionally, regardless of whose bonus is used, the hussar gains an additional +%1 bonus on all skill checks to overcome obstacles as part of a chase.|(CavalierLVL/6)*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hussar ~ Skillful Rider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.HussarClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hussar and his mount work in tandem to achieve amazing accomplishments of dexterity while riding. As long as the hussar is mounted, whenever he or his mount is required to attempt an Acrobatics, Climb, Escape Artist, Fly, Stealth, or Swim check, he can use his own modifier or his mount's, whichever is higher. Additionally, regardless of whose bonus is used, the hussar gains an additional +%1 bonus on all skill checks to overcome obstacles as part of a chase.|(CavalierLVL/6)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 305,
+    "record_key": "Hussar ~ Skillful Rider"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

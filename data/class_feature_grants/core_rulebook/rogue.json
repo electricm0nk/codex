@@ -1,0 +1,107 @@
+[
+  {
+    "key": "Rogue ~ Evasion",
+    "class": "Rogue",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 199
+    }
+  },
+  {
+    "key": "Rogue ~ Master Strike",
+    "class": "Rogue",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 203
+    }
+  },
+  {
+    "key": "Rogue ~ Rogue Talents",
+    "class": "Rogue",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 200
+    }
+  },
+  {
+    "key": "Rogue ~ Sneak Attack",
+    "class": "Rogue",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 197
+    }
+  },
+  {
+    "key": "Rogue ~ Trap Sense",
+    "class": "Rogue",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 201
+    }
+  },
+  {
+    "key": "Rogue ~ Trapfinding",
+    "class": "Rogue",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 198
+    }
+  },
+  {
+    "key": "Rogue ~ Uncanny Dodge Tracker",
+    "class": "Rogue",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 202
+    }
+  }
+]

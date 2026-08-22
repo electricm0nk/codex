@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You change the target into an animal (as per beast shape I), elemental (as per elemental body I), fey (as per fey form I), humanoid (as per alter self), monstrous humanoid (as per monstrous physique I), or vermin (as per vermin shape I) and the chosen form can have a fly speed. The subject's statistics change as per the appropriate spell except the creature's ability scores and natural armor do not change. The creature can change between its natural form and the chosen form at will as a standard action.",
+    "key": "Shapechanger's Gift (Greater)",
+    "level": 7,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Temporarily change a target into an animal, elemental, fey, humanoid, monstrous humanoid, or vermin.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You change the target into an animal (as per beast shape I), elemental (as per elemental body I), fey (as per fey form I), humanoid (as per alter self), monstrous humanoid (as per monstrous physique I), or vermin (as per vermin shape I) and the chosen form can have a fly speed. The subject's statistics change as per the appropriate spell except the creature's ability scores and natural armor do not change. The creature can change between its natural form and the chosen form at will as a standard action.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Willing living creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Shapechanger's Gift (Greater)",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

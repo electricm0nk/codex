@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Fist ~ Blessed Fortitude",
+    "name": "Blessed Fortitude",
+    "class": "Warpriest",
+    "description": "A sacred fist can avoid even magical and unusual attacks with help from his deity. If he succeeds at a Fortitude saving throw against an attack that has a reduced effect on a successful save, he instead avoids the effect entirely. A helpless sacred fist does not gain the benefit of the blessed fortitude ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Fist ~ Blessed Fortitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A sacred fist can avoid even magical and unusual attacks with help from his deity. If he succeeds at a Fortitude saving throw against an attack that has a reduced effect on a successful save, he instead avoids the effect entirely. A helpless sacred fist does not gain the benefit of the blessed fortitude ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4008,
+    "record_key": "Sacred Fist ~ Blessed Fortitude"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against Grotesquery ~ Restore True Beauty",
+    "name": "Restore True Beauty",
+    "class": "Paladin",
+    "description": "At i4th level, a paladin can expend two uses of her lay on hands ability to attempt to dispel any non-harmless transmutation effect on a target, as break enchantment. Additionally, the paladin can expend two uses of her lay on hands ability to remove all of the target's temporary Charisma damage and restore all points drained from its Charisma score, as restoration. This ability replaces aura of faith.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Grotesquery ~ Restore True Beauty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At i4th level, a paladin can expend two uses of her lay on hands ability to attempt to dispel any non-harmless transmutation effect on a target, as break enchantment. Additionally, the paladin can expend two uses of her lay on hands ability to remove all of the target's temporary Charisma damage and restore all points drained from its Charisma score, as restoration. This ability replaces aura of faith."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 491,
+    "record_key": "Oath against Grotesquery ~ Restore True Beauty"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

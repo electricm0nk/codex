@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abyssal Bloodline ~ Strength of the Abyss",
+    "name": "Strength of the Abyss",
+    "class": "Abyssal Bloodline",
+    "description": "You gain a +%1 inherent bonus to your Strength.|Sorcerer_AbyssalStrengthOfTheAbyss_StrBonus*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodline ~ Strength of the Abyss"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Abyssal Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Abyssal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Abyssal_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Abyssal_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AbyssalStrengthOfTheAbyss_StrBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 inherent bonus to your Strength.|Sorcerer_AbyssalStrengthOfTheAbyss_StrBonus*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|Sorcerer_AbyssalStrengthOfTheAbyss_StrBonus*2|TYPE=Inherent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AbyssalStrengthOfTheAbyss_StrBonus|min(max(0,(Sorcerer_Abyssal_BloodlinePower9LVL-5)/4),3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2363,
+    "record_key": "Abyssal Bloodline ~ Strength of the Abyss"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

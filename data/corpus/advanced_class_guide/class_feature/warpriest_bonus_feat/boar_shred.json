@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Boar Shred",
+    "name": "Boar Shred",
+    "class": "Warpriest Bonus Feat",
+    "description": "The wounds you inf lict with your unarmed strikes bleed, giving you renewed vigor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Boar Shred"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Improved Unarmed Strike,Boar Ferocity,Boar Style"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=9"
+      },
+      {
+        "key": "DESC",
+        "value": "The wounds you inf lict with your unarmed strikes bleed, giving you renewed vigor."
+      },
+      {
+        "key": "DESC",
+        "value": " You can make an Intimidate check to demoralize an opponent as a move action. While using Boar Style, whenever you tear an opponent's flesh, once per round at the start of that opponent's turn he takes 1d6 bleed damage. The bleed damage dealt while using Boar Style persist even if you later switch to a different style."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Boar Shred"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4399,
+    "record_key": "Warpriest Bonus Feat ~ Boar Shred"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

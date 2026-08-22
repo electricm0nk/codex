@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cockatrice ~ Petrification",
+    "delivery": "Supernatural",
+    "description": "A cockatrice's bite causes flesh to calcify and harden--multiple bites can cause a living creature to fossilize into stone. Each time a creature is damaged by a cockatrice's bite attack, it must succeed on a DC 12 Fortitude save or take 1d4 points of Dexterity damage as its flesh and bones stiffen and harden. (This slow petrification does not alter a bitten creature's natural armor.) A creature that is reduced to 0 Dexterity by a cockatrice's bites immediately turns completely to stone, as if petrified by a flesh to stone spell. Every day, a creature petrified by a cockatrice in this manner can attempt a new DC 12 Fortitude save to recover from the petrification, at which point the victim returns to flesh with 1 Dexterity (and thereafter can be restored to full Dexterity by natural healing or magic as normal)--but after a petrified creature fails three of these Fortitude saves in a row, the petrified state becomes permanent. A creature restored to flesh via magic has its Dexterity damage caused by cockatrice bites removed, but not any existing Dexterity damage from other sources. A cockatrice is immune to the petrification ability of itself and of other cockatrices, but other petrification attacks affect them normally.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:cockatrice_petrification",
+    "name": "Petrification",
+    "owners": [
+      "beastiary:monster:cockatrice"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Petrification"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|PetrificationDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PetrificationDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PetrificationDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Petrification)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PetrificationDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cockatrice's bite causes flesh to calcify and harden--multiple bites can cause a living creature to fossilize into stone. Each time a creature is damaged by a cockatrice's bite attack, it must succeed on a DC 12 Fortitude save or take 1d4 points of Dexterity damage as its flesh and bones stiffen and harden. (This slow petrification does not alter a bitten creature's natural armor.) A creature that is reduced to 0 Dexterity by a cockatrice's bites immediately turns completely to stone, as if petrified by a flesh to stone spell. Every day, a creature petrified by a cockatrice in this manner can attempt a new DC 12 Fortitude save to recover from the petrification, at which point the victim returns to flesh with 1 Dexterity (and thereafter can be restored to full Dexterity by natural healing or magic as normal)--but after a petrified creature fails three of these Fortitude saves in a row, the petrified state becomes permanent. A creature restored to flesh via magic has its Dexterity damage caused by cockatrice bites removed, but not any existing Dexterity damage from other sources. A cockatrice is immune to the petrification ability of itself and of other cockatrices, but other petrification attacks affect them normally."
+      },
+      {
+        "key": "KEY",
+        "value": "Cockatrice ~ Petrification"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.48",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 230,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Cockatrice ~ Petrification",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

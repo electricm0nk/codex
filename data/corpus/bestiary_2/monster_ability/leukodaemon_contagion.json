@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Leukodaemon ~ Contagion",
     "delivery": "Supernatural",
@@ -15,19 +13,55 @@
     "owners": [
       "bestiary_2:monster:daemon_leukodaemon"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bow)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeukodaemonContagionDC|19"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LeukodaemonContagionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any arrow a leukodaemon fires from a bow is tainted with disease.  If a creature is damaged by a leukodaemon's arrow, it must make a DC %1 Fortitude save or be affected as if by the spell contagion.  A leukodaemon can manifest arrows at will and never runs out of ammunition.|LeukodaemonContagionDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Leukodaemon ~ Contagion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.68",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 301,
-    "record_key": "Leukodaemon ~ Contagion"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 301,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Leukodaemon ~ Contagion",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

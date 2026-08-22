@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:54Z",
+  "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
     "key": "Halfling ~ Ability Scores",
     "name": "+2 Dexterity, +2 Charisma, -2 Strength",
@@ -80,7 +80,6 @@
   "pi_marker": null,
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:bonus"
+    "computed:pre_guard"
   ]
 }

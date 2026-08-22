@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "6",
@@ -28,6 +26,132 @@
     ],
     "race_subtype": "Agathion|Extraplanar|Good",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bard ~ Bardic Knowledge|Detect Evil ~ Constant|Mage Armor ~ Constant|Pounce|Vulpinal ~ Calm Emotions Aura"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Common|Draconic|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON,CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicKnowledgeSkillBonus|6"
+      },
+      {
+        "key": "CR",
+        "value": "6"
+      },
+      {
+        "key": "DR",
+        "value": "10/evil or silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Spellcraft|TYPE=Perform"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):7"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d4"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing,*2,1d3"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Agathion|Extraplanar|Good"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=7|Major Image,13+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=7|Charm Monster,14+CHA|Dimension Door (self plus objects)|Dispel Evil,15+CHA|Flame Arrow|Holy Smite,14+CHA|Remove Disease"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=7|Invisibility (self only)"
+      },
+      {
+        "key": "SR",
+        "value": "17"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "S",
     "source_page": "p.22",
     "speeds": [
@@ -37,16 +161,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 59,
-    "record_key": "Agathion (Vulpinal)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Agathion (Vulpinal)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

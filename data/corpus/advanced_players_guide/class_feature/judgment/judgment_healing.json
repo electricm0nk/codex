@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Judgment ~ Healing",
+    "name": "Judgment / Healing",
+    "class": "Judgment",
+    "description": "The inquisitor is surrounded by a healing light, gaining fast healing %1. This causes the inquisitor to heal %1 point of damage each round as long as the inquisitor is alive and the judgment lasts.|1+InqJudgeHealingLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Judgment ~ Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentNeither.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeHealingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The inquisitor is surrounded by a healing light, gaining fast healing %1. This causes the inquisitor to heal %1 point of damage each round as long as the inquisitor is alive and the judgment lasts.|1+InqJudgeHealingLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgeHealingLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 318,
+    "record_key": "Judgment ~ Healing"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

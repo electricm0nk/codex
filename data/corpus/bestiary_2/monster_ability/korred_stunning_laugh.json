@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Korred ~ Stunning Laugh",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:korred"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stunning Laugh"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KorredStunningLaughDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KorredStunningLaughDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Stunning Laugh)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KorredStunningLaughDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a standard action, a korred can unleash a strange laugh that stuns all creatures within a 30-foot burst for 1d2 rounds (Fortitude DC %1 negates).  This is a sonic, mind-affecting effect.  Fey are immune to this ability.|KorredStunningLaughDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Korred ~ Stunning Laugh"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.173",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 754,
-    "record_key": "Korred ~ Stunning Laugh"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 754,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Korred ~ Stunning Laugh",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

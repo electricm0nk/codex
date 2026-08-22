@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Elemental Bloodline (Air)",
+    "name": "Air",
+    "class": null,
+    "description": "One of the four elements infuses your being, and you can draw upon its power in times of need. At first level, you must select one of the four elements: air, earth, fire, or water. This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your element. Air is associate with the Electricity energy type and the flight movement type (Fly 60 feet (average)).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Elemental Bloodline (Air)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Elemental Bloodline Choice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ElementalBloodlineChoice_Air|0"
+      },
+      {
+        "key": "DESC",
+        "value": "One of the four elements infuses your being, and you can draw upon its power in times of need. At first level, you must select one of the four elements: air, earth, fire, or water. This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your element. Air is associate with the Electricity energy type and the flight movement type (Fly 60 feet (average))."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ElementalBloodlineChoice_Air|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2491,
+    "record_key": "Sorcerer Elemental Bloodline (Air)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

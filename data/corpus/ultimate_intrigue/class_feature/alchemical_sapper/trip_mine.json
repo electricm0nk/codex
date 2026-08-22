@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemical Sapper ~ Trip Mine",
+    "name": "Trip Mine",
+    "class": "Alchemist",
+    "description": "An alchemical sapper can expend two uses of his bomb class feature to prepare a special kind of trap called a trip mine. This special bomb remains inert until 1 round after it leaves the alchemical sapper's possession, after which time it becomes armed. When a creature enters a square containing an armed trip mine, it explodes, dealing normal bomb damage to all creatures in its square (DC %1; Reflex half) and splash damage to every creature adjacent to that square. A trip mine can be disarmed with a successful Disable Device check (DC %1); otherwise, it lasts until the next time the alchemical sapper refreshes his daily bombs. If the alchemical sapper expends four uses of his bomb class feature, his trip mine deals damage as per a demolition bomb; this does not count against his daily uses of the demolition bomb ability. Other than demolition bomb, discoveries that modify bombs cannot apply to trip mine.|10+AlchemistLVL/2+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemical Sapper ~ Trip Mine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An alchemical sapper can expend two uses of his bomb class feature to prepare a special kind of trap called a trip mine. This special bomb remains inert until 1 round after it leaves the alchemical sapper's possession, after which time it becomes armed. When a creature enters a square containing an armed trip mine, it explodes, dealing normal bomb damage to all creatures in its square (DC %1; Reflex half) and splash damage to every creature adjacent to that square. A trip mine can be disarmed with a successful Disable Device check (DC %1); otherwise, it lasts until the next time the alchemical sapper refreshes his daily bombs. If the alchemical sapper expends four uses of his bomb class feature, his trip mine deals damage as per a demolition bomb; this does not count against his daily uses of the demolition bomb ability. Other than demolition bomb, discoveries that modify bombs cannot apply to trip mine.|10+AlchemistLVL/2+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 159,
+    "record_key": "Alchemical Sapper ~ Trip Mine"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

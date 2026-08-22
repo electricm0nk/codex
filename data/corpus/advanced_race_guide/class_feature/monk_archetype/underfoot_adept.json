@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Underfoot Adept",
+    "name": "Underfoot Adept",
+    "class": "Monk Archetype",
+    "description": "An underfoot adept turns his diminutive stature and unorthodox footwork into a powerful weapon. Effortlessly moving across the battlefield, he ducks under the legs of larger creatures and then topples them with surprising attacks. An underfoot adept has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Underfoot Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkBonusFeat1.MonkStunningFist.MonkHighJump"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Underfoot Adept],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkBonusFeat1,TYPE.MonkStunningFist,TYPE.MonkHighJump]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "An underfoot adept turns his diminutive stature and unorthodox footwork into a powerful weapon. Effortlessly moving across the battlefield, he ducks under the legs of larger creatures and then topples them with surprising attacks. An underfoot adept has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Underfoot Adept ~ Underfoot Grace|!PRECLASS:1,Monk=5|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Underfoot Adept ~ Underfoot Trip|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Underfoot Adept ~ Improved Underfoot Grace|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 297,
+    "record_key": "Monk Archetype ~ Underfoot Adept"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

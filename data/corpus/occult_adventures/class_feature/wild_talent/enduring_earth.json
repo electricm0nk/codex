@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Enduring Earth",
+    "name": "Enduring Earth",
+    "class": "Wild Talent",
+    "description": "Element earth; Type utility (Su); Level 4; Burn - When using earth blasts, earth wild talents, or composite blasts that include earth, double the duration if it's longer than 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Enduring Earth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Earth,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type utility (Su); Level 4; Burn - When using earth blasts, earth wild talents, or composite blasts that include earth, double the duration if it's longer than 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 745,
+    "record_key": "Wild Talent ~ Enduring Earth"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

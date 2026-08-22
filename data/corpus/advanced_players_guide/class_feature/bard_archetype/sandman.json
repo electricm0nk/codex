@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Sandman",
+    "name": "Sandman",
+    "class": "Bard Archetype",
+    "description": "Combining performance with stealth, trickery, and guile, the sandman uses cleverness to keep others off-balance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Sandman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardInspireCourage.BardSuggestion.BardInspireGreatness.BardInspireHeroics.BardMassSuggestion.BardDeadlyPerformance.BardBardicKnowledge.BardVersatilePerformance.BardInspireCompetence.BardLoreMaster"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Sandman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardSuggestion,TYPE.BardInspireGreatness,TYPE.BardInspireHeroics,TYPE.BardMassSuggestion,TYPE.BardDeadlyPerformance,TYPE.BardBardicKnowledge,TYPE.BardVersatilePerformance,TYPE.BardInspireCompetence,TYPE.BardLoreMaster]"
+      },
+      {
+        "key": "DESC",
+        "value": "Combining performance with stealth, trickery, and guile, the sandman uses cleverness to keep others off-balance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Stealspell|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Slumber Song|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Dramatic Subtext|PRECLASS:1,Bard=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Greater Stealspell|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Mass Slumber Song|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Spell Catching|PRECLASS:1,Bard=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Master of Deception|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Sneakspell|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Trap Sense|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sandman ~ Sneak Attack|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1623,
+    "record_key": "Bard Archetype ~ Sandman"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

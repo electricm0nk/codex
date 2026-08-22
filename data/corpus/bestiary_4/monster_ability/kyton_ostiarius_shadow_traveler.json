@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Kyton (Ostiarius) ~ Shadow Traveler",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:kyton_ostiarius"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When an ostiarius uses plane shift to travel to the Plane of Shadow, it arrives at its intended destination with complete accuracy. When an ostiarius uses shadow walk, it moves at 100 miles per hour."
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton (Ostiarius) ~ Shadow Traveler"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 992,
-    "record_key": "Kyton (Ostiarius) ~ Shadow Traveler"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 992,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Kyton (Ostiarius) ~ Shadow Traveler",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

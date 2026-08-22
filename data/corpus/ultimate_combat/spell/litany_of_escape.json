@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "With a powerful prayer, you call upon the servants of your god to whisk a friend out of a grapple. The target loses the grappled and pinned conditions and is teleported 10 feet. If there is no available space for the target to teleport to, the spell fails.",
+    "key": "Litany of Escape",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Paladin=3|Inquisitor=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Teleports a friend out of a grapple.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "With a powerful prayer, you call upon the servants of your god to whisk a friend out of a grapple. The target loses the grappled and pinned conditions and is teleported 10 feet. If there is no available space for the target to teleport to, the spell fails.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent"
+      },
+      {
+        "key": "DURATION",
+        "value": "instantaneous"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "no"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/litanyOfEscape.html#_litany-of-escape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Teleportation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one willing creature that is grappled"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Litany of Escape",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

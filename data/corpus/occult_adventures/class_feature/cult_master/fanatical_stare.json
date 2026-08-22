@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Master ~ Fanatical Stare",
+    "name": "Fanatical Stare",
+    "class": "Mesmerist",
+    "description": "A cult master can turn his gaze on a creature to fill it with fervent belief in the cult master. The target of the gaze gains a +%1 competence bonus on attack rolls and weapon damage rolls. Instead of taking the hypnotic stare's penalty on Will saves, the target gains a bonus of an equal amount on Will saves. The bonuses don't apply to attacks against the cult master or on saves against the cult master's spells or abilities. The cult master can also suppress any penalties inflicted by his stare for the target.|CMFanaticalBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Master ~ Fanatical Stare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMFanaticalBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult master can turn his gaze on a creature to fill it with fervent belief in the cult master. The target of the gaze gains a +%1 competence bonus on attack rolls and weapon damage rolls. Instead of taking the hypnotic stare's penalty on Will saves, the target gains a bonus of an equal amount on Will saves. The bonuses don't apply to attacks against the cult master or on saves against the cult master's spells or abilities. The cult master can also suppress any penalties inflicted by his stare for the target.|CMFanaticalBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMFanaticalBonus|min(1+MesmeristLVL/6,4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1467,
+    "record_key": "Cult Master ~ Fanatical Stare"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

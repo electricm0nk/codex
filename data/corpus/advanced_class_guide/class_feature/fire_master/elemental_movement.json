@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fire Master ~ Elemental Movement",
+    "name": "Elemental Movement",
+    "class": "Fire Master",
+    "description": "You gain a burrow speed of 30 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fire Master ~ Elemental Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.ArcanistArchetype.SpecialQuality.Supernatural.ArcanistExploit15"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a burrow speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Burrow,30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2476,
+    "record_key": "Fire Master ~ Elemental Movement"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

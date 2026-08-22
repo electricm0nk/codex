@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Opposition School",
+    "name": "Metal Opposition School",
+    "class": null,
+    "description": "You have chosen metal spells as an opposition school. Preparing a metal spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has a metal spell as a prerequisite.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.WoodOpposedSchool.ArcaneOppositionSchool"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Metal School"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen metal spells as an opposition school. Preparing a metal spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has a metal spell as a prerequisite."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 783,
+    "record_key": "Metal Opposition School"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

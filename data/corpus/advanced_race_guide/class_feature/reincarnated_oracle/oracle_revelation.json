@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Reincarnated Oracle ~ Oracle Revelation",
+    "name": "Oracle Revelation",
+    "class": "Reincarnated Oracle",
+    "description": "You gain a standard Oracle Revelation of your chosen mystery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Oracle ~ Oracle Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural.ReincarnatedOracleRevelation"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PRECLASS:1,Oracle=3],[PREABILITY:1,CATEGORY=Special Ability,Reincarnated Oracle ~ Location Memories]"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a standard Oracle Revelation of your chosen mystery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 945,
+    "record_key": "Reincarnated Oracle ~ Oracle Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant Void Elemental School ~ Aura of Prescience",
+    "name": "Aura of Prescience",
+    "class": "Savant Void Elemental School",
+    "description": "You can emit a 30-foot aura of void energy for %1 rounds. Allies within this aura gain a +2 insight bonus on ability checks, attack rolls, damage rolls, saving throws, and skill checks. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Void Elemental School ~ Aura of Prescience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura of void energy for %1 rounds. Allies within this aura gain a +2 insight bonus on ability checks, attack rolls, damage rolls, saving throws, and skill checks. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2625,
+    "record_key": "Savant Void Elemental School ~ Aura of Prescience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

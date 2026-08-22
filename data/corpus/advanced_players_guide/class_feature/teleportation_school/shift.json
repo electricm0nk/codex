@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Teleportation School ~ Shift",
+    "name": "Shift",
+    "class": "Teleportation School",
+    "description": "At 1st level, you can teleport to a nearby space as a swift action as if using dimension door. This movement does not provoke an attack of opportunity. You must be able to see the space that you are moving into. You cannot take other creatures with you when you use this ability (except for familiars). You can move %1 feet. You can use this ability %2 times per day.|TeleportationShiftRange|TeleportationShiftTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Teleportation School ~ Shift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TeleportationShiftRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TeleportationShiftTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, you can teleport to a nearby space as a swift action as if using dimension door. This movement does not provoke an attack of opportunity. You must be able to see the space that you are moving into. You cannot take other creatures with you when you use this ability (except for familiars). You can move %1 feet. You can use this ability %2 times per day.|TeleportationShiftRange|TeleportationShiftTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TeleportationShiftRange|floor(max(ConjurationSchoolLVL/2,1))*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TeleportationShiftTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TeleportationShiftTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3387,
+    "record_key": "Teleportation School ~ Shift"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

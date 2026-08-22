@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Distraction",
+    "name": "Distraction",
+    "class": "Bardic Performance",
+    "description": "You can use your performance to counter magic effects that depend on sight. Each round of the distraction, make a Perform (act, comedy, dance, or oratory) skill check. Any creature within 30 feet (including yourself) that is affected by an illusion (pattern) or illusion (figment) magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform skill check proves to be higher. If a creature within range of the distraction is already under the effect of a noninstantaneous illusion (pattern) or illusion (figment) magical attack, it gains another saving throw against the effect each round it sees the distraction, but it must use your Perform skill check result for the save. Distraction does not work on effects that don't allow saves. Distraction relies on visual components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Distraction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to counter magic effects that depend on sight. Each round of the distraction, make a Perform (act, comedy, dance, or oratory) skill check. Any creature within 30 feet (including yourself) that is affected by an illusion (pattern) or illusion (figment) magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform skill check proves to be higher. If a creature within range of the distraction is already under the effect of a noninstantaneous illusion (pattern) or illusion (figment) magical attack, it gains another saving throw against the effect each round it sees the distraction, but it must use your Perform skill check result for the save. Distraction does not work on effects that don't allow saves. Distraction relies on visual components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 522,
+    "record_key": "Bardic Performance ~ Distraction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

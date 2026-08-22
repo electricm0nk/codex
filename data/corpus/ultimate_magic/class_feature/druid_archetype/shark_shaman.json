@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Shark Shaman",
+    "name": "Shark Shaman",
+    "class": "Druid Archetype",
+    "description": "Some druids emulate the deadly shark, a remorseless hunter that marine dwellers dread. Like a true shark, a shark shaman leaves blood and fear in her wake.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Shark Shaman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidThousandFaces.DruidWildShape.DruidVenomImmunity"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Shark Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidNatureBond]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some druids emulate the deadly shark, a remorseless hunter that marine dwellers dread. Like a true shark, a shark shaman leaves blood and fear in her wake."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Druid ~ Wild Shape|Shaman Druid Wild Shape|Shaman Druid Wild Shape Progression|Shaman Druid Wild Shape Times|Shaman Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Shark Shaman ~ Wild Empathy|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Shark Shaman ~ Totem Transformation|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Shark Shaman ~ Totemic Summons|PRECLASS:1,Druid=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Shark Shaman ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shark Shaman Bonus Feats|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Shark Shaman ~ Nature Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanDruidWildShape|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanDruidWildShape|classlevel(\"Druid\")"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1094,
+    "record_key": "Druid Archetype ~ Shark Shaman"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Annihilator ~ Devastating Infusion",
+    "name": "Devastating Infusion",
+    "class": "Kineticist",
+    "description": "At 1st level, an elemental annihilator can either shoot her kinetic blast at a target within 30 feet or make a single melee attack as if she were using kinetic blade as an attack action. For this attack, the elemental annihilator's base attack bonus from her kineticist levels is equal to her full kineticist level. A devastating infusion always deals an amount of damage equal to 1d8 + the elemental annihilator's Constitution modifier, regardless of the annihilator's class level or use of composite blasts. When making a melee attack with devastating infusion, the elemental annihilator doesn't provoke attacks of opportunity, and if she uses two hands, the attack's damage is equal to 1d8 + 1-1/2 times her Constitution modifier. This is a 1st-level form infusion that costs 0 points of burn and can be used with any physical blast (but not energy blasts). Unlike with kinetic blade, the elemental annihilator can use Vital Strike with devastating infusion. The damage bonus from elemental overflow doesn't apply to devastating infusion's damage rolls. This ability replaces the 1st-level infusion and the basic utility wild talent normally granted by selecting an element.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Annihilator ~ Devastating Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Annihilator Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an elemental annihilator can either shoot her kinetic blast at a target within 30 feet or make a single melee attack as if she were using kinetic blade as an attack action. For this attack, the elemental annihilator's base attack bonus from her kineticist levels is equal to her full kineticist level. A devastating infusion always deals an amount of damage equal to 1d8 + the elemental annihilator's Constitution modifier, regardless of the annihilator's class level or use of composite blasts. When making a melee attack with devastating infusion, the elemental annihilator doesn't provoke attacks of opportunity, and if she uses two hands, the attack's damage is equal to 1d8 + 1-1/2 times her Constitution modifier. This is a 1st-level form infusion that costs 0 points of burn and can be used with any physical blast (but not energy blasts). Unlike with kinetic blade, the elemental annihilator can use Vital Strike with devastating infusion. The damage bonus from elemental overflow doesn't apply to devastating infusion's damage rolls. This ability replaces the 1st-level infusion and the basic utility wild talent normally granted by selecting an element."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1328,
+    "record_key": "Elemental Annihilator ~ Devastating Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

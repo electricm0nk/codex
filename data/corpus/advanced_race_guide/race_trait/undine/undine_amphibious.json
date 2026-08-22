@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Undine ~ Amphibious",
+    "name": "Amphibious",
+    "race_key": "Undine",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Undine Racial Trait",
+      "SpecialQuality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Undine_ReplaceSpellLikeAbility"
+    ],
+    "description": "Some undines are born with a permanent bond to water. Undines with this racial trait gain the aquatic subtype and amphibious special quality. This racial trait replaces the spell-like ability racial trait.",
+    "source_page": "p.175",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine ~ Amphibious"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Undine Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Undine ~ Amphibious],[!PREFACT:1,ABILITIES,Undine_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some undines are born with a permanent bond to water. Undines with this racial trait gain the aquatic subtype and amphibious special quality."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Undine ~ Amphibious"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Amphibious"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "FACT",
+        "value": "Undine_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 777,
+    "record_key": "Undine ~ Amphibious"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

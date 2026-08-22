@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Archetype ~ Wildblooded",
+    "name": "Wildblooded",
+    "class": "Sorcerer Archetype",
+    "description": "A wildblooded sorcerer has a mutated version of a more common bloodline, with one arcana and at least one bloodline power that are different from those of an unmutated bloodline.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Archetype ~ Wildblooded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Sorcerer Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Sorcerer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Sorcerer Archetype ~ Wildblooded],[!PREFACT:1,ABILITIES,Sorcerer_Archetype_Bloodline=True,Sorcerer_Archetype_BloodlineArcana=True,Sorcerer_Archetype_BloodlinePowers=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildblooded sorcerer has a mutated version of a more common bloodline, with one arcana and at least one bloodline power that are different from those of an unmutated bloodline."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wildblooded Bloodline Mutation|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineArcana|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineArcana|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePowers|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1630,
+    "record_key": "Sorcerer Archetype ~ Wildblooded"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

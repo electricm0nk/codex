@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Travel Domain ~ Agile Feet",
+    "name": "Agile Feet",
+    "class": "Travel Domain",
+    "description": "As a free action, you can gain increased mobility for 1 round. For the next round, you ignore all difficult terrain and do not take any penalties for moving through it. You can use this ability %1 times per day.|AgileFeetTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Travel Domain ~ Agile Feet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.ModifyMovement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AgileFeetTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, you can gain increased mobility for 1 round. For the next round, you ignore all difficult terrain and do not take any penalties for moving through it. You can use this ability %1 times per day.|AgileFeetTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AgileFeetTimes|DomainTravelTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|AgileFeetTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AgileFeetTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3265,
+    "record_key": "Travel Domain ~ Agile Feet"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

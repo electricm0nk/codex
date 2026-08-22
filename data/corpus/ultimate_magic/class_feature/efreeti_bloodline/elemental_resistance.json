@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Efreeti Bloodline ~ Elemental Resistance",
+    "name": "Elemental Resistance",
+    "class": "Efreeti Bloodline",
+    "description": "You gain fire resistance %1.|Sorcerer_EfreetiElementalResistance_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Efreeti Bloodline ~ Elemental Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Efreeti Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Efreeti"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Efreeti_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Efreeti_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EfreetiElementalResistance_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain fire resistance %1.|Sorcerer_EfreetiElementalResistance_ResistanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EfreetiElementalResistance_ResistanceBonus|min(floor((Sorcerer_Efreeti_BloodlinePower3LVL+3)/6),2)*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|Sorcerer_EfreetiElementalResistance_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|EfreetiBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 612,
+    "record_key": "Efreeti Bloodline ~ Elemental Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

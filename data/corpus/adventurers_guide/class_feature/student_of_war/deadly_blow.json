@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of War ~ Deadly Blow",
+    "name": "Deadly Blow",
+    "class": "Student of War",
+    "description": "Your awareness of your studied foe allows you to find weak spots where none should exist. If you use your know the enemy ability and beat the Knowledge check DC by 10 or more, you may ignore the target's natural damage reduction and immunity to critical hits and sneak attacks. This does not apply to immunities granted by spells, environmental effects, or equipment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of War ~ Deadly Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of War Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "DESC",
+        "value": "Your awareness of your studied foe allows you to find weak spots where none should exist. If you use your know the enemy ability and beat the Knowledge check DC by 10 or more, you may ignore the target's natural damage reduction and immunity to critical hits and sneak attacks. This does not apply to immunities granted by spells, environmental effects, or equipment."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 527,
+    "record_key": "Student of War ~ Deadly Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

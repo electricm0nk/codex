@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Lurker in Light ~ Ritual Gate",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:lurker_in_light"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "By sacrificing one or more humanoid victims, a lurker or group of lurkers can create a gate to the Material Plane, one of the Elemental Planes, or the realm of the fey, either to return home or to conjure allies.  Creating a gate for travel requires the sacrifice of five victims - the gate created remains open for 1 minute.  Creating a gate to bring allies to the Material Plane requires one sacrifice for every HD of the creature intended to pass through the gate (so five sacrifices can bring a lurker or a Medium air elemental, eight can bring a Large earth elemental, and so on).  The sacrifices do not need to be simultaneous; as long as all sacrifices occur at some point during the hour-long ritual, the magic continues to build until it reaches the required total."
+      },
+      {
+        "key": "KEY",
+        "value": "Lurker in Light ~ Ritual Gate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.180",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 789,
-    "record_key": "Lurker in Light ~ Ritual Gate"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 789,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Lurker in Light ~ Ritual Gate",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

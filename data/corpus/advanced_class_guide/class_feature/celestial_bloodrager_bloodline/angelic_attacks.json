@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Celestial Bloodrager Bloodline ~ Angelic Attacks",
+    "name": "Angelic Attacks",
+    "class": "Celestial Bloodrager Bloodline",
+    "description": "Your melee attacks are considered good-aligned weapons for the purpose of bypassing damage reduction. Furthermore, you deal 1d6 extra damage when you deal damage to an evil outsider with a melee attack. This extra damage stacks with effects such as Align Weapon and those granted by a weapon with the holy magic weapon special ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodrager Bloodline ~ Angelic Attacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Celestial Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Celestial_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Celestial_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your melee attacks are considered good-aligned weapons for the purpose of bypassing damage reduction. Furthermore, you deal 1d6 extra damage when you deal damage to an evil outsider with a melee attack. This extra damage stacks with effects such as Align Weapon and those granted by a weapon with the holy magic weapon special ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Bloodrager_Celestial_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 659,
+    "record_key": "Celestial Bloodrager Bloodline ~ Angelic Attacks"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

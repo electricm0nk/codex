@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Life Spirit ~ Channel",
+    "name": "Channel",
+    "class": "Life Spirit",
+    "description": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|ShamanChannelDice|ShamanChannelDieSize|ShamanChannelDC|ShamanChannelTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Spirit ~ Channel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural.ChannelEnergy.Channel Energy.Channel Energy Positive.Channel Positive Energy"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Channel Positive Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanChannelTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanChannelLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanChannelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanChannelDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|ShamanChannelDice|ShamanChannelDieSize|ShamanChannelDC|ShamanChannelTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanChannelTimes|1+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanChannelLVL|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanChannelDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanChannelDice|(ShamanChannelLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanChannelDC|10+(ShamanChannelLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanChannelLVL|ShamanChannelLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|ShamanChannelDice|ShamanChannelDieSize|ShamanChannelDC|ShamanChannelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ShamanChannelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1600,
+    "record_key": "Life Spirit ~ Channel"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

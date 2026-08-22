@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daring General ~ Followers",
+    "name": "Daring General Followers",
+    "class": "Daring General",
+    "description": "Beyond the rules noted in Aides-de-Camp, if the daring general uses his followers to create an army using the mass combat rules from Pathfinder RPG Ultimate Campaign, that army starts with one extra tactic of the daring general's choice and a +2 bonus to its morale score. The daring general can assign each of his followers individually to serve as either footmen or honor guards (described below). He does not need to assign either role to a given follower, if he prefers. He can change the role of a follower at any time, but it takes 1 day per level for the follower to change her tactics to suit her new role. Followers with a particular role must group together with other followers with the same role to form an army in mass combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring General ~ Followers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Beyond the rules noted in Aides-de-Camp, if the daring general uses his followers to create an army using the mass combat rules from Pathfinder RPG Ultimate Campaign, that army starts with one extra tactic of the daring general's choice and a +2 bonus to its morale score. The daring general can assign each of his followers individually to serve as either footmen or honor guards (described below). He does not need to assign either role to a given follower, if he prefers. He can change the role of a follower at any time, but it takes 1 day per level for the follower to change her tactics to suit her new role. Followers with a particular role must group together with other followers with the same role to form an army in mass combat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Daring General ~ Follower ~ Footman"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Daring General ~ Follower ~ Honor Guard"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 298,
+    "record_key": "Daring General ~ Followers"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

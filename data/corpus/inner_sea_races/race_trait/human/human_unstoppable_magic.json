@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:47:16Z",
+  "ingested_at": "2026-08-15T19:20:15Z",
   "data": {
     "key": "Human ~ Unstoppable Magic",
     "name": "Unstoppable Magic",
@@ -43,11 +43,11 @@
       },
       {
         "key": "DESC",
-        "value": "Humans from civilizations built upon advanced magic, such as Geb or Nex, are educated in a variety of ways to accomplish their magical goals. They gain a +2 racial bonus on caster level checks against spell resistance."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This racial trait replaces the bonus feat trait.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Unstoppable Magic"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

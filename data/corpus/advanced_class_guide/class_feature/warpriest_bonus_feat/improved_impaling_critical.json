@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Impaling Critical",
+    "name": "Improved Impaling Critical",
+    "class": "Warpriest Bonus Feat",
+    "description": "When you impale a target, you hinder its movement and can cause severe bleeding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Impaling Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Critical"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Impaling Critical,Critical Focus,Weapon Specialization (TYPE=MeleePiercing)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:13],[PREVARGTEQ:WarpriestBonusFeatBAB,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "When you impale a target, you hinder its movement and can cause severe bleeding."
+      },
+      {
+        "key": "DESC",
+        "value": " While you are using Impaling Critical to impale an opponent, and you are still holding onto that weapon, that opponent must succeed at a grapple combat maneuver check against you to pull your weapon out. If you have let go of your weapon, the impaled opponent must spend a standard action to remove the weapon. Until the opponent pulls the weapon out, his speed in all modes is halved and his maneuverability, if any, is reduced by one step. When the weapon comes out, instead of dealing the damage normal for Impaling Critical, you can deal bleed damage equal to your weapon's damage dice result once per round at the start of that opponent's turn."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|FEAT|Impaling Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Impaling Critical (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4469,
+    "record_key": "Warpriest Bonus Feat ~ Improved Impaling Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

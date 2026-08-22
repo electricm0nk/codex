@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Landing Roll",
+    "name": "Landing Roll",
+    "class": "Warpriest Bonus Feat",
+    "description": "You have learned the technique of rolling safely away when an enemy trips you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Landing Roll"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Dodge,Mobility"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned the technique of rolling safely away when an enemy trips you."
+      },
+      {
+        "key": "DESC",
+        "value": " If you are tripped, you can spend an immediate action to move 5 feet without provoking an attack of opportunity. This does not count as taking a 5-foot step. You fall prone after this movement."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Landing Roll"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4479,
+    "record_key": "Warpriest Bonus Feat ~ Landing Roll"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

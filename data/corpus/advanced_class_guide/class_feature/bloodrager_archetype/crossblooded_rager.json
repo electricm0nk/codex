@@ -1,0 +1,159 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Archetype ~ Crossblooded Rager",
+    "name": "Crossblooded Rager",
+    "class": "Bloodrager Archetype",
+    "description": "While most bloodragers manifest only one bloodline, there are some who, through some quirk of heredity or the conjunction of other powers, manifest two. This combination of two distinct bloodlines can create a versatile and powerful rager who stands out among the horde.&nl;A crossblooded rager selects two different bloodlines. He gains access to the feats, bonus spells, and some of the powers of both bloodlines he is descended from, but at the cost of reducing mental clarity (see Drawbacks). If the crossblooded rager already has a bloodline from another class, one of the chosen bloodlines must be that bloodline.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Archetype ~ Crossblooded Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BloodragerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_Bloodline=True,Bloodrager_CF_Bloodline=True,Bloodrager_Archetype_BloodlineFeats=True,Bloodrager_Archetype_BloodlineFeat6=True,Bloodrager_Archetype_BloodlineFeat9=True,Bloodrager_Archetype_BloodlineFeat12=True,Bloodrager_Archetype_BloodlineFeat15=True,Bloodrager_Archetype_BloodlineFeat18=True,Bloodrager_Archetype_BloodlinePowers=True,Bloodrager_Archetype_BloodlinePower1=True,Bloodrager_Archetype_BloodlinePower4=True,Bloodrager_Archetype_BloodlinePower8=True,Bloodrager_Archetype_BloodlinePower12=True,Bloodrager_Archetype_BloodlinePower16=True,Bloodrager_Archetype_BloodlinePower20=True,Bloodrager_Archetype_BloodlineSpells=True,Bloodrager_Archetype_BloodlineSpell7=True,Bloodrager_Archetype_BloodlineSpell10=True,Bloodrager_Archetype_BloodlineSpell13=True,Bloodrager_Archetype_BloodlineSpell16=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most bloodragers manifest only one bloodline, there are some who, through some quirk of heredity or the conjunction of other powers, manifest two. This combination of two distinct bloodlines can create a versatile and powerful rager who stands out among the horde.&nl;A crossblooded rager selects two different bloodlines. He gains access to the feats, bonus spells, and some of the powers of both bloodlines he is descended from, but at the cost of reducing mental clarity (see Drawbacks). If the crossblooded rager already has a bloodline from another class, one of the chosen bloodlines must be that bloodline."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Crossblooded Rager ~ Bonus Feats|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Crossblooded Rager ~ Bloodline Spells|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Crossblooded Rager ~ Bloodline Powers|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Crossblooded Rager ~ Drawbacks|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Crossblooded Rager ~ Bloodline|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeat9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeat15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell16|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2744,
+    "record_key": "Bloodrager Archetype ~ Crossblooded Rager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

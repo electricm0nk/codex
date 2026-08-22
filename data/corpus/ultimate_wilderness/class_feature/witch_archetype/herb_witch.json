@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Herb Witch",
+    "name": "Herb Witch",
+    "class": "Witch Archetype",
+    "description": "Some witches dedicate their lives to the mastery of herb lore. Herb witches brew foul-tasting medicines, sweet poisons, and other concoctions from the untamed plants of the wild.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Herb Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Herb Witch],[!PREFACT:1,ABILITIES,Witch_Archetype_Hex1=True,Witch_Archetype_Hex2=True,Witch_Archetype_Hex10=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some witches dedicate their lives to the mastery of herb lore. Herb witches brew foul-tasting medicines, sweet poisons, and other concoctions from the untamed plants of the wild."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Herb Witch ~ Patron Spells|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Herb Witch ~ Herb Lore|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Herb Witch ~ Hexes|PRECLASS:1,Witch=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex10|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1245,
+    "record_key": "Witch Archetype ~ Herb Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

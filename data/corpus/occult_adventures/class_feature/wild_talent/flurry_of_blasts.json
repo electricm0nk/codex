@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Flurry Of Blasts",
+    "name": "Flurry Of Blasts",
+    "class": "Wild Talent",
+    "description": "Element universal; Type form infusion; Level 3; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Flurry Of Blasts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Universal"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite extended range"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type form infusion; Level 3; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts any Saving Throw none Instead of a single kinetic blast, you shoot two kinetic blasts at targets within 120 feet that each deal damage as if your kineticist level were 1st (effects or abilities that increase your kinetic blast's damage don't apply). At 10th level, you can shoot three blasts with flurry of blasts; this increases to four blasts at 16th level and to five blasts at 20th level. If you are under the effect of haste or similar magic that increases your number of attacks in a fullattack action, the number of kinetic blasts in your flurry of blasts increases by 1. No two targets can be more than 30 feet apart. You must assign the targets of all your blasts before rolling any of the attacks. Any blast beyond the first that hits the same target adds 1d6 points of damage; bonuses and penalties to damage don't apply. If you are using a substance infusion that requires a saving throw, a target attempts its save only once (even if it was hit multiple times), but it takes a penalty on the save equal to the number of times it was hit beyond the first. If you are using a substance infusion that requires a caster level check or combat maneuver check, you roll the check only once against each target, but you gain a bonus on the check equal to the number of times that target was hit beyond the first. If you are using the pushing substance infusion, the maximum distance of the push increases by 5 feet for each time the target was hit beyond the first."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 696,
+    "record_key": "Wild Talent ~ Flurry Of Blasts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

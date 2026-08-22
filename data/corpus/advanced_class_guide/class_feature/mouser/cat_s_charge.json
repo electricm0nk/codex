@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mouser ~ Cat's Charge",
+    "name": "Cat's Charge",
+    "class": "Swashbuckler",
+    "description": "As long as a mouser has at least 1 panache point, when she charges a foe whose size is larger than her own, the mouser can end her charge in any space she can reach, not just the closest space. All other requirements of the charge must still be satisfied. This deed replaces bleeding wound.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mouser ~ Cat's Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mouser Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as a mouser has at least 1 panache point, when she charges a foe whose size is larger than her own, the mouser can end her charge in any space she can reach, not just the closest space. All other requirements of the charge must still be satisfied. This deed replaces bleeding wound."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3900,
+    "record_key": "Mouser ~ Cat's Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

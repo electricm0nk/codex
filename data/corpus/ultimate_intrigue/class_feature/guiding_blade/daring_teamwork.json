@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guiding Blade ~ Daring Teamwork",
+    "name": "Daring Teamwork",
+    "class": "Swashbuckler",
+    "description": "A guiding blade uses her panache to inspire her allies to heights of teamwork they could never reach alone. At 1st level, a guiding blade gains a bonus teamwork feat. She gains an additional teamwork feat at 4th level and every 4 swashbuckler levels thereafter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guiding Blade ~ Daring Teamwork"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Features.GuidingBladeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guiding blade uses her panache to inspire her allies to heights of teamwork they could never reach alone. At 1st level, a guiding blade gains a bonus teamwork feat. She gains an additional teamwork feat at 4th level and every 4 swashbuckler levels thereafter."
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, she can spend 1 panache point to grant a teamwork feat she gained from this ability to all allies within 30 feet who can see and hear her.|!PRECLASS:1,Swashbuckler=7"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, she can spend 1 panache point to grant a teamwork feat she gained from this ability to all allies within 30 feet who can see and hear her.|PRECLASS:1,Swashbuckler=7|!PRECLASS:1,Swashbuckler=13"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, she can spend 1 panache point to grant two teamwork feats to all allies within 30 feet who can see and hear her, and she can grant any teamwork feats she possesses, not just the teamwork feats she gained from this ability.|PRECLASS:1,Swashbuckler=13"
+      },
+      {
+        "key": "DESC",
+        "value": "They do not need to meet the feat's prerequisites. She can use this ability multiple times to grant multiple teamwork feats. This ability lasts for %1 rounds, but if the guiding blade ever fails to have at least 1 panache point, all of these durations end immediately. A guiding blade regains panache whenever an ally reduces a creature to 0 or fewer hit points, instead of when she herself does so. She still doesn't regain panache from unattended objects, helpless or unaware creatures, or opponents with low Hit Dice. This ability alters panache.|3+SwashbucklerLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat|1+SwashbucklerLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 947,
+    "record_key": "Guiding Blade ~ Daring Teamwork"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Agile Maneuvers",
+    "name": "Agile Maneuvers",
+    "class": "Warpriest Bonus Feat",
+    "description": "You learned to use your quickness in place of brute force when performing combat maneuvers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Agile Maneuvers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DESC",
+        "value": "You learned to use your quickness in place of brute force when performing combat maneuvers."
+      },
+      {
+        "key": "DESC",
+        "value": " You add your Dexterity bonus to your base attack bonus and size bonus when determining your Combat Maneuver Bonus (see Chapter 8) instead of your Strength bonus."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Agile Maneuvers"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4199,
+    "record_key": "Warpriest Bonus Feat ~ Agile Maneuvers"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

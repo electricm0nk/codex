@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Dervish Dancer",
+    "name": "Dervish Dancer",
+    "class": "Bard Archetype",
+    "description": "Not all bards inspire others with their performances. Dervish dancers enter a near-mystical trance that allows them to push their bodies beyond normal limits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Dervish Dancer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardSuggestion.BardMassSuggestion.BardDirgeOfDoom.BardFrighteningPerformance.BardBardicKnowledge.BardLoreMaster.BardVersatilePerformance.BardSoothingPerformance.BardDeadlyPerformance.BardWeaponProficiencies"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Dervish Dancer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardWeaponProficiencies,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardDirgeOfDoom,TYPE.BardFrighteningPerformance,TYPE.BardBardicKnowledge,TYPE.BardLoreMaster,TYPE.BardVersatilePerformance,TYPE.BardSoothingPerformance,TYPE.BardDeadlyPerformance]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all bards inspire others with their performances. Dervish dancers enter a near-mystical trance that allows them to push their bodies beyond normal limits."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Weapon and Armor Proficiency|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Battle Dance|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Rain of Blows|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Razor's Kiss|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Leaf on the Wind|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Fleet|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Versatile Dance|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Dance of Fury|PRECLASS:1,Bard=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Dervish Dancer ~ Battle Fury|PRECLASS:1,Bard=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 385,
+    "record_key": "Bard Archetype ~ Dervish Dancer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

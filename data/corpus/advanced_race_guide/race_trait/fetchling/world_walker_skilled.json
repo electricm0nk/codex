@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "World Walker ~ Skilled",
+    "name": "Skilled",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "SpecialQuality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "World walker fetchlings have a +2 racial bonus on Stealth checks and a +1 racial bonus on Knowledge (nature) and Knowledge (local) checks.",
+    "source_page": "p.109",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "World Walker ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "World walker fetchlings have a +2 racial bonus on Stealth checks and a +1 racial bonus on Knowledge (nature) and Knowledge (local) checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+1 Knowledge (nature), +1 Knowledge (local), +2 Stealth"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Stealth",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Knowledge (Local),Knowledge (Nature)",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 464,
+    "record_key": "World Walker ~ Skilled"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

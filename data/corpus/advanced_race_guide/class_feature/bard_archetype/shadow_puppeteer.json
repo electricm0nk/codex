@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Shadow Puppeteer",
+    "name": "Shadow Puppeteer",
+    "class": "Bard Archetype",
+    "description": "A shadow puppeteer invokes amazing and terrifying shadow puppet shows, producing supernatural effects by creating and manipulating shadow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Shadow Puppeteer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardInspireCourage1.BardInspireCourage2.BardInspireCourage3.BardInspireCourage4.BardInspireCompetence1.BardInspireCompetence2.BardInspireCompetence3.BardInspireCompetence4.BardInspireCompetence5.BardInspireCompetence6"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Shadow Puppeteer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage1,TYPE.BardInspireCourage2,TYPE.BardInspireCourage3,TYPE.BardInspireCourage4,TYPE.BardInspireCompetence1,TYPE.BardInspireCompetence2,TYPE.BardInspireCompetence3,TYPE.BardInspireCompetence4,TYPE.BardInspireCompetence5,TYPE.BardInspireCompetence6]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsWayang=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A shadow puppeteer invokes amazing and terrifying shadow puppet shows, producing supernatural effects by creating and manipulating shadow."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Puppeteer ~ Bardic Performance|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Puppeteer ~ Shadow Servant|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Puppeteer ~ Shadow Puppets|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 999,
+    "record_key": "Bard Archetype ~ Shadow Puppeteer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Duelist ~ Deflect Arrows",
+    "name": "Deflect Arrows",
+    "class": "Duelist",
+    "description": "At 9th level, a duelist gains the benefit of the Deflect Arrows feat when using a light or one-handed piercing weapon. The duelist does not need a free hand to use this feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ Deflect Arrows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a duelist gains the benefit of the Deflect Arrows feat when using a light or one-handed piercing weapon. The duelist does not need a free hand to use this feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deflect Arrows|PREEQUIP:1,TYPE=Piercing|PREEQUIP:1,WIELDCATEGORY=Light,WIELDCATEGORY=OneHanded"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.384"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3003,
+    "record_key": "Duelist ~ Deflect Arrows"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

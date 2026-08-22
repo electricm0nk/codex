@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verminous Hunter ~ Vermin Companion",
+    "name": "Vermin Companion",
+    "class": "Hunter",
+    "description": "A verminous hunter must choose a vermin companion instead of an animal companion. The hunter tactics class ability allows a verminous hunter to grant her teamwork feats to a mindless vermin companion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter ~ Vermin Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Extraordinary.HunterAnimalCompanion.Animal Companion"
+      },
+      {
+        "key": "DESC",
+        "value": "A verminous hunter must choose a vermin companion instead of an animal companion. The hunter tactics class ability allows a verminous hunter to grant her teamwork feats to a mindless vermin companion."
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Ant (Giant)),Companion (Beetle (Giant)),Companion (Centipede (Giant)),Companion (Crab (Giant)),Companion (Leech (Giant)),Companion (Mantis (Giant)),Companion (Scorpion (Giant)),Companion (Slug (Giant)),Companion (Spider (Giant)),Companion (Wasp (Giant))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3248,
+    "record_key": "Verminous Hunter ~ Vermin Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

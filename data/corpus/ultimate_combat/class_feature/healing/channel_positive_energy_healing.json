@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Healing ~ Channel Positive Energy",
+    "name": "Channel Positive Energy (Healing)",
+    "class": "Healing",
+    "description": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|ClericChannelPositiveEnergyDice|ClericChannelPositiveEnergyDieSize|ClericChannelPositiveEnergyDC|ClericChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Healing ~ Channel Positive Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Supernatural.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelPositiveEnergyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelEnergyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelEnergyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelEnergyTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|ClericChannelPositiveEnergyDice|ClericChannelPositiveEnergyDieSize|ClericChannelPositiveEnergyDC|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Positive Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDice|(ClericChannelPositiveEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDC|10+(ClericChannelPositiveEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyLVL|ClericChannelEnergyLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|ClericChannelPositiveEnergyDice|ClericChannelPositiveEnergyDieSize|ClericChannelPositiveEnergyDC|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 595,
+    "record_key": "Healing ~ Channel Positive Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Masked Maiden",
+    "name": "Masked Maiden",
+    "class": "Vigilante Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Masked Maiden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Masked Maiden],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_DualIdentity=True,Vigilante_Archetype_SeamlessGuise=True,Vigilante_Archetype_SocialTalent3=True,Vigilante_Archetype_SocialTalent7=True,Vigilante_Archetype_SocialTalent11=True,Vigilante_Archetype_SocialTalent15=True,Vigilante_Archetype_SocialTalent19=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masked Maiden ~ Weapon and Armor Proficiency|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masked Maiden ~ Imperfect Control|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masked Maiden ~ Scars of the Past |PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masked Maiden ~ Armor Training|PRECLASS:1,Vigilante=3"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_DualIdentity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SeamlessGuise|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent19|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SeamlessGuise|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent19|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1099,
+    "record_key": "Vigilante Archetype ~ Masked Maiden"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

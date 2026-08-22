@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Improved Spell Recall Output",
+    "name": "Improved Spell Recall",
+    "class": null,
+    "description": "You can use your arcane pool to recall spells you have already cast. With a swift action, you can recall any single magus spell that you have already prepared and cast that day by expending a number of points from your arcane pool equal to 1/2 the spell's level (minimum 1). The spell is prepared again, just as if it had not been cast. Furthermore, instead of recalling a used spell, as a swift action you can prepare a spell of the same level that you have in your spellbook. You do so by expending a number of points from your arcane pool equal to the spell's level (minimum 1). You cannot apply metamagic feats to a spell prepared in this way. You do not need to reference your spellbook to prepare a spell in this way.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Improved Spell Recall Output"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your arcane pool to recall spells you have already cast. With a swift action, you can recall any single magus spell that you have already prepared and cast that day by expending a number of points from your arcane pool equal to 1/2 the spell's level (minimum 1). The spell is prepared again, just as if it had not been cast. Furthermore, instead of recalling a used spell, as a swift action you can prepare a spell of the same level that you have in your spellbook. You do so by expending a number of points from your arcane pool equal to the spell's level (minimum 1). You cannot apply metamagic feats to a spell prepared in this way. You do not need to reference your spellbook to prepare a spell in this way."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 53,
+    "record_key": "Improved Spell Recall Output"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lion Blade ~ Cloud the Mind",
+    "name": "Cloud the Mind",
+    "class": "Lion Blade",
+    "description": "Whenever a Lion Blade's opposed Disguise or Stealth check is exceeded by one or more observers' Perception checks, she can trick the observers into thinking they imagined noticing anything wrong as an immediate action. She attempts a Bluff check opposed by the targets' Sense Motive checks. Each target who fails this opposed check ignores the fact that he saw her. The Lion Blade also gains spell resistance %1 against divination spells. If a spell is foiled by her spell resistance, she learns the spell's normal effect and can choose a substitute result for the divination rather than causing it to obviously fail.|10+LionBladeLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lion Blade ~ Cloud the Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a Lion Blade's opposed Disguise or Stealth check is exceeded by one or more observers' Perception checks, she can trick the observers into thinking they imagined noticing anything wrong as an immediate action. She attempts a Bluff check opposed by the targets' Sense Motive checks. Each target who fails this opposed check ignores the fact that he saw her. The Lion Blade also gains spell resistance %1 against divination spells. If a spell is foiled by her spell resistance, she learns the spell's normal effect and can choose a substitute result for the divination rather than causing it to obviously fail.|10+LionBladeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 169,
+    "record_key": "Lion Blade ~ Cloud the Mind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

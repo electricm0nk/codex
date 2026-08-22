@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rakshasa Bloodline ~ Hide Aura",
+    "name": "Hide Aura",
+    "class": "Rakshasa Bloodline",
+    "description": "You can conceal yourself from prying magic. This ability acts like a constant nondetection spell cast upon yourself. You can end or restore this protection as a move action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rakshasa Bloodline ~ Hide Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Rakshasa Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Rakshasa"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Rakshasa_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can conceal yourself from prying magic. This ability acts like a constant nondetection spell cast upon yourself. You can end or restore this protection as a move action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Constant"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|RakshasaBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 667,
+    "record_key": "Rakshasa Bloodline ~ Hide Aura"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

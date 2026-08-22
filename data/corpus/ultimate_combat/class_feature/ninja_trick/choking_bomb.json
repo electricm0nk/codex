@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Choking Bomb",
+    "name": "Choking Bomb",
+    "class": "Ninja Trick",
+    "description": "Whenever a ninja throws a smoke bomb, all living creatures in the resulting cloud must make a Fortitude save or become staggered by the choking black smoke for 1d4 rounds. The DC of this saving throw is equal to 10 + 1/2 the ninja's level + the ninja's Charisma modifier. The ninja can decide to create an ordinary smoke bomb or add poison to this smoke bomb as normal. The ninja must have the poison bomb ninja trick before selecting this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Choking Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Ninja Trick ~ Poison Bomb"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a ninja throws a smoke bomb, all living creatures in the resulting cloud must make a Fortitude save or become staggered by the choking black smoke for 1d4 rounds. The DC of this saving throw is equal to 10 + 1/2 the ninja's level + the ninja's Charisma modifier. The ninja can decide to create an ordinary smoke bomb or add poison to this smoke bomb as normal. The ninja must have the poison bomb ninja trick before selecting this trick."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 126,
+    "record_key": "Ninja Trick ~ Choking Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

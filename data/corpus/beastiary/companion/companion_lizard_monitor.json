@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "ability_keys": [
       "beastiary:companion:companion_advancement_monitor_lizard",
@@ -24,6 +22,104 @@
     ],
     "race_subtype": null,
     "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Monitor Lizard|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|STR/2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Monitor Lizard"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Swim,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Melee.Finesseable.Bludgeoning.Piercing.Poison,*1,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Monitor Lizard"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.AnimalCompanion"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -69,16 +165,18 @@
       "AnimalCompanion"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_companion.lst",
-    "sha256": "3fe313f8e8a6327555fb01d34bf2cf2509d638a3005563d66fb1c81d8a9b715c",
-    "line": 26,
-    "record_key": "Companion (Lizard (Monitor))"
-  },
+  "ingested_at": "2026-08-18T22:35:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_companion.lst",
+    "record_key": "Companion (Lizard (Monitor))",
+    "sha256": "3fe313f8e8a6327555fb01d34bf2cf2509d638a3005563d66fb1c81d8a9b715c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

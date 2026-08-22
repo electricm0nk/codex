@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Serpentine Bloodline ~ Den of Vipers",
+    "name": "Den of Vipers",
+    "class": "Serpentine Bloodline",
+    "description": "You may summon a host of writhing serpents. This power acts as creeping doom, but the swarms' poison inflicts Con damage and any creature other than you sharing a space with a swarm is entangled. You may use this ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpentine Bloodline ~ Den of Vipers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Serpentine Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Serpentine"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Serpentine_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineDenOfVipers_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may summon a host of writhing serpents. This power acts as creeping doom, but the swarms' poison inflicts Con damage and any creature other than you sharing a space with a swarm is entangled. You may use this ability once per day."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineDenOfVipers_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_SerpentineDenOfVipers_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|SerpentineBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3193,
+    "record_key": "Serpentine Bloodline ~ Den of Vipers"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ironskin Monk ~ Tough as Nails",
+    "name": "Tough as Nails",
+    "class": "Monk",
+    "description": "An ironskin monk gains DR %1/-.  Damage reduction can reduce damage to 0 but not below 0. This ability replaces fast movement and slow fall.|IronskinMonkToughasNailsBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironskin Monk ~ Tough as Nails"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronskinMonkToughasNailsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An ironskin monk gains DR %1/-.  Damage reduction can reduce damage to 0 but not below 0. This ability replaces fast movement and slow fall.|IronskinMonkToughasNailsBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|-|IronskinMonkToughasNailsBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronskinMonkToughasNailsBonus|1+(MonkLVL-6)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 585,
+    "record_key": "Ironskin Monk ~ Tough as Nails"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "corpus_key": "Cat ~ Sprint",
     "delivery": "Extraordinary",
@@ -15,6 +13,32 @@
       "core_rulebook:companion:companion_cat_small_cheetah",
       "core_rulebook:companion:companion_cat_small_leopard"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per hour, a Small Cat companion can move at 10 times its normal speed (500 feet) when it makes a charge."
+      },
+      {
+        "key": "KEY",
+        "value": "Cat ~ Sprint"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "B1"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyMovement"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.40",
     "stat_adjustments": [],
@@ -24,16 +48,18 @@
       "ModifyMovement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 194,
-    "record_key": "Cat ~ Sprint"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 194,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Cat ~ Sprint",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

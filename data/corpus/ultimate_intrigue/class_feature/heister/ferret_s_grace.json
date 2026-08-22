@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heister ~ Ferret's Grace",
+    "name": "Ferret's Grace",
+    "class": "Rogue",
+    "description": "A heister gains Stealthy as a bonus feat. Additionally, a heister counts as a creature one size category smaller than she actually is when determining whether or not she is squeezing into an enclosed space (Core Rulebook p193-194). Finally, when a heister uses the Escape Artist skill to move through a tight space where her head fits but her shoulders do not (Core Rulebook p95-96), the DC is 20, instead of 30.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heister ~ Ferret's Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.HeisterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A heister gains Stealthy as a bonus feat. Additionally, a heister counts as a creature one size category smaller than she actually is when determining whether or not she is squeezing into an enclosed space (Core Rulebook p193-194). Finally, when a heister uses the Escape Artist skill to move through a tight space where her head fits but her shoulders do not (Core Rulebook p95-96), the DC is 20, instead of 30."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Stealthy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 741,
+    "record_key": "Heister ~ Ferret's Grace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

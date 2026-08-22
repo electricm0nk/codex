@@ -1,0 +1,200 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Bloodline ~ Fey",
+    "name": "Fey Bloodline",
+    "class": "Bloodrager Bloodline",
+    "description": "One of your ancestors was fey, or the fey realm somehow intermixed with your bloodline.|PREVAREQ:Bloodrager_Fey_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bloodline ~ Fey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.SpecialQuality.ClassSpecialization.Bloodrager Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlineSpellsLvl1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlineSpellsLvl2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlineSpellsLvl3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlineSpellsLvl4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "One of your ancestors was fey, or the fey realm somehow intermixed with your bloodline.|PREVAREQ:Bloodrager_Fey_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Bloodrager Bloodline ~ Bonus Spells|PREVARGTEQ:Bloodrager_Fey_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Bloodrager Bloodline ~ Bloodline Powers|PREVARGTEQ:Bloodrager_Fey_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Fey Bloodrager Bloodline ~ Power LVL 01|PREVARGTEQ:Bloodrager_Fey_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Fey Bloodrager Bloodline ~ Power LVL 04|PREVARGTEQ:Bloodrager_Fey_BloodlinePower4,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Fey Bloodrager Bloodline ~ Power LVL 08|PREVARGTEQ:Bloodrager_Fey_BloodlinePower8,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Fey Bloodrager Bloodline ~ Power LVL 12|PREVARGTEQ:Bloodrager_Fey_BloodlinePower12,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Fey Bloodrager Bloodline ~ Power LVL 16|PREVARGTEQ:Bloodrager_Fey_BloodlinePower16,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Fey Bloodrager Bloodline ~ Power LVL 20|PREVARGTEQ:Bloodrager_Fey_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Fey_BloodlinePower1LVL|Bloodrager_Fey_BloodlineLVL+BloodragerBloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Fey_BloodlinePower4LVL|Bloodrager_Fey_BloodlineLVL+BloodragerBloodlinePower4LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Fey_BloodlinePower8LVL|Bloodrager_Fey_BloodlineLVL+BloodragerBloodlinePower8LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Fey_BloodlinePower12LVL|Bloodrager_Fey_BloodlineLVL+BloodragerBloodlinePower12LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Fey_BloodlinePower16LVL|Bloodrager_Fey_BloodlineLVL+BloodragerBloodlinePower16LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Fey_BloodlinePower20LVL|Bloodrager_Fey_BloodlineLVL+BloodragerBloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Fey"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bloodrager Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 809,
+    "record_key": "Bloodrager Bloodline ~ Fey"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist ~ Magic Item Skill",
+    "name": "Magic Item Skill",
+    "class": "Occultist",
+    "description": "An occultist's knowledge of magic items grants him a bonus when attempting to use them. He gains a +%1 bonus on all Use Magic Device checks.|OccultistLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Magic Item Skill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist's knowledge of magic items grants him a bonus when attempting to use them. He gains a +%1 bonus on all Use Magic Device checks.|OccultistLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|OccultistLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 986,
+    "record_key": "Occultist ~ Magic Item Skill"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

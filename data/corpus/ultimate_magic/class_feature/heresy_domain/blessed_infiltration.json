@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heresy Domain ~ Blessed Infiltration",
+    "name": "Blessed Infiltration",
+    "class": "Heresy Domain",
+    "description": "When you make a Bluff, Diplomacy, or Stealth check, you may roll twice and take the more favorable result. You can use this ability %1 times per day.|BlessedInfiltrationTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heresy Domain ~ Blessed Infiltration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlessedInfiltrationTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make a Bluff, Diplomacy, or Stealth check, you may roll twice and take the more favorable result. You can use this ability %1 times per day.|BlessedInfiltrationTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlessedInfiltrationTimes|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 364,
+    "record_key": "Heresy Domain ~ Blessed Infiltration"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

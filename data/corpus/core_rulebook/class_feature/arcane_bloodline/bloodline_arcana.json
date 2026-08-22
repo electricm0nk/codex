@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Arcane Bloodline",
+    "description": "Whenever you apply a metamagic feat to a spell that increases the slot used by at least one level, increase the spell's DC by +1. This bonus does not stack with itself and does not apply to spells modified by the Heighten Spell feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you apply a metamagic feat to a spell that increases the slot used by at least one level, increase the spell's DC by +1. This bonus does not stack with itself and does not apply to spells modified by the Heighten Spell feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+1 DC for metamagic spells that increase spell level)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2376,
+    "record_key": "Arcane Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

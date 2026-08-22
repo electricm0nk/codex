@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Conspirator ~ Watcher Sense",
+    "name": "Watcher Sense",
+    "class": "Investigator",
+    "description": "A conspirator is able to sense when someone else is watching him. He gains a +%1 bonus on Perception checks to notice scrying sensors, prying eyes, and other magical effects used to watch him, as well as on Perception checks to act on the surprise round.|InvestigatorLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conspirator ~ Watcher Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.ConspiratorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A conspirator is able to sense when someone else is watching him. He gains a +%1 bonus on Perception checks to notice scrying sensors, prying eyes, and other magical effects used to watch him, as well as on Perception checks to act on the surprise round.|InvestigatorLVL/3"
+      },
+      {
+        "key": "DESC",
+        "value": " Additionally, if a scrying sensor is invisible, the invisibility does not increase the DC of the conspirator's Perception check to notice it, regardless of whether or not he is using an ability that allows him to see invisible things. The DC for his Perception check is equal to 20 + the spell's level (with no +20 increase to the Perception DC for a moving invisible sensor or no +40 increase for an immobile invisible sensor).|PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 511,
+    "record_key": "Conspirator ~ Watcher Sense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

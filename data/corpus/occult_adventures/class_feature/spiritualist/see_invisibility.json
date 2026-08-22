@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ See Invisibility",
+    "name": "See Invisibility",
+    "class": "Spiritualist",
+    "description": "At 9th level, a spiritualist gains the ability to see many things normally hidden from sight. She gains the ability to use see invisibility as a spell-like ability once per day, with a duration of 10 minutes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ See Invisibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a spiritualist gains the ability to see many things normally hidden from sight. She gains the ability to use see invisibility as a spell-like ability once per day, with a duration of 10 minutes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1286,
+    "record_key": "Spiritualist ~ See Invisibility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

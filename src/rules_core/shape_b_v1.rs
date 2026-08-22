@@ -174,6 +174,25 @@ pub struct CorpusRecordV1<T> {
     pub wiring_class: String,
     #[serde(default)]
     pub wiring_class_signals: Vec<String>,
+    /// Where the record's DESCRIPTION came from, when that differs from
+    /// where the rest of the record came from.
+    ///
+    /// `SD31-E6-F5-005` narrowed 412 already-shipped equipment records'
+    /// `source` from a web page to the pinned oracle's own `.lst` row, because
+    /// their identity/cost/weight always WERE corpus-derived and only the
+    /// description was web-sourced. The web citation is not discarded — it
+    /// moves here, unchanged and in full, because it is the OGL/attribution
+    /// record for the prose the player reads.
+    ///
+    /// Added to this struct by `SD31-W14-INTEGRATE-001` after the adversarial
+    /// review CONFIRMED the field was OFF-SCHEMA: it was written by
+    /// `cache_gen::lst_provenance_repair` and read only by two test files, and
+    /// since this struct carries no `deny_unknown_fields`, any typed
+    /// round-trip through `CorpusRecordV1` silently DROPPED it — losing the
+    /// attribution for 412 records' shipped prose. `#[serde(default)]` per
+    /// this struct's own versioning convention (see `license` above).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub description_source: Option<CorpusSource>,
 }
 
 /// A v1-record validation defect (`decisions.md §17`'s "Validation: every
@@ -646,6 +665,7 @@ mod tests {
             pi_marker: Some(PI_MARKER_REDACTED.to_string()),
 wiring_class: String::new(),
         wiring_class_signals: Vec::new(),
+        description_source: None,
         };
 
         let json = serde_json::to_value(&record).expect("v1 record must serialize");
@@ -687,6 +707,7 @@ wiring_class: String::new(),
             pi_marker: None,
 wiring_class: String::new(),
         wiring_class_signals: Vec::new(),
+        description_source: None,
         };
         assert_eq!(validate_license(&record), Err(LicenseValidationError::MissingPiField));
     }
@@ -704,6 +725,7 @@ wiring_class: String::new(),
             pi_marker: Some("not-quite-right".to_string()),
 wiring_class: String::new(),
         wiring_class_signals: Vec::new(),
+        description_source: None,
         };
         assert_eq!(validate_license(&record), Err(LicenseValidationError::MissingRedactionMarker));
     }
@@ -721,6 +743,7 @@ wiring_class: String::new(),
             pi_marker: None,
 wiring_class: String::new(),
         wiring_class_signals: Vec::new(),
+        description_source: None,
         };
         assert_eq!(validate_license(&record), Ok(()));
     }

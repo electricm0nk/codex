@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Patient Ambusher ~ Additional Traps",
+    "name": "Additional Traps",
+    "class": "Hunter",
+    "description": "At 3rd level and every 3 hunter levels thereafter, a patient ambusher can learn a new type of trap, selected from the list of ranger traps presented on pages 64-65 of Ultimate Magic. Once a trap is learned, it can't be unlearned and replaced with a different type of trap. The patient ambusher cannot learn an individual trap more than once.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Patient Ambusher ~ Additional Traps"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PatientAmbusherClassFeatures.SpecialAttack.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level and every 3 hunter levels thereafter, a patient ambusher can learn a new type of trap, selected from the list of ranger traps presented on pages 64-65 of Ultimate Magic. Once a trap is learned, it can't be unlearned and replaced with a different type of trap. The patient ambusher cannot learn an individual trap more than once."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ranger Trap|NumberOfTraps"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 672,
+    "record_key": "Patient Ambusher ~ Additional Traps"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,7 @@
 # Testing
 
 > Scope: the full verification command set for this repo, test conventions, the fixture grammar, and how to run corpus-gated tests — this file doubles as the "how do I verify my change" runbook.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for the new §"The derived-evaluator fixture seam" section only; every other section still carries its 2026-07-22 tranche/5-3 (SD-25 closure) verification and is unchanged.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Quick reference: what to run for a given change
@@ -161,6 +161,106 @@ choice=choice:human_ability_bonus:ability:strength
 ```
 
 Fixtures are explicit about what they do *not* claim: comment blocks routinely state which downstream compute paths stay "claim-blocked" for that fixture (e.g. the dwarf-fighter fixture's header notes the Fighter combat baseline stays blocked because the bounded compute path is grounded only for `race:human`). This is chosen input only — no derived/computed values are ever present in a fixture file.
+
+## The derived-evaluator fixture seam (`tests/fixtures/rules_core/derived-evaluator-fixtures.json`)
+
+> Verified 2026-08-19 against `tranche/11` (SD-31 wave 15, `SD31-W15-INTEGRATE-001`).
+
+A **separate** artifact from the `key=value` character-input fixtures above, and a different kind
+of test entirely. It is the instrument that lets a `wiring_class: derived` unit reach `done`.
+
+**Why it exists.** `pf1e_dashboard_producer.doneness_verdict()` caps a `derived` unit at `held`
+however well it is wired, until the unit carries a `fixture-verified` stamp. The stamp is written
+by `v06_work_inventory::apply_done_rung_stamps()` from the report
+`bin/derived_evaluator_fixture_check` produces. So the bar for a `derived` unit is: *the engine's
+evaluator, run over this repo's own `data/corpus/` ingest, reproduces a value derived
+INDEPENDENTLY from the pinned PCGen oracle's `.lst` bytes.*
+
+**Independence is the whole property, and it has two layers.**
+
+1. *Different artifact.* Every `scripts/derive_*_fixtures.py` generator reads only pinned oracle
+   bytes; it imports no engine module and opens no file under `data/corpus/`. The engine evaluates
+   `data/corpus/`. `docs/work-inventory.json` is read for unit IDENTITY only.
+2. *Different bytes, where a family can manage it.* The strongest families pin an expected value
+   that comes from a **different row in a different file** than the one the evaluator parses —
+   `monster_sla` reads the granted spell's own `CLASSES:` record, `monster_ability` reads the
+   owner's `MONSTERCLASS:<type>:<HD>` row — so a fixture entry cannot be a restatement of what the
+   evaluator computes. A family that can only pin a value read off the same row it parses is
+   weaker, and says so.
+
+**Eleven families as of wave 17** (`run_bar_check` in
+`src/rules_core/derived_evaluator_fixture_check.rs` runs all eleven and unions their results):
+
+| array | kind | magnitude | rows |
+|---|---|---|---:|
+| `entries` | equipment | `BONUS:STAT` | 94 |
+| `monster_entries` | monster | `BONUS:VAR\|SLA_CL\|` caster level | 77 |
+| `monster_sla_entries` | monster | spell-like-ability save DC → the granted spell's LEVEL | 314 |
+| `monster_ability_entries` | monster_ability | Universal Monster Rule save-DC base (summed literal) | 92 |
+| `monster_ability_formula_entries` | monster_ability | Universal Monster Rule save-DC base (full formula, `10+(HD/2)+<STAT>`) | 8 (wave 17: +2, `find_owner_row` bare-leading-field owner fallback) |
+| `companion_entries` | companion | natural-attack Strength damage | 117 |
+| `companion_skill_entries` | companion | `BONUS:SKILL\|Climb,Swim\|DEX-STR` ability-diff | 134 |
+| `companion_save_dc_entries` | companion | DESC-embedded save-DC formula (`<base>[+HD/2]+<ability>`) | 25 (new, wave 17) |
+| `spell_entries` | spell | caster-level-linear DURATION | 898 |
+| `spell_range_entries` | spell | `RANGE:` keyword → ft/level/divisor | 760 |
+| `class_feature_entries` | class_feature | per-level scaling `BONUS:VAR` | 12 |
+
+**`companion_save_dc_entries` (wave 17):** the formula lives ONLY in the ability's own `DESC:`
+argument list — no separate `BONUS:` field states it — so `render_pcgen_desc` (no formula
+interpreter) was silently dropping the save-DC number from player-facing prose before this seam.
+The bar check's non-circular weight is carried by an IDENTITY check on `(base, includes_half_hd,
+ability)`, transcribed verbatim from the upstream `.lst` bytes; the `expected.save_dc_at` ladder
+itself is a same-rule reimplementation in Python, not an independent transcription (corrected in
+`scripts/derive_companion_save_dc_fixtures.py`'s own module doc after wave-17 adversarial review —
+see `OPEN-ISSUES.md` row 305).
+
+**`companion_skill_entries`'s bar check compares two things, not one** (wave-16 adversarial review
+finding, fixed the same cycle): the arithmetic `(plus_modifier, minus_modifier) → skill_bonus`
+triples AND, independently, that the evaluator parsed the SAME two named abilities the fixture's
+`plus_ability`/`minus_ability` pin — without the second check, a shipped record's formula could be
+mutated to name different abilities entirely (`DEX-STR` → `CHA-INT`) and the bar check would stay
+green, since the pinned arithmetic triples never named which ability was which.
+
+**Rows and units are not the same count, and the tool says so.** `monster_sla` emits one row per
+GRANTED SPELL and clears a unit only when every one of its rows clears; `spell_entries` and
+`spell_range_entries` overlap on 414 unit IDs. So `fixtures_total` (a sum of per-family row counts)
+is strictly ≥ the number of covered units, and the binary reports
+`N unit(s) cleared over M fixture row(s); F failed; N not ingested` rather than conflating them.
+
+**A unit that fails ANY seam is removed from `cleared`.** `cleared` is a union and `failures` is
+keyed by `unit_id`, so without that subtraction a unit covered by two seams could be stamped on
+the strength of the seam it passed while the seam it failed only appeared in a report nothing
+reads.
+
+### The generator idempotency contract (new 2026-08-19 — three generators shipped without it)
+
+**Every `scripts/derive_*_fixtures.py` MUST select its target population on BOTH `grounded` and
+`fixture-verified`, and this is load-bearing, not stylistic.** `apply_done_rung_stamps()` rewrites
+a covered unit's status from `grounded` to `fixture-verified`, and every generator REPLACES its
+family array rather than merging. A generator that selects `grounded` alone therefore emits its
+rows on the first run and the EMPTY SET on every run after it — silently withdrawing its own
+credit at the next regen, with no gate catching it.
+
+Three of wave 15's four new generators shipped this defect
+(`derive_monster_ability_save_dc_fixtures.py`, `derive_companion_strength_damage_fixtures.py`, and
+`derive_monster_sla_spell_level_fixtures.py` before its author caught it mid-cycle). A stamp is
+never treated as EVIDENCE: every row is still re-derived from the oracle on every run, and the
+stamp only answers "is this unit in the population", which is what it meant before it was stamped.
+
+**The check that proves it:** run every generator twice on a stamped tree and `diff -q` the
+fixture. All eight families currently re-derive byte-identically. There is no automated test for
+this yet (`OPEN-ISSUES.md` row 286).
+
+### Per-family provenance guarantees
+
+Each family should ship a `tests/derived_evaluator_fixture_check_<family>.rs` asserting four
+things about its own rows: the pinned `upstream_lst` still hashes to the pinned
+`upstream_lst_sha256`; the pinned `corpus_field` appears verbatim on the pinned `upstream_line`;
+the expected values re-derive from that field by a reference implementation written IN THE TEST
+(a third implementation, so no two of generator/evaluator/test can share a bug); and the array is
+non-empty with one row per unit, so the file cannot become vacuous. `companion_entries` shipped
+without these and had them added by `SD31-W15-INTEGRATE-001` after a reviewer proved a fabricated
+provenance ratified itself (`OPEN-ISSUES.md` row 287).
 
 ## Corpus-gated tests
 

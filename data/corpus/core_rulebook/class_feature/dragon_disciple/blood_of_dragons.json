@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Blood of Dragons",
+    "name": "Blood of Dragons",
+    "class": "Dragon Disciple",
+    "description": "A dragon disciple adds his level to his sorcerer levels when determining the powers gained from his bloodline. If the dragon disciple does not have levels of sorcerer, he instead gains bloodline powers of the draconic bloodline, using his dragon disciple level as his sorcerer level to determine the bonuses gained. He must choose a dragon type upon gaining his first level in this class and that type must be the same as his sorcerer type. This ability does not grant bonus spells to a sorcerer unless he possesses spell slots of an appropriate level. Such bonus spells are automatically granted if the sorcerer gains spell slots of the spell's level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Blood of Dragons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Dragon Disciple Class Feature.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "A dragon disciple adds his level to his sorcerer levels when determining the powers gained from his bloodline. If the dragon disciple does not have levels of sorcerer, he instead gains bloodline powers of the draconic bloodline, using his dragon disciple level as his sorcerer level to determine the bonuses gained. He must choose a dragon type upon gaining his first level in this class and that type must be the same as his sorcerer type. This ability does not grant bonus spells to a sorcerer unless he possesses spell slots of an appropriate level. Such bonus spells are automatically granted if the sorcerer gains spell slots of the spell's level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Dragon Disciple Bloodline|1|PREVAREQ:HasSorcererBloodline,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.381"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineCasterLVL|DragonDiscipleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Draconic_BloodlineLVL|DragonDiscipleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Draconic_BloodlineProgressionLVL|DragonDiscipleLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2964,
+    "record_key": "Dragon Disciple ~ Blood of Dragons"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

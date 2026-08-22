@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "River Soul ~ River Bound Curse",
+    "name": "River Bound Curse",
+    "class": "Oracle",
+    "description": "You bind your power to one particular river, which is the source of your spells and class abilities. You must carry a small vessel containing water from the river you are bound to at all times. If the vessel is destroyed or travels more than 10 feet away from you, you are unable to cast oracle spells or use your supernatural or spell-like class abilities until you recover the vessel or fill a new one with water from the river to which you are bound. Once per month, you can bond with a different river in a ceremony at that river that takes 12 hours to complete. You lose your bond with the previous river in the process.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Soul ~ River Bound Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oracle Class Features.RiverSoulClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You bind your power to one particular river, which is the source of your spells and class abilities. You must carry a small vessel containing water from the river you are bound to at all times. If the vessel is destroyed or travels more than 10 feet away from you, you are unable to cast oracle spells or use your supernatural or spell-like class abilities until you recover the vessel or fill a new one with water from the river to which you are bound. Once per month, you can bond with a different river in a ceremony at that river that takes 12 hours to complete. You lose your bond with the previous river in the process."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 845,
+    "record_key": "River Soul ~ River Bound Curse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

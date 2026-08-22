@@ -1,0 +1,188 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "No Spellcasting ~ Investigator",
+    "name": "No Spellcasting",
+    "class": "No Spellcasting",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "No Spellcasting ~ Investigator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.InvestigatorClassFeatures"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Investigator.RESET|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=1|-floor((INT+3)/4)|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=1|-1|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=1|-1|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=1|-1|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=1|-1|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=1|-1|PRECLASS:1,Investigator=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=2|-floor((INT+2)/4)|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=2|-1|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=2|-1|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=2|-1|PRECLASS:1,Investigator=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=2|-1|PRECLASS:1,Investigator=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=2|-1|PRECLASS:1,Investigator=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=3|-floor((INT+1)/4)|PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=3|-1|PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=3|-1|PRECLASS:1,Investigator=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=3|-1|PRECLASS:1,Investigator=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=3|-1|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=3|-1|PRECLASS:1,Investigator=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=4|-floor(INT/4)|PRECLASS:1,Investigator=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=4|-1|PRECLASS:1,Investigator=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=4|-1|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=4|-1|PRECLASS:1,Investigator=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=4|-1|PRECLASS:1,Investigator=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=4|-1|PRECLASS:1,Investigator=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=5|-floor(INT-1/4)|PRECLASS:1,Investigator=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=5|-1|PRECLASS:1,Investigator=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=5|-1|PRECLASS:1,Investigator=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=5|-1|PRECLASS:1,Investigator=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=5|-1|PRECLASS:1,Investigator=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=5|-1|PRECLASS:1,Investigator=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=6|-floor(INT-2/4)|PRECLASS:1,Investigator=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=6|-1|PRECLASS:1,Investigator=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=6|-1|PRECLASS:1,Investigator=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=6|-1|PRECLASS:1,Investigator=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=6|-1|PRECLASS:1,Investigator=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Investigator;LEVEL=6|-1|PRECLASS:1,Investigator=20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1272,
+    "record_key": "No Spellcasting ~ Investigator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

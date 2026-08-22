@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Luck bonus to armor class of %CHOICE",
+    "key": "BNS_AC_LUCK",
+    "name": "BNS_AC_LUCK",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "%CHOICE+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bonus AC / Luck"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Shield.Weapon.Belt.Body.Chest.Eyes.Feet.Hands.Head.Headband.Neck.Ring.Shoulders.Wrist.Instrument.Staff.Rod"
+      },
+      {
+        "key": "COST",
+        "value": "(2500*%CHOICE*%CHOICE)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Enhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.550"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PRETYPE:1,Enhancement,ArmorEnhancement,ShieldEnhancement,WeaponEnhancement],[PRETYPE:1,Armor,Shield,Weapon]],[PRETYPE:1,Belt,Body,Chest,Eyes,Feet,Hands,Head,Headband,Neck,Ring,Shoulders,Wrist,Instrument,Staff,Rod]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Luck bonus to armor class of %CHOICE"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMBER|MIN=1|MAX=5|TITLE=Armor Other Bonus"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 604,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "BNS_AC_LUCK",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

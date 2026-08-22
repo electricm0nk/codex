@@ -1,25 +1,99 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like magic fang, except that the enhancement bonus on attack and damage rolls is +1 per four caster levels [maximum +5]. This bonus does not allow a natural weapon or unarmed strike to bypass damage reduction aside from magic. Alternatively, you may imbue all of the creature's natural weapons with a +1 enhancement bonus [regardless of your caster level]. Greater magic fang can be made permanent with a permanency spell.",
     "key": "Magic Fang (Greater)",
-    "school": "Transmutation",
     "level": 3,
-    "description": "This spell functions like magic fang, except that the enhancement bonus on attack and damage rolls is +1 per four caster levels [maximum +5]. This bonus does not allow a natural weapon or unarmed strike to bypass damage reduction aside from magic. Alternatively, you may imbue all of the creature's natural weapons with a +1 enhancement bonus [regardless of your caster level]. Greater magic fang can be made permanent with a permanency spell."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like magic fang, except that the enhancement bonus on attack and damage rolls is +(min(5,floor(CASTERLEVEL/4))).|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like magic fang, except that the enhancement bonus on attack and damage rolls is +1 per four caster levels [maximum +5]. This bonus does not allow a natural weapon or unarmed strike to bypass damage reduction aside from magic. Alternatively, you may imbue all of the creature's natural weapons with a +1 enhancement bonus [regardless of your caster level]. Greater magic fang can be made permanent with a permanency spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/magicFang.html#_magic-fang-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.309"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Natural|WEAPON|TOHIT,DAMAGE|min(floor(%CHOICE/4),5)|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants one natural weapon or unarmed strike of the subject a +1 per four caster levels (maximum +5) enhancement bonus on attack and damage rolls"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=5|MAX=20|TITLE=Choose spell caster level"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 378,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1132,
-    "record_key": "Magic Fang (Greater).MOD"
+    "record_key": "Magic Fang (Greater)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

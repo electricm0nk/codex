@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": null,
+    "description": "A mirror of soul snaring has 15 extradimensional compartments within it. Any creature coming within 30 feet of the device and looking at its own reflection must succeed at a DC 23 Will save or have its soul sucked into one of the compartments.",
+    "key": "Mirror of Soul Snaring",
+    "name": "Mirror of Soul Snaring",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Cursed"
+      },
+      {
+        "key": "WT",
+        "value": "45"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "SPROP",
+        "value": "A mirror of soul snaring has 15 extradimensional compartments within it. Any creature coming within 30 feet of the device and looking at its own reflection must succeed at a DC 23 Will save or have its soul sucked into one of the compartments."
+      }
+    ],
+    "weight_lbs": 45.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 132,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Mirror of Soul Snaring",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

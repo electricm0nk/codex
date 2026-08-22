@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like invisibility, except that the effect moves with the group and is broken when anyone in the group attacks. Individuals in the group cannot see each other. The spell is broken for any individual who moves more than 180 feet from the nearest member of the group. If only two individuals are affected, the one moving away from the other one loses its invisibility. If both are moving away from each other, they both become visible when the distance between them exceeds 180 feet.",
     "key": "Invisibility (Mass)",
-    "school": "Illusion",
     "level": 7,
-    "description": "This spell functions like invisibility, except that the effect moves with the group and is broken when anyone in the group attacks. Individuals in the group cannot see each other. The spell is broken for any individual who moves more than 180 feet from the nearest member of the group. If only two individuals are affected, the one moving away from the other one loses its invisibility. If both are moving away from each other, they both become visible when the distance between them exceeds 180 feet."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like invisibility, except that the effect moves with the group and is broken when anyone in the group attacks. Individuals in the group cannot see each other. The spell is broken for any individual who moves more than 180 feet from the nearest member of the group. If only two individuals are affected, the one moving away from the other one loses its invisibility. If both are moving away from each other, they both become visible when the distance between them exceeds 180 feet.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like invisibility, except that the effect moves with the group and is broken when anyone in the group attacks.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Trickery=8"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless) or Will negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/invisibility.html#_invisibility-mass"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless) or yes (harmless, object)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Any number of creatures, no two of which can be more than 180 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 338,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1094,
-    "record_key": "Invisibility (Mass).MOD"
+    "record_key": "Invisibility (Mass)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

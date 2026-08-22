@@ -513,11 +513,31 @@ fn ingested_record_keys_match_their_cited_line() {
     };
 
     // Known outstanding debt, enumerated so it cannot silently grow.
-    // Each entry is (book, cached record_key). Empty: the ACG Naturalist
-    // debt (9 rows) was paid off by re-keying to the archetype-qualified
-    // KEY:. Leave this empty rather than deleting the mechanism — the
-    // next mis-keyed ingest, in ACG or any other book, must be added
-    // here deliberately, not silently absorbed.
+    // Each entry is (book, cached record_key). The ACG Naturalist debt (9
+    // rows) was paid off by re-keying to the archetype-qualified KEY: —
+    // leave this mechanism in place rather than deleting it, since the
+    // next mis-keyed ingest, in ACG or any other book, must be added here
+    // deliberately, not silently absorbed.
+    //
+    // SD31-W5-INTEGRATE-001 (2026-08-16) landed 10 rows here (the
+    // `OPEN-ISSUES.md` row 90/92 class-ability-cited subset of a 50-record
+    // `find_citation` mis-citation finding — re-derived to 39 records at
+    // the time of the fix below, not 50; the other 40 was itself an
+    // over-count carried in the original finding's own prose). `find_citation`
+    // tried a `KEY:`-field match across EVERY `.lst` in the book before a
+    // first-column match in ANY file, so a proficiency/class-ability row's
+    // `KEY:` could beat the real equipment row.
+    //
+    // `SD31-E6-F5-004` fixed the root cause (`equipment_gap.rs`'s
+    // `find_citation` now tries every strategy against equipment-shaped
+    // files — basename containing `"equip"` — before ever falling back to
+    // a non-equipment-shaped file) and re-cited all 39 affected records
+    // (`gen_cache_hand_authored_equipment` re-run after deleting the 39
+    // wrong-citation files so the no-clobber write guard could not block
+    // the correction). All 10 of these rows now cite their real equipment
+    // row and no longer trip this trap — debt paid to zero, matching the
+    // ACG Naturalist precedent. Left empty, not deleted, so the next
+    // mis-keyed ingest is still caught and must be enumerated deliberately.
     const KNOWN_KEY_MISMATCH_DEBT: &[(&str, &str)] = &[];
 
     let findings = audit_ingested_cache(&cache_dir(), &root).expect("cache audit runs");

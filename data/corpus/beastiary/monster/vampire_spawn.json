@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:vampire_blood_drain",
@@ -32,6 +30,108 @@
     ],
     "race_subtype": null,
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Energy Drain|Fast Healing|Resistance to Cold|Resistance to Electricity|Vampire ~ Blood Drain|Vampire ~ Dominate|Vampire ~ Gaseous Form|Vampire ~ Shadowless|Vampire ~ Spider Climb|Vampire Spawn ~ Resurrection Vulnerability|Vampire Weaknesses"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyDrainLevels|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGE|STR/2"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "DR",
+        "value": "5/Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.276",
     "speeds": [
@@ -41,16 +141,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 400,
-    "record_key": "Vampire Spawn"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 400,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Vampire Spawn",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

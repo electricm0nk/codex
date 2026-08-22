@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elementalist Shifter Aspect ~ Air",
+    "name": "Aspect of Air",
+    "class": "Elementalist Shifter Aspect",
+    "description": "You take on the power of an air elemental, gaining the ability to fly and to control powerful gusts of wind. [Minor Form] You gain a +%1 enhancement bonus to your Dexterity score.|AirAspectDexBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elementalist Shifter Aspect ~ Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ElementalistShifterAspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterAirAspectLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AirAspectDexBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You take on the power of an air elemental, gaining the ability to fly and to control powerful gusts of wind. [Minor Form] You gain a +%1 enhancement bonus to your Dexterity score.|AirAspectDexBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " [Major Form] Your shape changes to that of a Medium air elemental (Bestiary p120). While you are in this form, you gain a fly speed of 60 feet (average maneuverability) and airborne creatures take a -1 penalty on attack and damage rolls against you.|PREVARGTEQ:ShifterWildShape,1|PREVARLT:ShifterAirAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": " [Major Form] Your shape changes to that of a Medium air elemental (Bestiary p120). While you are in this form, you gain a fly speed of 100 feet (perfect maneuverability) and airborne creatures take a -1 penalty on attack and damage rolls against you. You gain the whirlwind special ability. [Whirlwind (Su)] You can transform yourself into a whirlwind as a standard action for %1 rounds. This otherwise functions as per the whirlwind universal monster rule.|ShifterAirAspectLVL/2|PREVARGTEQ:ShifterWildShape,1|PREVARGTEQ:ShifterAirAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": " You gain Improved Natural Attack with your slam.|PREVARGTEQ:ShifterWildShape,1|PREVARGTEQ:ShifterAirAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterAirAspectLVL|ShifterAspectLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AirAspectDexBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AirAspectDexBonus|2|PREVARGTEQ:ShifterAirAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AirAspectDexBonus|2|PREVARGTEQ:ShifterAirAspectLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1049,
+    "record_key": "Elementalist Shifter Aspect ~ Air"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

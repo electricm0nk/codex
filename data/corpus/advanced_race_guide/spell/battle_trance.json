@@ -1,23 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "You are transformed into a single-minded force of destruction. You gain the ferocity monster special ability, a number of temporary hit points equal to 1d6 + your caster level (maximum +10), and a +4 morale bonus on saving throws against mind-affecting effects. You cannot use the withdraw action or willingly move away from a creature that has attacked you. When you use this spell, you immediately take 4 points of Intelligence damage. You must make a DC 20 concentration check to cast spells, and all other concentration checks to cast spells have a -5 penalty.",
     "key": "Battle Trance",
-    "school": "Enchantment",
     "level": 3,
-    "description": "You are transformed into a single-minded force of destruction. You gain the ferocity monster special ability, a number of temporary hit points equal to 1d6 + your caster level (maximum +10), and a +4 morale bonus on saving throws against mind-affecting effects. You cannot use the withdraw action or willingly move away from a creature that has attacked you. When you use this spell, you immediately take 4 points of Intelligence damage. You must make a DC 20 concentration check to cast spells, and all other concentration checks to cast spells have a -5 penalty."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Antipaladin,Inquisitor,Ranger=3|Cleric,Witch=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You are transformed into a single-minded force of destruction. You gain the ferocity monster special ability, a number of temporary hit points equal to 1d6 + your caster level (maximum +10), and a +4 morale bonus on saving throws against mind-affecting effects. You cannot use the withdraw action or willingly move away from a creature that has attacked you. When you use this spell, you immediately take 4 points of Intelligence damage. You must make a DC 20 concentration check to cast spells, and all other concentration checks to cast spells have a -5 penalty."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsHalfOrc=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will Negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/coreRaces/halfOrcs.html#_battle-trance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Enchantment"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 39,
-    "record_key": "Battle Trance"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Battle Trance",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",

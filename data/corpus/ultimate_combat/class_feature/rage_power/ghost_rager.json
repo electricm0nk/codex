@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Ghost Rager",
+    "name": "Ghost Rager",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian deals normal damage to incorporeal creatures even when using nonmagical weapons. She also gains a +3 morale bonus to touch AC, which increases by 1 at 8th level and every 4 levels thereafter (to a maximum of +7 at 20th level). This can't raise her touch AC above her full AC. A barbarian must be at least 6th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Ghost Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian deals normal damage to incorporeal creatures even when using nonmagical weapons. She also gains a +3 morale bonus to touch AC, which increases by 1 at 8th level and every 4 levels thereafter (to a maximum of +7 at 20th level). This can't raise her touch AC above her full AC. A barbarian must be at least 6th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 280,
+    "record_key": "Rage Power ~ Ghost Rager"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

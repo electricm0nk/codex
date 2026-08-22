@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Scrap Bomb",
+    "name": "Scrap Bomb",
+    "class": "Discovery",
+    "description": "When the alchemist creates a bomb, he can choose to have it explode into shards of shrapnel that deal piercing damage. A creature that takes a direct hit from a scrap bomb takes 1 point of bleed damage per die of bomb damage unless it succeeds at a Reflex save.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Scrap Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural.AlchemistBombModifier"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGoblin=true"
+      },
+      {
+        "key": "DESC",
+        "value": "When the alchemist creates a bomb, he can choose to have it explode into shards of shrapnel that deal piercing damage. A creature that takes a direct hit from a scrap bomb takes 1 point of bleed damage per die of bomb damage unless it succeeds at a Reflex save."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 564,
+    "record_key": "Discovery ~ Scrap Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

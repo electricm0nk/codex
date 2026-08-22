@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Bloodline ~ Tanglevine",
+    "name": "Tanglevine",
+    "class": "Verdant Bloodline",
+    "description": "As a standard action, you can create a 15-foot-long, animated vine that springs from your hand. This vine lasts for 1 round and can be used to make a single disarm, steal, or trip combat maneuver, using +%1 in place of your normal CMB. You can use this power %2 times per day.|Sorcerer_VerdantTanglevine_CMB|Sorcerer_Verdant_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Bloodline ~ Tanglevine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Verdant Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Verdant_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VerdantTanglevine_CMB|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a 15-foot-long, animated vine that springs from your hand. This vine lasts for 1 round and can be used to make a single disarm, steal, or trip combat maneuver, using +%1 in place of your normal CMB. You can use this power %2 times per day.|Sorcerer_VerdantTanglevine_CMB|Sorcerer_Verdant_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VerdantTanglevine_CMB|Sorcerer_Verdant_BloodlinePower1LVL+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (CMB +%1)|Sorcerer_VerdantTanglevine_CMB|Sorcerer_Verdant_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Verdant_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|VerdantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3262,
+    "record_key": "Verdant Bloodline ~ Tanglevine"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Spirit Blade",
     "category": "ArmsArmor",
-    "name": "Spirit Blade",
     "cost_gp": 2.0,
-    "weight": 1.0,
-    "description": "A +3 ghost touch dagger with a translucent blade decorated with faces and mist; can cast dispel magic once per day."
+    "description": "A +3 ghost touch dagger with a translucent blade decorated with faces and mist; can cast dispel magic once per day.",
+    "key": "Spirit Blade",
+    "name": "Spirit Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Dagger"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Specific.Piercing.Slashing.Dagger.BladeLight.Tengu"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Ghost Touch ~ Weapon.Special Ability ~ +3 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can cast dispel magic once per day."
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 79,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Spirit Blade",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Centipede (Giant)",
     "delivery": null,
@@ -14,6 +12,32 @@
     "owners": [
       "ultimate_magic:companion:companion_centipede_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Centipede (Giant)"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Centipede (Giant))"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -21,16 +45,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
-    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
-    "line": 46,
-    "record_key": "Companion Advancement ~ Centipede (Giant)"
-  },
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Centipede (Giant)",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

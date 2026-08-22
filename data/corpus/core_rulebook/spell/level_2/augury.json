@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "An augury can tell you whether a particular action will bring good or bad results for you in the immediate future. The base chance for receiving a meaningful reply is 70%% + 1%% per caster level, to a maximum of 90%%; this roll is made secretly. A question may be so straightforward that a successful result is automatic, or so vague as to have no chance of success. If the augury succeeds, you get one of four results: . Weal [if the action will probably bring good results]. . Woe [for bad results]. . Weal and woe [for both]. . Nothing [for actions that don't have especially good or bad results]. If the spell fails, you get the \"nothing\" result. A cleric who gets the \"nothing\" result has no way to tell whether it was the consequence of a failed or successful augury. The augury can see into the future only about half an hour, so anything that might happen after that does not affect the result. Thus, the result might not take into account the longterm consequences of a contemplated action. All auguries cast by the same person about the same topic use the same die result as the first casting.",
     "key": "Augury",
-    "school": "Divination",
     "level": 2,
-    "description": "An augury can tell you whether a particular action will bring good or bad results for you in the immediate future. The base chance for receiving a meaningful reply is 70%% + 1%% per caster level, to a maximum of 90%%; this roll is made secretly. A question may be so straightforward that a successful result is automatic, or so vague as to have no chance of success. If the augury succeeds, you get one of four results: . Weal [if the action will probably bring good results]. . Woe [for bad results]. . Weal and woe [for both]. . Nothing [for actions that don't have especially good or bad results]. If the spell fails, you get the \"nothing\" result. A cleric who gets the \"nothing\" result has no way to tell whether it was the consequence of a failed or successful augury. The augury can see into the future only about half an hour, so anything that might happen after that does not affect the result. Thus, the result might not take into account the longterm consequences of a contemplated action. All auguries cast by the same person about the same topic use the same die result as the first casting."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M, F"
+      },
+      {
+        "key": "DESC",
+        "value": "An augury can tell you whether a particular action will bring good or bad results for you in the immediate future. The base chance for receiving a meaningful reply is 70%% + 1%% per caster level, to a maximum of 90%%; this roll is made secretly. A question may be so straightforward that a successful result is automatic, or so vague as to have no chance of success. If the augury succeeds, you get one of four results: . Weal [if the action will probably bring good results]. . Woe [for bad results]. . Weal and woe [for both]. . Nothing [for actions that don't have especially good or bad results]. If the spell fails, you get the \"nothing\" result. A cleric who gets the \"nothing\" result has no way to tell whether it was the consequence of a failed or successful augury. The augury can see into the future only about half an hour, so anything that might happen after that does not affect the result. Thus, the result might not take into account the longterm consequences of a contemplated action. All auguries cast by the same person about the same topic use the same die result as the first casting.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "An augury can tell you whether a particular action will bring good or bad results for you in the immediate future.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/augury.html#_augury"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 38,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 803,
-    "record_key": "Augury.MOD"
+    "record_key": "Augury",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

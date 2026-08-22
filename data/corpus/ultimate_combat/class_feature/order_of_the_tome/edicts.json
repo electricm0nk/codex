@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Tome ~ Edicts",
+    "name": "Edicts",
+    "class": "Order of the Tome",
+    "description": "An order of the tome cavalier must protect written knowledge (or at least approved knowledge) at all costs. Some are also devoted to the destruction of proscribed knowledge and are equally zealous in the pursuit of its destruction. Most of these cavaliers believe that the preservation of a written work is more important than a single life, even their own, as it ensures future generations benefit from its wisdom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Tome ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the tome cavalier must protect written knowledge (or at least approved knowledge) at all costs. Some are also devoted to the destruction of proscribed knowledge and are equally zealous in the pursuit of its destruction. Most of these cavaliers believe that the preservation of a written work is more important than a single life, even their own, as it ensures future generations benefit from its wisdom."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 458,
+    "record_key": "Order of the Tome ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

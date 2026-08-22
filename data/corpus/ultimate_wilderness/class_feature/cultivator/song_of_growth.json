@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cultivator ~ Song of Growth",
+    "name": "Song of Growth",
+    "class": "Bard",
+    "description": "A cultivator can spontaneously promote massive plant growth with his bardic performance. While he maintains his song of growth, the cultivator can spend a standard action to select one side of a square within 30 feet of himself and instantly create an opaque barrier of plant matter to block that face, providing total cover. He can create one barrier as part of starting his bardic performance if he starts the performance as a standard action. The side the cultivator selects must be supported by the ground, and the growth itself cannot support more than 5 pounds of weight. The conjured barrier has hardness 0, AC 5, and %1 hit points. A cultivator can maintain %2 plant growths. These barriers immediately crumble to dust when the cultivator ends his performance.|BardLVL*2|CHA+BardLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cultivator ~ Song of Growth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.CultivatorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A cultivator can spontaneously promote massive plant growth with his bardic performance. While he maintains his song of growth, the cultivator can spend a standard action to select one side of a square within 30 feet of himself and instantly create an opaque barrier of plant matter to block that face, providing total cover. He can create one barrier as part of starting his bardic performance if he starts the performance as a standard action. The side the cultivator selects must be supported by the ground, and the growth itself cannot support more than 5 pounds of weight. The conjured barrier has hardness 0, AC 5, and %1 hit points. A cultivator can maintain %2 plant growths. These barriers immediately crumble to dust when the cultivator ends his performance.|BardLVL*2|CHA+BardLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 254,
+    "record_key": "Cultivator ~ Song of Growth"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

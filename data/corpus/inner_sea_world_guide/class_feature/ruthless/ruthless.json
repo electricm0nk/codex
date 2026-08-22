@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ruthless ~ Low",
+    "name": "Ruthless",
+    "class": "Ruthless",
+    "description": "Whenever you kill a foe or reduce it to a dying state with a melee attack, you can immediately make another attack with the same weapon on any legal target at the same attack bonus as a swift action. You gain a +%1 bonus on damage rolls with this attack.|LowTemplarLvl",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ruthless ~ Low"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you kill a foe or reduce it to a dying state with a melee attack, you can immediately make another attack with the same weapon on any legal target at the same attack bonus as a swift action. You gain a +%1 bonus on damage rolls with this attack.|LowTemplarLvl"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 136,
+    "record_key": "Ruthless ~ Low"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Giant Stalker",
+    "name": "Giant Stalker",
+    "class": "Barbarian Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Giant Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Giant Stalker],[!PREFACT:1,ABILITIES,Barbarian_Archetype_Rage=True,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Giant Stalker ~ Harangue Giant|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Giant Stalker ~ Smell Giants|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Giant Stalker ~ Giant Baiter|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 611,
+    "record_key": "Barbarian Archetype ~ Giant Stalker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

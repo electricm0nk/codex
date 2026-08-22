@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit ~ Bones",
+    "name": "Bones (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: cause fear (1st), false life (2nd), animate dead (3rd), fear (4th), slay living (5th), circle of death (6th), control undead (7th), horrid wilting (8th), wail of the banshee (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Bones"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBonesSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBonesSpiritAnimal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: cause fear (1st), false life (2nd), animate dead (3rd), fear (4th), slay living (5th), circle of death (6th), control undead (7th), horrid wilting (8th), wail of the banshee (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bones Spirit ~ Touch of the Grave"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bones Spirit ~ Shard Soul|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bones Spirit ~ Shedding Form|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bones Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBonesSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBonesSpiritAnimal|FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1446,
+    "record_key": "Shaman Spirit ~ Bones"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

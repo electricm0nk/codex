@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as lesser entice fey, except that the spell's whimsical calling can produce a single fey of 12 Hit Dice or less, or two fey of the same kind whose Hit Dice total no more than 12. Material components include offerings worth 1250 gp plus payment.|PRERULE:1,DisplayFullSpell",
+    "key": "Entice Fey",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=6|Druid,Shaman=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Entice service from a fey of 12 Hit Dice or fewer.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as lesser entice fey, except that the spell's whimsical calling can produce a single fey of 12 Hit Dice or less, or two fey of the same kind whose Hit Dice total no more than 12. Material components include offerings worth 1250 gp plus payment.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Entice Fey"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Calling"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One or two called fey, totaling no more than 12 Hit Dice, which can't appear more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 49,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Entice Fey",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

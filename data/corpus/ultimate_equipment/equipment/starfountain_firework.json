@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 500.0,
+    "description": "Indoors or in a closed area, the ricocheting fireworks deal damage each round in a 20-foot-radius spread (Reflex DC 15 halves). Creatures who fail their save are blinded for 1d4 rounds and deafened for 1 hour.",
+    "key": "Starfountain (Firework)",
+    "name": "Starfountain (Firework)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Spells (Ray)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemical.Consumable.Weapon.Ranged.Thrown.Fire"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "100"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      },
+      {
+        "key": "SPROP",
+        "value": "Indoors or in a closed area, the ricocheting fireworks deal damage each round in a 20-foot-radius spread (Reflex DC 15 halves). Creatures who fail their save are blinded for 1d4 rounds and deafened for 1 hour."
+      }
+    ],
+    "weight_lbs": 100.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 696,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Starfountain (Firework)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

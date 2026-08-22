@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bouncer ~ Crowd Control",
+    "name": "Crowd Control",
+    "class": "Brawler",
+    "description": "When in a bar fight, a bouncer has her tenacity (see page 56) reduced by the crowd at the end of a round by the minimum possible amount. In addition, when she takes the mix it up action, she reduces the tenacity of the crowd by an additional amount equal to her brawler level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bouncer ~ Crowd Control"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "When in a bar fight, a bouncer has her tenacity (see page 56) reduced by the crowd at the end of a round by the minimum possible amount. In addition, when she takes the mix it up action, she reduces the tenacity of the crowd by an additional amount equal to her brawler level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 23,
+    "record_key": "Bouncer ~ Crowd Control"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

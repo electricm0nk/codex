@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Emissary ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Cavalier",
+    "description": "An emissary can select Endurance, Fleet, or Run in addition to the list of combat feats whenever he gains a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emissary ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An emissary can select Endurance, Fleet, or Run in addition to the list of combat feats whenever he gains a bonus feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Emissary Bonus Feat|CavalierLvl/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 485,
+    "record_key": "Emissary ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

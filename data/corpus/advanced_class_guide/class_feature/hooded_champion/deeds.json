@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hooded Champion ~ Deeds",
+    "name": "Deeds",
+    "class": "Ranger",
+    "description": "The hooded champion gains the swashbuckler's derring-do and dodging panache deeds, as well as the following deeds. For all deeds, treat the hooded champion's ranger level as his swashbuckler level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hooded Champion ~ Deeds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hooded Champion Class Feature.Ranger Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerDeedsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The hooded champion gains the swashbuckler's derring-do and dodging panache deeds, as well as the following deeds. For all deeds, treat the hooded champion's ranger level as his swashbuckler level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Derring-Do"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Dodging Panache"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerDeedsLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3544,
+    "record_key": "Hooded Champion ~ Deeds"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

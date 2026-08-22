@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Gaze of Flames",
+    "name": "Gaze of Flames",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman sees through fire, fog, and smoke without penalty as long as there is enough light to otherwise allow her to see normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Gaze of Flames"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanFlameHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Gaze of Flames"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanFlameSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanGazeOfFlamesRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GazeOfFlamesRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman sees through fire, fog, and smoke without penalty as long as there is enough light to otherwise allow her to see normally."
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can gaze through any source of flame within %1 feet, as clairvoyance.|GazeOfFlamesRange|PREVARGTEQ:ShamanSpiritLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can use this ability %1 rounds per day, but these rounds do not need to be consecutive.|ShamanGazeOfFlamesRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanGazeOfFlamesRounds|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GazeOfFlamesRange|10*ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1550,
+    "record_key": "Shaman Spirit Hex ~ Gaze of Flames"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

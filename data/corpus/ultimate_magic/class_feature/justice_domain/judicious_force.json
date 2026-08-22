@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Justice Domain ~ Judicious Force",
+    "name": "Judicious Force",
+    "class": "Justice Domain",
+    "description": "If you or an ally within 10 feet makes a critical threat with a melee or ranged attack, as an immediate action you may add +4 to the confirmation roll. This does not stack with the Critical Focus feat. You may use this ability %1 times per day.|DomainJusticeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Justice Domain ~ Judicious Force"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you or an ally within 10 feet makes a critical threat with a melee or ranged attack, as an immediate action you may add +4 to the confirmation roll. This does not stack with the Critical Focus feat. You may use this ability %1 times per day.|DomainJusticeTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 376,
+    "record_key": "Justice Domain ~ Judicious Force"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

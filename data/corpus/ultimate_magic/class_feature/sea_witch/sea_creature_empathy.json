@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sea Witch ~ Sea Creature Empathy",
+    "name": "Sea Creature Empathy",
+    "class": "Witch",
+    "description": "You can influence the attitude of water-dwelling animals and animals that live along coasts and shores, including birds, as if using wild empathy. You use your witch level as your druid level for this ability. If you have wild empathy from another class, your witch levels stack with the other class's levels to determine your wild empathy bonus for these kinds of creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sea Witch ~ Sea Creature Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can influence the attitude of water-dwelling animals and animals that live along coasts and shores, including birds, as if using wild empathy. You use your witch level as your druid level for this ability. If you have wild empathy from another class, your witch levels stack with the other class's levels to determine your wild empathy bonus for these kinds of creatures."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2021,
+    "record_key": "Sea Witch ~ Sea Creature Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cognatogen ~ Stat Selection Final",
+    "name": "Grand Cognatogen",
+    "class": "Cognatogen",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cognatogen ~ Stat Selection Final"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cognatogen_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Display"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|CognatogenACBonus|TYPE=NaturalArmor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,DEX,CON|CognatogenStatBonus|TYPE=Alchemical"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|INT,WIS,CHA|CognatogenStatPenalty"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 133,
+    "record_key": "Cognatogen ~ Stat Selection Final"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

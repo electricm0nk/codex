@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Conjuration Savant School ~ Acid Dart",
+    "name": "Acid Dart",
+    "class": "Conjuration Savant School",
+    "description": "As a standard action, you can unleash an acid dart targeting any foe within 30 feet as a ranged touch attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conjuration Savant School ~ Acid Dart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialAttack.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConjurationAcidDartDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConjurationAcidDartTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can unleash an acid dart targeting any foe within 30 feet as a ranged touch attack."
+      },
+      {
+        "key": "DESC",
+        "value": "The acid dart deals 1d6 points of acid damage.|PREVAREQ:ConjurationAcidDartDamageBonus,0"
+      },
+      {
+        "key": "DESC",
+        "value": "The acid dart deals 1d6+%1 points of acid damage.|ConjurationAcidDartDamageBonus|PREVARGT:ConjurationAcidDartDamageBonus,0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|ConjurationAcidDartTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConjurationAcidDartDamageBonus|ArcanistSavantSchoolLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConjurationAcidDartTimes|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ConjurationAcidDartTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2557,
+    "record_key": "Conjuration Savant School ~ Acid Dart"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

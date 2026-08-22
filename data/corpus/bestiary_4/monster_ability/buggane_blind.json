@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Buggane ~ Blind",
     "delivery": "Extraordinary",
@@ -13,21 +11,41 @@
     "owners": [
       "bestiary_4:monster:buggane"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Bugganes are blind. They are immune to gaze attacks, visual effects, illusions, and other attack forms that rely on sight."
+      },
+      {
+        "key": "KEY",
+        "value": "Buggane ~ Blind"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Senses"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Senses"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 361,
-    "record_key": "Buggane ~ Blind"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 361,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Buggane ~ Blind",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

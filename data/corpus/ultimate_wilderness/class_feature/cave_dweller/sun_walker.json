@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cave Dweller ~ Sun Walker",
+    "name": "Sun Walker",
+    "class": "Barbarian",
+    "description": "A cave dweller gains a +%1 dodge bonus to AC and on saving throws against effects with the light descriptor or that produce bright or sudden light. Any penalties on attack rolls, saving throws, or skill checks because of bright light are reduced by %1.|CaveDwellerSunWalkerBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cave Dweller ~ Sun Walker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.CaveDwellerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CaveDwellerSunWalkerBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cave dweller gains a +%1 dodge bonus to AC and on saving throws against effects with the light descriptor or that produce bright or sudden light. Any penalties on attack rolls, saving throws, or skill checks because of bright light are reduced by %1.|CaveDwellerSunWalkerBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CaveDwellerSunWalkerBonus|(BarbarianLVL-4)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 200,
+    "record_key": "Cave Dweller ~ Sun Walker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master Chymist ~ Extracts per Day",
+    "name": "Extracts per Day",
+    "class": "Master Chymist",
+    "description": "At the indicated levels, a master chymist gains new extracts per day as if she had also gained a level in alchemist. She does not, however, gain other benefits a character of that class would have gained, except for extracts per day and an increased effective caster level for extracts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Chymist ~ Extracts per Day"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Extra"
+      },
+      {
+        "key": "DESC",
+        "value": "At the indicated levels, a master chymist gains new extracts per day as if she had also gained a level in alchemist. She does not, however, gain other benefits a character of that class would have gained, except for extracts per day and an increased effective caster level for extracts."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistAlchemyLVL|MasterChymistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1362,
+    "record_key": "Master Chymist ~ Extracts per Day"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

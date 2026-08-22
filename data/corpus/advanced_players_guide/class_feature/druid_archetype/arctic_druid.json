@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Arctic Druid",
+    "name": "Arctic Druid",
+    "class": "Druid Archetype",
+    "description": "An arctic druid watches over the stark landscape of the far frozen reaches of the world, tending the stunted and rugged life that ekes out its survival in the least habitable climes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Arctic Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidWoodlandStride.DruidTracklessStep.DruidNaturesLure.DruidVenomImmunity.DruidThousandFaces.DruidWildShape"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Arctic Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidNaturesLure,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces,TYPE.DruidWildShape]"
+      },
+      {
+        "key": "DESC",
+        "value": "An arctic druid watches over the stark landscape of the far frozen reaches of the world, tending the stunted and rugged life that ekes out its survival in the least habitable climes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Arctic Druid ~ Arctic Native|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Arctic Druid ~ Icewalking|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Arctic Druid ~ Arctic Endurance|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Arctic Druid ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Arctic Druid ~ Snowcaster|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Arctic Druid ~ Flurry Form|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1890,
+    "record_key": "Druid Archetype ~ Arctic Druid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

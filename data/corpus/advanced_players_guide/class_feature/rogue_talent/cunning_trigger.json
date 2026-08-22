@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Cunning Trigger",
+    "name": "Cunning Trigger",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can use a swift action to set off any trap within 30 feet that she constructed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Cunning Trigger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can use a swift action to set off any trap within 30 feet that she constructed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2898,
+    "record_key": "Rogue Talent ~ Cunning Trigger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

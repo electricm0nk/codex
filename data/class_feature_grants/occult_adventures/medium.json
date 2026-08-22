@@ -1,0 +1,437 @@
+[
+  {
+    "key": "Kami Medium ~ Ask the Kami",
+    "class": "Medium",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1391
+    }
+  },
+  {
+    "key": "Kami Medium ~ Kami Channeler",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1391
+    }
+  },
+  {
+    "key": "Kami Medium ~ Natural Taboo",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1391
+    }
+  },
+  {
+    "key": "Kami Medium ~ Ofuda",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1391
+    }
+  },
+  {
+    "key": "Kami Medium ~ Shikigami",
+    "class": "Medium",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1391
+    }
+  },
+  {
+    "key": "Kami Medium ~ Ward",
+    "class": "Medium",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1391
+    }
+  },
+  {
+    "key": "Reanimated Medium ~ Channel Self",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1392
+    }
+  },
+  {
+    "key": "Reanimated Medium ~ Ease Passage",
+    "class": "Medium",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1392
+    }
+  },
+  {
+    "key": "Reanimated Medium ~ Lingering Spirit",
+    "class": "Medium",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1392
+    }
+  },
+  {
+    "key": "Reanimated Medium ~ Living Legend",
+    "class": "Medium",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1392
+    }
+  },
+  {
+    "key": "Reanimated Medium ~ Nothing Is Taboo",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1392
+    }
+  },
+  {
+    "key": "Reanimated Medium ~ Spirit Warding",
+    "class": "Medium",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1392
+    }
+  },
+  {
+    "key": "Relic Channeler ~ Apport Relic",
+    "class": "Medium",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1393
+    }
+  },
+  {
+    "key": "Relic Channeler ~ Connection Specialty",
+    "class": "Medium",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1393
+    }
+  },
+  {
+    "key": "Relic Channeler ~ Object Reading",
+    "class": "Medium",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1393
+    }
+  },
+  {
+    "key": "Relic Channeler ~ Powerful Bond",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1393
+    }
+  },
+  {
+    "key": "Relic Channeler ~ Relics",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1393
+    }
+  },
+  {
+    "key": "Spirit Dancer ~ Attaca",
+    "class": "Medium",
+    "level": 18,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1394
+    }
+  },
+  {
+    "key": "Spirit Dancer ~ Dance of Infinite Forms",
+    "class": "Medium",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1394
+    }
+  },
+  {
+    "key": "Spirit Dancer ~ Nothing Is Taboo",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1394
+    }
+  },
+  {
+    "key": "Spirit Dancer ~ Spirit Aura",
+    "class": "Medium",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1394
+    }
+  },
+  {
+    "key": "Spirit Dancer ~ Spirit Dance",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1394
+    }
+  },
+  {
+    "key": "Spirit Dancer ~ Spirit Troika",
+    "class": "Medium",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1394
+    }
+  },
+  {
+    "key": "Storyteller ~ Diminished Spirits",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1395
+    }
+  },
+  {
+    "key": "Storyteller ~ Knowledge of Tales",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1395
+    }
+  },
+  {
+    "key": "Storyteller ~ Learn the Story",
+    "class": "Medium",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1395
+    }
+  },
+  {
+    "key": "Storyteller ~ Living Story",
+    "class": "Medium",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1395
+    }
+  },
+  {
+    "key": "Storyteller ~ Storyteller's Performance",
+    "class": "Medium",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1395
+    }
+  },
+  {
+    "key": "Storyteller ~ Versatile Surge",
+    "class": "Medium",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1395
+    }
+  }
+]

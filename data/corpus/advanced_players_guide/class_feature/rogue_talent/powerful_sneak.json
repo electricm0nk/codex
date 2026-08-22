@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Powerful Sneak",
+    "name": "Powerful Sneak",
+    "class": "Rogue Talent",
+    "description": "Whenever a rogue with this talent takes a full attack action, she can elect to take a -2 penalty on all attack rolls until the start of her next turn. If an attack during this time is a sneak attack, she treats all 1s on the sneak attack damage dice as 2s.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Powerful Sneak"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.Extraordinary.SpecialAttack.AttackOption"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a rogue with this talent takes a full attack action, she can elect to take a -2 penalty on all attack rolls until the start of her next turn. If an attack during this time is a sneak attack, she treats all 1s on the sneak attack damage dice as 2s."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2913,
+    "record_key": "Rogue Talent ~ Powerful Sneak"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

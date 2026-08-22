@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Inferno Bomb",
+    "name": "Inferno Bomb*",
+    "class": "Discovery",
+    "description": "The effects of the smoke created by an alchemist's bomb duplicate the effects of incendiary cloud instead of fog cloud, filling an area equal to twice the bomb's splash radius for 1 round per level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Inferno Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Smoke Bomb"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "The effects of the smoke created by an alchemist's bomb duplicate the effects of incendiary cloud instead of fog cloud, filling an area equal to twice the bomb's splash radius for 1 round per level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 141,
+    "record_key": "Discovery ~ Inferno Bomb"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

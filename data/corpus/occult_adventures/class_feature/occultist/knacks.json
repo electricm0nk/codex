@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist ~ Knacks",
+    "name": "Knacks",
+    "class": "Occultist",
+    "description": "An occultist learns one knack, or 0-level psychic spell, each time he selects an implement school (including when he again selects a school that he has already learned to use). These spells are cast like any other spell, but they can be cast any number of times per day. Knacks cast using any other spell slots because of metamagic feats applied to them, for example, consume spell slots as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Knacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist learns one knack, or 0-level psychic spell, each time he selects an implement school (including when he again selects a school that he has already learned to use). These spells are cast like any other spell, but they can be cast any number of times per day. Knacks cast using any other spell slots because of metamagic feats applied to them, for example, consume spell slots as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 984,
+    "record_key": "Occultist ~ Knacks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,155 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Ectoplasmatist",
+    "name": "Ectoplasmatist",
+    "class": "Spiritualist Archetype",
+    "description": "Instead of calling upon a phantom from the Ethereal Plane, an ectoplasmatist infuses herself with the mysterious substance called ectoplasm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Ectoplasmatist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpiritualistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Ectoplasmatist],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_EthericTether=true,Spiritualist_Archetype_Phantom=true,Spiritualist_Archetype_SharedConsciousness=true,Spiritualist_Archetype_FusedConsciousness=true,Spiritualist_Archetype_SpiritualBond=true,Spiritualist_Archetype_EmpoweredConsciousness=true,Spiritualist_Archetype_BondedManifestation=true,Spiritualist_Archetype_PhantomRecall=true,Spiritualist_Archetype_DualBond=true,Spiritualist_Archetype_SpiritualInterference=true,Spiritualist_Archetype_GreaterSpiritualInterference=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of calling upon a phantom from the Ethereal Plane, an ectoplasmatist infuses herself with the mysterious substance called ectoplasm."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Ectoplasmatist ~ Ectoplasmic Lash|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Ectoplasmatist ~ Spiritual Combat|PRECLASS:1,Spiritualist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Ectoplasmatist ~ Ectoplasmic Armor|PRECLASS:1,Spiritualist=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_EthericTether|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Phantom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SharedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_FusedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SpiritualBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_EmpoweredConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_BondedManifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_PhantomRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_DualBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_GreaterSpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_EthericTether|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_Phantom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SharedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_FusedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SpiritualBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_EmpoweredConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_BondedManifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_PhantomRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_DualBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_GreaterSpiritualInterference|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1611,
+    "record_key": "Spiritualist Archetype ~ Ectoplasmatist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

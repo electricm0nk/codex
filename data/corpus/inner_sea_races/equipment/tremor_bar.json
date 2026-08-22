@@ -1,0 +1,54 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 70000.0,
+    "description": null,
+    "key": "Tremor Bar",
+    "name": "Tremor Bar",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "70000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "235"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Tremor Bar|TIMES=5|CASTERLEVEL=15|Stone Shape"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Tremor Bar|TIMES=1|CASTERLEVEL=15|Earthquake"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_general.lst",
+    "record_key": "Tremor Bar",
+    "sha256": "84a3e01dc08eb0973262e16a2d9b0fa29512085f2dbc2f6087f0edf2697f0a6f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

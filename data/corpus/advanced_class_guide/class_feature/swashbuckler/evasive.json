@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler ~ Evasive",
+    "name": "Evasive",
+    "class": "Swashbuckler",
+    "description": "At 11th level, while a swashbuckler has at least 1 panache point, she gains the benefits of the evasion, uncanny dodge, and improved uncanny dodge rogue class features. She uses her swashbuckler level as her rogue level for improved uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Evasive"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL11"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL11.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SwashbucklerDeedQualifyLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, while a swashbuckler has at least 1 panache point, she gains the benefits of the evasion, uncanny dodge, and improved uncanny dodge rogue class features. She uses her swashbuckler level as her rogue level for improved uncanny dodge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2088,
+    "record_key": "Swashbuckler ~ Evasive"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

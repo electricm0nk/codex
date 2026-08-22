@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Shaman ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Druid",
+    "description": "Your wild shape ability functions at your druid level - 4. If you take on the form of a lizard, you instead use your unmodified druid level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Shaman ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural.DruidWildShape"
+      },
+      {
+        "key": "DESC",
+        "value": "Your wild shape ability functions at your druid level - 4. If you take on the form of a lizard, you instead use your unmodified druid level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWildShapeTimes|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1104,
+    "record_key": "Dragon Shaman ~ Wild Shape"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

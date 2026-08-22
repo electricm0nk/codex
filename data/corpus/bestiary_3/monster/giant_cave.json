@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "6",
@@ -18,6 +16,104 @@
     ],
     "race_subtype": "Giant",
     "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Giant (Cave)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|6|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "6"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant (Cave)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Humanoid:9"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*2,1d8"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Giant"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Giant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (120')|Low-Light Vision"
+      }
+    ],
     "size": "L",
     "source_page": "p.126",
     "speeds": [
@@ -27,16 +123,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 124,
-    "record_key": "Giant (Cave)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Giant (Cave)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

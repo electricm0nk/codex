@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Marid Bloodline ~ Bonus Spells",
+    "name": "Marid Bloodline ~ Bonus Spells",
+    "class": "Marid Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Obscuring Mist|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|See Invisibility|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Gaseous Form|PREVAREQ:Sorcerer_CF_BloodlineSpell3,0|PREVARGTEQ:BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=4|Wall Of Ice|PREVAREQ:Sorcerer_CF_BloodlineSpell4,0|PREVARGTEQ:BloodlineCasterLVL,9"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Persistent Image|PREVAREQ:Sorcerer_CF_BloodlineSpell5,0|PREVARGTEQ:BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=6|Elemental Body III|PREVAREQ:Sorcerer_CF_BloodlineSpell6,0|PREVARGTEQ:BloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Plane Shift|PREVAREQ:Sorcerer_CF_BloodlineSpell7,0|PREVARGTEQ:BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=8|Polar Ray|PREVAREQ:Sorcerer_CF_BloodlineSpell8,0|PREVARGTEQ:BloodlineCasterLVL,17"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=9|Wish|PREVAREQ:Sorcerer_CF_BloodlineSpell9,0|PREVARGTEQ:BloodlineCasterLVL,19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 642,
+    "record_key": "Marid Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

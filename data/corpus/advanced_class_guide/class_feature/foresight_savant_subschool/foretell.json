@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Foresight Savant Subschool ~ Foretell",
+    "name": "Foretell",
+    "class": "Foresight Savant Subschool",
+    "description": "You can utter a prediction of the immediate future. While your foretelling is in effect, you emit a 30-foot aura of fortune that aids your allies or hinders your enemies, as chosen by you at the time of prediction. If you choose to aid, you and your allies gain a +2 luck bonus on ability checks, attack rolls, caster level checks, saving throws, and skill checks. If you choose to hinder, your enemies take a -2 penalty on those rolls instead. You can use this ability for a %1 rounds per day. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Foresight Savant Subschool ~ Foretell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can utter a prediction of the immediate future. While your foretelling is in effect, you emit a 30-foot aura of fortune that aids your allies or hinders your enemies, as chosen by you at the time of prediction. If you choose to aid, you and your allies gain a +2 luck bonus on ability checks, attack rolls, caster level checks, saving throws, and skill checks. If you choose to hinder, your enemies take a -2 penalty on those rolls instead. You can use this ability for a %1 rounds per day. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2595,
+    "record_key": "Foresight Savant Subschool ~ Foretell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arrow Champion ~ Weapon Versatility",
+    "name": "Weapon Versatility",
+    "class": "Swashbuckler",
+    "description": "An arrow champion learns to use precision-based tricks just as accurately with her bow as with her melee weapons. Provided that her swashbuckler level is high enough, she can use the bleeding wound, deadly stab, menacing swordplay, perfect thrust, stunning stab, and targeted strike deeds when attacking with a bow, so long as her target is within 30 feet. If she spends a panache point to increase the range of her precise aim ability, the increased range applies to this ability as well.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arrow Champion ~ Weapon Versatility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Features.ArrowChampionClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An arrow champion learns to use precision-based tricks just as accurately with her bow as with her melee weapons. Provided that her swashbuckler level is high enough, she can use the bleeding wound, deadly stab, menacing swordplay, perfect thrust, stunning stab, and targeted strike deeds when attacking with a bow, so long as her target is within 30 feet. If she spends a panache point to increase the range of her precise aim ability, the increased range applies to this ability as well."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1204,
+    "record_key": "Arrow Champion ~ Weapon Versatility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Gorgon's Fist",
+    "name": "Gorgon's Fist",
+    "class": "Warpriest Bonus Feat",
+    "description": "With one well-placed blow, you leave your target reeling.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Gorgon's Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Unarmed Strike,Scorpion Style"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "With one well-placed blow, you leave your target reeling."
+      },
+      {
+        "key": "DESC",
+        "value": " As a standard action, make a single unarmed melee attack against a foe whose speed is reduced (such as from Scorpion Style). If the attack hits, you deal damage normally and the target is staggered until the end of your next turn unless it makes a Fortitude saving throw (DC 10 + 1/2 your character level + your Wis modifier). This feat has no effect on targets that are staggered."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Gorgon's Fist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4228,
+    "record_key": "Warpriest Bonus Feat ~ Gorgon's Fist"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

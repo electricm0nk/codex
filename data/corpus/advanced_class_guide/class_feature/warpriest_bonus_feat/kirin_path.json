@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Kirin Path",
+    "name": "Kirin Path",
+    "class": "Warpriest Bonus Feat",
+    "description": "You turn knowledge of your enemy into a flawless defense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Kirin Path"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Kirin Strike,Kirin Style,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (arcana)=12"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (dungeoneering)=5,Knowledge (local)=5,Knowledge (nature)=5,Knowledge (planes)=5,Knowledge (religion)=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You turn knowledge of your enemy into a flawless defense."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you make a Knowledge check to identify a creature, even when using Kirin Style, you can take 10 even if stress and distractions would normally prevent you from doing so. While using Kirin Style against a creature you have identified using that feat, if the creature ends its turn within your threatened area, you can spend a use of your attacks of opportunity that round to move up to 5 feet times your Intelligence modifier (minimum 1). You must end your move in a square threatened by the creature. This move does not provoke attacks of opportunity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Kirin Path"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4476,
+    "record_key": "Warpriest Bonus Feat ~ Kirin Path"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Name-Keeper ~ Spells Focus",
+    "name": "Spells",
+    "class": "Name-Keeper",
+    "description": "[NOT IMPLEMENTED] The name-keeper selects a second shaman spirit and adds the spells granted by that spirit to her list of spells that she can cast using spirit magic. She gains one additional spirit magic spell slot of her highest spell level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Name-Keeper ~ Spells Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PathfindersPastFocus.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] The name-keeper selects a second shaman spirit and adds the spells granted by that spirit to her list of spells that she can cast using spirit magic. She gains one additional spirit magic spell slot of her highest spell level."
+      },
+      {
+        "key": "DESC",
+        "value": "She selects two shaman spirits and adds both their granted spells to the list of spells she can cast using spirit magic.|PRECLASS:1,Shaman=12"
+      },
+      {
+        "key": "DESC",
+        "value": "Her number of spirit magic spell slots at each spell level increases to two.|PRECLASS:1,Shaman=20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1045,
+    "record_key": "Name-Keeper ~ Spells Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

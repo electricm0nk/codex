@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Major Amplification ~ Subordinate Spell",
+    "name": "Subordinate Spell",
+    "class": "Major Amplification",
+    "description": "The psychic can divide her mind to cast a less powerful spell upon herself alongside her linked spell. The linked spell can't be lower than 5th level and can't take less than a standard action to cast. This applies to the actual casting time, so the psychic can't add a subordinate spell to a quickened spell. The subordinate spell's casting time must be 1 standard action or less, and its level can be no higher than the linked spell's level - 5. The subordinate spell must target only the psychic (even if it could normally affect other or multiple targets). The psychic must spend a number of points from her phrenic pool equal to 3 + double the subordinate spell's level. The subordinate spell acts as though it had been cast, and uses up one of the psychic's spells per day of its level. The effects of the two spells are separate, so each might require its own concentration check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Major Amplification ~ Subordinate Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Major Amplification.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PsychicLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can divide her mind to cast a less powerful spell upon herself alongside her linked spell. The linked spell can't be lower than 5th level and can't take less than a standard action to cast. This applies to the actual casting time, so the psychic can't add a subordinate spell to a quickened spell. The subordinate spell's casting time must be 1 standard action or less, and its level can be no higher than the linked spell's level - 5. The subordinate spell must target only the psychic (even if it could normally affect other or multiple targets). The psychic must spend a number of points from her phrenic pool equal to 3 + double the subordinate spell's level. The subordinate spell acts as though it had been cast, and uses up one of the psychic's spells per day of its level. The effects of the two spells are separate, so each might require its own concentration check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1182,
+    "record_key": "Major Amplification ~ Subordinate Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Pistolero",
+    "name": "Pistolero",
+    "class": "Gunslinger Archetype",
+    "description": "While most gunslingers have favorite firearms, there are those rare ones who choose to specialize in onehanded firearms exclusively. These gunslingers are called pistoleros. While they lack the flexibility of being able to pick up any kind of firearm and use it with reasonable proficiency, they are crackerjack shots with pistols and similar firearms. Their skill and aim with these firearms at close range is second to none, and they rarely misfire with these weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Pistolero"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype.GunslingerGunTraining.GunslingerDeadeyeDeed.GunslingerStartlingShotDeed.GunslingerBleedingWoundDeed"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ PISTOLERO],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerGunTraining,TYPE.GunslingerDeadeyeDeed,TYPE.GunslingerStartlingShotDeed,TYPE.GunslingerBleedingWoundDeed]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most gunslingers have favorite firearms, there are those rare ones who choose to specialize in onehanded firearms exclusively. These gunslingers are called pistoleros. While they lack the flexibility of being able to pick up any kind of firearm and use it with reasonable proficiency, they are crackerjack shots with pistols and similar firearms. Their skill and aim with these firearms at close range is second to none, and they rarely misfire with these weapons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Pistolero ~ Weapon Proficiency|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Pistolero ~ Up Close and Deadly|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Pistolero ~ Deadeye|PRECLASS:1,Gunslinger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Pistolero ~ Twin Shot Knockdown|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Pistolero ~ Pistol Training|PRECLASS:1,Gunslinger=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|PISTOLERO ~ Pistol Training|PREABILITY:1,CATEGORY=Internal,Optional Rules Firearms ~ Guns Everywhere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 807,
+    "record_key": "Gunslinger Archetype ~ Pistolero"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

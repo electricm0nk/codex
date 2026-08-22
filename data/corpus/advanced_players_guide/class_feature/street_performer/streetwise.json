@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Street Performer ~ Streetwise",
+    "name": "Streetwise",
+    "class": "Bard",
+    "description": "A street performer gains a bonus equal to half his level on Bluff, Disguise, Knowledge (local), and Sleight of Hand checks, Diplomacy or Intimidate checks made to influence crowds, and Diplomacy checks to gather information (minimum +1). This replaces bardic knowledge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Street Performer ~ Streetwise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.BardBardicKnowledge"
+      },
+      {
+        "key": "DESC",
+        "value": "A street performer gains a bonus equal to half his level on Bluff, Disguise, Knowledge (local), and Sleight of Hand checks, Diplomacy or Intimidate checks made to influence crowds, and Diplomacy checks to gather information (minimum +1). This replaces bardic knowledge."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Disguise,Knowledge (Local),Sleight of Hand|min(1,BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1732,
+    "record_key": "Street Performer ~ Streetwise"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

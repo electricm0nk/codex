@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flesheater ~ Rage",
+    "name": "Rage",
+    "class": "Barbarian",
+    "description": "In additional to the standard bonuses and penalties of rage, a flesheater takes a -2 penalty to Intelligence while raging. The additional benefits and penalties from a flesheater's abilities last only as long as her rage does, and she cannot use these abilities if they would bring the total penalty to Intelligence to an amount equal to or greater than her Intelligence score. This ability alters the rage ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flesheater ~ Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flesheater Class Feature.Barbarian Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "In additional to the standard bonuses and penalties of rage, a flesheater takes a -2 penalty to Intelligence while raging. The additional benefits and penalties from a flesheater's abilities last only as long as her rage does, and she cannot use these abilities if they would bring the total penalty to Intelligence to an amount equal to or greater than her Intelligence score. This ability alters the rage ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1670,
+    "record_key": "Flesheater ~ Rage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

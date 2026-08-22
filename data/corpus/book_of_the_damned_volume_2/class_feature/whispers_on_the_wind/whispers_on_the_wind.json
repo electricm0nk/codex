@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Whispers on the Wind ~ Pazuzu",
+    "name": "Whispers on the Wind",
+    "class": "Whispers on the Wind",
+    "description": "Charm person 3/day, enthrall 2/day, or fly 1/day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Whispers on the Wind ~ Pazuzu"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=3|CASTERLEVEL=TL|Charm Person,11+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=2|CASTERLEVEL=TL|Enthrall,12+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Fly,13+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "Charm person 3/day, enthrall 2/day, or fly 1/day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 172,
+    "record_key": "Whispers on the Wind ~ Pazuzu"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

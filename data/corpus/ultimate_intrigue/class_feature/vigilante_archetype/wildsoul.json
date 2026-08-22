@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Wildsoul",
+    "name": "Wildsoul",
+    "class": "Vigilante Archetype",
+    "description": "Within some vigilantes are incredible innate abilities that, although normally the domain of natural beasts, inexplicably aid them in fighting their enemies. These vigilantes have ties to the creature whose abilities they emulate, whether from a distant lycanthrope ancestor, a divine touch, unnatural experimentation, or something else altogether.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Wildsoul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Wildsoul],[!PREFACT:1,ABILITIES,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_VigilanteTalent2=True,Vigilante_Archetype_VigilanteTalent6=True,Vigilante_Archetype_VigilanteTalent12=True,Vigilante_Archetype_VigilanteTalent18=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Within some vigilantes are incredible innate abilities that, although normally the domain of natural beasts, inexplicably aid them in fighting their enemies. These vigilantes have ties to the creature whose abilities they emulate, whether from a distant lycanthrope ancestor, a divine touch, unnatural experimentation, or something else altogether."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildsoul ~ Natural Course|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent18|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 974,
+    "record_key": "Vigilante Archetype ~ Wildsoul"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja ~ Ninja Trick",
+    "name": "Ninja Trick",
+    "class": "Ninja",
+    "description": "As a ninja continues her training, she learns a number of tricks that allow her to confuse her foes and grant her supernatural abilities. Starting at 2nd level, a ninja gains one ninja trick. She gains one additional ninja trick for every 2 levels attained after 2nd. Unless otherwise noted, a ninja cannot select an individual ninja trick more than once. Tricks marked with an asterisk (*) add effects to a ninja's sneak attack. Only one of these tricks can be applied to an individual attack and the decision must be made before the attack is made.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja ~ Ninja Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NinjaTrickLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a ninja continues her training, she learns a number of tricks that allow her to confuse her foes and grant her supernatural abilities. Starting at 2nd level, a ninja gains one ninja trick. She gains one additional ninja trick for every 2 levels attained after 2nd. Unless otherwise noted, a ninja cannot select an individual ninja trick more than once. Tricks marked with an asterisk (*) add effects to a ninja's sneak attack. Only one of these tricks can be applied to an individual attack and the decision must be made before the attack is made."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|NinjaTrickLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NinjaTrickLVL|NinjaLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueTalentLVL|NinjaLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 115,
+    "record_key": "Ninja ~ Ninja Trick"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

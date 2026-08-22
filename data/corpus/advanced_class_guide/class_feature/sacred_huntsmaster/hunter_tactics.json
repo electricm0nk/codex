@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Huntsmaster ~ Hunter Tactics",
+    "name": "Hunter Tactics",
+    "class": "Inquisitor",
+    "description": "A sacred huntsmaster automatically grants her teamwork feats to her animal companion. The companion doesn't need to meet the prerequisites of these teamwork feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Huntsmaster ~ Hunter Tactics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary.InquisitorSoloTactics"
+      },
+      {
+        "key": "DESC",
+        "value": "A sacred huntsmaster automatically grants her teamwork feats to her animal companion. The companion doesn't need to meet the prerequisites of these teamwork feats."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3290,
+    "record_key": "Sacred Huntsmaster ~ Hunter Tactics"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

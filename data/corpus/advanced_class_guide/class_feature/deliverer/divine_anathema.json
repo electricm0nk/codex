@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deliverer ~ Divine Anathema",
+    "name": "Divine Anathema",
+    "class": "Slayer",
+    "description": "As a free action a deliverer can declare a studied target to be his divine anathema. The studied target's alignment must be at least two steps away from that of the deliverer. Against this target, the deliverer's attacks deal an additional 2d6 points of damage; this damage is directly from divine power and does not stack with the bonus damage from a holy or unholy weapon, or a weapon with a similar weapon special ability or effect. A deliverer can have only one divine anathema at a time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deliverer ~ Divine Anathema"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Deliverer Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action a deliverer can declare a studied target to be his divine anathema. The studied target's alignment must be at least two steps away from that of the deliverer. Against this target, the deliverer's attacks deal an additional 2d6 points of damage; this damage is directly from divine power and does not stack with the bonus damage from a holy or unholy weapon, or a weapon with a similar weapon special ability or effect. A deliverer can have only one divine anathema at a time."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3754,
+    "record_key": "Deliverer ~ Divine Anathema"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

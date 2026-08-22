@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Primal Bloodline ~ Elementalist Summoning",
+    "name": "Elementalist Summoning",
+    "class": "Primal Bloodline",
+    "description": "Whenever you summon a creature, it gains",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primal Bloodline ~ Elementalist Summoning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Primal Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Primal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Elemental_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Elemental_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you summon a creature, it gains"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "resistance 10 (if it already has such resistance, its resistance increases by +5), and its natural attacks deal an additional 1d6 points of"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "damage. This bloodline power replaces elemental blast."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ElementalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1732,
+    "record_key": "Primal Bloodline ~ Elementalist Summoning"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

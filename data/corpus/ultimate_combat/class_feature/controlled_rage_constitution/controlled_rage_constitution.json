@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Controlled Rage (Constitution)",
+    "name": "Controlled Rage (Constitution)",
+    "class": null,
+    "description": "Select this to assign full bonus to Constitution.",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "1d"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Controlled Rage Choice"
+      },
+      {
+        "key": "DESC",
+        "value": "Select this to assign full bonus to Constitution."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControlledConBonus|ControlledRageBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 368,
+    "record_key": "Controlled Rage (Constitution)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

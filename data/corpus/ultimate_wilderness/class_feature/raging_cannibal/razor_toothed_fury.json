@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Raging Cannibal ~ Razor-Toothed Fury",
+    "name": "Razor-Toothed Fury",
+    "class": "Barbarian",
+    "description": "A raging cannibal's bite becomes even more fearsome. When using her bite attack, the raging cannibal can take a -%1 penalty on her attack roll to add %2 points of bleed damage to the damage dealt.|RagingCannibalRazorToothedBonus|2*RagingCannibalRazorToothedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raging Cannibal ~ Razor-Toothed Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.RagingCannibalClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagingCannibalRazorToothedBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A raging cannibal's bite becomes even more fearsome. When using her bite attack, the raging cannibal can take a -%1 penalty on her attack roll to add %2 points of bleed damage to the damage dealt.|RagingCannibalRazorToothedBonus|2*RagingCannibalRazorToothedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagingCannibalRazorToothedBonus|(BarbarianLVL-2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 214,
+    "record_key": "Raging Cannibal ~ Razor-Toothed Fury"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Reanimated Medium ~ Spirit Warding",
+    "name": "Spirit Warding",
+    "class": "Medium",
+    "description": "The reanimated medium can ward himself from other spirits and the grave's call.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reanimated Medium ~ Spirit Warding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The reanimated medium can ward himself from other spirits and the grave's call."
+      },
+      {
+        "key": "DESC",
+        "value": "He gains a +4 bonus on saving throws against possession, death effects, and negative energy. This stacks with the bonus to resist possession that mediums gain from having high influence.|!PRECLASS:1,Medium=18"
+      },
+      {
+        "key": "DESC",
+        "value": "He becomes immune to possession, death effects, and negative energy.|PRECLASS:1,Medium=18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1417,
+    "record_key": "Reanimated Medium ~ Spirit Warding"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

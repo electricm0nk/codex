@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Archer ~ Arrow of Death",
+    "name": "Arrow of Death",
+    "class": "Arcane Archer",
+    "description": "At 10th level, an arcane archer can create a special type of slaying arrow that forces the target, if damaged by the arrow's attack, to make a Fortitude save (DC %1) or be slain immediately. It takes 1 day to make a slaying arrow, and the arrow only functions for the arcane archer who created it. The slaying arrow lasts no longer than 1 year, and the archer can only have one such arrow in existence at a time.|ArrowOfDeathDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Archer ~ Arrow of Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArrowOfDeathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, an arcane archer can create a special type of slaying arrow that forces the target, if damaged by the arrow's attack, to make a Fortitude save (DC %1) or be slain immediately. It takes 1 day to make a slaying arrow, and the arrow only functions for the arcane archer who created it. The slaying arrow lasts no longer than 1 year, and the archer can only have one such arrow in existence at a time.|ArrowOfDeathDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArrowOfDeathDC|20+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.376"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|ArrowOfDeathDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2928,
+    "record_key": "Arcane Archer ~ Arrow of Death"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

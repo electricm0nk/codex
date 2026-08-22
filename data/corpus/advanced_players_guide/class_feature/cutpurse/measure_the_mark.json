@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cutpurse ~ Measure the Mark",
+    "name": "Measure the Mark",
+    "class": "Rogue",
+    "description": "When a cutpurse makes a Sleight of Hand check to take something from a creature, the target makes its Perception check before the rogue makes her Sleight of Hand check, and the rogue knows the Perception check result. She can decide whether or not to make the check based on the results of the target's Perception check. If the rogue elects not to make the check, she can make a Bluff check, opposed by the target's Sense Motive, to prevent the target from noticing the attempt. This ability replaces trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cutpurse ~ Measure the Mark"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RogueClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a cutpurse makes a Sleight of Hand check to take something from a creature, the target makes its Perception check before the rogue makes her Sleight of Hand check, and the rogue knows the Perception check result. She can decide whether or not to make the check based on the results of the target's Perception check. If the rogue elects not to make the check, she can make a Bluff check, opposed by the target's Sense Motive, to prevent the target from noticing the attempt. This ability replaces trapfinding."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2964,
+    "record_key": "Cutpurse ~ Measure the Mark"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

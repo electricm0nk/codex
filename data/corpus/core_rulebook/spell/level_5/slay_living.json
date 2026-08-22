@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You can attempt to slay any one living creature. When you cast this spell, your hand seethes with eerie dark fire. You must succeed on a melee touch attack to touch the target. The target takes 12d6 points of damage + 1 point per caster level. If the target's Fortitude saving throw succeeds, it instead takes 3d6 points of damage + 1 point per caster level. The subject might die from damage even if it succeeds on its saving throw.",
     "key": "Slay Living",
-    "school": "Necromancy",
     "level": 5,
-    "description": "You can attempt to slay any one living creature. When you cast this spell, your hand seethes with eerie dark fire. You must succeed on a melee touch attack to touch the target. The target takes 12d6 points of damage + 1 point per caster level. If the target's Fortitude saving throw succeeds, it instead takes 3d6 points of damage + 1 point per caster level. The subject might die from damage even if it succeeds on its saving throw."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to slay any one living creature. When you cast this spell, your hand seethes with eerie dark fire. You must succeed on a melee touch attack to touch the target. The target takes 12d6 points of damage + 1 point per caster level. If the target's Fortitude saving throw succeeds, it instead takes 3d6 points of damage + 1 point per caster level. The subject might die from damage even if it succeeds on its saving throw.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to slay any one living creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Death"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Death,Repose=5"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/slayLiving.html#_slay-living"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.344"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Living creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 550,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1300,
-    "record_key": "Slay Living.MOD"
+    "record_key": "Slay Living",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

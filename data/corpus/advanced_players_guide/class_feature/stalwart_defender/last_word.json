@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stalwart Defender ~ Last Word",
+    "name": "Last Word",
+    "class": "Stalwart Defender",
+    "description": "Once per day, while in a defensive stance, a stalwart defender can make one melee attack against an opponent within reach in response to an attack that would reduce him to negative hit points, knock him unconscious, or kill him. For example, a stalwart defender has 1 hit point left when a red dragon bites him; the defender may use this ability even if the dragon's bite would otherwise kill him instantly. If the attack hits, roll the damage dice for the attack twice and add the results together, but do not multiply damage bonuses from Strength, weapon abilities (such as flaming), or precision-based damage (such as sneak attack). This bonus damage is not multiplied on a critical hit (although other damage bonuses are multiplied normally). Once the defender's attack is resolved, he suffers the normal effect of the attack that provoked this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stalwart Defender ~ Last Word"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, while in a defensive stance, a stalwart defender can make one melee attack against an opponent within reach in response to an attack that would reduce him to negative hit points, knock him unconscious, or kill him. For example, a stalwart defender has 1 hit point left when a red dragon bites him; the defender may use this ability even if the dragon's bite would otherwise kill him instantly. If the attack hits, roll the damage dice for the attack twice and add the results together, but do not multiply damage bonuses from Strength, weapon abilities (such as flaming), or precision-based damage (such as sneak attack). This bonus damage is not multiplied on a critical hit (although other damage bonuses are multiplied normally). Once the defender's attack is resolved, he suffers the normal effect of the attack that provoked this ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1473,
+    "record_key": "Stalwart Defender ~ Last Word"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Hedge Witch",
+    "name": "Hedge Witch",
+    "class": "Witch Archetype",
+    "description": "Among witches, there are those who devote themselves to the care of others and restrict their practices to the healing arts. They often take the place of clerics in rural communities and may wander the countryside servicing the needs of several small communities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Hedge Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchHex4.WitchHex8"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Hedge Witch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchHexes,TYPE.WitchHex4,TYPE.WitchHex8]"
+      },
+      {
+        "key": "DESC",
+        "value": "Among witches, there are those who devote themselves to the care of others and restrict their practices to the healing arts. They often take the place of clerics in rural communities and may wander the countryside servicing the needs of several small communities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hedge Witch ~ Spontaneous Healing|PRECLASS:1,Witch=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hedge Witch ~ Empathic Healing|PRECLASS:1,Witch=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1988,
+    "record_key": "Witch Archetype ~ Hedge Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

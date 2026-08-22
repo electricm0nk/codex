@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Combat Style ~ Kurgess",
+    "name": "Kurgess",
+    "class": "Ranger Combat Style",
+    "description": "If a ranger selects Kurgess's style, he can choose from the following list whenever he gains a combat style feat: Charging Hurleruc, Deadly Aim, Improved Grapple, and Opening Volley. At 6th level, he adds Improved Charging Hurler and Greater Grapple to the list. At 10th level, he adds Pinning Knockout and Shot on the Run to the list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style ~ Kurgess"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.RangerCombatStyle.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,Kurgess"
+      },
+      {
+        "key": "DESC",
+        "value": "If a ranger selects Kurgess's style, he can choose from the following list whenever he gains a combat style feat: Charging Hurleruc, Deadly Aim, Improved Grapple, and Opening Volley. At 6th level, he adds Improved Charging Hurler and Greater Grapple to the list. At 10th level, he adds Pinning Knockout and Shot on the Run to the list."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Charging_Hurler|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Deadly_Aim|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Grapple|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Opening_Volley|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Charging_Hurler|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Grapple|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Pinning_Knockout|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Shot_on_the_Run|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 267,
+    "record_key": "Ranger Combat Style ~ Kurgess"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

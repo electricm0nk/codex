@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Bloodrager Bloodline ~ Caster's Scourge",
+    "name": "Caster's Scourge",
+    "class": "Arcane Bloodrager Bloodline",
+    "description": "You gain a pool of %1 extra attacks of opportunity. You can only use this pool of attacks of opportunity to make attacks against spellcasters who cast or attempted to cast defensively in your threatened area. Either the Spellbreaker feat, the Caster's Bane bloodrage power, or some similar effect is still required to make attacks of opportunity against spellcasters who are casting defensively.|Bloodrager_Arcane_CastersScourge_Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bloodrager Bloodline ~ Caster's Scourge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Arcane Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Arcane"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Arcane_BloodlineProgressionLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_CastersScourge_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a pool of %1 extra attacks of opportunity. You can only use this pool of attacks of opportunity to make attacks against spellcasters who cast or attempted to cast defensively in your threatened area. Either the Spellbreaker feat, the Caster's Bane bloodrage power, or some similar effect is still required to make attacks of opportunity against spellcasters who are casting defensively.|Bloodrager_Arcane_CastersScourge_Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Arcane_CastersScourge_Times|max(1,DEX)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ArcaneBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 636,
+    "record_key": "Arcane Bloodrager Bloodline ~ Caster's Scourge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -15,7 +15,7 @@
 //! This module reported four books — `crb`, `apg`, `acg`, `beastiary1` —
 //! long after `advanced_race_guide` and `pathfinder_unchained` landed as
 //! real `rules_tables` books with real records (ARG: 200 equipment, 187
-//! feats, 92 spells, 156 racial traits; PU: 4 classes, 64 class features, 42
+//! feats, 93 spells, 156 racial traits; PU: 4 classes, 64 class features, 42
 //! equipment modifiers, 17 feats). Because the panel's own caption reads
 //! "every rule book landed in `rules_tables`", a tester reading that screen
 //! would correctly conclude, from a truthful-sounding caption, that two
@@ -94,6 +94,7 @@ use std::process::Command;
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
+use codex::rules_core::rules_tables::adventurers_guide as ag;
 use codex::rules_core::rules_tables::advanced_race_guide as arg;
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::MonsterId;
@@ -101,6 +102,7 @@ use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables, feats as crb_feats,
     race_tables::RaceId, spell_list as crb_spell_list,
 };
+use codex::rules_core::rules_tables::occult_adventures as oa;
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::ultimate_equipment as ue;
@@ -216,6 +218,16 @@ fn diagnostic_book_id(race_catalog_book_code: &str) -> String {
         "CRB" => "crb".to_string(),
         "B1" => "beastiary1".to_string(),
         "ARG" => "advanced_race_guide".to_string(),
+        // SD-31 Epic 1-F2 (2026-08-15). Without this arm the race count for
+        // Bestiary 2's 6 new races is computed under key "B2" but
+        // `book_status("bestiary_2", ...)` looks it up by "bestiary_2" --
+        // same mismatch class `diagnostic_book_id`'s own doc comment names
+        // for CRB/B1/ARG, just not yet hit for this book.
+        "B2" => "bestiary_2".to_string(),
+        // Skinwalker follow-on batch (2026-08-15), same mismatch class.
+        "B5" => "bestiary_5".to_string(),
+        // SD-31 wave-24 integration cycle (2026-08-20), same mismatch class.
+        "B6" => "bestiary_6".to_string(),
         other => other.to_string(),
     }
 }
@@ -477,19 +489,6 @@ fn ultimate_wilderness_counts() -> BTreeMap<String, u32> {
     counts
 }
 
-/// Core Essentials: SD-29 Epic 7 round 7 (`SD29-E7-F2-008`) — this book's
-/// `companion` family, 102 records (58 creature rows + 44 ability rows).
-///
-/// Its 64 heritage `race_trait` records are served OFF DISK from
-/// `data/corpus/core_essentials/race_trait/` by the race-trait lane
-/// (`RuleSetId::Ce`, `decisions.md §49`) rather than out of a compiled table,
-/// so they are not readable from `rules_tables` and are deliberately not
-/// counted here — this function reports what this book landed IN
-/// `src/rules_core/rules_tables/`, which is the companion family alone.
-fn core_essentials_counts() -> BTreeMap<String, u32> {
-    companion_book_counts("core_essentials")
-}
-
 /// Ultimate Combat: SD-28 Epic 27 (`epic-27-uc-complete`) from-scratch
 /// book ingest, first slice. 263 feat records -- see
 /// `ultimate_combat::feat_tables`'s own doc comment for the catalog.
@@ -514,6 +513,26 @@ fn ultimate_magic_counts() -> BTreeMap<String, u32> {
     counts.insert("feats".to_string(), um::feat_tables::feat_tables().len() as u32);
     counts.insert("equipment".to_string(), um::equipment_tables::equipment_tables().len() as u32);
     counts.extend(companion_book_counts("ultimate_magic"));
+    counts
+}
+
+/// Occult Adventures: SD31-E6-F2-003 -- this book's FIRST compiled record
+/// family of any kind (no prior lane has ingested any of its content). 144
+/// base spell records -- see `occult_adventures::spell_list`'s own doc
+/// comment for the catalog and the 328-unit `mod_only` class-widening
+/// residue it deliberately does not cover.
+fn occult_adventures_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), oa::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Adventurer's Guide: SD-31 wave-29 (`lane5-book-onboard` lane) -- this
+/// book's FIRST compiled record family of any kind. 45 base spell records
+/// -- see `adventurers_guide::spell_list`'s own doc comment.
+fn adventurers_guide_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), ag::spell_list::SPELL_LIST.len() as u32);
     counts
 }
 
@@ -789,16 +808,6 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_wilderness_counts(),
             &races,
         ),
-        // SD-29 Epic 7 round 7. Core Essentials — the NINTH registration point
-        // this lane pays per book, and the first round to discover it, because
-        // it is the first companion book whose directory did not already exist
-        // in `rules_tables/` for another family's sake.
-        book_status(
-            "core_essentials",
-            "src/rules_core/rules_tables/core_essentials",
-            core_essentials_counts(),
-            &races,
-        ),
         book_status(
             "ultimate_combat",
             "src/rules_core/rules_tables/ultimate_combat",
@@ -815,6 +824,18 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             "ultimate_psionics",
             "src/rules_core/rules_tables/ultimate_psionics",
             ultimate_psionics_counts(),
+            &races,
+        ),
+        book_status(
+            "occult_adventures",
+            "src/rules_core/rules_tables/occult_adventures",
+            occult_adventures_counts(),
+            &races,
+        ),
+        book_status(
+            "adventurers_guide",
+            "src/rules_core/rules_tables/adventurers_guide",
+            adventurers_guide_counts(),
             &races,
         ),
     ]
@@ -961,12 +982,19 @@ mod tests {
                 "ultimate_intrigue",
                 "ultimate_equipment",
                 "ultimate_wilderness",
-                // SD-29 Epic 7 round 7 -- companions only; this book's 64
-                // heritage race traits are served off disk, not from a table.
-                "core_essentials",
                 "ultimate_combat",
                 "ultimate_magic",
-                "ultimate_psionics"
+                "ultimate_psionics",
+                // SD31-E6-F2-003 -- this book's first compiled record family
+                // of any kind, appended at the end of the list rather than
+                // inserted into a book-family block, since it shares no
+                // chassis with any book above it.
+                "occult_adventures",
+                // SD-31 wave-29 (`lane5-book-onboard` lane) -- this book's
+                // first compiled record family of any kind, same
+                // appended-at-the-end placement as `occult_adventures`
+                // above, for the same reason.
+                "adventurers_guide"
             ]
         );
     }
@@ -1058,7 +1086,7 @@ mod tests {
             arg_book.content_kind_counts["spells"],
             arg::spell_list::SPELL_LIST.len() as u32
         );
-        assert_eq!(arg_book.content_kind_counts["spells"], 92);
+        assert_eq!(arg_book.content_kind_counts["spells"], 93);
         assert_eq!(
             arg_book.content_kind_counts["equipment"],
             arg::equipment_tables::equipment_tables().len() as u32
@@ -1071,8 +1099,10 @@ mod tests {
         // reader has to infer from an absence.
         assert!(
             !arg_book.content_kind_counts.contains_key("race_traits"),
-            "ARG's 156 racial-trait records are corpus-JSON-only; see the module doc for why \
-             they are accounted for in LICENSE.json rather than here"
+            "ARG's 283 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
+             201 -> 259 by SD-31-E6-F4-002; 259 -> 283 by SD-31-E6-F4-003, both 2026-08-16) \
+             are corpus-JSON-only; see the module doc for why they are accounted for in \
+             LICENSE.json rather than here"
         );
     }
 
@@ -1120,13 +1150,63 @@ mod tests {
     /// — so agreement between them is real evidence rather than a tautology,
     /// and a table that silently loses records shows up as a mismatch here.
     ///
-    /// ARG's 156 corpus-JSON-only racial traits are the one declared
-    /// difference, stated as a number here rather than waved at, so the two
-    /// artifacts reconcile exactly.
+    /// ARG's corpus-JSON-only racial traits + class_feature records (201 ->
+    /// 844 by SD-31 `epic-5-chassis-sweep` F1, `SD31-E5-F1-001`, 2026-08-15;
+    /// 844 -> 859 by `SD31-W4-INTEGRATE-001`, 2026-08-16, reconciling
+    /// `SD31-E6-F5-002`'s 15 corpus-JSON-only `equipment`/`equipment_modifier`
+    /// records -- `equipment_gap_tables` is not among this diagnostic's
+    /// tracked `rules_tables` sums for ARG, the same corpus-only shape as
+    /// the class_feature records above)
+    /// are the one declared difference, stated as a number here rather than
+    /// waved at, so the two artifacts reconcile exactly.
     #[test]
     fn the_two_ingested_books_totals_reconcile_with_their_license_artifacts() {
         for (book_id, corpus_dir, corpus_only_records) in [
-            ("advanced_race_guide", "advanced_race_guide", 156u32),
+            // 156 -> 201 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6-race
+            // batch added 45 more ARG race_trait records. 201 -> 844 by
+            // SD-31 `SD31-E5-F1-001` (2026-08-15): `cache_gen::class_feature`
+            // wrote 643 new class_feature corpus-JSON-only records for this
+            // book (no rules_tables module carries class_feature data, so
+            // this is not double-counted -- see that cycle's module doc
+            // comment and `artifacts/SD31-E5-F1-001-lever-measurement.md`).
+            // 859 -> 917 by SD-31-E6-F4-002 (2026-08-16): `ingest_races.rs`'s
+            // own 6-race chassis batch adds 58 corpus-JSON-only race_trait
+            // records here (no rules_tables module backs race_trait data
+            // either); its 6 `race` chassis records are NOT added here --
+            // they ARE counted in `reported`, via the SAME `races` map
+            // `race_counts_by_diagnostic_book()` already merges into every
+            // book's `content_kind_counts` (ARG's `races` row moved
+            // `None` -> `Some(6)` this cycle, see the dedicated test above).
+            // 917 -> 941 by SD-31-E6-F4-003 (2026-08-16): `ingest_race_traits
+            // .rs`'s own 24-record alternate-trait batch for those same 6
+            // races (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang) -- also
+            // corpus-JSON-only race_trait content, same shape as above.
+            // 941 -> 979 by SD31-E6-F4-004 (2026-08-17): `ingest_races.rs`'s
+            // own 4-race follow-on batch adds 38 more corpus-JSON-only
+            // race_trait records (Gillman/Nagaji/Vanara/Vishkanya); its 4
+            // `race` chassis records are again NOT added here for the same
+            // reason the 2026-08-16 batch's weren't -- they ARE counted in
+            // `reported`, via the same `races` map merge (ARG's `races` row
+            // moved `Some(6)` -> `Some(10)` this cycle).
+            // 979 -> 990 by SD31-E6-F4-006 (2026-08-17): `ingest_race_traits
+            // .rs`'s own 11-record alternate-trait batch for those same 4
+            // races (Gillman/Nagaji/Vanara/Vishkanya) -- also
+            // corpus-JSON-only race_trait content, same shape as above.
+            // 990 -> 1008 by SD31-E6-F4-007 (2026-08-17): `ingest_races.rs`'s
+            // own 2-race follow-on batch adds 18 more corpus-JSON-only
+            // race_trait records (Changeling 9, Samsaran 9), closing
+            // `arg_races.lst`'s full 37-row playable-race roster; its 2
+            // `race` chassis records are again NOT added here for the same
+            // reason every prior batch's weren't -- they ARE counted in
+            // `reported` (ARG's `races` row moved `Some(10)` -> `Some(12)`
+            // this cycle).
+            // 1008 -> 1072 by `SD31-CE-COMPANION-001` (2026-08-18): `decisions.md §9`
+            // retired the `core_essentials` book id and Aasimar's and Tiefling's 64
+            // heritage `race_trait` records moved into this book's own corpus directory.
+            // They are corpus-only by construction -- `decisions.md §24` rules out the
+            // formula interpreter a compiled race-trait table would need, so they are
+            // served off disk and this diagnostic's `rules_tables` half cannot see them.
+            ("advanced_race_guide", "advanced_race_guide", 1072u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();
@@ -1182,7 +1262,20 @@ mod tests {
             .find(|b| b.book_id == "beastiary1")
             .expect("beastiary1 present");
         assert_eq!(bestiary.content_kind_counts["monsters"], 46 + 280);
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 323);
+        // SD31-E6-F9-005 (transcription lane, wave 12): 323 -> 399 (+76),
+        // 76 new monster_ability records transcribed for this book.
+        // SD31-W21-MONSTER-001 (wave 21): 399 -> 467 (+68), the
+        // `CATEGORY:Internal` bundle-row ownership hop
+        // (`transcribe_monster_tables.py::find_internal_bundle_ability_refs`)
+        // resolved 68 previously-orphaned ability rows.
+        // SD31-W23-MONSTER-001 (wave 23): 467 -> 522 (+55), the cross-table-
+        // owner remedy `decisions.md §58.3` named and left unbuilt --
+        // `transcribe_monster_tables.py`'s cross-table-owner screen now
+        // transcribes ability rows whose owner's OWN stat block ships from
+        // `rules_tables::beastiary1` (46 legacy monsters) rather than
+        // dropping them, keyed to that real owner's name
+        // (`MonsterBook::abilities_owned_by_name`).
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 522);
     }
 
     #[test]
@@ -1225,10 +1318,21 @@ mod tests {
         );
         assert_eq!(
             races("advanced_race_guide"),
-            None,
-            "ARG declares zero races of its own (`decisions.md §25.2`), and this panel's \
-             convention is that a content-kind row means real records — so the honest \
-             rendering of zero here is no row, not `races: 0`"
+            Some(12),
+            "ARG's own 12-race total: the 6-race batch (Catfolk, Kitsune, Ratfolk, Strix, \
+             Suli, Wayang; SD-31-E6-F4-002, 2026-08-16) -- ARG no longer declares zero races \
+             of its own (superseding `decisions.md §25.2`'s premise) -- plus SD31-E6-F4-004's \
+             4-race follow-on (Gillman, Nagaji, Vanara, Vishkanya; 2026-08-17) plus \
+             SD31-E6-F4-007's 2-race follow-on (Changeling, Samsaran; 2026-08-17), closing \
+             `arg_races.lst`'s full 37-row playable-race roster"
+        );
+        assert_eq!(
+            races("bestiary_2"),
+            Some(6),
+            "Bestiary 2's six races (SD-31 Epic 1-F2, 2026-08-15) -- the first race batch \
+             this panel has reported since Bestiary 1's, and proof the \
+             `diagnostic_book_id(\"B2\")` mapping this batch added actually attaches the \
+             count to the right book row"
         );
     }
 
@@ -1251,7 +1355,16 @@ mod tests {
             creatable.len(),
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
-        assert_eq!(panel_total, 18, "18 in-scope races today: CRB's 7 plus Bestiary 1's 11");
+        assert_eq!(
+            panel_total, 38,
+            "38 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
+             (SD-31 Epic 1-F2, 2026-08-15) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
+             2026-08-15) plus Advanced Race Guide's 12 (SD-31-E6-F4-002, 2026-08-16: Catfolk, \
+             Kitsune, Ratfolk, Strix, Suli, Wayang; SD31-E6-F4-004, 2026-08-17: Gillman, \
+             Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, 2026-08-17: Changeling, Samsaran -- \
+             closing `arg_races.lst`'s full 37-row playable-race roster) plus Bestiary 6's 1 \
+             (Rougarou, SD-31 wave-24, 2026-08-20)"
+        );
     }
 
     /// A book with no race content must not grow a misleading `races: 0` row —

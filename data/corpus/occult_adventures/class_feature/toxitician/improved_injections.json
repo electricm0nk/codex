@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Toxitician ~ Improved Injections",
+    "name": "Improved Injections",
+    "class": "Mesmerist",
+    "description": "The toxitician can add two different improvements to an injection. The injection still requires only one save.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxitician ~ Improved Injections"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The toxitician can add two different improvements to an injection. The injection still requires only one save."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1492,
+    "record_key": "Toxitician ~ Improved Injections"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [
       "bestiary_3:monster_ability:alraune_calming_fragrance",
@@ -21,6 +19,116 @@
     ],
     "race_subtype": null,
     "race_type": "Plant",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Alraune"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo|Common|Elven|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|17|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BleedDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BleedDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|10"
+      },
+      {
+        "key": "CR",
+        "value": "13"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Plant:19"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Vines,Weapon.Natural.Finesseable.Melee,*4,1d10"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "SR",
+        "value": "24"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ],
     "size": "L",
     "source_page": "p.13",
     "speeds": [
@@ -30,16 +138,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 16,
-    "record_key": "Alraune"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Alraune",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

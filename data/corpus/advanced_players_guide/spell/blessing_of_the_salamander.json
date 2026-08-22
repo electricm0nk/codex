@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Blessing of the Salamander",
-    "school": "Transmutation",
-    "level": 4,
     "description": "When you cast this on a creature, its skin turns slick and clammy and it is able to regenerate damage each round. While under the effects of the spell, the creature gains fast healing 5, fire resistance 20 and a +2 competence bonus to its Combat Maneuver Defense.",
-    "full_text": true
+    "full_text": true,
+    "key": "Blessing of the Salamander",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=4|Druid=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject gets fast healing 2, fire resistance 10, and +2 to its CMD.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this on a creature, its skin turns slick and clammy and it is able to regenerate damage each round. While under the effects of the spell, the creature gains fast healing 5, fire resistance 20 and a +2 competence bonus to its Combat Maneuver Defense.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/blessingOfTheSalamander.html#_blessing-of-the-salamander"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 40,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1867,
-    "record_key": "Blessing of the Salamander"
+    "record_key": "Blessing of the Salamander",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

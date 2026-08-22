@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Filidh ~ Armor and Weapon Proficiency",
+    "name": "Armor and Weapon Proficiency",
+    "class": "Bard",
+    "description": "A filidh is proficient with light armor and is prohibited from wearing metal armor. A filidh can wear wooden armor that has been altered by the ironwood spell. Filidhs are proficient with shields (except tower shields) but can use only those made of wood. A filidh who wears prohibited armor or uses a prohibited shield is unable to cast bard spells or use any of his supernatural or spell-like class abilities while doing so and for 24 hours thereafter. This alters a bard's normal armor and weapon proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Filidh ~ Armor and Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FilidhClassFeatures"
+      },
+      {
+        "key": "DESC",
+        "value": "A filidh is proficient with light armor and is prohibited from wearing metal armor. A filidh can wear wooden armor that has been altered by the ironwood spell. Filidhs are proficient with shields (except tower shields) but can use only those made of wood. A filidh who wears prohibited armor or uses a prohibited shield is unable to cast bard spells or use any of his supernatural or spell-like class abilities while doing so and for 24 hours thereafter. This alters a bard's normal armor and weapon proficiencies."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 265,
+    "record_key": "Filidh ~ Armor and Weapon Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

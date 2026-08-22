@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Ward Against Death",
+    "name": "Ward Against Death",
+    "class": "Domain Power",
+    "description": "You can emit a 30-foot aura that wards against death for %1 rounds per day. Living creatures in this area are immune to death effects, energy drain, and effects that cause negative levels. This ward does not remove negative levels that a creature has already gained, but the negative levels have no effect while the creature is inside the warded area. These rounds do not need to be consecutive.|WardAgainstDeathRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Ward Against Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Aura.Repose Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WardAgainstDeathRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura that wards against death for %1 rounds per day. Living creatures in this area are immune to death effects, energy drain, and effects that cause negative levels. This ward does not remove negative levels that a creature has already gained, but the negative levels have no effect while the creature is inside the warded area. These rounds do not need to be consecutive.|WardAgainstDeathRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WardAgainstDeathRounds|DomainReposeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds/day)|WardAgainstDeathRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WardAgainstDeathRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 736,
+    "record_key": "Domain Power ~ Ward Against Death"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

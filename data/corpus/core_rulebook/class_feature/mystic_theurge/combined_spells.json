@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mystic Theurge ~ Combined Spells",
+    "name": "Combined Spells",
+    "class": "Mystic Theurge",
+    "description": "You can prepare and cast spells from one of your spellcasting classes using the available slots from any of your other spellcasting classes. Spells prepared or cast in this way take up a slot one level higher than they originally occupied. This ability cannot be used to cast a spell at a lower level if that spell exists on both spell lists. You can prepare spells up to level %1 from one of your spellcasting classes using the slots one level higher of the other spellcasting class. The components of these spells do not change, but they otherwise follow the rules for the spellcasting class used to cast the spell. Spontaneous spellcasters can only select spells that they have prepared that day using non-spontaneous classes for this ability, even if the spells have already been cast.|CombinedSpellsMaxLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Theurge ~ Combined Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Mystic TheurgeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombinedSpellsLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombinedSpellsMaxLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can prepare and cast spells from one of your spellcasting classes using the available slots from any of your other spellcasting classes. Spells prepared or cast in this way take up a slot one level higher than they originally occupied. This ability cannot be used to cast a spell at a lower level if that spell exists on both spell lists. You can prepare spells up to level %1 from one of your spellcasting classes using the slots one level higher of the other spellcasting class. The components of these spells do not change, but they otherwise follow the rules for the spellcasting class used to cast the spell. Spontaneous spellcasters can only select spells that they have prepared that day using non-spontaneous classes for this ability, even if the spells have already been cast.|CombinedSpellsMaxLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombinedSpellsMaxLevel|(CombinedSpellsLVL+1)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.388"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3042,
+    "record_key": "Mystic Theurge ~ Combined Spells"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

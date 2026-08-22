@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "WORLD WALKER ~ Path of Trees",
+    "name": "Path of Trees",
+    "class": "WORLD WALKER",
+    "description": "At 9th level, once a day, a wanderer can step within a tree and then teleport from that tree to another one in a manner similar to the tree stride spell (Core Rulebook 362). She gains an extra use of this ability each day at 12th level, and a third use of this ability at 15th level. Furthermore, a world walker of 13th level or higher can use this ability to teleport to any other tree of its type up to 100 miles away. This ability replaces both venom immunity and timeless body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "WORLD WALKER ~ Path of Trees"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, once a day, a wanderer can step within a tree and then teleport from that tree to another one in a manner similar to the tree stride spell (Core Rulebook 362). She gains an extra use of this ability each day at 12th level, and a third use of this ability at 15th level. Furthermore, a world walker of 13th level or higher can use this ability to teleport to any other tree of its type up to 100 miles away. This ability replaces both venom immunity and timeless body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 669,
+    "record_key": "WORLD WALKER ~ Path of Trees"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

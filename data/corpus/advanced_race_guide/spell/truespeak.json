@@ -1,23 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "You can communicate with any creature that is not mindless. As long as you can be heard, your speech is understandable to all creatures, each of which hears you as though you were conversing in its language or other natural mode of communication, and you hear their responses as though in your own native language. You may ask questions and receive answers, though this spell does not make creatures more friendly or cooperative than normal, and non-sentient creatures may give limited responses. While using truespeak, your language-dependent effects can affect any creature that is not mindless.",
     "key": "Truespeak",
-    "school": "Divination",
     "level": 4,
-    "description": "You can communicate with any creature that is not mindless. As long as you can be heard, your speech is understandable to all creatures, each of which hears you as though you were conversing in its language or other natural mode of communication, and you hear their responses as though in your own native language. You may ask questions and receive answers, though this spell does not make creatures more friendly or cooperative than normal, and non-sentient creatures may give limited responses. While using truespeak, your language-dependent effects can affect any creature that is not mindless."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=4|Sorcerer,Witch,Wizard=5|Cleric=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "You can communicate with any creature that is not mindless. As long as you can be heard, your speech is understandable to all creatures, each of which hears you as though you were conversing in its language or other natural mode of communication, and you hear their responses as though in your own native language. You may ask questions and receive answers, though this spell does not make creatures more friendly or cooperative than normal, and non-sentient creatures may give limited responses. While using truespeak, your language-dependent effects can affect any creature that is not mindless."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsAasimar=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/aasimars.html#_truespeak"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Divination"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 67,
-    "record_key": "Truespeak"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 67,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Truespeak",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

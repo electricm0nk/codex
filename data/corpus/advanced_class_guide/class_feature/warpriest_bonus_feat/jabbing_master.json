@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Jabbing Master",
+    "name": "Jabbing Master",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your quick punches become even more lethal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Jabbing Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "6,CATEGORY=FEAT,Dodge,Improved Unarmed Strike,Jabbing Dancer,Jabbing Style,Mobility,Power Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:12],[PREVARGTEQ:WarpriestBonusFeatBAB,12],[PREVARGTEQ:MonkFeatQualify,8],[PRECLASS:1,Monk=8,Brawler=8]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your quick punches become even more lethal."
+      },
+      {
+        "key": "DESC",
+        "value": " While using Jabbing Style, the extra damage you deal when you hit a single target with two unarmed strikes increases to 2d6, and the extra damage when you hit a single target with three or more unarmed strikes increases to 4d6."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Jabbing Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4167,
+    "record_key": "Warpriest Bonus Feat ~ Jabbing Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

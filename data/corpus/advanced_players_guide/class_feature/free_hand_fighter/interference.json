@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Free Hand Fighter ~ Interference",
+    "name": "Interference",
+    "class": "Fighter",
+    "description": "At 13th level, a free hand fighter can make a disarm or trip combat maneuver against a target he threatens as a move action to push his opponent off balance. If successful, the target becomes flat-footed. This condition lasts until the target takes damage from a melee or ranged attack or until the beginning of the free hand fighter's next turn, whichever comes first. This ability replaces weapon training 3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Free Hand Fighter ~ Interference"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining3"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a free hand fighter can make a disarm or trip combat maneuver against a target he threatens as a move action to push his opponent off balance. If successful, the target becomes flat-footed. This condition lasts until the target takes damage from a melee or ranged attack or until the beginning of the free hand fighter's next turn, whichever comes first. This ability replaces weapon training 3."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2155,
+    "record_key": "Free Hand Fighter ~ Interference"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

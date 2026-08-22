@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ringleader ~ Sinister Mien",
+    "name": "Sinister Mien",
+    "class": "Bard",
+    "description": "A ringleader can use her Intimidate bonus in place of her Perform bonus when using her bardic performance class ability. When the ringleader uses Intimidate to improve a creature's attitude, the creature's attitude remains friendly for 10 additional minutes per point by which the ringleader exceeded the check's DC.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ringleader ~ Sinister Mien"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Feature.RingleaderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "DESC",
+        "value": "A ringleader can use her Intimidate bonus in place of her Perform bonus when using her bardic performance class ability. When the ringleader uses Intimidate to improve a creature's attitude, the creature's attitude remains friendly for 10 additional minutes per point by which the ringleader exceeded the check's DC."
+      },
+      {
+        "key": "DESC",
+        "value": "The ringleader gains Dazzling Display as a bonus feat and does not need a weapon in her hand to use the feat.|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "DESC",
+        "value": "The ringleader can activate Dazzling Display as a standard action.|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "DESC",
+        "value": "She can affect all enemies within %1 feet with Dazzling Display.|SinisterMienRange|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SinisterMienRange|60|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SinisterMienRange|60|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Dazzling Display|PRECLASS:1,Bard=6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 654,
+    "record_key": "Ringleader ~ Sinister Mien"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

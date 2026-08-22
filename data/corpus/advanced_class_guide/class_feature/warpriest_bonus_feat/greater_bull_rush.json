@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Greater Bull Rush",
+    "name": "Greater Bull Rush",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your bull rush attacks throw enemies off balance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Greater Bull Rush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Bull Rush,Power Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your bull rush attacks throw enemies off balance."
+      },
+      {
+        "key": "DESC",
+        "value": " You receive a +2 bonus on checks made to bull rush a foe. This bonus stacks with the bonus granted by Improved Bull Rush. Whenever you bull rush an opponent, his movement provokes attacks of opportunity from all of your allies (but not you)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Bull Rush"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4230,
+    "record_key": "Warpriest Bonus Feat ~ Greater Bull Rush"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

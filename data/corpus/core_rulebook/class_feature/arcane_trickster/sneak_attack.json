@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Trickster ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Arcane Trickster",
+    "description": "This is exactly like the rogue ability of the same name. The extra damage dealt increases by +1d6 every other level (2nd, 4th, 6th, 8th, and 10th). If an arcane trickster gets a sneak attack bonus from another source (such as rogue levels), the bonuses on damage stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Trickster ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ClassFeatures.ArcaneTricksterClassFeatures"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SneakAttackDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SneakAttackDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This is exactly like the rogue ability of the same name. The extra damage dealt increases by +1d6 every other level (2nd, 4th, 6th, 8th, and 10th). If an arcane trickster gets a sneak attack bonus from another source (such as rogue levels), the bonuses on damage stack."
+      },
+      {
+        "key": "DESC",
+        "value": "[Sneak Attack Damage %1d%2]|SneakAttackDice|SneakAttackDieSize"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDieSize|6|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|ArcaneTricksterLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2939,
+    "record_key": "Arcane Trickster ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

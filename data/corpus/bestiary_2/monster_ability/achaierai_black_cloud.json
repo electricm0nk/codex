@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Achaierai ~ Black Cloud",
     "delivery": "Supernatural",
@@ -16,19 +14,55 @@
     "owners": [
       "bestiary_2:monster:achaierai"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2d6, DC %1 Fort or become confused)|BlackCloudDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlackCloudDC|10+(TL/2)+CON"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlackCloudDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An achaierai can exhale a cloud of choking, toxic smoke three times per day. All creatures within 10 feet of the achaierai immediately take 2d6 points of damage as their flesh melts and rots away. The cloud erodes sanity as well as flesh, and anyone who takes damage from the black cloud must also make a DC %1 Fortitude save or become confused. Every round, the victim may attempt another DC %2 Fortitude save to recover from the confusion; otherwise it persists, lasting indefinitely until the condition is removed or the victim eventually makes her saving throw. The confusion element of a black cloud is a mind-affecting effect. This is a poison effect. Achaierais are immune to this ability|BlackCloudDC|BlackCloudDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Achaierai ~ Black Cloud"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.7"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.7",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 6,
-    "record_key": "Achaierai ~ Black Cloud"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Achaierai ~ Black Cloud",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cassisian ~ Perfect Memory",
+    "delivery": "Extraordinary",
+    "description": "Though they are not particularly intelligent, cassisians have perfect memories and remember everything they see or hear.  They can faultlessly recite conversations they heard hundreds of years before.  They also have the power to erase portions of their own memories, which they do (usually under orders from superior angels) to protect sensitive information.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:cassisian_perfect_memory",
+    "name": "Perfect Memory",
+    "owners": [
+      "bestiary_2:monster:angel_cassisian"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Though they are not particularly intelligent, cassisians have perfect memories and remember everything they see or hear.  They can faultlessly recite conversations they heard hundreds of years before.  They also have the power to erase portions of their own memories, which they do (usually under orders from superior angels) to protect sensitive information."
+      },
+      {
+        "key": "KEY",
+        "value": "Cassisian ~ Perfect Memory"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.26",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2164,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Cassisian ~ Perfect Memory",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

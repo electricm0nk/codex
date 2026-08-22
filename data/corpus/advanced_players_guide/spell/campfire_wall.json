@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Campfire Wall",
-    "school": "Evocation",
-    "level": 2,
     "description": "You can create a barrier around a fire of at least campfire size that shelters everyone inside so long as the fire continues to burn. The barrier appears as a crackling sphere of light and fire that is clearly visible, providing as much illumination as a torch.  The barrier bocks line of sight, granting creatures on either side of the barrier total concealment from creatures on the other side. Any object or creature passing through the barrier from outside takes 1d6 points of fire damage and is also outlined with light equivalent to that of a torch, for 1d6 minutes. Creatures outlined in this way are plainly visible regardless of the light conditions and do not benefit from any sort of concealment, magical or otherwise. The light is not bright enough to have any special effect on undead or creatures vulnerable to light.  Creatures inside the barrier can leave without penalty, but if they try to return they suffer the same consequences as anyone else. If the fire source at the barrier's center is extinguished or moved, the spell ends.",
-    "full_text": true
+    "full_text": true,
+    "key": "Campfire Wall",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger=2|Bard,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates a shelter around a campfire.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a barrier around a fire of at least campfire size that shelters everyone inside so long as the fire continues to burn. The barrier appears as a crackling sphere of light and fire that is clearly visible, providing as much illumination as a torch.  The barrier bocks line of sight, granting creatures on either side of the barrier total concealment from creatures on the other side. Any object or creature passing through the barrier from outside takes 1d6 points of fire damage and is also outlined with light equivalent to that of a torch, for 1d6 minutes. Creatures outlined in this way are plainly visible regardless of the light conditions and do not benefit from any sort of concealment, magical or otherwise. The light is not bright enough to have any special effect on undead or creatures vulnerable to light.  Creatures inside the barrier can leave without penalty, but if they try to return they suffer the same consequences as anyone else. If the fire source at the barrier's center is extinguished or moved, the spell ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire|Light"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) hours; see below (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(ash made from burnt thorns)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/campfireWall.html#_campfire-wall-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "20-ft.-radius sphere centered on fire source"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 58,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1888,
-    "record_key": "Campfire Wall"
+    "record_key": "Campfire Wall",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

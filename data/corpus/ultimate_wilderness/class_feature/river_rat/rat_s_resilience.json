@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "River Rat ~ Rat's Resilience",
+    "name": "Rat's Resilience",
+    "class": "Rogue",
+    "description": "A river rat is inured to dangers presented by disease-carrying parasites, poisonous fish, and other toxic river denizens. A river rat gains a +%1 bonus on saving throws against disease and poison effects.|min(6,RogueLVL/3)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Rat ~ Rat's Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.RiverRatClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A river rat is inured to dangers presented by disease-carrying parasites, poisonous fish, and other toxic river denizens. A river rat gains a +%1 bonus on saving throws against disease and poison effects.|min(6,RogueLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs.disease and poison effects.|min(6,RogueLVL/3)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 986,
+    "record_key": "River Rat ~ Rat's Resilience"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -35,6 +35,12 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
       monsterClass: 'Companion:2',
       typeSegments: [],
       naturalAttacks: [{ name: 'Bite', damageDice: null }],
+      naturalAttackDamageBonuses: [
+        { attack: 'Bite', bonus: '+1/2 Str modifier (minimum +0)', unparsedFormula: null },
+      ],
+      // The Griffon's own row states no `BONUS:SKILL` ability-difference
+      // token — an empty list is the real corpus state, not an omission.
+      skillAbilityDiffBonuses: [],
       statAdjustments: [
         { ability: 'STR', amount: 6 },
         { ability: 'DEX', amount: 4 },
@@ -55,6 +61,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           description: null,
           descriptionVariants: [],
           statAdjustments: [],
+          saveDcFormulas: [],
           sourcePage: null,
         },
         {
@@ -69,6 +76,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
             { ability: 'STR', amount: 2 },
             { ability: 'CON', amount: 2 },
           ],
+          saveDcFormulas: [],
           sourcePage: null,
         },
       ],
@@ -89,6 +97,13 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
       monsterClass: 'Construct:1',
       typeSegments: ['Companion', 'Familiar', 'Construct'],
       naturalAttacks: [{ name: 'Slam', damageDice: null }],
+      naturalAttackDamageBonuses: [],
+      // Transcribed from `data/corpus/inner_sea_intrigue/companion/
+      // familiar_clockwork_spy.json`'s own `BONUS:SKILL|Climb,Swim|DEX-STR`
+      // token.
+      skillAbilityDiffBonuses: [
+        { skills: ['Climb', 'Swim'], bonus: 'Dex modifier − Str modifier', unparsedFormula: null },
+      ],
       statAdjustments: [{ ability: 'DEX', amount: 2 }],
       naturalArmor: null,
       sourcePage: 'p.47',
@@ -102,6 +117,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           description: null,
           descriptionVariants: [],
           statAdjustments: [],
+          saveDcFormulas: [],
           sourcePage: null,
         },
       ],

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lantern Lighter ~ Enhanced Vision",
+    "name": "Enhanced Vision",
+    "class": "Ranger",
+    "description": "A lantern lighter hones his senses to better combat subterranean enemies. He gains low-light vision. If the lantern lighter already has low-light vision, he can instead see three times as far as humans in areas of dim light.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lantern Lighter ~ Enhanced Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.LanternLighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "DESC",
+        "value": "A lantern lighter hones his senses to better combat subterranean enemies. He gains low-light vision. If the lantern lighter already has low-light vision, he can instead see three times as far as humans in areas of dim light."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 985,
+    "record_key": "Lantern Lighter ~ Enhanced Vision"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

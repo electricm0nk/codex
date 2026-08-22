@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Evocation Savant School ~ Force Missile",
+    "name": "Force Missile",
+    "class": "Evocation Savant School",
+    "description": "As a standard action you can unleash a force missile that automatically strikes a foe, as Magic Missile. The force missile deals 1d4+%1 points of damage. This is a force effect. You can use this ability %2 times per day.|EvocationIntenseSpellsBonus|EvocationForceMissileTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evocation Savant School ~ Force Missile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialAttack.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EvocationForceMissileTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action you can unleash a force missile that automatically strikes a foe, as Magic Missile. The force missile deals 1d4+%1 points of damage. This is a force effect. You can use this ability %2 times per day.|EvocationIntenseSpellsBonus|EvocationForceMissileTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvocationForceMissileTimes|3+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1d4+%1, %2/day)|max(1,ArcanistSavantSchoolLVL/2)|EvocationForceMissileTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|EvocationForceMissileTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2566,
+    "record_key": "Evocation Savant School ~ Force Missile"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

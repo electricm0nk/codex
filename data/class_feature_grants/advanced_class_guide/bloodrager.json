@@ -1,0 +1,482 @@
+[
+  {
+    "key": "Blood Conduit ~ Contact Specialist",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2702
+    }
+  },
+  {
+    "key": "Blood Conduit ~ Reflexive Conduit",
+    "class": "Bloodrager",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2702
+    }
+  },
+  {
+    "key": "Blood Conduit ~ Spell Conduit",
+    "class": "Bloodrager",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2702
+    }
+  },
+  {
+    "key": "Bloodrider ~ Blood Bond",
+    "class": "Bloodrager",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2703
+    }
+  },
+  {
+    "key": "Bloodrider ~ Fast Rider",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2703
+    }
+  },
+  {
+    "key": "Bloodrider ~ Feral Mount",
+    "class": "Bloodrager",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2703
+    }
+  },
+  {
+    "key": "Crossblooded Rager ~ Bloodline",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2744
+    }
+  },
+  {
+    "key": "Crossblooded Rager ~ Bloodline Powers",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2744
+    }
+  },
+  {
+    "key": "Crossblooded Rager ~ Bloodline Spells",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2744
+    }
+  },
+  {
+    "key": "Crossblooded Rager ~ Bonus Feats",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2744
+    }
+  },
+  {
+    "key": "Crossblooded Rager ~ Drawbacks",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2744
+    }
+  },
+  {
+    "key": "Greenrager ~ Furious Summoning",
+    "class": "Bloodrager",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2704
+    }
+  },
+  {
+    "key": "Greenrager ~ Summoning Rager",
+    "class": "Bloodrager",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2704
+    }
+  },
+  {
+    "key": "Greenrager ~ Unfettered Fury",
+    "class": "Bloodrager",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2704
+    }
+  },
+  {
+    "key": "Metamagic Rager ~ Meta-Rage",
+    "class": "Bloodrager",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2705
+    }
+  },
+  {
+    "key": "Primalist ~ Primal Choice 12",
+    "class": "Bloodrager",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2796
+    }
+  },
+  {
+    "key": "Primalist ~ Primal Choice 16",
+    "class": "Bloodrager",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2796
+    }
+  },
+  {
+    "key": "Primalist ~ Primal Choice 20",
+    "class": "Bloodrager",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2796
+    }
+  },
+  {
+    "key": "Primalist ~ Primal Choice 4",
+    "class": "Bloodrager",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2796
+    }
+  },
+  {
+    "key": "Primalist ~ Primal Choice 8",
+    "class": "Bloodrager",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": false,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2796
+    }
+  },
+  {
+    "key": "Primalist ~ Primal Choices",
+    "class": "Bloodrager",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2706
+    }
+  },
+  {
+    "key": "Rageshaper ~ Bestial Aspect",
+    "class": "Bloodrager",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2707
+    }
+  },
+  {
+    "key": "Rageshaper ~ Furious Transformation",
+    "class": "Bloodrager",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2707
+    }
+  },
+  {
+    "key": "Spelleater ~ Blood of Life",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2708
+    }
+  },
+  {
+    "key": "Spelleater ~ Spell Eating",
+    "class": "Bloodrager",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2708
+    }
+  },
+  {
+    "key": "Steelblood ~ Armor Training",
+    "class": "Bloodrager",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2709
+    }
+  },
+  {
+    "key": "Steelblood ~ Armored Swiftness",
+    "class": "Bloodrager",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2709
+    }
+  },
+  {
+    "key": "Steelblood ~ Blood Deflection",
+    "class": "Bloodrager",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2709
+    }
+  },
+  {
+    "key": "Steelblood ~ Indomitable Stance",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2709
+    }
+  },
+  {
+    "key": "Steelblood ~ Weapon and Armor Proficiency",
+    "class": "Bloodrager",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2709
+    }
+  },
+  {
+    "key": "Untouchable Rager ~ Raging Resistance",
+    "class": "Bloodrager",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2710
+    }
+  },
+  {
+    "key": "Untouchable Rager ~ Resistance Control",
+    "class": "Bloodrager",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2710
+    }
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Combat Style Feat ~ Ranged Feint",
+    "name": "Ranged Feint",
+    "class": "Ranger Combat Style Feat",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style Feat ~ Ranged Feint"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Ranged Feint"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Ranger_Combat_Style_Feat_Ranged_Feint,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Ranged Feint|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 608,
+    "record_key": "Ranger Combat Style Feat ~ Ranged Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

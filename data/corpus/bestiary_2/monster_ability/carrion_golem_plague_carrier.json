@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Carrion Golem ~ Plague Carrier",
     "delivery": "Extraordinary",
@@ -15,19 +13,67 @@
     "owners": [
       "bestiary_2:monster:golem_carrion"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Disease"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(slam)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CarrionGolemDiseaseDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CarrionGolemDiseaseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Disease)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CarrionGolemDiseaseDC|2|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CarrionGolemDiseaseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a carrion golem is created, its creator infects it with a specific disease.  The carrion golem can then inflict those it strikes with its slams with this disease - most carrion golems inflict filth fever.  Filth Fever: Slam - injury; save Fortitude DC %1; onset 1d3 days; frequency 1/day; effect 1d3 Dex damage and 1d3 Con damage; cure 2 consecutive saves.|CarrionGolemDiseaseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Carrion Golem ~ Plague Carrier"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.136",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 602,
-    "record_key": "Carrion Golem ~ Plague Carrier"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 602,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Carrion Golem ~ Plague Carrier",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

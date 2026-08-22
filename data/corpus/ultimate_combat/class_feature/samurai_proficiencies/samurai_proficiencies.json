@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai Proficiencies",
+    "name": "Samurai Proficiencies",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai Proficiencies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Samurai"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Katana)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 186,
+    "record_key": "Samurai Proficiencies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

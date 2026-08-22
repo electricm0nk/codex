@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Two-Weapon Fighting",
+    "name": "Improved Two-Weapon Fighting",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are skilled at fighting with two weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Two-Weapon Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Two-Weapon Fighting"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,17],[PREVARGTEQ:FeatDexRequirement,17]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at fighting with two weapons."
+      },
+      {
+        "key": "DESC",
+        "value": " In addition to the standard single extra attack you get with an off-hand weapon, you get a second attack with it, albeit at a -5 penalty."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Two-Weapon Fighting"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4254,
+    "record_key": "Warpriest Bonus Feat ~ Improved Two-Weapon Fighting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

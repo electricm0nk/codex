@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bogborn Alchemist ~ Toxic Skin",
+    "name": "Toxic Skin",
+    "class": "Bogborn Alchemist",
+    "description": "A bogborn alchemist can select the toxic skin grippli racial trait in place of an alchemical discovery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bogborn Alchemist ~ Toxic Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Bogborn Alchemist"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Grippli ~ Toxic Skin"
+      },
+      {
+        "key": "DESC",
+        "value": "A bogborn alchemist can select the toxic skin grippli racial trait in place of an alchemical discovery."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grippli ~ Toxic Skin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 866,
+    "record_key": "Bogborn Alchemist ~ Toxic Skin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

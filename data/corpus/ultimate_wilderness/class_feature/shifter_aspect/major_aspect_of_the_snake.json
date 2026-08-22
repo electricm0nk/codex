@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Snake ~ Major",
+    "name": "Major Aspect of the Snake",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of an emperor cobra (Bestiary 2 p252). While in this form, you gain a climb speed of 30 feet, a swim speed of 30 feet, low-light vision, scent (30 feet), a bite attack (2d6 damage), and the Combat Reflexes feat. If you already have Combat Reflexes or your Dexterity score is not high enough to gain more attacks of opportunity from Combat Reflexes, you can instead make one additional attack of opportunity each round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Snake ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Snake_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of an emperor cobra (Bestiary 2 p252). While in this form, you gain a climb speed of 30 feet, a swim speed of 30 feet, low-light vision, scent (30 feet), a bite attack (2d6 damage), and the Combat Reflexes feat. If you already have Combat Reflexes or your Dexterity score is not high enough to gain more attacks of opportunity from Combat Reflexes, you can instead make one additional attack of opportunity each round."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 racial bonus on Acrobatics and Stealth checks.|PREVARGTEQ:ShifterSnakeAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make an attack of opportunity with your bite attack, that attack also applies the following poison. [Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d3 Con damage; cure 2 consecutive saves.]|10+ShifterSnakeAspectLVL/2+CON|PREVARGTEQ:ShifterSnakeAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 87,
+    "record_key": "Shifter Aspect ~ Snake ~ Major"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

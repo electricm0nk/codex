@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abyssal Bloodrager Bloodline ~ Demonic Immunities",
+    "name": "Demonic Immunities",
+    "class": "Abyssal Bloodrager Bloodline",
+    "description": "You're immune to poison and electricity. You have this benefit constantly, even while not bloodraging.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abyssal Bloodrager Bloodline ~ Demonic Immunities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Abyssal Bloodrager Bloodline ~ Power LVL 20.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Abyssal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Abyssal_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Abyssal_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You're immune to poison and electricity. You have this benefit constantly, even while not bloodraging."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Electricity|Immunity to Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AbyssalBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 612,
+    "record_key": "Abyssal Bloodrager Bloodline ~ Demonic Immunities"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

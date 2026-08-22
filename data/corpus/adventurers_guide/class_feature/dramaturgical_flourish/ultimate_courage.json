@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dramaturgical Flourish ~ Ultimate Courage",
+    "name": "Ultimate Courage",
+    "class": "Dramaturgical Flourish",
+    "description": "Allies who are affected by the argent dramaturge's inspire courage bardic performance gain double the normal morale bonuses on saving throws against fear and charm effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dramaturgical Flourish ~ Ultimate Courage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DramaturgicalFlourish"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bardic Performance ~ Inspire Courage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "DESC",
+        "value": "Allies who are affected by the argent dramaturge's inspire courage bardic performance gain double the normal morale bonuses on saving throws against fear and charm effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 35,
+    "record_key": "Dramaturgical Flourish ~ Ultimate Courage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisition ~ Heresy",
+    "name": "Heresy Inquisition",
+    "class": "Inquisition",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisition ~ Heresy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain.Inquisition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHeresyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHeresyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHeresyTimes|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heresy Domain ~ Righteous Infiltration"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heresy Domain ~ Blessed Infiltration|PREVARGTEQ:DomainHeresyLVL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heresy Domain ~ Word of Anathema|PREVARGTEQ:DomainHeresyLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHeresyLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHeresyDC|10+(DomainHeresyLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHeresyTimes|DomainPowerTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 328,
+    "record_key": "Inquisition ~ Heresy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "key": "Royal Accuser ~ Class Skills",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+      "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+      "line": 104
+    }
+  },
+  {
+    "key": "Royal Accuser ~ Detect Monsters and Secrets",
+    "class": "Inquisitor",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+      "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+      "line": 104
+    }
+  },
+  {
+    "key": "Royal Accuser ~ Favored Enemy",
+    "class": "Inquisitor",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+      "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+      "line": 104
+    }
+  },
+  {
+    "key": "Royal Accuser ~ Final Sway",
+    "class": "Inquisitor",
+    "level": 18,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+      "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+      "line": 104
+    }
+  },
+  {
+    "key": "Royal Accuser ~ Greater Detect Magic",
+    "class": "Inquisitor",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+      "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+      "line": 104
+    }
+  },
+  {
+    "key": "Royal Accuser ~ Informed Hunch",
+    "class": "Inquisitor",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+      "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+      "line": 104
+    }
+  },
+  {
+    "key": "Royal Accuser ~ Meticulous Inspection",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+      "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+      "line": 104
+    }
+  }
+]

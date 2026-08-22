@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Explosive Missile",
+    "name": "Explosive Missile",
+    "class": "Discovery",
+    "description": "As a standard action, the alchemist can infuse a single arrow, crossbow bolt, or one-handed firearm bullet with the power of his bomb, load the ammunition, and shoot the ranged weapon. He must be proficient with the weapon in order to accomplish this. When the infused ammunition hits its target, it deals damage normally and detonates as if the alchemist had thrown the bomb at the target. If the explosive missile misses, it does not detonate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Explosive Missile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the alchemist can infuse a single arrow, crossbow bolt, or one-handed firearm bullet with the power of his bomb, load the ammunition, and shoot the ranged weapon. He must be proficient with the weapon in order to accomplish this. When the infused ammunition hits its target, it deals damage normally and detonates as if the alchemist had thrown the bomb at the target. If the explosive missile misses, it does not detonate."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 26,
+    "record_key": "Discovery ~ Explosive Missile"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

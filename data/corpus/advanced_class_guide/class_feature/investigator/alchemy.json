@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Alchemy",
+    "name": "Alchemy",
+    "class": "Investigator",
+    "description": "Investigators are highly trained in the creation of mundane alchemical substances and magical potionlike extracts.  When using Craft (alchemy) to create an alchemical item, you gain a competence bonus equal to %1 on the skill check. In addition, you can use Craft (alchemy) to identify potions as if using detect magic. You must hold the potion for 1 round to attempt such a check.  Like an alchemist, an investigator prepares his spells by mixing ingredients and a tiny fraction of his own magical power into a number of extracts, and then effectively casts the spell by drinking the extract. These extracts have powerful effects, but they are also bound to their creator. Extracts behave like spells in potion form, and as such their effects can be dispelled by dispel magic and similar effects, using the investigator's level as the caster level.  An investigator can create only a certain number of extracts of each level per day he receives bonus extracts per day if he has a high Intelligence score, in the same way a wizard receives bonus spells per day.  When an investigator mixes an extract, he infuses the chemicals and reagents in the extract with magic siphoned from his own magical aura. An extract immediately become inert if it leaves the investigator's possession, reactivating as soon as it returns to his keeping-an investigator cannot normally pass out his extracts for allies to use. An extract, once created, remains potent for 1 day before losing its magic, so an investigator must reprepare his extracts every day. Mixing an extract takes 1 minute of work.  Creating extracts consumes raw material, but the cost of those materials is insignificant-comparable to the valueless material components of most spells. If a spell normally has a costly material component, that component is expended during the consumption of that particular extract. Extracts cannot be made from spells that have focus requirements; extracts that duplicate divine spells never have a divine focus requirement.  An investigator uses the alchemist formula list (Pathfinder RPG Advanced Player's Guide 32) to determine the extracts he can know. An investigator can prepare an extract of any formula he knows. To learn or use an extract, an investigator must have at least an Intelligence score equal to 10 + the extract's level. The saving throw DC for an investigator's extract is equal to 10 + the extract's level + the investigator's Intelligence modifier.  An investigator may know any number of formulae.  He stores his formulae in a special tome called a formula book. He must refer to this book whenever he prepares an extract. At 1st level, an investigator starts with two 1st level formulae of his choice, plus a number of additional formulae equal to his Intelligence modifier. At each new investigator level, he gains one new formula for any level that he can create. An investigator can also add formulae to his book just like a wizard adds spells to his spellbook, using the same costs, pages, and time requirements. A formula book costs as much as a spellbook. An investigator can study a wizard's spellbook to learn any formula that is equivalent to a spell the spellbook contains. A wizard, however, cannot learn spells from a formula book.  An investigator can also learn formulae from another investigator's or an alchemist's formula book (and vice versa). An investigator does not need to decipher arcane writing before copying that formulae.|InvestigatorAlchemyCreationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Alchemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorAlchemyCreationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Investigators are highly trained in the creation of mundane alchemical substances and magical potionlike extracts.  When using Craft (alchemy) to create an alchemical item, you gain a competence bonus equal to %1 on the skill check. In addition, you can use Craft (alchemy) to identify potions as if using detect magic. You must hold the potion for 1 round to attempt such a check.  Like an alchemist, an investigator prepares his spells by mixing ingredients and a tiny fraction of his own magical power into a number of extracts, and then effectively casts the spell by drinking the extract. These extracts have powerful effects, but they are also bound to their creator. Extracts behave like spells in potion form, and as such their effects can be dispelled by dispel magic and similar effects, using the investigator's level as the caster level.  An investigator can create only a certain number of extracts of each level per day he receives bonus extracts per day if he has a high Intelligence score, in the same way a wizard receives bonus spells per day.  When an investigator mixes an extract, he infuses the chemicals and reagents in the extract with magic siphoned from his own magical aura. An extract immediately become inert if it leaves the investigator's possession, reactivating as soon as it returns to his keeping-an investigator cannot normally pass out his extracts for allies to use. An extract, once created, remains potent for 1 day before losing its magic, so an investigator must reprepare his extracts every day. Mixing an extract takes 1 minute of work.  Creating extracts consumes raw material, but the cost of those materials is insignificant-comparable to the valueless material components of most spells. If a spell normally has a costly material component, that component is expended during the consumption of that particular extract. Extracts cannot be made from spells that have focus requirements; extracts that duplicate divine spells never have a divine focus requirement.  An investigator uses the alchemist formula list (Pathfinder RPG Advanced Player's Guide 32) to determine the extracts he can know. An investigator can prepare an extract of any formula he knows. To learn or use an extract, an investigator must have at least an Intelligence score equal to 10 + the extract's level. The saving throw DC for an investigator's extract is equal to 10 + the extract's level + the investigator's Intelligence modifier.  An investigator may know any number of formulae.  He stores his formulae in a special tome called a formula book. He must refer to this book whenever he prepares an extract. At 1st level, an investigator starts with two 1st level formulae of his choice, plus a number of additional formulae equal to his Intelligence modifier. At each new investigator level, he gains one new formula for any level that he can create. An investigator can also add formulae to his book just like a wizard adds spells to his spellbook, using the same costs, pages, and time requirements. A formula book costs as much as a spellbook. An investigator can study a wizard's spellbook to learn any formula that is equivalent to a spell the spellbook contains. A wizard, however, cannot learn spells from a formula book.  An investigator can also learn formulae from another investigator's or an alchemist's formula book (and vice versa). An investigator does not need to decipher arcane writing before copying that formulae.|InvestigatorAlchemyCreationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorAlchemyCreationBonus|InvestigatorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1242,
+    "record_key": "Investigator ~ Alchemy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

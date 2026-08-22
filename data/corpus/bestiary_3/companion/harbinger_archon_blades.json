@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "corpus_key": "Harbinger Archon ~ Blades",
     "delivery": "Extraordinary",
@@ -13,6 +11,28 @@
     "owners": [
       "bestiary_3:companion:archon_harbinger"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A harbinger can extend blades from its body to strike with as primary natural attacks. These blades possess a +1 enhancement bonus on attack and damage rolls, and are treated as both magic and good-aligned for the purposes of penetrating damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Harbinger Archon ~ Blades"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.18",
     "stat_adjustments": [],
@@ -21,16 +41,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
-    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
-    "line": 41,
-    "record_key": "Harbinger Archon ~ Blades"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "record_key": "Harbinger Archon ~ Blades",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

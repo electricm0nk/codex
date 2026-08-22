@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 10000.0,
+    "description": null,
+    "key": "Locket of True and False Friends",
+    "name": "Locket of True and False Friends",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Necklace"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "232"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_general.lst",
+    "record_key": "Locket of True and False Friends",
+    "sha256": "84a3e01dc08eb0973262e16a2d9b0fa29512085f2dbc2f6087f0edf2697f0a6f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

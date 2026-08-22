@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Divine Defender",
+    "name": "Divine Defender",
+    "class": "Paladin Archetype",
+    "description": "Some paladins see themselves as the last line of defense between the teeming hordes of evil and the innocent folk trying to make a living in a harsh, unforgiving world. These defenders spend their lives protecting others and taking on foes that the common man should not even know exist. To aid them in their holy mission, they have special powers to protect themselves and those around them. The divine defender has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Divine Defender"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinMercy.PaladinDivineBond"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Divine Defender],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinMercy,TYPE.PaladinDivineBond]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some paladins see themselves as the last line of defense between the teeming hordes of evil and the innocent folk trying to make a living in a harsh, unforgiving world. These defenders spend their lives protecting others and taking on foes that the common man should not even know exist. To aid them in their holy mission, they have special powers to protect themselves and those around them. The divine defender has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Defender ~ Shared Defense|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Divine Defender ~ Divine Bond|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2471,
+    "record_key": "Paladin Archetype ~ Divine Defender"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

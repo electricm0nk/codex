@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier ~ Master Tactician",
+    "name": "Master Tactician",
+    "class": "Cavalier",
+    "description": "At 17th level, the cavalier receives an additional teamwork feat as a bonus feat. He must meet the prerequisites for this feat. The cavalier can grant this feat to his allies using the tactician ability. Whenever the cavalier uses the tactician ability, he grants any two teamwork feats that he knows. He can select from any of his teamwork feats, not just his bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier ~ Master Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, the cavalier receives an additional teamwork feat as a bonus feat. He must meet the prerequisites for this feat. The cavalier can grant this feat to his allies using the tactician ability. Whenever the cavalier uses the tactician ability, he grants any two teamwork feats that he knows. He can select from any of his teamwork feats, not just his bonus feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactician Teamwork Feat|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 206,
+    "record_key": "Cavalier ~ Master Tactician"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

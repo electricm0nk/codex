@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ World Serpent Totem",
+    "name": "World Serpent Totem",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains a +1 insight bonus to AC against outsiders and aberrations. This bonus increases by +1 for each world serpent rage power the barbarian possesses, excluding this one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ World Serpent Totem"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Supernatural.BarbarianTotemRagePower"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE=BarbarianTotemRagePower],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ World Serpent Totem]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains a +1 insight bonus to AC against outsiders and aberrations. This bonus increases by +1 for each world serpent rage power the barbarian possesses, excluding this one."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 297,
+    "record_key": "Rage Power ~ World Serpent Totem"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

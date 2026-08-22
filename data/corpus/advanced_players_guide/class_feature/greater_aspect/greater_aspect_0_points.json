@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Greater Aspect ~ 0 points",
+    "name": "Greater Aspect ~ 0 points",
+    "class": "Greater Aspect",
+    "description": "Divert 0 points from your eidolon's evolution pool and add no evolutions to yourself.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.SummonerGreaterAspect"
+      },
+      {
+        "key": "DESC",
+        "value": "Divert 0 points from your eidolon's evolution pool and add no evolutions to yourself."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 838,
+    "record_key": "Greater Aspect ~ 0 points"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

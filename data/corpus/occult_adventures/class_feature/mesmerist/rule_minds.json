@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist ~ Rule Minds",
+    "name": "Rule Minds",
+    "class": "Mesmerist",
+    "description": "A mesmerist can permanently mentally enslave a creature. When the mesmerist successfully affects the target of his hypnotic stare with an enchantment spell that requires a saving throw, he can force the creature to attempt a second Will saving throw with a DC equal to the spell's DC. The DC is reduced by 5 if the monster isn't a humanoid. If the creature fails, it becomes a permanent thrall to the mesmerist (as dominate monster) until the mesmerist dies. If it succeeds, it can't be affected by rule minds again for 24 hours. A mesmerist can have only one creature enthralled at a time. If he enthralls a new creature, the previous one is set free but is unaware that it was enthralled by the mesmerist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Rule Minds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mesmerist can permanently mentally enslave a creature. When the mesmerist successfully affects the target of his hypnotic stare with an enchantment spell that requires a saving throw, he can force the creature to attempt a second Will saving throw with a DC equal to the spell's DC. The DC is reduced by 5 if the monster isn't a humanoid. If the creature fails, it becomes a permanent thrall to the mesmerist (as dominate monster) until the mesmerist dies. If it succeeds, it can't be affected by rule minds again for 24 hours. A mesmerist can have only one creature enthralled at a time. If he enthralls a new creature, the previous one is set free but is unaware that it was enthralled by the mesmerist."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 930,
+    "record_key": "Mesmerist ~ Rule Minds"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Runesage ~ Runic Focus",
+    "name": "Runic Focus",
+    "class": "Swashbuckler",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runesage ~ Runic Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.RunesageClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal School"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Runic Focus School|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=1|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=2|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=3|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=4|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=5|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=6|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=7|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=8|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Wizard;LEVEL=9|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1132,
+    "record_key": "Runesage ~ Runic Focus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

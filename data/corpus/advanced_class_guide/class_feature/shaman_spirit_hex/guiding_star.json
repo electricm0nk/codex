@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Guiding Star",
+    "name": "Guiding Star",
+    "class": "Shaman Spirit Hex",
+    "description": "Whenever the shaman can see the open sky at night, she can determine her precise location and can add her Wisdom modifier to her Charisma modifier on all Charisma-based skill checks. In addition, once per night while outdoors, she can cast one spell as if it were modified by the Empower Spell, Extend Spell, Silent Spell, or Still Spell feat without increasing the spell's casting time or level. The shaman doesn't need to possess the feat to use this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Guiding Star"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanHeavensHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Guiding Star"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanHeavensSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the shaman can see the open sky at night, she can determine her precise location and can add her Wisdom modifier to her Charisma modifier on all Charisma-based skill checks. In addition, once per night while outdoors, she can cast one spell as if it were modified by the Empower Spell, Extend Spell, Silent Spell, or Still Spell feat without increasing the spell's casting time or level. The shaman doesn't need to possess the feat to use this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|TYPE=Charisma|WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1568,
+    "record_key": "Shaman Spirit Hex ~ Guiding Star"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Giraffe",
     "delivery": null,
@@ -13,6 +11,44 @@
     "name": "Companion Advancement (Giraffe)",
     "owners": [
       "bestiary_4:companion:companion_giraffe"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamSize|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Giraffe"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Giraffe)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -26,16 +62,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
-    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
-    "line": 10,
-    "record_key": "Companion Advancement ~ Giraffe"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Giraffe",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

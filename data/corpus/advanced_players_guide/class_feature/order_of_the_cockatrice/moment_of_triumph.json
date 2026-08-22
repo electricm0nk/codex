@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Cockatrice ~ Moment of Triumph",
+    "name": "Moment of Triumph",
+    "class": "Order of the Cockatrice",
+    "description": "At 15th level, the cavalier can, as a free action, declare a moment of triumph. For 1 round, the cavalier receives a competence bonus equal to his Charisma modifier on all ability checks, attack rolls, damage rolls, saving throws, and skill checks. This bonus is also added to his AC. In addition, any critical threats he makes are automatically confirmed. The cavalier can use this ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Cockatrice ~ Moment of Triumph"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, the cavalier can, as a free action, declare a moment of triumph. For 1 round, the cavalier receives a competence bonus equal to his Charisma modifier on all ability checks, attack rolls, damage rolls, saving throws, and skill checks. This bonus is also added to his AC. In addition, any critical threats he makes are automatically confirmed. The cavalier can use this ability once per day."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 240,
+    "record_key": "Order of the Cockatrice ~ Moment of Triumph"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

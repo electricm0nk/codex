@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Roof Runner ~ Shingle Stride",
+    "name": "Shingle Stride",
+    "class": "Hunter",
+    "description": "A roof runner and her animal companion can move at full speed without penalty when using Acrobatics to cross narrow or uneven surfaces, and climb at half speed (instead of one-quarter speed) without taking the -5 penalty.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Roof Runner ~ Shingle Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.RoofRunnerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A roof runner and her animal companion can move at full speed without penalty when using Acrobatics to cross narrow or uneven surfaces, and climb at half speed (instead of one-quarter speed) without taking the -5 penalty."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 416,
+    "record_key": "Roof Runner ~ Shingle Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

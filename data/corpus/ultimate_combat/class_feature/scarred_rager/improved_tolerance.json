@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scarred Rager ~ Improved Tolerance",
+    "name": "Improved Tolerance",
+    "class": "Barbarian",
+    "description": "At 5th level, a scarred rager's tolerance ability also applies to effects that would cause her to become dazed, frightened, shaken, or stunned. This replaces improved uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Rager ~ Improved Tolerance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a scarred rager's tolerance ability also applies to effects that would cause her to become dazed, frightened, shaken, or stunned. This replaces improved uncanny dodge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 325,
+    "record_key": "Scarred Rager ~ Improved Tolerance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

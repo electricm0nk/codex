@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Deadly Shuriken",
+    "name": "Deadly Shuriken",
+    "class": "Ninja Trick",
+    "description": "As a full-round action, a ninja with this master trick can take careful aim and pool all of her attack potential into a single, deadly shuriken throw. When she does this, she throws a single shuriken at a single target, but makes as many attack rolls as she can, based on her base attack bonus. She makes the attack rolls in order from highest bonus to lowest, as if she were making a full attack. If any of the attack rolls hit the target, the attack hits. For each additional successful attack roll beyond the first, the ninja increases the damage by 1d6. Precision damage and extra damage from weapon special abilities (such as flaming) are added with damage modifiers and are not increased by this advanced talent. If one or more rolls are critical threats, she confirms the critical once using her highest base attack bonus -5. For each critical threat beyond the first, she reduces this penalty by 1 (to a maximum of 0).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Deadly Shuriken"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NinjaTrickLVL,10],[PREVARGTEQ:RogueTalentLVL,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a ninja with this master trick can take careful aim and pool all of her attack potential into a single, deadly shuriken throw. When she does this, she throws a single shuriken at a single target, but makes as many attack rolls as she can, based on her base attack bonus. She makes the attack rolls in order from highest bonus to lowest, as if she were making a full attack. If any of the attack rolls hit the target, the attack hits. For each additional successful attack roll beyond the first, the ninja increases the damage by 1d6. Precision damage and extra damage from weapon special abilities (such as flaming) are added with damage modifiers and are not increased by this advanced talent. If one or more rolls are critical threats, she confirms the critical once using her highest base attack bonus -5. For each critical threat beyond the first, she reduces this penalty by 1 (to a maximum of 0)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 163,
+    "record_key": "Ninja Trick ~ Deadly Shuriken"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

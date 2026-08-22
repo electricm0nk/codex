@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Predator's Grace",
+    "name": "Predator's Grace",
+    "class": "Domain Power",
+    "description": "You can, as a swift action, grant yourself a +%1-foot bonus to your base speed for 1 round. In addition, you gain low-light vision for 1 round. If you already possess low-light vision, the range of your sight becomes three times that of a human in dim light for 1 round. You can use this ability %2 times per day.|10+floor(DomainLVL/5)*5|DomainAnimalTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Predator's Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, as a swift action, grant yourself a +%1-foot bonus to your base speed for 1 round. In addition, you gain low-light vision for 1 round. If you already possess low-light vision, the range of your sight becomes three times that of a human in dim light for 1 round. You can use this ability %2 times per day.|10+floor(DomainLVL/5)*5|DomainAnimalTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainAnimalTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1840,
+    "record_key": "Domain Power ~ Predator's Grace"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

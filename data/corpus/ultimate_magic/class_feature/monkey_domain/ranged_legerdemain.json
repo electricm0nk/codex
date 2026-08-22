@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monkey Domain ~ Ranged Legerdemain",
+    "name": "Ranged Legerdemain",
+    "class": "Monkey Domain",
+    "description": "You can use the Disable Device and Sleight of Hand skills at a range of 30 feet. Working at a distance increases the normal skill check DC by 5, and you cannot take 10 on this check. Any object to be manipulated must weigh 5 pounds or less. You can only use this ability if you have at least 1 rank in the skill being used.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monkey Domain ~ Ranged Legerdemain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Monkey Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use the Disable Device and Sleight of Hand skills at a range of 30 feet. Working at a distance increases the normal skill check DC by 5, and you cannot take 10 on this check. Any object to be manipulated must weigh 5 pounds or less. You can only use this ability if you have at least 1 rank in the skill being used."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 297,
+    "record_key": "Monkey Domain ~ Ranged Legerdemain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Striker ~ Feral Aspect",
+    "name": "Feral Aspect",
+    "class": "Brawler",
+    "description": "This functions as the shifter aspect class feature of the shifter, except the feral striker can choose only from the bear, bull, falcon, snake, stag, tiger, and wolf aspects. She has access to only the minor versions all these aspects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Striker ~ Feral Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.FeralStrikerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralAspectMinutes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralAspectCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralAspectLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This functions as the shifter aspect class feature of the shifter, except the feral striker can choose only from the bear, bull, falcon, snake, stag, tiger, and wolf aspects. She has access to only the minor versions all these aspects."
+      },
+      {
+        "key": "DESC",
+        "value": "The feral striker can take on two minor aspects simultaneously as a move action.|PRECLASS:1,Brawler=6|!PRECLASS:1,Brawler=12"
+      },
+      {
+        "key": "DESC",
+        "value": "Each aspect counts toward her total number of minutes (so if a feral striker who normally has 9 total minutes of aspects takes on two aspects simultaneously for 4 minutes, she still has 1 minute remaining). She can end one or both aspects as a free action on her turn.|PRECLASS:1,Brawler=6|!PRECLASS:1,Brawler=20"
+      },
+      {
+        "key": "DESC",
+        "value": "The feral shifter adds her Constitution modifier to the total number of minutes per day in which she can use feral aspect.|PRECLASS:1,Brawler=10"
+      },
+      {
+        "key": "DESC",
+        "value": "The feral striker can take on three aspects simultaneously as a move action or one or two aspects as a swift action.|PRECLASS:1,Brawler=12|!PRECLASS:1,Brawler=20"
+      },
+      {
+        "key": "DESC",
+        "value": "The feral striker can take on as many aspects as she wishes at once as a swift action, and they count as only one aspect for the purpose of calculating duration.|PRECLASS:1,Brawler=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Feral Aspect Choice|FeralAspectCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralAspectMinutes|BrawlerLVL+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralAspectMinutes|CON|PRECLASS:1,Brawler=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralAspectCount|1+(BrawlerLVL/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralAspectLVL|BrawlerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|FeralAspectMinutes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Feral Aspect"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 358,
+    "record_key": "Feral Striker ~ Feral Aspect"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

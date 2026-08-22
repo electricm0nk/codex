@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Majordomo ~ Paper Trail",
+    "name": "Paper Trail",
+    "class": "Investigator",
+    "description": "A majordomo is trained to uncover forgeries and trace down discrepancies in paperwork in order to ferret out intrigue. She adds +1 to Linguistics and Profession checks to spot a forgery, deal with paperwork, and notice discrepancies in paperwork. A majordomo who analyzes the handwriting of a document and succeeds at a Linguistics check against a DC equal to 20 + the writer's Bluff bonus gets a hunch about whether the document's writer was lying or otherwise nervous. This ability doesn't work if the document was dictated to someone who thought the contents were legitimate.|max(1,InvestigatorLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Majordomo ~ Paper Trail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.MajordomoClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A majordomo is trained to uncover forgeries and trace down discrepancies in paperwork in order to ferret out intrigue. She adds +1 to Linguistics and Profession checks to spot a forgery, deal with paperwork, and notice discrepancies in paperwork. A majordomo who analyzes the handwriting of a document and succeeds at a Linguistics check against a DC equal to 20 + the writer's Bluff bonus gets a hunch about whether the document's writer was lying or otherwise nervous. This ability doesn't work if the document was dictated to someone who thought the contents were legitimate.|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Linguistics=Identify Forgery|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 521,
+    "record_key": "Majordomo ~ Paper Trail"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

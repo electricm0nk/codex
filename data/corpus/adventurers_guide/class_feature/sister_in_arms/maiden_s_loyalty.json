@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sister-in-Arms ~ Maiden's Loyalty",
+    "name": "Maiden's Loyalty",
+    "class": "Cavalier",
+    "description": "The loyalty of a sister-in-arms is absolute. A sister-in-arms gains a +%1 bonus on Will saves against any effect that would compel her to attack or betray her allies.|SisterInArmsLoyaltyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sister-in-Arms ~ Maiden's Loyalty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SisterInArmsClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SisterInArmsLoyaltyBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DESC",
+        "value": "The loyalty of a sister-in-arms is absolute. A sister-in-arms gains a +%1 bonus on Will saves against any effect that would compel her to attack or betray her allies.|SisterInArmsLoyaltyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SisterInArmsLoyaltyBonus|1+CavalierLVL/4"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 bonus on Will saves vs. effects that compel attacking or betraying allies.|1+CavalierLVL/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 760,
+    "record_key": "Sister-in-Arms ~ Maiden's Loyalty"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

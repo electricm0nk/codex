@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ancient Guardian ~ Patience of Nature",
+    "name": "Patience of Nature",
+    "class": "Druid",
+    "description": "An ancient guardian adds Diplomacy, Perform (oratory), and Sense Motive to her list of class skills and gains an insight bonus equal to half her druid level on such checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancient Guardian ~ Patience of Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient guardian adds Diplomacy, Perform (oratory), and Sense Motive to her list of class skills and gains an insight bonus equal to half her druid level on such checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Perform (oratory),Sense Motive|DruidLVL/2|TYPE=Insight"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Diplomacy|Perform (oratory)|Sense Motive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 73,
+    "record_key": "Ancient Guardian ~ Patience of Nature"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

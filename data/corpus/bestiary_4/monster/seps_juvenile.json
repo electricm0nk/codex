@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:seps_juvenile_acid_blood",
@@ -21,6 +19,116 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Seps (Juvenile)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Seps (Juvenile)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Fly|Perception|Stealth|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d6,SPROP=plus poison"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      }
+    ],
     "size": "M",
     "source_page": "p.237",
     "speeds": [
@@ -30,16 +138,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 206,
-    "record_key": "Seps (Juvenile)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 206,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Seps (Juvenile)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

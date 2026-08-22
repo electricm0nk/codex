@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Archmage Seance Boon",
+    "name": "Archmage Seance Boon",
+    "class": "Medium",
+    "description": "Your damaging spells deal an additional 2 points of damage of the same type that they would normally deal to each target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Archmage Seance Boon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural.SeanceBoon"
+      },
+      {
+        "key": "DESC",
+        "value": "Your damaging spells deal an additional 2 points of damage of the same type that they would normally deal to each target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 838,
+    "record_key": "Medium ~ Archmage Seance Boon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

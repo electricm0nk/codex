@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sharptooth ~ Blood in the Water",
+    "name": "Blood in the Water",
+    "class": "Barbarian",
+    "description": "A sharptooth can tear the flesh from living creatures. Her attacks add 3 points of bleed damage while she is raging.|SharptoothBleedDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sharptooth ~ Blood in the Water"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.SharptoothClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SharptoothBleedDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sharptooth can tear the flesh from living creatures. Her attacks add 3 points of bleed damage while she is raging.|SharptoothBleedDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SharptoothBleedDamage|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SharptoothBleedDamage|CON|TYPE=Base|PRECLASS:1,Barbarian=12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 220,
+    "record_key": "Sharptooth ~ Blood in the Water"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

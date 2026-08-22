@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Jawbreaker",
+    "name": "Jawbreaker",
+    "class": "Warpriest Bonus Feat",
+    "description": "You deliver a powerful strike to the mouth, breaking teeth and bone.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Jawbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Unarmed Strike,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Heal=6"
+      },
+      {
+        "key": "DESC",
+        "value": "You deliver a powerful strike to the mouth, breaking teeth and bone."
+      },
+      {
+        "key": "DESC",
+        "value": " When you make a successful Stunning Fist attempt against an opponent that is grappled, helpless, or stunned, instead of imparting any other Stunning Fist effect, you can cripple that opponent's mouth, dealing normal unarmed strike damage and 1d4 points of bleed damage. Until the bleed damage ends, the target is unable to use its mouth to attack, speak clearly, and employ verbal spell components. A creature that is immune to critical hits or that has no discernible mouth is immune to the effects of this feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Jawbreaker"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4406,
+    "record_key": "Warpriest Bonus Feat ~ Jawbreaker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

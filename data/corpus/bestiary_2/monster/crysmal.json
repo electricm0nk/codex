@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:crysmal_shard_spike"
@@ -25,6 +23,124 @@
     ],
     "race_subtype": "Earth|Elemental",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crysmal ~ Crystal Sense|Crysmal ~ Shard Spike|Immunity to Cold|Immunity to Fire|Resistance to Electricity"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Terran"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In rocky areas|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sting|DAMAGE|max(0,STR/2)"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "DR",
+        "value": "5/bludgeoning"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Burrow,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Sting,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing,*1,2d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Earth|Elemental"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=4|Dimension Door|Sanctuary,12+CHA|Touch of Idiocy,12+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=4|Detect Magic|Ghost Sound,10+CHA|Mage Hand|Silent Image,11+CHA"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "S",
     "source_page": "p.61",
     "speeds": [
@@ -38,16 +154,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 199,
-    "record_key": "Crysmal"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 199,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Crysmal",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

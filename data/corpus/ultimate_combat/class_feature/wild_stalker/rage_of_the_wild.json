@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Stalker ~ Rage of the Wild",
+    "name": "Rage of the Wild",
+    "class": "Ranger",
+    "description": "At 4th level, a wild stalker gains the rage ability as the barbarian class feature, but its barbarian level is considered to be his ranger level -3. This ability replaces hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Stalker ~ Rage of the Wild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a wild stalker gains the rage ability as the barbarian class feature, but its barbarian level is considered to be his ranger level -3. This ability replaces hunter's bond."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageLvl|RangerLvl-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1576,
+    "record_key": "Wild Stalker ~ Rage of the Wild"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

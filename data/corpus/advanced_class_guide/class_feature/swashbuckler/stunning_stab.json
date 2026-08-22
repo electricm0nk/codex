@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler ~ Stunning Stab",
+    "name": "Stunning Stab",
+    "class": "Swashbuckler",
+    "description": "At 19th level, when a swashbuckler hits a creature with a light or one-handed piercing melee weapon, she can spend 2 panache points to stun the creature for 1 round. The creature must make a DC %1 Fortitude saving throw. If the creature fails, it is stunned for 1 round. Creatures that are immune to critical hits are also immune to this effect.|SwashbucklerStunningStabDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Stunning Stab"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL19"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL19.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SwashbucklerDeedQualifyLVL,19"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerStunningStabDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerStunningStabLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, when a swashbuckler hits a creature with a light or one-handed piercing melee weapon, she can spend 2 panache points to stun the creature for 1 round. The creature must make a DC %1 Fortitude saving throw. If the creature fails, it is stunned for 1 round. Creatures that are immune to critical hits are also immune to this effect.|SwashbucklerStunningStabDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerStunningStabLVL|SwashbucklerDeedsLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerStunningStabDC|SwashbucklerStunningStabLVL/2+10+DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2098,
+    "record_key": "Swashbuckler ~ Stunning Stab"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

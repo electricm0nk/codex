@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Stars Subdomain",
+    "name": "Stars Subdomain",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Stars Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Stars Subdomain],[PREABILITY:1,CATEGORY=Special Ability,Core Domain ~ Stars Subdomain],[PREVARLT:VoidDomain,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainStarsSubdomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Guarded Mind|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Void)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ The Stars Are Right|PREVARGTEQ:DomainVoidLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Void"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 36,
+    "record_key": "Inquisitor Domain ~ Stars Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

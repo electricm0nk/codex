@@ -59,6 +59,19 @@ unattended-mode authorization) — read it directly each cycle. This file states
    `generated_at`/`doneness_source_generated_at`) risks a figure that silently drifted between the two
    reads. Any cycle receipt quoting a live-dashboard figure checks this field first and, if `false`,
    names the specific source field and its own stamp — not just "the dashboard says N."
+10. **The public site's status feed is refreshed on the same integration-cycle cadence as the
+    dashboard, by the same command.** `scripts/publish-site-dashboard.sh` (no args) already
+    regenerates `site/dashboard/PF1e-dashboard.json` from the live producer AND, as its own
+    trailing step, `site/status-data.json` + `site/status-data/*.json` (the public, PI-screened,
+    three-bucket-doneness, standing-tagged projection `scripts/site/build_public_status.py` builds
+    from `site/dashboard/units/*.json` — SITE-PUBSTATUS-001, 2026-08-17). Publishing the public
+    site dashboard/status feed is an integration-cycle concern, not a per-card one (same posture as
+    override 3's own receipt convention) — a per-card cycle is not expected to run this, but any
+    cycle that DOES touch `docs/work-inventory.json` or `site/dashboard/units/*.json` runs
+    `./scripts/publish-site-dashboard.sh` (real publish, not `--check`) and commits the refresh
+    before closing. `./scripts/verify.sh`'s `site-dashboard-check` / `site-dashboard-pi-gate` /
+    `site-public-status-check` / `site-public-status-pi-gate` stages are what actually enforce
+    this — a stale or PI-leaking committed copy is a full-gate failure, not a courtesy check.
 
 ## What is not overridden
 

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cloaked Wolf ~ Lure Prey",
+    "name": "Lure Prey",
+    "class": "Inquisitor",
+    "description": "Cloaked wolves are skilled at maintaining a harmless guise even while they silently prepare to strike against their enemies. A cloaked wolf receives a +%1 morale bonus on all Disguise and Sleight of Hand checks. When a cloaked wolf uses Sleight of Hand to draw a hidden weapon, this bonus doubles.|CloakedWolfSkillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cloaked Wolf ~ Lure Prey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.CloakedWolfClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CloakedWolfSkillBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Cloaked wolves are skilled at maintaining a harmless guise even while they silently prepare to strike against their enemies. A cloaked wolf receives a +%1 morale bonus on all Disguise and Sleight of Hand checks. When a cloaked wolf uses Sleight of Hand to draw a hidden weapon, this bonus doubles.|CloakedWolfSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Sleight of Hand=Draw Hidden Weapon|CloakedWolfSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise,Sleight of Hand|CloakedWolfSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CloakedWolfSkillBonus|max(1,InquisitorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 448,
+    "record_key": "Cloaked Wolf ~ Lure Prey"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

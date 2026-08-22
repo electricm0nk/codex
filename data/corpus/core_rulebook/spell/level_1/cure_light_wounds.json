@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "When laying your hand upon a living creature, you channel positive energy that cures 1d8 points of damage + 1 point per caster level [maximum +5]. Since undead are powered by negative energy, this spell deals damage to them instead of curing their wounds. An undead creature can apply spell resistance, and can attempt a Will save to take half damage.",
     "key": "Cure Light Wounds",
-    "school": "Conjuration",
     "level": 1,
-    "description": "When laying your hand upon a living creature, you channel positive energy that cures 1d8 points of damage + 1 point per caster level [maximum +5]. Since undead are powered by negative energy, this spell deals damage to them instead of curing their wounds. An undead creature can apply spell resistance, and can attempt a Will save to take half damage."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Druid,Paladin=1|Ranger=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "When laying your hand upon a living creature, you channel positive energy that cures 1d8 points of damage + 1 point per caster level [maximum +5]. Since undead are powered by negative energy, this spell deals damage to them instead of curing their wounds. An undead creature can apply spell resistance, and can attempt a Will save to take half damage.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When laying your hand upon a living creature, you channel positive energy that cures 1d8+(min(5,CASTERLEVEL)) points of damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Healing=1"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will half (harmless); see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/cureLightWounds.html#_cure-light-wounds"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless); see text"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 126,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 888,
-    "record_key": "Cure Light Wounds.MOD"
+    "record_key": "Cure Light Wounds",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

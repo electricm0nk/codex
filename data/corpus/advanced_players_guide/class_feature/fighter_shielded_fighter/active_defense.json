@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Shielded Fighter ~ Active Defense",
+    "name": "Active Defense",
+    "class": "Fighter",
+    "description": "At 3rd level, a shielded fighter gains a +1 dodge bonus to AC when wielding a shield and fighting defensively, using Combat Expertise, or using total defense. This bonus increases by +1 for every four levels beyond 3rd. As a swift action, he may share this bonus with one adjacent ally, or half of the bonus (minimum +0) with all adjacent allies, until the beginning of his next turn. This ability replaces armor training 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Shielded Fighter ~ Active Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining1.FighterArmorTraining2.FighterArmorTraining3.FighterArmorTraining4"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a shielded fighter gains a +1 dodge bonus to AC when wielding a shield and fighting defensively, using Combat Expertise, or using total defense. This bonus increases by +1 for every four levels beyond 3rd. As a swift action, he may share this bonus with one adjacent ally, or half of the bonus (minimum +0) with all adjacent allies, until the beginning of his next turn. This ability replaces armor training 4."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2206,
+    "record_key": "Fighter Shielded Fighter ~ Active Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

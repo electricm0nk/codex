@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Seal-Breaker ~ Corpse Rider",
+    "name": "Corpse Rider",
+    "class": "Antipaladin",
+    "description": "Upon reaching 5th level, a sealbreaker receives a boon from beyond the grave. This boon can take one of two forms: the seal-breaker can choose to form a bond with his weapon, or he can choose to animate an undead mount to ride. If a bonded weapon is selected, this ability works exactly like the antipaladin's fiendish boon ability. If the undead mount ability is selected, the sealbreaker gains the ability to reanimate any Large corpse (or a Medium corpse for Small seal-breakers) as his corpse mount. If no such corpse is present, the seal-breaker cannot summon his mount. The corpse animates as a quadruped of the same size that the seal-breaker can ride, regardless of the corpse's living form. This corpse mount functions as a druid's animal companion using the seal-breaker's level as his effective druid level. The mount has the same base statistics as a heavy horse, pony, boar, camel, or dog (based on its size) with the following changes: its type changes to undead, it has a good Will save and bad Fortitude and Reflex saves, it uses the base creature's Constitution score as its Charisma score (and likewise applies all level-based advancements to Charisma instead of Constitution), and it has an Intelligence score of at least 6. This ability otherwise functions as and replaces fiendish boon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Seal-Breaker ~ Corpse Rider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Antipaladin Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon reaching 5th level, a sealbreaker receives a boon from beyond the grave. This boon can take one of two forms: the seal-breaker can choose to form a bond with his weapon, or he can choose to animate an undead mount to ride. If a bonded weapon is selected, this ability works exactly like the antipaladin's fiendish boon ability. If the undead mount ability is selected, the sealbreaker gains the ability to reanimate any Large corpse (or a Medium corpse for Small seal-breakers) as his corpse mount. If no such corpse is present, the seal-breaker cannot summon his mount. The corpse animates as a quadruped of the same size that the seal-breaker can ride, regardless of the corpse's living form. This corpse mount functions as a druid's animal companion using the seal-breaker's level as his effective druid level. The mount has the same base statistics as a heavy horse, pony, boar, camel, or dog (based on its size) with the following changes: its type changes to undead, it has a good Will save and bad Fortitude and Reflex saves, it uses the base creature's Constitution score as its Charisma score (and likewise applies all level-based advancements to Charisma instead of Constitution), and it has an Intelligence score of at least 6. This ability otherwise functions as and replaces fiendish boon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 188,
+    "record_key": "Seal-Breaker ~ Corpse Rider"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

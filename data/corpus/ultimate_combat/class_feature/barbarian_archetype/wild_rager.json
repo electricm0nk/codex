@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Wild Rager",
+    "name": "Wild Rager",
+    "class": "Barbarian Archetype",
+    "description": "Rages are barely controlled, but there are those who wholly give in to their more savage side, letting their rages take them to a confusing and uncontrolled place of terrible savagery. These barbarians become beasts, consumed with absolute bloodlust to the point where they cannot tell friend from foe.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Wild Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype.BarbarianUncannyDodge.BarbarianImprovedUncannyDodge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Wild Rager],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianUncannyDodge,TYPE.BarbarianImprovedUncannyDodge]"
+      },
+      {
+        "key": "DESC",
+        "value": "Rages are barely controlled, but there are those who wholly give in to their more savage side, letting their rages take them to a confusing and uncontrolled place of terrible savagery. These barbarians become beasts, consumed with absolute bloodlust to the point where they cannot tell friend from foe."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Wild Rager ~ Uncontrolled Rage|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Wild Rager ~ Wild Fighting|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Wild Rager ~ Rage Conversion|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Wild Rager ~ Rage Powers|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Barbarian"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 309,
+    "record_key": "Barbarian Archetype ~ Wild Rager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

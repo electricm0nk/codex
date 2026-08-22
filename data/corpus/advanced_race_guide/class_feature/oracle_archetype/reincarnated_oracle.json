@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle Archetype ~ Reincarnated Oracle",
+    "name": "Reincarnated Oracle",
+    "class": "Oracle Archetype",
+    "description": "A reincarnated oracle draws her knowledge and power from the experiences of her previous lives. Her memories guide her through a spiritual ascension leading the way to her ultimate incarnation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Reincarnated Oracle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleMysterySpell2.OracleMysterySpell4.OracleMysterySpell10.OracleMysterySpell16.OracleMysterySpell18.OracleMysteryRevelation1.OracleMysteryRevelation3.OracleMysteryRevelation7"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Oracle ~ Haunted,Oracle ~ Tongues"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Reincarnated Oracle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell16,TYPE.OracleMysterySpell18,TYPE.OracleRevelation1,TYPE.OracleRevelation3,TYPE.OracleRevelation7]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsSamsaran=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A reincarnated oracle draws her knowledge and power from the experiences of her previous lives. Her memories guide her through a spiritual ascension leading the way to her ultimate incarnation."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Reincarnated Oracle ~ Recommended Mysteries|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Reincarnated Oracle ~ Oracle's Curse|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Reincarnated Oracle ~ Bonus Spells|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Reincarnated Oracle ~ Revelations|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Oracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 936,
+    "record_key": "Oracle Archetype ~ Reincarnated Oracle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

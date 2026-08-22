@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Asavir ~ Equine Bond",
+    "name": "Equine Bond",
+    "class": "Asavir",
+    "description": "An asavir gains a horse as a loyal steed. This mount functions as a druid's animal companion, using the asavir's level + 2 as her effective druid level (for example, at 3rd level, the asavir's mount functions as a 5th-level druid's animal companion). The companion must be a horse or pony, though the GM might approve other equine animals as suitable mounts (especially in the case of unusually large or small asavirs). If the asavir has a horse companion from another class that grants a similar ability (such as cavalier APG , druid, or ranger), her asavir levels stack with levels from one of these other classes (her choice) for the purposes of determining her mount's statistics and abilities-she does not gain a second companion for having this ability from a different class. Her total effective druid level for determining her mount's statistics can never exceed her total character level. An asavir doesn't take an armor check penalty on Ride checks while riding her mount, and her mount is always considered combat trained and begins play with Light Armor Proficiency as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Equine Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsavirAnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterIsAsavir|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "DESC",
+        "value": "An asavir gains a horse as a loyal steed. This mount functions as a druid's animal companion, using the asavir's level + 2 as her effective druid level (for example, at 3rd level, the asavir's mount functions as a 5th-level druid's animal companion). The companion must be a horse or pony, though the GM might approve other equine animals as suitable mounts (especially in the case of unusually large or small asavirs). If the asavir has a horse companion from another class that grants a similar ability (such as cavalier APG , druid, or ranger), her asavir levels stack with levels from one of these other classes (her choice) for the purposes of determining her mount's statistics and abilities-she does not gain a second companion for having this ability from a different class. Her total effective druid level for determining her mount's statistics can never exceed her total character level. An asavir doesn't take an armor check penalty on Ride checks while riding her mount, and her mount is always considered combat trained and begins play with Light Armor Proficiency as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirAnimalCompanionLVL|AsavirLVL+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|AsavirAnimalCompanionLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterIsAsavir|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Horse),Companion (Pony)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|-ACCHECK"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 42,
+    "record_key": "Asavir ~ Equine Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

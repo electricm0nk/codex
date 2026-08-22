@@ -1,27 +1,101 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Wall of Lava",
-    "school": "Conjuration",
-    "level": 8,
     "description": "This spell creates a vertical wall of lava that is 1 inch thick for every 4 caster levels and composed of up to one 5-foot square per level. A wall of lava's maximum height cannot exceed half of its width (with a minimum height of 5 feet). The wall cannot be conjured so that it occupies the same space as a creature or object. A section of a wall of lava can be destroyed by damage (hardness 4, hp 90), but if a section is destroyed, the remaining lava in the wall immediately fills in any such hole created, reducing the wall's overall size by one 5-foot square but remaining a contiguous barrier. Each time a weapon strikes a wall of lava, it takes 2d6 points of fire damage (or the creature who strikes the wall takes 2d6 fire damage if the attack was via an unarmed strike or natural attack).  A creature can move through a wall of lava as a full-round action by making a DC 25 Strength check-failure indicates that the creature is pushed back out of the wall to the point he just attempted to leave. A creature with a burrow speed can move through the wall using its burrow speed. An attempt to move through a wall of lava inflicts 20d6 fire damage. A wall of lava also radiates heat as if it were a wall of fire, although the heat from a wall of lava radiates from both sides.  Once per round as a move action, you can direct the wall of lava to erupt. This causes a plume of lava to fire at any target within 60 feet of either side of the wall, but reduces the wall's overall size by 1d4 5-foot square sections. You must make a ranged touch attack to hit the target, which takes 10d6 points of fire damage on a hit. Holes created in a wall of lava from this effect instantly reseal, reducing the overall size of the wall.  All damage inflicted by physical contact with a wall of lava continues for 1d3 rounds after exposure ceases, but this additional damage is only half that dealt during actual contact (that is, 1d6 or 5d6 or 10d6 points per round).",
-    "full_text": true
+    "full_text": true,
+    "key": "Wall of Lava",
+    "level": 8,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=8"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell creates a vertical wall of lava that is 1 inch thick for every 4 caster levels and composed of up to one 5-foot square per level. A wall of lava's maximum height cannot exceed half of its width (with a minimum height of 5 feet). The wall cannot be conjured so that it occupies the same space as a creature or object. A section of a wall of lava can be destroyed by damage (hardness 4, hp 90), but if a section is destroyed, the remaining lava in the wall immediately fills in any such hole created, reducing the wall's overall size by one 5-foot square but remaining a contiguous barrier. Each time a weapon strikes a wall of lava, it takes 2d6 points of fire damage (or the creature who strikes the wall takes 2d6 fire damage if the attack was via an unarmed strike or natural attack).  A creature can move through a wall of lava as a full-round action by making a DC 25 Strength check-failure indicates that the creature is pushed back out of the wall to the point he just attempted to leave. A creature with a burrow speed can move through the wall using its burrow speed. An attempt to move through a wall of lava inflicts 20d6 fire damage. A wall of lava also radiates heat as if it were a wall of fire, although the heat from a wall of lava radiates from both sides.  Once per round as a move action, you can direct the wall of lava to erupt. This causes a plume of lava to fire at any target within 60 feet of either side of the wall, but reduces the wall's overall size by 1d4 5-foot square sections. You must make a ranged touch attack to hit the target, which takes 10d6 points of fire damage on a hit. Holes created in a wall of lava from this effect instantly reseal, reducing the overall size of the wall.  All damage inflicted by physical contact with a wall of lava continues for 1d3 rounds after exposure ceases, but this additional damage is only half that dealt during actual contact (that is, 1d6 or 5d6 or 10d6 points per round).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Wall damages foes that try to enter, periodically launches lava at nearby targets.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth|Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a chunk of dried lava)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "EarthSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/wallOfLava.html#_wall-of-lava"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "lava wall whose area is up to (CASTERLEVEL) 5-ft. squares (S)"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 266,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2113,
-    "record_key": "Wall of Lava"
+    "record_key": "Wall of Lava",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

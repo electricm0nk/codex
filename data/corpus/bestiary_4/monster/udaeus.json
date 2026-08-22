@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:udaeus_armor_and_weapon_training",
@@ -18,6 +16,120 @@
     "natural_attacks": [],
     "race_subtype": "Mythic|Udaeus",
     "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Udaeus"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|4"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Udaeus"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Climb|TYPE.Craft|Handle Animal|Heal|TYPE.Profession|Ride|Survival"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Humanoid:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Mythic|Udaeus"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid"
+      }
+    ],
     "size": "M",
     "source_page": "p.267",
     "speeds": [
@@ -27,16 +139,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 237,
-    "record_key": "Udaeus"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 237,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Udaeus",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

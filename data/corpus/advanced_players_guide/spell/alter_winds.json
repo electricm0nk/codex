@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Alter Winds",
-    "school": "Transmutation",
-    "level": 1,
     "description": "You subtly enhance or diminish the effects of natural winds within the spell's area, which is an immobile emanation around a point touched by you as the spell is cast. Within the area, natural (but not magical) wind effects are either increased or decreased by one step in intensity (Core Rulebook 439). The maximum wind force you can affect with this spell is based on your caster level, as shown on the table below. Alter winds has no effect on magical wind effects.",
-    "full_text": true
+    "full_text": true,
+    "key": "Alter Winds",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Increase/decrease strength of natural winds.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You subtly enhance or diminish the effects of natural winds within the spell's area, which is an immobile emanation around a point touched by you as the spell is cast. Within the area, natural (but not magical) wind effects are either increased or decreased by one step in intensity (Core Rulebook 439). The maximum wind force you can affect with this spell is based on your caster level, as shown on the table below. Alter winds has no effect on magical wind effects.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Air"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/alterWinds.html#_alter-winds"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "immobile 10-ft.-radius emanation"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 21,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1846,
-    "record_key": "Alter Winds"
+    "record_key": "Alter Winds",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

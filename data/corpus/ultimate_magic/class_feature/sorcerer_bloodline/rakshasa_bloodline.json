@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Rakshasa",
+    "name": "Rakshasa Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "At some point in your family's history, one of your ancestors was tainted by the inf luence of a rakshasa. Though most of your family seem entirely normal, you have always felt your own skin is a prison from which magic allows you to escape. Your birthright is a secret you may be forced to keep from societies that would never deal with you if your heritage were known.|PREVAREQ:Sorcerer_Rakshasa_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Rakshasa"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At some point in your family's history, one of your ancestors was tainted by the inf luence of a rakshasa. Though most of your family seem entirely normal, you have always felt your own skin is a prison from which magic allows you to escape. Your birthright is a secret you may be forced to keep from societies that would never deal with you if your heritage were known.|PREVAREQ:Sorcerer_Rakshasa_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Disguise|PREVARGTEQ:Sorcerer_Rakshasa_BloodlineClassSkill1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rakshasa Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Rakshasa_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rakshasa Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Rakshasa_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rakshasa Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Rakshasa_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Rakshasa Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Rakshasa_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Rakshasa Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Rakshasa_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Rakshasa Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Rakshasa_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Rakshasa Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Rakshasa_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Rakshasa Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Rakshasa_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower1LVL|Sorcerer_Rakshasa_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower3LVL|Sorcerer_Rakshasa_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower9LVL|Sorcerer_Rakshasa_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower15LVL|Sorcerer_Rakshasa_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower20LVL|Sorcerer_Rakshasa_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Rakshasa"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 655,
+    "record_key": "Sorcerer Bloodline ~ Rakshasa"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

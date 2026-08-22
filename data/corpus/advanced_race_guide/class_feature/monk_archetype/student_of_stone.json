@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Student of Stone",
+    "name": "Student of Stone",
+    "class": "Monk Archetype",
+    "description": "By following the path of the stone, students of stone give up much of monks' mobility in favor of sheer resilience.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Student of Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkEvasion.MonkFastMovement.MonkHighJump.MonkImprovedEvasion.MonkAbundantStep.MonkPerfectSelf"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Student of Stone],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkEvasion,TYPE.MonkFastMovement,TYPE.MonkHighJump,TYPE.MonkImprovedEvasion,TYPE.MonkAbundantStep,TYPE.MonkPerfectSelf]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsOread=true"
+      },
+      {
+        "key": "DESC",
+        "value": "By following the path of the stone, students of stone give up much of monks' mobility in favor of sheer resilience."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Hard as Stone|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Strength of Stone|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Bonus Feat|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Bones of Stone 1|!PRECLASS:1,Monk=10|PRECLASS:1,Monk=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Bones of Stone 2|!PRECLASS:1,Monk=15|PRECLASS:1,Monk=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Bones of Stone 3|PRECLASS:1,Monk=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Body of Stone|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Soul of Stone|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Stone ~ Stone Self|PRECLASS:1,Monk=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 678,
+    "record_key": "Monk Archetype ~ Student of Stone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

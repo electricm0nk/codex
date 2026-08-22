@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Bone Lock",
+    "name": "Bone Lock",
+    "class": "Shaman Spirit Hex",
+    "description": "With a quick incantation, the shaman causes a creature within 30 feet to suffer stiffness in the joints and bones, causing the target to be staggered",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Bone Lock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Bone Lock"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBonesSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBoneLockDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBoneLockDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With a quick incantation, the shaman causes a creature within 30 feet to suffer stiffness in the joints and bones, causing the target to be staggered"
+      },
+      {
+        "key": "DESC",
+        "value": "1 round.|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 rounds.|ShamanBoneLockDuration|PREVARGTEQ:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "A successful Fortitude saving throw (DC %1) negates this effect.|ShamanBoneLockDC"
+      },
+      {
+        "key": "DESC",
+        "value": "The target can attempt a save each round to end the effect if its initial saving throw fails.|PREMULT:2,[PREVARGTEQ:ShamanSpiritLVL,8],[PREVARLT:ShamanSpiritLVL,16]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBoneLockDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBoneLockDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1527,
+    "record_key": "Shaman Spirit Hex ~ Bone Lock"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against Undeath ~ Aura of Life",
+    "name": "Aura of Life",
+    "class": "Paladin",
+    "description": "You gain a +4 morale bonus on saves against attacks that grant negative levels and saves to overcome negative levels. Each ally within 10 feet of you gains a +2 morale bonus on these saves. This ability functions only while you are conscious, not if you are unconscious or dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Undeath ~ Aura of Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 morale bonus on saves against attacks that grant negative levels and saves to overcome negative levels. Each ally within 10 feet of you gains a +2 morale bonus on these saves. This ability functions only while you are conscious, not if you are unconscious or dead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1559,
+    "record_key": "Oath against Undeath ~ Aura of Life"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

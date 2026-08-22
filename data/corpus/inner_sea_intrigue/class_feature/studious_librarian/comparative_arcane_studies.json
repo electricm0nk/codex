@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Studious Librarian ~ Comparative Arcane Studies",
+    "name": "Comparative Arcane Studies",
+    "class": "Bard",
+    "description": "The studious librarian is exposed to a wide variety of magical writing, and can use his own magic to duplicate spells from other classes' spell lists. %1 times per day, a studious librarian can cast any spell from the bard, sorcerer/wizard, or witch spell lists from a scroll or spellbook in hand as if it were one of his bard spells known, expending a bard spell slot of the same spell level to cast the desired spell. Casting a spell from a scroll this way does not cause the spell to vanish from the scroll. A spell cast in this way cannot be modified by metamagic.|min(4,(BardLVL-2)/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Studious Librarian ~ Comparative Arcane Studies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The studious librarian is exposed to a wide variety of magical writing, and can use his own magic to duplicate spells from other classes' spell lists. %1 times per day, a studious librarian can cast any spell from the bard, sorcerer/wizard, or witch spell lists from a scroll or spellbook in hand as if it were one of his bard spells known, expending a bard spell slot of the same spell level to cast the desired spell. Casting a spell from a scroll this way does not cause the spell to vanish from the scroll. A spell cast in this way cannot be modified by metamagic.|min(4,(BardLVL-2)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 35,
+    "record_key": "Studious Librarian ~ Comparative Arcane Studies"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

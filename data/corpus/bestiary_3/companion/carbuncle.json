@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "ability_keys": [
       "bestiary_3:companion:carbuncle_empath",
@@ -24,6 +22,92 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Carbuncle"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=in grass,Stealth=in brush|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d3"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "reach_feet": null,
     "record_type": "creature",
     "size": "T",
@@ -64,16 +148,18 @@
       "Magical Beast"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
-    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb",
-    "line": 15,
-    "record_key": "Carbuncle"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
+    "record_key": "Carbuncle",
+    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

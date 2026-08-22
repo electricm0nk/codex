@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcanist Archetype ~ Occultist",
+    "name": "Occultist",
+    "class": "Arcanist Archetype",
+    "description": "Not all arcanists peer inward to discern the deepest secrets of magic. Some look outward, connecting with extraplanar creatures and bartering for secrets, power, and favor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist Archetype ~ Occultist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ArcanistArchetype.ArcanistExploit1.ArcanistExploit7.ArcanistMagicalSupremacy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Arcanist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Occultist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistExploit1,TYPE.ArcanistExploit7,TYPE.ArcanistMagicalSupremacy]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistOccultistArchetype|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all arcanists peer inward to discern the deepest secrets of magic. Some look outward, connecting with extraplanar creatures and bartering for secrets, power, and favor."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Occultist ~ Planar Spells|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Occultist ~ Conjurer's Focus|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Occultist ~ Planar Contact|PRECLASS:1,Arcanist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Class Feature|AUTOMATIC|Occultist ~ Perfect Summoner|PRECLASS:1,Arcanist=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistOccultistArchetype|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Arcanist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2378,
+    "record_key": "Arcanist Archetype ~ Occultist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

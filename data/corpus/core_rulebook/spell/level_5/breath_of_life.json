@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell cures 5d8 points of damage + 1 point per caster level [maximum +25]. Unlike other spells that heal damage, breath of life can bring recently slain creatures back to life. If cast upon a creature that has died within 1 round, apply the healing from this spell to the creature. If the healed creature's hit point total is at a negative amount less than its Constitution score, it comes back to life and stabilizes at its new hit point total. If the creature's hit point total is at a negative amount equal to or greater than its Constitution score, the creature remains dead. Creatures brought back to life through breath of life gain a temporary negative level that lasts for 1 day. Creatures slain by death effects cannot be saved by breath of life. Like cure spells, breath of life deals damage to undead creatures rather than curing them, and cannot bring them back to life.",
     "key": "Breath of Life",
-    "school": "Conjuration",
     "level": 5,
-    "description": "This spell cures 5d8 points of damage + 1 point per caster level [maximum +25]. Unlike other spells that heal damage, breath of life can bring recently slain creatures back to life. If cast upon a creature that has died within 1 round, apply the healing from this spell to the creature. If the healed creature's hit point total is at a negative amount less than its Constitution score, it comes back to life and stabilizes at its new hit point total. If the creature's hit point total is at a negative amount equal to or greater than its Constitution score, the creature remains dead. Creatures brought back to life through breath of life gain a temporary negative level that lasts for 1 day. Creatures slain by death effects cannot be saved by breath of life. Like cure spells, breath of life deals damage to undead creatures rather than curing them, and cannot bring them back to life."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell cures 5d8 points of damage + 1 point per caster level [maximum +25]. Unlike other spells that heal damage, breath of life can bring recently slain creatures back to life. If cast upon a creature that has died within 1 round, apply the healing from this spell to the creature. If the healed creature's hit point total is at a negative amount less than its Constitution score, it comes back to life and stabilizes at its new hit point total. If the creature's hit point total is at a negative amount equal to or greater than its Constitution score, the creature remains dead. Creatures brought back to life through breath of life gain a temporary negative level that lasts for 1 day. Creatures slain by death effects cannot be saved by breath of life. Like cure spells, breath of life deals damage to undead creatures rather than curing them, and cannot bring them back to life.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell cures 5d8+(min(CASTERLEVEL,25)) points of damage|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Healing=5"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless) or Will half, see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/breathOfLife.html#_breath-of-life"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless) or yes, see text"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 67,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 830,
-    "record_key": "Breath of Life.MOD"
+    "record_key": "Breath of Life",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

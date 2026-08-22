@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magician ~ Expanded Repertoire",
+    "name": "Expanded Repertoire",
+    "class": "Bard",
+    "description": "At 2nd level and every four levels thereafter, a magician can add one spell to his spells known from the spell list of any arcane spellcasting class. The spell must be of a level he can cast. This ability replaces versatile performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magician ~ Expanded Repertoire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardVersatilePerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every four levels thereafter, a magician can add one spell to his spells known from the spell list of any arcane spellcasting class. The spell must be of a level he can cast. This ability replaces versatile performance."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Expanded Repertoire Selection|BardLVL+2/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1691,
+    "record_key": "Magician ~ Expanded Repertoire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

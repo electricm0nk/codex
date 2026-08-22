@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Voice of the Wild ~ Nature Magic",
+    "name": "Nature Magic",
+    "class": "Bard",
+    "description": "[NOT IMPLEMENTED] At 1st level, a voice of the wild can select a 1st-level druid or ranger spell as a bard spell known instead of a spell from the bard spell list. The voice of the wild can select another druid or ranger spell (of any bard spell level he can cast) at 4th, 7th, 10th, 13th, and 16th levels. If he chooses to learn a new spell in place of an old one, he can exchange a druid or ranger spell for another.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Voice of the Wild ~ Nature Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Voice of the Wild Class Feature.Bard Class Feature.BardCountersong.BardVersatilePerformance.BardJackOfAllTrades"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] At 1st level, a voice of the wild can select a 1st-level druid or ranger spell as a bard spell known instead of a spell from the bard spell list. The voice of the wild can select another druid or ranger spell (of any bard spell level he can cast) at 4th, 7th, 10th, 13th, and 16th levels. If he chooses to learn a new spell in place of an old one, he can exchange a druid or ranger spell for another."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2696,
+    "record_key": "Voice of the Wild ~ Nature Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

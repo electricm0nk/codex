@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Weapon Master ~ Weapon Training",
+    "name": "Weapon Training",
+    "class": "Fighter",
+    "description": "You gaina a +%1 bonus on attack and damage rolls with your chosen weapon. This ability replaces armor training 1, 2, 3, and 4.|WeaponTrainingBase",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Weapon Master ~ Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining1.FighterArmorTraining2.FighterArmorTraining3.FighterArmorTraining4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingBase|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gaina a +%1 bonus on attack and damage rolls with your chosen weapon. This ability replaces armor training 1, 2, 3, and 4.|WeaponTrainingBase"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Master Chosen Weapon|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBase|(FighterLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2234,
+    "record_key": "Fighter Weapon Master ~ Weapon Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

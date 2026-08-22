@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Red Shroud",
+    "name": "Red Shroud",
+    "class": null,
+    "description": "You can create a veil of red mist %1 times/day as a move action. This persists for %2 rounds, and grants a +1 dodge bonus to AC and fast healing %1.|max(1,CON)|RedMantisLvl",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a veil of red mist %1 times/day as a move action. This persists for %2 rounds, and grants a +1 dodge bonus to AC and fast healing %1.|max(1,CON)|RedMantisLvl"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|max(1,CON)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|1|TYPE=Dodge"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 425,
+    "record_key": "Red Shroud"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

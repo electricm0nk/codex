@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Death Slayer ~ Channel Smite",
+    "name": "Channel Smite",
+    "class": "Death Slayer",
+    "description": "A death slayer gains Channel Smite as a bonus feat. If she already has this feat, she instead gains a different feat selected from those bonus feats normally available to her at 2nd level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Death Slayer ~ Channel Smite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Death Slayer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "DESC",
+        "value": "A death slayer gains Channel Smite as a bonus feat. If she already has this feat, she instead gains a different feat selected from those bonus feats normally available to her at 2nd level."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Channel Smite Feat|Death Slayer Bonus Feat"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 127,
+    "record_key": "Death Slayer ~ Channel Smite"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

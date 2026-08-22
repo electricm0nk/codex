@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Siege School ~ Display",
+    "name": "Siege School",
+    "class": "Siege School",
+    "description": "The strange rituals needed to empower all forms of siege engines takes a level of dedication and perseverance that limits a wizard's time to unlock other arcane mysteries. At 1st level, the siege mage forsakes three schools of magic. Once chosen, these opposition schools cannot be changed. A siege mage who prepares spells from his opposition school must use two spell slots of that level to prepare the spell. In addition, the siege mage takes a -4 penalty on any skill checks made when crafting a magic item that has a spell from one of his opposition schools. This ability replaces arcane school. Chosen Opposition Schools, %1.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege School ~ Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The strange rituals needed to empower all forms of siege engines takes a level of dedication and perseverance that limits a wizard's time to unlock other arcane mysteries. At 1st level, the siege mage forsakes three schools of magic. Once chosen, these opposition schools cannot be changed. A siege mage who prepares spells from his opposition school must use two spell slots of that level to prepare the spell. In addition, the siege mage takes a -4 penalty on any skill checks made when crafting a magic item that has a spell from one of his opposition schools. This ability replaces arcane school. Chosen Opposition Schools, %1.|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SCHOOLS|ALL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1755,
+    "record_key": "Siege School ~ Display"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

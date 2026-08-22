@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Plant Blessing ~ Creeping Vines",
+    "name": "Creeping Vines",
+    "class": "Plant Blessing",
+    "description": "Upon hitting with a melee attack, as a swift action you cause the creature you hit to sprout entangling vines that attempt to hold it in place, entangling it for 1 round (Reflex negates).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Blessing ~ Creeping Vines"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon hitting with a melee attack, as a swift action you cause the creature you hit to sprout entangling vines that attempt to hold it in place, entangling it for 1 round (Reflex negates)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2269,
+    "record_key": "Plant Blessing ~ Creeping Vines"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

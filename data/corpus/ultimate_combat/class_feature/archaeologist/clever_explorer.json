@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Archaeologist ~ Clever Explorer",
+    "name": "Clever Explorer",
+    "class": "Bard",
+    "description": "At 2nd level, an Archaeologist gains a bonus equal to half his class level on Disable Device and Perception checks. He can disable intricate and complex devices in half the normal amount of time (minimum 1 round) and open a lock as a standard action. At 6th level, an Archaeologist can take 10 on Disable Device checks, even if distracted or endangered, and can disarm magical traps. This ability replaces the versatile performance ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archaeologist ~ Clever Explorer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an Archaeologist gains a bonus equal to half his class level on Disable Device and Perception checks. He can disable intricate and complex devices in half the normal amount of time (minimum 1 round) and open a lock as a standard action. At 6th level, an Archaeologist can take 10 on Disable Device checks, even if distracted or endangered, and can disarm magical traps. This ability replaces the versatile performance ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device,Perception|classlevel(\"Bard\")/2|PREVARGTEQ:classlevel(\"Bard\"),2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 392,
+    "record_key": "Archaeologist ~ Clever Explorer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

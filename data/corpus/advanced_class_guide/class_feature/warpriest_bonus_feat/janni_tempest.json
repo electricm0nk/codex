@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Janni Tempest",
+    "name": "Janni Tempest",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your gale of attacks easily throws your opponents off balance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Janni Tempest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Unarmed Strike,Janni Style"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Acrobatics=5,Perform (dance)=5"
+      },
+      {
+        "key": "DESC",
+        "value": "Your gale of attacks easily throws your opponents off balance."
+      },
+      {
+        "key": "DESC",
+        "value": " While you are using the Janni Style feat, whenever you make an unarmed attack and hit an opponent, you gain a +4 bonus on checks made to bull rush or trip that opponent, as long as the combat maneuver is your next attack by the end of your turn. You do not provoke an attack of opportunity from the target of the maneuver."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Janni Tempest"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4475,
+    "record_key": "Warpriest Bonus Feat ~ Janni Tempest"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

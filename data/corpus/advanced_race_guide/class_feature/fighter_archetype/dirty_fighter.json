@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Dirty Fighter",
+    "name": "Dirty Fighter",
+    "class": "Fighter Archetype",
+    "description": "The dirty fighter laughs at concepts like honor and fair play. He cares only for victory, no matter how he achieves it, and spends as much time mastering sneaky combat maneuvers as he does drilling with weapons or learning how to wear armor. A dirty fighter has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Dirty Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Dirty Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsOrc=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The dirty fighter laughs at concepts like honor and fair play. He cares only for victory, no matter how he achieves it, and spends as much time mastering sneaky combat maneuvers as he does drilling with weapons or learning how to wear armor. A dirty fighter has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dirty Fighter ~ Sidestep|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dirty Fighter ~ Maneuver Training|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dirty Fighter ~ Speedy Tricks|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dirty Fighter ~ Double Tricks|PRECLASS:1,Fighter=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 647,
+    "record_key": "Fighter Archetype ~ Dirty Fighter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

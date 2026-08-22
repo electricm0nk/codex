@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "A misty vapor arises around you. It is stationary. The vapor obscures all sight, including darkvision, beyond 5 feet. A creature 5 feet away has concealment [attacks have a 20%% miss chance]. Creatures farther away have total concealment [50%% miss chance, and the attacker cannot use sight to locate the target]. A moderate wind [11+ mph], such as from a gust of wind spell, disperses the fog in 4 rounds. A strong wind [21+ mph] disperses the fog in 1 round. A fireball, flame strike, or similar spell burns away the fog in the explosive or fiery spell's area. A wall of fire burns away the fog in the area into which it deals damage. This spell does not function underwater.",
     "key": "Obscuring Mist",
-    "school": "Conjuration",
     "level": 1,
-    "description": "A misty vapor arises around you. It is stationary. The vapor obscures all sight, including darkvision, beyond 5 feet. A creature 5 feet away has concealment [attacks have a 20%% miss chance]. Creatures farther away have total concealment [50%% miss chance, and the attacker cannot use sight to locate the target]. A moderate wind [11+ mph], such as from a gust of wind spell, disperses the fog in 4 rounds. A strong wind [21+ mph] disperses the fog in 1 round. A fireball, flame strike, or similar spell burns away the fog in the explosive or fiery spell's area. A wall of fire burns away the fog in the area into which it deals damage. This spell does not function underwater."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "A misty vapor arises around you. It is stationary. The vapor obscures all sight, including darkvision, beyond 5 feet. A creature 5 feet away has concealment [attacks have a 20%% miss chance]. Creatures farther away have total concealment [50%% miss chance, and the attacker cannot use sight to locate the target]. A moderate wind [11+ mph], such as from a gust of wind spell, disperses the fog in 4 rounds. A strong wind [21+ mph] disperses the fog in 1 round. A fireball, flame strike, or similar spell burns away the fog in the explosive or fiery spell's area. A wall of fire burns away the fog in the area into which it deals damage. This spell does not function underwater.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "A misty, stationary vapor arises around you obscuring all sight, including darkvision, beyond 5 feet.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Air,Darkness,Water,Weather=1"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "20 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/obscuringMist.html#_obscuring-mist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Cloud spreads in 20-ft. radius from you, 20 ft. high"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 416,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1169,
-    "record_key": "Obscuring Mist.MOD"
+    "record_key": "Obscuring Mist",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

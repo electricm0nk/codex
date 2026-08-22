@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Shifter ~ Plant Shape",
+    "name": "Plant Shape",
+    "class": "Shifter",
+    "description": "A verdant shifter's wild shape ability instead functions as plant shape",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Shifter ~ Plant Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.VerdantShifterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A verdant shifter's wild shape ability instead functions as plant shape"
+      },
+      {
+        "key": "DESC",
+        "value": "I.|!PRECLASS:1,Shifter=12"
+      },
+      {
+        "key": "DESC",
+        "value": "II.|PRECLASS:1,Shifter=12|!PRECLASS:1,Shifter=18"
+      },
+      {
+        "key": "DESC",
+        "value": "III.|PRECLASS:1,Shifter=18"
+      },
+      {
+        "key": "DESC",
+        "value": "The verdant shifter can maintain this form for %1 rounds per day. This ability otherwise functions as the standard wild shape shifter class feature. This alters wild shape.|ShifterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1104,
+    "record_key": "Verdant Shifter ~ Plant Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

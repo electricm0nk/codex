@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Fetchling ~ Subtle Manipulator",
+    "name": "Subtle Manipulator",
+    "race_key": "Fetchling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Fetchling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Fetchling_ReplaceSpellLikeAbilities"
+    ],
+    "description": "Rather than taking on the forms of others, some fetchling are adept at destroying the memories of other creatures. Instead of gaining disguise self as a spell-like ability, such fetchlings can use memory lapse (Advanced Player's Guide 232) once per day as a spell-like ability. For this ability, a fetchling's caster level is equal to his total Hit Dice. This racial trait modifies the spell-like ability racial trait.",
+    "source_page": "p.109",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fetchling ~ Subtle Manipulator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Fetchling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Fetchling ~ Subtle Manipulator],[!PREFACT:1,ABILITIES,Fetchling_ReplaceSpellLikeAbilities=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than taking on the forms of others, some fetchling are adept at destroying the memories of other creatures. Instead of gaining disguise self as a spell-like ability, such fetchlings can use memory lapse (Advanced Player's Guide 232) once per day as a spell-like ability. For this ability, a fetchling's caster level is equal to his total Hit Dice."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait modifies the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Fetchling ~ Subtle Manipulator"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fetchling Racial Trait|AUTOMATIC|Subtle Manipulator ~ Spell-Like Abilities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      },
+      {
+        "key": "FACT",
+        "value": "Fetchling_ReplaceSpellLikeAbilities|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 457,
+    "record_key": "Fetchling ~ Subtle Manipulator"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

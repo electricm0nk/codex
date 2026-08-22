@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Illusion Savant School ~ Blinding Ray",
+    "name": "Blinding Ray",
+    "class": "Illusion Savant School",
+    "description": "As a standard action you can fire a shimmering ray at any foe within 30 feet as a ranged touch attack. The ray causes creatures to be blinded for 1 round. Creatures with more than %1 Hit Dice are dazzled for 1 round instead. This ability can be used %2 times per day.|IllusionBlindingRayLimit|IllusionBlindingRayTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Illusion Savant School ~ Blinding Ray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialAttack.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionBlindingRayLimit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionBlindingRayTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action you can fire a shimmering ray at any foe within 30 feet as a ranged touch attack. The ray causes creatures to be blinded for 1 round. Creatures with more than %1 Hit Dice are dazzled for 1 round instead. This ability can be used %2 times per day.|IllusionBlindingRayLimit|IllusionBlindingRayTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionBlindingRayLimit|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionBlindingRayTimes|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|IllusionBlindingRayTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2569,
+    "record_key": "Illusion Savant School ~ Blinding Ray"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

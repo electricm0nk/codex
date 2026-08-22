@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Crossblooded Rager ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Bloodrager",
+    "description": "A crossblooded rager combines the bonus feat lists from both of his bloodlines and can select his bloodline bonus feats from this combined list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crossblooded Rager ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.Crossblooded Rager Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "A crossblooded rager combines the bonus feat lists from both of his bloodlines and can select his bloodline bonus feats from this combined list."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2745,
+    "record_key": "Crossblooded Rager ~ Bonus Feats"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

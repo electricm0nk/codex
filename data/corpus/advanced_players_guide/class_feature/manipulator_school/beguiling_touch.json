@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Manipulator School ~ Beguiling Touch",
+    "name": "Beguiling Touch",
+    "class": "Manipulator School",
+    "description": "You can charm a living creature by touching it. Creatures with more than %1 Hit Dice are unaffected, as are creatures in combat and those with an attitude of hostile toward you. Creatures receive a Will save DC %2 to negate the effect. Creatures that fail their save are affected by charm monster for %3 rounds. This is a mind-affecting effect. You can use this ability a %4 per day.|ManipulatorBeguilingTouchHD|ManipulatorBeguilingTouchDC|ManipulatorBeguilingTouchRounds|ManipulatorBeguilingTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Manipulator School ~ Beguiling Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManipulatorBeguilingTouchHD|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManipulatorBeguilingTouchDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManipulatorBeguilingTouchRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManipulatorBeguilingTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can charm a living creature by touching it. Creatures with more than %1 Hit Dice are unaffected, as are creatures in combat and those with an attitude of hostile toward you. Creatures receive a Will save DC %2 to negate the effect. Creatures that fail their save are affected by charm monster for %3 rounds. This is a mind-affecting effect. You can use this ability a %4 per day.|ManipulatorBeguilingTouchHD|ManipulatorBeguilingTouchDC|ManipulatorBeguilingTouchRounds|ManipulatorBeguilingTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManipulatorBeguilingTouchHD|EnchantmentSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManipulatorBeguilingTouchDC|10+EnchantmentSchoolLVL/2+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManipulatorBeguilingTouchRounds|max(EnchantmentSchoolLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManipulatorBeguilingTouchTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ManipulatorBeguilingTouchTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3369,
+    "record_key": "Manipulator School ~ Beguiling Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

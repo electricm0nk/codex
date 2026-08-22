@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "corpus_key": "Ahuizotl ~ Voice Mimicry",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_3:monster:ahuizotl"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An ahuizotl can perfectly mimic the sound of humanoid sobbing and can even attempt to mimic voices it has heard. When mimicking a voice, an ahuizotl must make a Bluff check opposed by its listener's Sense Motive check. If the listener has never heard the voice the ahuizotl is attempting to mimic, the listener takes a -8 penalty on the Sense Motive check."
+      },
+      {
+        "key": "KEY",
+        "value": "Ahuizotl ~ Voice Mimicry"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.10",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 308,
-    "record_key": "Ahuizotl ~ Voice Mimicry"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 308,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ahuizotl ~ Voice Mimicry",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

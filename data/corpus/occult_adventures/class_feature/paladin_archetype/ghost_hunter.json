@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Ghost Hunter",
+    "name": "Ghost Hunter",
+    "class": "Paladin Archetype",
+    "description": "Ghost hunters devote their lives to eliminating malevolent spirits and putting them to rest.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Ghost Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Ghost Hunter],[!PREFACT:1,ABILITIES,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_Mercy6=True,Paladin_Archetype_Mercy9=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghost hunters devote their lives to eliminating malevolent spirits and putting them to rest."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Ghost Hunter ~ Ghostly Smite|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Ghost Hunter ~ Exorcise Possession|PRECLASS:1,Paladin=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Ghost Hunter ~ Speak to the Restless|PRECLASS:1,Paladin=9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy6|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy9|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy6|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy9|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1908,
+    "record_key": "Paladin Archetype ~ Ghost Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

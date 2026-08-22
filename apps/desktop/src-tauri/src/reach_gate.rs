@@ -112,7 +112,8 @@ use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
+    acg, adventurers_guide as ag, advanced_race_guide as arg, apg, beastiary1, crb,
+    inner_sea_gods as isg, occult_adventures as oa, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
     ultimate_magic as um, ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
 };
@@ -367,7 +368,7 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // record slice — the family is discovered anyway, three ways over.
     ("UnchainedBarbarianFeature", "class_features"),
     ("UnchainedMonkFeature", "class_features"),
-    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
+    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 406 records (403 + 3 Slayer archetypes, SD31-E4-F1-001)
     // across 7 books (acg, advanced_race_guide, apg, ultimate_combat,
     // ultimate_magic, ultimate_psionics, ultimate_wilderness). Its own
     // record family, not a facet of `class_feature` -- an archetype is
@@ -570,6 +571,18 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // Pre-existing spelling of the Bestiary 1 directory; `beastiary1` is what
     // the diagnostic and every existing claim call the book.
     ("beastiary", "beastiary1"),
+    // `SD31-E6-F10-002`: `docs/work-inventory.json`'s own book field for
+    // Bestiary 1 equipment (derived from the corpus `.lst`'s own
+    // `SOURCELONG:Bestiary`, `decisions.md §9`) is the correctly-spelled
+    // `"bestiary"`, not the pre-existing `"beastiary"` misspelling above --
+    // a SECOND, previously-empty corpus directory that this cycle's
+    // `cache_gen::equipment_gap` `"B1"` routing populated for the first
+    // time (`equipment_gap.rs::book_routing`). Same book id as the
+    // misspelled directory (`equipment_gap_tables`'s rows already carry
+    // `book: "B1"`, which `equipment_reach`'s existing `("beastiary1",
+    // "equipment")` arm already unions in) so the two directories share
+    // one reach claim rather than needing a second, duplicate arm.
+    ("bestiary", "beastiary1"),
     ("advanced_race_guide", "advanced_race_guide"),
     ("pathfinder_unchained", "pathfinder_unchained"),
     // SD-29 Epic 5 pilot. Directory and book id are spelled the same, like
@@ -582,12 +595,6 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("inner_sea_races", "inner_sea_races"),
     // SD-29 Epic 6 round 3 (race-trait lane, extend). Same again.
     ("horror_adventures", "horror_adventures"),
-    // SD-29 Epic 6 round 4 (race-trait lane, extend). Same again -- and note
-    // that this book id names a real corpus directory of its own only because
-    // Aasimar's and Tiefling's heritage traits belong to no other book; the
-    // book's shared racial-trait files are still attributed to `core_rulebook`
-    // and `beastiary` by `ingest_races`.
-    ("core_essentials", "core_essentials"),
     // SD-29 Epic 5 extend, round 2 (monster lane). Same again -- the corpus
     // directory and the book id are the same string for both volumes.
     ("book_of_the_damned_volume_1", "book_of_the_damned_volume_1"),
@@ -643,6 +650,44 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // into `rules_tables` without ever writing corpus JSON for them — so the
     // companion family is the first content this book serves off disk.
     ("ultimate_magic", "ultimate_magic"),
+    // SD-31 `epic-6-ingest-lanes` F5/F6 (`SD31-E6-F5-001`). Ultimate
+    // Equipment had no `data/corpus/ultimate_equipment/` directory at all
+    // before this cycle (`OPEN-ISSUES.md` row 12) despite already driving
+    // the desktop equipment catalog via `equipment_resolver::
+    // equipment_catalog_rows()`'s compiled table -- `cache_gen::
+    // ultimate_equipment` (`gen_cache_ultimate_equipment`) writes the first
+    // real corpus JSON for the book. `corpus_ingest_diagnostic.rs` already
+    // names this book `"ultimate_equipment"` (`ultimate_equipment_counts`);
+    // this entry names the directory the same way every other book here
+    // does.
+    ("ultimate_equipment", "ultimate_equipment"),
+    // SD-31 `epic-5-chassis-sweep` F1 (`SD31-E5-F1-001`). `cache_gen::
+    // class_feature` wrote the first-ever `data/corpus/<book>/` directory
+    // at all for these six books (no LICENSE.json, no other kind's corpus
+    // JSON, nothing -- `corpus_ingest_diagnostic.rs` has no entry for any
+    // of them either, so no diagnostic book id exists to reuse; same-name
+    // pairing, matching every other book above with no diagnostic entry).
+    // `ultimate_combat`/`ultimate_intrigue` already drive real `reach_of`
+    // claims (feats/equipment/archetypes) sourced directly from their
+    // compiled `rules_tables` modules, never from `data/corpus/`, which is
+    // why they could be claimed without ever needing a row here until now.
+    // Both books' `data/corpus/` directories are now populated by TWO
+    // independent SD-31 wave-4 lanes: `cache_gen::class_feature`'s
+    // `class_feature/` subdirectory and `cache_gen::equipment_gap`'s
+    // `equipment/` subdirectory (`SD31-E6-F5-002`) -- one registration
+    // covers both, the mapping is directory-to-book-id, not kind-scoped.
+    ("occult_adventures", "occult_adventures"),
+    ("adventurers_guide", "adventurers_guide"),
+    ("ultimate_combat", "ultimate_combat"),
+    ("ultimate_intrigue", "ultimate_intrigue"),
+    ("inner_sea_magic", "inner_sea_magic"),
+    ("inner_sea_taverns", "inner_sea_taverns"),
+    // `SD31-E6-F10-004`: `gen_cache_equipment_gap` wrote the first-ever
+    // `data/corpus/mythic_adventures/` directory at all (no LICENSE.json,
+    // no other kind's corpus JSON, nothing existed before this cycle) --
+    // same-name pairing, matching every other book above with no
+    // diagnostic entry.
+    ("mythic_adventures", "mythic_adventures"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -769,6 +814,21 @@ fn corpus_record_ids(book_dir: &str, kind_dir: &str) -> BTreeSet<String> {
     corpus_record_field(book_dir, kind_dir, "id")
 }
 
+/// Every `data.key` under one exact directory, rather than under a whole
+/// `<book>/<kind>/` tree. Used where a claim needs a SUBSET of a book's kind to
+/// fail independently -- the Aasimar/Tiefling heritage records inside ARG's
+/// much larger `race_trait/` tree are the case that needed it.
+fn corpus_record_keys_in(dir: &Path) -> BTreeSet<String> {
+    json_files_under(dir)
+        .into_iter()
+        .filter_map(|path| {
+            let text = fs::read_to_string(&path).ok()?;
+            let value: serde_json::Value = serde_json::from_str(&text).ok()?;
+            value.get("data")?.get("key")?.as_str().map(str::to_owned)
+        })
+        .collect()
+}
+
 fn corpus_record_field(book_dir: &str, kind_dir: &str, field: &str) -> BTreeSet<String> {
     let dir = repo_root().join("data/corpus").join(book_dir).join(kind_dir);
     json_files_under(&dir)
@@ -889,6 +949,115 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD31-E6-F2-002: UM joined `spell_resolver::spell_catalog_rows()` as
+        // the catalog's 6th book, the same `build_spell_catalog`/"All books"
+        // render path ARG and UI use. 10 of its 269 records carry neither a
+        // `CLASSES:`/`DOMAINS:` level (`Restore Eidolon` and siblings), but
+        // every one still carries a real `SCHOOL:` and/or `DESC:`, so
+        // `has_payload` is satisfied regardless -- not a bare-record risk.
+        // The genuine risk was the 15 `Masterpiece` bard-performance records,
+        // which carry NEITHER a recognized `SCHOOL:` (`"Masterpiece"`, this
+        // engine's 9-school enum does not model it) NOR a `DESC:` token --
+        // only a real `level`, from their own `CLASSES:Bard=N` token. Caught
+        // by this gate's own `bare_records_are_exactly_the_recorded_findings`
+        // check the FIRST time this arm was added: a level-parsing bug in
+        // `ingest_ultimate_magic_spells.rs` had silently dropped that level
+        // too, making all 15 genuinely bare (fixed; see `OPEN-ISSUES.md` row
+        // 47). With the level restored, `has_payload` is satisfied by
+        // `level` alone for all 15, and this gate passes with zero
+        // `OPEN_FINDINGS` entries needed for this family.
+        ("ultimate_magic", "spells") => Some(spells_reach(
+            "UM",
+            um::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD31-E6-F2-003: OA joins `spell_resolver::spell_catalog_rows()` as
+        // the catalog's 7th book, the same `build_spell_catalog`/"All books"
+        // render path UM/UI/ARG use -- this book's FIRST reach claim of any
+        // kind. One record (`Talismanic Implement`) carries no `CLASSES:`
+        // token so no `level`, and two (`Repulsion` excluded as a cross-book
+        // collision; `Share Language (Communal)`) carry neither `SCHOOL:`
+        // nor `DESC:` of their own -- every shipped record still carries a
+        // real `key` plus at least one of `school`/`level`/`description`,
+        // so `has_payload` is satisfied for all 144, proven by this gate's
+        // own `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed.
+        ("occult_adventures", "spells") => Some(spells_reach(
+            "OA",
+            oa::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD31-E6-F2-004: UC joins `spell_resolver::spell_catalog_rows()` as
+        // the catalog's 8th book, the same `build_spell_catalog`/"All
+        // books" render path UM/OA use. 3 records (`Life Conduit` and its
+        // two named variants) carry no `CLASSES:` token so no `level`, but
+        // every shipped record still carries a real `key` plus at least
+        // one of `school`/`level`/`description`, so `has_payload` is
+        // satisfied for all 146, proven by this gate's own
+        // `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed.
+        ("ultimate_combat", "spells") => Some(spells_reach(
+            "UC",
+            uc::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD31-E6-F10-001: ISG joins `spell_resolver::spell_catalog_rows()`
+        // as the catalog's 9th book, the same `build_spell_catalog`/"All
+        // books" render path UM/OA/UC use -- proven live, not merely
+        // asserted, by a DoD-8 on-screen capture of "Blade Snare" rendering
+        // its real corpus prose under the "ISG" book badge
+        // (`docs/release/SD-31-corpus-closure-grind/artifacts/
+        // SD31-E6-F10-001/item8/spell-blade-snare.png`). 31 of its 92
+        // records carry no `CLASSES:`/`DOMAINS:` level (mostly deity-boon
+        // variant spells whose base entry lives elsewhere), but every
+        // shipped record still carries a real `key` plus at least one of
+        // `school`/`level`/`description`, so `has_payload` is satisfied
+        // for all 92, proven by this gate's own
+        // `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed.
+        ("inner_sea_gods", "spells") => Some(spells_reach(
+            "ISG",
+            isg::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-31 wave-19 (`ultimate_wilderness` lane): UW joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 10th
+        // book, the same `build_spell_catalog`/"All books" render path
+        // UM/OA/UC/ISG use -- this book's first `spell`-kind reach claim.
+        // Every one of the 61 base declarations carries a real `SCHOOL:`,
+        // `CLASSES:`/`DOMAINS:` level and `DESC:`, so `has_payload` is
+        // satisfied for all 61 (`src/bin/ingest_ultimate_wilderness_spells.rs`).
+        ("ultimate_wilderness", "spells") => Some(spells_reach(
+            "UW",
+            uw::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide
+        // joins `spell_resolver::spell_catalog_rows()` as the catalog's
+        // 12th book, the same `build_spell_catalog`/"All books" render
+        // path UM/OA/UC/ISG/UW use -- this book's FIRST reach claim of any
+        // kind, and its first compiled `RuleSetId`. Every base declaration
+        // carries a real `SCHOOL:`, `CLASSES:` level and/or `DESC:`, so
+        // `has_payload` is satisfied, proven by this gate's own
+        // `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed (`src/bin/ingest_adventurers_guide_spells.rs`).
+        ("adventurers_guide", "spells") => Some(spells_reach(
+            "AG",
+            ag::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Equipment: `list_equipment_catalog` / `list_equipment` serve every
         // ingested book's table since the SD-27 widening of
@@ -1001,6 +1170,31 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // unions in itself. The empty seed set here is the literal truth of
         // this book's hand-authored coverage, not an omission.
         ("ultimate_wilderness", "equipment") => Some(equipment_reach("UW", BTreeSet::new())),
+        // `SD31-E6-F10-003`: 8 further already-compiled books extended into
+        // the corpus gap lane, same "no hand-authored table at all" shape
+        // as `UW` above — every one of their catalog rows is a gap-lane
+        // row, which `equipment_reach` unions in itself.
+        ("occult_adventures", "equipment") => Some(equipment_reach("OA", BTreeSet::new())),
+        ("horror_adventures", "equipment") => Some(equipment_reach("HA", BTreeSet::new())),
+        ("inner_sea_races", "equipment") => Some(equipment_reach("ISR", BTreeSet::new())),
+        ("inner_sea_world_guide", "equipment") => Some(equipment_reach("ISWG", BTreeSet::new())),
+        ("monster_codex", "equipment") => Some(equipment_reach("MC", BTreeSet::new())),
+        ("bestiary_2", "equipment") => Some(equipment_reach("B2", BTreeSet::new())),
+        ("bestiary_3", "equipment") => Some(equipment_reach("B3", BTreeSet::new())),
+        ("bestiary_4", "equipment") => Some(equipment_reach("B4", BTreeSet::new())),
+        // `SD31-E6-F10-004`: 5 further already-compiled books extended into
+        // the corpus gap lane (the ones `SD31-E6-F10-003` deliberately left
+        // out, `OPEN-ISSUES.md` row 186 -- now reachable via a per-record
+        // blacklist pre-filter, `gen_equipment_gap_tables.rs`'s
+        // `blacklist_hit`). Same "no hand-authored table at all" shape as
+        // every entry above.
+        ("inner_sea_gods", "equipment") => Some(equipment_reach("ISG", BTreeSet::new())),
+        ("mythic_adventures", "equipment") => Some(equipment_reach("MYTHIC", BTreeSet::new())),
+        ("inner_sea_combat", "equipment") => Some(equipment_reach("ISC", BTreeSet::new())),
+        ("inner_sea_intrigue", "equipment") => Some(equipment_reach("ISI", BTreeSet::new())),
+        ("book_of_the_damned_volume_2", "equipment") => {
+            Some(equipment_reach("BOTD2", BTreeSet::new()))
+        }
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
@@ -1020,6 +1214,45 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("beastiary1", "races") => Some(races_reach(
             "B1",
             crate::race_catalog::ingested_race_ids_for_book("beastiary"),
+        )),
+        // SD-31 Epic 1-F2 (2026-08-15). Bestiary 2's 6-race chassis batch:
+        // the first new race-catalog book since the original 18
+        // (`decisions.md §25.3`). Same mechanism as CRB/B1 above -- no new
+        // surface, `ingest_races` files this book's chassis+standard traits
+        // exactly like the other two, so `list_race_catalog` already serves
+        // it once `race_catalog::RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS`
+        // both carry `"bestiary_2"`/`B2`.
+        ("bestiary_2", "races") => Some(races_reach(
+            "B2",
+            crate::race_catalog::ingested_race_ids_for_book("bestiary_2"),
+        )),
+        // SD-31 Epic 1 follow-on batch (2026-08-15). Skinwalker's chassis:
+        // same mechanism as CRB/B1/B2 above, once `race_catalog::
+        // RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS` both carry
+        // `"bestiary_5"`/`B5`.
+        ("bestiary_5", "races") => Some(races_reach(
+            "B5",
+            crate::race_catalog::ingested_race_ids_for_book("bestiary_5"),
+        )),
+        // SD-31 wave-24 integration cycle (2026-08-20). Rougarou's chassis:
+        // same mechanism as CRB/B1/B2/B5 above, once `race_catalog::
+        // RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS` both carry
+        // `"bestiary_6"`/`B6`.
+        ("bestiary_6", "races") => Some(races_reach(
+            "B6",
+            crate::race_catalog::ingested_race_ids_for_book("bestiary_6"),
+        )),
+        // SD-31-E6-F4-002 (2026-08-16). Advanced Race Guide's own 6-race
+        // chassis batch (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang) --
+        // same mechanism as CRB/B1/B2/B5 above, once `race_catalog::
+        // RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS` both carry
+        // `"advanced_race_guide"`/`ARG`. Before this batch ARG declared zero
+        // races (`decisions.md §25`, `alternate_only_books_contribute_no_
+        // catalog_rows_but_are_loaded_and_counted`), so this is a new claim,
+        // not a widening of an existing one.
+        ("advanced_race_guide", "races") => Some(races_reach(
+            "ARG",
+            crate::race_catalog::ingested_race_ids_for_book("advanced_race_guide"),
         )),
 
         // Racial traits: `list_alternate_racial_traits` serves every race's
@@ -1041,6 +1274,28 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // reach test passed without ever asking about them.
         ("crb", "race_traits") => Some(race_traits_reach("CRB", "core_rulebook")),
         ("beastiary1", "race_traits") => Some(race_traits_reach("B1", "beastiary")),
+        // SD-31 Epic 1-F2 (2026-08-15). Bestiary 2's 57 standard racial-trait
+        // records, filed under `bestiary_2` by `ingest_races` exactly like
+        // CRB's and Bestiary 1's above -- same claim shape, no new surface.
+        // (The 48 ARG/ISR *alternate* rows this batch also added are covered
+        // by the `advanced_race_guide`/`inner_sea_races` claims below, since
+        // `race_traits_reach` filters by the record's own `book_id`, which
+        // for an alternate is the book it was actually read from.)
+        ("bestiary_2", "race_traits") => Some(race_traits_reach("B2", "bestiary_2")),
+        // SD-31 Epic 1 follow-on batch (2026-08-15). Skinwalker's 9
+        // standard-tier racial-trait records, filed under `bestiary_5` by
+        // `ingest_races` -- same claim shape as `bestiary_2` above. This
+        // batch does NOT ingest Skinwalker's heritage-shaped alternates
+        // (see `ingest_races.rs`'s `skinwalker` doc comment), so there is
+        // no separate alternate-trait claim to add here yet.
+        ("bestiary_5", "race_traits") => Some(race_traits_reach("B5", "bestiary_5")),
+        // SD-31 wave-24 integration cycle (2026-08-20). Rougarou's 8
+        // standard-tier racial-trait records, filed under `bestiary_6` by
+        // `ingest_races` -- same claim shape as `bestiary_2`/`bestiary_5`
+        // above. No heritage/alternate content exists for this race in the
+        // pinned oracle (confirmed: no `*_subrace.lst` file), so there is no
+        // separate alternate-trait claim to add here.
+        ("bestiary_6", "race_traits") => Some(race_traits_reach("B6", "bestiary_6")),
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
@@ -1101,21 +1356,6 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // asserts the full pass by exact count rather than leaving it unstated.
         ("horror_adventures", "race_traits") => Some(race_traits_reach("HA", "horror_adventures")),
         // SD-29 Epic 6 round 4 (race-trait lane, extend, 2026-08-12,
-        // `decisions.md §49`). Core Essentials' 64 heritage records --
-        // Aasimar's 6 and Tiefling's 10 selectable heritages, plus the 48
-        // replacement rows those heritages grant -- served by exactly the two
-        // commands ARG's, APG's, Monster Codex's, ISR's and HA's claims run.
-        //
-        // **This is the first book in the lane whose records are majority
-        // `flagGranted` rather than `Alternate`, and the claim is therefore
-        // load-bearing in a way the earlier ones were not.** 48 of the 64 are
-        // reached only through the third arm of `race_traits_reach` -- the one
-        // that selects each alternate in turn and reads what comes in with it.
-        // A regression that broke the heritage grant link would leave the
-        // other five books' claims completely green and drop this one from 64
-        // to 16, which is exactly the granularity this claim exists to have.
-        ("core_essentials", "race_traits") => Some(race_traits_reach("CE", "core_essentials")),
-
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
         // die and threat range as a rendered detail line
@@ -1387,25 +1627,6 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("ultimate_wilderness", "companions") => {
             Some(companions_reach("ultimate_wilderness", "UW"))
         }
-
-        // SD-29 Epic 7 round 7. Core Essentials's companions and familiars —
-        // the SECOND claim this book carries, beside the 64 heritage
-        // `race_traits` the race-trait lane landed (`("core_essentials",
-        // "race_traits")` above, same `CE` wire code, same corpus directory).
-        // `CORPUS_BOOK_IDS` already names the directory for that reason and
-        // needed no entry this round.
-        //
-        // 103 of the book's 145 companion units ship — its whole `reachable
-        // remainder` per `scripts/classify_companion_rows.py`. The 42 that do
-        // not are not in this gate's denominator, because they were never
-        // ingested: 22 `.COPY=` CREATURE delta rows (`decisions.md §63.1`, the
-        // first companion book to carry the delta shape on its creature half),
-        // the 4 `.MOD` ability overlays `§59.2` predicted this book would first
-        // exercise, and 16 orphans. They stay counted in
-        // `docs/work-inventory.json`, and get no `OPEN_FINDINGS` entry for the
-        // reason `§61.2` states: that list is keyed by FAMILY, and this family
-        // does reach a player.
-        ("core_essentials", "companions") => Some(companions_reach("core_essentials", "CE")),
 
         // SD-29 Epic 7 round 8. Core Rulebook's companions and familiars — the
         // SIXTH family this book carries, beside its classes, races, spells,
@@ -1916,6 +2137,23 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
             || entry.monster_class.is_some()
             || entry.natural_armor.is_some()
             || !entry.natural_attacks.is_empty()
+            // SD31-W15-COMPANION-001: the row's `BONUS:WEAPONPROF=…|DAMAGE|`
+            // tokens, rendered as the PF1 rule they state. Added to the
+            // predicate because it is genuine per-row payload a player reads —
+            // NOT because any row needs it to reach: every row carrying one
+            // already reaches on `natural_attacks`/`stat_adjustments`, and this
+            // clause moving no record is asserted by
+            // `the_damage_bonus_column_moves_no_record_into_reach` below.
+            || !entry.natural_attack_damage_bonuses.is_empty()
+            // SD31 wave 16: the row's `BONUS:SKILL|<skills>|<A>-<B>` tokens,
+            // rendered as the PF1 rule they state. Added for the identical
+            // reason override 2095's own comment states for the sibling
+            // damage-bonus clause: genuine per-row payload a player reads,
+            // NOT because any row needs it to reach — every companion row
+            // carrying this token also carries `BONUS:STAT` adjustments, and
+            // this clause moving no record is asserted by
+            // `the_skill_bonus_column_moves_no_record_into_reach` below.
+            || !entry.skill_ability_diff_bonuses.is_empty()
             || !entry.stat_adjustments.is_empty()
             || !entry.abilities.is_empty();
         if has_payload {
@@ -1936,6 +2174,17 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
                 // the screen renders four paragraphs under them.
                 || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
                 || !ability.stat_adjustments.is_empty()
+                // wave 17: the row's DESC-embedded save-DC formula
+                // (`<base>[+HD/2]+<ability>`), rendered as the PF1 rule it
+                // states. Added for the identical reason the sibling
+                // damage-bonus/skill-bonus clauses above state: genuine
+                // per-row payload a player reads, NOT because any row needs
+                // it to reach — every ability carrying this token also
+                // carries real `description`/`description_variants` prose,
+                // and this clause moving no record is asserted by
+                // `the_save_dc_formula_column_moves_no_record_into_reach`
+                // below.
+                || !ability.save_dc_formulas.is_empty()
                 || ability.source_page.is_some();
             if has_payload {
                 with_payload.insert(ability.key.clone());
@@ -2262,7 +2511,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          Do NOT close this by deleting the record: it is real corpus content for a modelled \
          race, and the same rule the `Oversized Goblin` entry above states applies here.",
     ),
-    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
+    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 406 records (403 + 3 Slayer archetypes, SD31-E4-F1-001)
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
     // the swap correctly in compute output for the wired slots (Alchemist's
     // Mutagen/Discovery/Poison Resistance, Fighter's Bravery -- proven via
@@ -2278,12 +2527,14 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "acg",
         "archetypes",
-        "Gap: 87 ACG archetype-swap records are ingested and the engine can already ground a \
-         selected one's slot-swap correctly, but zero reach a player -- no archetype-selection \
-         surface exists anywhere in the desktop app. Remedy: build an archetype picker \
-         (archetype_catalog.rs plus a choice-set surface on the character sheet, the same shape \
-         equipment/feat/spell catalogs already use) and wire the per-slot supersession for this \
-         book's classes; delete this entry once ACG's archetypes reach the picker.",
+        "Gap: 90 ACG archetype-swap records are ingested (87 + 3 Slayer archetypes -- Bounty \
+         Hunter, Deliverer, Stygian Slayer -- added by SD31-E4-F1-001, 2026-08-16) and the engine \
+         can already ground a selected one's slot-swap correctly, but zero reach a player -- no \
+         archetype-selection surface exists anywhere in the desktop app. Remedy: build an \
+         archetype picker (archetype_catalog.rs plus a choice-set surface on the character sheet, \
+         the same shape equipment/feat/spell catalogs already use) and wire the per-slot \
+         supersession for this book's classes; delete this entry once ACG's archetypes reach the \
+         picker.",
     ),
     (
         "advanced_race_guide",
@@ -2307,8 +2558,10 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "ultimate_combat",
         "archetypes",
-        "Gap: 65 Ultimate Combat archetype-swap records are ingested with no archetype-selection \
-         surface to reach a player through. Remedy: same as ACG above; delete once landed.",
+        "Gap: 68 Ultimate Combat archetype-swap records are ingested (65 + 2 Gunslinger \
+         archetypes, Pistolero and Mysterious Stranger, added by `SD31-E4-F1-002`, + 1 Ninja \
+         archetype, Scout, added by `SD31-E4-F1-003`) with no archetype-selection surface to \
+         reach a player through. Remedy: same as ACG above; delete once landed.",
     ),
     (
         "ultimate_magic",
@@ -2330,6 +2583,50 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          archetype-selection surface to reach a player through. Remedy: same as ACG above; \
          delete once landed.",
     ),
+    // SD-31 `epic-5-chassis-sweep` F1 (`SD31-E5-F1-001`, 2026-08-15). 21
+    // books' `class_feature` corpus JSON went from absent to real, byte-
+    // verified content in one cycle (`cache_gen::class_feature`,
+    // `artifacts/SD31-E5-F1-001-lever-measurement.md` for the full proving
+    // trace). No reach claim exists for any of them because none can,
+    // honestly, today: `Kind::ClassFeature`'s doneness path
+    // (`v06_work_inventory.rs`'s `classify()`) requires the ENGINE to
+    // already compute the feature (a consumer-delta probe or a matching
+    // `explanation_id`) before a record can ground at all -- a corpus
+    // dump cannot manufacture that, only unlock the `literal-verified`
+    // stamp for the rare subset (14 units, corpus-wide) already grounded
+    // by pre-existing engine wiring. The remaining, overwhelming majority
+    // of each book's class_feature content genuinely has no engine
+    // chassis wiring yet -- that is `epic-4-mechanism`'s scope, which has
+    // landed zero classes corpus-wide as of this cycle
+    // (`SD-31-corpus-closure-grind/kanban.md`'s `epic-4-mechanism` row).
+    // Remedy, identical for all 21: wire that class's chassis mechanism
+    // (per-class, `epic-4-mechanism`), then either claim the family here
+    // or delete the entry once its records reach a player. Record counts
+    // below are this cycle's own written totals per book (primary-file
+    // sourced only; see the same artifact for the nested-support-file and
+    // `ultimate_psionics` exclusions).
+    ("acg", "class_features", "Gap: 2395 Advanced Class Guide class_feature records are ingested corpus-wide; the engine's own per-class mechanism wiring (epic-4-mechanism) has not landed for any of ACG's classes yet, so no reach claim exists. Remedy: wire per-class chassis mechanisms, then claim or delete per class as they land."),
+    ("advanced_race_guide", "class_features", "Gap: 643 Advanced Race Guide class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("apg", "class_features", "Gap: 2055 Advanced Player's Guide class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("bestiary_4", "class_features", "Gap: 4 Bestiary 4 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("bestiary_6", "class_features", "Gap: 18 Bestiary 6 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("book_of_the_damned_volume_1", "class_features", "Gap: 10 Book of the Damned Vol. 1 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("book_of_the_damned_volume_2", "class_features", "Gap: 205 Book of the Damned Vol. 2 class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("crb", "class_features", "Gap: 959 Core Rulebook class_feature records are ingested corpus-wide; most CRB classes have SOME pre-existing engine wiring (14 of the 25 corpus-wide static-grounded units this cycle promoted are CRB's own already-computed features), but the great majority of CRB's own class_feature records still have no engine wiring -- epic-4-mechanism has not run a dedicated CRB pass. Remedy: same as ACG above, per remaining class/feature."),
+    ("horror_adventures", "class_features", "Gap: 165 Horror Adventures class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_combat", "class_features", "Gap: 306 Inner Sea Combat class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_intrigue", "class_features", "Gap: 158 Inner Sea Intrigue class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_world_guide", "class_features", "Gap: 142 Inner Sea World Guide class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("monster_codex", "class_features", "Gap: 68 Monster Codex class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("ultimate_magic", "class_features", "Gap: 1069 Ultimate Magic class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("ultimate_wilderness", "class_features", "Gap: 753 Ultimate Wilderness class_feature records are ingested corpus-wide; no per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("occult_adventures", "class_features", "Gap: 979 Occult Adventures class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind); every one of OA's 6 base classes (Occultist, Spiritualist, Medium, Mesmerist, Kineticist, Psychic) measures 0/N wired-able per epic-3-measurement's own SD31-E3-F1-001 clearance table, so no reach claim can exist until real class-chassis wiring lands. Remedy: same as ACG above."),
+    ("adventurers_guide", "class_features", "Gap: 651 Adventurer's Guide class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind); this book carries no compiled rule set at all today (`evidence: no_compiled_rule_set_for_book` on every sampled unit), so no reach claim can exist until the book itself is onboarded to the engine, not only its class_feature kind. Remedy: onboard the book's class chassis, then wire per-class mechanisms as ACG above."),
+    ("ultimate_combat", "class_features", "Gap: 991 Ultimate Combat class_feature records are ingested corpus-wide (first data/corpus/ultimate_combat/ directory this book has ever had -- its existing feats/equipment/archetypes reach claims are sourced directly from the compiled rules_tables module, never from data/corpus/). Gunslinger (SD31-E4-F1-002), Ninja (SD31-E4-F1-003) and now Samurai (SD31-E4-F1-004: real chassis BAB/saves plus Challenge uses/day+damage bonus, Resolve uses/day, and Bonus Feat count, all in pilot_compute.rs; named_raw: 0 archetype content RE-VERIFIED not merely inherited, so no supersession branch was built) all now have real pilot_compute.rs chassis wiring, but zero of any of the three classes' records can reach `done` or `held` on the board: `v06_work_inventory.rs`'s `modelled_class_books()` names only CRB/APG/ACG, so no Ultimate Combat class_feature record is even classified against the wiring that exists (OPEN-ISSUES.md row 96, lane 1's file, not this card's). Remedy: register UcClassId::ALL into modelled_class_books() (row 96) -- all three UC classes are now wired and waiting on that single lane-1 fix."),
+    ("ultimate_intrigue", "class_features", "Gap: 651 Ultimate Intrigue class_feature records are ingested corpus-wide (first data/corpus/ultimate_intrigue/ directory this book has ever had, same shape as Ultimate Combat above). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_magic", "class_features", "Gap: 198 Inner Sea Magic class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -2409,11 +2706,70 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // and no selection reaches it. This is an upstream data gap, not a
         // wiring gap: selecting `Human ~ Tribalistic` correctly suppresses the
         // standard `Human ~ Languages` row, and nothing brings this one in to
-        // take its place. Remedy in OPEN_FINDINGS above. 71 of the book's 72
-        // records reach a player; this is the one.
-        &["Human ~ Tribalistic Languages"],
+        // take its place. Remedy in OPEN_FINDINGS above.
+        //
+        // The three `Mostly Human ~ <Race> ~ Languages` rows below are a
+        // DIFFERENT shape of the same outcome, added by SD-31 Epic 1-F2
+        // (2026-08-15).
+        //
+        // CORRECTED 2026-08-15 (`SD31-W2-INTEGRATE-001`, Finding 8; the
+        // original comment below the correction is left visible per this
+        // program's doc convention, and is WRONG about upstream). PCGen DOES
+        // ship a granter for all four races (Ifrit/Oread/Sylph/Undine)
+        // symmetrically: `isr_abilities_race.lst:650/651/652/653` are
+        // `Geneiekin ~ Mostly Human.MOD` rows, each carrying
+        // `FACT:<Race>_ReplaceLanguages|True` AND its own
+        // `ABILITY:<Race> Racial Trait|AUTOMATIC|Mostly Human ~ <Race> ~
+        // Languages|PREFACT:...` grant. Upstream is complete; the gap is
+        // entirely project-side. The BASE row (`isr_abilities_race.lst:649`,
+        // `Geneiekin ~ Mostly Human`) carries
+        // `TYPE:RacialTraits.SpecialQuality.Special Quality` with no
+        // race-scoped TYPE component, so `parse_row` never emits a
+        // `<Race> Racial Trait` classification target for it -- and the
+        // per-race grants live ONLY on the four `.MOD` rows, which
+        // `is_mod_row` deliberately excludes from ingestion
+        // (`ingest_race_traits.rs`'s own test doc already names these exact
+        // rows, filtered "one step later" because "those 5 name races this
+        // project does not model" -- a clause SD-31 Epic 1 made false for
+        // 4 of the 5). Oread's sibling row reaches purely because
+        // `Oread ~ Isolated` (a second, UNRELATED Inner Sea Races row) also
+        // happens to set `Oread_ReplaceLanguages` -- that is an accident of
+        // a second setter, not proof the other three lack one; the Geneiekin
+        // path itself is unmodelled for all four. Concrete remedy: model the
+        // Geneiekin heritage the way Aasimar/Tiefling already are (same
+        // class of work as the already-deferred Dhampir/Skinwalker
+        // heritage build, `OPEN-ISSUES.md` row 13) -- tracked as a follow-on
+        // Epic 1 card, `OPEN-ISSUES.md` row 18, not an accepted permanent
+        // gap.
+        //
+        // ORIGINAL (WRONG) COMMENT, preserved for the record: each row
+        // carries a *positive* `PREFACT:1,ABILITIES,
+        // <Race>_ReplaceLanguages=True`, so `race_resolver::classify` reads
+        // them as `TraitRole::FlagGranted`, not `Unclassified` -- but no
+        // Ifrit/Sylph/Undine alternate in either ARG or Inner Sea Races sets
+        // the `<Race>_ReplaceLanguages` flag that would grant them (verified:
+        // grep every `sets_replace_flags` value for these three races across
+        // both books' ingested records -- none contains it). Oread's sibling
+        // row (`Mostly Human ~ Oread ~ Languages`) DOES reach, because
+        // `Oread ~ Isolated` (Inner Sea Races) sets `Oread_ReplaceLanguages` --
+        // the presence of that one working case is what proves this is a real
+        // upstream content gap for the other three, not a resolver defect: the
+        // exact same mechanism reaches Oread's row and only Oread's.
+        // [This inference is backwards -- see the correction above.]
+        //
+        // 79 of the book's 82 records reach a player; these three plus
+        // `Human ~ Tribalistic Languages` are the four that do not. The
+        // numeric pin itself is correct and needs no change -- the three
+        // records genuinely do not reach today, only the root-cause
+        // rationale was wrong.
+        &[
+            "Human ~ Tribalistic Languages",
+            "Mostly Human ~ Ifrit ~ Languages",
+            "Mostly Human ~ Sylph ~ Languages",
+            "Mostly Human ~ Undine ~ Languages",
+        ],
     ),
-    // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
+    // SD28-C4.8/§60/§63: all 406 archetype-swap records across 7 books (403 + 3 Slayer archetypes, SD31-E4-F1-001) --
     // every key, because none reaches a player through any surface today
     // (no picker exists at all, see OPEN_FINDINGS). This is the "whole
     // family unreached" shape, not a partial shortfall.
@@ -2490,6 +2846,14 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Skald Archetype ~ Herald of the Horn",
             "Skald Archetype ~ Spell Warrior",
             "Skald Archetype ~ Totemic Skald",
+            // SD31-E4-F1-001 (2026-08-16): Slayer's own archetype block, added
+            // to acg::archetype_tables this same cycle -- same "whole family
+            // unreached" shape as every other entry here (no archetype picker
+            // exists anywhere in the desktop app yet, see OPEN_FINDINGS's
+            // "acg"/"archetypes" entry above).
+            "Slayer Archetype ~ Bounty Hunter",
+            "Slayer Archetype ~ Deliverer",
+            "Slayer Archetype ~ Stygian Slayer",
             "Sorcerer Archetype ~ Eldritch Scrapper",
             "Sorcerer Archetype ~ Mongrel Mage",
             "Summoner Archetype ~ Naturalist",
@@ -2703,9 +3067,22 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Fighter Archetype ~ Tower Shield Specialist",
             "Fighter Archetype ~ Unarmed Fighter",
             "Fighter Archetype ~ Unbreakable",
+            // SD31-E4-F1-002: the first 2 of Gunslinger's own 4 archetypes,
+            // added to `archetype_tables.rs` this cycle. Still `NotSurfaced`
+            // (no archetype-selection surface exists, same as every other
+            // record in this list) -- pinned here so the reach test does not
+            // read their absence as a NEW, unrecorded regression.
+            "Gunslinger Archetype ~ Mysterious Stranger",
+            "Gunslinger Archetype ~ Pistolero",
             "Inquisitor Archetype ~ Iconoclast",
             "Inquisitor Archetype ~ Spellbreaker",
             "Inquisitor Archetype ~ Witch Hunter",
+            // SD31-E4-F1-003: Ninja's one real archetype, added to
+            // `archetype_tables.rs` this cycle. Still `NotSurfaced` (no
+            // archetype-selection surface exists, same as every other
+            // record in this list) -- pinned here so the reach test does
+            // not read its absence as a NEW, unrecorded regression.
+            "Ninja Archetype ~ Scout",
             "Paladin Archetype ~ Divine Hunter",
             "Paladin Archetype ~ Empyreal Knight",
             "Paladin Archetype ~ Holy Gun",
@@ -2909,6 +3286,130 @@ fn full_inventory() -> BTreeSet<Family> {
 mod tests {
     use super::*;
 
+    /// ANTI-GAMING (Decision 1(a)): the `naturalAttackDamageBonuses` column
+    /// this cycle added to `companions_reach`'s payload predicate must not be
+    /// what carries any record over the bar. Every companion row that states a
+    /// `BONUS:WEAPONPROF=…|DAMAGE|` token also states natural attacks and stat
+    /// adjustments, so the new clause is genuine payload a player reads and
+    /// nothing more. Asserted rather than assumed — a clause that DID move
+    /// records would be reach bought with a column, which is exactly the
+    /// inflation this program forbids.
+    #[test]
+    fn the_damage_bonus_column_moves_no_record_into_reach() {
+        let response = crate::companion_catalog::build_companion_catalog();
+        let mut with_bonus = 0usize;
+        for entry in &response.entries {
+            if entry.natural_attack_damage_bonuses.is_empty() {
+                continue;
+            }
+            with_bonus += 1;
+            let reaches_without_the_new_clause = entry
+                .race_type
+                .as_deref()
+                .is_some_and(|t| !t.trim().is_empty())
+                || entry.size.as_deref().is_some_and(|s| !s.trim().is_empty())
+                || entry.source_page.as_deref().is_some_and(|p| !p.trim().is_empty())
+                || !entry.speeds.is_empty()
+                || entry.monster_class.is_some()
+                || entry.natural_armor.is_some()
+                || !entry.natural_attacks.is_empty()
+                || !entry.stat_adjustments.is_empty()
+                || !entry.abilities.is_empty();
+            assert!(
+                reaches_without_the_new_clause,
+                "{} would reach ONLY because of naturalAttackDamageBonuses -- that is reach \
+                 bought with a column, not content a player can read",
+                entry.key
+            );
+        }
+        assert!(
+            with_bonus > 0,
+            "no served companion carries a damage-bonus token at all; this test would then be \
+             asserting nothing"
+        );
+    }
+
+    /// The `skillAbilityDiffBonuses` twin of
+    /// `the_damage_bonus_column_moves_no_record_into_reach`, same reasoning:
+    /// every companion row that states a `BONUS:SKILL|<skills>|<A>-<B>`
+    /// token also states `BONUS:STAT` adjustments, so the new clause is
+    /// genuine payload a player reads and nothing more.
+    #[test]
+    fn the_skill_bonus_column_moves_no_record_into_reach() {
+        let response = crate::companion_catalog::build_companion_catalog();
+        let mut with_skill_bonus = 0usize;
+        for entry in &response.entries {
+            if entry.skill_ability_diff_bonuses.is_empty() {
+                continue;
+            }
+            with_skill_bonus += 1;
+            let reaches_without_the_new_clause = entry
+                .race_type
+                .as_deref()
+                .is_some_and(|t| !t.trim().is_empty())
+                || entry.size.as_deref().is_some_and(|s| !s.trim().is_empty())
+                || entry.source_page.as_deref().is_some_and(|p| !p.trim().is_empty())
+                || !entry.speeds.is_empty()
+                || entry.monster_class.is_some()
+                || entry.natural_armor.is_some()
+                || !entry.natural_attacks.is_empty()
+                || !entry.natural_attack_damage_bonuses.is_empty()
+                || !entry.stat_adjustments.is_empty()
+                || !entry.abilities.is_empty();
+            assert!(
+                reaches_without_the_new_clause,
+                "{} would reach ONLY because of skillAbilityDiffBonuses -- that is reach bought \
+                 with a column, not content a player can read",
+                entry.key
+            );
+        }
+        assert!(
+            with_skill_bonus > 0,
+            "no served companion carries a skill-bonus token at all; this test would then be \
+             asserting nothing"
+        );
+    }
+
+    /// The `saveDcFormulas` twin of `the_damage_bonus_column_moves_no_record_
+    /// into_reach`/`the_skill_bonus_column_moves_no_record_into_reach`, same
+    /// reasoning but on the ABILITY-level predicate (this is the first of
+    /// the three columns stated there rather than on the creature): every
+    /// companion ability that states a DESC-embedded save-DC formula also
+    /// states real `description`/`description_variants` prose (the DESC:
+    /// token the formula's own argument list hangs off), so the new clause
+    /// is genuine payload a player reads and nothing more.
+    #[test]
+    fn the_save_dc_formula_column_moves_no_record_into_reach() {
+        let response = crate::companion_catalog::build_companion_catalog();
+        let mut with_save_dc = 0usize;
+        for entry in &response.entries {
+            for ability in &entry.abilities {
+                if ability.save_dc_formulas.is_empty() {
+                    continue;
+                }
+                with_save_dc += 1;
+                let reaches_without_the_new_clause = ability.facet.is_some()
+                    || ability.delivery.is_some()
+                    || !ability.type_segments.is_empty()
+                    || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
+                    || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
+                    || !ability.stat_adjustments.is_empty()
+                    || ability.source_page.is_some();
+                assert!(
+                    reaches_without_the_new_clause,
+                    "{} would reach ONLY because of saveDcFormulas -- that is reach bought with \
+                     a column, not content a player can read",
+                    ability.key
+                );
+            }
+        }
+        assert!(
+            with_save_dc > 0,
+            "no served companion ability carries a save-DC formula at all; this test would then \
+             be asserting nothing"
+        );
+    }
+
     /// The inventory itself must be real. If either source silently returned
     /// nothing, every other test here would pass while checking no content at
     /// all — the exact "test that passes while asserting nothing" failure this
@@ -3003,9 +3504,31 @@ mod tests {
         // `ABILITY:<cat>|AUTOMATIC|<key>` token. `race_resolver` reads that
         // grant shape now, so all 156 reach and the expectation is `Surfaced`.
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
-        assert_eq!(ingested.len(), 156, "ARG's 156 ingested race-trait records, counted on disk");
+        assert_eq!(
+            ingested.len(),
+            414,
+            "ARG's 414 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
+             1-F2, 2026-08-15, Bestiary 2's 6-race batch; 201 -> 259 by SD-31-E6-F4-002, \
+             2026-08-16, ingest_races.rs's own 6-race batch of 58 standard-tier records for \
+             Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, sharing this book directory with this \
+             binary's alternate-trait output for the first time; 259 -> 283 by \
+             SD-31-E6-F4-003, 2026-08-16, ingest_race_traits.rs's own real ARG alternate-trait \
+             rows for those same 6 races -- Catfolk 6, Kitsune 2, Ratfolk 4, Strix 6, Suli 5, \
+             Wayang 1 = 24; 283 -> 321 by SD31-E6-F4-004, 2026-08-17, ingest_races.rs's own \
+             4-race follow-on batch of 38 standard-tier records for Gillman/Nagaji/Vanara/\
+             Vishkanya; 321 -> 332 by SD31-E6-F4-006, 2026-08-17, ingest_race_traits.rs's own \
+             real ARG alternate-trait rows for those same 4 races -- Gillman 5, Nagaji 1, \
+             Vanara 3, Vishkanya 2 = 11; 332 -> 350 by SD31-E6-F4-007, 2026-08-17, \
+             ingest_races.rs's own 2-race follow-on batch of 18 standard-tier records for \
+             Changeling/Samsaran, closing arg_races.lst's full 37-row playable-race roster -- \
+             no alternate-trait batch for these 2, neither race has ARG alternate content; \
+             350 -> 414 by the Core Essentials removal, 2026-08-18, which re-filed Aasimar's \
+             and Tiefling's 64 heritage records here -- 16 selectable heritages (6 Aasimar + \
+             10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows they grant, \
+             previously read out of data/corpus/core_essentials/race_trait/)"
+        );
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 156),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 414),
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
@@ -3069,23 +3592,33 @@ mod tests {
         let ingested = corpus_record_keys("inner_sea_races", "race_trait");
         assert_eq!(
             ingested.len(),
-            71,
-            "ISR's 71 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
+            82,
+            "ISR's 82 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
              (SD-29 `decisions.md` 53): `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's \
              own declaration that the record NAME is Product Identity. A name cannot be \
              redacted, so the row is dropped at ingest rather than screened -- the same \
-             ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows"
+             ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows. \
+             71 -> 82 by SD-31 Epic 1-F2 (2026-08-15), Bestiary 2's 6-race batch."
         );
 
-        // 70 of 71 reach. The shortfall is `Human ~ Tribalistic Languages` and
-        // it is pinned by key, both ways, so a SECOND unreached record fails
-        // here and so does this one silently starting to reach.
+        // 79 of 82 reach. The shortfall is `Human ~ Tribalistic Languages`
+        // plus the three `Mostly Human ~ <Race> ~ Languages` rows
+        // `UNREACHED_RECORD_FINDINGS` names, pinned by key, both ways, so a
+        // FIFTH unreached record fails here and so does any of these four
+        // silently starting to reach.
         match reach_of(&isr_traits).expect("ISR race traits have a declared claim") {
             Reach::NotSurfaced { missing, .. } => {
+                let mut missing: Vec<&str> = missing.iter().map(String::as_str).collect();
+                missing.sort_unstable();
                 assert_eq!(
-                    missing.iter().map(String::as_str).collect::<Vec<_>>(),
-                    vec!["Human ~ Tribalistic Languages"],
-                    "exactly one ISR record is unreached, and it is the one OPEN_FINDINGS names"
+                    missing,
+                    vec![
+                        "Human ~ Tribalistic Languages",
+                        "Mostly Human ~ Ifrit ~ Languages",
+                        "Mostly Human ~ Sylph ~ Languages",
+                        "Mostly Human ~ Undine ~ Languages",
+                    ],
+                    "exactly four ISR records are unreached, and they are the ones OPEN_FINDINGS names"
                 );
             }
             other => panic!("ISR's race-trait shortfall must be reported exactly, got {other:?}"),
@@ -3134,12 +3667,18 @@ mod tests {
         }
     }
 
-    /// Core Essentials' heritage traits reach a player, all 64 of them.
+    /// Aasimar's and Tiefling's heritage traits reach a player, all 64 of them.
     ///
-    /// SD-29 race-trait lane round 4 (`decisions.md §49`). This is the last
-    /// entry in the lane's 553-unit ceiling that is ordinary content, and it
-    /// is the only book whose records are **majority granted rather than
-    /// chosen**: 16 heritages a player picks and 48 replacement rows that
+    /// SD-29 race-trait lane round 4 (`decisions.md §49`) landed these under a
+    /// `core_essentials` book id. `decisions.md §9` removed that label -- Core
+    /// Essentials is not a Pathfinder book -- and the records were re-filed
+    /// under `advanced_race_guide`, which is where the Aasimar/Tiefling variant
+    /// heritages are actually published and where the same two races' other ARG
+    /// alternate-trait records already lived. This test is unchanged in what it
+    /// proves; only the book id and the wire code moved.
+    ///
+    /// They are the only records in the lane that are **majority granted rather
+    /// than chosen**: 16 heritages a player picks and 48 replacement rows that
     /// arrive with whichever heritage was picked.
     ///
     /// The count is asserted in both halves, not just in total, because the
@@ -3148,24 +3687,41 @@ mod tests {
     /// `<race>_abilities_globalvar_subrace.lst` would drop it to 16 while
     /// leaving 16 perfectly selectable records that change nothing on the
     /// sheet -- the browse-only stub class `decisions.md §44.2` describes, and
-    /// the precise failure this book's shape invites.
+    /// the precise failure this shape invites.
     #[test]
-    fn core_essentials_heritage_racial_traits_reach_a_player() {
-        let ce_traits = Family::new("core_essentials", "race_traits");
+    fn aasimar_and_tiefling_heritage_racial_traits_reach_a_player() {
+        let arg_traits = Family::new("advanced_race_guide", "race_traits");
         assert!(
-            corpus_inventory().0.contains(&ce_traits),
-            "the data/corpus scan must see data/corpus/core_essentials/race_trait/"
+            corpus_inventory().0.contains(&arg_traits),
+            "the data/corpus scan must see data/corpus/advanced_race_guide/race_trait/"
         );
-        assert!(full_inventory().contains(&ce_traits), "and it must reach the gate's inventory");
+        assert!(full_inventory().contains(&arg_traits), "and it must reach the gate's inventory");
 
-        let ingested = corpus_record_keys("core_essentials", "race_trait");
+        // Counted on disk from the two directories the heritage records live
+        // in, so this half still fails independently of ARG's other 350 rows.
+        let heritage: BTreeSet<String> = ["aasimar", "tiefling"]
+            .into_iter()
+            .flat_map(|race| {
+                corpus_record_keys_in(
+                    &repo_root()
+                        .join("data/corpus/advanced_race_guide/race_trait")
+                        .join(race),
+                )
+            })
+            .collect();
+        let subrace: BTreeSet<&String> = heritage
+            .iter()
+            .filter(|key| {
+                key.contains(" ~ ") && SUBRACE_HERITAGE_KEYS.iter().any(|k| key.contains(k))
+            })
+            .collect();
         assert_eq!(
-            ingested.len(),
+            subrace.len(),
             64,
-            "Core Essentials' 64 ingested heritage-trait records, counted on disk: 16 selectors \
-             (6 Aasimar + 10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows \
-             they grant. races/skinwalker/ carries the same shape and is out of scope -- \
-             Skinwalker is not one of the 18 races this project models"
+            "the 64 ingested heritage-trait records, counted on disk: 16 selectors (6 Aasimar + \
+             10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows they grant. \
+             races/skinwalker/ carries the same shape and is out of scope -- Skinwalker is not \
+             one of the 18 races this project models. Got {subrace:?}"
         );
 
         // The half that a broken grant link would silently leave standing.
@@ -3174,7 +3730,7 @@ mod tests {
             .races
             .iter()
             .flat_map(|race| race.alternates.iter())
-            .filter(|row| row.book == "CE")
+            .filter(|row| subrace.iter().any(|key| *key == &row.key))
             .map(|row| row.key.clone())
             .collect();
         assert_eq!(
@@ -3184,16 +3740,39 @@ mod tests {
              the player picks and are never menu rows. Got {selectable:?}"
         );
 
-        match reach_of(&ce_traits).expect("CE race traits have a declared claim") {
+        match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
             Reach::Surfaced { .. } => {}
             other => panic!(
-                "every CE heritage record must reach a player; got {other:?}. A shortfall here \
+                "every heritage record must reach a player; got {other:?}. A shortfall here \
                  of exactly 48 means the `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant \
                  links derived from <race>_abilities_globalvar_subrace.lst stopped being \
                  written by src/bin/ingest_race_traits.rs"
             ),
         }
     }
+
+    /// The 16 heritage names, spelled as the corpus spells them. Named rather
+    /// than pattern-matched so the 64-record assertion above cannot be
+    /// satisfied by some other 64 records that happen to land in the same two
+    /// directories.
+    const SUBRACE_HERITAGE_KEYS: &[&str] = &[
+        "Agathion-Blooded",
+        "Angel-Blooded",
+        "Archon-Blooded",
+        "Azata-Blooded",
+        "Garuda-Blooded",
+        "Peri-Blooded",
+        "Asura-Spawn",
+        "Daemon-Spawn",
+        "Demodand-Spawn",
+        "Demon-Spawn",
+        "Devil-Spawn",
+        "Div-Spawn",
+        "Kyton-Spawn",
+        "Qlippoth-Spawn",
+        "Oni-Spawn",
+        "Rakshasa-Spawn",
+    ];
 
     /// The other half of the same blind spot: `pathfinder_unchained` hid
     /// behind accessor functions, so a `pub const`-only scanner reported an
@@ -3876,11 +4455,13 @@ mod tests {
             314,
             "the 314 rows that state a stat block; the other 2 are `.COPY=` deltas"
         );
-        assert_eq!(
-            abilities.len(),
-            401,
-            "the 401 owned rows; the book's other 65 are orphans owned by no monster row here"
-        );
+        // SD31-E6-F9-005 (transcription lane, wave 12): 401 -> 493 (+92 new
+        // monster_ability records transcribed for this book). The prior
+        // comment's "65 orphans" figure described a different, un-written
+        // raw-candidate population this test does not itself assert on and
+        // this cycle did not re-derive -- not restated here to avoid
+        // quoting a number nobody has re-checked against the new total.
+        assert_eq!(abilities.len(), 493, "the owned rows on disk for this book/kind");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -3896,7 +4477,42 @@ mod tests {
             .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
             .collect();
         assert_eq!(served_monsters, monsters, "served monsters");
-        assert_eq!(served_abilities, abilities, "served abilities");
+        // `SD31-W21-MONSTER-001`: `served_abilities` now carries 18 MORE keys
+        // than `abilities` (the `data/corpus/bestiary_2/monster_ability/*.json`
+        // set) — every one owned via the `CATEGORY:Internal` bundle-row
+        // ownership hop (`transcribe_monster_tables.py::
+        // find_internal_bundle_ability_refs`), served by `list_monster_catalog`
+        // straight from the compiled `monster_chassis::MONSTER_BOOKS` table
+        // (`build_monster_catalog`, above), which never reads `data/corpus/`
+        // at all. Real, on-screen content with no JSON twin yet — asserted as
+        // a superset with the exact delta named, not silently widened to a
+        // bare `is_subset` that could absorb an unrelated future regression.
+        const BUNDLE_OWNED_NO_JSON_TWIN_YET: &[&str] = &[
+            "bestiary_2:monster_ability:breath_weapon_cone_of_negative_energy",
+            "bestiary_2:monster_ability:breath_weapon_cone_of_sound",
+            "bestiary_2:monster_ability:brine_dragon_capsize",
+            "bestiary_2:monster_ability:brine_dragon_desiccating_bite",
+            "bestiary_2:monster_ability:brine_dragon_painful_strikes",
+            "bestiary_2:monster_ability:cloud_dragon_cloud_breath",
+            "bestiary_2:monster_ability:cloud_dragon_cloud_form",
+            "bestiary_2:monster_ability:cloud_dragon_thundering_bite",
+            "bestiary_2:monster_ability:crystal_dragon_razor_sharp",
+            "bestiary_2:monster_ability:magma_dragon_magma_breath",
+            "bestiary_2:monster_ability:magma_dragon_magma_tomb",
+            "bestiary_2:monster_ability:magma_dragon_superheated",
+            "bestiary_2:monster_ability:umbral_dragon_create_shadows",
+            "bestiary_2:monster_ability:umbral_dragon_energy_drain",
+            "bestiary_2:monster_ability:umbral_dragon_ghost_bane",
+            "bestiary_2:monster_ability:umbral_dragon_shadow_breath",
+            "bestiary_2:monster_ability:umbral_dragon_umbral_scion",
+            "bestiary_2:monster_ability:water_breathing",
+        ];
+        let expected_served: BTreeSet<String> = abilities
+            .iter()
+            .cloned()
+            .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
+            .collect();
+        assert_eq!(served_abilities, expected_served, "served abilities");
 
         // The same live-blacklist property the Inner Sea World Guide claim
         // checks. Asserting "this book has no Product Identity" by citing a
@@ -3925,7 +4541,8 @@ mod tests {
             .expect("a claim is declared")
         {
             Reach::Surfaced { records, surface } => {
-                assert_eq!(records, 401);
+                // SD31-E6-F9-005 (transcription lane, wave 12): 401 -> 493.
+                assert_eq!(records, 493);
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected every linked ability to reach, got {other:?}"),
@@ -3985,7 +4602,30 @@ mod tests {
             .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
             .collect();
         assert_eq!(served_monsters, monsters, "served monsters");
-        assert_eq!(served_abilities, abilities, "served abilities");
+        // `SD31-W21-MONSTER-001`: `served_abilities` now carries 9 MORE keys
+        // than `abilities` (the `data/corpus/bestiary_3/monster_ability/*.json`
+        // set) — every one owned via the `CATEGORY:Internal` bundle-row
+        // ownership hop, served by `list_monster_catalog` straight from the
+        // compiled `monster_chassis::MONSTER_BOOKS` table, which never reads
+        // `data/corpus/` at all. Same shape as Bestiary 2's own claim above;
+        // see its comment for the full explanation.
+        const BUNDLE_OWNED_NO_JSON_TWIN_YET: &[&str] = &[
+            "bestiary_3:monster_ability:adhukait_dance_of_disaster",
+            "bestiary_3:monster_ability:adhukait_dual_mind",
+            "bestiary_3:monster_ability:adhukait_spell_like_abilities",
+            "bestiary_3:monster_ability:aghasura_attraction_aura",
+            "bestiary_3:monster_ability:aghasura_dual_wielder",
+            "bestiary_3:monster_ability:aghasura_infused_weapons",
+            "bestiary_3:monster_ability:aghasura_poison",
+            "bestiary_3:monster_ability:legion_archon_flames_of_faith",
+            "bestiary_3:monster_ability:legion_archon_second_skin",
+        ];
+        let expected_served: BTreeSet<String> = abilities
+            .iter()
+            .cloned()
+            .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
+            .collect();
+        assert_eq!(served_abilities, expected_served, "served abilities");
 
         // The same live-blacklist property every chassis book's claim checks:
         // a grep that returned 0 today is a statement about today, and this
@@ -4072,13 +4712,19 @@ mod tests {
 
         // The book's monster ABILITIES, a family it has had records for only
         // since round 8. Same shape as every other chassis book's claim.
+        // SD31-E6-F9-005 (transcription lane, wave 12): 323 -> 399 (+76 new
+        // monster_ability records transcribed for this book).
+        // SD31-W23-MONSTER-001: 399 -> 522 (+123 on disk this cycle's `gen_
+        // book_cache` run wrote -- 68 of those were wave 21's own +399->467
+        // Rust-table delta, never previously cache-generated to JSON, plus
+        // this cycle's own +55 cross-table-owner rows, `decisions.md §58.3`).
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 323, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 522, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 323),
-            other => panic!("expected all 323 abilities to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 522),
+            other => panic!("expected all 522 abilities to reach, got {other:?}"),
         }
     }
 

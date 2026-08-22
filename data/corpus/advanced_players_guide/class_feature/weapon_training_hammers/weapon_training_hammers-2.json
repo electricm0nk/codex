@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Two-Handed Weapon Training 2 Hammers",
+    "name": "Weapon Training (Hammers)",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Two-Handed Weapon Training 2 Hammers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.TwoHandedWeaponTraining.TwoHandedWeaponTraining2.TwoHandedWeaponTrainingHammers"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.TwoHandedWeaponTrainingHammers"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Weapon Group Hammers TwoHanded|TOHIT,DAMAGE|WeaponTrainingHammers|TYPE=WeaponTraining"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2261,
+    "record_key": "Two-Handed Weapon Training 2 Hammers"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

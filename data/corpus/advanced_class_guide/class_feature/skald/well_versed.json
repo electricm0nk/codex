@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald ~ Well-Versed",
+    "name": "Well-Versed",
+    "class": "Skald",
+    "description": "You are resistant to sonic effects. You gain a +%1 bonus on saving throws made against bardic performance, as well as sonic and language-dependent effects.|SkaldWellVersedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Well-Versed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldWellVersed.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkaldWellVersedBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are resistant to sonic effects. You gain a +%1 bonus on saving throws made against bardic performance, as well as sonic and language-dependent effects.|SkaldWellVersedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldWellVersedBonus|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 bonus on saving throws against bardic performance, as well as all sonic or language-dependent effects|SkaldWellVersedBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1726,
+    "record_key": "Skald ~ Well-Versed"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

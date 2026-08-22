@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Tome ~ Challenge",
+    "name": "Challenge",
+    "class": "Order of the Tome",
+    "description": "Whenever an order of the tome cavalier issues a challenge, he receives a +2 bonus on all saving throws against spells or spell-like abilities cast by the subject of his challenge and a +2 bonus on all Bluff and Sense motive checks involving the subject of his challenge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Tome ~ Challenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever an order of the tome cavalier issues a challenge, he receives a +2 bonus on all saving throws against spells or spell-like abilities cast by the subject of his challenge and a +2 bonus on all Bluff and Sense motive checks involving the subject of his challenge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 459,
+    "record_key": "Order of the Tome ~ Challenge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

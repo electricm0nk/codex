@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nimble Guardian ~ Defensive Aid",
+    "name": "Defensive Aid",
+    "class": "Monk",
+    "description": "%1 times per day, a nimble guardian can interpose herself between one adjacent ally and an attack or damage dealt in an area of effect. If an adjacent ally is the target of the attack or is required to make a Reflex saving throw against a damaging effect, as an immediate action the nimble guardian can grant that ally a +4 circumstance bonus to AC or on the saving throw against the effect. The nimble guardian must use this ability before the attack roll or saving throw is made. The nimble guardian can only use this ability if he is wearing light or no armor.|NimbleGuardianDefensiveAidTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nimble Guardian ~ Defensive Aid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NimbleGuardianDefensiveAidTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, a nimble guardian can interpose herself between one adjacent ally and an attack or damage dealt in an area of effect. If an adjacent ally is the target of the attack or is required to make a Reflex saving throw against a damaging effect, as an immediate action the nimble guardian can grant that ally a +4 circumstance bonus to AC or on the saving throw against the effect. The nimble guardian must use this ability before the attack roll or saving throw is made. The nimble guardian can only use this ability if he is wearing light or no armor.|NimbleGuardianDefensiveAidTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NimbleGuardianDefensiveAidTimes|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 450,
+    "record_key": "Nimble Guardian ~ Defensive Aid"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

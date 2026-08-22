@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Swap Places",
+    "name": "Improved Swap Places",
+    "class": "Warpriest Bonus Feat",
+    "description": "When you and your ally use Swap Places, your ally can be up to one size larger or smaller than you, and your movement into the ally's square does not provoke an attack of opportunity. If your ally cannot fit into the space you had been occupying and there are no available adjacent squares to accommodate the rest of the ally's space, the ally must squeeze. Alternatively, as part of its movement, the ally can attempt a bull rush combat maneuver against a creature that occupies a space your ally would occupy, but this bull rush cannot move the creature more than 5 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Swap Places"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Swap Places"
+      },
+      {
+        "key": "DESC",
+        "value": "When you and your ally use Swap Places, your ally can be up to one size larger or smaller than you, and your movement into the ally's square does not provoke an attack of opportunity. If your ally cannot fit into the space you had been occupying and there are no available adjacent squares to accommodate the rest of the ally's space, the ally must squeeze. Alternatively, as part of its movement, the ally can attempt a bull rush combat maneuver against a creature that occupies a space your ally would occupy, but this bull rush cannot move the creature more than 5 feet."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Swap Places"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4163,
+    "record_key": "Warpriest Bonus Feat ~ Improved Swap Places"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

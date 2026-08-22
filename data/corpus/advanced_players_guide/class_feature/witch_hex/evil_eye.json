@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Evil Eye",
+    "name": "Evil Eye",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_EvilEye",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Evil Eye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchEvilEyePenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_EvilEye|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_EvilEye"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch can cause doubt in the mind of a foe within 30 feet that you can see. The target takes a %1 penalty on one of the following (witch's choice): AC, ability checks, attack rolls, saving throws, or skill checks. This hex lasts for %2 rounds. A Will save reduces this to just 1 round. This is a mind-affecting effect.|WitchEvilEyePenalty|3+WitchHexStat"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Evil Eye"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_EvilEye|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_EvilEye|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Evil Eye)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchEvilEyePenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchEvilEyePenalty|-2|PREVARGTEQ:WitchHexAbilityLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 891,
+    "record_key": "Witch Hex ~ Evil Eye"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

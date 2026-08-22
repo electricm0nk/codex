@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phantasm School ~ Terror",
+    "name": "Terror",
+    "class": "Phantasm School",
+    "description": "As a standard action, you can make a melee touch attack that causes a creature to be assailed by nightmares only it can see. The creature provokes an attack of opportunity from you or an ally of your choice. Creatures with more than %1 Hit Dice are unaffected. This is a mind-affecting fear effect. You can use this ability %1 times per day.|PhantasmTerrorHD|PhantasmTerrorTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantasm School ~ Terror"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantasmTerrorHD|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantasmTerrorTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can make a melee touch attack that causes a creature to be assailed by nightmares only it can see. The creature provokes an attack of opportunity from you or an ally of your choice. Creatures with more than %1 Hit Dice are unaffected. This is a mind-affecting fear effect. You can use this ability %1 times per day.|PhantasmTerrorHD|PhantasmTerrorTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantasmTerrorHD|IllusionSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantasmTerrorTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PhantasmTerrorTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3373,
+    "record_key": "Phantasm School ~ Terror"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

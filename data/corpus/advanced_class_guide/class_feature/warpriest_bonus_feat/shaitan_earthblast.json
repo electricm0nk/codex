@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Shaitan Earthblast",
+    "name": "Shaitan Earthblast",
+    "class": "Warpriest Bonus Feat",
+    "description": "With a forceful stomp you release a blast of acid from the earth to burn your enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Shaitan Earthblast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:3,[PRESTAT:2,CON=15,WIS=17],[PREABILITY:4,CATEGORY=FEAT,Elemental Fist,Improved Unarmed Strike,Shaitan Skin,Shaitan Style],[PREMULT:1,[PREMULT:1,[PRETOTALAB:13],[PREVARGTEQ:WarpriestBonusFeatBAB,13]],[PREVARGTEQ:MonkFeatQualify,11]]]"
+      },
+      {
+        "key": "DESC",
+        "value": "With a forceful stomp you release a blast of acid from the earth to burn your enemies."
+      },
+      {
+        "key": "DESC",
+        "value": " While using the Shaitan Style feat, as a standard action, you can spend two Elemental Fist (Advanced Player's Guide 158) attempts to unleash a 20-foot column of acid that has a 5-foot radius and erupts from a point of origin within 30 feet of you. Creatures caught in the column take your unarmed strike damage plus the acid damage from your Elemental Fist and are staggered for 1 round. A successful Reflex save (DC 10 + 1/2 your character level + your Wis modifier) reduces the damage by half and prevents a target from being staggered."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Shaitan Earthblast"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4532,
+    "record_key": "Warpriest Bonus Feat ~ Shaitan Earthblast"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

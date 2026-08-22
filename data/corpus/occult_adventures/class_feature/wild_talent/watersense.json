@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Watersense",
+    "name": "Watersense",
+    "class": "Wild Talent",
+    "description": "Element water; Type utility (Su); Level 4; Burn - You gain tremorsense with a range of 30 feet to detect anything in contact with the same body of water as you. While you are benefiting from this tremorsense, your water blasts and composite blasts that include water don't suffer a miss chance from concealment or total concealment against creatures you detect with this tremorsense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Watersense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Water"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Water,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type utility (Su); Level 4; Burn - You gain tremorsense with a range of 30 feet to detect anything in contact with the same body of water as you. While you are benefiting from this tremorsense, your water blasts and composite blasts that include water don't suffer a miss chance from concealment or total concealment against creatures you detect with this tremorsense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 799,
+    "record_key": "Wild Talent ~ Watersense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

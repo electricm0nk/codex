@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Faith Initiate ~ A Thousand Voices",
+    "name": "A Thousand Voices",
+    "class": "Druid",
+    "description": "The Green Faith initiate can communicate with any creature with a language or any stone, as if using tonnues and stone tell, for up to (CASTERLEVEL) minutes per day. These minutes do not need to be consecutive, but must be spent in 1-minute increments.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Initiate ~ A Thousand Voices"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.GreenFaithInitiateClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The Green Faith initiate can communicate with any creature with a language or any stone, as if using tonnues and stone tell, for up to (CASTERLEVEL) minutes per day. These minutes do not need to be consecutive, but must be spent in 1-minute increments."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 537,
+    "record_key": "Green Faith Initiate ~ A Thousand Voices"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

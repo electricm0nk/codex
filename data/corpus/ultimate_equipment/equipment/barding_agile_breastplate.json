@@ -1,0 +1,90 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 800.0,
+    "description": null,
+    "key": "Barding (Agile Breastplate)",
+    "name": "Barding (Agile Breastplate)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=When Jumping",
+          "3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Climb",
+          "3"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Barding (Medium)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Standard.Barding.Mount"
+      },
+      {
+        "key": "COST",
+        "value": "800"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "25"
+      }
+    ],
+    "weight_lbs": 25.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 167,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Barding (Agile Breastplate)",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

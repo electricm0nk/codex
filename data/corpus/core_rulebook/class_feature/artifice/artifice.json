@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Artifice Domain",
+    "name": "Artifice",
+    "class": null,
+    "description": "You can repair damage to objects, animate objects with life, and create objects from nothing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Artifice Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can repair damage to objects, animate objects with life, and create objects from nothing."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Artificer's Touch|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Artifice)|PREVARGTEQ:DomainArtificeAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dancing Weapons|PREVARGTEQ:DomainArtificeAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeDC|10+(DomainArtificeLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Artifice=1|Animate Rope|Artifice=2|Wood Shape|Artifice=3|Stone Shape|Artifice=4|Minor Creation|Artifice=5|Fabricate|Artifice=6|Major Creation|Artifice=7|Wall of Iron|Artifice=8|Instant Summons|Artifice=9|Prismatic Sphere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 653,
+    "record_key": "Artifice Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue ~ Trapfinding",
+    "name": "Trapfinding",
+    "class": "Rogue",
+    "description": "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.Trapfinding"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Trapfinding|TrapfindingBonus|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|TrapfindingBonus|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingBonus|max(TrapfindingLVL/2,1)|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingLVL|RogueLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1617,
+    "record_key": "Rogue ~ Trapfinding"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,66 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 1800.0,
+    "description": null,
+    "key": "Material ~ Eel Hide ~ Armor / Medium",
+    "name": "Eel Hide",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Eel Hide ~ Armor / Medium"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Armor"
+      },
+      {
+        "key": "COST",
+        "value": "1800"
+      },
+      {
+        "key": "ITYPE",
+        "value": "EelHide"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Medium"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Material ~ Leather"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Artisan,Spell Component"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Material ~ Eel Hide ~ Armor / Medium",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

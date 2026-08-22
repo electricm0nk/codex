@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Winter Witch ~ Cold Flesh",
+    "name": "Cold Flesh",
+    "class": "Witch",
+    "description": "At 1st level, a winter witch gains endure elements as a constant spell-like ability, but only against cold temperatures. At 4th level, she gains cold resistance 5, making her comfortable in near-freezing temperatures. At 9th-level, this increases to cold resistance 10, and at 14th level, it becomes immunity to cold. This replaces the witch's 4th-level hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winter Witch ~ Cold Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Winter Witch|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=WitchLVL|Endure Elements (Cold Environment),11+INT"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a winter witch gains endure elements as a constant spell-like ability, but only against cold temperatures. At 4th level, she gains cold resistance 5, making her comfortable in near-freezing temperatures. At 9th-level, this increases to cold resistance 10, and at 14th level, it becomes immunity to cold. This replaces the witch's 4th-level hex."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|PREVARGTEQ:WitchLVL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|5|TYPE=Resistance|PREVARGTEQ:WitchLVL,4|PREVARLT:WitchLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance|PREVARGTEQ:WitchLVL,9|PREVARLT:WitchLVL,14"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 394,
+    "record_key": "Winter Witch ~ Cold Flesh"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

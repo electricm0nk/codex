@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Musketeer ~ Weapon And Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Musketeer",
+    "description": "A musketeer does not gain proficiency in heavy armor. Musketeers are proficient with all simple and martial weapons, and with firearms. A cavalier's levels stack with any fighter levels he possesses for the purpose of meeting the level prerequisite for feats that specifically select a firearm, such as Weapon Specialization.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Musketeer ~ Weapon And Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A musketeer does not gain proficiency in heavy armor. Musketeers are proficient with all simple and martial weapons, and with firearms. A cavalier's levels stack with any fighter levels he possesses for the purpose of meeting the level prerequisite for feats that specifically select a firearm, such as Weapon Specialization."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Firearm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfMedium"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 509,
+    "record_key": "Musketeer ~ Weapon And Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Order ~ Order of the Blue Rose",
+    "name": "Order of the Blue Rose",
+    "class": "Cavalier Order",
+    "description": "The cavaliers of the order of the blue rose dedicate themselves to promoting peace in the lands they roam. Skilled warriors and adept diplomats, these cavaliers counsel wisdom, patience, and understanding, but are ever mindful of the need to take up arms to strike down aggressors, tyrants, or evil usurpers. Although they believe wholeheartedly in peace as an aim and a final goal, cavaliers of the blue rose are warriors first, and embrace their role as guardians of those who cannot or will not take up arms to defend themselves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Order ~ Order of the Blue Rose"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavaliers of the order of the blue rose dedicate themselves to promoting peace in the lands they roam. Skilled warriors and adept diplomats, these cavaliers counsel wisdom, patience, and understanding, but are ever mindful of the need to take up arms to strike down aggressors, tyrants, or evil usurpers. Although they believe wholeheartedly in peace as an aim and a final goal, cavaliers of the blue rose are warriors first, and embrace their role as guardians of those who cannot or will not take up arms to defend themselves."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Blue Rose ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Blue Rose ~ Challenge|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Blue Rose ~ Skills|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Blue Rose ~ Order Abilities|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Blue Rose ~ Flat of the Blade|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Blue Rose ~ Inner Peace|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Blue Rose ~ Shield of Blades|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 434,
+    "record_key": "Cavalier Order ~ Order of the Blue Rose"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

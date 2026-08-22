@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler ~ Bleeding Wound",
+    "name": "Bleeding Wound",
+    "class": "Swashbuckler",
+    "description": "At 11th level, when the swashbuckler hits a living creature with a light or one-handed piercing melee weapon attack, she can spend 1 panache point as a free action to have that attack deal extra %1 bleed damage. Alternatively, the swashbuckler can spend 2 panache points to deal 1 point of Strength, Dexterity, or Constitution bleed damage (swashbuckler's choice) instead. Creatures that are immune to sneak attacks are also immune to these types of bleed damage.|BleedingWoundDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Bleeding Wound"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL11"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL11.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SwashbucklerDeedQualifyLVL,11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BleedingWoundDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, when the swashbuckler hits a living creature with a light or one-handed piercing melee weapon attack, she can spend 1 panache point as a free action to have that attack deal extra %1 bleed damage. Alternatively, the swashbuckler can spend 2 panache points to deal 1 point of Strength, Dexterity, or Constitution bleed damage (swashbuckler's choice) instead. Creatures that are immune to sneak attacks are also immune to these types of bleed damage.|BleedingWoundDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BleedingWoundDamage|DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2086,
+    "record_key": "Swashbuckler ~ Bleeding Wound"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

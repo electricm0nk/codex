@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lore Warden ~ Skill Over Strength ~ AG",
+    "name": "Skill Over Strength",
+    "class": "Fighter",
+    "description": "A lore warden qualifies for feats and other abilities as though she had the Combat Expertise feat.|!PRECLASS:1,Fighter=6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Warden ~ Skill Over Strength ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Feature.LoreWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "DESC",
+        "value": "A lore warden qualifies for feats and other abilities as though she had the Combat Expertise feat.|!PRECLASS:1,Fighter=6"
+      },
+      {
+        "key": "DESC",
+        "value": "A lore warden gains Combat Expertise as a bonus feat, even if she would not normally qualify for the feat. If she already has Combat Expertise, she instead gains any one combat feat that includes Combat Expertise as a prerequisite (and for which she otherwise qualifies).|PRECLASS:1,Fighter=6"
+      },
+      {
+        "key": "DESC",
+        "value": "She can treat her base attack bonus as though it were 2 higher for the purpose of calculating the effects of Combat Expertise.|PRECLASS:1,Fighter=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lore Warden ~ Serves As Combat Expertise|!PRECLASS:1,Fighter=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Skill Over Strength Bonus Feat|PREVARGTEQ:FighterLVL,6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 852,
+    "record_key": "Lore Warden ~ Skill Over Strength ~ AG"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

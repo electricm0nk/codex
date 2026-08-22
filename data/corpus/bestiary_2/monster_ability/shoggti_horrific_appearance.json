@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Shoggti ~ Horrific Appearance",
     "delivery": "Supernatural",
@@ -13,19 +11,63 @@
     "owners": [
       "bestiary_2:monster:qlippoth_shoggti"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Horrific Appearance"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|ShoggtiHorrificAppearanceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShoggtiHorrificAppearanceDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShoggtiHorrificAppearanceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Horrific Appearance)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShoggtiHorrificAppearanceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures that succumb to a shoggti's horrific appearance become fascinated by the creature's hypnotically wriggling tentacles and the strange, shimmering colors in its eye.  This effect persists for 1d6 rounds (but can be ended by the normal methods of defeating the fascinated condition)."
+      },
+      {
+        "key": "KEY",
+        "value": "Shoggti ~ Horrific Appearance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.225",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1022,
-    "record_key": "Shoggti ~ Horrific Appearance"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1022,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Shoggti ~ Horrific Appearance",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

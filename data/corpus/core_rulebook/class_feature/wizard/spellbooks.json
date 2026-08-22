@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wizard ~ Spellbooks",
+    "name": "Spellbooks",
+    "class": "Wizard",
+    "description": "A wizard must study his spellbook each day to prepare his spells. He cannot prepare any spell not recorded in his spellbook, except for read magic, which all wizards can prepare from memory.&nl;A wizard begins play with a spellbook containing all 0-level wizard spells (except those from his opposed schools, if any; see Arcane Schools) plus three 1st-level spells of his choice. The wizard also selects a number of additional 1st-level spells equal to his Intelligence modifier to add to the spellbook. At each new wizard level, he gains two new spells of any spell level or levels that he can cast (based on his new wizard level) for his spellbook. At any time, a wizard can also add spells found in other wizards' spellbooks to his own.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard ~ Spellbooks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Wizard Class Feature"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "A wizard must study his spellbook each day to prepare his spells. He cannot prepare any spell not recorded in his spellbook, except for read magic, which all wizards can prepare from memory.&nl;A wizard begins play with a spellbook containing all 0-level wizard spells (except those from his opposed schools, if any; see Arcane Schools) plus three 1st-level spells of his choice. The wizard also selects a number of additional 1st-level spells equal to his Intelligence modifier to add to the spellbook. At each new wizard level, he gains two new spells of any spell level or levels that he can cast (based on his new wizard level) for his spellbook. At any time, a wizard can also add spells found in other wizards' spellbooks to his own."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Wizard Spellbook"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2574,
+    "record_key": "Wizard ~ Spellbooks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

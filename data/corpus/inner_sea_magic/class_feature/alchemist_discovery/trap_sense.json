@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Discovery ~ Trap Sense",
+    "name": "Trap Sense",
+    "class": "Alchemist Discovery",
+    "description": "You gain a +%1 bonus on Reflex saves made to avoid traps, and a +%1 dodge bonus to AC against attacks made by traps.|TrapSenseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Discovery ~ Trap Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.AlchemistDiscovery"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Crypt Breaker"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistTrapSenseLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Reflex saves made to avoid traps, and a +%1 dodge bonus to AC against attacks made by traps.|TrapSenseBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Trap Sense"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|AlchemistDiscoveryLVL/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 149,
+    "record_key": "Alchemist Discovery ~ Trap Sense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

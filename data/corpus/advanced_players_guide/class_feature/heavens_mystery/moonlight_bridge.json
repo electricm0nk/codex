@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heavens Mystery ~ Moonlight Bridge",
+    "name": "Moonlight Bridge",
+    "class": "Heavens Mystery",
+    "description": "You summon a bridge of shimmering moonlight. The 10-foot-wide span touches the ground at a point adjacent to your position. From this point it can extend in any direction for %1 feet. The path persists until you have crossed over the bridge or for 24 hours, whichever is shorter. You may summon a moonlight bridge %2 times per day. Should the bridge be attacked, treat it as a wall of force.|OracleMoonlightBridgeLength|OracleMoonlightBridgeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Mystery ~ Moonlight Bridge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMoonlightBridgeLength|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMoonlightBridgeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon a bridge of shimmering moonlight. The 10-foot-wide span touches the ground at a point adjacent to your position. From this point it can extend in any direction for %1 feet. The path persists until you have crossed over the bridge or for 24 hours, whichever is shorter. You may summon a moonlight bridge %2 times per day. Should the bridge be attacked, treat it as a wall of force.|OracleMoonlightBridgeLength|OracleMoonlightBridgeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMoonlightBridgeLength|classlevel(\"Oracle\")*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMoonlightBridgeTimes|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 613,
+    "record_key": "Heavens Mystery ~ Moonlight Bridge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

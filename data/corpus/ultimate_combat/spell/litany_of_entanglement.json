@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Your litany conjures chains of energy that lash upward from the ground and hamper the target's movement. The target is entangled. This spell has no effect on flying creatures, or creatures not standing upon solid ground. While subject to this spell, the target cannot be the target of another spell that has the word \"litany\" in the title.",
+    "key": "Litany of Entanglement",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Paladin=2|Inquisitor=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Entangles a creature for 1 round.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your litany conjures chains of energy that lash upward from the ground and hamper the target's movement. The target is entangled. This spell has no effect on flying creatures, or creatures not standing upon solid ground. While subject to this spell, the target cannot be the target of another spell that has the word \"litany\" in the title.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/litanyOfEntanglement.html#_litany-of-entanglement"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Calling"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Litany of Entanglement",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

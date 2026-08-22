@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Hex ~ Ward",
+    "name": "Ward",
+    "class": "Shaman Hex",
+    "description": "The shaman places a protective ward over one creature. The warded creature receives a +%1 deflection bonus to AC and a +%1 resistance bonus on saving throws. This effect lasts until the warded creature is hit or fails a saving throw. A shaman knows when a warded creature is no longer protected. A shaman can have only one ward active at a time. If the shaman uses this hex while a previous ward is still active, that previous ward immediately ends. A shaman cannot use this ability on herself.|ShamanWardHexBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Ward"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Ward"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWardHexBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman places a protective ward over one creature. The warded creature receives a +%1 deflection bonus to AC and a +%1 resistance bonus on saving throws. This effect lasts until the warded creature is hit or fails a saving throw. A shaman knows when a warded creature is no longer protected. A shaman can have only one ward active at a time. If the shaman uses this hex while a previous ward is still active, that previous ward immediately ends. A shaman cannot use this ability on herself.|ShamanWardHexBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWardHexBonus|1+min(2,ShamanHexLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1439,
+    "record_key": "Shaman Hex ~ Ward"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Oread",
+    "name": "Oread",
+    "base_size": "M",
+    "base_move_walk": 20,
+    "race_type": "Outsider",
+    "type_tokens": [
+      "Base",
+      "PC",
+      "Featured"
+    ],
+    "legs": 2,
+    "hands": 2,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Oread"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC.Featured"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_races.lst",
+    "sha256": "a01e11688d824965a5606e899fb163db246ec0076706e78b88d0471b703a71ef",
+    "line": 6,
+    "record_key": "Oread"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

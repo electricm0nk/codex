@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Inspired Blade",
+    "name": "Inspired Blade",
+    "class": "Swashbuckler Archetype",
+    "description": "An inspired blade is both a force of personality and a sage of swordplay dedicated to the perfection of combat with the rapier. They use the science and geometry with swordplay to beautiful and deadly effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Inspired Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype.SwashbucklerBleedingWoundDeed.SwashbucklerPanache.SwashbucklerFinesse.SwashbucklerWeaponTraining.SwashbucklerWeaponMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Inspired Blade],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerBleedingWound,TYPE.SwashbucklerPanache,TYPE.SwashbucklerSwashbucklerFinesse,TYPE.SwashbucklerDeeds,TYPE.SwashbucklerSwashbucklerWeaponTraining,TYPE.SwashbucklerSwashbucklerWeaponMastery]"
+      },
+      {
+        "key": "DESC",
+        "value": "An inspired blade is both a force of personality and a sage of swordplay dedicated to the perfection of combat with the rapier. They use the science and geometry with swordplay to beautiful and deadly effect."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Inspired Blade ~ Inspired Panache|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Inspired Blade ~ Inspired Finesse|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Inspired Blade ~ Rapier Training|PRECLASS:1,Swashbuckler=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Deed ~ Inspired Strike|PRECLASS:1,Swashbuckler=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Inspired Blade ~ Rapier Weapon Mastery|PRECLASS:1,Swashbuckler=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Swashbuckler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3842,
+    "record_key": "Swashbuckler Archetype ~ Inspired Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

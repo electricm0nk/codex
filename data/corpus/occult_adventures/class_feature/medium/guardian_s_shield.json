@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Guardian's Shield",
+    "name": "Guardian's Shield",
+    "class": "Medium",
+    "description": "(Lesser) You gain proficiency in heavy armors and shields (including tower shields).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Guardian's Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Lesser) You gain proficiency in heavy armors and shields (including tower shields)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Heavy|Shield Prof|Shield Prof ~ Tower"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 853,
+    "record_key": "Medium ~ Guardian's Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

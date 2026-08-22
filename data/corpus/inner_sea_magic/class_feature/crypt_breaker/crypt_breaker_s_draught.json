@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Crypt Breaker ~ Crypt Breaker's Draught",
+    "name": "Crypt Breaker's Draught",
+    "class": "Crypt Breaker",
+    "description": "Rather than develop mutagens that increase their natural armor and physical abilities at the expense of their minds, crypt breakers focus on the creation of special draughts that can enhance their senses. When a crypt breaker drinks one of these draughts, he gains a +4 bonus on all Perception checks and gains one of the following special senses: darkvision 60 feet, low-light vision, or scent. While under the effects of a crypt breaker's draught, the alchemist also gains light blindness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crypt Breaker ~ Crypt Breaker's Draught"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Supernatural.AlchemistMutagen"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than develop mutagens that increase their natural armor and physical abilities at the expense of their minds, crypt breakers focus on the creation of special draughts that can enhance their senses. When a crypt breaker drinks one of these draughts, he gains a +4 bonus on all Perception checks and gains one of the following special senses: darkvision 60 feet, low-light vision, or scent. While under the effects of a crypt breaker's draught, the alchemist also gains light blindness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 143,
+    "record_key": "Crypt Breaker ~ Crypt Breaker's Draught"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

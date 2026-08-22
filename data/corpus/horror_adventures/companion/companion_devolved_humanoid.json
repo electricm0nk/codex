@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "ability_keys": [
       "horror_adventures:companion:companion_advancement_devolved_humanoid"
@@ -26,6 +24,104 @@
     ],
     "race_subtype": null,
     "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Devolved Humanoid|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "3"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Devolved Humanoid"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Companion [NAME]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "NotAllowed,1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.AnimalCompanion"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "M",
@@ -67,16 +163,18 @@
       "AnimalCompanion"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races_companion.lst",
-    "sha256": "ee1e57dafe789962483eb7eaa925462b91f84f4aa24bbf88aacc758028f6fca1",
-    "line": 3,
-    "record_key": "Companion (Devolved Humanoid)"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races_companion.lst",
+    "record_key": "Companion (Devolved Humanoid)",
+    "sha256": "ee1e57dafe789962483eb7eaa925462b91f84f4aa24bbf88aacc758028f6fca1"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

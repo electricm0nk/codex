@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Tendriculos ~ Paralysis",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:tendriculos"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralysis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(3d6 rounds, DC %1)|ParalysisDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParalysisDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParalysisDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paralysis)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ParalysisDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can render your victims immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can usually resist it with a Fortitude saving throw (DC %1). Unlike hold person and similar effects, a paralysis effect does not allow a new save each round. A winged creature flying in the air at the time that it is paralyzed cannot flap its wings and falls. A swimmer can't swim and may drown.|ParalysisDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Tendriculos ~ Paralysis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.259"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.259",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1224,
-    "record_key": "Tendriculos ~ Paralysis"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1224,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Tendriculos ~ Paralysis",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

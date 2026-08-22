@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Soul Eater ~ Find Target",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:soul_eater"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a soul eater's conjurer orders it to find a creature, it can do so unerringly, as though guided by a locate creature spell that has no maximum range and is not blocked by running water.  The conjurer must have seen the desired target and must speak the target's name."
+      },
+      {
+        "key": "KEY",
+        "value": "Soul Eater ~ Find Target"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.254",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1194,
-    "record_key": "Soul Eater ~ Find Target"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1194,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Soul Eater ~ Find Target",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

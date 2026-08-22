@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brute ~ Tear Them Apart",
+    "name": "Tear Them Apart",
+    "class": "Vigilante",
+    "description": "At 20th level, a brute has learned how to tear at his enemies' bodies when he hits with multiple attacks. When he takes a full attack action while in his vigilante identity, if a brute hits an opponent with at least two attacks, he deals an additional 1d10 points of damage plus 1-1/2 times his Strength modifier. If he hits an opponent with four attacks during a full attack action while in his vigilante identity, he instead deals an additional 3d10 points of damage plus 1-1/2 times his Strength modifier. The damage occurs after he has taken his last attack with the full attack action. This counts as a rend and does not stack with other abilities that grant rend.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brute ~ Tear Them Apart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a brute has learned how to tear at his enemies' bodies when he hits with multiple attacks. When he takes a full attack action while in his vigilante identity, if a brute hits an opponent with at least two attacks, he deals an additional 1d10 points of damage plus 1-1/2 times his Strength modifier. If he hits an opponent with four attacks during a full attack action while in his vigilante identity, he instead deals an additional 3d10 points of damage plus 1-1/2 times his Strength modifier. The damage occurs after he has taken his last attack with the full attack action. This counts as a rend and does not stack with other abilities that grant rend."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 982,
+    "record_key": "Brute ~ Tear Them Apart"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

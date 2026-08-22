@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Bowling Infusion",
+    "name": "Bowling Infusion",
+    "class": "Wild Talent",
+    "description": "Element aether or earth; Type substance infusion; Level 2; Burn 2 Associated Blasts earth, magma, metal, mud, telekinetic Saving Throw none You bowl your foes over with the sheer mass of your kinetic blast. Attempt a trip combat maneuver check against each target damaged by your infused blast, using your Constitution modifier instead of your Strength modifier to determine your Combat Maneuver Bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Bowling Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Aether.Infusion Wild Talent Earth"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:KineticistLVL_Aether,4],[PREVARGTEQ:KineticistLVL_Earth,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether or earth; Type substance infusion; Level 2; Burn 2 Associated Blasts earth, magma, metal, mud, telekinetic Saving Throw none You bowl your foes over with the sheer mass of your kinetic blast. Attempt a trip combat maneuver check against each target damaged by your infused blast, using your Constitution modifier instead of your Strength modifier to determine your Combat Maneuver Bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 679,
+    "record_key": "Wild Talent ~ Bowling Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

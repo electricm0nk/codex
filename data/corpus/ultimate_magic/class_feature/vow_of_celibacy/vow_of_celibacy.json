@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vow of Celibacy",
+    "name": "Vow of Celibacy",
+    "class": null,
+    "description": "You must abstain from all sexual and intimate physical activity. You take it to an extreme, refusing to even share a room with another person, or sleeping on the opposite side of a camp from other people in a group. You are not allowed to touch others or have others touch you (including touch spells from allies). Striking enemies in battle or being struck by enemies is not prohibited, but you shun all peaceful or pleasurable contact.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.MonkVow"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "DESC",
+        "value": "You must abstain from all sexual and intimate physical activity. You take it to an extreme, refusing to even share a room with another person, or sleeping on the opposite side of a camp from other people in a group. You are not allowed to touch others or have others touch you (including touch spells from allies). Striking enemies in battle or being struck by enemies is not prohibited, but you shun all peaceful or pleasurable contact."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|max(1,floor(classlevel(\"Monk\")/5))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 429,
+    "record_key": "Vow of Celibacy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

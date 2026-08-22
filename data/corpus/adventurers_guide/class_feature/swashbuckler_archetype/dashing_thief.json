@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Dashing Thief",
+    "name": "Dashing Thief",
+    "class": "Swashbuckler Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Dashing Thief"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Dashing Thief],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_ClassSkills=True,Swashbuckler_Archetype_DerringDoDeed=True,Swashbuckler_Archetype_SwashbucklersEdgeDeed=True,Swashbuckler_Archetype_Panache=True,Swashbuckler_Archetype_BonusFeats=True,Swashbuckler_Archetype_MenacingSwordplayDeed=True,Swashbuckler_Archetype_DizzyingDefenseDeed=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dashing Thief ~ Bold Thief|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dashing Thief ~ Thief's Confidence|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dashing Thief ~ Rogue Talents|PRECLASS:1,Swashbuckler=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dashing Thief ~ Dazing Charm Deed|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dashing Thief ~ Swaying Charm Deed|PRECLASS:1,Swashbuckler=15"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DerringDoDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklersEdgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DizzyingDefenseDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DizzyingDefenseDeed|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1075,
+    "record_key": "Swashbuckler Archetype ~ Dashing Thief"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dusk Stalker ~ Shadow Guide",
+    "name": "Shadow Guide",
+    "class": "Ranger",
+    "description": "When a dusk stalker gains the favored terrain ability, that ability is modified in the following ways. At 3rd level, a dusk stalker picks his primary terrain normally, but only gains a +1 bonus on those checks while on a plane other than the Shadow Plane, and gains a +3 bonus on those checks while on the Shadow Plane. Each time he chooses to add a bonus in a favored terrain, he gains a +1 bonus on those checks while on a plane other than the Shadow Plane, and gains a +3 bonus on those checks while on the Shadow Plane.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dusk Stalker ~ Shadow Guide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When a dusk stalker gains the favored terrain ability, that ability is modified in the following ways. At 3rd level, a dusk stalker picks his primary terrain normally, but only gains a +1 bonus on those checks while on a plane other than the Shadow Plane, and gains a +3 bonus on those checks while on the Shadow Plane. Each time he chooses to add a bonus in a favored terrain, he gains a +1 bonus on those checks while on a plane other than the Shadow Plane, and gains a +3 bonus on those checks while on the Shadow Plane."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 518,
+    "record_key": "Dusk Stalker ~ Shadow Guide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

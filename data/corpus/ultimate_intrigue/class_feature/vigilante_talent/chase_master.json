@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Chase Master",
+    "name": "Chase Master",
+    "class": "Vigilante Talent",
+    "description": "Whether he is the pursuer or the pursued, few can best a vigilante at a chase. He receives a +%1 bonus on all checks during a chase (see GameMastery Guide p.232).|MAX(4,VigilanteTalentLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Chase Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Chase Master"
+      },
+      {
+        "key": "DESC",
+        "value": "Whether he is the pursuer or the pursued, few can best a vigilante at a chase. He receives a +%1 bonus on all checks during a chase (see GameMastery Guide p.232).|MAX(4,VigilanteTalentLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 75,
+    "record_key": "Vigilante Talent ~ Chase Master"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

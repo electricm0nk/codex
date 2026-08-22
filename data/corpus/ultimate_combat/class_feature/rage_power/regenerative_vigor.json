@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Regenerative Vigor",
+    "name": "Regenerative Vigor",
+    "class": "Rage Power",
+    "description": "After using her renewed vigor rage power until her current rage ends, the barbarian gains fast healing 1 for every 6 barbarian levels she has (maximum fast healing 3). She regains hit points from fast healing at the start of each of her turns. A barbarian must have the renewed vigor rage power and be at least 6th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Regenerative Vigor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Renewed Vigor"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "After using her renewed vigor rage power until her current rage ends, the barbarian gains fast healing 1 for every 6 barbarian levels she has (maximum fast healing 3). She regains hit points from fast healing at the start of each of her turns. A barbarian must have the renewed vigor rage power and be at least 6th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 290,
+    "record_key": "Rage Power ~ Regenerative Vigor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Planeslayer's Call",
-    "school": "Enchantment",
-    "level": 4,
     "description": "The magic of your allies in the area becomes more potent against certain outsiders. Chose one alignment subtype (chaotic, evil, good, or lawful). Against outsiders with that alignment component or subtype, your allies in the area gain a +2 bonus on caster level checks to overcome spell resistance, and their spells ignore the first 10 points of energy resistance (but not energy immunity). This spell gains the alignment descriptor that is opposite the outsider alignment chosen. For example, if you choose for the spell to affect evil outsiders, then this spell has the good descriptor.",
-    "full_text": true
+    "full_text": true,
+    "key": "Planeslayer's Call",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor,Paladin=4|Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Allies gain benefits against outsiders of an alignment you choose.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The magic of your allies in the area becomes more potent against certain outsiders. Chose one alignment subtype (chaotic, evil, good, or lawful). Against outsiders with that alignment component or subtype, your allies in the area gain a +2 bonus on caster level checks to overcome spell resistance, and their spells ignore the first 10 points of energy resistance (but not energy immunity). This spell gains the alignment descriptor that is opposite the outsider alignment chosen. For example, if you choose for the spell to affect evil outsiders, then this spell has the good descriptor.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting (see text)"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "20 Ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/planeslayersCall.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "allies within a 20-ft.-radius burst centered on you"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 96,
-    "record_key": "Planeslayer's Call"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Planeslayer's Call",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

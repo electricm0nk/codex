@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghost Hunter ~ Ghostly Smite",
+    "name": "Ghostly Smite",
+    "class": "Paladin",
+    "description": "A ghost hunter's smite evil ability does not automatically bypass DR (other than DR/good). However, she treats her weapon as a ghost touch weapon against the target of her smite. She does not deal extra damage on the first attack against evil outsiders and evil dragons, but she deals 3 points of damage per paladin level she possesses to undead creatures on the first attack (instead of 2 points). This ability alters smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghost Hunter ~ Ghostly Smite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ghost Hunter Class Feature.Paladin Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A ghost hunter's smite evil ability does not automatically bypass DR (other than DR/good). However, she treats her weapon as a ghost touch weapon against the target of her smite. She does not deal extra damage on the first attack against evil outsiders and evil dragons, but she deals 3 points of damage per paladin level she possesses to undead creatures on the first attack (instead of 2 points). This ability alters smite evil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1911,
+    "record_key": "Ghost Hunter ~ Ghostly Smite"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

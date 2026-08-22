@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Argent Dramaturge ~ Argent Performance",
+    "name": "Argent Performance",
+    "class": "Argent Dramaturge",
+    "description": "An argent dramaturge can use Perform (sing) to create special magical effects that hinder outsiders (particularly those affected by silver, such as devils) as per the bardic performance bard class feature. She can use this ability for %1 rounds per day, and can use rounds of bardic performance gained from bard levels to perform argent performances and vice-versa. Starting an argent performance is a move action, but it can be maintained each round as a free action. An argent performance cannot be disrupted, but ends immediately if the argent dramaturge is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. An argent performance counts as a bardic performance when determining how many performances the argent dramaturge can have in effect at one time. An argent performance has audible components but not visual components. The save DC against an argent dramaturge's performance is %2.|ArgentPerformanceRounds|ArgentPerformanceDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Dramaturge ~ Argent Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Argent Dramaturge Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArgentPerformanceRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArgentPerformanceDC|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "DESC",
+        "value": "An argent dramaturge can use Perform (sing) to create special magical effects that hinder outsiders (particularly those affected by silver, such as devils) as per the bardic performance bard class feature. She can use this ability for %1 rounds per day, and can use rounds of bardic performance gained from bard levels to perform argent performances and vice-versa. Starting an argent performance is a move action, but it can be maintained each round as a free action. An argent performance cannot be disrupted, but ends immediately if the argent dramaturge is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. An argent performance counts as a bardic performance when determining how many performances the argent dramaturge can have in effect at one time. An argent performance has audible components but not visual components. The save DC against an argent dramaturge's performance is %2.|ArgentPerformanceRounds|ArgentPerformanceDC"
+      },
+      {
+        "key": "DESC",
+        "value": "An argent dramaturge can start an argent performance as a swift action if she chooses.|PREVARGTEQ:ArgentDramaturgeLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArgentPerformanceRounds|ArgentDramaturgeLVL*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArgentPerformanceDC|10+ArgentDramaturgeLVL+CHA"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Argent Performance ~ Song of Silver"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Argent Performance ~ Anchoring Aria|PREVARGTEQ:ArgentDramaturgeLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Argent Performance ~ Righteous Chord|PREVARGTEQ:ArgentDramaturgeLVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ArgentPerformanceRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per days"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 24,
+    "record_key": "Argent Dramaturge ~ Argent Performance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

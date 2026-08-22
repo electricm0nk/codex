@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Lodestone",
+    "name": "Lodestone",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes one creature within 30 feet to become heavy and lethargic. The creature is treated as if it were carrying a medium load. If the creature is already carrying a medium load, it is instead treated as if it were carrying a heavy load. If the creature is carrying a heavy load, its maximum Dexterity bonus to AC is reduced to +0, it takes a -9 armor check penalty, and its movement is reduced to 5 feet. The effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanLodestoneDuration|ShamanLodestoneDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Lodestone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanStoneHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Lodestone"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanStoneSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanLodestoneDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanLodestoneDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes one creature within 30 feet to become heavy and lethargic. The creature is treated as if it were carrying a medium load. If the creature is already carrying a medium load, it is instead treated as if it were carrying a heavy load. If the creature is carrying a heavy load, its maximum Dexterity bonus to AC is reduced to +0, it takes a -9 armor check penalty, and its movement is reduced to 5 feet. The effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanLodestoneDuration|ShamanLodestoneDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanLodestoneDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanLodestoneDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1653,
+    "record_key": "Shaman Spirit Hex ~ Lodestone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

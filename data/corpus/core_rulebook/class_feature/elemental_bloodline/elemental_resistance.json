@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Bloodline ~ Elemental Resistance",
+    "name": "Elemental Resistance",
+    "class": "Elemental Bloodline",
+    "description": "You gain energy resistance %1 against|Sorcerer_ElementalElementalResistance_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Bloodline ~ Elemental Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Elemental Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Elemental"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Elemental_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Elemental_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ElementalElementalResistance_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain energy resistance %1 against|Sorcerer_ElementalElementalResistance_ResistanceBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "acid.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire.|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ElementalElementalResistance_ResistanceBonus|min(floor((Sorcerer_Elemental_BloodlinePower3LVL+3)/6),2)*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|Sorcerer_ElementalElementalResistance_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|Sorcerer_ElementalElementalResistance_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|Sorcerer_ElementalElementalResistance_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|Sorcerer_ElementalElementalResistance_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ElementalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2486,
+    "record_key": "Elemental Bloodline ~ Elemental Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

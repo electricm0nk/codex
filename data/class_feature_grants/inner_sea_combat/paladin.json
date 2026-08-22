@@ -1,0 +1,227 @@
+[
+  {
+    "key": "Iroran Paladin ~ Aura of Excellence",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Aura of Law",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Aura of Perfection",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Confident Defense",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Divine Body",
+    "class": "Paladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Ki Pool",
+    "class": "Paladin",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Personal Trial",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Sense Perfection",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Skills",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Iroran Paladin ~ Unarmed Strike",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 23
+    }
+  },
+  {
+    "key": "Oath against Chaos ~ Detect Chaos",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 476
+    }
+  },
+  {
+    "key": "Oath against Chaos ~ Order of Good",
+    "class": "Paladin",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 476
+    }
+  },
+  {
+    "key": "Oath against Chaos ~ Smite Chaos",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 476
+    }
+  },
+  {
+    "key": "Oath against Grotesquery ~ Beauty Unyielding",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 477
+    }
+  },
+  {
+    "key": "Oath against Grotesquery ~ Restore True Beauty",
+    "class": "Paladin",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 477
+    }
+  }
+]

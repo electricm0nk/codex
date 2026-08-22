@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Single-Minded Appraiser",
+    "name": "Single-Minded Appraiser",
+    "class": "Rogue Talent",
+    "description": "A catfolk rogue with this talent is skilled at determining the value of sparkly things. She can always take 10 when appraising gems and jewelry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Single-Minded Appraiser"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsCatfolk=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A catfolk rogue with this talent is skilled at determining the value of sparkly things. She can always take 10 when appraising gems and jewelry."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 438,
+    "record_key": "Rogue Talent ~ Single-Minded Appraiser"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

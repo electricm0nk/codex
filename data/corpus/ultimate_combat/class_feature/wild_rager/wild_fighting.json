@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Rager ~ Wild Fighting",
+    "name": "Wild Fighting",
+    "class": "Barbarian",
+    "description": "At 2nd level, even when not raging, wild ragers often fight with reckless, savage abandon. A wild rager using the full-attack action can make one extra attack per round at her highest base attack bonus. Until the beginning of her next turn, however, she takes a -2 penalty on attack rolls and -4 penalty to AC. This ability replaces uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Rager ~ Wild Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, even when not raging, wild ragers often fight with reckless, savage abandon. A wild rager using the full-attack action can make one extra attack per round at her highest base attack bonus. Until the beginning of her next turn, however, she takes a -2 penalty on attack rolls and -4 penalty to AC. This ability replaces uncanny dodge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 377,
+    "record_key": "Wild Rager ~ Wild Fighting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

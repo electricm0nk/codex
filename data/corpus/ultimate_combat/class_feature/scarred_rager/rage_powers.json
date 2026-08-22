@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scarred Rager ~ Rage Powers",
+    "name": "Rage Powers",
+    "class": "Barbarian",
+    "description": "The following rage powers complement the scarred rager archetype - auspicious mark*, body bludgeon*, come and get me**, increased damage reduction, inspire ferocity**, internal fortitude, intimidating glare, reckless abandon**, regenerative vigor*, renewed life*, renewed vigor, renewed vitality*, roused anger, and terrifying howl.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Rager ~ Rage Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following rage powers complement the scarred rager archetype - auspicious mark*, body bludgeon*, come and get me**, increased damage reduction, inspire ferocity**, internal fortitude, intimidating glare, reckless abandon**, regenerative vigor*, renewed life*, renewed vigor, renewed vitality*, roused anger, and terrifying howl."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 326,
+    "record_key": "Scarred Rager ~ Rage Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

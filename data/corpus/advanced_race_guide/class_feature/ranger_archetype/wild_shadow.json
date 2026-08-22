@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Wild Shadow",
+    "name": "Wild Shadow",
+    "class": "Ranger Archetype",
+    "description": "The isolation that some half-elves feel leads them to live a life of isolation amid the wild places of the world. Such rangers stalk the wild like shadows, creating close bonds with the wild itself instead of seeking the solace and aid of companions. While ill at ease within cities and other urban areas, they are adept at using the terrain to tactical advantage; they dart through brambles and rough terrain with uncommon grace and use the land itself to lock down enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Wild Shadow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerTrack.RangerWildEmpathy.RangerFavoredTerrain.RangerHuntersBond.RangerWoodlandStride.RangerQuarry.RangerCamouflage.RangerImprovedQuarry"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wild Shadow],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerTrack,TYPE.RangerWildEmpathy,TYPE.RangerFavoredTerrain,TYPE.RangerHuntersBond,TYPE.RangerWoodlandStride,TYPE.RangerQuarry,TYPE.RangerCamouflage,TYPE.RangerImprovedQuarry]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The isolation that some half-elves feel leads them to live a life of isolation amid the wild places of the world. Such rangers stalk the wild like shadows, creating close bonds with the wild itself instead of seeking the solace and aid of companions. While ill at ease within cities and other urban areas, they are adept at using the terrain to tactical advantage; they dart through brambles and rough terrain with uncommon grace and use the land itself to lock down enemies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shadow ~ Wild at Heart|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shadow ~ Favored Terrain|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shadow ~ Woodland Stride|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shadow ~ Unfettered Step|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shadow ~ Harrying Attack|PRECLASS:1,Ranger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shadow ~ Wild Stalker|PRECLASS:1,Ranger=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shadow ~ Master of Terrain|PRECLASS:1,Ranger=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 197,
+    "record_key": "Ranger Archetype ~ Wild Shadow"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

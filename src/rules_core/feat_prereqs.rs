@@ -499,12 +499,16 @@ mod prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        // 1578 hand-authored records + the 83 corpus gap rows the feat gap
-        // lane joined on. Every gap row's own `PRE`-family tokens are carried
-        // verbatim into `FeatCatalogRecord::prerequisites`, so the new rows
-        // are evaluated by this gate exactly like every other record — they
-        // are not offered unconditionally.
-        assert_eq!(reports.len(), 1661);
+        // 1578 hand-authored records + the 531 corpus gap rows the feat gap
+        // lane joined on (`SD31-E6-F8-001`'s original 83 + `SD31-E6-F8-002`'s
+        // 242 + `SD31-E6-F2-007`'s 199 Mythic Adventures rows -- SD31-W10-
+        // INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins
+        // from the original 358 -- + `SD31-E6-F8-003`'s 7). Every gap row's
+        // own `PRE`-family tokens are carried verbatim into
+        // `FeatCatalogRecord::prerequisites`, so the new rows are evaluated
+        // by this gate exactly like every other record — they are not
+        // offered unconditionally.
+        assert_eq!(reports.len(), 2109);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
@@ -525,7 +529,40 @@ mod prerequisite_tests {
         // with a stated reason instead of being offered it under an
         // unverifiable prerequisite. Modelling a token can only ever move
         // this number down, and that direction is the point.
-        assert_eq!(eligible, 552, "a starting Fighter's real eligible-feat count");
+        // +94 with `SD31-E6-F8-002`'s 242 more gap rows joined on
+        // (2026-08-16): re-derived by this same test, not guessed.
+        // +207 with `SD31-E6-F2-007`'s 358 Mythic Adventures rows joined on
+        // (2026-08-17). Most of Mythic's own gate is `PREVARGTEQ:
+        // MythicTierLevel,...` -- an unmodelled var this evaluator already
+        // treats as non-blocking for every OTHER book's records
+        // (`pre_tokens::tests::an_unrecognised_kind_never_blocks`), so a
+        // level-1 Fighter is reported, not denied, on the mythic-tier gate
+        // alone; a colliding row's OWN `PREABILITY:...,CATEGORY=FEAT,<key>`
+        // clause (proven present for every collision by
+        // `feats_all::tests::cross_book_key_collisions_are_exactly_the_known_set`)
+        // is what still correctly denies a record whose base feat this
+        // Fighter build does not hold.
+        // -159 with `SD31-W10-INTEGRATE-001`'s exclusion of the
+        // `VISIBLE:EXPORT` display-plumbing twins: every one of them carried
+        // `prerequisites: None` (no `PRE` token at all), so every one of
+        // them was trivially eligible and counted here -- removing them
+        // moves this number down by exactly 159, the full twin population,
+        // not a partial figure.
+        // +2 with `SD31-E6-F8-003`'s 7 new gap rows joined on: 5 of the 7
+        // (Greater Stylized Spell, Masked Renown, Stylized Spell Mastery,
+        // Stylized Spontaneity, Demonic Obedience) are correctly DENIED --
+        // each carries only modelled, AND-chained `PRE`-family tokens
+        // (`PRESKILL`/`PREABILITY`/`PREDEITY`) a level-1 13-STR Fighter does
+        // not meet. The other 2 (Convincing Persona, Masked Symbol) each
+        // carry a `PREMULT` whose alternatives are `[PRESKILL:...]` OR
+        // `[PREABILITY:1,CATEGORY=Special Ability,Vigilante ~ Dual
+        // Identity]` -- an unmodelled special-ability category the engine
+        // cannot verify -- so `pre_tokens`' own
+        // `a_premult_with_an_unmodelled_alternative_reports_rather_than_denies`
+        // rule reports rather than denies the whole clause, landing both in
+        // `eligible` (unverified, not confirmed met) exactly like every
+        // other unmodelled-alternative record already does.
+        assert_eq!(eligible, 696, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

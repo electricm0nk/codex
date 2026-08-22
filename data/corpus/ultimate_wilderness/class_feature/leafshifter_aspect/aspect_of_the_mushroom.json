@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Leafshifter Aspect ~ Mushroom",
+    "name": "Aspect of the Mushroom",
+    "class": "Leafshifter Aspect",
+    "description": "You gain a +%1 enhancement bonus on saves against poison.|MushroomAspectBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leafshifter Aspect ~ Mushroom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Leafshifter Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MushroomAspectBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus on saves against poison.|MushroomAspectBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MushroomAspectBonus|2*(2+(ShifterAspectLVL>=8)+(ShifterAspectLVL>=15))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs. poison|MushroomAspectBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1077,
+    "record_key": "Leafshifter Aspect ~ Mushroom"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

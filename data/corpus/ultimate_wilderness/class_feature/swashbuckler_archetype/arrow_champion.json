@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Arrow Champion",
+    "name": "Arrow Champion",
+    "class": "Swashbuckler Archetype",
+    "description": "While the swashbuckler's agile style of combat is equally suited to urban settings and wilderness, the bow and arrow is an indispensable asset in open areas and harsh terrain where fancy footwork isn't enough to close the distance or dodge the enemy's arrows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Arrow Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Arrow Champion],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_Panache=True,Swashbuckler_Archetype_OpportuneParryandRiposteDeed=True,Swashbuckler_Archetype_PreciseStrikeDeed=True,Swashbuckler_Archetype_SwashbucklersInitiativeDeed=True,Swashbuckler_Archetype_SuperiorFeintDeed=True,Swashbuckler_Archetype_SwashbucklerWeaponTraining=True,Swashbuckler_Archetype_SwashbucklerWeaponMastery=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While the swashbuckler's agile style of combat is equally suited to urban settings and wilderness, the bow and arrow is an indispensable asset in open areas and harsh terrain where fancy footwork isn't enough to close the distance or dodge the enemy's arrows."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arrow Champion ~ Arrow Champion's Panache|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arrow Champion ~ Retaliation|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arrow Champion ~ Precise Aim|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arrow Champion ~ Swift Switch|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arrow Champion ~ Archer's Feint|PRECLASS:1,Swashbuckler=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arrow Champion ~ Weapon Versatility|PRECLASS:1,Swashbuckler=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arrow Champion ~ Versatile Weapon Mastery|PRECLASS:1,Swashbuckler=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklersInitiativeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_PreciseStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklersInitiativeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponTraining|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1195,
+    "record_key": "Swashbuckler Archetype ~ Arrow Champion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

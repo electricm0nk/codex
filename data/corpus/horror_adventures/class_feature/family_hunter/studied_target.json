@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Family Hunter ~ Studied Target",
+    "name": "Studied Target",
+    "class": "Slayer",
+    "description": "A slayer can maintain more than one studied target at a time only if all targets are closely related to one another (even if they aren't part of the family line she seeks to cleanse). This includes blood relatives; undead spawn; constructs or undead and their creator; summoned creatures and their summoner; creatures that are charmed, dominated, or otherwise under direct magical control and their controller; and cohorts, followers, animal companions, familiars, and similar associates of one master. This ability alters studied target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Family Hunter ~ Studied Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "DESC",
+        "value": "A slayer can maintain more than one studied target at a time only if all targets are closely related to one another (even if they aren't part of the family line she seeks to cleanse). This includes blood relatives; undead spawn; constructs or undead and their creator; summoned creatures and their summoner; creatures that are charmed, dominated, or otherwise under direct magical control and their controller; and cohorts, followers, animal companions, familiars, and similar associates of one master. This ability alters studied target."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 232,
+    "record_key": "Family Hunter ~ Studied Target"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

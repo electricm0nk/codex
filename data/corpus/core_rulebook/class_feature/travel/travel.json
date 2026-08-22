@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Travel Domain",
+    "name": "Travel",
+    "class": null,
+    "description": "You are an explorer and find enlightenment in the simple joy of travel, be it by foot or conveyance or magic. Increase your base speed by 10 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Travel Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are an explorer and find enlightenment in the simple joy of travel, be it by foot or conveyance or magic. Increase your base speed by 10 feet."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Agile Feet|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Travel)|PREVARGTEQ:DomainTravelAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dimensional Hop|PREVARGTEQ:DomainTravelAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelDC|10+(DomainTravelLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTravelAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Travel=1|Longstrider|Travel=2|Locate Object|Travel=3|Fly|Travel=4|Dimension Door|Travel=5|Teleport|Travel=6|Find the Path|Travel=7|Teleport (Greater)|Travel=8|Phase Door|Travel=9|Astral Projection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 679,
+    "record_key": "Travel Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

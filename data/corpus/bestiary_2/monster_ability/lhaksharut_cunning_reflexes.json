@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Lhaksharut ~ Cunning Reflexes",
     "delivery": "Extraordinary",
@@ -15,19 +13,43 @@
     "owners": [
       "bestiary_2:monster:inevitable_lhaksharut"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A lhaksharut uses its Wisdom modifier, rather than its Dexterity modifier, to determine how many additional attacks of opportunity it gains with the Combat Reflexes feat.  This benefit equates to %1 additional attacks of opportunity per round.|WIS"
+      },
+      {
+        "key": "KEY",
+        "value": "Lhaksharut ~ Cunning Reflexes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.164",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 706,
-    "record_key": "Lhaksharut ~ Cunning Reflexes"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 706,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Lhaksharut ~ Cunning Reflexes",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

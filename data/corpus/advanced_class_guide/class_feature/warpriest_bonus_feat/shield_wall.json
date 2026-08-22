@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Shield Wall",
+    "name": "Shield Wall",
+    "class": "Warpriest Bonus Feat",
+    "description": "You form a unified defense with those around you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Shield Wall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREPROFWITHSHIELD:3,TYPE.Buckler,TYPE.Light,TYPE.Heavy],[PREABILITY:1,CATEGORY=FEAT,Shield Proficiency]"
+      },
+      {
+        "key": "DESC",
+        "value": "You form a unified defense with those around you."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you are wielding a shield and are adjacent to an ally who also has this feat, the AC bonus from your shield increases, depending on the shield wielded by your ally. If your ally is wielding a buckler or a light shield, your shield bonus increases by +1. If your ally is wielding a heavy shield or a tower shield, your shield bonus increases by +2. You keep these bonuses even if your ally loses his shield bonus due to making a shield bash attack. If an adjacent ally with this feat uses a tower shield to grant total cover, you also benefit if an attack targeting you passes through the edge of the shield (see page 153 of the Pathfinder RPG Core Rulebook)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Shield Wall"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.169"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4374,
+    "record_key": "Warpriest Bonus Feat ~ Shield Wall"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

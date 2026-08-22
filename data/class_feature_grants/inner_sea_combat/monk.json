@@ -1,0 +1,182 @@
+[
+  {
+    "key": "Hamatulatsu Master ~ Alignment",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 22
+    }
+  },
+  {
+    "key": "Hamatulatsu Master ~ Bonus Feats",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 22
+    }
+  },
+  {
+    "key": "Hamatulatsu Master ~ Infernal Resilience",
+    "class": "Monk",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 22
+    }
+  },
+  {
+    "key": "Hamatulatsu Master ~ Ki Pool",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 22
+    }
+  },
+  {
+    "key": "Hamatulatsu Master ~ Stunning Fist",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 22
+    }
+  },
+  {
+    "key": "Monk of the Seven Forms ~ Bonus Feats",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 26
+    }
+  },
+  {
+    "key": "Monk of the Seven Forms ~ Endurance",
+    "class": "Monk",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 26
+    }
+  },
+  {
+    "key": "Monk of the Seven Forms ~ Lightning Finish",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 26
+    }
+  },
+  {
+    "key": "Monk of the Seven Forms ~ Sirocco Fury",
+    "class": "Monk",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 26
+    }
+  },
+  {
+    "key": "Ouat ~ Awaken Divinity",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 159
+    }
+  },
+  {
+    "key": "Ouat ~ Know the Unseen Disciples",
+    "class": "Monk",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 159
+    }
+  },
+  {
+    "key": "Ouat ~ Spurn Tradition",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 159
+    }
+  }
+]

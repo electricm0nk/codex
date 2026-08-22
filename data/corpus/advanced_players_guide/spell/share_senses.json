@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Share Senses",
-    "school": "Divination",
-    "level": 3,
     "description": "Spending a moment in meditation and conjuring an image of the creature to mind, you reshape your link with your familiar, causing it to functions like a scrying sensor. Upon casting this spell you can hear, see, or smell (any one, your choice) what your familiar is experiencing. You gain the benefits of any nonmagical special abilities your familiar has tied to the chosen sense (such as low-light vision or scent), but use your own Perception skill. You don't need line of sight or line of effect to your familiar, but you must have an active empathic link. You may change the sense you are sharing as a standard action. Unlike other scrying spells, share senses does not allow magically or supernaturally enhanced senses to work through it, and you are unable to see in magical or natural darkness unless your familiar possesses the ability to see in such conditions.  The sensory link with your familiar can be detected as though it were a scrying sensor.",
-    "full_text": true
+    "full_text": true,
+    "key": "Share Senses",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 full round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=3|Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Perceive the world around your familiar.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Spending a moment in meditation and conjuring an image of the creature to mind, you reshape your link with your familiar, causing it to functions like a scrying sensor. Upon casting this spell you can hear, see, or smell (any one, your choice) what your familiar is experiencing. You gain the benefits of any nonmagical special abilities your familiar has tied to the chosen sense (such as low-light vision or scent), but use your own Perception skill. You don't need line of sight or line of effect to your familiar, but you must have an active empathic link. You may change the sense you are sharing as a standard action. Unlike other scrying spells, share senses does not allow magically or supernaturally enhanced senses to work through it, and you are unable to see in magical or natural darkness unless your familiar possesses the ability to see in such conditions.  The sensory link with your familiar can be detected as though it were a scrying sensor.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a hair, scale, or feather from your familiar)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/shareSenses.html#_share-senses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Scrying"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Your familiar"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 216,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2060,
-    "record_key": "Share Senses"
+    "record_key": "Share Senses",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

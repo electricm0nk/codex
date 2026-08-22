@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divination Savant School ~ Forwarned",
+    "name": "Forwarned",
+    "class": "Divination Savant School",
+    "description": "You can always act in the surprise round, but you are still considered flat-footed until you take an action. In addition, you receive a +%1 bonus on initiative rolls.|DivinationForwarnedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divination Savant School ~ Forwarned"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivinationForwarnedBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can always act in the surprise round, but you are still considered flat-footed until you take an action. In addition, you receive a +%1 bonus on initiative rolls.|DivinationForwarnedBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Anytime you roll initiative, assume the roll resulted in a natural 20.|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|DivinationForwarnedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivinationForwarnedBonus|max(1,ArcanistSavantSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2559,
+    "record_key": "Divination Savant School ~ Forwarned"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

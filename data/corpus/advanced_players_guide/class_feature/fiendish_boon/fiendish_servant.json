@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fiendish Boon ~ Fiendish Servant",
+    "name": "Fiendish Servant",
+    "class": "Fiendish Boon",
+    "description": "Your fiendish boon allows you to gain the service of a fiendish servant.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendish Boon ~ Fiendish Servant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialQuality.FiendishBoon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FiendishServantSummonLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FiendishServantSpellLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FiendishServantSpellResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your fiendish boon allows you to gain the service of a fiendish servant."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendishServantSummonLevel|min((FiendishBoonLVL+1)/2,9)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendishServantSpellLevel|FiendishBoonLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendishServantSpellResistance|FiendishBoonLVL+11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1007,
+    "record_key": "Fiendish Boon ~ Fiendish Servant"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

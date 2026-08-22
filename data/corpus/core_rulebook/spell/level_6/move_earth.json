@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Move earth moves dirt [clay, loam, sand, and soil], possibly collapsing embankments, moving hillocks, shifting dunes, and so forth. In no event can rock formations be collapsed or moved. The area to be affected determines the casting time. For every 150-foot square [up to 10 feet deep], casting takes 10 minutes. The maximum area, 750 feet by 750 feet, takes 4 hours and 10 minutes to move. This spell does not violently break the surface of the ground. Instead, it creates wavelike crests and troughs, with the earth reacting with glacial fluidity until the desired result is achieved. Trees, structures, rock formations, and such are mostly unaffected except for changes in elevation and relative topography. The spell cannot be used for tunneling and is generally too slow to trap or bury creatures. Its primary use is for digging or filling moats or for adjusting terrain contours before a battle. This spell has no effect on earth creatures.",
     "key": "Move Earth",
-    "school": "Transmutation",
     "level": 6,
-    "description": "Move earth moves dirt [clay, loam, sand, and soil], possibly collapsing embankments, moving hillocks, shifting dunes, and so forth. In no event can rock formations be collapsed or moved. The area to be affected determines the casting time. For every 150-foot square [up to 10 feet deep], casting takes 10 minutes. The maximum area, 750 feet by 750 feet, takes 4 hours and 10 minutes to move. This spell does not violently break the surface of the ground. Instead, it creates wavelike crests and troughs, with the earth reacting with glacial fluidity until the desired result is achieved. Trees, structures, rock formations, and such are mostly unaffected except for changes in elevation and relative topography. The spell cannot be used for tunneling and is generally too slow to trap or bury creatures. Its primary use is for digging or filling moats or for adjusting terrain contours before a battle. This spell has no effect on earth creatures."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "see text"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Move earth moves dirt (clay, loam, sand, and soil), possibly collapsing embankments, moving hillocks, shifting dunes, and so forth.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Move earth moves dirt [clay, loam, sand, and soil], possibly collapsing embankments, moving hillocks, shifting dunes, and so forth. In no event can rock formations be collapsed or moved. The area to be affected determines the casting time. For every 150-foot square [up to 10 feet deep], casting takes 10 minutes. The maximum area, 750 feet by 750 feet, takes 4 hours and 10 minutes to move. This spell does not violently break the surface of the ground. Instead, it creates wavelike crests and troughs, with the earth reacting with glacial fluidity until the desired result is achieved. Trees, structures, rock formations, and such are mostly unaffected except for changes in elevation and relative topography. The spell cannot be used for tunneling and is generally too slow to trap or bury creatures. Its primary use is for digging or filling moats or for adjusting terrain contours before a battle. This spell has no effect on earth creatures.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/moveEarth.html#_move-earth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.316"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Dirt in an area up to 750 ft. square and up to 10 ft. deep (S)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 408,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1162,
-    "record_key": "Move Earth.MOD"
+    "record_key": "Move Earth",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

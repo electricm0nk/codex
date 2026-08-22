@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Master Combat Performer",
+    "name": "Master Combat Performer",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are a master of the techniques and weapons of the arena and the stage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Master Combat Performer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=FEAT,Performing Combatant],[PREABILITY:3,CATEGORY=FEAT,TYPE=Performance]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a master of the techniques and weapons of the arena and the stage."
+      },
+      {
+        "key": "DESC",
+        "value": " You can make performance combat checks as a free action. You are proficient in all weapons with the performance special quality."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Master Combat Performer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4486,
+    "record_key": "Warpriest Bonus Feat ~ Master Combat Performer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

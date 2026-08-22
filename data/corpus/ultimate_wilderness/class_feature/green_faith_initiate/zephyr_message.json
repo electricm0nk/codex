@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Faith Initiate ~ Zephyr Message",
+    "name": "Zephyr Message",
+    "class": "Druid",
+    "description": "Once per day, the Green Faith initiate can cast whispering wind as a spell-like ability, treating her druid level as her caster level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Initiate ~ Zephyr Message"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.GreenFaithInitiateClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, the Green Faith initiate can cast whispering wind as a spell-like ability, treating her druid level as her caster level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 534,
+    "record_key": "Green Faith Initiate ~ Zephyr Message"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

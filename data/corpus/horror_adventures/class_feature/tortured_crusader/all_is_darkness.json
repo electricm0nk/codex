@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tortured Crusader ~ All Is Darkness",
+    "name": "All Is Darkness",
+    "class": "Paladin",
+    "description": "Everything around a tortured crusader is so bleak that detecting evil only reminds her that the odds are always against her. A tortured crusader doesn't gain the detect evil or divine grace class features. At 1st level, a tortured crusader gains the smite evil ability, but she doesn't add her Charisma bonus to attack rolls or a deflection bonus equal to her Charisma bonus to her AC against the target of her smite. At 2nd level, she adds a +4 bonus to attack rolls and a +4 deflection bonus to AC against the target of her smite. This ability alters smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tortured Crusader ~ All Is Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "Everything around a tortured crusader is so bleak that detecting evil only reminds her that the odds are always against her. A tortured crusader doesn't gain the detect evil or divine grace class features. At 1st level, a tortured crusader gains the smite evil ability, but she doesn't add her Charisma bonus to attack rolls or a deflection bonus equal to her Charisma bonus to her AC against the target of her smite. At 2nd level, she adds a +4 bonus to attack rolls and a +4 deflection bonus to AC against the target of her smite. This ability alters smite evil."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteEvilAttackBonus,SmiteEvilACBonus|-max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteEvilAttackBonus,SmiteEvilACBonus|4|PRECLASS:1,Paladin=2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 196,
+    "record_key": "Tortured Crusader ~ All Is Darkness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

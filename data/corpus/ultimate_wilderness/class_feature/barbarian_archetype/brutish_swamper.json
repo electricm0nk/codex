@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Brutish Swamper",
+    "name": "Brutish Swamper",
+    "class": "Barbarian Archetype",
+    "description": "The hardy and insular denizens of the swamp produce warriors of narrow focus and great strength. The prejudice and misunderstanding with which civilized folk often regard barbarians is often even more pronounced in the case of these belligerent outcasts from society, in large part due to the fact that brutish swampers deliberately mock and antagonize the so-called \"city folk.\" To a brutish swamper, an urban lifestyle is one that breeds weakness and lassitude in the body. The brutish swamper has little interest or patience in maintaining alliances or friendship with those who live such soft lifestyles, and this aggression only further encourages feelings of prejudice on both sides of the cultural divide. When a brutish swamper joins an adventuring party, they usually come to value the skills and talents of their more urbanized companions, but never fully understand the desire to live lives surrounded by creature comforts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Brutish Swamper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Brutish Swamper],[!PREFACT:1,ABILITIES,Barbarian_Archetype_ClassSkills=True,Barbarian_Archetype_FastMovement=True,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_ImprovedUncannyDodge=True,Barbarian_Archetype_TrapSense=True,Barbarian_Archetype_RagePower6=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The hardy and insular denizens of the swamp produce warriors of narrow focus and great strength. The prejudice and misunderstanding with which civilized folk often regard barbarians is often even more pronounced in the case of these belligerent outcasts from society, in large part due to the fact that brutish swampers deliberately mock and antagonize the so-called \"city folk.\" To a brutish swamper, an urban lifestyle is one that breeds weakness and lassitude in the body. The brutish swamper has little interest or patience in maintaining alliances or friendship with those who live such soft lifestyles, and this aggression only further encourages feelings of prejudice on both sides of the cultural divide. When a brutish swamper joins an adventuring party, they usually come to value the skills and talents of their more urbanized companions, but never fully understand the desire to live lives surrounded by creature comforts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brutish Swamper ~ Swamp Skills|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brutish Swamper ~ Marsh March|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brutish Swamper ~ Home|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brutish Swamper ~ Stubborn|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brutish Swamper ~ Wrastlin'|PRECLASS:1,Barbarian=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower6|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 182,
+    "record_key": "Barbarian Archetype ~ Brutish Swamper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

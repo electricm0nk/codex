@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phantom Thief Talent ~ Instant Recognition",
+    "name": "Instant Recognition",
+    "class": "Phantom Thief Talent",
+    "description": "The phantom thief is so well known that his name precedes him, even to other communities. It only takes 4 hours of effort to get the word out to transfer his renown benefits to a new community.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief Talent ~ Instant Recognition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=Special Ability,Phantom Thief Talent ~ Incredible Renown,Phantom Thief Talent ~ Triumphant Return,Phantom Thief ~ Broad Education"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom thief is so well known that his name precedes him, even to other communities. It only takes 4 hours of effort to get the word out to transfer his renown benefits to a new community."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 875,
+    "record_key": "Phantom Thief Talent ~ Instant Recognition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

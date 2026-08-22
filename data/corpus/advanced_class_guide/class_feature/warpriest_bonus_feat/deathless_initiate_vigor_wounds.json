@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Deathless Initiate (Vigor/Wounds)",
+    "name": "Deathless Initiate (Vigor/Wounds)",
+    "class": "Warpriest Bonus Feat",
+    "description": "For you, impending death is a call to wrath.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Deathless Initiate (Vigor/Wounds)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Diehard (Vigor/Wound),Endurance"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsOrc=true,IsHalfOrc=true"
+      },
+      {
+        "key": "PRERULE",
+        "value": "1,DAMAGE_VW"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,STR=13,CON=13"
+      },
+      {
+        "key": "DESC",
+        "value": "For you, impending death is a call to wrath."
+      },
+      {
+        "key": "DESC",
+        "value": " You are not staggered when your wound points reach your wound threshold, but you lose 1 wound point if you take any action during your turn. You only take 1 wound point each round when you take actions. Furthermore, you gain a +2 bonus on melee attacks and damage rolls when your wound points are at or below your wound threshold."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deathless Initiate (Vigor/Wounds)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4577,
+    "record_key": "Warpriest Bonus Feat ~ Deathless Initiate (Vigor/Wounds)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

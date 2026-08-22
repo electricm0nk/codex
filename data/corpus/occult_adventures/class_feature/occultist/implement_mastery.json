@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist ~ Implement Mastery",
+    "name": "Implement Mastery",
+    "class": "Occultist",
+    "description": "An occultist learns to master one of his implements. He selects one implement school. Whenever he uses a focus power from an implement of that school, the DC to resist any of the effects increases by 4 and he treats his occultist level as 4 higher when determining the effects and duration of that power. In addition, the occultist gains 4 extra points of mental focus, but these points must always be invested in implements of the mastered school. He can't save these points or expend them for any ability other than the focus powers of those implements. The hardness of each of the occultist's implements of the mastered school increases by an additional 20 as long as the item has at least 1 point of mental focus stored within.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Implement Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist learns to master one of his implements. He selects one implement school. Whenever he uses a focus power from an implement of that school, the DC to resist any of the effects increases by 4 and he treats his occultist level as 4 higher when determining the effects and duration of that power. In addition, the occultist gains 4 extra points of mental focus, but these points must always be invested in implements of the mastered school. He can't save these points or expend them for any ability other than the focus powers of those implements. The hardness of each of the occultist's implements of the mastered school increases by an additional 20 as long as the item has at least 1 point of mental focus stored within."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 994,
+    "record_key": "Occultist ~ Implement Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

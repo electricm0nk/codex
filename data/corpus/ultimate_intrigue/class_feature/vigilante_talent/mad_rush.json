@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Mad Rush",
+    "name": "Mad Rush",
+    "class": "Vigilante Talent",
+    "description": "Whenever the vigilante charges, he can make a full attack. Whenever he uses this ability, he takes a -4 penalty to his AC until the start of his next turn (in addition to the AC penalty for charging).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Mad Rush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Mad Rush"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsAvenger,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the vigilante charges, he can make a full attack. Whenever he uses this ability, he takes a -4 penalty to his AC until the start of his next turn (in addition to the AC penalty for charging)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 91,
+    "record_key": "Vigilante Talent ~ Mad Rush"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

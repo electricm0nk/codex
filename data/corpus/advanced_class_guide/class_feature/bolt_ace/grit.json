@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bolt Ace ~ Grit",
+    "name": "Grit",
+    "class": "Gunslinger",
+    "description": "A bolt ace regains grit when she scores a critical hit or deals a killing blow with any kind of crossbow. This ability modifies the grit Class Feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Grit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A bolt ace regains grit when she scores a critical hit or deals a killing blow with any kind of crossbow. This ability modifies the grit Class Feature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Grit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3106,
+    "record_key": "Bolt Ace ~ Grit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

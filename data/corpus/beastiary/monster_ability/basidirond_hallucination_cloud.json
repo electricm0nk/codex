@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Basidirond ~ Hallucination Cloud",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:basidirond"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Hallucination Cloud"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|HallucinationCloudDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinationCloudDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinationCloudDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Hallucination Cloud)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HallucinationCloudDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action once per minute, a basidirond can release a cloud of invisible spores in a 20-foot radius. All creatures within the area must succeed on a DC %1 Fortitude save or be affected by powerful hallucinations as long as they remain in the cloud plus 1d4 rounds after leaving the area. A new save must be made each round a creature remains within the affected area. A hallucination cloud persists for 5 rounds before dispersing--a strong wind causes it to disperse immediately.|HallucinationCloudDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Basidirond ~ Hallucination Cloud"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.28",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 145,
-    "record_key": "Basidirond ~ Hallucination Cloud"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 145,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Basidirond ~ Hallucination Cloud",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

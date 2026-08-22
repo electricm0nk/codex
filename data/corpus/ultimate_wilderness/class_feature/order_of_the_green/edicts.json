@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Green ~ Edicts",
+    "name": "Edicts",
+    "class": "Order of the Green",
+    "description": "The cavalier must know his place in the natural order and strive to defend the balance of nature. He must be willing to allow nature to take its course, and he must stop all those who would do harm to its delicate balance. He will not tolerate aberrant creatures, undead, or the irresponsible and greedy consumption of natural resources. He may be farsighted and seek to establish agreements that lead to lasting protection of the natural world, but resorts to violence if it is the most effective way to enforce such protection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Green ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier must know his place in the natural order and strive to defend the balance of nature. He must be willing to allow nature to take its course, and he must stop all those who would do harm to its delicate balance. He will not tolerate aberrant creatures, undead, or the irresponsible and greedy consumption of natural resources. He may be farsighted and seek to establish agreements that lead to lasting protection of the natural world, but resorts to violence if it is the most effective way to enforce such protection."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 456,
+    "record_key": "Order of the Green ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

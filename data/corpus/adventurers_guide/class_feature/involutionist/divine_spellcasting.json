@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Involutionist ~ Divine Spellcasting",
+    "name": "Divine Spellcasting",
+    "class": "Spiritualist",
+    "description": "An involutionist is a divine spellcaster. Her spells use verbal components instead of thought components and somatic components instead of emotional components. An involutionist's spirit phantom is her conduit to the divine, and it serves as her divine focus; the involutionist must either be within 5 feet on her spirit phantom or absorb her phantom into her consciousness to cast spells that require a divine focus. This ability alters spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Involutionist ~ Divine Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.InvolutionistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "DESC",
+        "value": "An involutionist is a divine spellcaster. Her spells use verbal components instead of thought components and somatic components instead of emotional components. An involutionist's spirit phantom is her conduit to the divine, and it serves as her divine focus; the involutionist must either be within 5 feet on her spirit phantom or absorb her phantom into her consciousness to cast spells that require a divine focus. This ability alters spellcasting."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1054,
+    "record_key": "Involutionist ~ Divine Spellcasting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

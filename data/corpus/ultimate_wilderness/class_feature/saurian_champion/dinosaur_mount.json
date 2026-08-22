@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Saurian Champion ~ Dinosaur Mount",
+    "name": "Dinosaur Mount",
+    "class": "Cavalier",
+    "description": "A saurian champion bonds with a dinosaur companion that willingly serves as his mount. This mount functions as a cavalier's normal mount with the following adjustments: The saurian champion's mount must be a dinosaur (see the various Pathfinder RPG Bestiary volumes). The saurian champion can ride mounts of his size category and larger, rather than only those of a larger size. Increase the mount's Strength score by 8 for the purpose of determining its carrying capacity. Whenever an ability or feat allows the saurian champion's mount to make a hoof attack, the mount can make a claw or bite attack instead. This alters the cavalier's mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saurian Champion ~ Dinosaur Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SaurianChampionMountBonuses|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A saurian champion bonds with a dinosaur companion that willingly serves as his mount. This mount functions as a cavalier's normal mount with the following adjustments: The saurian champion's mount must be a dinosaur (see the various Pathfinder RPG Bestiary volumes). The saurian champion can ride mounts of his size category and larger, rather than only those of a larger size. Increase the mount's Strength score by 8 for the purpose of determining its carrying capacity. Whenever an ability or feat allows the saurian champion's mount to make a hoof attack, the mount can make a claw or bite attack instead. This alters the cavalier's mount."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaurianChampionMountBonuses|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 437,
+    "record_key": "Saurian Champion ~ Dinosaur Mount"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Versatile Channeler ~ Positive Energy",
+    "name": "Positive Energy",
+    "class": "Versatile Channeler",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Versatile Channeler ~ Positive Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VersatileChanneler.Channel Energy.Channel Positive Energy"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Cleric ~ Channel Negative Energy,Power Over Undead ~ Command Undead"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Channel Positive Energy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Positive Energy ~ Cleric|PREMULT:3,[PREALIGN:LN,TN,CN],[PREMULT:1,[PREDEITYALIGN:LN,TN,CN],[PREDEITY:1,None]],[PREABILITY:1,CATEGORY=Special Ability,Cleric ~ Channel Negative Energy]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Positive Energy ~ Necromancer|PREABILITY:1,CATEGORY=Special Ability,Power Over Undead ~ Command Undead"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 818,
+    "record_key": "Versatile Channeler ~ Positive Energy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sea Witch ~ Know Direction",
+    "name": "Know Direction",
+    "class": "Witch",
+    "description": "So long as you are near a sizable body of water (at least a lake with a diameter of 1 mile or more), you may cast know direction at will as a spelllike ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sea Witch ~ Know Direction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "So long as you are near a sizable body of water (at least a lake with a diameter of 1 mile or more), you may cast know direction at will as a spelllike ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2020,
+    "record_key": "Sea Witch ~ Know Direction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

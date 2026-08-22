@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cruoromancer ~ Commanding Infusion",
+    "name": "Commanding Infusion",
+    "class": "Wizard",
+    "description": "When using this infusion with animate dead, the cruoromancer can create %1 Hit Dice of undead.|WizardLVL*3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cruoromancer ~ Commanding Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When using this infusion with animate dead, the cruoromancer can create %1 Hit Dice of undead.|WizardLVL*3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 463,
+    "record_key": "Cruoromancer ~ Commanding Infusion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

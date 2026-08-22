@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 2000.0,
+    "description": "If living heal 1 point for each 1d6 damage caused to undead by nearby Channel Positive Energy;If undead, same, but for Channel Negative Energy vs. living beings",
+    "key": "Channel-Thieving Belt",
+    "name": "Channel-Thieving Belt",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "2000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SPROP",
+        "value": "If living heal 1 point for each 1d6 damage caused to undead by nearby Channel Positive Energy;If undead, same, but for Channel Negative Energy vs. living beings"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Channel-Thieving Belt",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

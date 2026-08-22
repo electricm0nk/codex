@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Censor ~ HK",
+    "name": "Censor",
+    "class": "Censor",
+    "description": "When you use smite chaos on a creature, %1/day you can strike the creature mute for 1d4 rounds unless it makes a successful Will save (DC %2). A mute creature cannot speak, nor can it cast spells that have verbal components or use language-dependant effects.|HKDiscipline|HKDisciplineDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Censor ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.HKAbility.HKORack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use smite chaos on a creature, %1/day you can strike the creature mute for 1d4 rounds unless it makes a successful Will save (DC %2). A mute creature cannot speak, nor can it cast spells that have verbal components or use language-dependant effects.|HKDiscipline|HKDisciplineDC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HKDiscipline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 206,
+    "record_key": "Censor ~ HK"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shadow Bloodline ~ Nighteye",
+    "name": "Nighteye",
+    "class": "Shadow Bloodline",
+    "description": "You gain darkvision %1 feet. If you already possess darkvision, its range is increased by this amount.|Sorcerer_ShadowNighteye_Range",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Bloodline ~ Nighteye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Shadow Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Shadow"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Shadow_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Shadow_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ShadowNighteye_Range|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain darkvision %1 feet. If you already possess darkvision, its range is increased by this amount.|Sorcerer_ShadowNighteye_Range"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ShadowNighteye_Range|min(floor((Sorcerer_Shadow_BloodlinePower3LVL+3)/6),2)*30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|Sorcerer_ShadowNighteye_Range"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ShadowBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3209,
+    "record_key": "Shadow Bloodline ~ Nighteye"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

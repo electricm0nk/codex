@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Watersinger ~ Bardic Performance",
+    "name": "Bardic Performance",
+    "class": "Bard",
+    "description": "A watersinger has some unique bardic performances, which replace some of the standard bardic performances as listed in each entry. These bardic performances follow all the general rules and restrictions of a bard's bardic performances.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Watersinger ~ Bardic Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A watersinger has some unique bardic performances, which replace some of the standard bardic performances as listed in each entry. These bardic performances follow all the general rules and restrictions of a bard's bardic performances."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 809,
+    "record_key": "Watersinger ~ Bardic Performance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

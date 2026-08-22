@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "WORLD WALKER ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "WORLD WALKER",
+    "description": "At 3rd level, the world walker gains the ranger's favored terrain ability (Core Rulebook 65). She treats her druid level as her ranger level for this ability. If she has levels in both classes, both class's levels stack for determining the effect of this ability. This ability replaces trackless step and reduce nature's lore.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "WORLD WALKER ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the world walker gains the ranger's favored terrain ability (Core Rulebook 65). She treats her druid level as her ranger level for this ability. If she has levels in both classes, both class's levels stack for determining the effect of this ability. This ability replaces trackless step and reduce nature's lore."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain|Ranger ~ Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerFavoredTerrainLVL|DruidLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 668,
+    "record_key": "WORLD WALKER ~ Favored Terrain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Sanctify Armor",
-    "school": "Abjuration",
-    "level": 3,
     "description": "You imbue your armor with a righteous aura. It gains a +1 enhancement bonus per four caster levels (maximum +5 at 20th level). When using your judgment or smite ability, you gain DR 5/evil.  An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell.",
-    "full_text": true
+    "full_text": true,
+    "key": "Sanctify Armor",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=3|Inquisitor=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "+(min((CASTERLEVEL/4),5)) AC.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue your armor with a righteous aura. It gains a +1 enhancement bonus per four caster levels (maximum +5 at 20th level). When using your judgment or smite ability, you gain DR 5/evil.  An outfit of regular clothing counts as armor that grants no AC bonus for the purpose of this spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/sanctifyArmor.html#_sanctify-armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "armor touched"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 207,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2051,
-    "record_key": "Sanctify Armor"
+    "record_key": "Sanctify Armor",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

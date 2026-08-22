@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Chronicler's Insight ~ Religion",
+    "name": "Religion",
+    "class": "Investigator",
+    "description": "When performing a studied strike, the investigator's attack overcomes damage reduction as if it were a weapon with the silver property. He also gains a +1 insight bonus on saving throws against undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Chronicler's Insight ~ Religion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ChroniclersInsight.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "When performing a studied strike, the investigator's attack overcomes damage reduction as if it were a weapon with the silver property. He also gains a +1 insight bonus on saving throws against undead."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1162,
+    "record_key": "Investigator ~ Chronicler's Insight ~ Religion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

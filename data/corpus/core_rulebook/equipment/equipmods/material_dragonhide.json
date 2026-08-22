@@ -1,26 +1,105 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Material ~ Dragonhide",
     "category": "equipmods",
-    "name": "Dragonhide",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "Dragonhide can be crafted into any item normally made from leather or hide and is treated as such for all purposes, including cost. Any nonmagical dragonhide armor is treated as masterwork armor. If the type of dragon that provided the hide had immunity to certain forms of energy, dragonhide armor fashioned from its hide grants the wearer that same immunity if the armor's magical enhancement bonus is at least +3. One dragon's hide provides enough material to craft a suit of dragonhide armor for a creature one size category smaller than the dragon (or masterwork/magic dragonhide armor of other sorts for smaller creatures still). Druids may wear dragonhide armor without it interfering with their class abilities as though it were normal leather or hide armor."
+    "description": "Dragonhide can be crafted into any item normally made from leather or hide and is treated as such for all purposes, including cost. Any nonmagical dragonhide armor is treated as masterwork armor. If the type of dragon that provided the hide had immunity to certain forms of energy, dragonhide armor fashioned from its hide grants the wearer that same immunity if the armor's magical enhancement bonus is at least +3. One dragon's hide provides enough material to craft a suit of dragonhide armor for a creature one size category smaller than the dragon (or masterwork/magic dragonhide armor of other sorts for smaller creatures still). Druids may wear dragonhide armor without it interfering with their class abilities as though it were normal leather or hide armor.",
+    "key": "Material ~ Dragonhide",
+    "name": "Dragonhide",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-1",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Dragonhide"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Armor.Shield"
+      },
+      {
+        "key": "COST",
+        "value": "BASECOST+300"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Dragonhide.Nonmetal.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "SPROP",
+        "value": "dragonhide"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|10 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 10"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 108,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Material ~ Dragonhide",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

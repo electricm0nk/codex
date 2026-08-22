@@ -1,0 +1,200 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Bloodline ~ Destined",
+    "name": "Destined Bloodline",
+    "class": "Bloodrager Bloodline",
+    "description": "Your bloodline is destined for great things. And when you bloodrage, you exude a greatness that makes all but mythic creatures seem lesser.|PREVAREQ:Bloodrager_Destined_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bloodline ~ Destined"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.SpecialQuality.ClassSpecialization.Bloodrager Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlineSpellsLvl1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlineSpellsLvl2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlineSpellsLvl3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlineSpellsLvl4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your bloodline is destined for great things. And when you bloodrage, you exude a greatness that makes all but mythic creatures seem lesser.|PREVAREQ:Bloodrager_Destined_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Destined Bloodrager Bloodline ~ Bonus Spells|PREVARGTEQ:Bloodrager_Destined_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Destined Bloodrager Bloodline ~ Bloodline Powers|PREVARGTEQ:Bloodrager_Destined_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Destined Bloodrager Bloodline ~ Power LVL 01|PREVARGTEQ:Bloodrager_Destined_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Destined Bloodrager Bloodline ~ Power LVL 04|PREVARGTEQ:Bloodrager_Destined_BloodlinePower4,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Destined Bloodrager Bloodline ~ Power LVL 08|PREVARGTEQ:Bloodrager_Destined_BloodlinePower8,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Destined Bloodrager Bloodline ~ Power LVL 12|PREVARGTEQ:Bloodrager_Destined_BloodlinePower12,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Destined Bloodrager Bloodline ~ Power LVL 16|PREVARGTEQ:Bloodrager_Destined_BloodlinePower16,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Destined Bloodrager Bloodline ~ Power LVL 20|PREVARGTEQ:Bloodrager_Destined_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower1LVL|Bloodrager_Destined_BloodlineLVL+BloodragerBloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower4LVL|Bloodrager_Destined_BloodlineLVL+BloodragerBloodlinePower4LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower8LVL|Bloodrager_Destined_BloodlineLVL+BloodragerBloodlinePower8LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower12LVL|Bloodrager_Destined_BloodlineLVL+BloodragerBloodlinePower12LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower16LVL|Bloodrager_Destined_BloodlineLVL+BloodragerBloodlinePower16LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower20LVL|Bloodrager_Destined_BloodlineLVL+BloodragerBloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Destined"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bloodrager Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 669,
+    "record_key": "Bloodrager Bloodline ~ Destined"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Combat Style ~ Natural Weapon",
+    "name": "Natural Weapon",
+    "class": "Ranger Combat Style",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style ~ Natural Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerCombatStyle"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RangerCombatStyleNaturalWeaponAllowed,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Aspect_of_the_Beast|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Natural_Attack|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Rending_Claws|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Weapon_Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Eldritch_Claws|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Vital_Strike|1|PREVARGTEQ:CombatStyleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Multiattack|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Vital_Strike|1|PREVARGTEQ:CombatStyleLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2560,
+    "record_key": "Ranger Combat Style ~ Natural Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Jungle Domain ~ Brachiation",
+    "name": "Brachiation",
+    "class": "Jungle Domain",
+    "description": "As a free action for %1 rounds per day, you may climb with a climb speed equal to your land speed, and gain a +%2 bonus on Acrobatics checks.  These rounds do not have to be consecutive.|BrachiationTimes|BrachiationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Jungle Domain ~ Brachiation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DomainPower.Jungle Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrachiationTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrachiationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action for %1 rounds per day, you may climb with a climb speed equal to your land speed, and gain a +%2 bonus on Acrobatics checks.  These rounds do not have to be consecutive.|BrachiationTimes|BrachiationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrachiationTimes|classlevel(\"Druid\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrachiationBonus|classlevel(\"Druid\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BrachiationTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 291,
+    "record_key": "Jungle Domain ~ Brachiation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

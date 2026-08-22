@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Chameleon ~ Effortless Sneak",
+    "name": "Effortless Sneak",
+    "class": "Rogue",
+    "description": "At 3rd level, the chameleon chooses a single terrain from the ranger's favored terrain class feature. While she is within that terrain, she can take 10 on any Stealth check she can make within that terrain. When the chameleon reaches 6th level, and every three levels thereafter, she chooses a new type of terrain from the ranger's favored terrain list. She gains this ability with the newly picked terrain. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chameleon ~ Effortless Sneak"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the chameleon chooses a single terrain from the ranger's favored terrain class feature. While she is within that terrain, she can take 10 on any Stealth check she can make within that terrain. When the chameleon reaches 6th level, and every three levels thereafter, she chooses a new type of terrain from the ranger's favored terrain list. She gains this ability with the newly picked terrain. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1687,
+    "record_key": "Chameleon ~ Effortless Sneak"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

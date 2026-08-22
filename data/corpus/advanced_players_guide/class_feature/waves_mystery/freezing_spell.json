@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Waves Mystery ~ Freezing Spell",
+    "name": "Freezing Spell",
+    "class": "Waves Mystery",
+    "description": "Whenever a creature fails a saving throw and takes cold damage from one of your spells, it is slowed (as the slow spell) for 1 round. Spells that do not allow a save do not slow creatures. At 11th level, the duration increases to 1d4 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Mystery ~ Freezing Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WavesRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a creature fails a saving throw and takes cold damage from one of your spells, it is slowed (as the slow spell) for 1 round. Spells that do not allow a save do not slow creatures. At 11th level, the duration increases to 1d4 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 687,
+    "record_key": "Waves Mystery ~ Freezing Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

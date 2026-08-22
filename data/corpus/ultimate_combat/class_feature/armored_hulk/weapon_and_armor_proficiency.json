@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Armored Hulk ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Barbarian",
+    "description": "An armored hulk gains proficiency in heavy armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armored Hulk ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An armored hulk gains proficiency in heavy armor."
+      },
+      {
+        "key": "AUTO",
+        "value": "ARMORPROF|ARMORTYPE=Heavy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 314,
+    "record_key": "Armored Hulk ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

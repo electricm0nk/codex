@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Cockatrice",
+    "name": "Order of the Cockatrice",
+    "class": null,
+    "description": "An order of the cockatrice cavalier adds his Charisma modifier to the DC on another creature's attempt to demoralize him through Intimidate (in addition to his Wisdom modifier, as normal).",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderChallengeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the cockatrice cavalier adds his Charisma modifier to the DC on another creature's attempt to demoralize him through Intimidate (in addition to his Wisdom modifier, as normal)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Cockatrice ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Cockatrice ~ Braggart|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Cockatrice ~ Steal Glory|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Cockatrice ~ Moment of Triumph|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderChallengeBonus|CavalierLVL/4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Appraise|TYPE=Perform"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 morale bonus on all melee damage rolls made against the target of his challenge as long as he is the only creature threatening the target.|1+OrderChallengeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 234,
+    "record_key": "Order of the Cockatrice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

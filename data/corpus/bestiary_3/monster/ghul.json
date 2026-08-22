@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "5",
@@ -22,6 +20,108 @@
     ],
     "race_subtype": "Shapechanger",
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Ghul"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Tracking|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|6|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "5"
+      },
+      {
+        "key": "DR",
+        "value": "5/good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:6"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Climb,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*2,1d4"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ],
     "size": "M",
     "source_page": "p.124",
     "speeds": [
@@ -35,16 +135,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 121,
-    "record_key": "Ghul"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Ghul",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

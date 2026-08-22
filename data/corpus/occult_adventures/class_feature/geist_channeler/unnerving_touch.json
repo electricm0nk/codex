@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Geist Channeler ~ Unnerving Touch",
+    "name": "Unnerving Touch",
+    "class": "Spiritualist",
+    "description": "As a standard action, a geist channeler's phantom can make a melee touch attack against a living creature, even if that creature is corporeal. If the attack hits, the target is shaken for 1d4+1 rounds. A successful Will save (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier) negates this effect. At 5th level, when the phantom can damage corporeal creatures with its slam attack, its slam attacks against living corporeal creatures gain this ability. Multiple attacks against the same creature don't cause the creature to become frightened. This is a mind-affecting fear effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geist Channeler ~ Unnerving Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Geist Channeler Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a geist channeler's phantom can make a melee touch attack against a living creature, even if that creature is corporeal. If the attack hits, the target is shaken for 1d4+1 rounds. A successful Will save (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier) negates this effect. At 5th level, when the phantom can damage corporeal creatures with its slam attack, its slam attacks against living corporeal creatures gain this ability. Multiple attacks against the same creature don't cause the creature to become frightened. This is a mind-affecting fear effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1629,
+    "record_key": "Geist Channeler ~ Unnerving Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

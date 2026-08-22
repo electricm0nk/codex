@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oozemorph ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "class": "Shifter",
+    "description": "An oozemorph gains DR 4/slashing while unencumbered and either wearing no armor or wearing light nonmetal armor.|OozemorphDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oozemorph ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.OozemorphClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OozemorphDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An oozemorph gains DR 4/slashing while unencumbered and either wearing no armor or wearing light nonmetal armor.|OozemorphDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OozemorphDR|4+(2*(ShifterLVL/4))"
+      },
+      {
+        "key": "DR",
+        "value": "OozemorphDR/slashing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1089,
+    "record_key": "Oozemorph ~ Damage Reduction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

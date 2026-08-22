@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Archivist ~ Naturalist",
+    "name": "Naturalist",
+    "class": "Bard",
+    "description": "An archivist who has identified a creature with a Knowledge check appropriate to its type can use performance to share strategies for defeating it with allies in combat. The archivist and any allies within 30 feet gain a +%1 insight bonus to AC and on attack rolls and saving throws against exceptional, supernatural, and spell-like abilities used by creatures of that specific kind of monster (e.g., frost giants, not all giants or all humanoids). This bonus increases by +1 at 5th level and every six levels thereafter. This language-dependent ability requires visual and audible components. This ability replaces inspire courage.|NaturalistBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archivist ~ Naturalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardInspireCourage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalistBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An archivist who has identified a creature with a Knowledge check appropriate to its type can use performance to share strategies for defeating it with allies in combat. The archivist and any allies within 30 feet gain a +%1 insight bonus to AC and on attack rolls and saving throws against exceptional, supernatural, and spell-like abilities used by creatures of that specific kind of monster (e.g., frost giants, not all giants or all humanoids). This bonus increases by +1 at 5th level and every six levels thereafter. This language-dependent ability requires visual and audible components. This ability replaces inspire courage.|NaturalistBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalistBonus|((BardLVL-1)/5)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempBonusDisplayNaturalist|%CHOICE|TYPE=Insight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|%CHOICE|TYPE=Insight"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|TOHIT|%CHOICE|TYPE=Insight"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|ALL|%CHOICE|TYPE=Insight"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=5|TITLE=Bonus Applied to AC and To Hit"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1642,
+    "record_key": "Archivist ~ Naturalist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

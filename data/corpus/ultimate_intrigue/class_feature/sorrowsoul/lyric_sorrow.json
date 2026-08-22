@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorrowsoul ~ Lyric Sorrow",
+    "name": "Lyric Sorrow",
+    "class": "Bard",
+    "description": "A sorrowsoul draws upon grief, rage, and tragedy to fuel his bardic performances. When a sorrowsoul begins a bardic performance, he can choose to alter its effects with lyric sorrow. If he does so, he uses twice the number of rounds of his bardic performance ability as normal, and even if the sorrowsoul has the Lingering Performance feat, the performance's effects do not last for any additional rounds. A sorrowsoul can use his lyric sorrow in conjunction with inspire courage. When he chooses to do so, he increases his bonuses on saving throws and on weapon attack and damage rolls from +1 to +%1, but his other allies receive no benefit.|SorrowsoulInspiredCourageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorrowsoul ~ Lyric Sorrow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.SorrowsoulClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A sorrowsoul draws upon grief, rage, and tragedy to fuel his bardic performances. When a sorrowsoul begins a bardic performance, he can choose to alter its effects with lyric sorrow. If he does so, he uses twice the number of rounds of his bardic performance ability as normal, and even if the sorrowsoul has the Lingering Performance feat, the performance's effects do not last for any additional rounds. A sorrowsoul can use his lyric sorrow in conjunction with inspire courage. When he chooses to do so, he increases his bonuses on saving throws and on weapon attack and damage rolls from +1 to +%1, but his other allies receive no benefit.|SorrowsoulInspiredCourageBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " A sorrowsoul can use his lyric sorrow ability in conjunction with inspire greatness to grant himself 3 bonus Hit Dice, a +3 competence bonus on attack rolls, and a +2 competence bonus on Fortitude saves; if he does so, inspire greatness only affects him, not any other allies.|PRECLASS:1,Bard=12"
+      },
+      {
+        "key": "DESC",
+        "value": " A sorrowsoul can use his lyric sorrow ability in conjunction with the inspire heroics bardic performance. When using the lyric sorrow version of this performance, a sorrowsoul gains fast healing 5 and benefits from a 50%% miss chance, as if under the effects of displacement, in addition to the standard bonuses conferred by this bardic performance, but if he does so, inspire heroics only affects him, not any other allies.|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SorrowsoulInspiredCourageBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SorrowsoulInspiredCourageBonus|2|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SorrowsoulInspiredCourageBonus|2|PRECLASS:1,Bard=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SorrowsoulInspiredCourageBonus|2|PRECLASS:1,Bard=17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 251,
+    "record_key": "Sorrowsoul ~ Lyric Sorrow"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

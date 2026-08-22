@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Linnorm Death Curse (Taiga)",
+    "name": "Linnorm Death Curse (Taiga)",
+    "class": "Rage Power",
+    "description": "The character channels the power of a taiga linnorm. The character's melee attacks deal an additional 1 point of electricity damage. If the character is knocked unconscious or killed by an attack or spell, the attacker suffers the curse of electricity (Will negates). A character must be at least 4th level to select this rage power. Curse of Electricity: save Will DC 10 + 1/2 character's level + character's Charisma bonus; effect target gains vulnerability to electricity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Linnorm Death Curse (Taiga)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=4"
+      },
+      {
+        "key": "DESC",
+        "value": "The character channels the power of a taiga linnorm. The character's melee attacks deal an additional 1 point of electricity damage. If the character is knocked unconscious or killed by an attack or spell, the attacker suffers the curse of electricity (Will negates). A character must be at least 4th level to select this rage power. Curse of Electricity: save Will DC 10 + 1/2 character's level + character's Charisma bonus; effect target gains vulnerability to electricity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1761,
+    "record_key": "Rage Power ~ Linnorm Death Curse (Taiga)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

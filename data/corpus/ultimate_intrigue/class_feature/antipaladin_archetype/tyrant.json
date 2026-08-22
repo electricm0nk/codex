@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Antipaladin Archetype ~ Tyrant",
+    "name": "Tyrant",
+    "class": "Antipaladin Archetype",
+    "description": "Evil arises in every form imaginable, not just in hearts full of destruction and chaos. Tyrants are manipulative and lawful antipaladins, chess masters who arrange things behind the scenes to ensure that whatever happens, evil always wins, and the tyrant along with it. Unlike other antipaladins, tyrants are all too happy to associate with good creatures, the better to manipulate them into performing evil acts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin Archetype ~ Tyrant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AntipaladinArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Antipaladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Antipaladin Archetype ~ Tyrant],[!PREFACT:1,ABILITIES,Antipaladin_Archetype_ClassSkills=True,Antipaladin_Archetype_FiendishBoon=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Evil arises in every form imaginable, not just in hearts full of destruction and chaos. Tyrants are manipulative and lawful antipaladins, chess masters who arrange things behind the scenes to ensure that whatever happens, evil always wins, and the tyrant along with it. Unlike other antipaladins, tyrants are all too happy to associate with good creatures, the better to manipulate them into performing evil acts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tyrant ~ Class Skills|PRECLASS:1,Antipaladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tyrant ~ Tyrant's Code|PRECLASS:1,Antipaladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tyrant ~ Diabolic Boon|PRECLASS:1,Antipaladin=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_FiendishBoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_ClassSkills|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 210,
+    "record_key": "Antipaladin Archetype ~ Tyrant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

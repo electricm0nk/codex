@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Iconoclast ~ Shake Effects",
+    "name": "Shake Effects",
+    "class": "Inquisitor",
+    "description": "At 1st level, an iconoclast gains a +2 bonus on all saving throws against effects that come from a magic item. This ability replaces monster lore.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iconoclast ~ Shake Effects"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an iconoclast gains a +2 bonus on all saving throws against effects that come from a magic item. This ability replaces monster lore."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 876,
+    "record_key": "Iconoclast ~ Shake Effects"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

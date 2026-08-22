@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Bramble Brewer",
+    "name": "Bramble Brewer",
+    "class": "Alchemist Archetype",
+    "description": "Some half-elven alchemists merge human curiosity with their elven link to nature. Such alchemists can manipulate the forces of alchemy to create bombs that reshape terrain and defoliate swaths of vegetation or to create mutagens that bestow the resilience of oak or the tenacity of bamboo.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Bramble Brewer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype.AlchemistDiscovery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Bramble Brewer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistDiscovery]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-elven alchemists merge human curiosity with their elven link to nature. Such alchemists can manipulate the forces of alchemy to create bombs that reshape terrain and defoliate swaths of vegetation or to create mutagens that bestow the resilience of oak or the tenacity of bamboo."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bramble Brewer ~ Briar Bombs|PRECLASS:1,Alchemist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bramble Brewer ~ Dendrite Mutagen|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bramble Brewer ~ Grand Discovery|PRECLASS:1,Alchemist=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bramble Brewer ~ Discoveries|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 195,
+    "record_key": "Alchemist Archetype ~ Bramble Brewer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

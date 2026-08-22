@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Spirit Shield",
+    "name": "Spirit Shield",
+    "class": "Ancestor Mystery",
+    "description": "You can call upon the spirits of your ancestors to form a shield around you that blocks incoming attacks and grants you a +%1 armor bonus. You can use this shield for %2 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|SpiritShieldBonus|SpiritShieldDuration|!PRECLASS:1,Oracle=13",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Spirit Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.AncestorRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritShieldDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritShieldBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the spirits of your ancestors to form a shield around you that blocks incoming attacks and grants you a +%1 armor bonus. You can use this shield for %2 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|SpiritShieldBonus|SpiritShieldDuration|!PRECLASS:1,Oracle=13"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the spirits of your ancestors to form a shield around you that blocks incoming attacks and grants you a +%1 armor bonus. This shield causes arrows, rays, and other ranged attacks requiring an attack roll against you to have a 50%% miss chance. You can use this shield for %2 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|SpiritShieldBonus|SpiritShieldDuration|PRECLASS:1,Oracle=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritShieldDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritShieldBonus|4+2*max(0,floor((classlevel(\"Oracle\")-3)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|SpiritShieldBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 458,
+    "record_key": "Ancestor Mystery ~ Spirit Shield"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

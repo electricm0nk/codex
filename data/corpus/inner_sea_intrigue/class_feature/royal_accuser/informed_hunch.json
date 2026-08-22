@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Royal Accuser ~ Informed Hunch",
+    "name": "Informed Hunch",
+    "class": "Inquisitor",
+    "description": "Once per day, a royal accuser can contemplate an ongoing investigation he is involved in and potentially know whether his hunches are on the right track. This functions as augury, except if it succeeds, the royal accuser gets one of the following results in place of weal, woe, or weal and woe. The royal accuser treats his inquisitor level as his caster level. &nl;[Correct] if the hunch is the exact truth, such as if a particular individual is  responsible for a crime, or if a particular organization is behind a series of events. &nl;]Incorrect] if the hunch is entirely off base, such as if a suspected individual had nothing to do with a crime, or a suspected organization had no interest or hand in a series of events. &nl;[On the right track] if the hunch is partially correct, such as if a suspected individual participated in a criminal conspiracy or had foreknowledge of the crime in question, or if a suspected organization directly profited from and knew about but did not entirely orchestrate a series of events.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Royal Accuser ~ Informed Hunch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a royal accuser can contemplate an ongoing investigation he is involved in and potentially know whether his hunches are on the right track. This functions as augury, except if it succeeds, the royal accuser gets one of the following results in place of weal, woe, or weal and woe. The royal accuser treats his inquisitor level as his caster level. &nl;[Correct] if the hunch is the exact truth, such as if a particular individual is  responsible for a crime, or if a particular organization is behind a series of events. &nl;]Incorrect] if the hunch is entirely off base, such as if a suspected individual had nothing to do with a crime, or a suspected organization had no interest or hand in a series of events. &nl;[On the right track] if the hunch is partially correct, such as if a suspected individual participated in a criminal conspiracy or had foreknowledge of the crime in question, or if a suspected organization directly profited from and knew about but did not entirely orchestrate a series of events."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 110,
+    "record_key": "Royal Accuser ~ Informed Hunch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

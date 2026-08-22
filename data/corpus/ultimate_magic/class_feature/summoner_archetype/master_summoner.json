@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner Archetype ~ Master Summoner",
+    "name": "Master Summoner",
+    "class": "Summoner Archetype",
+    "description": "A master summoner sacrifices the power of his eidolon in favor of summoning a plethora of otherworldly creatures to aid him.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Master Summoner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype.SummonerShieldAlly.SummonerGreaterShieldAlly.SummonerBondSenses.SummonerSummonMonster"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Master Summoner],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerEidolon,TYPE.SummonerShieldAlly,TYPE.SummonerGreaterShieldAlly,TYPE.SummonerBondSenses,TYPE.SummonerSummonMonster]"
+      },
+      {
+        "key": "DESC",
+        "value": "A master summoner sacrifices the power of his eidolon in favor of summoning a plethora of otherworldly creatures to aid him."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Master Summoner ~ Lesser Eidolon"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Master Summoner ~ Summoning Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Augment Summoning|PRECLASS:1,Summoner=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Summoner ~ Shield Ally|PRECLASS:1,Summoner=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1816,
+    "record_key": "Summoner Archetype ~ Master Summoner"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

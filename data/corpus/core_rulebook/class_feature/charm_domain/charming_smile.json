@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Charm Domain ~ Charming Smile",
+    "name": "Charming Smile",
+    "class": "Charm Domain",
+    "description": "You can cast Charm Person as a swift action with a DC of %1. You can only have one creature charmed in this way at a time. The total duration of this effect is %2 round per day. These rounds do not need to be consecutive, and you can dismiss the charm anytime as a free action. Each attempt to use this ability consumes 1 round of its duration, whether or not the creature succeeds on its save to resist the effect.|DomainCharmDC|CharmCharmingSmileRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Charm Domain ~ Charming Smile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CharmCharmingSmileRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast Charm Person as a swift action with a DC of %1. You can only have one creature charmed in this way at a time. The total duration of this effect is %2 round per day. These rounds do not need to be consecutive, and you can dismiss the charm anytime as a free action. Each attempt to use this ability consumes 1 round of its duration, whether or not the creature succeeds on its save to resist the effect.|DomainCharmDC|CharmCharmingSmileRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CharmCharmingSmileRounds|DomainCharmLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CharmCharmingSmileRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3194,
+    "record_key": "Charm Domain ~ Charming Smile"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

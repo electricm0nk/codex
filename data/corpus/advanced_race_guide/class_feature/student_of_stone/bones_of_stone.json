@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of Stone ~ Bones of Stone 1",
+    "name": "Bones of Stone",
+    "class": "Student of Stone",
+    "description": "As a swift action, a student of stone can spend 1 ki point to gain DR 2/magic until the beginning of his next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Stone ~ Bones of Stone 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a student of stone can spend 1 ki point to gain DR 2/magic until the beginning of his next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 683,
+    "record_key": "Student of Stone ~ Bones of Stone 1"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

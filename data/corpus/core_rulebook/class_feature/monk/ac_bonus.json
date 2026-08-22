@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ AC Bonus",
+    "name": "AC Bonus",
+    "class": "Monk",
+    "description": "When unarmored and unencumbered, you add +%1 to your AC and your CMD. These bonuses apply even against touch attacks or when you are flat-footed. You lose these bonuses when you are immobilized or helpless, when you wear any armor, when you carry a shield, or when you carry a medium or heavy load.|MonkACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ AC Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When unarmored and unencumbered, you add +%1 to your AC and your CMD. These bonuses apply even against touch attacks or when you are flat-footed. You lose these bonuses when you are immobilized or helpless, when you wear any armor, when you carry a shield, or when you carry a medium or heavy load.|MonkACBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk AC Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkACLVL|MonkLVL|TYPE=Level"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1095,
+    "record_key": "Monk ~ AC Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

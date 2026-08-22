@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Your successful melee touch attack deals 1d6 points of electricity damage per caster level [maximum 5d6]. When delivering the jolt, you gain a +3 bonus on attack rolls if the opponent is wearing metal armor [or is carrying a metal weapon or is made of metal].",
     "key": "Shocking Grasp",
-    "school": "Evocation",
     "level": 1,
-    "description": "Your successful melee touch attack deals 1d6 points of electricity damage per caster level [maximum 5d6]. When delivering the jolt, you gain a +3 bonus on attack rolls if the opponent is wearing metal armor [or is carrying a metal weapon or is made of metal]."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Your successful melee touch attack deals (min(5,CASTERLEVEL))d6 points of electricity damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your successful melee touch attack deals 1d6 points of electricity damage per caster level [maximum 5d6]. When delivering the jolt, you gain a +3 bonus on attack rolls if the opponent is wearing metal armor [or is carrying a metal weapon or is made of metal].|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Electricity"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/shockingGrasp.html#_shocking-grasp"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.343"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature or object touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 544,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1293,
-    "record_key": "Shocking Grasp.MOD"
+    "record_key": "Shocking Grasp",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

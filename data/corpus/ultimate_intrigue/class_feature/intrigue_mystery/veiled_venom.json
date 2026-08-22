@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Veiled Venom",
+    "name": "Veiled Venom",
+    "class": "Intrigue Mystery",
+    "description": "The powers of intrigue veil your poisons and magic items from magical scrutiny. As a standard action, you can touch an object, granting it the benefits of the spells magic aura and obscure poison. You can use this ability at will, but each time you do, the effects of any previous use end.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Veiled Venom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The powers of intrigue veil your poisons and magic items from magical scrutiny. As a standard action, you can touch an object, granting it the benefits of the spells magic aura and obscure poison. You can use this ability at will, but each time you do, the effects of any previous use end."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 575,
+    "record_key": "Intrigue Mystery ~ Veiled Venom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

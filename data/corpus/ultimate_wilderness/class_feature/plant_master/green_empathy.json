@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Plant Master ~ Green Empathy",
+    "name": "Green Empathy",
+    "class": "Hunter",
+    "description": "A plant master can improve the attitude of a plant creature. Green empathy functions like a Diplomacy check to improve the attitude of a person. The plant master rolls 1d20 and adds his hunter level and his Charisma modifier to determine the wild empathy check result. The typical wild plant creature has a starting attitude of indifferent. To use green empathy, the plant master and the plant creature must be within 30 feet of each other under normal conditions. Generally, influencing a plant creature in this way takes 1 minute, but as with influencing people, it might take more or less time. A plant master can also use this ability to influence an animal, but he takes a -4 penalty on the check. He has no ability to influence magical beasts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master ~ Green Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PlantMasterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A plant master can improve the attitude of a plant creature. Green empathy functions like a Diplomacy check to improve the attitude of a person. The plant master rolls 1d20 and adds his hunter level and his Charisma modifier to determine the wild empathy check result. The typical wild plant creature has a starting attitude of indifferent. To use green empathy, the plant master and the plant creature must be within 30 feet of each other under normal conditions. Generally, influencing a plant creature in this way takes 1 minute, but as with influencing people, it might take more or less time. A plant master can also use this ability to influence an animal, but he takes a -4 penalty on the check. He has no ability to influence magical beasts."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 678,
+    "record_key": "Plant Master ~ Green Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

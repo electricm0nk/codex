@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Detective ~ Show Yourselves",
+    "name": "Show Yourselves",
+    "class": "Bard",
+    "description": "At 15th level, a detective can use performance to compel creatures to reveal themselves when hiding. All enemies within 30 feet must make a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier). If they fail, they must cease using Stealth, unlock and open doors between themselves and the detective, and dismiss, suppress, or dispel if necessary magical effects that grant invisibility or any other form of concealment from the detective. As long as they can hear the performance, affected creatures may not attack or flee until they have eliminated every such effect, though they are freed from this compulsion immediately if attacked. Creatures in the area must make this save each round the bard continues his performance. This ability is language-dependent and requires audible components. This performance replaces inspire heroics.|10+CHA+(BardLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Detective ~ Show Yourselves"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardInspireHeroics"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, a detective can use performance to compel creatures to reveal themselves when hiding. All enemies within 30 feet must make a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier). If they fail, they must cease using Stealth, unlock and open doors between themselves and the detective, and dismiss, suppress, or dispel if necessary magical effects that grant invisibility or any other form of concealment from the detective. As long as they can hear the performance, affected creatures may not attack or flee until they have eliminated every such effect, though they are freed from this compulsion immediately if attacked. Creatures in the area must make this save each round the bard continues his performance. This ability is language-dependent and requires audible components. This performance replaces inspire heroics.|10+CHA+(BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1662,
+    "record_key": "Detective ~ Show Yourselves"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

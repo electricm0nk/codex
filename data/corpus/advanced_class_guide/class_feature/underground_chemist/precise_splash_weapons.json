@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Underground Chemist ~ Precise Splash Weapons",
+    "name": "Precise Splash Weapons",
+    "class": "Underground Chemist",
+    "description": "An underground chemist can deal sneak attack damage with splash weapons. The attack must be her first attack that round, qualify for dealing sneak attack damage (such as against a flat-footed target), and be directed at a creature rather than a square.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Underground Chemist ~ Precise Splash Weapons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Underground Chemist Class Feature.Rogue Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An underground chemist can deal sneak attack damage with splash weapons. The attack must be her first attack that round, qualify for dealing sneak attack damage (such as against a flat-footed target), and be directed at a creature rather than a square."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3568,
+    "record_key": "Underground Chemist ~ Precise Splash Weapons"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

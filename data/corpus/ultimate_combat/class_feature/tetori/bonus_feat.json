@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tetori ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Monk",
+    "description": "A tetori gains the following bonus feats - 1st level-Improved Grapple, 2nd level-Stunning Pin, 6th level-Greater Grapple, 10th level-Pinning Knockout, 14th level-Choke Hold, 18th level-Neckbreaker. These feats replace a monk's normal bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tetori ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A tetori gains the following bonus feats - 1st level-Improved Grapple, 2nd level-Stunning Pin, 6th level-Greater Grapple, 10th level-Pinning Knockout, 14th level-Choke Hold, 18th level-Neckbreaker. These feats replace a monk's normal bonus feats."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1398,
+    "record_key": "Tetori ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

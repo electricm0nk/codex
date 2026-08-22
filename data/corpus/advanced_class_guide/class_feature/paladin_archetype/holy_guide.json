@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Holy Guide",
+    "name": "Holy Guide",
+    "class": "Paladin Archetype",
+    "description": "A holy guide believes that it's his sacred calling to clear the roads of bandits between towns as well as to escort travelers to safety. He must enforce the rule of law in the wilderness and help those that cannot defend themselves against the many dangers of the area.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Holy Guide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinMercy3.PaladinMercy6"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Holy Guide],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinMercy3,TYPE.PaladinMercy5]"
+      },
+      {
+        "key": "DESC",
+        "value": "A holy guide believes that it's his sacred calling to clear the roads of bandits between towns as well as to escort travelers to safety. He must enforce the rule of law in the wilderness and help those that cannot defend themselves against the many dangers of the area."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Guide ~ Class Skills|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Guide ~ Favored Terrain|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Guide ~ Teamwork Feat|PRECLASS:1,Paladin=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3513,
+    "record_key": "Paladin Archetype ~ Holy Guide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

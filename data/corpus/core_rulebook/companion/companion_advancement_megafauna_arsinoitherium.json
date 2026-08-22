@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Megafauna (Arsinoitherium)",
     "delivery": null,
@@ -14,6 +12,32 @@
     "owners": [
       "core_rulebook:companion:companion_megafauna_arsinoitherium"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Megafauna (Arsinoitherium)"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Megafauna (Arsinoitherium))"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Arsinoitherium Companion Advancement"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -21,16 +45,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 209,
-    "record_key": "Companion Advancement ~ Megafauna (Arsinoitherium)"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 209,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Megafauna (Arsinoitherium)",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

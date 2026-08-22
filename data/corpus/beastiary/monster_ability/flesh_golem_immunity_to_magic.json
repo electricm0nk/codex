@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Flesh Golem ~ Immunity to Magic",
     "delivery": "Extraordinary",
@@ -13,21 +11,49 @@
     "owners": [
       "beastiary:monster:golem_flesh"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A flesh golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature, as noted below. * A magical attack that deals cold or fire damage slows a flesh golem (as the slow spell) for 2d6 rounds (no save). * A magical attack that deals electricity damage breaks any slow effect on the golem and heals 1 point of damage for every 3 points of damage the attack would otherwise deal. If the amount of healing would cause the golem to exceed its full normal hit points, it gains any excess as temporary hit points. A flesh golem gets no saving throw against attacks that deal electricity damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Flesh Golem ~ Immunity to Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
     "source_page": "p.160",
     "traits": [
       "Immunity"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 721,
-    "record_key": "Flesh Golem ~ Immunity to Magic"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 721,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Flesh Golem ~ Immunity to Magic",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Seduction Domain ~ Inspire Devotion",
+    "name": "Inspire Devotion",
+    "class": "Seduction Domain",
+    "description": "By spending at least 1 hour engaged in acts of physical pleasure with a willing partner, you can attempt a Diplomacy check to improve that partner's attitude or increase your influence with that partner (or reduce a rival's influence with that partner) with no maximum on the number of steps by which you can change that partner's attitude or disposition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Seduction Domain ~ Inspire Devotion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending at least 1 hour engaged in acts of physical pleasure with a willing partner, you can attempt a Diplomacy check to improve that partner's attitude or increase your influence with that partner (or reduce a rival's influence with that partner) with no maximum on the number of steps by which you can change that partner's attitude or disposition."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 98,
+    "record_key": "Seduction Domain ~ Inspire Devotion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

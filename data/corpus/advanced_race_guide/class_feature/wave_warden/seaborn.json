@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wave Warden ~ Seaborn",
+    "name": "Seaborn",
+    "class": "Ranger",
+    "description": "A wave warden may move through any sort of aquatic growth (such as coral or seaweed) or across a wet surface at his normal speed and without taking damage or suffering any other impairment. Obstacles that are enchanted or magically manipulated to impede motion still affect him.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden ~ Seaborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wave warden may move through any sort of aquatic growth (such as coral or seaweed) or across a wet surface at his normal speed and without taking damage or suffering any other impairment. Obstacles that are enchanted or magically manipulated to impede motion still affect him."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 889,
+    "record_key": "Wave Warden ~ Seaborn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

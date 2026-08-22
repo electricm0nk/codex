@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Bloodline ~ Thoughtsense",
+    "name": "Thoughtsense",
+    "class": "Psychic Bloodline",
+    "description": "You can detect the thoughts of others around you, as a constant thoughtsense effect with a range of 30 feet instead of 60 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Bloodline ~ Thoughtsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Psychic Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Psychic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Psychic_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Psychic_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can detect the thoughts of others around you, as a constant thoughtsense effect with a range of 30 feet instead of 60 feet."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Constant"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|PsychicBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1884,
+    "record_key": "Psychic Bloodline ~ Thoughtsense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

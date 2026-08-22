@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Venomous Saliva",
+    "name": "Venomous Saliva",
+    "class": "Domain Power",
+    "description": "As a swift action, you can spit a gout of life-stealing venom onto a weapon you are wielding. The poison lasts for 1 minute or until you make an attack that injures a foe with that weapon. Life-Stealing Venom: Injury; save Fort DC %1;frequency 1/round for 3 rounds; effect 1 Con damage; cure 1 save. You can use the venomous saliva ability %2 times per day.|DomainScalykindDC|DomainScalykindTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Venomous Saliva"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can spit a gout of life-stealing venom onto a weapon you are wielding. The poison lasts for 1 minute or until you make an attack that injures a foe with that weapon. Life-Stealing Venom: Injury; save Fort DC %1;frequency 1/round for 3 rounds; effect 1 Con damage; cure 1 save. You can use the venomous saliva ability %2 times per day.|DomainScalykindDC|DomainScalykindTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.319"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainScalykindTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 22,
+    "record_key": "Domain Power ~ Venomous Saliva"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

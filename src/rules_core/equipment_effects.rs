@@ -45,12 +45,14 @@
 pub mod arms_armor;
 pub mod equipmods;
 pub mod general;
+pub mod intelligent_item;
 pub mod magic_items;
 
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::character_input::EquipmentSelection;
 use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
 use crate::rules_core::equipment_effects::general::SkillCheckBonus;
+use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContribution;
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
@@ -104,6 +106,12 @@ pub struct ResolvedEquipmentEffect {
     /// for every other category, and for an `equipmods` record that
     /// carries no matching `BONUS:WEAPON|...|TYPE=Enhancement` token.
     pub weapon_enhancement_bonus: Option<WeaponEnhancementBonus>,
+    /// The armor-slot "Spell Resistance" special ability family's flat
+    /// `SR:<n>` contribution (see `equipmods::resolve_spell_resistance_
+    /// bonus`'s own doc comment). `None` for every other category, and
+    /// for an `equipmods` record that carries no literal-integer `SR:`
+    /// token.
+    pub spell_resistance_bonus: Option<i16>,
     /// v0.6 alpha swarm items 1+27 sub-task 2: the real, per-weapon
     /// TOHIT-affecting bonus resolved from *this specific* selection's own
     /// `applied_modifiers` (see `character_input::EquipmentSelection`'s doc
@@ -117,6 +125,20 @@ pub struct ResolvedEquipmentEffect {
     /// explicitly attached rather than inferred from "the only weapon
     /// equipped."
     pub to_hit_bonus: Option<i16>,
+    /// SD-31 intelligent-item resolver (operator ruling 2026-08-19): this
+    /// selection's own Intelligence/Wisdom/Charisma/Ego/alignment
+    /// contribution, summed across this specific selection's
+    /// `applied_modifiers` (see `character_input::EquipmentSelection`'s
+    /// doc comment) -- the SAME per-selection attachment model
+    /// `to_hit_bonus` uses, not the loadout-wide sum
+    /// `weapon_enhancement_bonus`/`ability_bonus` use (see
+    /// `equipment_effects::intelligent_item`'s own module doc comment for
+    /// why: an intelligent item's own stat block belongs to the specific
+    /// item it is attached to, not to every other equipped item). `None`
+    /// when none of this selection's applied modifiers carry any
+    /// `Intelligent Item ~ ...` token (the common case -- an ordinary,
+    /// non-intelligent item).
+    pub intelligent_item: Option<IntelligentItemContribution>,
     pub table_cell: Option<TableCellRef>,
 }
 
@@ -160,6 +182,12 @@ pub struct EquipmentEffects {
     pub spell_failure_chance: Option<f32>,
     pub armor_check_penalty_total: i16,
     pub attack_bonus_delta: Option<i16>,
+    /// The HIGHEST `per_item[].spell_resistance_bonus` among everything
+    /// equipped -- PF1's real rule ("if a creature has multiple sources
+    /// of spell resistance, only the highest value applies"), unlike
+    /// `armor_class_delta`'s additive stacking. `None` when nothing
+    /// equipped grants Spell Resistance.
+    pub spell_resistance_total: Option<i16>,
 }
 
 /// The equipment-effect engine seam (`technical-design.md` §2.4, adapted
@@ -178,6 +206,7 @@ pub fn compute_equipment_effects(
     let mut armor_check_penalty_total: i16 = 0;
     let mut weapon_count: u32 = 0;
     let mut single_weapon_to_hit_bonus: i16 = 0;
+    let mut spell_resistance_total: Option<i16> = None;
 
     for selection in equipped {
         let Some((record, table_cell)) =
@@ -186,11 +215,13 @@ pub fn compute_equipment_effects(
             continue;
         };
         let to_hit_bonus = is_weapon_record(record).then(|| {
-            let bonus = resolve_weapon_to_hit_bonus(&selection.applied_modifiers, corpus);
+            let bonus = resolve_weapon_to_hit_bonus(record, &selection.applied_modifiers, corpus);
             weapon_count += 1;
             single_weapon_to_hit_bonus = bonus;
             bonus
         });
+        let intelligent_item_contribution =
+            resolve_intelligent_item_contribution(&selection.applied_modifiers, corpus);
         let key = equipment_key_token(record)
             .unwrap_or(&record.name)
             .to_string();
@@ -209,6 +240,7 @@ pub fn compute_equipment_effects(
         let skill_bonus = general::compute_general_effect(record);
         let ability_bonus = magic_items::compute_magic_items_effect(record);
         let weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
+        let spell_resistance_bonus = equipmods::resolve_spell_resistance_bonus(record);
         let has_arms_armor_effect = effect.armor_class_bonus.is_some()
             || effect.max_dex.is_some()
             || effect.spell_failure.is_some()
@@ -219,7 +251,7 @@ pub fn compute_equipment_effects(
             EquipmentCategory::General
         } else if ability_bonus.is_some() {
             EquipmentCategory::MagicItems
-        } else if weapon_enhancement_bonus.is_some() {
+        } else if weapon_enhancement_bonus.is_some() || spell_resistance_bonus.is_some() {
             EquipmentCategory::Equipmods
         } else {
             // No category-defining token matched at all (e.g. a plain
@@ -249,6 +281,12 @@ pub fn compute_equipment_effects(
         if let Some(penalty) = effect.armor_check_penalty {
             armor_check_penalty_total += penalty;
         }
+        if let Some(sr) = spell_resistance_bonus {
+            // PF1's real rule: multiple SR sources do not stack, only the
+            // highest applies (see `EquipmentEffects::spell_resistance_
+            // total`'s own doc comment) -- `max`, never `+=`.
+            spell_resistance_total = Some(spell_resistance_total.map_or(sr, |current| current.max(sr)));
+        }
 
         per_item.push(ResolvedEquipmentEffect {
             item_id: selection.item_id.clone(),
@@ -261,7 +299,9 @@ pub fn compute_equipment_effects(
             skill_bonus,
             ability_bonus,
             weapon_enhancement_bonus,
+            spell_resistance_bonus,
             to_hit_bonus,
+            intelligent_item: intelligent_item_contribution,
             table_cell,
         });
     }
@@ -280,6 +320,7 @@ pub fn compute_equipment_effects(
         spell_failure_chance,
         armor_check_penalty_total,
         attack_bonus_delta,
+        spell_resistance_total,
     }
 }
 
@@ -291,7 +332,30 @@ pub fn compute_equipment_effects(
 /// `BONUS:WEAPON|...|TYPE=Enhancement` chain, contributes nothing --
 /// mirrors the main loop's own resolve-or-skip discipline, not a
 /// fabricated value.
-fn resolve_weapon_to_hit_bonus(applied_modifiers: &[String], corpus: &SourcePackageContent) -> i16 {
+///
+/// **`SD31-W18-INTEGRATE-001` fix (adversarial review, `OPEN-ISSUES.md`
+/// row 309 re-opened):** `weapon_record` is the specific weapon this
+/// to-hit bonus is being resolved for. Wave 18's row-309 re-land guarded
+/// `damage_total::resolve_weapon_enhancement_modifier` against a
+/// `natural_attack_only` bonus (the Amulet of Mighty Fists family)
+/// leaking onto an ordinary weapon's DAMAGE roll, but left THIS function
+/// -- the one `compute_equipment_effects` actually calls for every
+/// weapon's `to_hit_bonus`/`attack_bonus_delta`, via
+/// `selection.applied_modifiers`, the attachment shape the shipped
+/// desktop app's own `attach_equipment_modifier_at_root` uses -- with no
+/// scope check at all. Confirmed live before this fix: an Amulet of
+/// Mighty Fists +5 attached to an ordinary Longsword yielded
+/// `to_hit_bonus = Some(5)` / `attack_bonus_delta = Some(5)`, a real
+/// player-facing regression reaching `character_hub.rs` ->
+/// `CharacterSheet.tsx`'s "Attack Bonus" stat tile. Same guard as
+/// `resolve_weapon_enhancement_modifier`: skip a `natural_attack_only`
+/// bonus unless `weapon_record` itself is a real natural attack.
+fn resolve_weapon_to_hit_bonus(
+    weapon_record: &EquipmentRecord,
+    applied_modifiers: &[String],
+    corpus: &SourcePackageContent,
+) -> i16 {
+    let weapon_is_natural_attack = is_natural_attack_weapon(weapon_record);
     let mut total = 0;
     for modifier_item_id in applied_modifiers {
         let Some((record, _table_cell)) = equipment_id_resolve(modifier_item_id, RuleSetId::Crb, corpus) else {
@@ -305,12 +369,80 @@ fn resolve_weapon_to_hit_bonus(applied_modifiers: &[String], corpus: &SourcePack
         // strictly redundant with it, and silently dropped any non-CRB
         // modifier's bonus before this check ever ran.
         if let Some(bonus) = equipmods::compute_equipmods_effect(record) {
+            if bonus.natural_attack_only && !weapon_is_natural_attack {
+                continue;
+            }
             if bonus.affects.contains("TOHIT") {
                 total += bonus.bonus;
             }
         }
     }
     total
+}
+
+/// Resolves `applied_modifiers` against `corpus` and sums every attached
+/// modifier's `intelligent_item::compute_intelligent_item_effect`
+/// contribution (SD-31 intelligent-item resolver, operator ruling
+/// 2026-08-19). Mirrors `resolve_weapon_to_hit_bonus`'s own resolve-or-skip
+/// discipline: a modifier item_id that doesn't resolve, or resolves to a
+/// record carrying none of this family's tokens, contributes nothing.
+/// Numeric fields (ability-score/Ego deltas) sum across every attached
+/// modifier that carries them -- a real build attaches exactly one
+/// `Intelligent Item ~ Ability Score / <Ability> <N>` per mental ability
+/// (PCGen's own `REPLACES:` chain on these records prevents selecting two
+/// values for the same ability at once, see module doc comment), so
+/// summing is safe and matches how `Intelligent Item ~ Base`'s own
+/// literal 10-point baseline composes with a selected Ability Score
+/// modifier's delta. `alignment` takes the last attached modifier that
+/// carries one (a real build attaches at most one, per the same
+/// `REPLACES:` discipline on the alignment family). Returns `None` when no
+/// attached modifier contributes anything at all.
+fn resolve_intelligent_item_contribution(
+    applied_modifiers: &[String],
+    corpus: &SourcePackageContent,
+) -> Option<IntelligentItemContribution> {
+    let mut total = IntelligentItemContribution::default();
+    let mut found = false;
+    for modifier_item_id in applied_modifiers {
+        let Some((record, _table_cell)) = equipment_id_resolve(modifier_item_id, RuleSetId::Crb, corpus) else {
+            continue;
+        };
+        if let Some(contribution) = intelligent_item::compute_intelligent_item_effect(record) {
+            found = true;
+            total.intelligence_bonus += contribution.intelligence_bonus;
+            total.wisdom_bonus += contribution.wisdom_bonus;
+            total.charisma_bonus += contribution.charisma_bonus;
+            total.ego_bonus += contribution.ego_bonus;
+            if contribution.alignment.is_some() {
+                total.alignment = contribution.alignment;
+            }
+        }
+    }
+    found.then_some(total)
+}
+
+/// Whether `record` carries PF1's natural-attack `TYPE:` marker -- an
+/// exact `Natural` dot-segment (e.g. CRB's `Unarmed Strike`/`Flurry of
+/// Blows`, `TYPE:...Weapon Group Natural.Natural.Light` --
+/// `core_rulebook/cr_equip_arms_armor.lst` lines 292/296 -- confirmed the
+/// `Weapon Group Natural` segment is a DIFFERENT, non-exact-matching
+/// string, so this reads the real `Natural` segment specifically, not a
+/// substring match that would also fire on `Weapon Group Natural`).
+///
+/// **`SD31-W17-INTEGRATE-001` fix (OPEN-ISSUES row 309):** this is the
+/// scope-aware signal `resolve_weapon_enhancement_modifier`
+/// (`damage_total.rs`) now checks before applying a
+/// `WeaponEnhancementBonus` whose `natural_attack_only` field is `true`
+/// (the Amulet of Mighty Fists family's own `WEAPONPROF=TYPE.Natural`
+/// chain, see `equipmods.rs`) -- without it, wave 17 found an equipped
+/// Amulet of Mighty Fists wrongly bonused every weapon a character
+/// wielded, not just its natural attacks.
+pub fn is_natural_attack_weapon(record: &EquipmentRecord) -> bool {
+    record
+        .tokens
+        .iter()
+        .find(|token| token.key == "TYPE")
+        .is_some_and(|token| token.value.split('.').any(|segment| segment == "Natural"))
 }
 
 /// Whether `record` is an actively-wielded weapon for the single-weapon
@@ -660,5 +792,305 @@ Keen (ARG)\tKEY:Special Ability ~ Keen ~ Weapon (ARG)\tTYPE:Weapon\tCOST:0\tBONU
 
         assert_eq!(effects.attack_bonus_delta, Some(1), "a non-CRB weapon modifier must still apply");
         assert_eq!(effects.per_item[0].to_hit_bonus, Some(1));
+    }
+}
+
+/// SD-31 intelligent-item resolver (operator ruling 2026-08-19) end-to-end
+/// aggregation tests, and the `SD31-W17-INTEGRATE-001` (OPEN-ISSUES row
+/// 309) natural-attack-scope fix.
+#[cfg(test)]
+mod intelligent_item_and_natural_attack_scope_tests {
+    use super::*;
+    use crate::pcgen_import::ir_converter::convert_equipment_record;
+    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::character_input::ActiveState;
+    use crate::rules_core::equipment_effects::intelligent_item::ItemAlignment;
+    use crate::rules_core::source_content::SourceRef;
+
+    // Real verbatim tokens: the Base record (line 354) + a real Ability
+    // Score record (line 377, Wisdom 15) + a real Alignment record
+    // (`ma_equipmods.lst` line 96, Chaotic Good) attached to a Longsword,
+    // exactly the way a real character build attaches applied modifiers.
+    const INTELLIGENT_ITEM_FIXTURE_TEXT: &str = "\
+Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8
+Intelligent Magic Item Base\tKEY:Intelligent Item ~ Base\tTYPE:Weapon.Armor.Goods\tCOST:500\tBONUS:VAR|IntItemStatINT|10\tBONUS:VAR|IntItemStatWIS|10\tBONUS:VAR|IntItemStatCHA|10\n\
+Int Item / Stat Wisdom 15\tKEY:Intelligent Item ~ Ability Score / Wisdom 15\tTYPE:Weapon.Armor.Goods\tCOST:1400\tBONUS:VAR|IntelligentItemEgo|2\tBONUS:VAR|IntItemStatWIS|5\n\
+Legendary Intelligent Item / Align (CG)\tKEY:Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Good\tTYPE:Mythic.Intelligent.Alignment\tCOST:0\tBONUS:VAR|IntItemAlignment|20\n\
+Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.Monk.Bludgeoning.Finesseable.Close.Weapon Group Close.Weapon Group Monk.Weapon Group Natural.Natural.Light\tCOST:0\tWT:0\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d3\tWIELD:Light\n\
++1 to Hit and Damage\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\tTYPE:Amulet of Mighty Fists\tPLUS:1\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\n\
++1 (Enhancement to Weapon)\tKEY:Special Ability ~ +1 ~ Weapon\tTYPE:Weapon\tPLUS:1\tCOST:0\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\n";
+
+    fn corpus_with_fixture() -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries("cr_equipmods.lst", INTELLIGENT_ITEM_FIXTURE_TEXT);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: "cr_equipmods.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    fn equipped_with_modifiers(item_id: &str, applied_modifiers: &[&str]) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item_id.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: applied_modifiers.iter().map(|id| id.to_string()).collect(),
+        }
+    }
+
+    #[test]
+    fn an_intelligent_longsword_yields_its_real_summed_stat_block() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![equipped_with_modifiers(
+            "Longsword (Base)",
+            &[
+                "Intelligent Item ~ Base",
+                "Intelligent Item ~ Ability Score / Wisdom 15",
+                "Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Good",
+            ],
+        )];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let item = effects
+            .per_item
+            .iter()
+            .find(|item| item.item_id == "Longsword (Base)")
+            .expect("Longsword must resolve");
+        let intelligent_item = item
+            .intelligent_item
+            .as_ref()
+            .expect("an intelligent longsword must yield a contribution");
+
+        assert_eq!(intelligent_item.intelligence_bonus, 10, "10 (Base) + 0 (no INT modifier attached)");
+        assert_eq!(intelligent_item.wisdom_bonus, 15, "10 (Base) + 5 (Wisdom 15's own delta) == 15");
+        assert_eq!(intelligent_item.charisma_bonus, 10, "10 (Base) + 0");
+        assert_eq!(intelligent_item.ego_bonus, 2, "Wisdom 15's own literal Ego contribution");
+        assert_eq!(intelligent_item.alignment, Some(ItemAlignment::ChaoticGood));
+    }
+
+    #[test]
+    fn an_ordinary_longsword_with_no_intelligent_item_modifiers_has_none() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![equipped_with_modifiers("Longsword (Base)", &["Special Ability ~ +1 ~ Weapon"])];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let item = &effects.per_item[0];
+
+        assert_eq!(item.intelligent_item, None, "a plain +1 weapon carries no intelligent-item token at all");
+    }
+
+    /// Regression guard: an intelligent item's stat block is scoped to the
+    /// SPECIFIC selection it's attached to (`applied_modifiers`), not
+    /// summed across the whole loadout the way `weapon_enhancement_bonus`
+    /// bounded model does -- a second, ordinary weapon equipped alongside
+    /// the intelligent longsword must not pick up its stat block.
+    #[test]
+    fn a_second_unattached_weapon_does_not_inherit_the_first_items_intelligence() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![
+            equipped_with_modifiers(
+                "Longsword (Base)",
+                &["Intelligent Item ~ Base", "Intelligent Item ~ Ability Score / Wisdom 15"],
+            ),
+            equipped_with_modifiers("Unarmed Strike", &[]),
+        ];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let unarmed = effects
+            .per_item
+            .iter()
+            .find(|item| item.item_id == "Unarmed Strike")
+            .expect("Unarmed Strike must resolve");
+
+        assert_eq!(
+            unarmed.intelligent_item, None,
+            "the Longsword's own intelligent-item stat block must not leak onto an unattached weapon"
+        );
+    }
+
+    #[test]
+    fn unarmed_strike_is_a_real_natural_attack() {
+        let corpus = corpus_with_fixture();
+        let (record, _) = equipment_id_resolve("Unarmed Strike", RuleSetId::Crb, &corpus)
+            .expect("Unarmed Strike must resolve");
+        assert!(is_natural_attack_weapon(record));
+    }
+
+    #[test]
+    fn a_longsword_is_not_a_natural_attack() {
+        let corpus = corpus_with_fixture();
+        let (record, _) = equipment_id_resolve("Longsword (Base)", RuleSetId::Crb, &corpus)
+            .expect("Longsword must resolve");
+        assert!(!is_natural_attack_weapon(record));
+    }
+
+    /// `SD31-W17-INTEGRATE-001` (OPEN-ISSUES row 309): the Amulet of
+    /// Mighty Fists family's `WEAPONPROF=TYPE.Natural` chain is now
+    /// recognized (`equipmods.rs`) and tagged `natural_attack_only: true`
+    /// -- proves the tag survives resolution through
+    /// `compute_equipment_effects`, ready for `damage_total.rs`'s
+    /// consumer to honour.
+    #[test]
+    fn an_amulet_of_mighty_fists_modifier_is_tagged_natural_attack_only() {
+        let corpus = corpus_with_fixture();
+        // Equipped as its own top-level selection, matching how
+        // `equipmods.rs`'s own weapon-enhancement fixtures equip
+        // "Special Ability ~ +1 ~ Weapon" directly -- `weapon_enhancement_bonus`
+        // reads the SELECTION's own record, unlike `to_hit_bonus`/
+        // `intelligent_item`, which read `applied_modifiers`.
+        let equipped_items = vec![equipped_with_modifiers("Special Ability ~ +1 ~ Amulet of Mighty Fists", &[])];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let amulet = &effects.per_item[0];
+        let bonus = amulet
+            .weapon_enhancement_bonus
+            .as_ref()
+            .expect("the Amulet of Mighty Fists chain must now resolve to a real bonus");
+        assert!(bonus.natural_attack_only, "the Amulet of Mighty Fists family scopes to natural attacks only");
+        assert_eq!(bonus.bonus, 1);
+    }
+
+    /// `SD31-W18-INTEGRATE-001` (adversarial review, `OPEN-ISSUES.md` row
+    /// 309 re-opened): `damage_total::resolve_weapon_enhancement_modifier`
+    /// was scope-guarded in wave 18, but `resolve_weapon_to_hit_bonus` --
+    /// the function `compute_equipment_effects` actually calls for
+    /// `to_hit_bonus`/`attack_bonus_delta` via `selection.applied_modifiers`,
+    /// the SAME attachment shape the shipped desktop app's
+    /// `attach_equipment_modifier_at_root` uses -- was not. Confirmed live
+    /// before this fix: an Amulet of Mighty Fists +1 attached to an
+    /// ordinary Longsword yielded `to_hit_bonus = Some(1)` /
+    /// `attack_bonus_delta = Some(1)`, leaking the natural-attack-only
+    /// bonus onto a non-natural weapon. Mutation-provable: removing the
+    /// `bonus.natural_attack_only && !weapon_is_natural_attack` skip in
+    /// `resolve_weapon_to_hit_bonus` reproduces `Some(1)` here.
+    #[test]
+    fn amulet_of_mighty_fists_attached_as_a_modifier_does_not_leak_onto_an_ordinary_longsword() {
+        let corpus = corpus_with_fixture();
+        let equipped_items =
+            vec![equipped_with_modifiers("Longsword (Base)", &["Special Ability ~ +1 ~ Amulet of Mighty Fists"])];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let longsword = &effects.per_item[0];
+
+        assert_eq!(
+            longsword.to_hit_bonus,
+            Some(0),
+            "a natural-attack-only bonus attached to a non-natural weapon must not apply"
+        );
+        assert_eq!(
+            effects.attack_bonus_delta,
+            Some(0),
+            "the single-weapon attack_bonus_delta scalar must reflect the same scope guard"
+        );
+    }
+
+    /// Positive control for the same guard: a REAL natural attack
+    /// (Unarmed Strike) with the Amulet attached as a modifier DOES
+    /// receive the bonus -- proves the fix scopes the bonus, it does not
+    /// simply zero it out everywhere.
+    #[test]
+    fn amulet_of_mighty_fists_attached_as_a_modifier_applies_to_a_real_natural_attack() {
+        let corpus = corpus_with_fixture();
+        let equipped_items =
+            vec![equipped_with_modifiers("Unarmed Strike", &["Special Ability ~ +1 ~ Amulet of Mighty Fists"])];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let unarmed = &effects.per_item[0];
+
+        assert_eq!(unarmed.to_hit_bonus, Some(1), "a natural-attack-only bonus must apply to a real natural attack");
+        assert_eq!(effects.attack_bonus_delta, Some(1));
+    }
+}
+
+/// `SD31-W21-EQUIPMOD-001`: the armor-slot "Spell Resistance" special
+/// ability family (`equipmods::resolve_spell_resistance_bonus`) end to
+/// end through `compute_equipment_effects` -- the same `equipment_key_is_
+/// wired` shape `v06_work_inventory.rs` probes to ground an
+/// `equipment_modifier` unit.
+#[cfg(test)]
+mod spell_resistance_tests {
+    use super::*;
+    use crate::pcgen_import::ir_converter::convert_equipment_record;
+    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::character_input::ActiveState;
+    use crate::rules_core::source_content::SourceRef;
+
+    // Real verbatim tokens copied from `core_rulebook/cr_equipmods.lst`
+    // lines 343 (`/ 13 ~ Armor`) and 346 (`/ 19 ~ Armor`), plus a plain
+    // Longsword with no SR-shaped token anywhere, for the negative
+    // control.
+    const FIXTURE_TEXT: &str = "\
+Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8
+Spell Resistance 13\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 13 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:2\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:13\tSPROP:grants spell resistance 13
+Spell Resistance 19\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 19 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:8\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:19\tSPROP:grants spell resistance 19
+";
+
+    fn corpus_with_fixture() -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries("cr_equipmods.lst", FIXTURE_TEXT);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: "cr_equipmods.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    fn equipped(item_id: &str) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item_id.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn spell_resistance_13_armor_yields_a_real_per_item_and_aggregate_bonus() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![equipped("Special Ability ~ Spell Resistance / 13 ~ Armor")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item[0].spell_resistance_bonus, Some(13));
+        assert_eq!(effects.spell_resistance_total, Some(13));
+    }
+
+    /// PF1's real rule: "If a creature has multiple sources of spell
+    /// resistance, only the highest value applies" -- unlike
+    /// `armor_class_delta` (armor and shield AC bonuses genuinely stack),
+    /// two simultaneous SR sources must yield the HIGHEST single value,
+    /// never their sum. Equipping both the 13 and 19 tiers together must
+    /// read `Some(19)`, not `Some(32)`.
+    #[test]
+    fn two_spell_resistance_sources_yield_the_highest_not_the_sum() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![
+            equipped("Special Ability ~ Spell Resistance / 13 ~ Armor"),
+            equipped("Special Ability ~ Spell Resistance / 19 ~ Armor"),
+        ];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(
+            effects.spell_resistance_total,
+            Some(19),
+            "PF1: multiple SR sources take the highest value, they do not stack"
+        );
+    }
+
+    #[test]
+    fn an_ordinary_weapon_has_no_spell_resistance_bonus() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![equipped("Longsword (Base)")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item[0].spell_resistance_bonus, None);
+        assert_eq!(effects.spell_resistance_total, None);
     }
 }

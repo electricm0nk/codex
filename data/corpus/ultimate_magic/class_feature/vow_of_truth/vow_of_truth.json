@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vow of Truth",
+    "name": "Vow of Truth",
+    "class": null,
+    "description": "You are not allowed to deliberately speak any lies, including bluffing, stating half-truths with the intent to deceive, exaggerating, telling white lies, and so on. This applies to all forms of communication. If presented with circumstances where telling the truth would bring harm to another, you remain silent. Many monks of this vow also take a vow of silence to show their commitment.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.MonkVow"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "DESC",
+        "value": "You are not allowed to deliberately speak any lies, including bluffing, stating half-truths with the intent to deceive, exaggerating, telling white lies, and so on. This applies to all forms of communication. If presented with circumstances where telling the truth would bring harm to another, you remain silent. Many monks of this vow also take a vow of silence to show their commitment."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|max(1,floor(classlevel(\"Monk\")/5))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 436,
+    "record_key": "Vow of Truth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

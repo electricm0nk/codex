@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Guide ~ Teamwork Feat",
+    "name": "Teamwork Feat",
+    "class": "Paladin",
+    "description": "A holy guide gains a teamwork feat as a bonus feat. He must meet the prerequisites for this feat. As a standard action, He can expend one use of smite evil to grant this feat to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. Evil creatures do not gain the benefit of this teamwork feat, even if the paladin considers them allies.|3+floor(PaladinLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Guide ~ Teamwork Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Holy Guide Class Feature.Paladin Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A holy guide gains a teamwork feat as a bonus feat. He must meet the prerequisites for this feat. As a standard action, He can expend one use of smite evil to grant this feat to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. Evil creatures do not gain the benefit of this teamwork feat, even if the paladin considers them allies.|3+floor(PaladinLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Teamwork Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3519,
+    "record_key": "Holy Guide ~ Teamwork Feat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

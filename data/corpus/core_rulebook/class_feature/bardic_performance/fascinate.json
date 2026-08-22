@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Fascinate",
+    "name": "Fascinate",
+    "class": "Bardic Performance",
+    "description": "You can use your performance to cause up to %1 creatures to become fascinated with you. Each creature to be fascinated must be within 90 feet, able to see and hear you, and capable of paying attention to you. You must also be able to see the creatures affected. The distraction of a nearby combat or other dangers prevents this ability from working. Each creature within range receives a Will save (DC %2) to negate the effect. If a creature's saving throw succeeds, you cannot attempt to fascinate that creature again for 24 hours. If its saving throw fails, the creature sits quietly and observes your performance for as long as you continue to maintain it. While fascinated, a target takes a -4 penalty on all skill checks made as reactions, such as Perception checks. Any potential threat to the target allows the target to make a new saving throw against the effect. Any obvious threat, such as someone drawing a weapon, casting a spell, or aiming a weapon at the target, automatically breaks the effect. Fascinate is an enchantment (compulsion), mind-affecting ability. Fascinate relies on audible and visual components in order to function.|FascinateCreatures|FascinateDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Fascinate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FascinateCreatures|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FascinateDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to cause up to %1 creatures to become fascinated with you. Each creature to be fascinated must be within 90 feet, able to see and hear you, and capable of paying attention to you. You must also be able to see the creatures affected. The distraction of a nearby combat or other dangers prevents this ability from working. Each creature within range receives a Will save (DC %2) to negate the effect. If a creature's saving throw succeeds, you cannot attempt to fascinate that creature again for 24 hours. If its saving throw fails, the creature sits quietly and observes your performance for as long as you continue to maintain it. While fascinated, a target takes a -4 penalty on all skill checks made as reactions, such as Perception checks. Any potential threat to the target allows the target to make a new saving throw against the effect. Any obvious threat, such as someone drawing a weapon, casting a spell, or aiming a weapon at the target, automatically breaks the effect. Fascinate is an enchantment (compulsion), mind-affecting ability. Fascinate relies on audible and visual components in order to function.|FascinateCreatures|FascinateDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FascinateCreatures|(BardicPerformanceLVL+2)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FascinateDC|10+(BardicPerformanceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 523,
+    "record_key": "Bardic Performance ~ Fascinate"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

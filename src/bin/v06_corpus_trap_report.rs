@@ -89,6 +89,7 @@ const REPORT_ORDER: &[Trap] = &[
     Trap::NamespacedKey,
     Trap::TokenDenseRecord,
     Trap::GoverningTokenHiddenByFilter,
+    Trap::MultiCostRow,
     Trap::UnresolvableCitation,
 ];
 
@@ -541,6 +542,7 @@ mod tests {
             Trap::TokenDenseRecord,
             Trap::GoverningTokenHiddenByFilter,
             Trap::CopyRecord,
+            Trap::MultiCostRow,
             Trap::UnresolvableCitation,
         ];
         for trap in all {

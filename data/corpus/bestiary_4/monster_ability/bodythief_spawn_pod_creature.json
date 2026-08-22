@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Bodythief ~ Spawn Pod Creature",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:bodythief"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once a bodythief has absorbed the life essence of a Large or smaller creature, it can begin growing a duplicate of that creature as a free action. Growing a Tiny or smaller duplicate takes 1 round, a Small duplicate 3 rounds, a Medium duplicate 5 rounds, and a Large duplicate 10 rounds. Duplicates are identical to the creature whose life essence has been devoured, but they gain the pod creature template. They closely resemble the original creature and retain all its memories. The newly created spawn has none of the original creature's equipment, though the bodythief can vomit forth any surviving swallowed gear as a move action. As the duplicate hatches, the bodythief makes a Disguise check to determine the resemblance to the original. The duplicate must be grown within 24 hours of the original's digestion, or its essence and memories dissipate. Only a single duplicate can made of any given creature."
+      },
+      {
+        "key": "KEY",
+        "value": "Bodythief ~ Spawn Pod Creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 318,
-    "record_key": "Bodythief ~ Spawn Pod Creature"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 318,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Bodythief ~ Spawn Pod Creature",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

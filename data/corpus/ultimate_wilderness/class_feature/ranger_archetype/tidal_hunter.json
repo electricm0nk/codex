@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Tidal Hunter",
+    "name": "Tidal Hunter",
+    "class": "Ranger Archetype",
+    "description": "The tidal hunter draws strength from the fish and other wildlife of the deep.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Tidal Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Tidal Hunter],[!PREFACT:1,ABILITIES,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_CombatStyleFeat6=True,Ranger_Archetype_Track=True,Ranger_Archetype_Camouflage=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_WoodlandStride=True,Ranger_Archetype_ImprovedEvasion=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The tidal hunter draws strength from the fish and other wildlife of the deep."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tidal Hunter ~ Waterborn|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tidal Hunter ~ Keen Scent|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tidal Hunter ~ Aquatic Mastery|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tidal Hunter ~ Wave Rush|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Tidal Hunter ~ Tidal Surge|PRECLASS:1,Ranger=16"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ImprovedEvasion|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 901,
+    "record_key": "Ranger Archetype ~ Tidal Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

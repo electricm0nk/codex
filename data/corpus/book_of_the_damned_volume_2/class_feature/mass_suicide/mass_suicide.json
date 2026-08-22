@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mass Suicide ~ Sifkesh",
+    "name": "Mass Suicide",
+    "class": "Mass Suicide",
+    "description": "You can cast weird 1/day as a spell-like ability. Rather than assault the victims with images of fear, this ability assaults the targets with images and sensations of crippling sadness and despair. Those who succumb to the spell and die do so at their own hands. If no method of suicide is available for one who succumbs to this effect, the victim simply dies outright of sadness. This effect is equivalent to a 9th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mass Suicide ~ Sifkesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Weird,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast weird 1/day as a spell-like ability. Rather than assault the victims with images of fear, this ability assaults the targets with images and sensations of crippling sadness and despair. Those who succumb to the spell and die do so at their own hands. If no method of suicide is available for one who succumbs to this effect, the victim simply dies outright of sadness. This effect is equivalent to a 9th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 183,
+    "record_key": "Mass Suicide ~ Sifkesh"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

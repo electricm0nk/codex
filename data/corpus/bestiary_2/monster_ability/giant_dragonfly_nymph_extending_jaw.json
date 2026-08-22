@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Giant Dragonfly Nymph ~ Extending Jaw",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_2:monster:dragonfly_nymph_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|REACH|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant dragonfly nymph can extend its jaws with surprising speed.  Not only does this extend the nymph's reach with its bite attack, but during the surprise round, a nymph gains a +4 bonus on attack rolls with its bite."
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Dragonfly Nymph ~ Extending Jaw"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.105",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 431,
-    "record_key": "Giant Dragonfly Nymph ~ Extending Jaw"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 431,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Giant Dragonfly Nymph ~ Extending Jaw",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

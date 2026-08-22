@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Halcyon Druid ~ Peacekeeper",
+    "name": "Peacekeeper",
+    "class": "Druid",
+    "description": "A halcyon druid adds half her class level (minimum 1) to Diplomacy and Knowledge (local) checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halcyon Druid ~ Peacekeeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.HalcyonDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "DESC",
+        "value": "A halcyon druid adds half her class level (minimum 1) to Diplomacy and Knowledge (local) checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Knowledge (local)|max(1,DruidLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 790,
+    "record_key": "Halcyon Druid ~ Peacekeeper"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

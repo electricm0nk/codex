@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Involutionist",
+    "name": "Involutionist",
+    "class": "Spiritualist Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Involutionist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SpiritualistArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Involutionist],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_Spellcasting=True,Spiritualist_Archetype_Phantom=True,Spiritualist_Archetype_BondedManifestation=True,Spiritualist_Archetype_DetectUndead=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Involutionist ~ Divine Spellcasting|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Involutionist ~ Spirit Phantom|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Involutionist ~ Spirit Manifestation|PRECLASS:1,Spiritualist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Involutionist ~ Spirit Awareness|PRECLASS:1,Spiritualist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Involutionist ~ Involuate|PRECLASS:1,Spiritualist=11"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Phantom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_BondedManifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_DetectUndead|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_Phantom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_DetectUndead|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1052,
+    "record_key": "Spiritualist Archetype ~ Involutionist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

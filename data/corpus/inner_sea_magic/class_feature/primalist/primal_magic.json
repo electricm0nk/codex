@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Primalist ~ Primal Magic",
+    "name": "Primal Magic",
+    "class": "Primalist",
+    "description": "A primalist may attempt to channel primal magic as a swift action to cast a prepared spell without losing that spell from its spell slot. Essentially, a primalist is forcing primal magic into the world and attempting to shape it into a specific spell effect. To use this ability, she casts the spell as she would normally, but as the spell's effects take place, she makes a concentration check (DC 20 + double the spell's level). If she fails this check, she expends the spell normally as if she had cast it, but its actual effects are replaced by a CR %1 primal magic event and she is staggered for 1 round per level of the spell she was attempting to cast. If she makes this check, she casts the spell normally and it is not expended from her prepared spell slot, allowing her to cast that spell again at a later point.&nl; You may use primal magic in this manner %2 per day.|CASTERLEVEL|PrimalMagicTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primalist ~ Primal Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.WizardArcaneBond"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PrimalMagicTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A primalist may attempt to channel primal magic as a swift action to cast a prepared spell without losing that spell from its spell slot. Essentially, a primalist is forcing primal magic into the world and attempting to shape it into a specific spell effect. To use this ability, she casts the spell as she would normally, but as the spell's effects take place, she makes a concentration check (DC 20 + double the spell's level). If she fails this check, she expends the spell normally as if she had cast it, but its actual effects are replaced by a CR %1 primal magic event and she is staggered for 1 round per level of the spell she was attempting to cast. If she makes this check, she casts the spell normally and it is not expended from her prepared spell slot, allowing her to cast that spell again at a later point.&nl; You may use primal magic in this manner %2 per day.|CASTERLEVEL|PrimalMagicTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimalMagicTimes|1+WizardLVL/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Channel primal magic as a swift action (concentration DC 20 + double spell level)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PrimalMagicTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 423,
+    "record_key": "Primalist ~ Primal Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

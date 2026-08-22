@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Infernal Bloodrager Bloodline ~ Bonus Spells",
+    "name": "Infernal Bloodrager Bloodline ~ Bonus Spells",
+    "class": "Infernal Bloodrager Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=1|Protection from Good|PREVAREQ:Bloodrager_CF_BloodlineSpell1,0|PREVARGTEQ:Bloodrager_Infernal_BloodlineSpellLvl1,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=2|Scorching Ray|PREVAREQ:Bloodrager_CF_BloodlineSpell2,0|PREVARGTEQ:Bloodrager_Infernal_BloodlineSpellLvl2,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Suggestion|PREVAREQ:Bloodrager_CF_BloodlineSpell3,0|PREVARGTEQ:Bloodrager_Infernal_BloodlineSpellLvl3,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=4|Fire Shield|PREVAREQ:Bloodrager_CF_BloodlineSpell4,0|PREVARGTEQ:Bloodrager_Infernal_BloodlineSpellLvl4,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 848,
+    "record_key": "Infernal Bloodrager Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

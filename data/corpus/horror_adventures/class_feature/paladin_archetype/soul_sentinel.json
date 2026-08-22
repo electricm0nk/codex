@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Soul Sentinel",
+    "name": "Soul Sentinel",
+    "class": "Paladin Archetype",
+    "description": "In a world of horrors, some holy warriors fight to safeguard the minds and spirits of those exposed to evil. Soul sentinels use the strength of their resolve to stem the tide of corruption and insanity, as they believe that the greatest tragedy is a soul lost to evil when it was within their power to save it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Soul Sentinel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "In a world of horrors, some holy warriors fight to safeguard the minds and spirits of those exposed to evil. Soul sentinels use the strength of their resolve to stem the tide of corruption and insanity, as they believe that the greatest tragedy is a soul lost to evil when it was within their power to save it."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Soul Sentinel],[!PREFACT:1,ABILITIES,Paladin_Archetype_Mercy6=True,Paladin_Archetype_AuraOfJustice=True,Paladin_Archetype_Mercy12=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Soul Sentinel ~ Reprieve|PRECLASS:1,Paladin=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Soul Sentinel ~ Sacred Soul|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Soul Sentinel ~ Greater Reprieve|PRECLASS:1,Paladin=12"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy12|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 178,
+    "record_key": "Paladin Archetype ~ Soul Sentinel"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

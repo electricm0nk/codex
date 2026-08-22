@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deep Walker ~ Rock Hopper",
+    "name": "Rock Hopper",
+    "class": "Ranger",
+    "description": "At 7th level, a deep walker instinctively grasps for the most stable surfaces and holds on tighter while moving over underground rock and stone. The deep walker gains a +5 bonus on all Acrobatics and Climb checks made to traverse underground terrain. Furthermore, the deep walker ignores difficult terrain created by underground terrain and subterranean flora. This ability replaces woodland stride.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Walker ~ Rock Hopper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.RangerWoodlandStride"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a deep walker instinctively grasps for the most stable surfaces and holds on tighter while moving over underground rock and stone. The deep walker gains a +5 bonus on all Acrobatics and Climb checks made to traverse underground terrain. Furthermore, the deep walker ignores difficult terrain created by underground terrain and subterranean flora. This ability replaces woodland stride."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1529,
+    "record_key": "Deep Walker ~ Rock Hopper"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

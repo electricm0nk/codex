@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Faith ~ Divine Energy",
+    "name": "Divine Energy",
+    "class": "Psychic",
+    "description": "You can channel spell energy into cure or inf lict spells. This ability functions similarly to the cleric's ability to spontaneously cast cure or inf lict spells, and the type of spells you can convert depends on your alignment in the same way. The cure or inf lict spells don't count as being on your psychic spell list for the purposes of any other effects. Each day, you can convert up to one spell from each spell level you can cast. Each time you use this ability to convert a spell, you regain 1 point in your phrenic pool. The maximum number of points you can regain in this way per day is equal to your Wisdom modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Faith ~ Divine Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel spell energy into cure or inf lict spells. This ability functions similarly to the cleric's ability to spontaneously cast cure or inf lict spells, and the type of spells you can convert depends on your alignment in the same way. The cure or inf lict spells don't count as being on your psychic spell list for the purposes of any other effects. Each day, you can convert up to one spell from each spell level you can cast. Each time you use this ability to convert a spell, you regain 1 point in your phrenic pool. The maximum number of points you can regain in this way per day is equal to your Wisdom modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1215,
+    "record_key": "Psychic Discipline Faith ~ Divine Energy"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

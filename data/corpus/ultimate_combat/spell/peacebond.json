@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You lock a weapon in place on its owner's body, or within the weapon's sheath or holster. Anyone who then tries to draw the weapon must spend a standard action and succeed at a Strength check (DC equal to the saving throw DC) to do so, provoking attacks of opportunity whether the attempt succeeds or fails.",
+    "key": "Peacebond",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor,Sorcerer,Witch,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "Locks a weapon in place on the target's body.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You lock a weapon in place on its owner's body, or within the weapon's sheath or holster. Anyone who then tries to draw the weapon must spend a standard action and succeed at a Strength check (DC equal to the saving throw DC) to do so, provoking attacks of opportunity whether the attempt succeeds or fails.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/peacebond.html#_peacebond"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one sheathed or slung weapon"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 96,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Peacebond",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

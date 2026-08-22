@@ -1,0 +1,140 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Hair",
+    "name": "Hair",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Hair",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Hair"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Natural Attack"
+      },
+      {
+        "key": "TYPE",
+        "value": "NaturalAttack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Hair|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalHairReach|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairThreatRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HairAttackMult|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Hair"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Hair"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Hair"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Hair|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Hair|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Hair)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalHairReach|WitchWhiteHairedHairRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairAttackBonus|BAB+WitchHexStat-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Hair)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairAttackBonus|DEX-WitchHexStat|PREABILITY:1,CATEGORY=FEAT,Weapon Finesse"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairThreatRange|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairThreatRange|-1|PREABILITY:1,CATEGORY=FEAT,Improved Critical (Hair)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HairAttackMult|2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackName|Hair"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackToHit|%1|HairAttackBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackDamage|%1d%2+%3|HairDamageDice|HairDamageSize|HairDamageBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackReach|%1 ft.|NaturalHairReach"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackType|Lethal"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackThreatRange|%1|HairThreatRange"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackCritMult|x%1|HairAttackMult"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 717,
+    "record_key": "Witch Hex ~ Hair"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

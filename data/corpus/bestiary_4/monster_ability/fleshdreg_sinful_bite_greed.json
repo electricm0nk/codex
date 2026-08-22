@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Fleshdreg ~ Sinful Bite (Greed)",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:fleshdreg"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A greed fleshdreg's bite can twist and warp the body of a creature it attacks. Any creature that takes damage from a greed fleshdreg's bite attack must succeed at a DC %1 Fortitude save or have its speed reduced by half and take a -2 penalty to Strength and Dexterity for 1d6 rounds.|10+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Fleshdreg ~ Sinful Bite (Greed)"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 656,
-    "record_key": "Fleshdreg ~ Sinful Bite (Greed)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 656,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fleshdreg ~ Sinful Bite (Greed)",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

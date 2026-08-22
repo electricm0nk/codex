@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Treesinger ~ Plant Companion",
+    "name": "Plant Companion",
+    "class": "Treesinger",
+    "description": "The treesinger forms a close bond with a plant companion.  This plant is a loyal companion that accompanies the treesinger on her adventures. Except for the companion being a creature of the plant type, drawn from the list of plant companions, this ability otherwise works like the standard druid's animal companion ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treesinger ~ Plant Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.PlantBondOption.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantCompanionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The treesinger forms a close bond with a plant companion.  This plant is a loyal companion that accompanies the treesinger on her adventures. Except for the companion being a creature of the plant type, drawn from the list of plant companions, this ability otherwise works like the standard druid's animal companion ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantCompanionLVL|DruidLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Plant Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Plant Companion|Companion (Carnivorous Flower),Companion (Crawling Vine),Companion (Puffball),Companion (Sapling Treant)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 145,
+    "record_key": "Treesinger ~ Plant Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

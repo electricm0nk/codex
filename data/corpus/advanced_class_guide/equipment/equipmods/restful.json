@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 4500.0,
+    "description": "Only need 2 hours of uninterrupted sleep, and heals as in comfortable bed; not fatigued by sleeping in this armor",
+    "key": "Restful",
+    "name": "Restful",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Restful ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "Only need 2 hours of uninterrupted sleep, and heals as in comfortable bed; not fatigued by sleeping in this armor"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Restful",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

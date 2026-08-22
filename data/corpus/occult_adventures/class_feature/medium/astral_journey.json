@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Astral Journey",
+    "name": "Astral Journey",
+    "class": "Medium",
+    "description": "A medium can enter a deep coma in order to project himself onto the Astral Plane as astral projection, except he can project only himself, he can't enter other planes, and his projected gear has no magical properties.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Astral Journey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Medium|TIMES=ATWILL|CASTERLEVEL=MediumLVL|Astral Projection,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium can enter a deep coma in order to project himself onto the Astral Plane as astral projection, except he can project only himself, he can't enter other planes, and his projected gear has no magical properties."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 822,
+    "record_key": "Medium ~ Astral Journey"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

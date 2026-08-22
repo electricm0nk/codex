@@ -1,23 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "A swirling ball of wind rolls in whichever direction you point, hurling those it strikes with great force. The sphere is treated in all ways as an area of severe wind, applying a -4 penalty on ranged weapon attacks that pass through it. The sphere moves 30 feet per round. As part of this movement, it can ascend or jump up to 30 feet to strike a target. If it enters a space containing a Medium or smaller creature, it stops moving for that round and generates a sharp thrust of wind to bull rush the creature. The sphere's CMB for bull rush combat maneuvers uses your caster level in place of its base attack bonus, with a +2 bonus for its Strength score (14). Whether or not the bull rush is successful, the creature takes 1d6 points of nonlethal bludgeoning damage from the attack. If the bull rush fails, the creature is still subject to the severe winds from the sphere as long as they remain in the same square as it. A gusting sphere rolls over objects or barriers that are less than 4 feet tall. The sphere moves as long as you actively direct it (a move action for you); otherwise, it merely stays at rest. A gusting sphere immediately dissipates if it exceeds the spell's range.",
     "key": "Gusting Sphere",
-    "school": "Evocation",
     "level": 2,
-    "description": "A swirling ball of wind rolls in whichever direction you point, hurling those it strikes with great force. The sphere is treated in all ways as an area of severe wind, applying a -4 penalty on ranged weapon attacks that pass through it. The sphere moves 30 feet per round. As part of this movement, it can ascend or jump up to 30 feet to strike a target. If it enters a space containing a Medium or smaller creature, it stops moving for that round and generates a sharp thrust of wind to bull rush the creature. The sphere's CMB for bull rush combat maneuvers uses your caster level in place of its base attack bonus, with a +2 bonus for its Strength score (14). Whether or not the bull rush is successful, the creature takes 1d6 points of nonlethal bludgeoning damage from the attack. If the bull rush fails, the creature is still subject to the severe winds from the sphere as long as they remain in the same square as it. A gusting sphere rolls over objects or barriers that are less than 4 feet tall. The sphere moves as long as you actively direct it (a move action for you); otherwise, it merely stays at rest. A gusting sphere immediately dissipates if it exceeds the spell's range."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Magus,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "A swirling ball of wind rolls in whichever direction you point, hurling those it strikes with great force. The sphere is treated in all ways as an area of severe wind, applying a -4 penalty on ranged weapon attacks that pass through it. The sphere moves 30 feet per round. As part of this movement, it can ascend or jump up to 30 feet to strike a target. If it enters a space containing a Medium or smaller creature, it stops moving for that round and generates a sharp thrust of wind to bull rush the creature. The sphere's CMB for bull rush combat maneuvers uses your caster level in place of its base attack bonus, with a +2 bonus for its Strength score (14). Whether or not the bull rush is successful, the creature takes 1d6 points of nonlethal bludgeoning damage from the attack. If the bull rush fails, the creature is still subject to the severe winds from the sphere as long as they remain in the same square as it. A gusting sphere rolls over objects or barriers that are less than 4 feet tall. The sphere moves as long as you actively direct it (a move action for you); otherwise, it merely stays at rest. A gusting sphere immediately dissipates if it exceeds the spell's range."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Air"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsSylph=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude Negates (object) or Reflex Negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/sylphs.html#_gusting-sphere"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "5-ft diameter sphere"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Evocation"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 146,
-    "record_key": "Gusting Sphere"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 146,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Gusting Sphere",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Ghaele ~ Light Ray",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "beastiary:monster:azata_ghaele"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A ghaele's light rays have a range of 300 feet. This attack bypasses all damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Ghaele ~ Light Ray"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Light Ray,Weapon.Natural.Weapon Group Natural.Ranged.Finesseable,*2,2d12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.25",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 136,
-    "record_key": "Ghaele ~ Light Ray"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 136,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ghaele ~ Light Ray",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

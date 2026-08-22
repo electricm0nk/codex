@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Sea Witch",
+    "name": "Sea Witch",
+    "class": "Witch Archetype",
+    "description": "A sea witch's affinities are tied to the vast oceans and the rolling waves. Her magic concerns the moon, tides, water, and winds, and she is most at peace when she is upon or near the sea.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Sea Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchPatronSpell2.WitchPatronSpell4.WitchPatronSpell6.WitchPatronSpell8.WitchPatronSpell10.WitchPatronSpell12.WitchPatronSpell14.WitchPatronSpell16.WitchPatronSpell18.WitchHex1"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Sea Witch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatron,TYPE.WitchPatronSpell2,TYPE.WitchPatronSpell4,TYPE.WitchPatronSpell6,TYPE.WitchPatronSpell8,TYPE.WitchPatronSpell10,TYPE.WitchPatronSpell12,TYPE.WitchPatronSpell14,TYPE.WitchPatronSpell16,TYPE.WitchPatronSpell18,TYPE.WitchHexes,TYPE.WitchHex1]"
+      },
+      {
+        "key": "DESC",
+        "value": "A sea witch's affinities are tied to the vast oceans and the rolling waves. Her magic concerns the moon, tides, water, and winds, and she is most at peace when she is upon or near the sea."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sea Witch ~ Know Direction|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sea Witch ~ Sea Creature Empathy|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sea Witch Bonus Spells|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1989,
+    "record_key": "Witch Archetype ~ Sea Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

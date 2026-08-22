@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mammoth Rider ~ Rugged Steed",
+    "name": "Rugged Steed",
+    "class": "Mammoth Rider",
+    "description": "At 3rd level and every 2 levels thereafter, the natural armor bonus of a mammoth riderӳ steed increases by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Rugged Steed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RuggedSteedACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrantRuggedSteed|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level and every 2 levels thereafter, the natural armor bonus of a mammoth riderӳ steed increases by 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GrantRuggedSteed|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 360,
+    "record_key": "Mammoth Rider ~ Rugged Steed"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

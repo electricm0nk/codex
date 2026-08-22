@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forester ~ Improved Evasion",
+    "name": "Improved Evasion",
+    "class": "Hunter",
+    "description": "A forester's evasion improves. Improved evasion works like evasion, except while the forester still takes no damage on a successful Reflex saving throw against attacks, she takes only half damage on a failed save. A helpless forester does not gain the benefit of improved evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forester ~ Improved Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ForesterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A forester's evasion improves. Improved evasion works like evasion, except while the forester still takes no damage on a successful Reflex saving throw against attacks, she takes only half damage on a failed save. A helpless forester does not gain the benefit of improved evasion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 665,
+    "record_key": "Forester ~ Improved Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

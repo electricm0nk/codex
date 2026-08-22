@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "15",
@@ -13,6 +11,116 @@
     "natural_attacks": [],
     "race_subtype": "Extraplanar|Good|Herald|Shapechanger",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ The Spirit of Adoration"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,WIS,CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Diplomacy|Intimidate"
+      },
+      {
+        "key": "DR",
+        "value": "10/Evil"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NG"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):16"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar|Good|Herald|Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "SR",
+        "value": "26"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.308",
     "speeds": [
@@ -26,16 +134,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
-    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
-    "line": 72,
-    "record_key": "The Spirit of Adoration"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "record_key": "The Spirit of Adoration",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

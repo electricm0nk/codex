@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Faith ~ Prayer Aura",
+    "name": "Prayer Aura",
+    "class": "Psychic",
+    "description": "At 13th level, as a free action, you can extend an aura around you to bolster your allies and make your enemies less effective. You can use this aura for a number of rounds per day equal to your psychic level. These rounds don't need to be consecutive. This functions as the prayer spell, granting your allies a +1 luck bonus on attack rolls, weapon damage rolls, saves, and skill checks and imposing a 1 penalty on your enemies' rolls of those types. If you are chaotic, lawful, good, or evil, the penalty from your aura changes to 2 against creatures of an opposing alignment. The penalty doesn't change further for a creature that opposes you on two alignment axes (such as a chaotic evil creature fighting a lawful good psychic).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Faith ~ Prayer Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, as a free action, you can extend an aura around you to bolster your allies and make your enemies less effective. You can use this aura for a number of rounds per day equal to your psychic level. These rounds don't need to be consecutive. This functions as the prayer spell, granting your allies a +1 luck bonus on attack rolls, weapon damage rolls, saves, and skill checks and imposing a 1 penalty on your enemies' rolls of those types. If you are chaotic, lawful, good, or evil, the penalty from your aura changes to 2 against creatures of an opposing alignment. The penalty doesn't change further for a creature that opposes you on two alignment axes (such as a chaotic evil creature fighting a lawful good psychic)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1217,
+    "record_key": "Psychic Discipline Faith ~ Prayer Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

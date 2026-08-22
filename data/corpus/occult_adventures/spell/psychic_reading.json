@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Read surface thoughts to learn information about a subject.",
+    "key": "Psychic Reading",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Mesmerist,Psychic,Spiritualist=1|Bard,Inquisitor,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Read surface thoughts to learn information about a subject."
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Psychic Reading"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One humanoid creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Psychic Reading",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

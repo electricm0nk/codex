@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Firefall",
-    "school": "Transmutation",
-    "level": 4,
     "description": "Firefall causes a fire to erupt into a geyser of dazzlingly bright liquid flame. The spell uses one fire source, which is immediately extinguished. A fire larger than a 20-foot cube is only partly extinguished. Magical fires are not extinguished, but a creature of the fire subtype used as the source takes 1 point of damage per caster level (no saving throw).  The coruscating rain of fire fills a hemispherical burst with a radius of 60 feet. All creatures and objects in the area take 5d6 points of fire damage and catch on fire (Core Rulebook 444).  Creatures who make successful Reflex saves take half damage and don't catch on fire. Creatures within 120 feet of the original fire source are blinded for 1d4+1 rounds (Will negates).",
-    "full_text": true
+    "full_text": true,
+    "key": "Firefall",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Causes fire to burst up, dealing 2d6 fire damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Firefall causes a fire to erupt into a geyser of dazzlingly bright liquid flame. The spell uses one fire source, which is immediately extinguished. A fire larger than a 20-foot cube is only partly extinguished. Magical fires are not extinguished, but a creature of the fire subtype used as the source takes 1 point of damage per caster level (no saving throw).  The coruscating rain of fire fills a hemispherical burst with a radius of 60 feet. All creatures and objects in the area take 5d6 points of fire damage and catch on fire (Core Rulebook 444).  Creatures who make successful Reflex saves take half damage and don't catch on fire. Creatures within 120 feet of the original fire source are blinded for 1d4+1 rounds (Will negates).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(one fire source)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates and Reflex negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/firefall.html#_firefall"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one fire source, up to a 20-foot cube"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 119,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1952,
-    "record_key": "Firefall"
+    "record_key": "Firefall",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

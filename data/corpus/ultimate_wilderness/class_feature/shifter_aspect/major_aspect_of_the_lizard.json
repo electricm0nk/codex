@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Lizard ~ Major",
+    "name": "Major Aspect of the Lizard",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of an agile and brightly colored giant lizard (as per the giant frilled lizard from Bestiary p194, but with the following changes). While in this form, you gain a base speed of %1 feet, low-light vision, scent (30 feet), a primary bite attack (1d8 damage) with the grab ability and a secondary tail attack (1d6 damage) with the trip ability.|LizardAspectBaseSpeed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Lizard ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Lizard_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LizardAspectBaseSpeed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of an agile and brightly colored giant lizard (as per the giant frilled lizard from Bestiary p194, but with the following changes). While in this form, you gain a base speed of %1 feet, low-light vision, scent (30 feet), a primary bite attack (1d8 damage) with the grab ability and a secondary tail attack (1d6 damage) with the trip ability.|LizardAspectBaseSpeed"
+      },
+      {
+        "key": "DESC",
+        "value": "You also gain a climb speed of 30 feet.|PREVARGTEQ:ShifterLizardAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Improved Natural Attack with your bite and your tail attacks, and the reach of your tail attack becomes 10 feet.|PREVARGTEQ:ShifterLizardAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LizardAspectBaseSpeed|40"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LizardAspectBaseSpeed|20|PREVARGTEQ:ShifterLizardAspectLVL,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 71,
+    "record_key": "Shifter Aspect ~ Lizard ~ Major"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

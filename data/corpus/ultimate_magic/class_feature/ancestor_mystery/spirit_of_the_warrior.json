@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Spirit of the Warrior",
+    "name": "Spirit of the Warrior",
+    "class": "Ancestor Mystery",
+    "description": "You can summon the spirit of a great warrior ancestor and allow it to possess you, becoming a mighty warrior yourself. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, and a +4 natural armor bonus to AC. Your base attack bonus while possessed equals your oracle level (which may give you additional attacks), and you gain the Improved Critical feat with a weapon of your choice. You can use this ability for %1 rounds. This duration does not need to be consecutive, but it must be spent in 1-round increments.|SpiritOfTheWarriorDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Spirit of the Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.AncestorRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritOfTheWarriorDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon the spirit of a great warrior ancestor and allow it to possess you, becoming a mighty warrior yourself. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, and a +4 natural armor bonus to AC. Your base attack bonus while possessed equals your oracle level (which may give you additional attacks), and you gain the Improved Critical feat with a weapon of your choice. You can use this ability for %1 rounds. This duration does not need to be consecutive, but it must be spent in 1-round increments.|SpiritOfTheWarriorDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritOfTheWarriorDuration|floor(classlevel(\"Oracle\")/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|4|TYPE=NaturalArmor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|BASEAB|classlevel(\"Oracle\")-(3*classlevel(\"Oracle\")/4)|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,DEX,CON|4|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 457,
+    "record_key": "Ancestor Mystery ~ Spirit of the Warrior"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

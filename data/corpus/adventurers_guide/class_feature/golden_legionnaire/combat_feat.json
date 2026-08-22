@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Golden Legionnaire ~ Combat Feat",
+    "name": "Combat Feat",
+    "class": "Golden Legionnaire",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Golden Legionnaire ~ Combat Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GoldenLegionnaireStandStill.GoldenLegionnaireBodyguard.GoldenLegionnaireInHarmsWay.GoldenLegionnaireSwiftAid"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|1"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 157,
+    "record_key": "Golden Legionnaire ~ Combat Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

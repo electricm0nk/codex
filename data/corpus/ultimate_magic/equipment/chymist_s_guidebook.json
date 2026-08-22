@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2545.0,
+    "description": "Level 15 Alchemist; Protection - Good lock (DC 30).; Formulae -5.delayed consumption, magic jar, spell resistance; 4.detonate, freedom of movement, greater invisibility, restoration, stoneskin; 3.amplify elixir, arcane sight, haste, heroism, protection from energy, thorn body; 2.alter self, bear's endurance, false life, fire breath, see invisibility, transmute potion to poison; 1.ant haul, comprehend languages, cure light wounds, detect secret doors, enlarge person, jump, keen senses, negate aroma, shield, true strike",
+    "key": "Chymist's Guidebook",
+    "name": "Chymist's Guidebook",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "COST",
+        "value": "2545"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 15 Alchemist"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - Good lock (DC 30)."
+      },
+      {
+        "key": "SPROP",
+        "value": "Formulae -5.delayed consumption, magic jar, spell resistance; 4.detonate, freedom of movement, greater invisibility, restoration, stoneskin; 3.amplify elixir, arcane sight, haste, heroism, protection from energy, thorn body; 2.alter self, bear's endurance, false life, fire breath, see invisibility, transmute potion to poison; 1.ant haul, comprehend languages, cure light wounds, detect secret doors, enlarge person, jump, keen senses, negate aroma, shield, true strike"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Chymist's Guidebook",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Host ~ Heroic Splendor",
+    "name": "Heroic Splendor",
+    "class": "Occultist",
+    "description": "[not implemented as a temp bonus]At 6th level, a battle host can draw power from his bonded item to imbue himself with superhuman strength, agility, or resilience. As a swift action, a battle host can grant himself a +4 insight bonus to Strength, Dexterity, or Constitution for 1 minute. The battle host can use this ability once per day at 6th level, plus one additional time per day for every 4 occultist levels he possesses beyond 6th. If he activates heroic splendor again before the duration expires, the new use of heroic splendor replaces the old use. This ability replaces outside contact.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Host ~ Heroic Splendor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Battle Host Class Feature.Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented as a temp bonus]At 6th level, a battle host can draw power from his bonded item to imbue himself with superhuman strength, agility, or resilience. As a swift action, a battle host can grant himself a +4 insight bonus to Strength, Dexterity, or Constitution for 1 minute. The battle host can use this ability once per day at 6th level, plus one additional time per day for every 4 occultist levels he possesses beyond 6th. If he activates heroic splendor again before the duration expires, the new use of heroic splendor replaces the old use. This ability replaces outside contact."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1531,
+    "record_key": "Battle Host ~ Heroic Splendor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

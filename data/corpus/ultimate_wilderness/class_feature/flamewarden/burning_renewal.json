@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flamewarden ~ Burning Renewal",
+    "name": "Burning Renewal",
+    "class": "Ranger",
+    "description": "A flamewarden can use the cleansing power of fire to remove afflictions from his body, mind, and soul. When the flamewarden takes 5 or more points of fire damage, he can remove one of the following conditions: fatigued, shaken, or sickened. Alternatively, he can remove 1 point of ability damage or drain from an ability score of his choice. If the flamewarden takes 10 or more points of fire damage, he can remove one of the following conditions: exhausted, frightened, or nauseated. Alternatively, he can remove 1d6 points of ability damage or drain from an ability score of his choice. The ranger can use this ability only once each time he takes fire damage, regardless of how much damage it deals over the required amount. He can use this ability %1 times per day. If the flamewarden has fire resistance or immunity to fire, fire damage he would have otherwise taken still counts toward activating burning renewal.|3+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flamewarden ~ Burning Renewal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.FlamewardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A flamewarden can use the cleansing power of fire to remove afflictions from his body, mind, and soul. When the flamewarden takes 5 or more points of fire damage, he can remove one of the following conditions: fatigued, shaken, or sickened. Alternatively, he can remove 1 point of ability damage or drain from an ability score of his choice. If the flamewarden takes 10 or more points of fire damage, he can remove one of the following conditions: exhausted, frightened, or nauseated. Alternatively, he can remove 1d6 points of ability damage or drain from an ability score of his choice. The ranger can use this ability only once each time he takes fire damage, regardless of how much damage it deals over the required amount. He can use this ability %1 times per day. If the flamewarden has fire resistance or immunity to fire, fire damage he would have otherwise taken still counts toward activating burning renewal.|3+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 910,
+    "record_key": "Flamewarden ~ Burning Renewal"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

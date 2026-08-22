@@ -1,26 +1,72 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Brilliant Energy ~ Weapon",
     "category": "equipmods",
-    "name": "Brilliant Energy",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "A brilliant energy weapon has its significant portion transformed into light, although this does not modify the item's weight. It always gives off light as a torch (20-foot radius). A brilliant energy weapon ignores nonliving matter. Armor and shield bonuses to AC (including any enhancement bonuses to that armor) do not count against it because the weapon passes through armor (Dexterity, deflection, dodge, natural armor, and other such bonuses still apply). A brilliant energy weapon cannot harm undead, constructs, or objects."
+    "description": "A brilliant energy weapon has its significant portion transformed into light, although this does not modify the item's weight. It always gives off light as a torch (20-foot radius). A brilliant energy weapon ignores nonliving matter. Armor and shield bonuses to AC (including any enhancement bonuses to that armor) do not count against it because the weapon passes through armor (Dexterity, deflection, dodge, natural armor, and other such bonuses still apply). A brilliant energy weapon cannot harm undead, constructs, or objects.",
+    "key": "Special Ability ~ Brilliant Energy ~ Weapon",
+    "name": "Brilliant Energy",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Brilliant Energy ~ Weapon"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon"
+      },
+      {
+        "key": "PLUS",
+        "value": "4"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.470"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,WeaponEnhancement],[PRETYPE:1,Weapon,Ammunition]"
+      },
+      {
+        "key": "SPROP",
+        "value": "ignores armor and shield bonuses including enhancement, cannot harm undead, constructs, and objects"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/brilliant-energy/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/brilliant-energy/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 233,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Brilliant Energy ~ Weapon",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

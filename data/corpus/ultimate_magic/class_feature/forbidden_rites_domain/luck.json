@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Luck Domain",
+    "name": "Luck",
+    "class": "Forbidden Rites Domain",
+    "description": "You are infused with luck, and your mere presence can spread good fortune.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Luck Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.LuckDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are infused with luck, and your mere presence can spread good fortune."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Bit of Luck|PREDOMAIN:1,Luck|PREVARGTEQ:DomainLuckAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Good Fortune|PREDOMAIN:1,Luck|PREVARGTEQ:DomainLuckAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLuckLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLuckDC|10+(DomainLuckLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLuckTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLuckAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|True Strike|Cleric=2|Aid|Cleric=3|Protection from Energy|Cleric=4|Freedom of Movement|Cleric=5|Break Enchantment|Cleric=6|Mislead|Cleric=7|Spell Turning|Cleric=8|Moment of Prescience|Cleric=9|Miracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1045,
+    "record_key": "Forbidden Rites Domain ~ Luck Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

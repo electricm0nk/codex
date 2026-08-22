@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Reincarnated Druid ~ Resist Death's Touch",
+    "name": "Resist Death's Touch",
+    "class": "Druid",
+    "description": "You gain a +4 bonus on saving throws against death effects, energy drain, and necromancy effects, and on stabilization checks when dying.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Druid ~ Resist Death's Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 bonus on saving throws against death effects, energy drain, and necromancy effects, and on stabilization checks when dying."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1179,
+    "record_key": "Reincarnated Druid ~ Resist Death's Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

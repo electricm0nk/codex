@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Exarch ~ Double Jeopardy",
+    "name": "Double Jeopardy",
+    "class": "Inquisitor",
+    "description": "Whenever an exarch uses her fearsome jurist ability, she may choose to affect two weapons, with one gaining the jurist weapon special ability and the other the menacing special ability as above. Both special abilities may be combined in a single weapon, whose critical threat range doubles. This does not stack with keen edge, Improved Critical, or similar effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exarch ~ Double Jeopardy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever an exarch uses her fearsome jurist ability, she may choose to affect two weapons, with one gaining the jurist weapon special ability and the other the menacing special ability as above. Both special abilities may be combined in a single weapon, whose critical threat range doubles. This does not stack with keen edge, Improved Critical, or similar effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 43,
+    "record_key": "Exarch ~ Double Jeopardy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

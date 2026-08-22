@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Unbroken Stride",
+    "name": "Unbroken Stride",
+    "class": "Bard",
+    "description": "An impervious messenger draws upon his bardic abilities to imbue himself with grace and speed. While using this bardic performance, an impervious messenger gains a +%1 insight bonus on all Acrobatics, Climb, Fly, and Ride checks. In addition, while maintaining this performance, he gains the benefits of the ranger's woodland stride ability and a +10-foot enhancement bonus to his base land speed.|BardLVL/2|UnbrokenStrideBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Unbroken Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ImperviousMessengerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnbrokenStrideBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An impervious messenger draws upon his bardic abilities to imbue himself with grace and speed. While using this bardic performance, an impervious messenger gains a +%1 insight bonus on all Acrobatics, Climb, Fly, and Ride checks. In addition, while maintaining this performance, he gains the benefits of the ranger's woodland stride ability and a +10-foot enhancement bonus to his base land speed.|BardLVL/2|UnbrokenStrideBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " An impervious messenger using his unbroken stride bardic performance also acts as if under the effect of freedom of movement.|PRECLASS:1,Bard=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnbrokenStrideBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnbrokenStrideBonus|20|PRECLASS:1,Bard=12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 231,
+    "record_key": "Bardic Performance ~ Unbroken Stride"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

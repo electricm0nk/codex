@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Winding Path Renegade ~ Monk Moves",
+    "name": "Monk Moves",
+    "class": "Brawler",
+    "description": "A winding path renegade can use her martial flexibility ability to gain the benefits of certain monk abilities as well as combat feats. Each ability counts as one combat feat for this purpose, and the winding path renegade is treated as a monk of a level equal to her brawler level for determining the effects of these abilities. The winding path renegade gains access to these abilities at the levels listed. She does not gain a ki pool, and can't use powers that require ki. The winding path renegade must be wearing light or no armor to benefit from this ability. Monk Ability [Level Available]; Evasion [4th]; Fast Movement [4th]; Slow Fall [4th]; High Jump [5th]; Improved Evasion [9th]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winding Path Renegade ~ Monk Moves"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.WindingPathRenegadeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "A winding path renegade can use her martial flexibility ability to gain the benefits of certain monk abilities as well as combat feats. Each ability counts as one combat feat for this purpose, and the winding path renegade is treated as a monk of a level equal to her brawler level for determining the effects of these abilities. The winding path renegade gains access to these abilities at the levels listed. She does not gain a ki pool, and can't use powers that require ki. The winding path renegade must be wearing light or no armor to benefit from this ability. Monk Ability [Level Available]; Evasion [4th]; Fast Movement [4th]; Slow Fall [4th]; High Jump [5th]; Improved Evasion [9th]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 722,
+    "record_key": "Winding Path Renegade ~ Monk Moves"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

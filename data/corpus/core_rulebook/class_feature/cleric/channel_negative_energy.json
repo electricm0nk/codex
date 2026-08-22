@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric ~ Channel Negative Energy",
+    "name": "Channel Negative Energy",
+    "class": "Cleric",
+    "description": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|ClericChannelNegativeEnergyDice|ClericChannelNegativeEnergyDieSize|ClericChannelNegativeEnergyDC|ClericChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric ~ Channel Negative Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Supernatural.SpecialAttack.ChannelEnergySelection.ChannelEnergy.Channel Energy.Channel Energy Negative.Channel Negative Energy"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LN,TN,CN,LE,NE,CE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDEITYALIGN:LN,TN,CN,LE,NE,CE],[PREDEITY:1,None]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelNegativeEnergyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|ClericChannelNegativeEnergyDice|ClericChannelNegativeEnergyDieSize|ClericChannelNegativeEnergyDC|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Negative Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDice|(ClericChannelNegativeEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDC|10+(ClericChannelNegativeEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyLVL|ClericChannelEnergyLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|ClericChannelNegativeEnergyDice|ClericChannelNegativeEnergyDieSize|ClericChannelNegativeEnergyDC|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Channel Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 575,
+    "record_key": "Cleric ~ Channel Negative Energy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

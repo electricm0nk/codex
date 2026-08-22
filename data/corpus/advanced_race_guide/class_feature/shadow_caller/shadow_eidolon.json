@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shadow Caller ~ Shadow Eidolon",
+    "name": "Shadow Eidolon",
+    "class": "Summoner",
+    "description": "A shadow caller's eidolon is at once a thing of shadow called from the deep of the Shadow Plane and his own shadow; the two are inseparable. When his eidolon manifests, his shadow lengthens and finally detaches from him as a creature unto itself. For as long as the shadow caller's eidolon is manifested, he and the eidolon do not have distinct shadows, regardless of the presence or absence of light. This lack of a shadow replaces the magical symbol that identifies the summoner and his eidolon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Shadow Eidolon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Eidolon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonCompanionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shadow caller's eidolon is at once a thing of shadow called from the deep of the Shadow Plane and his own shadow; the two are inseparable. When his eidolon manifests, his shadow lengthens and finally detaches from him as a creature unto itself. For as long as the shadow caller's eidolon is manifested, he and the eidolon do not have distinct shadows, regardless of the presence or absence of light. This lack of a shadow replaces the magical symbol that identifies the summoner and his eidolon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 526,
+    "record_key": "Shadow Caller ~ Shadow Eidolon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

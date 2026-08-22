@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shapeshifter ~ Combat Style Feat",
+    "name": "Combat Style Feat",
+    "class": "Ranger",
+    "description": "At 2nd level, a shapeshifter ranger must choose the natural weapon combat style.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shapeshifter ~ Combat Style Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a shapeshifter ranger must choose the natural weapon combat style."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleArcheryAllowed,RangerCombatStyleTwoWeaponAllowed,RangerCombatStyleCrossbowAllowed,RangerCombatStyleMountedCombatAllowed,RangerCombatStyleTwoHandedWeaponAllowed,RangerCombatStyleWeaponAndShieldAllowed|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2819,
+    "record_key": "Shapeshifter ~ Combat Style Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

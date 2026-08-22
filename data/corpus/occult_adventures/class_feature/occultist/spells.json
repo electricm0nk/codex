@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist ~ Spells",
+    "name": "Spells",
+    "class": "Occultist",
+    "description": "An occultist casts psychic spells drawn from the occultist spell list, limited by the implement groups he knows. He can cast any spell he knows without preparing it ahead of time. Every occultist spell has an implement component (see Implements).|INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An occultist casts psychic spells drawn from the occultist spell list, limited by the implement groups he knows. He can cast any spell he knows without preparing it ahead of time. Every occultist spell has an implement component (see Implements).|INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 980,
+    "record_key": "Occultist ~ Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

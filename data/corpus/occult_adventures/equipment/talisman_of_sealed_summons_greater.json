@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 4500.0,
+    "description": "The first time that the wearer is hit by a natural attack from an evil summoned creature, the wearer is automatically affected by protection from evil.",
+    "key": "Talisman of Sealed Summons (Greater)",
+    "name": "Talisman of Sealed Summons, Greater",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman of Sealed Summons (Greater)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.GreaterMinor"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 1|CHARGES[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPROP",
+        "value": "The first time that the wearer is hit by a natural attack from an evil summoned creature, the wearer is automatically affected by protection from evil."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 120,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Talisman of Sealed Summons (Greater)",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

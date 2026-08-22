@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloody Jake ~ Sadistic Snare",
+    "name": "Sadistic Snare",
+    "class": "Slayer",
+    "description": "A bloody jake gains Learn Ranger Trap as a bonus feat, benefiting from it as if he were a ranger. He can expend two uses of his traps ability to add his sneak attack damage to the trap's damage; any slayer talents or rogue talents he has that modify sneak attack damage, such as bleeding attack, also apply to sneak attack damage dealt by his ranger traps.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ Sadistic Snare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A bloody jake gains Learn Ranger Trap as a bonus feat, benefiting from it as if he were a ranger. He can expend two uses of his traps ability to add his sneak attack damage to the trap's damage; any slayer talents or rogue talents he has that modify sneak attack damage, such as bleeding attack, also apply to sneak attack damage dealt by his ranger traps."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Learn Ranger Trap"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapTimes|SlayerLVL-1|!PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapTimes|SlayerLVL|PRECLASS:1,Ranger=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 217,
+    "record_key": "Bloody Jake ~ Sadistic Snare"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

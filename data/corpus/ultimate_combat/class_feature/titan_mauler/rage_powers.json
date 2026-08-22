@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Titan Mauler ~ Rage Powers",
+    "name": "Rage Powers",
+    "class": "Barbarian",
+    "description": "The following rage powers complement the titan mauler archetype - body bludgeon*, greater ground breaker*, ground breaker**, knockback, mighty swing, powerful blow, smasher**, and strength surge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Titan Mauler ~ Rage Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following rage powers complement the titan mauler archetype - body bludgeon*, greater ground breaker*, ground breaker**, knockback, mighty swing, powerful blow, smasher**, and strength surge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 344,
+    "record_key": "Titan Mauler ~ Rage Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

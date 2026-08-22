@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guard Dedication ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Guard Dedication",
+    "description": "The Ulfen Guard gains uncanny dodge, as the barbarian class feature of the same name. If the guard already has uncanny dodge from another source (or a previous instance of this dedication), she instead gains improved uncanny dodge. If she already has improved uncanny dodge, taking this dedication grants the effects of improved uncanny dodge to her chosen ally as long as the guard is adjacent to the ally. Use the guard's class level plus her barbarian levels to determine the minimum rogue level required to flank either character. This guard dedication can be chosen up to three times.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The Ulfen Guard gains uncanny dodge, as the barbarian class feature of the same name. If the guard already has uncanny dodge from another source (or a previous instance of this dedication), she instead gains improved uncanny dodge. If she already has improved uncanny dodge, taking this dedication grants the effects of improved uncanny dodge to her chosen ally as long as the guard is adjacent to the ally. Use the guard's class level plus her barbarian levels to determine the minimum rogue level required to flank either character. This guard dedication can be chosen up to three times."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Uncanny Dodge ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 571,
+    "record_key": "Guard Dedication ~ Uncanny Dodge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

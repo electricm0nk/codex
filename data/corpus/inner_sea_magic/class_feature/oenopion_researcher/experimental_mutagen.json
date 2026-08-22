@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oenopion Researcher ~ Experimental Mutagen",
+    "name": "Experimental Mutagen",
+    "class": "Alchemist",
+    "description": "An Oenopion researcher learns how to create an experimental mutagen that benefits others, though not as well as his normal mutagen. The experimental mutagen works just like a standard mutagen, except the natural armor bonus and the alchemical bonus to the ability score are half normal. The experimental mutagen has no risk of nauseating a creature who drinks it. The researcher decides when he creates the mutagen if it is a standard mutagen (which gives no benefit if another creature drinks it) or an experimental mutagen (which does); there is no difference in the cost, time to create, or any other aspect of the mutagen. If the researcher has discoveries or other abilities that alter or increase the benefits of the mutagen, these apply to the experimental mutagen (though the drinker only gets half the numerical bonus of the mutagen).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oenopion Researcher ~ Experimental Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Supernatural.AlchemistPoisonUse"
+      },
+      {
+        "key": "DESC",
+        "value": "An Oenopion researcher learns how to create an experimental mutagen that benefits others, though not as well as his normal mutagen. The experimental mutagen works just like a standard mutagen, except the natural armor bonus and the alchemical bonus to the ability score are half normal. The experimental mutagen has no risk of nauseating a creature who drinks it. The researcher decides when he creates the mutagen if it is a standard mutagen (which gives no benefit if another creature drinks it) or an experimental mutagen (which does); there is no difference in the cost, time to create, or any other aspect of the mutagen. If the researcher has discoveries or other abilities that alter or increase the benefits of the mutagen, these apply to the experimental mutagen (though the drinker only gets half the numerical bonus of the mutagen)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 154,
+    "record_key": "Oenopion Researcher ~ Experimental Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

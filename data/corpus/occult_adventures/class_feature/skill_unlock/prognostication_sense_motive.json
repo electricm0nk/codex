@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skill Unlock ~ Prognostication",
+    "name": "Prognostication (Sense Motive)",
+    "class": "Skill Unlock",
+    "description": "You are skilled in means of folk divination. The most common methods are cartomancy (reading cards), cheiromancy (reading a creature's palms), crystallomancy (crystal-gazing), extispicy (reading animal entrails), horoscopy (reading a creature's birth stars), oneiromancy (interpreting dreams), osteomancy (reading cast bones), and pyromancy (reading flames). Check: Once per day, you can predict a creature's fortune for the near future. You spend 10 minutes interpreting the divination means at your disposal. The GM then attempts a secret Sense Motive check with a DC modified by the subject's Hit Dice (see the table below). The result of the check can give you basic insight into the subject's nature, including its alignment, class, and levels or Hit Dice, and might reveal clues to the creature's immediate future. Determining the immediate future as an augury spell has a chance of successfully interpreting meaningful readings equal to 60%% plus 5%% for every point by which the check result exceeds the DC (to a maximum of 90%%). With a single check, you determine all the information whose DC you meet. For instance, if you had a result of 22 when telling the fortune of a creature with 2 HD, you would learn that creature's alignment and class, but not its level, HD, or fortune. Action: Reading a creature's fortune requires 10 minutes of uninterrupted contemplation, and the subject creature must be present. Try Again: Yes. You can attempt to read a particular creature's fortune repeatedly, but only once per 24 hours. Special: Specially crafted items purchased for the exclusive use of this skill grant a +2 circumstance bonus on Sense Motive checks to prognosticate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill Unlock ~ Prognostication"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillUnlock.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled in means of folk divination. The most common methods are cartomancy (reading cards), cheiromancy (reading a creature's palms), crystallomancy (crystal-gazing), extispicy (reading animal entrails), horoscopy (reading a creature's birth stars), oneiromancy (interpreting dreams), osteomancy (reading cast bones), and pyromancy (reading flames). Check: Once per day, you can predict a creature's fortune for the near future. You spend 10 minutes interpreting the divination means at your disposal. The GM then attempts a secret Sense Motive check with a DC modified by the subject's Hit Dice (see the table below). The result of the check can give you basic insight into the subject's nature, including its alignment, class, and levels or Hit Dice, and might reveal clues to the creature's immediate future. Determining the immediate future as an augury spell has a chance of successfully interpreting meaningful readings equal to 60%% plus 5%% for every point by which the check result exceeds the DC (to a maximum of 90%%). With a single check, you determine all the information whose DC you meet. For instance, if you had a result of 22 when telling the fortune of a creature with 2 HD, you would learn that creature's alignment and class, but not its level, HD, or fortune. Action: Reading a creature's fortune requires 10 minutes of uninterrupted contemplation, and the subject creature must be present. Try Again: Yes. You can attempt to read a particular creature's fortune repeatedly, but only once per 24 hours. Special: Specially crafted items purchased for the exclusive use of this skill grant a +2 circumstance bonus on Sense Motive checks to prognosticate."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1953,
+    "record_key": "Skill Unlock ~ Prognostication"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

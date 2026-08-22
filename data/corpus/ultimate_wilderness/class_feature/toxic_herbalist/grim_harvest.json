@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Toxic Herbalist ~ Grim Harvest",
+    "name": "Grim Harvest",
+    "class": "Ranger",
+    "description": "A toxic herbalist can spend 1 hour foraging for poisonous substances to create a dose of the following poisons:",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxic Herbalist ~ Grim Harvest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.ToxicHerbalistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A toxic herbalist can spend 1 hour foraging for poisonous substances to create a dose of the following poisons:"
+      },
+      {
+        "key": "DESC",
+        "value": "wyvern poison,|PRECLASS:1,Ranger=10"
+      },
+      {
+        "key": "DESC",
+        "value": "black lotus, deathblade|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "DESC",
+        "value": "dragonbile,|PRECLASS:1,Ranger=14"
+      },
+      {
+        "key": "DESC",
+        "value": "black adder venom, bloodroot, giant wasp poison, greenblood oil, large scorpion venom, malyass root paste, Medium spider venom, nitharit, shadow essence, small centipede poison, terinav root. (this hour can be integrated with the hour required to prepare spells or poultices). The toxic herbalist rolls 1d20 and adds his ranger level and his Intelligence modifier. The DC of this check is equal to the Craft DC of the poison he wishes to create. If he succeeds at this check, the ranger creates 1 dose of the chosen poison. The poison remains potent for %1 hours, regardless of the means used in attempts to preserve it, and it can't be sold. This ability functions only while the toxic herbalist is within one of his favored terrains.|RangerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 939,
+    "record_key": "Toxic Herbalist ~ Grim Harvest"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

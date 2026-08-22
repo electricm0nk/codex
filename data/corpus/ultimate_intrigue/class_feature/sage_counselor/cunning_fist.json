@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sage Counselor ~ Cunning Fist",
+    "name": "Cunning Fist",
+    "class": "Monk",
+    "description": "A sage counselor gains Combat Expertise as a bonus feat, even if he doesn't meet the prerequisites, and he can ignore the Intelligence prerequisite on feats that have Combat Expertise as a prerequisite.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sage Counselor ~ Cunning Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.SageCounselorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatFeatIntRequirement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sage counselor gains Combat Expertise as a bonus feat, even if he doesn't meet the prerequisites, and he can ignore the Intelligence prerequisite on feats that have Combat Expertise as a prerequisite."
+      },
+      {
+        "key": "DESC",
+        "value": " He gains Improved Feint as another bonus feat.|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "DESC",
+        "value": " He also gains Greater Feint, even if he doesn't meet the prerequisites.|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Combat Expertise"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Feint|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Feint|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatFeatIntRequirement|13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 556,
+    "record_key": "Sage Counselor ~ Cunning Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

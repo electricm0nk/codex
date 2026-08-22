@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Saboteur ~ Grand Discoveries",
+    "name": "Grand Discoveries",
+    "class": "Saboteur",
+    "description": "A saboteur may select the following grand discovery. True Chameleon Mutagen.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saboteur ~ Grand Discoveries"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Saboteur ~ Saboteur Discoveries"
+      },
+      {
+        "key": "DESC",
+        "value": "A saboteur may select the following grand discovery. True Chameleon Mutagen."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 181,
+    "record_key": "Saboteur ~ Grand Discoveries"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

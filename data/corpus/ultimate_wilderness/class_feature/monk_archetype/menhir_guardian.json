@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Menhir Guardian",
+    "name": "Menhir Guardian",
+    "class": "Monk Archetype",
+    "description": "Menhir guardians are ascetic protectors of sacred druidic sites, less concerned with structure and maintaining internal order than they are with preserving the natural balance of the world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Menhir Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LN,NG,NE,TN"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Menhir Guardian],[!PREFACT:1,ABILITIES,Monk_Archetype_Proficiencies=True,Monk_Archetype_UnarmedStrike=True,Monk_Archetype_KiPool=True,Monk_Archetype_FlurryOfBlows=True,Monk_Archetype_StunningFist=True,Monk_Archetype_HighJump=True,Monk_Archetype_QuiveringPalm=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Menhir guardians are ascetic protectors of sacred druidic sites, less concerned with structure and maintaining internal order than they are with preserving the natural balance of the world."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Menhir Guardian ~ Weapon Proficiency|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Menhir Guardian ~ Claws|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Menhir Guardian ~ Wild Flurry|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Menhir Guardian ~ Rebuking Strike|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 807,
+    "record_key": "Monk Archetype ~ Menhir Guardian"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

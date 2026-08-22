@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Reincarnated Oracle ~ Bonus Spells",
+    "name": "Bonus Spells",
+    "class": "Oracle",
+    "description": "see alignment (Ultimate Combat, 2nd), detect thoughts (4th), contact other plane (10th), moment of prescience (16th), overwhelming presence (Ultimate Magic, 18th). These spells replace the oracle's mystery bonus spells at these levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Oracle ~ Bonus Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "see alignment (Ultimate Combat, 2nd), detect thoughts (4th), contact other plane (10th), moment of prescience (16th), overwhelming presence (Ultimate Magic, 18th). These spells replace the oracle's mystery bonus spells at these levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|See Alignment|PRECLASS:1,Oracle=2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Detect Thoughts|PRECLASS:1,Oracle=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|Contact Other Plane|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Moment of Prescience|PRECLASS:1,Oracle=16"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Overwhelming Presence|PRECLASS:1,Oracle=18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 940,
+    "record_key": "Reincarnated Oracle ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

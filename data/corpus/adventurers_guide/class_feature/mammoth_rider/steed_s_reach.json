@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mammoth Rider ~ Steed's Reach",
+    "name": "Steed's Reach",
+    "class": "Mammoth Rider",
+    "description": "A mammoth riderӳ steedӳ reach improves to 15 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Steed's Reach"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrantSteedsReach|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "DESC",
+        "value": "A mammoth riderӳ steedӳ reach improves to 15 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GrantSteedsReach|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 365,
+    "record_key": "Mammoth Rider ~ Steed's Reach"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

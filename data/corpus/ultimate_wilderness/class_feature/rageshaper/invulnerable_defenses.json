@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rageshaper ~ Invulnerable Defenses",
+    "name": "Invulnerable Defenses",
+    "class": "Shifter",
+    "description": "A rageshaper becomes difficult to harm in his devastating form. Whenever the rageshaper takes on his devastating form and is unencumbered and either wearing no armor or wearing light or medium nonmetal armor, he gains a +2 natural armor bonus to his AC and DR 2/-.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rageshaper ~ Invulnerable Defenses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.RageshaperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A rageshaper becomes difficult to harm in his devastating form. Whenever the rageshaper takes on his devastating form and is unencumbered and either wearing no armor or wearing light or medium nonmetal armor, he gains a +2 natural armor bonus to his AC and DR 2/-."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1096,
+    "record_key": "Rageshaper ~ Invulnerable Defenses"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

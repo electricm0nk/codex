@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Shifting Sand",
-    "school": "Transmutation",
-    "level": 3,
     "description": "You cause an earthen or sandy surface to shift and churn within the area. The shifting sand obliterates tracks and is considered difficult terrain. Acrobatics checks in the area take a penalty equal to your caster level (maximum +10). Creatures entering or beginning their turn in the shifting sand must make a Reflex save each round or become entangled until the beginning of their next turn. If they attempt to move while entangled, they must make a second Reflex save or fall prone. Creatures with the stability racial trait (like dwarves) may apply it as a bonus on their saving throws.  As a move action, you may move the area of shifting sand up to 10 feet in any direction. Creatures that are entangled or prone in the spell's area are carried along with the shifting sand in the same direction if possible. This movement does not provoke attacks of opportunity. Unattended Medium or smaller objects may also be carried along or shallowly buried by the shifting sand.",
-    "full_text": true
+    "full_text": true,
+    "key": "Shifting Sand",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates difficult terrain and erases tracks; can carry creatures or objects along.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause an earthen or sandy surface to shift and churn within the area. The shifting sand obliterates tracks and is considered difficult terrain. Acrobatics checks in the area take a penalty equal to your caster level (maximum +10). Creatures entering or beginning their turn in the shifting sand must make a Reflex save each round or become entangled until the beginning of their next turn. If they attempt to move while entangled, they must make a second Reflex save or fall prone. Creatures with the stability racial trait (like dwarves) may apply it as a bonus on their saving throws.  As a move action, you may move the area of shifting sand up to 10 feet in any direction. Creatures that are entangled or prone in the spell's area are carried along with the shifting sand in the same direction if possible. This movement does not provoke attacks of opportunity. Unattended Medium or smaller objects may also be carried along or shallowly buried by the shifting sand.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a handful of sand)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "EarthSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/shiftingSand.html#_shifting-sand"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.243"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "20-ft. spread"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 217,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2062,
-    "record_key": "Shifting Sand"
+    "record_key": "Shifting Sand",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

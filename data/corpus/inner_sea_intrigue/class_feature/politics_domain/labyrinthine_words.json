@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Politics Domain ~ Labyrinthine Words",
+    "name": "Labyrinthine Words",
+    "class": "Politics Domain",
+    "description": "You add your Wisdom modifier in addition to your Charisma modifier on Bluff checks to lie and Diplomacy checks to influence other creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Politics Domain ~ Labyrinthine Words"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You add your Wisdom modifier in addition to your Charisma modifier on Bluff checks to lie and Diplomacy checks to influence other creatures."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Lie,Diplomacy=Influence Other Creatures|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 89,
+    "record_key": "Politics Domain ~ Labyrinthine Words"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bodily Mutation ~ Elongated Legs",
+    "name": "Elongated Legs",
+    "class": "Bodily Mutation",
+    "description": "The mutation mind's legs become long and spindly, increasing her base movement by 10 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bodily Mutation ~ Elongated Legs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Mind Class Feature.Bodily Mutation.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation mind's legs become long and spindly, increasing her base movement by 10 feet."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1593,
+    "record_key": "Bodily Mutation ~ Elongated Legs"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

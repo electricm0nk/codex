@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Rays of light burst forth from your outstretched hand, encircling each target's space with a cage of light. If a target fails its Reflex save, it becomes enclosed in the light prison. A creature enclosed in a light prison can attack, cast spells, and otherwise act normally as long as it stays within the light prison. However, if a creature passes through the walls of a light prison enclosing it, it takes 1d6 points of damage and is blinded for 1 round. Creatures do not receive saves to negate these effects. Once a creature passes through the walls of a light prison surrounding it, the effect ends for that creature.",
+    "key": "Light Prison",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric,Inquisitor,Magus,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Rays of light burst forth from your outstretched hand, encircling each target's space with a cage of light. If a target fails its Reflex save, it becomes enclosed in the light prison. A creature enclosed in a light prison can attack, cast spells, and otherwise act normally as long as it stays within the light prison. However, if a creature passes through the walls of a light prison enclosing it, it takes 1d6 points of damage and is blinded for 1 round. Creatures do not receive saves to negate these effects. Once a creature passes through the walls of a light prison surrounding it, the effect ends for that creature."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Light"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Light Prison"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL/2) creatures"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Light Prison",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

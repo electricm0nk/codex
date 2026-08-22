@@ -1,27 +1,53 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Crown of Blindness",
     "category": "MagicItems",
-    "name": "Crown of Blindness",
     "cost_gp": 0.0,
-    "weight": 1.0,
-    "description": "A cursed silver circlet that forces a DC 14 Fortitude save or permanently blinds the wearer, requiring curse-removal magic to reverse."
+    "description": "A cursed silver circlet that forces a DC 14 Fortitude save or permanently blinds the wearer, requiring curse-removal magic to reverse.",
+    "key": "Crown of Blindness",
+    "name": "Crown of Blindness",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Cursed"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/cursedItems.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/cursedItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 254,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Crown of Blindness",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

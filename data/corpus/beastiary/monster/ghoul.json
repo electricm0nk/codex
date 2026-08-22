@@ -1,39 +1,137 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
+    "challenge_rating": 1.0,
     "id": "beastiary1:monster:ghoul",
     "name": "Ghoul",
-    "challenge_rating": 1.0,
-    "size": "M",
-    "speed_ft": 30,
-    "race_type": "Undead",
-    "race_subtype": null,
-    "source_page": "p.146",
     "natural_attacks": [
       {
-        "name": "Claw",
-        "damage_dice": "1d6"
+        "damage_dice": "1d6",
+        "name": "Claw"
       },
       {
-        "name": "Bite",
-        "damage_dice": "1d6"
+        "damage_dice": "1d6",
+        "name": "Bite"
       }
-    ]
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Ghoul ~ Disease|Ghoul ~ Paralysis"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|2"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*2,1d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.146",
+    "speed_ft": 30
   },
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
     "line": 200,
-    "record_key": "Ghoul"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Ghoul",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

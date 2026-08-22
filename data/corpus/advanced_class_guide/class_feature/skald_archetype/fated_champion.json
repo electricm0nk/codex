@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald Archetype ~ Fated Champion",
+    "name": "Fated Champion",
+    "class": "Skald Archetype",
+    "description": "Many cultures see fate as a limit that is both stifling and unwanted, regardless of the destiny that lurks in the days and years ahead. Among cultures where skalds are the keepers of lore and wisdom, there are those who learn to read the winds of fate and take up the mantle of the fated champion, knowing and embracing their destined paths with strength borne of conviction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Fated Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype.SkaldWellVersed.SkaldSpellKenning.SkaldDirgeOfDoom.SkaldMasterSkald"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Fated Champion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldWellVersed,TYPE.SkaldDirgeOfDoom,TYPE.SkaldMasterSkald,TYPE.SkaldSpellKenning]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many cultures see fate as a limit that is both stifling and unwanted, regardless of the destiny that lurks in the days and years ahead. Among cultures where skalds are the keepers of lore and wisdom, there are those who learn to read the winds of fate and take up the mantle of the fated champion, knowing and embracing their destined paths with strength borne of conviction."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Fated Champion ~ Watcher of the Weave|PRECLASS:1,Skald=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Fated Champion ~ Far Seer|PRECLASS:1,Skald=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Fated Champion ~ Shield of Foresight|PRECLASS:1,Skald=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Fated Champion ~ Not This Day|PRECLASS:1,Skald=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Skald"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3675,
+    "record_key": "Skald Archetype ~ Fated Champion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

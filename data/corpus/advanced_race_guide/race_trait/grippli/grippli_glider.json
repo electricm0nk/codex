@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Grippli ~ Glider",
+    "name": "Glider",
+    "race_key": "Grippli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Grippli Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Grippli_ReplaceSwampStride"
+    ],
+    "description": "Gripplis' aerodynamic bodies and thick webbing between the toes enable a falling grippli to treat the distance fallen as half the actual distance. The grippli can steer himself while falling, moving horizontally up to a number of feet equal to half the vertical distance fallen. The grippli cannot use this trait if it is wearing heavy armor, is carrying a heavy load, or is unable to react to the fall (such as being helpless). This racial trait replaces swamp stride.",
+    "source_page": "p.190",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grippli ~ Glider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Grippli Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Grippli ~ Glider],[!PREFACT:1,ABILITIES,Grippli_ReplaceSwampStride=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gripplis' aerodynamic bodies and thick webbing between the toes enable a falling grippli to treat the distance fallen as half the actual distance. The grippli can steer himself while falling, moving horizontally up to a number of feet equal to half the vertical distance fallen. The grippli cannot use this trait if it is wearing heavy armor, is carrying a heavy load, or is unable to react to the fall (such as being helpless)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces swamp stride.|!PREABILITY:1,CATEGORY=Special Ability,Grippli ~ Glider"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "FACT",
+        "value": "Grippli_ReplaceSwampStride|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 905,
+    "record_key": "Grippli ~ Glider"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

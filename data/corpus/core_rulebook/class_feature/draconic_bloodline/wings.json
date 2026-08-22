@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodline ~ Wings",
+    "name": "Wings",
+    "class": "Draconic Bloodline",
+    "description": "Leathery dragon wings grow from your back as a standard action, giving you a fly speed of 60 feet with average maneuverability. You can dismiss the wings as a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline ~ Wings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Draconic Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Draconic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Draconic_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Draconic_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Leathery dragon wings grow from your back as a standard action, giving you a fly speed of 60 feet with average maneuverability. You can dismiss the wings as a free action."
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2447,
+    "record_key": "Draconic Bloodline ~ Wings"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

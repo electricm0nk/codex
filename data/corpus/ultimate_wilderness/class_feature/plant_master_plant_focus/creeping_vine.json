@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Plant Master Plant Focus ~ Creeping Vine",
+    "name": "Creeping Vine",
+    "class": "Plant Master Plant Focus",
+    "description": "Get +%1 competence bonus to Climb|PlantFocusCreepingVineBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master Plant Focus ~ Creeping Vine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PlantMasterPlantFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantFocusCreepingVineBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1 competence bonus to Climb|PlantFocusCreepingVineBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|PlantFocusCreepingVineBonus|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusCreepingVineBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusCreepingVineBonus|2|PREVARGTEQ:PlantMasterPlantFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantFocusCreepingVineBonus|2|PREVARGTEQ:PlantMasterPlantFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 684,
+    "record_key": "Plant Master Plant Focus ~ Creeping Vine"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

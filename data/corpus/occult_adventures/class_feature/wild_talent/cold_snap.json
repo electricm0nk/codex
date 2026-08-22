@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Cold Snap",
+    "name": "Cold Snap",
+    "class": "Wild Talent",
+    "description": "Element water; Type utility (Sp); Level 3; Burn 1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Cold Snap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Water"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Wild Talent ~ cold adaptation,Elemental Defense ~ Shroud Of Water"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites cold adaptation, shroud of water"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Water,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type utility (Sp); Level 3; Burn 1"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;You chill your shroud of water and send the cold around you, creating an aura of numbing cold around yourself. Until the next time your burn is removed, you can begin or end the cold aura at will as a swift action. The temperature in the area 30 feet around you lowers by 5° F per kineticist level you possess, to a minimum modified temperature of -10° F. If this brings the temperature in the area below 40° F, all creatures within 5 feet of you take a -4 penalty to Dexterity. You are immune to these effects, as are creatures that are immune to cold or that benefit from effects that protect against temperature, such as endure elements."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 740,
+    "record_key": "Wild Talent ~ Cold Snap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

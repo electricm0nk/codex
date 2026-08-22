@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "2",
@@ -29,6 +27,136 @@
     ],
     "race_subtype": "Chaotic|Extraplanar|Protean ~ Voidworm|Shapechanger",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Detect Law ~ Constant|Fast Healing|Flight Maneuverability|Voidworm ~ Change Shape|Voidworm ~ Confusion"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Protean"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|30|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|6"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Escape Artist|Knowledge (Arcana)|Stealth"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Melee.Natural.Finesseable.Blugeoning.Piercing.Slashing,*1,1d3|Tail Slap,Weapon.Melee.Natural.Finesseable.Bludgeoning,*1,1d3"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Extraplanar|Protean ~ Voidworm|Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=Week|CASTERLEVEL=12|Commune"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=6|Blur (self only)|Obscuring Mist"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=6|Dancing Lights|Ghost Sound,10+CHA|Prestidigitation"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "T",
     "source_page": "p.217",
     "speeds": [
@@ -42,16 +170,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 705,
-    "record_key": "Protean (Voidworm)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 705,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Protean (Voidworm)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

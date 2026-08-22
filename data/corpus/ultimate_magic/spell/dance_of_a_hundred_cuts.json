@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You become a lethal combat dancer, swirling and spinning with grace and precision. You gain a morale bonus on melee attack rolls, melee damage rolls, and Acrobatics checks, and to Armor Class. This bonus is equal to +1 per 3 caster levels (maximum +5 at 15th level). The bonus to AC is lost under any circumstances that would cause you to lose your Dexterity bonus to AC. You must remain moving for the spell to stay in effect. If in any round you do not either move at least 10 feet or make a melee attack, the spell's duration ends.",
+    "key": "Dance of a Hundred Cuts",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +(min(CASTERLEVEL/3,5)) combat bonus.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a lethal combat dancer, swirling and spinning with grace and precision. You gain a morale bonus on melee attack rolls, melee damage rolls, and Acrobatics checks, and to Armor Class. This bonus is equal to +1 per 3 caster levels (maximum +5 at 15th level). The bonus to AC is lost under any circumstances that would cause you to lose your Dexterity bonus to AC. You must remain moving for the spell to stay in effect. If in any round you do not either move at least 10 feet or make a melee attack, the spell's duration ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/danceOfAHundredCuts.html#_dance-of-a-hundred-cuts"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 67,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Dance of a Hundred Cuts",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Extra Swim Speed ~ Dagon",
+    "name": "Extra Swim Speed",
+    "class": "Extra Swim Speed",
+    "description": "Increase your current swim speed by 30 ft.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Extra Swim Speed ~ Dagon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.DagonSecondOath"
+      },
+      {
+        "key": "PREMOVE",
+        "value": "1,Swim=5"
+      },
+      {
+        "key": "DESC",
+        "value": "Increase your current swim speed by 30 ft."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 120,
+    "record_key": "Extra Swim Speed ~ Dagon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like suggestion, except that it can affect more creatures. The same suggestion applies to all these creatures.",
     "key": "Suggestion (Mass)",
-    "school": "Enchantment",
     "level": 5,
-    "description": "This spell functions like suggestion, except that it can affect more creatures. The same suggestion applies to all these creatures."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=5|Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like suggestion, except that it can affect more creatures. The same suggestion applies to all these creatures.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like suggestion, except that it can affect more creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours or until completed"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/suggestion.html#_suggestion-mass"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.350"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures, no two of which can be more than 30ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 583,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1333,
-    "record_key": "Suggestion (Mass).MOD"
+    "record_key": "Suggestion (Mass)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

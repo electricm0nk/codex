@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Xorn ~ Earth Glide",
     "delivery": "Extraordinary",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:xorn"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A xorn can glide through any sort of natural earth or stone as easily as a fish swims through water. Its burrowing leaves no sign of its passage nor hint at its presence to creatures that don't possess tremorsense. A move earth spell cast on an area containing a xorn moves the xorn back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save."
+      },
+      {
+        "key": "KEY",
+        "value": "Xorn ~ Earth Glide"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyMovement"
+      }
+    ],
     "source_page": "p.284",
     "traits": [
       "ModifyMovement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1274,
-    "record_key": "Xorn ~ Earth Glide"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1274,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Xorn ~ Earth Glide",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

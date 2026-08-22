@@ -1,25 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Alarm creates a subtle ward on an area you select. Once the spell effect is in place, it thereafter sounds a mental or audible alarm each time a creature of Tiny or larger size enters the warded area or touches it. A creature that speaks the password [determined by you at the time of casting] does not set off the alarm. You decide at the time of casting whether the alarm will be mental or audible in nature. Mental Alarm: A mental alarm alerts you [and only you] so long as you remain within 1 mile of the warded area. You note a single mental \"ping\" that awakens you from normal sleep but does not otherwise disturb concentration. A silence spell has no effect on a mental alarm. Audible Alarm: An audible alarm produces the sound of a hand bell, and anyone within 60 feet of the warded area can hear it clearly. Reduce the distance by 10 feet for each interposing closed door and by 20 feet for each substantial interposing wall. In quiet conditions, the ringing can be heard faintly as far as 180 feet away. The sound lasts for 1 round. Creatures within a silence spell cannot hear the ringing. Ethereal or astral creatures do not trigger the alarm. Alarm can be made permanent with a permanency spell.",
     "key": "Alarm",
-    "school": "Abjuration",
     "level": 1,
-    "description": "Alarm creates a subtle ward on an area you select. Once the spell effect is in place, it thereafter sounds a mental or audible alarm each time a creature of Tiny or larger size enters the warded area or touches it. A creature that speaks the password [determined by you at the time of casting] does not set off the alarm. You decide at the time of casting whether the alarm will be mental or audible in nature. Mental Alarm: A mental alarm alerts you [and only you] so long as you remain within 1 mile of the warded area. You note a single mental \"ping\" that awakens you from normal sleep but does not otherwise disturb concentration. A silence spell has no effect on a mental alarm. Audible Alarm: An audible alarm produces the sound of a hand bell, and anyone within 60 feet of the warded area can hear it clearly. Reduce the distance by 10 feet for each interposing closed door and by 20 feet for each substantial interposing wall. In quiet conditions, the ringing can be heard faintly as far as 180 feet away. The sound lasts for 1 round. Creatures within a silence spell cannot hear the ringing. Ethereal or astral creatures do not trigger the alarm. Alarm can be made permanent with a permanency spell."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Ranger,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Alarm creates a subtle ward on an area you select. Once the spell effect is in place, it thereafter sounds a mental or audible alarm each time a creature of Tiny or larger size enters the warded area or touches it. A creature that speaks the password [determined by you at the time of casting] does not set off the alarm. You decide at the time of casting whether the alarm will be mental or audible in nature. Mental Alarm: A mental alarm alerts you [and only you] so long as you remain within 1 mile of the warded area. You note a single mental \"ping\" that awakens you from normal sleep but does not otherwise disturb concentration. A silence spell has no effect on a mental alarm. Audible Alarm: An audible alarm produces the sound of a hand bell, and anyone within 60 feet of the warded area can hear it clearly. Reduce the distance by 10 feet for each interposing closed door and by 20 feet for each substantial interposing wall. In quiet conditions, the ringing can be heard faintly as far as 180 feet away. The sound lasts for 1 round. Creatures within a silence spell cannot hear the ringing. Ethereal or astral creatures do not trigger the alarm. Alarm can be made permanent with a permanency spell.  |PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Alarm creates a subtle ward on an area you select.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/alarm.html#_alarm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "20-ft.-radius emanation centered on a point in space"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 15,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 780,
-    "record_key": "Alarm.MOD"
+    "record_key": "Alarm",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

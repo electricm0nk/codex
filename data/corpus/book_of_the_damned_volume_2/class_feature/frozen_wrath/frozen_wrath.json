@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Frozen Wrath ~ Kostchtchie",
+    "name": "Frozen Wrath",
+    "class": "Frozen Wrath",
+    "description": "Chill touch 3/day, bull's strength 2/day, or sleet storm 1/day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frozen Wrath ~ Kostchtchie"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=3|CASTERLEVEL=TL|Chill Touch,11+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=2|CASTERLEVEL=TL|Bull's Strength,12+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Sleet Storm,13+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "Chill touch 3/day, bull's strength 2/day, or sleet storm 1/day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 151,
+    "record_key": "Frozen Wrath ~ Kostchtchie"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

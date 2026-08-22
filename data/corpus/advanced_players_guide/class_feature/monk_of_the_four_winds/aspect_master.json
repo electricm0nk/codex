@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk of the Four Winds ~ Aspect Master",
+    "name": "Aspect Master",
+    "class": "Monk",
+    "description": "At 17th level, a monk of the four winds must choose an aspect of one of the great spirits of the world. Once made, this choice cannot be changed. This spirit grants the monk a new appearance and new abilities, as well as changing or augmenting the monk's personality in some way. Once this choice is made, it cannot be changed. The monk must abide by the alignment restrictions of the aspect. If the monk ever changes his alignment to something outside the aspect's alignment restrictions, he loses this ability and cannot regain it unless his alignment later changes again to match that of the aspect. This ability replaces timeless body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Four Winds ~ Aspect Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkTimelessBody"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, a monk of the four winds must choose an aspect of one of the great spirits of the world. Once made, this choice cannot be changed. This spirit grants the monk a new appearance and new abilities, as well as changing or augmenting the monk's personality in some way. Once this choice is made, it cannot be changed. The monk must abide by the alignment restrictions of the aspect. If the monk ever changes his alignment to something outside the aspect's alignment restrictions, he loses this ability and cannot regain it unless his alignment later changes again to match that of the aspect. This ability replaces timeless body."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Aspect Master Selection|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2342,
+    "record_key": "Monk of the Four Winds ~ Aspect Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

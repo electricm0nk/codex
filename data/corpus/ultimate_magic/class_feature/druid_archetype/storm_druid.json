@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Storm Druid",
+    "name": "Storm Druid",
+    "class": "Druid Archetype",
+    "description": "While most druids focus their attention upon the rich earth and the bounty of nature that springs forth from it, the storm druid's eyes have ever been cast to the skies and the endless expanse of blue, channeling the most raw and untamed aspects of nature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Storm Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidSpontaneousCasting.DruidWoodlandStride.DruidTracklessStep.DruidResistNaturesLure.DruidVenomImmunity.DruidThousandFaces"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Storm Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidSpontaneousCasting,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure.TYPE.DruidThousandFaces,TYPE.DruidNatureBond]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most druids focus their attention upon the rich earth and the bounty of nature that springs forth from it, the storm druid's eyes have ever been cast to the skies and the endless expanse of blue, channeling the most raw and untamed aspects of nature."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Storm Druid ~ Spontaneous Domain Casting|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Storm Druid ~ Nature's Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Storm Druid ~ Windwalker|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Storm Druid ~ Stormvoice|PRECLASS:1,Druid=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Storm Druid ~ Eyes of the Storm|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Storm Druid ~ Windlord|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Storm Druid ~ Storm Lord|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1095,
+    "record_key": "Druid Archetype ~ Storm Druid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

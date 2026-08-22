@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist Trick ~ Levitation Buffer",
+    "name": "Levitation Buffer",
+    "class": "Mesmerist Trick",
+    "description": "A mesmerist's telekinetic assault renders foes around the subject less of a threat. The mesmerist can trigger this trick when either an enemy moves adjacent to the subject or the subject begins her turn with one or more enemies adjacent to her. The mesmerist can either lift all enemies adjacent to the subject slightly into the air or push them all away from the subject. Lifting enemies causes them to move at half speed and take a -4 penalty to their CMDs against bull rush, drag, and reposition attempts for 1 round (Will negates). The speed reduction and CMD penalty don't stack with those from hostile levitation. Pushing enemies away requires the mesmerist to attempt a bull rush combat maneuver check using %1 as his CMB. Any enemy that's successfully pushed moves away from the subject of the trick using the normal rules for a bull rush.|MesmeristLVL+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Trick ~ Levitation Buffer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A mesmerist's telekinetic assault renders foes around the subject less of a threat. The mesmerist can trigger this trick when either an enemy moves adjacent to the subject or the subject begins her turn with one or more enemies adjacent to her. The mesmerist can either lift all enemies adjacent to the subject slightly into the air or push them all away from the subject. Lifting enemies causes them to move at half speed and take a -4 penalty to their CMDs against bull rush, drag, and reposition attempts for 1 round (Will negates). The speed reduction and CMD penalty don't stack with those from hostile levitation. Pushing enemies away requires the mesmerist to attempt a bull rush combat maneuver check using %1 as his CMB. Any enemy that's successfully pushed moves away from the subject of the trick using the normal rules for a bull rush.|MesmeristLVL+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 943,
+    "record_key": "Mesmerist Trick ~ Levitation Buffer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

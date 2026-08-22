@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shapechange Savant Subschool ~ Battleshaping",
+    "name": "Battleshaping",
+    "class": "Shapechange Savant Subschool",
+    "description": "As a swift action, you grow a single natural weapon. The natural weapon lasts for 1 round and has a +%1 enhancement bonus on attack and damage rolls. You can grow a claw, a bite, or a gore attack. These attacks deal the normal damage for a creature of your size (see page 302 of the Pathfinder RPG Bestiary). At 11th level, you can shape two natural weapons. You may not grow additional limbs or a tail with this ability. You can use this ability %2 times per day.|ArcanistSavantSchoolLVL/4|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shapechange Savant Subschool ~ Battleshaping"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you grow a single natural weapon. The natural weapon lasts for 1 round and has a +%1 enhancement bonus on attack and damage rolls. You can grow a claw, a bite, or a gore attack. These attacks deal the normal damage for a creature of your size (see page 302 of the Pathfinder RPG Bestiary). At 11th level, you can shape two natural weapons. You may not grow additional limbs or a tail with this ability. You can use this ability %2 times per day.|ArcanistSavantSchoolLVL/4|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2607,
+    "record_key": "Shapechange Savant Subschool ~ Battleshaping"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

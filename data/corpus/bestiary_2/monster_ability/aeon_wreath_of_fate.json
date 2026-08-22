@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Aeon ~ Wreath of Fate",
     "delivery": "Supernatural",
@@ -16,19 +14,59 @@
     "owners": [
       "bestiary_2:monster:aeon_theletos"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|WreathofFateCL|HD"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WreathofFateDC|10+HD/2+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WreathofFateCL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WreathofFateDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round-action every 1d4 rounds, you can release a 60-foot cone of energy from your chest. Any intelligent creature struck by this cone must make a DC %1 Will save or become nearly overwhelmed with the knowledge of various fates that destiny has in store for him. There is no way to make sense of these myriad dooms and boons, and as a result, the victim is staggered. As long as this condition persists, the victim may choose to make two rolls when attempting an attack roll, a saving throw, or a skill check, he must accept the worse of the two rolls, but in so doing the wreath of fate passes from his soul and he is no longer staggered by this ability. Wreath of fate is a curse effect, and as such can be affected by remove curse or break enchantment, the effective caster level of this curse is %2.|WreathofFateDC|WreathofFateCL"
+      },
+      {
+        "key": "KEY",
+        "value": "Aeon ~ Wreath of Fate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.14",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 29,
-    "record_key": "Aeon ~ Wreath of Fate"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Aeon ~ Wreath of Fate",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

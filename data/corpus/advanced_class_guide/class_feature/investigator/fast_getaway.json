@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Fast Getaway",
+    "name": "Fast Getaway",
+    "class": "Investigator",
+    "description": "After successfully making a sneak attack or Sleight of Hand check, an investigator with this talent can spend a move action to take the withdraw action. She can move no more than her speed during this movement.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Fast Getaway"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DESC",
+        "value": "After successfully making a sneak attack or Sleight of Hand check, an investigator with this talent can spend a move action to take the withdraw action. She can move no more than her speed during this movement."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1347,
+    "record_key": "Investigator ~ Rogue Talent ~ Fast Getaway"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Air's Reach",
+    "name": "Air's Reach",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Su); Level 1; Burn - When using air blasts, air wild talents, or composite blasts that include air, double the blast's effective range. This effect applies after altering the range due to effects such as the extended range infusion. This doubles only the blast's effective range, not the area of effect for infusions like cloud and cyclone.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Air's Reach"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Su); Level 1; Burn - When using air blasts, air wild talents, or composite blasts that include air, double the blast's effective range. This effect applies after altering the range due to effects such as the extended range infusion. This doubles only the blast's effective range, not the area of effect for infusions like cloud and cyclone."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 732,
+    "record_key": "Wild Talent ~ Air's Reach"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Summoner",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight|PREVAREQ:Summoner_CF_ArmorProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=WeaponProfSimple|PREVAREQ:Summoner_CF_SimpleWeapons,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 793,
+    "record_key": "Summoner ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Enhancement Savant Subschool ~ Augment",
+    "name": "Augment",
+    "class": "Enhancement Savant Subschool",
+    "description": "As a standard action, you can touch a creature and grant it either a +%1 enhancement bonus to a single ability score of your choice or a +%2 bonus to natural armor that stacks with any natural armor the creature might possess. This augmentation lasts %3 rounds. You can use this ability %4 times per day.|AugmentEnhancementBonus|min(ArcanistSavantSchoolLVL/5+1,5)|max(ArcanistSavantSchoolLVL/2,1)|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enhancement Savant Subschool ~ Augment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AugmentEnhancementBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can touch a creature and grant it either a +%1 enhancement bonus to a single ability score of your choice or a +%2 bonus to natural armor that stacks with any natural armor the creature might possess. This augmentation lasts %3 rounds. You can use this ability %4 times per day.|AugmentEnhancementBonus|min(ArcanistSavantSchoolLVL/5+1,5)|max(ArcanistSavantSchoolLVL/2,1)|INT+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugmentEnhancementBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugmentEnhancementBonus|2|PREVARGTEQ:ArcanistSavantSchoolLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2592,
+    "record_key": "Enhancement Savant Subschool ~ Augment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

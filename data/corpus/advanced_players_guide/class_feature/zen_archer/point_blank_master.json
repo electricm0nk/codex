@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Zen Archer ~ Point Blank Master",
+    "name": "Point Blank Master",
+    "class": "Monk",
+    "description": "At 3rd level, a zen archer gains Point Blank Master* as a bonus feat, even if he does not meet the prerequisites. This ability replaces still mind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Zen Archer ~ Point Blank Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkStillMind"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a zen archer gains Point Blank Master* as a bonus feat, even if he does not meet the prerequisites. This ability replaces still mind."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Zen Archer Point Blank Master|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2386,
+    "record_key": "Zen Archer ~ Point Blank Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

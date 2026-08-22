@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Clay Golem ~ Immunity to Magic",
     "delivery": "Extraordinary",
@@ -13,21 +11,49 @@
     "owners": [
       "beastiary:monster:golem_clay"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A clay golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature, as noted below. * A move earth spell drives the golem back 120 feet and deals 3d12 points of damage to it (no save). * A disintegrate spell slows the golem (as the slow spell) for 1d6 rounds and deals 1d12 points of damage (no save). * An earthquake spell cast directly at a clay golem stops it from moving on its next turn and deals 5d10 points of damage (no save). * Any magical attack against a clay golem that deals acid damage heals 1 point of damage for every 3 points of damage it would otherwise deal. If the amount of healing would cause the golem to exceed its full normal hit points, it gains any excess as temporary hit points. A clay golem gets no saving throw against magical attacks that deal acid damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Clay Golem ~ Immunity to Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
     "source_page": "p.159",
     "traits": [
       "Immunity"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 716,
-    "record_key": "Clay Golem ~ Immunity to Magic"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 716,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Clay Golem ~ Immunity to Magic",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

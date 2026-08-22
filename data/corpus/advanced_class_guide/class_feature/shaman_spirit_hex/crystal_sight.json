@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Crystal Sight",
+    "name": "Crystal Sight",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman sees through stone, earth, or sand as easily as if it were transparent crystal. Her gaze can penetrate %1 feet (or 1/12th this thickness of metal). The shaman can use this ability %2 rounds per day, but these rounds do not need to be consecutive.|ShamanCrystalSightRange|ShamanCrystalSightRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Crystal Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanStoneHex.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Crystal Sight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanStoneSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanCrystalSightRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanCrystalSightRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman sees through stone, earth, or sand as easily as if it were transparent crystal. Her gaze can penetrate %1 feet (or 1/12th this thickness of metal). The shaman can use this ability %2 rounds per day, but these rounds do not need to be consecutive.|ShamanCrystalSightRange|ShamanCrystalSightRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanCrystalSightRange|ShamanSpiritLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanCrystalSightRounds|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1652,
+    "record_key": "Shaman Spirit Hex ~ Crystal Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

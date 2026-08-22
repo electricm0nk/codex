@@ -3,6 +3,9 @@ import type {
   CompanionAbilityDto,
   CompanionAttackDto,
   CompanionCatalogEntryDto,
+  CompanionDamageBonusDto,
+  CompanionSaveDcDto,
+  CompanionSkillBonusDto,
   CompanionStatAdjustmentDto,
 } from '../boundary/loadCompanionCatalog';
 import { loadCompanionCatalogRuntime } from './companionCatalogRuntime';
@@ -160,9 +163,70 @@ export function formatStatAdjustment(adjustment: CompanionStatAdjustmentDto): st
  */
 export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (corpus BONUS:STAT tokens)';
 
+/**
+ * The damage-bonus block's caption. Names the token so the reader knows it is
+ * a corpus fact, and says "extra" because the base attack already applies the
+ * full Strength modifier -- this is the other half PF1 CRB p.182 grants a
+ * creature with a single natural attack.
+ */
+export const DAMAGE_BONUS_CAPTION = 'Extra damage on attack (corpus BONUS:WEAPONPROF DAMAGE tokens)';
+
 /** `{ name: 'Bite', damageDice: null }` -> `'Bite'`; with dice -> `'Bite 1d6'`. */
 export function formatNaturalAttack(attack: CompanionAttackDto): string {
   return attack.damageDice ? `${attack.name} ${attack.damageDice}` : attack.name;
+}
+
+/**
+ * One damage-bonus row: `"Bite +1/2 Str modifier (minimum +0)"`.
+ *
+ * A shape the engine refuses to interpret prints its token verbatim and says
+ * so, rather than being dropped (which would tell the player the corpus states
+ * nothing) or rendered as if understood.
+ */
+export function formatDamageBonus(bonus: CompanionDamageBonusDto): string {
+  return bonus.unparsedFormula === null
+    ? `${bonus.attack} ${bonus.bonus}`
+    : `${bonus.attack} ${bonus.unparsedFormula} (formula not interpreted)`;
+}
+
+/**
+ * The skill-bonus block's caption. Names the token so the reader knows it is
+ * a corpus fact.
+ */
+export const SKILL_BONUS_CAPTION = 'Skill bonus from ability difference (corpus BONUS:SKILL tokens)';
+
+/**
+ * One skill-bonus row: `"Climb, Swim: Dex modifier − Str modifier"`.
+ *
+ * A shape the engine refuses to interpret prints its token verbatim and says
+ * so, matching [`formatDamageBonus`]'s own posture.
+ */
+export function formatSkillBonus(bonus: CompanionSkillBonusDto): string {
+  const skills = bonus.skills.join(', ');
+  return bonus.unparsedFormula === null
+    ? `${skills}: ${bonus.bonus}`
+    : `${skills}: ${bonus.unparsedFormula} (formula not interpreted)`;
+}
+
+/**
+ * The save-DC-formula block's caption, on an ABILITY row. Names the field so
+ * the reader knows it is a corpus fact stated only in the ability's own
+ * `DESC:` argument — the same fact `render_pcgen_desc` drops the `%1`
+ * placeholder for, so without this row the DC number is silently missing
+ * from the description above it.
+ */
+export const SAVE_DC_CAPTION = 'Save DC formula (embedded in ability description)';
+
+/**
+ * One save-DC-formula row: `"10 + 1/2 HD + Con modifier"`.
+ *
+ * A shape the engine refuses to interpret prints its token verbatim and says
+ * so, matching [`formatDamageBonus`]'s own posture.
+ */
+export function formatSaveDcFormula(formula: CompanionSaveDcDto): string {
+  return formula.unparsedFormula === null
+    ? formula.formula
+    : `${formula.unparsedFormula} (formula not interpreted)`;
 }
 
 /**
@@ -338,6 +402,18 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                     Attacks: {entry.naturalAttacks.map(formatNaturalAttack).join(', ')}
                   </p>
                 )}
+                {entry.naturalAttackDamageBonuses.length > 0 ? (
+                  <p style={{ color: 'var(--color-text)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
+                    <span style={{ color: 'var(--color-text-faint)' }}>{DAMAGE_BONUS_CAPTION}: </span>
+                    {entry.naturalAttackDamageBonuses.map(formatDamageBonus).join(', ')}
+                  </p>
+                ) : null}
+                {entry.skillAbilityDiffBonuses.length > 0 ? (
+                  <p style={{ color: 'var(--color-text)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
+                    <span style={{ color: 'var(--color-text-faint)' }}>{SKILL_BONUS_CAPTION}: </span>
+                    {entry.skillAbilityDiffBonuses.map(formatSkillBonus).join(', ')}
+                  </p>
+                ) : null}
                 {entry.abilities.length > 0 ? (
                   <div style={{ margin: '0.4rem 0 0' }}>
                     {entry.abilities.map((ability) => (
@@ -392,6 +468,12 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                           <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
                             {STAT_ADJUSTMENT_CAPTION}:{' '}
                             {ability.statAdjustments.map(formatStatAdjustment).join(', ')}
+                          </p>
+                        ) : null}
+                        {ability.saveDcFormulas.length > 0 ? (
+                          <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
+                            {SAVE_DC_CAPTION}:{' '}
+                            {ability.saveDcFormulas.map(formatSaveDcFormula).join(', ')}
                           </p>
                         ) : null}
                       </div>

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Glory Domain",
+    "name": "Glory",
+    "class": "Forbidden Rites Domain",
+    "description": "You are infused with the glory of the divine, and are a true foe of the undead. In addition, when you channel positive energy to harm undead creatures, the save DC to halve the damage is increased by 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Glory Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.GloryDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGloryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGloryDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGloryTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGloryAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are infused with the glory of the divine, and are a true foe of the undead. In addition, when you channel positive energy to harm undead creatures, the save DC to halve the damage is increased by 2."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Glory|PREDOMAIN:1,Glory|PREVARGTEQ:DomainGloryAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Divine Presence|PREDOMAIN:1,Glory|PREVARGTEQ:DomainGloryAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGloryLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDC|2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGloryDC|10+(DomainGloryLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGloryTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainGloryAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Shield of Faith|Cleric=2|Bless Weapon|Cleric=3|Searing Light|Cleric=4|Holy Smite|Cleric=5|Righteous Might|Cleric=6|Undeath to Death|Cleric=7|Holy Sword|Cleric=8|Holy Aura|Cleric=9|Gate"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1039,
+    "record_key": "Forbidden Rites Domain ~ Glory Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

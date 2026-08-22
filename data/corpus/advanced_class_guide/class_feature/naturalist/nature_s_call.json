@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Naturalist ~ Nature's Call",
+    "name": "Nature's Call",
+    "class": "Summoner",
+    "description": "You can cast summon nature's ally %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  You can only use this ability to summon creatures of the animal, magical beast, or vermin type. Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|NaturalistSummonNaturesAllyLVL|NaturalistSummonNaturesAllyTimes|NaturalistSummonNaturesAllyDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naturalist ~ Nature's Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Naturalist Class Feature.Summoner Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalistSummonNaturesAllyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalistSummonNaturesAllyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalistSummonNaturesAllyDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast summon nature's ally %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  You can only use this ability to summon creatures of the animal, magical beast, or vermin type. Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|NaturalistSummonNaturesAllyLVL|NaturalistSummonNaturesAllyTimes|NaturalistSummonNaturesAllyDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalistSummonNaturesAllyDuration|SummonerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalistSummonNaturesAllyLVL|min(9,(SummonerLVL+1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalistSummonNaturesAllyTimes|CHA+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|NaturalistSummonNaturesAllyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3815,
+    "record_key": "Naturalist ~ Nature's Call"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

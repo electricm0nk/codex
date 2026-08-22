@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Archetype ~ Verdant Shifter",
+    "name": "Verdant Shifter",
+    "class": "Shifter Archetype",
+    "description": "Verdant shifters have an affinity for plants rather than animals and gain a plantlike form that grows in power as they do. Verdant shifters are the enemies of creatures that would despoil the natural world, and they seek to maintain balance with civilization and industry to ensure the sanctity of wild spaces.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Archetype ~ Verdant Shifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShifterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shifter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shifter Archetype ~ Verdant Shifter],[!PREFACT:1,ABILITIES,Shifter_Archetype_WildEmpathy=True,Shifter_Archetype_ShifterAspect=True,Shifter_Archetype_DefensiveInstinct=True,Shifter_Archetype_ChimericAspect=True,Shifter_Archetype_GreaterChimericAspect=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Verdant shifters have an affinity for plants rather than animals and gain a plantlike form that grows in power as they do. Verdant shifters are the enemies of creatures that would despoil the natural world, and they seek to maintain balance with civilization and industry to ensure the sanctity of wild spaces."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Shifter ~ Speak with Plants|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Shifter ~ Verdant Body|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Shifter ~ Wild Armor|PRECLASS:1,Shifter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Verdant Shifter ~ Plant Shape|PRECLASS:1,Shifter=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_GreaterChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_GreaterChimericAspect|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1038,
+    "record_key": "Shifter Archetype ~ Verdant Shifter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

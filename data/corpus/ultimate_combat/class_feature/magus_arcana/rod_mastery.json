@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Rod Mastery",
+    "name": "Rod Mastery",
+    "class": "Magus Arcana",
+    "description": "Whenever the magus uses a rod, he calculates the DC for any spell it contains using his Intelligence modifier (minimum 0) instead of the minimum modifier needed to cast a spell of that level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Rod Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the magus uses a rod, he calculates the DC for any spell it contains using his Intelligence modifier (minimum 0) instead of the minimum modifier needed to cast a spell of that level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 918,
+    "record_key": "Magus Arcana ~ Rod Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

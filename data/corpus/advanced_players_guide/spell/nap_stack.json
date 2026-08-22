@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Nap Stack",
-    "school": "Necromancy",
-    "level": 3,
     "description": "You reduce the amount of uninterrupted sleep or rest creatures within the spell's area need in order to recover from injuries, regain spells, or other special abilities to 2 hours instead of the normal eight. In addition, if creatures continue to sleep or rest beyond the initial 2 hours, every additional 2 hours counts as a day of rest for the purpose of recovering hit points, ability damage, as well as for enduring diseases, poisons, or other afflictions. This means 8 total hours of sleep counts as 4 days for natural healing and for saving throws as diseases or similar afflictions run their course. When suffering from diseases, poison, or other afflictions, sleepers experience vivid dreams that help them track their recovery. If things go poorly they can, at any time, wake themselves up in order to seek a better alternative. If awoken or otherwise disturbed during this 8-hour period, creatures may return to sleep but they no longer enjoy the benefits of the accelerated recovery time. Creatures can only enjoy the benefits of this spell once in any 1-week period.",
-    "full_text": true
+    "full_text": true,
+    "key": "Nap Stack",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Subjects only need 2 hours for a night's sleep, and can sleep even longer for more benefits.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You reduce the amount of uninterrupted sleep or rest creatures within the spell's area need in order to recover from injuries, regain spells, or other special abilities to 2 hours instead of the normal eight. In addition, if creatures continue to sleep or rest beyond the initial 2 hours, every additional 2 hours counts as a day of rest for the purpose of recovering hit points, ability damage, as well as for enduring diseases, poisons, or other afflictions. This means 8 total hours of sleep counts as 4 days for natural healing and for saving throws as diseases or similar afflictions run their course. When suffering from diseases, poison, or other afflictions, sleepers experience vivid dreams that help them track their recovery. If things go poorly they can, at any time, wake themselves up in order to seek a better alternative. If awoken or otherwise disturbed during this 8-hour period, creatures may return to sleep but they no longer enjoy the benefits of the accelerated recovery time. Creatures can only enjoy the benefits of this spell once in any 1-week period.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "8 hours"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a little silk pillow worth 100 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/napStack.html#_nap-stack-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "30-ft.-radius emanation"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 169,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2008,
-    "record_key": "Nap Stack"
+    "record_key": "Nap Stack",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

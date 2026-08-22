@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Archetype ~ Name-Keeper",
+    "name": "Name-Keeper",
+    "class": "Shaman Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Archetype ~ Name-Keeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShamanArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Name-Keeper],[!PREFACT:1,ABILITIES,Shaman_Archetype_ClassSkills=True,Shaman_Archetype_SpiritAnimal=True,Shaman_Archetype_SpiritMagic=True,Shaman_Archetype_WanderingSpirit=True,Shaman_Archetype_WanderingHex=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Name-Keeper ~ Class Skills|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Name-Keeper ~ Inherited Wayfinder|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Name-Keeper ~ Keeper Spirit Magic|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Name-Keeper ~ Pathfinders Past|PRECLASS:1,Shaman=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_SpiritAnimal|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingHex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_SpiritAnimal|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingHex|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1036,
+    "record_key": "Shaman Archetype ~ Name-Keeper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

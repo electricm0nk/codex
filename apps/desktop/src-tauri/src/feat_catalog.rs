@@ -163,6 +163,53 @@ pub fn build_feat_catalog() -> FeatCatalogResponse {
     build_feat_catalog_for(None)
 }
 
+/// Finds one feat's own already-verified description by an EXACT name
+/// match — never fuzzy. Built for `class_feature_feat_bridge.rs`
+/// (SD31-W29-CLASSFEATURE-FEATBRIDGE-001, THE-BOX §2.1 F2): a `class_feature`
+/// record whose entire content is a grant of an already-separately-modelled
+/// `feat` (`ABILITY:FEAT|AUTOMATIC|<name>` / `ABILITY:FEAT|VIRTUAL|<name>`)
+/// carries no local description of its own, but the target feat's real
+/// rulebook text already exists here, already rendered, already leak-
+/// checked. This is that lookup, kept deliberately narrow: **exact string
+/// equality only.** This codebase's own standing lesson is that a shared
+/// name never implies a shared thing — a fuzzy matcher belongs, if built at
+/// all, in the caller, verified per-match against the owning record, never
+/// silently folded into this function.
+///
+/// Reuses the identical render treatment [`map_catalog_entry`] applies —
+/// `render_pcgen_desc` then a `dropped_args`/`leaked_pcgen_syntax` double
+/// refusal — rather than re-deriving it, so this function can never promise
+/// cleaner text than the picker itself would ship for the same record. When
+/// a name matches multiple books' feats (the catalog's own documented
+/// "Endurance" collision), the first exact match in `all_feat_tables()`'s
+/// own book order (CRB, APG, ACG, ARG, PU, …) wins — the SAME determinism
+/// `build_feat_catalog`'s caller already relies on for that collision,
+/// applied here rather than invented fresh.
+///
+/// Returns `None` when no book's feat carries this exact name, when the
+/// matched record has no `DESC:` token of its own, or when its render would
+/// itself be refused by the picker (an unresolved `%N`/raw PCGen leak) —
+/// never a guessed or partial description.
+pub fn feat_description_by_exact_name(name: &str) -> Option<String> {
+    for book in all_feat_tables() {
+        for entry in book.entries {
+            if entry.name != name {
+                continue;
+            }
+            let Some(raw) = entry.description else { continue };
+            let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
+            if !rendered.dropped_args.is_empty() {
+                continue;
+            }
+            if codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+                continue;
+            }
+            return Some(rendered.text);
+        }
+    }
+    None
+}
+
 fn build_feat_catalog_for(facts: Option<&CharacterPrereqFacts>) -> FeatCatalogResponse {
     let mut entries = Vec::new();
     for book in all_feat_tables() {
@@ -333,7 +380,17 @@ mod tests {
         // carry neither a `DESC:` nor a `BENEFIT:` token in the corpus and
         // are served with no description rather than a fabricated one, which
         // is why this moves by 65 and not by 83.
-        assert_eq!(with_description, 1630, "31 of the 1661 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows whose records carry neither DESC: nor BENEFIT:");
+        // +242 with `SD31-E6-F8-002`'s five-book gap lane: all 242 carry a
+        // real `DESC:` and/or `BENEFIT:` token, so `with_description` moves
+        // by exactly 242, not less.
+        // +323 with `SD31-E6-F2-007`'s 358 Mythic Adventures rows joined on
+        // (2026-08-17): 35 of them carry neither a `DESC:` nor a `BENEFIT:`
+        // token in the corpus and are served with no description rather
+        // than a fabricated one.
+        // +7 with `SD31-E6-F8-003`'s two more gap-lane books joined on: all
+        // 7 (inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) carry a
+        // real `DESC:` token, so `with_description` moves by exactly 7.
+        assert_eq!(with_description, 2043, "66 of the 2109 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows plus 35 Mythic gap rows whose records carry neither DESC: nor BENEFIT: (SD31-W10-INTEGRATE-001: 199 Mythic gap rows, not 358 -- 159 VISIBLE:EXPORT display-plumbing twins excluded, none of which lacked a description)");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -354,8 +411,12 @@ mod tests {
         // rewritten by `render_pcgen_desc` and confirmed leak-free by this
         // same test's per-record assertion above — a raw-corpus-shape count,
         // not a new player-visible leak.
-        assert_eq!(raw_leaks, 190, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 190, "exactly the leaking records are rewritten");
+        // `SD31-E6-F2-007` -- +2 with Mythic Adventures' 358 gap rows joined
+        // on: two of them carry an unsubstituted PCGen syntax leak in their
+        // own `DESC:`/`BENEFIT:` text, rewritten by `render_pcgen_desc`
+        // exactly like every other book's leaking rows.
+        assert_eq!(raw_leaks, 187, "the raw tables' own leak count (SD31-W10-INTEGRATE-001: 188 - 1, one of the two excluded VISIBLE:EXPORT Mythic twins carried a raw leak of its own -- the other's `changed` membership came from the two-field DESC/BENEFIT join differing from either raw field alone, not from a leak marker)");
+        assert_eq!(changed.len(), 198, "exactly the leaking/rewritten records (SD31-W10-INTEGRATE-001: 200 - 2, the two excluded VISIBLE:EXPORT Mythic twins)");
         // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 UM + 34 new
         // UPsi records. Every served description for all 185 is
         // confirmed leak-free by this same test's per-record
@@ -383,6 +444,7 @@ mod tests {
                 "Ambush Awareness",
                 "Animal Call",
                 "Aquatic Combatant",
+                "Arcane Armor Training",
                 "Arcane Strike",
                 "Battle Cry",
                 "Battlefield Healer",
@@ -418,7 +480,6 @@ mod tests {
                 "Earth Child Topple",
                 "Eidolon Mount",
                 "Empower Power",
-                // corpus gap rows (core_essentials, via CRB):
                 "Empower Spell-Like Ability ~ Ability",
                 "Empower Spell-Like Ability ~ Spell",
                 "Energized Wild Shape",
@@ -431,16 +492,15 @@ mod tests {
                 "Fear's Reach",
                 "Feign Curse",
                 "Feral Combat Training",
-                // twice: UC's own record, and UPsi's corpus reprint of it
-                // (`up_feats.lst` says so in its own comment).
-                "Feral Combat Training",
                 "Field Repair",
                 "Final Embrace",
                 "Frightful Shape",
+                "Gnome Trickster",
                 "Grasping Strike",
                 "Greater Beast Hunter",
                 "Greater Hunter's Bond",
                 "Greater Intuitive Shot",
+                "Greater Mesmerizing Feint",
                 "Greater Spring Attack",
                 "Greater Whip Mastery",
                 "Gruesome Slaughter",
@@ -465,9 +525,11 @@ mod tests {
                 "Intuitive Shot",
                 "Learn Ranger Trap",
                 "Life Lure",
+                "Lingering Spell-Like Ability",
                 "Master Siege Engineer",
                 "Menacing Bane",
                 "Merciful Bane",
+                "Mirror Kin",
                 "Modified Blast",
                 "Monastic Legacy",
                 "Monkey Moves",
@@ -488,12 +550,14 @@ mod tests {
                 "Painful Anchor",
                 "Paralyzing Strike",
                 "Passing Trick",
+                "Phantom Fortification",
                 "Photosynthetic Healing",
                 "Pinpoint Poisoner",
                 "Piranha Strike",
                 "Planar Wanderer",
                 "Prone Slinger",
                 "Prophetic Visionary",
+                "Protector of the People",
                 "Psionic Bull Rush",
                 "Psionic Disarm",
                 "Psionic Overrun",
@@ -519,6 +583,7 @@ mod tests {
                 "River Raider",
                 "School Strike",
                 "Scion of the Land",
+                "Seeping Darkness",
                 "Selective Power",
                 "Shapeshifting Hunter",
                 "Siege Engineer",
@@ -531,6 +596,7 @@ mod tests {
                 "Snap Shot",
                 "Sorcerous Strike",
                 "Spinning Throw",
+                "Spirit Sense",
                 "Stage Combatant",
                 "Staggering Fist",
                 "Street Sweep",
@@ -596,7 +662,7 @@ mod tests {
                 );
             }
         }
-        assert_eq!(total, 83, "the feat gap lane is 83 rows");
+        assert_eq!(total, 531, "the feat gap lane is 531 rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199 Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins from the original 358 -- + SD31-E6-F8-003's 7)");
     }
 
     #[test]
@@ -604,9 +670,15 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            1661,
+            2109,
             "1578 hand-authored (185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA \
-             + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi) + 83 corpus gap rows. \
+             + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa \
+             + 0 Iswg + 0 MonsterCodex + 0 Mythic + 0 Isi + 0 Botd2) + 531 corpus gap rows \
+             (SD31-E6-F8-001's original 83 + SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, \
+             31 Iswg, 32 MonsterCodex + SD31-E6-F2-007's 199 Mythic Adventures rows -- \
+             SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins \
+             from the original 358 -- + SD31-E6-F8-003's 7: inner_sea_intrigue 6, \
+             book_of_the_damned_volume_2 1). \
              Each per-source count below is that book's hand-authored figure \
              plus its gap rows; the rows themselves are asserted by key in \
              `catalog_serves_every_corpus_gap_row`."
@@ -614,11 +686,14 @@ mod tests {
 
         let by_source =
             |source: &str| response.entries.iter().filter(|e| e.source == source).count();
-        // `<hand-authored> + <corpus gap rows>` per book. CRB's 16 include
-        // the 15 `core_essentials` records: that shared library has no rule
-        // set of its own and `core_rulebook.pcc` includes it unconditionally,
-        // so CRB is the observed host.
-        assert_eq!(by_source("Crb"), 201, "185 + 16");
+        // `<hand-authored> + <corpus gap rows>` per book. `core_essentials`
+        // (`Ce`) is its own real rule set (`SD31-E6-F8-001`): the shared
+        // library has no hand-authored feat table of its own, but its 15
+        // `ce_feats.lst` records are served as their own `source: "Ce"`
+        // entries, not folded into CRB's `Crb` source -- `classify()`'s feat
+        // arm resolves a `core_essentials`-directory record's engine book
+        // straight to `Ce` via `source_book`, never through CRB.
+        assert_eq!(by_source("Crb"), 186, "185 + 1");
         assert_eq!(by_source("Apg"), 172, "172 + 0");
         assert_eq!(by_source("Acg"), 129, "129 + 0");
         assert_eq!(by_source("Arg"), 235, "187 + 48");
@@ -628,26 +703,55 @@ mod tests {
         assert_eq!(by_source("Uw"), 136, "135 + 1");
         assert_eq!(by_source("Uc"), 263, "261 + 2");
         assert_eq!(by_source("Um"), 156, "144 + 12");
+        assert_eq!(by_source("Ce"), 15, "0 + 15");
         assert_eq!(by_source("Upsi"), 222, "221 + 1");
+        // `SD31-E6-F8-002` -- five more books already compiled for another
+        // kind (race_trait and/or monster) that had no feat table at all
+        // before this cycle; every one of their served entries is a gap row.
+        assert_eq!(by_source("Ha"), 61, "0 + 61");
+        assert_eq!(by_source("Isr"), 50, "0 + 50");
+        assert_eq!(by_source("Oa"), 68, "0 + 68");
+        assert_eq!(by_source("Iswg"), 31, "0 + 31");
+        assert_eq!(by_source("MonsterCodex"), 32, "0 + 32");
+        // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set of
+        // any kind; every served entry is a gap row (`ma_feats.lst`'s 358
+        // non-`.MOD` declarations).
+        assert_eq!(by_source("Mythic"), 199, "0 + 199 (SD31-W10-INTEGRATE-001: 358 - 159 VISIBLE:EXPORT twins)");
+        // `SD31-E6-F8-003` -- two more books already compiled for another
+        // kind that had no feat table at all before this cycle; every one
+        // of their served entries is a gap row.
+        assert_eq!(by_source("Isi"), 6, "0 + 6");
+        assert_eq!(by_source("Botd2"), 1, "0 + 1");
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
         // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77 + UC 63
         // + UM 100 + UPsi 21, and so on per category.
-        // + 22 corpus gap rows.
-        assert_eq!(counts("General"), 649);
+        // + 22 corpus gap rows + 124 SD31-E6-F8-002 gap rows (Ha 19, Isr 6,
+        // Oa 62, Iswg 24, MonsterCodex 13).
+        // +2 with `SD31-E6-F2-007`'s 358 Mythic Adventures rows joined on:
+        // two of them (`TYPE:General`) fold to this facet.
+        // +7 with `SD31-E6-F8-003`'s two more gap-lane books joined on: all
+        // 7 (inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) carry
+        // `TYPE:General`.
+        assert_eq!(counts("General"), 782);
         // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182 + UM 3 + UPsi 9,
         // and so on.
-        // + 2 corpus gap rows.
-        assert_eq!(counts("Combat"), 584);
+        // + 2 corpus gap rows + 65 SD31-E6-F8-002 gap rows (Ha 24, Isr 18,
+        // Iswg 7, MonsterCodex 16).
+        assert_eq!(counts("Combat"), 649);
         // + UW 1 + UM 2 + UPsi 3.
         // + 1 corpus gap row (`Craft Construct`, via core_essentials).
         assert_eq!(counts("ItemCreation"), 15);
         // + UI 4 + UW 2 + UM 9.
-        assert_eq!(counts("Metamagic"), 51);
+        // + 7 SD31-E6-F8-002 gap rows (Oa 6, Ha 1).
+        // +1 with `SD31-E6-F2-007`'s 358 Mythic Adventures rows joined on
+        // (`Ascendant Spell`, `TYPE:Metamagic`).
+        assert_eq!(counts("Metamagic"), 59);
         // + UI 2 + UW 3 + UC 7 + UM 1.
-        assert_eq!(counts("Teamwork"), 23);
+        // + 29 SD31-E6-F8-002 gap rows (Isr 26, MonsterCodex 3).
+        assert_eq!(counts("Teamwork"), 52);
         assert_eq!(counts("Panache"), 4);
         // PU's three `###Block:`-derived categories; no other book has them.
         assert_eq!(counts("Alignment"), 9);
@@ -655,7 +759,16 @@ mod tests {
         assert_eq!(counts("WoundThreshold"), 3);
         // UCA's single corpus-derived category -- all 23 records are
         // `TYPE:Story`.
-        assert_eq!(counts("Story"), 23);
+        // + 4 SD31-E6-F8-002 gap rows (horror_adventures, its own
+        // `TYPE:Story` feats).
+        assert_eq!(counts("Story"), 27);
+        // `SD31-E6-F8-002` -- two brand-new categories, present ONLY as gap
+        // rows (`category` is the corpus `TYPE:` token's first dot-segment
+        // verbatim, never remapped to an existing book's enum spelling, so
+        // `Item Creation` (with a space) is a distinct string from the
+        // hand-authored tables' own `ItemCreation`).
+        assert_eq!(counts("Monster"), 12, "horror_adventures' own TYPE:Monster feats");
+        assert_eq!(counts("Item Creation"), 1, "horror_adventures, one TYPE:Item Creation feat");
         // UW's own new category -- Companion/animal-focused feats. No
         // other book carries this facet.
         assert_eq!(counts("Animal"), 11);
@@ -679,6 +792,22 @@ mod tests {
         // book carries either facet.
         assert_eq!(counts("Psionic"), 153);
         assert_eq!(counts("Metapsionic"), 35);
+        // Mythic Adventures' own new categories (`SD31-E6-F2-007`) --
+        // `category` is the corpus `TYPE:` token's first dot-segment
+        // verbatim, same rule as `SD31-E6-F8-002`'s gap-row facets below.
+        // `Mythic` is the book's dominant facet (160 of 199, after
+        // SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-
+        // plumbing twins from the raw 358 -- every excluded twin was itself
+        // `TYPE:Mythic`, so the whole reduction lands on this one facet);
+        // `Mythic Racial Heritage` is its 34 racial mythic-boost feats,
+        // unaffected (no twin was `TYPE:Mythic Racial Heritage`); the other
+        // three sit at 1 each (`SpecialAttack`: `Marked for Glory Output`;
+        // `Metamagic`: `Ascendant Spell`, counted above; `Familiar Class
+        // Feature`: a single familiar-boosting mythic feat).
+        assert_eq!(counts("Mythic"), 160);
+        assert_eq!(counts("Mythic Racial Heritage"), 34);
+        assert_eq!(counts("SpecialAttack"), 1);
+        assert_eq!(counts("Familiar Class Feature"), 1);
 
         // The corpus gap rows' own facets. Unlike every category above,
         // these are the corpus `TYPE:` token's first dot-segment verbatim
@@ -727,6 +856,11 @@ mod tests {
             "Discovery",
             "Psionic",
             "Metapsionic",
+            // Mythic Adventures' own new categories (`SD31-E6-F2-007`).
+            "Mythic",
+            "Mythic Racial Heritage",
+            "SpecialAttack",
+            "Familiar Class Feature",
             // corpus gap-row facets
             "AngelicFleshOption",
             "BloodDrinkerType",
@@ -744,6 +878,10 @@ mod tests {
             "SpecialQuality",
             "Supernatural",
             "Umbral Scion Spell",
+            // `SD31-E6-F8-002`'s five-book gap lane -- two brand-new
+            // categories, present only as gap rows.
+            "Monster",
+            "Item Creation",
         ]
         .iter()
         .map(|category| counts(category))
@@ -796,17 +934,27 @@ mod tests {
     fn both_endurance_listings_are_served_and_are_distinguishable() {
         let response = build_feat_catalog();
         let endurance: Vec<_> = response.entries.iter().filter(|e| e.key == "Endurance").collect();
-        assert_eq!(endurance.len(), 2, "CRB lists Endurance and PU re-lists it");
+        // `SD31-E6-F2-007` -- a third listing now exists, Mythic Adventures'
+        // own mythic upgrade (its `PREABILITY:...,CATEGORY=FEAT,Endurance`
+        // prerequisite is the mechanical proof this is a real variant, not
+        // a coincidental name clash --
+        // `feats_all::tests::cross_book_key_collisions_are_exactly_the_known_set`).
+        assert_eq!(endurance.len(), 3, "CRB lists Endurance, PU re-lists it, Mythic upgrades it");
 
         let sources: Vec<&str> = endurance.iter().map(|e| e.source.as_str()).collect();
-        assert_eq!(sources, vec!["Crb", "Pu"]);
+        assert_eq!(sources, vec!["Crb", "Pu", "Mythic"]);
         assert_eq!(endurance[0].category, "General");
         assert_eq!(endurance[1].category, "WoundThreshold");
+        assert_eq!(endurance[2].category, "Mythic");
         assert_eq!(
             endurance[0].description, endurance[1].description,
             "both corpus rows carry the same DESC: text"
         );
         assert!(endurance[0].description.is_some(), "and it is real text, not a shared absence");
+        assert!(
+            endurance[2].description.is_some(),
+            "the Mythic listing has its own real DESC: text too"
+        );
     }
 
     /// PU's block-derived categories are real filter values, not labels
@@ -886,6 +1034,45 @@ mod tests {
         }
     }
 
+    /// The proof case for `class_feature_feat_bridge.rs`: a real, exact
+    /// name lookup returns the SAME text `map_catalog_entry` would render
+    /// for that record — proving reuse, not reinvention.
+    #[test]
+    fn feat_description_by_exact_name_finds_a_real_feat() {
+        let extra_hex = feat_description_by_exact_name("Extra Hex");
+        let catalog_entry = build_feat_catalog()
+            .entries
+            .into_iter()
+            .find(|e| e.name == "Extra Hex")
+            .expect("Extra Hex must be in the catalog");
+        assert_eq!(extra_hex, catalog_entry.description);
+        assert_eq!(extra_hex.as_deref(), Some("You have learned the secrets of a new hex."));
+    }
+
+    /// No fuzzy matching, ever — a name one character off must not resolve.
+    #[test]
+    fn feat_description_by_exact_name_refuses_a_near_miss() {
+        assert_eq!(feat_description_by_exact_name("Extra Hexes"), None);
+        assert_eq!(feat_description_by_exact_name("extra hex"), None);
+        assert_eq!(feat_description_by_exact_name(""), None);
+        assert_eq!(feat_description_by_exact_name("Not A Real Feat Name At All"), None);
+    }
+
+    /// The multi-book collision precedent (`both_endurance_listings_are_
+    /// served_and_are_distinguishable`, above): CRB's own `Endurance` wins,
+    /// deterministically, the same book-order tie-break `all_feat_tables()`
+    /// already fixes.
+    #[test]
+    fn feat_description_by_exact_name_is_deterministic_on_a_cross_book_collision() {
+        let endurance = feat_description_by_exact_name("Endurance");
+        let crb_entry = build_feat_catalog()
+            .entries
+            .into_iter()
+            .find(|e| e.name == "Endurance" && e.source == "Crb")
+            .expect("CRB's Endurance must be in the catalog");
+        assert_eq!(endurance, crb_entry.description);
+    }
+
     #[test]
     fn filter_feat_catalog_with_no_filter_fields_returns_the_full_catalog() {
         let response = filter_feat_catalog(&FeatCatalogFilter::default());
@@ -916,8 +1103,10 @@ mod tests {
         });
 
         // 17 CRB + 19 APG + 4 UI + 2 UW + 9 UM; ACG, ARG, PU and UCA have
-        // no Metamagic feat records.
-        assert_eq!(response.entries.len(), 51);
+        // no Metamagic feat records. + 7 corpus gap rows (SD31-E6-F8-002:
+        // occult_adventures 6, horror_adventures 1). +1 with
+        // `SD31-E6-F2-007`'s Mythic `Ascendant Spell` (`TYPE:Metamagic`).
+        assert_eq!(response.entries.len(), 59);
         for entry in &response.entries {
             assert_eq!(entry.category, "Metamagic");
         }

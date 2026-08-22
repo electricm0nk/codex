@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Energy",
+    "name": "Energy Blast",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Kineticist Blast Type"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Kinetic Blast|WEAPON|DAMAGE|-CON+floor(CON/2)-KB_Tier"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 621,
+    "record_key": "Energy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

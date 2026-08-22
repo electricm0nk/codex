@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Destined Bloodline ~ Fated",
+    "name": "Fated",
+    "class": "Destined Bloodline",
+    "description": "You gain a +%1 luck bonus on all of your saving throws and to your AC during surprise rounds and when you are otherwise unaware of an attack.|Sorcerer_DestinedFated_LuckBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destined Bloodline ~ Fated"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Destined Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Supernatural.Defensive"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Destined"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Destined_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Destined_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DestinedFated_LuckBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 luck bonus on all of your saving throws and to your AC during surprise rounds and when you are otherwise unaware of an attack.|Sorcerer_DestinedFated_LuckBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DestinedFated_LuckBonus|floor((Sorcerer_Destined_BloodlinePower3LVL+1)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|Sorcerer_DestinedFated_LuckBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DestinedBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2427,
+    "record_key": "Destined Bloodline ~ Fated"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

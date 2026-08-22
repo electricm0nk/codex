@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deed ~ Subtle Throw",
+    "name": "Subtle Throw",
+    "class": "Swashbuckler",
+    "description": "A flying blade can spend 1 panache point as part of a ranged attack with a dagger or starknife to make it without provoking attacks of opportunity. At 6th level, as a swift action she can spend 1 panache point to make all of her ranged attacks with daggers or starknives without provoking attacks of opportunity until the start of her next turn. This deed replaces dodging panache.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Subtle Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flying Blade Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A flying blade can spend 1 panache point as part of a ranged attack with a dagger or starknife to make it without provoking attacks of opportunity. At 6th level, as a swift action she can spend 1 panache point to make all of her ranged attacks with daggers or starknives without provoking attacks of opportunity until the start of her next turn. This deed replaces dodging panache."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3881,
+    "record_key": "Deed ~ Subtle Throw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mammoth Spirit ~ Powerful Smash",
+    "name": "Powerful Smash",
+    "class": "Mammoth Spirit",
+    "description": "As a standard action, the shaman can attack with unarmed strikes as if she had the Improved Unarmed Strike feat. If the shaman hits a creature in this way, that creature must succeed at a Fortitude save (DC %1) or be dazed for 1 round. The shaman can use this ability %2 times per day.|10+ShamanLVL/2+CHA|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Spirit ~ Powerful Smash"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman can attack with unarmed strikes as if she had the Improved Unarmed Strike feat. If the shaman hits a creature in this way, that creature must succeed at a Fortitude save (DC %1) or be dazed for 1 round. The shaman can use this ability %2 times per day.|10+ShamanLVL/2+CHA|3+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1218,
+    "record_key": "Mammoth Spirit ~ Powerful Smash"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mindblade ~ Dual Manifest",
+    "name": "Dual Manifest",
+    "class": "Magus",
+    "description": "At 13th level, a mindblade can manifest two psychic weapons with the same action. She must pay the cost for both weapons. Also, when wielding a weapon two-handed, she can use her spell combat ability as though she had a hand free. This ability replaces heavy armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindblade ~ Dual Manifest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mindblade Class Feature.Magus Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a mindblade can manifest two psychic weapons with the same action. She must pay the cost for both weapons. Also, when wielding a weapon two-handed, she can use her spell combat ability as though she had a hand free. This ability replaces heavy armor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1790,
+    "record_key": "Mindblade ~ Dual Manifest"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

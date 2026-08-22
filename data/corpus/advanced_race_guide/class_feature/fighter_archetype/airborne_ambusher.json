@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Airborne Ambusher",
+    "name": "Airborne Ambusher",
+    "class": "Fighter Archetype",
+    "description": "Driven by suspicion and hatred, strix doggedly guard their territories, making deadly use of their flight. Using swift strikes from above, strix plummet onto their foes with lethal force.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Airborne Ambusher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Airborne Ambusher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsStrix=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Driven by suspicion and hatred, strix doggedly guard their territories, making deadly use of their flight. Using swift strikes from above, strix plummet onto their foes with lethal force."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Airborne Ambusher ~ Weapon and Armor Proficiency|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Airborne Ambusher ~ Class Skills|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Airborne Ambusher ~ Combat Flyer|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Airborne Ambusher ~ Aerobatics|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Airborne Ambusher ~ Flying Dodger|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Airborne Ambusher ~ Plummeting Charge|PRECLASS:1,Fighter=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 948,
+    "record_key": "Fighter Archetype ~ Airborne Ambusher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

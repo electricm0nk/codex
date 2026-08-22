@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Judgment ~ Destruction",
+    "name": "Judgment / Destruction",
+    "class": "Sacred Judgment",
+    "description": "The inquisitor is filled with divine wrath, gaining a +%1 sacred bonus on all weapon damage rolls.|1+InqJudgeDestructionLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Judgment ~ Destruction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentSacred.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeDestructionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The inquisitor is filled with divine wrath, gaining a +%1 sacred bonus on all weapon damage rolls.|1+InqJudgeDestructionLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgeDestructionLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 326,
+    "record_key": "Sacred Judgment ~ Destruction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

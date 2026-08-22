@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wildblooded ~ Linnorm",
+    "name": "Linnorm",
+    "class": "Wildblooded",
+    "description": "Your draconic heritage stems from a mighty, primordial linnorm rather than from the more common, somewhat civilized dragons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildblooded ~ Linnorm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildblooded Bloodline"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Draconic"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Draconic_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your draconic heritage stems from a mighty, primordial linnorm rather than from the more common, somewhat civilized dragons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Linnorm Bloodline ~ Bloodline Arcana|Linnorm Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Linnorm Bloodline ~ Elemental Spit|PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Draconic_Description|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower1|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1699,
+    "record_key": "Wildblooded ~ Linnorm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

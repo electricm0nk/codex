@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sanguine Angel ~ Maiden's Shield",
+    "name": "Maiden's Shield",
+    "class": "Sanguine Angel",
+    "description": "A sanguine angel is treated as if she had the Two-Weapon Fighting feat as long as she isusing a longsword and a shield. This allows her to take feats that require Two-Weapon Fighting as a prerequisite without meeting the Two-Weapon Fighting or Dexterity prerequisites, but she benefits from such feats only when she's wielding a longsword and shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanguine Angel ~ Maiden's Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Sanguine Angel Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "DESC",
+        "value": "A sanguine angel is treated as if she had the Two-Weapon Fighting feat as long as she isusing a longsword and a shield. This allows her to take feats that require Two-Weapon Fighting as a prerequisite without meeting the Two-Weapon Fighting or Dexterity prerequisites, but she benefits from such feats only when she's wielding a longsword and shield."
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=FEAT|Two-Weapon Fighting"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PreStatScore_DEX|MAX(15,DEX)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeatDexRequirement|MAX(15,DEX)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 455,
+    "record_key": "Sanguine Angel ~ Maiden's Shield"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

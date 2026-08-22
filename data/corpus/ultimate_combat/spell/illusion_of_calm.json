@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "When casting this spell, you create an illusory double that takes the same space of you. That double makes it look like you are standing still, even when you are not. While under the effects  of this spell, you do not provoke attacks of opportunity when you cast a spell, make a ranged attack with a thrown weapon, or move out of your first square during a move action. It does not hide ranged attacks made with any type of projectile weapon. When a creature hits you with an attack of any type, it gains a saving throw to disbelieve the figment. On a successful saving throw, it successfully disbelieves and the spell's effect ends for that creature.",
+    "key": "Illusion of Calm",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Magus,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting this spell, you create an illusory double that takes the same space of you. That double makes it look like you are standing still, even when you are not. While under the effects  of this spell, you do not provoke attacks of opportunity when you cast a spell, make a ranged attack with a thrown weapon, or move out of your first square during a move action. It does not hide ranged attacks made with any type of projectile weapon. When a creature hits you with an attack of any type, it gains a saving throw to disbelieve the figment. On a successful saving throw, it successfully disbelieves and the spell's effect ends for that creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You appear to be standing still, even when you take some actions.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will disbelieve (on hit; see below)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/illusionOfCalm.html#_illusion-of-calm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Figment"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Illusion of Calm",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Leshy Warden ~ Spirit Whisperer",
+    "name": "Spirit Whisperer",
+    "class": "Druid",
+    "description": "A leshy warden's connection to the spirits of nature becomes strong enough that she can always hear them whispering. She is treated as constantly under the effects of speak with plants. Once per day, she can spend 10 minutes in communion with the spirits to learn the answers to her questions, as commune with nature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshy Warden ~ Spirit Whisperer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A leshy warden's connection to the spirits of nature becomes strong enough that she can always hear them whispering. She is treated as constantly under the effects of speak with plants. Once per day, she can spend 10 minutes in communion with the spirits to learn the answers to her questions, as commune with nature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 523,
+    "record_key": "Leshy Warden ~ Spirit Whisperer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

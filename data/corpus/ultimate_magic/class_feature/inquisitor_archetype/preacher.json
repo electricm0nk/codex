@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Preacher",
+    "name": "Preacher",
+    "class": "Inquisitor Archetype",
+    "description": "Some inquisitors wander the land to spread the true word of their faith. Often they come into conflict with those hostile to their teachings or to the preacher's need to help those who cannot help themselves. The leaders of evil or aggressive religions send these preachers into new territories to win converts and hopefully allies. Often, they start uprisings against powers hostile to their religion, or defend a group of honest believers from the depredations of the unfaithful.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Preacher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype.InquisitorSoloTactics"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Preacher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorSoloTactics]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some inquisitors wander the land to spread the true word of their faith. Often they come into conflict with those hostile to their teachings or to the preacher's need to help those who cannot help themselves. The leaders of evil or aggressive religions send these preachers into new territories to win converts and hopefully allies. Often, they start uprisings against powers hostile to their religion, or defend a group of honest believers from the depredations of the unfaithful."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Preacher ~ Determination|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Inquisitor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1250,
+    "record_key": "Inquisitor Archetype ~ Preacher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

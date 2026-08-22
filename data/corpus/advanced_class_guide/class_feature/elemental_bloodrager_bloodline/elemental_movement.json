@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Bloodrager Bloodline ~ Elemental Movement",
+    "name": "Elemental Movement",
+    "class": "Elemental Bloodrager Bloodline",
+    "description": "You gain a fly speed of 60 ft. with average maneuverability.|PREVAREQ:BloodragerElementalBloodline_Air,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Bloodrager Bloodline ~ Elemental Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Elemental Bloodrager Bloodline ~ Power LVL 08.Bloodrager Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Elemental"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Elemental_BloodlineProgressionLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Elemental_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a fly speed of 60 ft. with average maneuverability.|PREVAREQ:BloodragerElementalBloodline_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a burrow speed of 30 ft.|PREVAREQ:BloodragerElementalBloodline_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your base speed increases by 30 ft.|PREVAREQ:BloodragerElementalBloodline_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a swim speed of 60 ft.|PREVAREQ:BloodragerElementalBloodline_Water,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Move ~ Fly (60)|PREVAREQ:BloodragerElementalBloodline_Air,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Move ~ Burrow (30)|PREVAREQ:BloodragerElementalBloodline_Earth,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Move ~ Land Increase (30)|PREVAREQ:BloodragerElementalBloodline_Fire,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Move ~ Swim (60)|PREVAREQ:BloodragerElementalBloodline_Water,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ElementalBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 778,
+    "record_key": "Elemental Bloodrager Bloodline ~ Elemental Movement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

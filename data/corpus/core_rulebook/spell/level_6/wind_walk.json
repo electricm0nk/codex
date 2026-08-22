@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You alter the substance of your body to a cloudlike vapor [as the gaseous form spell] and move through the air, possibly at great speed. You can take other creatures with you, each of which acts independently. Normally, a wind walker flies at a speed of 10 feet with perfect maneuverability. If desired by the subject, a magical wind wafts a wind walker along at up to 600 feet per round [60 mph] with poor maneuverability. Wind walkers are not invisible but rather appear misty and translucent. If fully clothed in white, they are 80%% likely to be mistaken for clouds, fog, vapors, or the like. A wind walker can regain its physical form as desired and later resume the cloud form. Each change to and from vaporous form takes 5 rounds, which counts toward the duration of the spell [as does any time spent in physical form]. As noted above, you can dismiss the spell, and you can even dismiss it for individual wind walkers and not others. For the last minute of the spell's duration, a wind walker in cloud form automatically descends 60 feet per round [for a total of 600 feet], though it may descend faster if it wishes. This descent serves as a warning that the spell is about to end.",
     "key": "Wind Walk",
-    "school": "Transmutation",
     "level": 6,
-    "description": "You alter the substance of your body to a cloudlike vapor [as the gaseous form spell] and move through the air, possibly at great speed. You can take other creatures with you, each of which acts independently. Normally, a wind walker flies at a speed of 10 feet with perfect maneuverability. If desired by the subject, a magical wind wafts a wind walker along at up to 600 feet per round [60 mph] with poor maneuverability. Wind walkers are not invisible but rather appear misty and translucent. If fully clothed in white, they are 80%% likely to be mistaken for clouds, fog, vapors, or the like. A wind walker can regain its physical form as desired and later resume the cloud form. Each change to and from vaporous form takes 5 rounds, which counts toward the duration of the spell [as does any time spent in physical form]. As noted above, you can dismiss the spell, and you can even dismiss it for individual wind walkers and not others. For the last minute of the spell's duration, a wind walker in cloud form automatically descends 60 feet per round [for a total of 600 feet], though it may descend faster if it wishes. This descent serves as a warning that the spell is about to end."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=6|Druid=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You alter the substance of your body to a cloudlike vapor [as the gaseous form spell] and move through the air, possibly at great speed. You can take other creatures with you, each of which acts independently. Normally, a wind walker flies at a speed of 10 feet with perfect maneuverability. If desired by the subject, a magical wind wafts a wind walker along at up to 600 feet per round [60 mph] with poor maneuverability. Wind walkers are not invisible but rather appear misty and translucent. If fully clothed in white, they are 80%% likely to be mistaken for clouds, fog, vapors, or the like. A wind walker can regain its physical form as desired and later resume the cloud form. Each change to and from vaporous form takes 5 rounds, which counts toward the duration of the spell [as does any time spent in physical form]. As noted above, you can dismiss the spell, and you can even dismiss it for individual wind walkers and not others. For the last minute of the spell's duration, a wind walker in cloud form automatically descends 60 feet per round [for a total of 600 feet], though it may descend faster if it wishes. This descent serves as a warning that the spell is about to end.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You alter the substance of your body to a cloudlike vapor and move through the air, possibly at great speed.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Air"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]; see text"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "No and Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/windWalk.html#_wind-walk"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.369"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No and yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You and (CASTERLEVEL/3) touched creatures"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 673,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1421,
-    "record_key": "Wind Walk.MOD"
+    "record_key": "Wind Walk",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

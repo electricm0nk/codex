@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cassisian ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:cassisian_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "bestiary_2:monster:angel_cassisian"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(15-ft. line, 1d6 cold or 1d6 fire, Reflex DC %1 half, usable every 1d4 rounds)|CassisianBreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CassisianBreathWeaponDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CassisianBreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CassisianBreathWeaponDC|0"
+      },
+      {
+        "key": "KEY",
+        "value": "Cassisian ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.26",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2162,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Cassisian ~ Breath Weapon",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

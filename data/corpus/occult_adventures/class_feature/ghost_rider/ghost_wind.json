@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghost Rider ~ Ghost Wind",
+    "name": "Ghost Wind",
+    "class": "Cavalier",
+    "description": "At 11th level, the ghost rider's ghost mount can use air walk (as the spell, no action required) at will for up to 1 round at a time, after which it falls to the ground. At 14th level, the mount can fly at its speed with a bonus on Fly skill checks equal to the ghost rider's class level. This ability replaces mighty charge and greater banner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghost Rider ~ Ghost Wind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ghost Rider Class Feature.Cavalier Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, the ghost rider's ghost mount can use air walk (as the spell, no action required) at will for up to 1 round at a time, after which it falls to the ground. At 14th level, the mount can fly at its speed with a bonus on Fly skill checks equal to the ghost rider's class level. This ability replaces mighty charge and greater banner."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1730,
+    "record_key": "Ghost Rider ~ Ghost Wind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

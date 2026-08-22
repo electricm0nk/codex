@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "ability_keys": [
       "book_of_the_damned_volume_2:monster_ability:vavakia_breath_weapon",
@@ -36,6 +34,160 @@
     ],
     "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfMedium"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frightful Presence|Immunity to Fire|Trample|True Seeing ~ Constant|Unholy Aura ~ Constant|Vavakia ~ Breath Weapon|Vavakia ~ Smoking Wound|Vavakia ~ Stun"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|13|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|HD"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|DAMAGE|STR/2"
+      },
+      {
+        "key": "CR",
+        "value": "18"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Intimidate|Knowledge (Arcana)|Spellcraft"
+      },
+      {
+        "key": "DR",
+        "value": "15/Cold Iron"
+      },
+      {
+        "key": "DR",
+        "value": "15/Good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):18"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,60,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing,*1,3d6,SPROP=plus smoking wound"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*2,1d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail Slap,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,2d8,SPROP=plus stun"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Demon|Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Earthquake,18+CHA|Summon Monster VI (Vavakia)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Blasphemy,17+CHA|Power Word Stun,18+CHA|Quickened Enervation"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=TL|Enervation|Telekinesis,15+CHA|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "29"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "H",
     "source_page": "p.60",
     "speeds": [
@@ -49,16 +201,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
-    "sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
-    "line": 10,
-    "record_key": "Demon (Vavakia)"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+    "record_key": "Demon (Vavakia)",
+    "sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

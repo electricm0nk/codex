@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Aspect of the Wolf",
-    "school": "Transmutation",
-    "level": 4,
     "description": "When you cast this spell, you take on an aspect of a wolf, including some of its physical characteristics. You become more rugged, your ears become elongated, and you sprout sharp fangs and fur.  You gain a +4 enhancement bonus to Strength and Dexterity, the scent ability, a +2 enhancement bonus on trip attacks, and can make a trip combat maneuver as a swift action. This trip attack does not provoke attacks of opportunity.",
-    "full_text": true
+    "full_text": true,
+    "key": "Aspect of the Wolf",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=4|Druid=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 Str and Dex, +2 bonus on trip attacks.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this spell, you take on an aspect of a wolf, including some of its physical characteristics. You become more rugged, your ears become elongated, and you sprout sharp fangs and fur.  You gain a +4 enhancement bonus to Strength and Dexterity, the scent ability, a +2 enhancement bonus on trip attacks, and can make a trip combat maneuver as a swift action. This trip attack does not provoke attacks of opportunity.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/aspectOfTheWolf.html#_aspect-of-the-wolf"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 30,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1855,
-    "record_key": "Aspect of the Wolf"
+    "record_key": "Aspect of the Wolf",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

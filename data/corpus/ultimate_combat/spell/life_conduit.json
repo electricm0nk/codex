@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You utilize life conduit to share hit points with your eidolon. While this spell is active, you can spend a swift action to transfer 1d6 hit points between you and your eidolon, either taking damage yourself and healing your eidolon or healing yourself and damaging your eidolon. If your eidolon moves farther than 50 feet from you, this spell ends.",
+    "key": "Life Conduit",
+    "level": null,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You are bound even tighter to your eidolon than normal, and may share hit points with it through your life link ability.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You utilize life conduit to share hit points with your eidolon. While this spell is active, you can spend a swift action to transfer 1d6 hit points between you and your eidolon, either taking damage yourself and healing your eidolon or healing yourself and damaging your eidolon. If your eidolon moves farther than 50 feet from you, this spell ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/lifeConduit.html#_life-conduit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 64,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Life Conduit",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

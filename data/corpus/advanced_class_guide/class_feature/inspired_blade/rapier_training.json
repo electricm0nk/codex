@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inspired Blade ~ Rapier Training",
+    "name": "Rapier Training",
+    "class": "Swashbuckler",
+    "description": "An inspired blade gains a +%1 bonus on attack rolls and a +%2 bonus on damage rolls with rapiers. While wielding a rapier, she gains the benefit of the Improved Critical feat.|InspiredRapierBonus|InspiredRapierBonus+1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Blade ~ Rapier Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspiredRapierBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An inspired blade gains a +%1 bonus on attack rolls and a +%2 bonus on damage rolls with rapiers. While wielding a rapier, she gains the benefit of the Improved Critical feat.|InspiredRapierBonus|InspiredRapierBonus+1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Critical (Rapier)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspiredRapierBonus|min(4,floor((SwashbucklerLVL-1)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|TOHIT|InspiredRapierBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|DAMAGE|InspiredRapierBonus+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3891,
+    "record_key": "Inspired Blade ~ Rapier Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Red Dragon ~ Melt Stone",
+    "delivery": "Supernatural",
+    "description": "An ancient or older red dragon can use its breath weapon to melt rock at a range of 100 feet, affecting a %1-foot-radius area per age category. The area becomes lava to a depth of 1 foot. Any creature in contact with the lava takes 20d6 points of fire damage on the first round, 10d6 on the second, and none thereafter as the lava hardens and cools. If used on a wall or ceiling, treat this ability as an avalanche that deals fire damage.",
+    "description_variables": [
+      "DragonAgeCategory*5"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:red_dragon_melt_stone",
+    "name": "Melt Stone",
+    "owners": [
+      "beastiary:monster:dragon_red"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient or older red dragon can use its breath weapon to melt rock at a range of 100 feet, affecting a %1-foot-radius area per age category. The area becomes lava to a depth of 1 foot. Any creature in contact with the lava takes 20d6 points of fire damage on the first round, 10d6 on the second, and none thereafter as the lava hardens and cools. If used on a wall or ceiling, treat this ability as an avalanche that deals fire damage.|DragonAgeCategory*5"
+      },
+      {
+        "key": "KEY",
+        "value": "Red Dragon ~ Melt Stone"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.98",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 439,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Red Dragon ~ Melt Stone",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

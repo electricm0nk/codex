@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Ground Breaker (Greater)",
+    "name": "Ground Breaker, Greater",
+    "class": "Rage Power",
+    "description": "When using the ground breaker** rage power, the barbarian can extend the radius of the effect by 5 feet. This rage power can be selected up to three times, and its effects stack. A barbarian must have the ground breaker rage power and be at least 8th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Ground Breaker (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Ground Breaker"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When using the ground breaker** rage power, the barbarian can extend the radius of the effect by 5 feet. This rage power can be selected up to three times, and its effects stack. A barbarian must have the ground breaker rage power and be at least 8th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 281,
+    "record_key": "Rage Power ~ Ground Breaker (Greater)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

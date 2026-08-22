@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maestro Bloodline ~ Beguiling Voice",
+    "name": "Beguiling Voice",
+    "class": "Maestro Bloodline",
+    "description": "You can use the sound of your voice to lull a target creature into taking no action. This ability acts as the daze spell, except it is language-dependent, has a duration of 1 round, and affects a living creature with no more than %1 Hit Dice. You can use this ability %2 times per day.|Sorcerer_MaestroBeguilingVoice_HD|Sorcerer_Maestro_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maestro Bloodline ~ Beguiling Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Maestro Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Maestro"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Maestro_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Maestro_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Maestro_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_MaestroBeguilingVoice_HD|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use the sound of your voice to lull a target creature into taking no action. This ability acts as the daze spell, except it is language-dependent, has a duration of 1 round, and affects a living creature with no more than %1 Hit Dice. You can use this ability %2 times per day.|Sorcerer_MaestroBeguilingVoice_HD|Sorcerer_Maestro_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_MaestroBeguilingVoice_HD|Sorcerer_Maestro_BloodlinePower1LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (%1 HD)|Sorcerer_MaestroBeguilingVoice_HD|Sorcerer_Maestro_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Maestro_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|MaestroBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 629,
+    "record_key": "Maestro Bloodline ~ Beguiling Voice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,227 @@
+[
+  {
+    "key": "Esoteric ~ AC Bonus",
+    "class": "Magus",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Arcane Pool",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Diminished Spellcasting",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Improved Tattooed Spell",
+    "class": "Magus",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Ki Arcana",
+    "class": "Magus",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Tattooed Spell",
+    "class": "Magus",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Unarmed Spellstrike",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Unarmed Strike",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Esoteric ~ Weapon and Armor Proficiency",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1770
+    }
+  },
+  {
+    "key": "Mindblade ~ Dual Manifest",
+    "class": "Magus",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1783
+    }
+  },
+  {
+    "key": "Mindblade ~ Dual Weapons",
+    "class": "Magus",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1783
+    }
+  },
+  {
+    "key": "Mindblade ~ Psychic Access",
+    "class": "Magus",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1783
+    }
+  },
+  {
+    "key": "Mindblade ~ Psychic Pool",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1783
+    }
+  },
+  {
+    "key": "Mindblade ~ Rapid Manifest",
+    "class": "Magus",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1783
+    }
+  },
+  {
+    "key": "Mindblade ~ Spells",
+    "class": "Magus",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1783
+    }
+  }
+]

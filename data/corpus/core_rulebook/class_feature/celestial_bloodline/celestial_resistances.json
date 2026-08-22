@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Celestial Bloodline ~ Celestial Resistances",
+    "name": "Celestial Resistances",
+    "class": "Celestial Bloodline",
+    "description": "You gain resist acid %1 and resist cold %1.|Sorcerer_CelestialCelestialResistances_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodline ~ Celestial Resistances"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Celestial Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Celestial_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Celestial_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CelestialCelestialResistances_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resist acid %1 and resist cold %1.|Sorcerer_CelestialCelestialResistances_ResistanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CelestialCelestialResistances_ResistanceBonus|min(floor((Sorcerer_Celestial_BloodlinePower3LVL+3)/6),2)*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus,ColdResistanceBonus|Sorcerer_CelestialCelestialResistances_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2409,
+    "record_key": "Celestial Bloodline ~ Celestial Resistances"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

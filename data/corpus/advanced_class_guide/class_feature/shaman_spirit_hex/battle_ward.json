@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Battle Ward",
+    "name": "Battle Ward",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman touches a willing creature (including herself) and grants a battle ward. The next time a foe makes an attack roll against the target, the ward activates and grants a +%1 deflection bonus to the warded creature's AC. Each subsequent time she's attacked, the defection bonus reduces by 1 (to +%2 for the second time she's attacked and +%3 for the third). The ward fades when the bonus is reduced to +0 or after 24 hours, whichever comes first.|ShamanBattleWardStartingBonus|ShamanBattleWardStartingBonus-1|ShamanBattleWardStartingBonus-2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Battle Ward"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Battle Ward"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBattleSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanBattleWardStartingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman touches a willing creature (including herself) and grants a battle ward. The next time a foe makes an attack roll against the target, the ward activates and grants a +%1 deflection bonus to the warded creature's AC. Each subsequent time she's attacked, the defection bonus reduces by 1 (to +%2 for the second time she's attacked and +%3 for the third). The ward fades when the bonus is reduced to +0 or after 24 hours, whichever comes first.|ShamanBattleWardStartingBonus|ShamanBattleWardStartingBonus-1|ShamanBattleWardStartingBonus-2"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature affected by this hex cannot be affected by it again for 24 hours."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanBattleWardStartingBonus|3+min(2,(ShamanSpiritLVL/8))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1503,
+    "record_key": "Shaman Spirit Hex ~ Battle Ward"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

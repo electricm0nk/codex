@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Clone Master ~ Rebirth",
+    "name": "Rebirth",
+    "class": "Alchemist",
+    "description": "You can prepare a clone of yourself that awakens if you are slain. Creating the clone costs 5,000 gp, takes 1 week of work, and requires 3 additional weeks for the clone to grow to maturity. If you die, the clone awakens as if you had used the Clone spell on yourself. You can have one inert of yourself at a time. Unused clones you create do not rot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Clone Master ~ Rebirth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can prepare a clone of yourself that awakens if you are slain. Creating the clone costs 5,000 gp, takes 1 week of work, and requires 3 additional weeks for the clone to grow to maturity. If you die, the clone awakens as if you had used the Clone spell on yourself. You can have one inert of yourself at a time. Unused clones you create do not rot."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 859,
+    "record_key": "Clone Master ~ Rebirth"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

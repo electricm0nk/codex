@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Call Down the Legends",
+    "name": "Call Down the Legends",
+    "class": "Pathfinder Chronicler",
+    "description": "At 7th level, once per week as a full-round action, a Pathfinder chronicler can summon 2d4 4th-level human barbarians, as if she used a bronze horn of Valhalla; these summoned barbarians serve her with complete loyalty. The barbarians are constructs, not actual people (although they seem to be). They arrive with the normal starting equipment for barbarians (see page 454) and attack anyone the chronicler designates.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Call Down the Legends"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, once per week as a full-round action, a Pathfinder chronicler can summon 2d4 4th-level human barbarians, as if she used a bronze horn of Valhalla; these summoned barbarians serve her with complete loyalty. The barbarians are constructs, not actual people (although they seem to be). They arrive with the normal starting equipment for barbarians (see page 454) and attack anyone the chronicler designates."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.391"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3058,
+    "record_key": "Pathfinder Chronicler ~ Call Down the Legends"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Boar Shaman ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Druid",
+    "description": "At 9th level and every four levels thereafter, a boar shaman gains one of the following bonus feats: Bleeding Critical, Blind-Fight, Diehard, or Improved Overrun. She must meet the prerequisites for these bonus feats. This ability replaces venom immunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boar Shaman ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level and every four levels thereafter, a boar shaman gains one of the following bonus feats: Bleeding Critical, Blind-Fight, Diehard, or Improved Overrun. She must meet the prerequisites for these bonus feats. This ability replaces venom immunity."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Boar Shaman Feat|(DruidLvl-5)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 655,
+    "record_key": "Boar Shaman ~ Bonus Feat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

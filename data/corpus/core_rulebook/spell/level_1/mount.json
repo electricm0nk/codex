@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You summon a light horse or a pony [your choice] to serve you as a mount. The steed serves willingly and well. The mount comes with a bit and bridle and a riding saddle.",
     "key": "Mount",
-    "school": "Conjuration",
     "level": 1,
-    "description": "You summon a light horse or a pony [your choice] to serve you as a mount. The steed serves willingly and well. The mount comes with a bit and bridle and a riding saddle."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon a light horse or a pony (your choice) to serve you as a mount.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon a light horse or a pony [your choice] to serve you as a mount. The steed serves willingly and well. The mount comes with a bit and bridle and a riding saddle.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/mount.html#_mount"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Summoning"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One mount"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 407,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1161,
-    "record_key": "Mount.MOD"
+    "record_key": "Mount",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

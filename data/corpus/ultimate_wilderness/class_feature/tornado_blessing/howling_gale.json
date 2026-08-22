@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tornado Blessing ~ Howling Gale",
+    "name": "Howling Gale",
+    "class": "Tornado Blessing",
+    "description": "You can invoke a howling windstorm around yourself as a standard action. For 1 minute, any Large or smaller creature takes twice as much movement to enter a space adjacent to you due to the winds, and thus can't take a 5-foot step to move adjacent to you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tornado Blessing ~ Howling Gale"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can invoke a howling windstorm around yourself as a standard action. For 1 minute, any Large or smaller creature takes twice as much movement to enter a space adjacent to you due to the winds, and thus can't take a 5-foot step to move adjacent to you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1237,
+    "record_key": "Tornado Blessing ~ Howling Gale"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

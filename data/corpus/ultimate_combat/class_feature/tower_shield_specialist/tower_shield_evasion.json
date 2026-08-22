@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tower Shield Specialist ~ Tower Shield Evasion",
+    "name": "Tower Shield Evasion",
+    "class": "Fighter",
+    "description": "At 16th level, while using a tower shield, the tower shield specialist gains evasion, as the rogue class ability. At 20th level, the shield specialist gains improved evasion, as the rogue advanced talent, while using a tower shield. This ability replaces both weapon training 4 and weapon mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tower Shield Specialist ~ Tower Shield Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 16th level, while using a tower shield, the tower shield specialist gains evasion, as the rogue class ability. At 20th level, the shield specialist gains improved evasion, as the rogue advanced talent, while using a tower shield. This ability replaces both weapon training 4 and weapon mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 757,
+    "record_key": "Tower Shield Specialist ~ Tower Shield Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

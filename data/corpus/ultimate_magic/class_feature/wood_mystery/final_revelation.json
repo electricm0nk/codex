@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Wood Mystery",
+    "description": "You become a living creature of wood. You are forevermore treated as the plant type rather than your original type for the purpose of spells and magical effects. Your skin takes on the appearance of polished wood grain, and you gain a +4 natural armor bonus to your Armor Class and damage reduction 10/- against wooden weapons or any natural attacks made by a wooden or woodlike creature. You gain immunity to paralysis, poison, polymorph, sleep, and stunning. At will, you can meld with any tree or single block of wood (as meld into stone, except wood only, and with no limit to how long you can remain in the wood).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a living creature of wood. You are forevermore treated as the plant type rather than your original type for the purpose of spells and magical effects. Your skin takes on the appearance of polished wood grain, and you gain a +4 natural armor bonus to your Armor Class and damage reduction 10/- against wooden weapons or any natural attacks made by a wooden or woodlike creature. You gain immunity to paralysis, poison, polymorph, sleep, and stunning. At will, you can meld with any tree or single block of wood (as meld into stone, except wood only, and with no limit to how long you can remain in the wood)."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Wood Mystery Final Revelation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 521,
+    "record_key": "Wood Mystery ~ Final Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Companion Body Type ~ Serpentine",
     "delivery": null,
@@ -16,6 +14,72 @@
       "ultimate_wilderness:companion:companion_spitting_cobra",
       "ultimate_wilderness:companion:familiar_sea_krait"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Armor|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Body|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Chest|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Feet|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Hands|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Head|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Neck|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Ring|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Shield|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Shoulders|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|Wrist|-2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Available Magic Item Slots; belt, eyes, headband"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Body Type ~ Serpentine"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuaility"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.177",
     "stat_adjustments": [],
@@ -23,16 +87,18 @@
       "SpecialQuaility"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 399,
-    "record_key": "Companion Body Type ~ Serpentine"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 399,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Companion Body Type ~ Serpentine",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

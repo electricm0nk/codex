@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dual-Cursed Oracle ~ Fortune",
+    "name": "Fortune",
+    "class": "Dual-Cursed Oracle",
+    "description": "As an immediate action, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll. You can use this ability %1/day.|FortuneTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual-Cursed Oracle ~ Fortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.GeneralRevelation.Extraordinary.PerDayOracleRevelation"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Oracle Archetype ~ Dual-Cursed Oracle"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FortuneTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll. You can use this ability %1/day.|FortuneTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FortuneTimes|(classlevel(\"Oracle\")+1)/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1471,
+    "record_key": "Dual-Cursed Oracle ~ Fortune"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

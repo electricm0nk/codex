@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: 2026-08-21 against tranche/11 (SD-31 wave 26 — formula interpreter wired to its first production consumers)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -131,6 +131,162 @@ selected skills, armor-check penalties beyond the deterministic posture, feat pr
 parity). Several of those gaps are exactly what the later per-domain engines in the
 [per-domain engine catalog](#per-domain-engine-catalog) below exist to fill, without editing this file.
 
+**Path note (SD31-E4-F1-005, since 2026-08-20):** `pilot_compute` is now a directory module
+(`src/rules_core/pilot_compute/mod.rs` holds the ~17,800-line orchestrator this section describes;
+`src/rules_core/pilot_compute/class_feature_grant_consumer.rs`, `class_slayer.rs`, and
+`class_ultimate_combat.rs` are per-class submodules split out as a pure code-move — same behaviour,
+same call sites via `mod.rs`'s own `use super::*` re-export). This document's `pilot_compute.rs`
+references above predate that split and describe `mod.rs`'s content; not fully swept to the new path
+throughout this file as of this note — treat `pilot_compute.rs` and `pilot_compute/mod.rs` as the
+same file wherever this document names the former.
+
+### 3a. `src/rules_core/pilot_compute/formula_interpreter.rs` and `domain_power.rs` — the formula
+interpreter (SD-31 wave 25/25b, a real architecture change, not an extension of the pattern above)
+
+**Every function cataloged in the table above is a hand-written, bespoke Rust closed-form
+expression, independently derived and verified against the corpus per feature.** That was a pinned
+rule (`SD-27 decisions.md §24.1`, "No formula interpreter") until `OPERATOR-RULINGS-2026-08-21.md`
+§20 overturned it for this package (folded into `docs/release/SD-31-corpus-closure-grind/decisions.md`
+as Decision 20): PCGen's own `BONUS:`/`DEFINE:` LST tokens already encode this arithmetic, and
+hand-transcribing it into a bespoke Rust function per feature was the direct cause of this program's
+per-unit throughput cost. Two new submodules, both under `src/rules_core/pilot_compute/`, exist as of
+wave 25b:
+
+- **`formula_reproduction_harness.rs`** — mechanically enumerates the existing hand-modelled
+  functions from source (>=166, a re-derivable floor, not a hand-maintained list) and defines the
+  `FormulaEvaluator` trait every interpreter implementation must satisfy. A small set of its
+  enumerated cases (21 as of wave 25b) exercise a real evaluator against them for agreement.
+- **`formula_interpreter.rs`** (`PcgenFormulaEvaluator`) — a real recursive-descent parser/evaluator
+  for the arithmetic grammar PCGen's own `BONUS:`/`DEFINE:` formula segments carry (integer/ability-
+  modifier variables, `+ - * /`, `floor`/`ceil`/`abs`/`min`/`max`/`if`/`classlevel`), semantics
+  re-derived from the pinned oracle's REAL resolution chain (`BonusObj.java` → `FormulaFactory.java`
+  → `JEPFormula.java` → `VariableProcessor.java` → `pcgen/util/PJEP.java extends org.nfunk.jep.JEP`,
+  function library `plugin/jepcommands/*Command.java` — see the module's own doc for the full chain
+  and wave 25b integration's correction of an earlier version that cited the wrong PCGen subsystem).
+- **`domain_power.rs`** — a narrower, independent arithmetic evaluator applied specifically to
+  Cleric/Inquisitor domain-power formulas, extending `ground_or_block_cleric_domain_power`/
+  `ground_or_block_inquisitor_domain_power`'s prior Good+Healing allowlist to War and Strength (wave
+  25 salvage, merged wave 25b).
+
+**What has NOT changed:** the ruling's own condition. *"Every interpreted value must clear
+`derived_evaluator_fixture_check` ... An interpreted value with no fixture is not done."* Neither
+`formula_interpreter.rs` nor `formula_reproduction_harness.rs` has a production consumer wired as of
+wave 25b — both are `pub` infrastructure with zero non-test callers, banking zero corpus units. The
+hand-written pattern the table above describes remains the shipping mechanism for every unit
+currently `done`; the interpreter is additive capability, not (yet) a replacement for what already
+ships. `domain_power.rs` IS wired (Cleric/Inquisitor War/Strength), because its own fixture gate
+(`mod fixture_check_tests`, in-module, corpus-byte-transcription-checked) satisfies the ruling's
+condition directly.
+
+**Known, disclosed gaps as of wave 25b** (see `OPEN-ISSUES.md` rows 354-357 and the wave 25b receipt
+for the full account): `classlevel("X")` does not verify its class-name argument against a bound
+class context (silently wrong, not merely incomplete, for a genuinely cross-class formula — a
+confirmed real corpus shape, `bestiary_3`'s `classlevel ("Magical Beast")/2-1`); comparisons do not
+yet produce a reusable numeric value outside `if()`'s own condition slot, so boolean-to-int coercion
+(`"1+(KineticistLVL>=15)"`) and `&&` (Sorcerer bloodline gates) both refuse rather than evaluate; the
+`BONUS:<TAG>|<target>|` envelope, PRE-token gating, and `PREVARGTEQ`-embedded repeated-conditional
+clauses are a different PCGen subsystem (`BonusObj`/`MultiTagBonusObj`) entirely out of scope.
+
+**Also new in `pilot_compute/mod.rs` as of wave 25b**: a flat-override `race_trait` compute seam
+(`explain_rougarou_flat_override_race_trait`, `explain_gillman_flat_override_race_trait`,
+`explain_vanara_flat_override_race_trait`) — the first `race_trait` movement in six waves, grounding
+a race's flat Speed/Vision/Natural-Weapon override (and, for Gillman/Vanara, the alternate-trait
+`PREFACT`-gated replacement of that override) without a new subsystem, following the same
+gate-then-explain shape the per-race seam table above already uses.
+
+### 3b. Wave 26 — the interpreter gets its first production consumers, plus grammar widening
+
+Wave 25b built `formula_interpreter.rs` and proved it against 22 hand-modelled functions but wired
+zero consumers. Wave 26 plugged it in:
+
+- **`class_feature_grant_consumer.rs`** now resolves a `class_feature` corpus record's `DESC:` `%N`
+  placeholder through the interpreter (`resolve_pcgen_var_chain`, a fixed-point pass over the
+  record's own same-record `BONUS:VAR` chain, seeded with the character's real class level) where
+  the static, book-agnostic `class_feature_descriptions.rs` catalog (desktop app) has no character
+  context to resolve it — that catalog was also fixed this wave to refuse serving a description whose
+  `%N` it cannot fill, rather than silently dropping the number (a real, disclosed ~2,389-description
+  reduction in raw served count, trading a subtly-wrong sentence for none). 12 class_feature records
+  fixture-verified this wave; 1 (`core_rulebook:class_feature:rogue_trapfinding`) newly crosses the
+  `derived`+`fixture-verified` → `done` bar. **Reachability caveat** (`OPEN-ISSUES.md` row 366): the
+  new consumer row this module emits for Trapfinding is itself suppressed by the pre-existing
+  `already_computed_slugs` guard (a hand-modelled `class_chassis.rogue.trapfinding` already occupies
+  that slug) — the banked unit's `done` status rests on the `derived` wiring class's own bar
+  (evaluator-fixture correctness), not on this new row reaching a live sheet. The value shown to the
+  player was, and remains, correct via the pre-existing hand-modelled path.
+- **`domain_power.rs`** (its own, separate, `i32`-typed evaluator — NOT `formula_interpreter`'s `f64`
+  one; unification is an open question, `OPEN-ISSUES.md` row 368) widened Cleric's own domain
+  dispatch to read the shared `DOMAIN_POWER_CATALOG` generically (previously Good/Healing-only even
+  though War/Strength already existed and were already served to Inquisitor), and added two new
+  catalog entries: Destruction ~ Destructive Smite (`max(DomainDestructionLVL/2,1)`) and Glory ~ Touch
+  of Glory (bare `DomainGloryLVL`, no `max()` wrap). 0 board units bank from this — confirmed this
+  cycle and pre-existing per `OPEN-ISSUES.md` row 360 — because `v06_work_inventory.rs`'s
+  `class_feature_owner` cannot attribute ANY `Domain Power ~ X` corpus row to Cleric or Inquisitor at
+  all, not even the already-shipped, already-computed Good/Healing powers.
+- **`formula_interpreter.rs` grammar widened**: bare/parenthesised comparisons as first-class
+  boolean-as-numeric values (`Expr::Cmp`), `&&`-chains of comparisons (`Expr::And`), and
+  `skillinfo("TOTALRANK", ...)` (`Expr::SkillInfoTotalRank`) — all three derived from decompiling the
+  pinned `org.scijava:jep:2.4.2` dependency jar's bytecode (`Comparative`/`Logical`/
+  `SkillInfoCommand`), not guessed. `corpus_shape_coverage`'s refusal count fell from 431/2,671
+  (16.1%) to 118/2,671 (4.4%).
+- **`bonus_stack_reader.rs`** (new module) reads the real multi-token `PREVARGTEQ`-gated additive-
+  stack shape (`witch_ward_bonus` and ~210–222 similar records/target-variable groups) — several
+  `BONUS:VAR` tokens sharing one target, each individually gated, summed only over currently-
+  qualifying addends per `PlayerCharacter.getTotalBonusTo`/`BonusManager.sumActiveBonusMap`. Zero
+  consumers wired yet (out of this wave's scope). The wave-25-dispatch-named
+  "`PREVARGTEQ`-embedded-inside-raw-formula-text" shape does not exist in the real corpus — a
+  dispatch-premise correction (`OPEN-ISSUES.md` row 364); this module reads the shape that IS real.
+- **`race_trait`**: a formula-shaped seam for Undine's 3 alternate racial traits was built this wave
+  and its arithmetic/fixtures were independently verified sound by two separate reviews, but the
+  accompanying board-credit change (adding `"undine"` to a coarse race-level allowlist) was found, on
+  mutation, to award `done` credit to 11 sibling records with no consumer of any kind — marked GAMED
+  and **NOT merged** to `tranche/11`. See `OPEN-ISSUES.md` row 365 for the full finding and two
+  remediation paths a future wave can take to land the sound parts (the seam and its fixtures)
+  without the gaming vector.
+
+**Known interpreter gaps as of wave 26** (supersedes the wave-25b list above where noted):
+`classlevel("X")` still does not verify its class-name argument (unchanged — still a hard
+precondition on banking anything through it); `classlevel("X","APPLIEDAS=NONEPIC")`'s 2-arg form is a
+real corpus shape, unverified, refuses cleanly; `var`/`count`/`mastervar`/`charbonusto`/`cl` (57
+refusals) remain unimplemented; comparisons/`&&`/`skillinfo(TOTALRANK)` are no longer gaps (closed
+this wave).
+
+### 3c. Wave 27 — the interpreter's second consumer (ability modifiers), and the class-chassis census
+
+Wave 27's dispatch reframed the program's remaining wall as "features for characters that cannot
+exist" and asked how many of the 157 not-done `class` units are Monk-shaped — a chassis table
+present, only the `table_class_id` dispatch mapping missing. **The census answer is zero**: every
+class with a real chassis table anywhere in the codebase (34 total, across CRB/APG/ACG/Pathfinder
+Unchained/Ultimate Combat) is already dispatched. See [status.md](./status.md)'s wave 27 section for
+the full breakdown of where the remaining 157 classes actually sit (prestige entry-requirement gap,
+net-new base-class tables, structurally-non-PC-class records, unstarted books).
+
+- **`class_feature_grant_consumer.rs`'s `resolve_pcgen_var_chain` now seeds the six ability-modifier
+  abbreviations** (STR/DEX/CON/INT/WIS/CHA) before its fixed-point `BONUS:VAR` pass, so a
+  `class_feature` `DESC:` formula referencing a bare ability modifier (not just the character's class
+  level) can resolve. Two units newly clear the `derived`+`fixture-verified` bar: Ranger ~ Master
+  Hunter, Rogue ~ Master Strike — both riding on pre-existing CRB chassis dispatch, not new class
+  support. **Reachability caveat, same shape as wave 26's row 366**: `already_computed_slugs`
+  suppresses both new rows in production (a pre-existing hand-modelled `value:0` explanation already
+  occupies each slug), so neither value newly reaches a live character sheet this wave — confirmed by
+  driving `compute_pilot_base_chassis` across 165 synthetic characters and finding zero
+  interpreter-resolved lines. `OPEN-ISSUES.md` row 375 names the concrete unblock
+  (`pathfinder_unchained::rogue_features::master_strike_dc` already proves the pattern for the
+  Unchained Rogue in the same file).
+- **The flat-override `race_trait` seam grew to 5 races** (Rougarou, Gillman, Vanara, **Samsaran,
+  Nagaji**), each requiring full per-record coverage of the race's reachable `computed` population
+  before being added to `FLAT_OVERRIDE_RACE_TRAIT_RACES` — a direct, disclosed response to wave 26's
+  Undine GAMED finding (row 365's partial-coverage shape). One real bug was caught and fixed during
+  integration: Nagaji's Hypnotic Gaze is an alternate trait that replaces Serpent's Sense
+  (`Nagaji_ReplaceSerpentsSense`, already registered in `race_resolver.rs`'s
+  `ALTERNATE_TRAIT_REPLACE_FLAGS`), but the merged seam emitted both unconditionally — fixed by
+  gating on `replaced_by_alternate_trait`, mirroring `explain_gillman_flat_override_race_trait`/
+  `explain_vanara_flat_override_race_trait`. The credit mechanism itself (`is_seamed`, race-level not
+  record-level) still banks all 10 Samsaran+Nagaji units regardless of this fix — see `OPEN-ISSUES.md`
+  row 365/378/380 for why that coarseness was left as-is rather than patched piecemeal for one race.
+- **No change to `formula_interpreter.rs`, `class_tables.rs`, or any `ClassId`-family enum this
+  wave.** Both class-scoped lanes (a corpus-wide census, and a CRB-prestige-class architecture
+  investigation) were comment-only diffs; zero classes were made buildable.
+
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 
 `compute_pilot_with_corpus(input: &CharacterInput, corpus: &SourcePackageContent) ->
@@ -242,17 +398,41 @@ subset of CRB feats only.
 
 **`src/rules_core/equipment_effects.rs`** (Epic 5) + submodules + `src/rules_core/equipment_resolver.rs` + `src/rules_core/spell_resolver.rs` —
 `compute_equipment_effects(equipped: &[EquipmentSelection], corpus) -> EquipmentEffects` dispatches
-across four category submodules under `src/rules_core/equipment_effects/`: `src/rules_core/equipment_effects/arms_armor.rs`
+across category submodules under `src/rules_core/equipment_effects/`: `src/rules_core/equipment_effects/arms_armor.rs`
 (AC/max-dex/spell-failure — the fields `EquipmentStatEffect` is shaped to carry),
 `src/rules_core/equipment_effects/general.rs` (per-item skill-check circumstance bonuses, via
 `ResolvedEquipmentEffect::skill_bonus`), `src/rules_core/equipment_effects/magic_items.rs` (per-item ability-score enhancement
-bonuses, via `ResolvedEquipmentEffect::ability_bonus`), and `src/rules_core/equipment_effects/equipmods.rs` (per-item weapon
-to-hit/damage enhancement bonuses, via `ResolvedEquipmentEffect::weapon_enhancement_bonus`) — all
-four landed. Corpus identity resolution for both equipment and spells is centralized, not duplicated
-per engine: `equipment_resolver::equipment_id_resolve` and `spell_resolver::spell_id_resolve` are
-the sole lookup functions every corpus-aware engine (`src/rules_core/pilot_compute_corpus.rs`,
-`src/rules_core/equipment_effects.rs`, `src/rules_core/spellbook.rs`, `src/rules_core/damage_total.rs`) calls to turn a chosen
+bonuses, via `ResolvedEquipmentEffect::ability_bonus`), `src/rules_core/equipment_effects/equipmods.rs` (per-item weapon
+to-hit/damage enhancement bonuses, via `ResolvedEquipmentEffect::weapon_enhancement_bonus`) — the original four Epic 5
+categories — plus, added SD-31 wave 18 (operator ruling 2026-08-19, intelligent-item subsystem
+in scope): `src/rules_core/equipment_effects/intelligent_item.rs` (a selection-scoped
+Intelligence/Wisdom/Charisma/Ego/alignment contribution, via `ResolvedEquipmentEffect::intelligent_item`
+— reads the CRB/Mythic Adventures `Intelligent Item ~ ...` `BONUS:VAR` chains directly; the Base
+record's own `BaseCostTracker`-formula Ego contribution is honestly skipped, not fabricated; the
+`Intelligent Item ~ Power/Purpose` families' own headline mechanics remain unresolved). A scoped
+`WeaponEnhancementBonus::natural_attack_only` field (equipmods.rs) marks the Amulet of Mighty Fists
+family's bonus as natural-attack-only; **both** live consumers — `damage_total::
+resolve_weapon_enhancement_modifier` (the top-level-selection `weapon_enhancement_bonus` path) and
+`equipment_effects::resolve_weapon_to_hit_bonus` (the `applied_modifiers`-attachment path the
+shipped desktop app's `attach_equipment_modifier_at_root` actually uses) — check
+`equipment_effects::is_natural_attack_weapon` on the specific weapon being resolved before applying
+it (`OPEN-ISSUES.md` rows 309/318 — the first consumer was fixed in wave 17/18, the second leaked
+until wave 18's own integration cycle closed it). Corpus identity resolution for both equipment and
+spells is centralized, not duplicated per engine: `equipment_resolver::equipment_id_resolve` and
+`spell_resolver::spell_id_resolve` are the sole lookup functions every corpus-aware engine
+(`src/rules_core/pilot_compute_corpus.rs`, `src/rules_core/equipment_effects.rs`,
+`src/rules_core/spellbook.rs`, `src/rules_core/damage_total.rs`) calls to turn a chosen
 `item_id`/`spell_id` into a real corpus record plus an optional `TableCellRef`.
+
+The intelligent-item resolver's own DTO shape has a real desktop-facing surface —
+`apps/desktop/src-tauri/src/intelligent_item_catalog.rs` (SD-31 wave 18) serves 152 intelligent-item
+component records (98 core_rulebook + 71 mythic_adventures, minus 17 `VISIBLE:NO` trigger rows)
+grouped by family, each mechanic transcribed with a friendly label/formula/translated prerequisite —
+see [desktop-app.md](./desktop-app.md). The two surfaces are independent: the catalog reads raw
+corpus equipmods directly (a static component reference), not `compute_equipment_effects`'s
+resolved output (a specific character's equipped item); reconciling them into one
+per-character "equipped intelligent item" view is a named, un-staffed follow-on
+(`OPEN-ISSUES.md` row 318's `next_lever`, `progress.md` `SD31-W18-INTEGRATE-001`).
 
 **`src/rules_core/damage_total.rs`** (Epic 6) — a single flat file (no per-category subdirectory), because per its
 own doc comment the full damage-modifier picture is one sequential computation rather than a

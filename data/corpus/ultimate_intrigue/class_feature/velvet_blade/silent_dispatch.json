@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Velvet Blade ~ Silent Dispatch",
+    "name": "Silent Dispatch",
+    "class": "Slayer",
+    "description": "A velvet blade becomes adept at taking out her targets quietly. She gains the silent dispatch vigilante talent without meeting the talent's prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Velvet Blade ~ Silent Dispatch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.VelvetBladeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A velvet blade becomes adept at taking out her targets quietly. She gains the silent dispatch vigilante talent without meeting the talent's prerequisites."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vigilante Talent ~ Silent Dispatch"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 936,
+    "record_key": "Velvet Blade ~ Silent Dispatch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

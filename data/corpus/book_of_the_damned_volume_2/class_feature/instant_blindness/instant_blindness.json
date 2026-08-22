@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Instant Blindness ~ Nocticula",
+    "name": "Instant Blindness",
+    "class": "Instant Blindness",
+    "description": "3/day, you can cast quickened blindess/deafness",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Instant Blindness ~ Nocticula"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=3|CASTERLEVEL=TL|Blindness/Deafness,12+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "3/day, you can cast quickened blindess/deafness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 164,
+    "record_key": "Instant Blindness ~ Nocticula"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

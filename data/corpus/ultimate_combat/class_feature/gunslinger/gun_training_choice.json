@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger ~ Gun Training Choice",
+    "name": "Gun Training Choice",
+    "class": "Gunslinger",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Gun Training Choice"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|TYPE=Firearm"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|DAMAGE|DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 44,
+    "record_key": "Gunslinger ~ Gun Training Choice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

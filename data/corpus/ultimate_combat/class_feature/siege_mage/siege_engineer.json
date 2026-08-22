@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Siege Mage ~ Siege Engineer",
+    "name": "Siege Engineer",
+    "class": "Wizard",
+    "description": "At 1st level, the siege mage gains Siege Engineer (see page 118) as a bonus feat, even though he does not meet the prerequisites for that feat. This ability replaces scribe scroll.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege Mage ~ Siege Engineer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, the siege mage gains Siege Engineer (see page 118) as a bonus feat, even though he does not meet the prerequisites for that feat. This ability replaces scribe scroll."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Siege Engineer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1751,
+    "record_key": "Siege Mage ~ Siege Engineer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

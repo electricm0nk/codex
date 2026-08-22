@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scholar ~ Local",
+    "name": "Scholar ~ Local",
+    "class": "Scholar",
+    "description": "You gain a +%1 bonus on Knowledge (Local).|ScholarLoBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Scholar"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScholarLoBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Local).|ScholarLoBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Local)|ScholarLoBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScholarLoBonus|if(skillinfo(\"TOTALRANK\",\"Knowledge (Local)\")>=10,4,2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 208,
+    "record_key": "Scholar ~ Local"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

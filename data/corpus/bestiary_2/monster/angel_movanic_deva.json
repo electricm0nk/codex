@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "10",
@@ -22,6 +20,120 @@
     "natural_attacks": [],
     "race_subtype": "Angel|Extraplanar|Good",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Detect Evil ~ Constant|Flight Maneuverability|Immunity to Death Effects|Immunity to Electricity|Immunity to Energy Drain|Immunity to Fire|Movanic Deva ~ Nature's Pacifism|Movanic Deva ~ Protected Life Force"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Draconic|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT,WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON,CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|11|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "10"
+      },
+      {
+        "key": "DR",
+        "value": "10/evil"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NG"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Diplomacy|Intimidate|Knowledge (Religion)|Survival"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):12"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Angel|Extraplanar|Good"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Cleric"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=8|Antimagic Field|Awaken|Holy Aura,18+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=7|CASTERLEVEL=8|Cure Serious Wounds"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=8|Aid|Discern Lies,14+CHA|Dispel Evil,15+CHA|Dispel Magic|Holy Smite,14+CHA|Invisibility (self only)|Plane Shift,15+CHA|Remove Curse|Remove Disease|Remove Fear"
+      },
+      {
+        "key": "SR",
+        "value": "21"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.28",
     "speeds": [
@@ -35,16 +147,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 84,
-    "record_key": "Angel (Movanic Deva)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Angel (Movanic Deva)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

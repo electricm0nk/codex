@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Hex ~ Charm",
+    "name": "Charm",
+    "class": "Shaman Hex",
+    "description": "A shaman charms an animal or humanoid creature within 30 feet by beckoning and speaking soothing words. This improves the attitude of an animal or humanoid creature by",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Charm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Charm"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanCharmHexDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanCharmHexDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shaman charms an animal or humanoid creature within 30 feet by beckoning and speaking soothing words. This improves the attitude of an animal or humanoid creature by"
+      },
+      {
+        "key": "DESC",
+        "value": " 1 step,|PREVARLT:ShamanHexLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "2 steps,|PREVARGTEQ:ShamanHexLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "as if the shaman had successfully used the Diplomacy skill. The effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours. This is a mind-affecting charm effect.|ShamanCharmHexDuration|ShamanCharmHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanCharmHexDuration|ShamanHexStatMod"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanCharmHexDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1429,
+    "record_key": "Shaman Hex ~ Charm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

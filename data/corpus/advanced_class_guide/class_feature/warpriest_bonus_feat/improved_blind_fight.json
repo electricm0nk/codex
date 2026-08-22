@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Blind-Fight",
+    "name": "Improved Blind-Fight",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your keen senses guide your hand against hidden foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Blind-Fight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Blind-Fight"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Perception=10"
+      },
+      {
+        "key": "DESC",
+        "value": "Your keen senses guide your hand against hidden foes."
+      },
+      {
+        "key": "DESC",
+        "value": " Your melee attacks ignore the miss chance for less than total concealment. You may still reroll your miss chance percentile roll for total concealment. If you successfully pinpoint an invisible or hidden attacker within 30 feet, that attacker gets no advantages related to hitting you with ranged attacks. That is, you don't lose your Dexterity bonus to Armor Class, and the attacker doesn't get the usual +2 bonus for being invisible."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Blind-Fight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4342,
+    "record_key": "Warpriest Bonus Feat ~ Improved Blind-Fight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

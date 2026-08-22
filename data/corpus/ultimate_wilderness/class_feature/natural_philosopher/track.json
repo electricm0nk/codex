@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Natural Philosopher ~ Track",
+    "name": "Track",
+    "class": "Investigator",
+    "description": "A natural philosopher adds %1 on Survival checks to follow tracks.|max(InvestigatorLVL/2,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Natural Philosopher ~ Track"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.NaturalPhilosopherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A natural philosopher adds %1 on Survival checks to follow tracks.|max(InvestigatorLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Follow or identify tracks|TrackBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrackBonus|max(InvestigatorLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 748,
+    "record_key": "Natural Philosopher ~ Track"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

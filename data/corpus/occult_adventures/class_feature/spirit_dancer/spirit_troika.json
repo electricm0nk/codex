@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Dancer ~ Spirit Troika",
+    "name": "Spirit Troika",
+    "class": "Medium",
+    "description": "A spirit dancer learns to dance with two partners. When using spirit dance, he can choose to spend 3 rounds of spirit dance each round to gain access to the abilities of any two of the six spirits he prepared during his seance for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Dancer ~ Spirit Troika"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit dancer learns to dance with two partners. When using spirit dance, he can choose to spend 3 rounds of spirit dance each round to gain access to the abilities of any two of the six spirits he prepared during his seance for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1437,
+    "record_key": "Spirit Dancer ~ Spirit Troika"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

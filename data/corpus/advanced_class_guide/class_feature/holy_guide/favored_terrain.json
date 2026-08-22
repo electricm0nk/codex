@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Guide ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "Paladin",
+    "description": "A holy guide chooses a favored terrain from the ranger favored terrains table. This otherwise functions like the ranger ability of the same name. This ability replaces the mercy gained at 3rd level. Every time a holy guide would be able to select another mercy, he can instead select another favored terrain and increase his bonuses for one existing favored terrain, just like a ranger.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Guide ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Holy Guide Class Feature.Paladin Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerFavoredTerrainLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A holy guide chooses a favored terrain from the ranger favored terrains table. This otherwise functions like the ranger ability of the same name. This ability replaces the mercy gained at 3rd level. Every time a holy guide would be able to select another mercy, he can instead select another favored terrain and increase his bonuses for one existing favored terrain, just like a ranger."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Common Favored Terrain"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Terrain|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3518,
+    "record_key": "Holy Guide ~ Favored Terrain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

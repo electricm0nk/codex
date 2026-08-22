@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Defense ~ Shroud Of Water",
+    "name": "Shroud Of Water",
+    "class": "Elemental Defense",
+    "description": "Element water; Type defense (Su); Level -; Burn 0 You surround yourself with a shroud of water, ice, or both that protects you from harm. The shroud can either cover your body, functioning as armor, or float around you and block attacks, functioning as a shield. It grants either a +4 armor bonus to AC or a +2 shield bonus to AC, and you can change the type of bonus as a standard action. This bonus increases by 1 for every 4 kineticist levels you possess beyond 2nd. By accepting 1 point of burn, you can increase the bonus by 1 until the next time your burn is removed. You can increase the bonus multiple times in this way, but it can't be increased by more than 50%% of its starting value. When you change the shroud to grant a shield bonus, any bonus in excess of this limit doesn't apply, but it remains if you change the shroud's bonus type again. Whenever you accept burn while using a water wild talent, the water coalescing around you allows your shroud to grant both the armor bonus and the shield bonus for 1 round. You can dismiss or restore this effect as an immediate action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Defense ~ Shroud Of Water"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Defense Wild Talent"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type defense (Su); Level -; Burn 0 You surround yourself with a shroud of water, ice, or both that protects you from harm. The shroud can either cover your body, functioning as armor, or float around you and block attacks, functioning as a shield. It grants either a +4 armor bonus to AC or a +2 shield bonus to AC, and you can change the type of bonus as a standard action. This bonus increases by 1 for every 4 kineticist levels you possess beyond 2nd. By accepting 1 point of burn, you can increase the bonus by 1 until the next time your burn is removed. You can increase the bonus multiple times in this way, but it can't be increased by more than 50%% of its starting value. When you change the shroud to grant a shield bonus, any bonus in excess of this limit doesn't apply, but it remains if you change the shroud's bonus type again. Whenever you accept burn while using a water wild talent, the water coalescing around you allows your shroud to grant both the armor bonus and the shield bonus for 1 round. You can dismiss or restore this effect as an immediate action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 676,
+    "record_key": "Elemental Defense ~ Shroud Of Water"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sohei ~ Monastic Mount",
+    "name": "Monastic Mount",
+    "class": "Monk",
+    "description": "At 4th level, a sohei may spend 1 point from his ki pool to grant his mount temporary hit points equal to twice his level for 1 hour per level. In addition, as long as the sohei and his mount are adjacent, including when mounted, the mount gains any of the following abilities the sohei possesses - AC bonus, diamond soul, evasion, high jump, improved evasion, ki strike (as long as the sohei has at least 1 point in his ki pool), perfect self, and still mind. When a sohei spends points from his ki pool, his mount gains the same benefits as the sohei. This ability replaces fast movement and increased unarmed damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sohei ~ Monastic Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a sohei may spend 1 point from his ki pool to grant his mount temporary hit points equal to twice his level for 1 hour per level. In addition, as long as the sohei and his mount are adjacent, including when mounted, the mount gains any of the following abilities the sohei possesses - AC bonus, diamond soul, evasion, high jump, improved evasion, ki strike (as long as the sohei has at least 1 point in his ki pool), perfect self, and still mind. When a sohei spends points from his ki pool, his mount gains the same benefits as the sohei. This ability replaces fast movement and increased unarmed damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1355,
+    "record_key": "Sohei ~ Monastic Mount"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

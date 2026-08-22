@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Whispering Campaign",
+    "name": "Whispering Campaign",
+    "class": "Pathfinder Chronicler",
+    "description": "Pathfinder chroniclers influence the world through their control of information and ability to shape public perception. At 5th level, as a special use of bardic music, the Pathfinder chronicler can create the effect of a doom spell as cast by a sorcerer of her class level by denouncing a creature in person. This is a language-dependent effect. Alternatively, the chronicler can denounce a particular target (an individual or a definable group of creatures) to others. This form of bardic music creates the effect of the enthrall spell, but at the end of the performance all creatures who failed to save shift their attitude toward the target of the oration by one step (in the direction of the Pathfinder chronicler's choice) for 1 day per class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Whispering Campaign"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Pathfinder chroniclers influence the world through their control of information and ability to shape public perception. At 5th level, as a special use of bardic music, the Pathfinder chronicler can create the effect of a doom spell as cast by a sorcerer of her class level by denouncing a creature in person. This is a language-dependent effect. Alternatively, the chronicler can denounce a particular target (an individual or a definable group of creatures) to others. This form of bardic music creates the effect of the enthrall spell, but at the end of the performance all creatures who failed to save shift their attitude toward the target of the oration by one step (in the direction of the Pathfinder chronicler's choice) for 1 day per class level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.390"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3056,
+    "record_key": "Pathfinder Chronicler ~ Whispering Campaign"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

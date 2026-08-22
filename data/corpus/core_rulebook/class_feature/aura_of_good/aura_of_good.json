@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aura of Good",
+    "name": "Aura of Good",
+    "class": null,
+    "description": "You project a faint good aura.|PREVAREQ:AuraGoodLVL,1",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Aura.ClericClassFeatures.PaladinClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraGoodLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlignmentAuraLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You project a faint good aura.|PREVAREQ:AuraGoodLVL,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You project a moderate good aura.|PREVARGTEQ:AuraGoodLVL,2|PREVARLTEQ:AuraGoodLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "You project a strong good aura.|PREVARGTEQ:AuraGoodLVL,5|PREVARLTEQ:AuraGoodLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You project an overwhelming good aura.|PREVARGTEQ:AuraGoodLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraGoodLVL|AlignmentAuraLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2876,
+    "record_key": "Aura of Good"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

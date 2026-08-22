@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisition ~ Execution",
+    "name": "Execution Inquisition",
+    "class": "Inquisition",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisition ~ Execution"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain.Inquisition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainExecutionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainExecutionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainExecutionTimes|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Execution Domain ~ Chosen Victim"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Execution Domain ~ Executioner's Strike|PREVARGTEQ:DomainExecutionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainExecutionLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainExecutionDC|10+(DomainExecutionLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainExecutionTimes|DomainPowerTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 74,
+    "record_key": "Inquisition ~ Execution"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

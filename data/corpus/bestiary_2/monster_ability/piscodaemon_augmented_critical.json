@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Piscodaemon ~ Augmented Critical",
     "delivery": "Extraordinary",
@@ -13,19 +11,51 @@
     "owners": [
       "bestiary_2:monster:daemon_piscodaemon"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|CRITMULTADD|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Claw|CRITRANGEADD|2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A piscodaemon's claws threaten a critical hit on an 18-20 and inflict x3 damage on a successful critical hit."
+      },
+      {
+        "key": "KEY",
+        "value": "Piscodaemon ~ Augmented Critical"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.72",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 318,
-    "record_key": "Piscodaemon ~ Augmented Critical"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 318,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Piscodaemon ~ Augmented Critical",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier ~ Greater Banner",
+    "name": "Greater Banner",
+    "class": "Cavalier",
+    "description": "At 14th level, the cavalier's banner becomes a rallying call to his allies. All allies within 60 feet receive a +2 morale bonus on saving throws against charm and compulsion spells and effects. In addition, while his banner is displayed, the cavalier can spend a standard action to wave the banner through the air, granting all allies within 60 feet an additional saving throw against any one spell or effect that is targeting them. This save is made at the original DC. Spells and effects that do not allow saving throws are unaffected by this ability. An ally cannot benefit from this ability more than once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier ~ Greater Banner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, the cavalier's banner becomes a rallying call to his allies. All allies within 60 feet receive a +2 morale bonus on saving throws against charm and compulsion spells and effects. In addition, while his banner is displayed, the cavalier can spend a standard action to wave the banner through the air, granting all allies within 60 feet an additional saving throw against any one spell or effect that is targeting them. This save is made at the original DC. Spells and effects that do not allow saving throws are unaffected by this ability. An ally cannot benefit from this ability more than once per day."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 205,
+    "record_key": "Cavalier ~ Greater Banner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

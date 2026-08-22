@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Giant Tick ~ Grab",
     "delivery": "Extraordinary",
@@ -13,19 +11,55 @@
     "owners": [
       "bestiary_2:monster:tick_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|4|TYPE=Racial.STACK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant tick can grab targets of any size, and has a +8 racial bonus on grapple checks rather than the normal +4 bonus most creatures with grab possess."
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Tick ~ Grab"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.265",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1254,
-    "record_key": "Giant Tick ~ Grab"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1254,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Giant Tick ~ Grab",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

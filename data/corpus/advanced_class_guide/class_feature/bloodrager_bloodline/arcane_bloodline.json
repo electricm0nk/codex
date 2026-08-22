@@ -1,0 +1,208 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Bloodline ~ Arcane",
+    "name": "Arcane Bloodline",
+    "class": "Bloodrager Bloodline",
+    "description": "While others of your kin are powerful wizards and sorcerers, the eldritch nature of the blood coursing through your veins transforms you into a spell-breaking terror.|PREVAREQ:Bloodrager_Arcane_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bloodline ~ Arcane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.SpecialQuality.ClassSpecialization.Bloodrager Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlineSpellsLvl1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlineSpellsLvl2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlineSpellsLvl3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlineSpellsLvl4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Arcane_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While others of your kin are powerful wizards and sorcerers, the eldritch nature of the blood coursing through your veins transforms you into a spell-breaking terror.|PREVAREQ:Bloodrager_Arcane_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Bloodrager Bloodline ~ Bonus Spells|PREVARGTEQ:Bloodrager_Arcane_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Bloodrager Bloodline ~ Bloodline Powers|PREVARGTEQ:Bloodrager_Arcane_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodrager Bloodline ~ Power LVL 01|PREVARGTEQ:Bloodrager_Arcane_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodrager Bloodline ~ Power LVL 04|PREVARGTEQ:Bloodrager_Arcane_BloodlinePower4,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodrager Bloodline ~ Power LVL 08|PREVARGTEQ:Bloodrager_Arcane_BloodlinePower8,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodrager Bloodline ~ Power LVL 12|PREVARGTEQ:Bloodrager_Arcane_BloodlinePower12,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodrager Bloodline ~ Power LVL 16|PREVARGTEQ:Bloodrager_Arcane_BloodlinePower16,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Arcane Bloodrager Bloodline ~ Power LVL 20|PREVARGTEQ:Bloodrager_Arcane_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Arcane_BloodlinePower1LVL|Bloodrager_Arcane_BloodlineLVL+BloodragerBloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Arcane_BloodlinePower4LVL|Bloodrager_Arcane_BloodlineLVL+BloodragerBloodlinePower4LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Arcane_BloodlinePower8LVL|Bloodrager_Arcane_BloodlineLVL+BloodragerBloodlinePower8LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Arcane_BloodlinePower12LVL|Bloodrager_Arcane_BloodlineLVL+BloodragerBloodlinePower12LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Arcane_BloodlinePower16LVL|Bloodrager_Arcane_BloodlineLVL+BloodragerBloodlinePower16LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Arcane_BloodlinePower20LVL|Bloodrager_Arcane_BloodlineLVL+BloodragerBloodlinePower20LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptiveQualifyLVL|BloodragerBloodlineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpellbreakerQualifyLVL|BloodragerBloodlineLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Arcane"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bloodrager Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 617,
+    "record_key": "Bloodrager Bloodline ~ Arcane"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

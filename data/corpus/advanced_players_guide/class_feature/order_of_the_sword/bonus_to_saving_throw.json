@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Sword ~ Bonus to Saving Throw",
+    "name": "Bonus to Saving Throw",
+    "class": "Order of the Sword",
+    "description": "+2 Morale Bonus to Selected Save",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Sword ~ Bonus to Saving Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 Morale Bonus to Selected Save"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Fortitude|Reflex|Will"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|%LIST|2|TYPE=Morale"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 288,
+    "record_key": "Order of the Sword ~ Bonus to Saving Throw"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

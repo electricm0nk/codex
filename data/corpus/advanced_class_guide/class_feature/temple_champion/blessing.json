@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Temple Champion ~ Blessing",
+    "name": "Blessing",
+    "class": "Paladin",
+    "description": "At 5th level, a temple champion gains the minor blessing (as the warpriest class feature) of the domain she selected at 4st level. She uses her paladin level as her warpriest level for determining the effects of that blessing. Any Wisdom-based aspects of that blessing instead use the temple champion's Charisma. At 11th level, she gains the major blessing of her chosen domain. This ability replaces divine bond and aura of justice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Temple Champion ~ Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Temple Champion Class Feature.Paladin Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a temple champion gains the minor blessing (as the warpriest class feature) of the domain she selected at 4st level. She uses her paladin level as her warpriest level for determining the effects of that blessing. Any Wisdom-based aspects of that blessing instead use the temple champion's Charisma. At 11th level, she gains the major blessing of her chosen domain. This ability replaces divine bond and aura of justice."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Warpriest Blessings Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Blessing|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingLVL|PaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMinorBlessingGrantedLVL|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMajorBlessingGrantedLVL|11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingUses|(WarpriestBlessingLVL/2)+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingDC|(WarpriestBlessingLVL/2)+10+CHA"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WarpriestBlessingUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3527,
+    "record_key": "Temple Champion ~ Blessing"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

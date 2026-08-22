@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Archaeologist ~ Trap Sense",
+    "name": "Trap Sense",
+    "class": "Bard",
+    "description": "At 3rd level, an Archaeologist gains trap sense +1, as the rogue class feature of the same name. This bonus improves by +1 for every three levels gained after 3rd, to a maximum of +6 at 18th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archaeologist ~ Trap Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an Archaeologist gains trap sense +1, as the rogue class feature of the same name. This bonus improves by +1 for every three levels gained after 3rd, to a maximum of +6 at 18th level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue ~ Trap Sense"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|classlevel(\"Bard\")/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 394,
+    "record_key": "Archaeologist ~ Trap Sense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

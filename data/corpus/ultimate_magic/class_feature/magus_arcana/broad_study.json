@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Broad Study",
+    "name": "Broad Study",
+    "class": "Magus Arcana",
+    "description": "You can use your spellstrike and spell combat abilities while casting or using spells from the spell list of another class. This does not allow you to cast arcane spells from that class's spell list without suffering the normal chances of arcane spell failure, unless the spell lacks somatic components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Broad Study"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.MagusArcana"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Magus Arcana ~ Broad Study"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your spellstrike and spell combat abilities while casting or using spells from the spell list of another class. This does not allow you to cast arcane spells from that class's spell list without suffering the normal chances of arcane spell failure, unless the spell lacks somatic components."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "CLASS|SPELLCASTER"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 82,
+    "record_key": "Magus Arcana ~ Broad Study"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

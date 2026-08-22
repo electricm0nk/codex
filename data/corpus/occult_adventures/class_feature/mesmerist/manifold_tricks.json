@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist ~ Manifold Tricks",
+    "name": "Manifold Tricks",
+    "class": "Mesmerist",
+    "description": "The mesmerist can have %1 tricks implanted at a time. Each creature can still be the subject of only one trick at a time. If the mesmerist implants a new trick while he already has his maximum number of concurrent tricks implanted, he must choose one implanted trick to dismiss without triggering (the dismissed trick still expends a daily use of the mesmerist's tricks).|ManifoldTricksCount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Manifold Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManifoldTricksCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The mesmerist can have %1 tricks implanted at a time. Each creature can still be the subject of only one trick at a time. If the mesmerist implants a new trick while he already has his maximum number of concurrent tricks implanted, he must choose one implanted trick to dismiss without triggering (the dismissed trick still expends a daily use of the mesmerist's tricks).|ManifoldTricksCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManifoldTricksCount|2+(MesmeristLVL-5)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 926,
+    "record_key": "Mesmerist ~ Manifold Tricks"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

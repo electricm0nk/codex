@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Thorn Javelin",
-    "school": "Conjuration",
-    "level": 1,
     "description": "A wooden thorn the size of a javelin (appropriate for your size) appears in your open hand. You can wield this thorn as a javelin, and you are proficient in its use. Any creature struck by the javelin must succeed at a Fortitude save or be sickened for 1 round. If you throw the javelin, another one appears in your hand. Any javelin that leaves your grasp disappears at the end of your turn. Each javelin attack you make reduces the spell's remaining duration by 1 minute. If an attack reduces the remaining duration to 0 minutes or less, the spell ends after that attack resolves.",
-    "full_text": true
+    "full_text": true,
+    "key": "Thorn Javelin",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger,Shaman=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "A wooden thorn the size of a javelin (appropriate for your size) appears in your open hand. You can wield this thorn as a javelin, and you are proficient in its use. Any creature struck by the javelin must succeed at a Fortitude save or be sickened for 1 round. If you throw the javelin, another one appears in your hand. Any javelin that leaves your grasp disappears at the end of your turn. Each javelin attack you make reduces the spell's remaining duration by 1 minute. If an attack reduces the remaining duration to 0 minutes or less, the spell ends after that attack resolves.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Wield a javelin that sickens opponents when it strikes.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Poison"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 Ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/thornJavelin.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "javelin-like thorn"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 124,
-    "record_key": "Thorn Javelin"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Thorn Javelin",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

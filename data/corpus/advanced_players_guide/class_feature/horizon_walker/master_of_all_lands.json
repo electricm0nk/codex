@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Horizon Walker ~ Master of All Lands",
+    "name": "Master of All Lands",
+    "class": "Horizon Walker",
+    "description": "At 10th level, the horizon walker becomes familiar with and comfortable in all possible terrains. His terrain bonus in all favored terrains increases by +2, and he treats all other terrains as if they were favored terrains (+2 bonus). If a naturally occurring condition of temperature or weather requires a check or saving throw, he automatically succeeds. All allies within 60 feet of him gain a +2 bonus on these checks and saves; if the horizon walker is in a mastered terrain, this bonus increases to +4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Horizon Walker ~ Master of All Lands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, the horizon walker becomes familiar with and comfortable in all possible terrains. His terrain bonus in all favored terrains increases by +2, and he treats all other terrains as if they were favored terrains (+2 bonus). If a naturally occurring condition of temperature or weather requires a check or saving throw, he automatically succeeds. All allies within 60 feet of him gain a +2 bonus on these checks and saves; if the horizon walker is in a mastered terrain, this bonus increases to +4."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1357,
+    "record_key": "Horizon Walker ~ Master of All Lands"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

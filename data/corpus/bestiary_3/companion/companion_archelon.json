@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "ability_keys": [
       "bestiary_3:companion:companion_advancement_archelon"
@@ -23,6 +21,88 @@
     ],
     "race_subtype": null,
     "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Archelon|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hold Breath|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Megafauna (Archelon)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,15,Swim,50"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "M",
@@ -61,16 +141,18 @@
     ],
     "type_segments": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_companion.lst",
-    "sha256": "7daa4e30be5659884ac06587264a899d801b61d1a9bd316a2e3a2c380958c374",
-    "line": 7,
-    "record_key": "Companion (Archelon)"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_companion.lst",
+    "record_key": "Companion (Archelon)",
+    "sha256": "7daa4e30be5659884ac06587264a899d801b61d1a9bd316a2e3a2c380958c374"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

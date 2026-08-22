@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Eruption",
+    "name": "Eruption",
+    "class": "Wild Talent",
+    "description": "Element fire; Type form infusion; Level 3; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Eruption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Fire"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite extended range"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type form infusion; Level 3; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts blue flame, fire, magma, steam Saving Throw Reflex half Your kinetic blast erupts from the ground in a pillar centered anywhere within 120 feet of you. The pillar affects all creatures and objects in a 10-foot-radius cylinder that extends 40 feet above the ground. An energy blast infused with eruption deals its normal damage to each target, while a physical blast deals half its normal amount of damage. The saving throw DC is Dexterity-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 690,
+    "record_key": "Wild Talent ~ Eruption"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

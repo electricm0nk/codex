@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 0.0,
+    "description": "restore drinker to starting age as young adult, removing all physical age-related penalties",
+    "key": "Sun Orchid Elixir",
+    "name": "Sun Orchid Elixir",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Artifact.Minor.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "SPROP",
+        "value": "restore drinker to starting age as young adult, removing all physical age-related penalties"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_magic_items.lst",
+    "record_key": "Sun Orchid Elixir",
+    "sha256": "74597707ea44ca43d75cb45d8f39e2262c2ace0c42be46729626f547aa943653"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

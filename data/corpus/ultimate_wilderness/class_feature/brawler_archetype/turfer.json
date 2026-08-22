@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brawler Archetype ~ Turfer",
+    "name": "Turfer",
+    "class": "Brawler Archetype",
+    "description": "A turfer has a mastery over particular types of terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Turfer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Turfer],[!PREFACT:1,ABILITIES,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_Knockout=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A turfer has a mastery over particular types of terrain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Turfer ~ Favored Turf|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Turfer ~ Terrain Mastery|PRECLASS:1,Brawler=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_Knockout|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_Knockout|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 353,
+    "record_key": "Brawler Archetype ~ Turfer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

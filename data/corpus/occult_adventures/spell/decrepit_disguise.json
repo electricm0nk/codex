@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Make an object seem worthless.",
+    "key": "Decrepit Disguise",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Medium,Mesmerist,Psychic,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Make an object seem worthless."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None (object) or Will disbelief (if interacted with)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Decrepit Disguise"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One object of no more than (CASTERLEVEL*10) cu. ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Decrepit Disguise",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

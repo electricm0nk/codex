@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Steel Hound ~ Talented Shot",
+    "name": "Talented Shot",
+    "class": "Investigator",
+    "description": "At 11th level, a steel hound can select a gunslinger deed in place of an investigator talent. He can select from any deed available to a gunslinger of his investigator level - 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steel Hound ~ Talented Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Steel Hound Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a steel hound can select a gunslinger deed in place of an investigator talent. He can select from any deed available to a gunslinger of his investigator level - 4."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3354,
+    "record_key": "Steel Hound ~ Talented Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ragechemist ~ Rage Mutagen",
+    "name": "Rage Mutagen",
+    "class": "Alchemist",
+    "description": "At 2nd level, whenever a ragechemist creates a mutagen that improves his Strength, that mutagen's bonus to Strength increases by 2 and penalized the alchemist's Intelligence score. Furthermore, while under the effects of this mutagen, whenever the alchemist takes damage, his rage grows, with detrimental effects. At the end of each turn that he takes hit point damage, the ragechemist must succeed at a Will saving throw (DC 15, or DC 20 if any of the damage came from a critical hit that turn) or take a -2 penalty on Will saving throws and to Intelligence. These penalties end 1 hour after the mutagen ends and stack with themselves. If the penalty lowers the ragechemist's Intelligence score to 0, the ragechemist is comatose until 1 hour after the mutagen expires. This ability replaces poison use.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ragechemist ~ Rage Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, whenever a ragechemist creates a mutagen that improves his Strength, that mutagen's bonus to Strength increases by 2 and penalized the alchemist's Intelligence score. Furthermore, while under the effects of this mutagen, whenever the alchemist takes damage, his rage grows, with detrimental effects. At the end of each turn that he takes hit point damage, the ragechemist must succeed at a Will saving throw (DC 15, or DC 20 if any of the damage came from a critical hit that turn) or take a -2 penalty on Will saving throws and to Intelligence. These penalties end 1 hour after the mutagen ends and stack with themselves. If the penalty lowers the ragechemist's Intelligence score to 0, the ragechemist is comatose until 1 hour after the mutagen expires. This ability replaces poison use."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenStatBonus|2|PREABILITY:1,CATEGORY=Special Ability,Alchemist ~ Mutagen Strength (First),Alchemist ~ Mutagen Strength (Second),Alchemist ~ Mutagen Strength (Third)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenStatPenalty|-2|PREABILITY:1,CATEGORY=Special Ability,Alchemist ~ Mutagen Strength (First),Alchemist ~ Mutagen Strength (Second),Alchemist ~ Mutagen Strength (Third)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|MutagenStatBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|INT|MutagenStatPenalty"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|LumberingRageConBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|MutagenACBonus|TYPE=Natural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutagenStatBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LumberingRageConBonus|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 260,
+    "record_key": "Ragechemist ~ Rage Mutagen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

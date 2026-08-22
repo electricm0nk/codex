@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Master ~ Reborn",
+    "name": "Reborn",
+    "class": "Mesmerist",
+    "description": "A cult master can ensure his own survival upon his death. The cult master can perform a 1-hour ceremony costing 5,000 gp in rare materials in which he uses his psychic powers to implant a small portion of his essence into his cohort, who must be a minimum of 17th level. When the cult master dies, in 7 days the cohort physically and mentally transforms into the cult master as if clone had been cast, except that the cohort's body takes the place of the inert body. The cult master can't use this ability again until he gains new cohort of at least 17th level and performs the necessary ceremony. The cohort can't be brought back to life except through miracle or wish.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Master ~ Reborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult master can ensure his own survival upon his death. The cult master can perform a 1-hour ceremony costing 5,000 gp in rare materials in which he uses his psychic powers to implant a small portion of his essence into his cohort, who must be a minimum of 17th level. When the cult master dies, in 7 days the cohort physically and mentally transforms into the cult master as if clone had been cast, except that the cohort's body takes the place of the inert body. The cult master can't use this ability again until he gains new cohort of at least 17th level and performs the necessary ceremony. The cohort can't be brought back to life except through miracle or wish."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1471,
+    "record_key": "Cult Master ~ Reborn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

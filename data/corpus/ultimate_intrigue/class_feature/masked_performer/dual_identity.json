@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masked Performer ~ Dual Identity",
+    "name": "Dual Identity",
+    "class": "Bard",
+    "description": "This ability acts as the vigilante ability of the same name, except as follows. The masked performer's identities are referred to as social and masked, rather than social and vigilante. Unlike a vigilante, most people who know of the masked performer actually know that the masked performer's identities are one and the same. Nonetheless, the dual identity ability is valuable to the masked performer due to offering her two perspectives on any problem and two different alignments.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masked Performer ~ Dual Identity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.MaskedPerformerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability acts as the vigilante ability of the same name, except as follows. The masked performer's identities are referred to as social and masked, rather than social and vigilante. Unlike a vigilante, most people who know of the masked performer actually know that the masked performer's identities are one and the same. Nonetheless, the dual identity ability is valuable to the masked performer due to offering her two perspectives on any problem and two different alignments."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 234,
+    "record_key": "Masked Performer ~ Dual Identity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

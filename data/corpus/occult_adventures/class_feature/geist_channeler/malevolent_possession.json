@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Geist Channeler ~ Malevolent Possession",
+    "name": "Malevolent Possession",
+    "class": "Spiritualist",
+    "description": "At 17th level, a geist channeler's phantom can invade the bodies of other creatures. This functions as possession (see page 181). To use this ability, the phantom must be adjacent to the target. The target can resist the effect with a successful Will save (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier). The phantom can use this ability once per day. This ability modifies the phantom and replaces the phantom's emotional focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geist Channeler ~ Malevolent Possession"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Geist Channeler Class Feature.Spiritualist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, a geist channeler's phantom can invade the bodies of other creatures. This functions as possession (see page 181). To use this ability, the phantom must be adjacent to the target. The target can resist the effect with a successful Will save (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier). The phantom can use this ability once per day. This ability modifies the phantom and replaces the phantom's emotional focus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1632,
+    "record_key": "Geist Channeler ~ Malevolent Possession"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

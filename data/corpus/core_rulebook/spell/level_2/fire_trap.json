@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Fire trap creates a fiery explosion when an intruder opens the item that the trap protects. A fire trap spell can ward any object that can be opened and closed. When casting fire trap, you select a point on the object as the spell's center. When someone other than you opens the object, a fiery explosion fills the area within a 5-foot radius around the spell's center. The flames deal 1d4 points of fire damage + 1 point per caster level [maximum +20]. The item protected by the trap is not harmed by this explosion. A fire-trapped item cannot have a second closure or warding spell placed on it. A knock spell does not bypass a fire trap. An unsuccessful dispel magic spell does not detonate the spell. Underwater, this ward deals half damage and creates a large cloud of steam. You can use the fire-trapped object without discharging it, as can any individual to whom the object was specifically attuned when cast. Attuning a fire-trapped object to an individual usually involves setting a password that you can share with friends. Magic traps such as fire trap are hard to detect and disable. A rogue [only] can use the Perception skill to find a fire trap and Disable Device to thwart it. The DC in each case is 25 + spell level [DC 27 for a druid's fire trap or DC 29 for the arcane version].",
     "key": "Fire Trap",
-    "school": "Abjuration",
     "level": 2,
-    "description": "Fire trap creates a fiery explosion when an intruder opens the item that the trap protects. A fire trap spell can ward any object that can be opened and closed. When casting fire trap, you select a point on the object as the spell's center. When someone other than you opens the object, a fiery explosion fills the area within a 5-foot radius around the spell's center. The flames deal 1d4 points of fire damage + 1 point per caster level [maximum +20]. The item protected by the trap is not harmed by this explosion. A fire-trapped item cannot have a second closure or warding spell placed on it. A knock spell does not bypass a fire trap. An unsuccessful dispel magic spell does not detonate the spell. Underwater, this ward deals half damage and creates a large cloud of steam. You can use the fire-trapped object without discharging it, as can any individual to whom the object was specifically attuned when cast. Attuning a fire-trapped object to an individual usually involves setting a password that you can share with friends. Magic traps such as fire trap are hard to detect and disable. A rogue [only] can use the Perception skill to find a fire trap and Disable Device to thwart it. The DC in each case is 25 + spell level [DC 27 for a druid's fire trap or DC 29 for the arcane version]."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid=2|Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Fire trap creates a fiery explosion when an intruder opens the item that the trap protects. A fire trap spell can ward any object that can be opened and closed. When casting fire trap, you select a point on the object as the spell's center. When someone other than you opens the object, a fiery explosion fills the area within a 5-foot radius around the spell's center. The flames deal 1d4 points of fire damage + 1 point per caster level [maximum +20]. The item protected by the trap is not harmed by this explosion. A fire-trapped item cannot have a second closure or warding spell placed on it. A knock spell does not bypass a fire trap. An unsuccessful dispel magic spell does not detonate the spell. Underwater, this ward deals half damage and creates a large cloud of steam. You can use the fire-trapped object without discharging it, as can any individual to whom the object was specifically attuned when cast. Attuning a fire-trapped object to an individual usually involves setting a password that you can share with friends. Magic traps such as fire trap are hard to detect and disable. A rogue [only] can use the Perception skill to find a fire trap and Disable Device to thwart it. The DC in each case is 25 + spell level [DC 27 for a druid's fire trap or DC 29 for the arcane version].|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Fire trap creates a fiery explosion when an intruder opens the item that the trap protects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent until discharged [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/fireTrap.html#_fire-trap"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Object touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 232,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 991,
-    "record_key": "Fire Trap.MOD"
+    "record_key": "Fire Trap",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

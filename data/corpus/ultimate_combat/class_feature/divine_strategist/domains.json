@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Strategist ~ Domains",
+    "name": "Domains",
+    "class": "Cleric",
+    "description": "A divine strategist gains only a single domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Strategist ~ Domains"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine strategist gains only a single domain."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 573,
+    "record_key": "Divine Strategist ~ Domains"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

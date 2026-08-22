@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Electric Eel ~ Electricity",
     "delivery": "Extraordinary",
@@ -16,6 +14,48 @@
     "owners": [
       "beastiary:companion:companion_eel_electric"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Electricity"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1d6, DC %1)|ElectricityDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Electricity)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElectricityDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An electric eel can produce a powerful jolt of electricity from its tail, delivering the jolt with a successful touch attack. On a critical hit, the creature struck must make a DC %1 Fortitude save or be stunned for 1d4 rounds.|ElectricityDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Electric Eel ~ Electricity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.119",
     "stat_adjustments": [],
@@ -24,16 +64,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
-    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
-    "line": 33,
-    "record_key": "Electric Eel ~ Electricity"
-  },
+  "ingested_at": "2026-08-18T22:35:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Electric Eel ~ Electricity",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

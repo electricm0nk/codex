@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bone Mystery ~ Near Death",
+    "name": "Near Death",
+    "class": "Bone Mystery",
+    "description": "You gain a +%1 insight bonus on saves against diseases, mind-affecting effects, and poisons.|OracleNearDeathSaveBonus|!PRECLASS:1,Oracle=7",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bone Mystery ~ Near Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BoneRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleNearDeathSaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 insight bonus on saves against diseases, mind-affecting effects, and poisons.|OracleNearDeathSaveBonus|!PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 insight bonus on saves against diseases, mind-affecting effects, poisons, death effects, sleep effects, and stunning.|OracleNearDeathSaveBonus|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleNearDeathSaveBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleNearDeathSaveBonus|2|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 581,
+    "record_key": "Bone Mystery ~ Near Death"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

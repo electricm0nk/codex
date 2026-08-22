@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sunrider ~ Concerted Effort",
+    "name": "Concerted Effort",
+    "class": "Druid",
+    "description": "A sunrider can extend the bond she shares with her horse to other nearby mounted companions, forming them into a fighting force that seems to share a single mind. Allied mounts within %1 feet of the sunrider gain evasion as per the animal companion special ability.|SunriderConcertedEffortRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sunrider ~ Concerted Effort"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.SunriderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SunriderConcertedEffortRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SunriderConcertedEffortSpeed|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "DESC",
+        "value": "A sunrider can extend the bond she shares with her horse to other nearby mounted companions, forming them into a fighting force that seems to share a single mind. Allied mounts within %1 feet of the sunrider gain evasion as per the animal companion special ability.|SunriderConcertedEffortRange"
+      },
+      {
+        "key": "DESC",
+        "value": "Allied mounts gain a +%1-foot enhancement bonus to their speed.|SunriderConcertedEffortSpeed|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "DESC",
+        "value": "Allied mounts also gain devotion as per the animal companion special ability.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "DESC",
+        "value": "Allied mounts gain multiattack as per the animal companion special ability.|PRECLASS:1,Druid=10"
+      },
+      {
+        "key": "DESC",
+        "value": "Allied mounts gain a +2 bonus on saving throws.|PRECLASS:1,Druid=12"
+      },
+      {
+        "key": "DESC",
+        "value": "Allied mounts gain improved evasion as per the animal companion special ability.|PRECLASS:1,Druid=16"
+      },
+      {
+        "key": "DESC",
+        "value": "Allied mounts gain a +2 dodge bonus to their Armor Class and a +2 bonus on attack rolls.|PRECLASS:1,Druid=18"
+      },
+      {
+        "key": "DESC",
+        "value": "Allied mounts gain DR 5/- and energy resistance 10 to acid, cold, electricity, fire, and sonic damage.|PRECLASS:1,Druid=20"
+      },
+      {
+        "key": "DESC",
+        "value": "These abilities function only while allied mounts are within range of the sunrider (her own mount always counts as an ally)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SunriderConcertedEffortRange|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SunriderConcertedEffortRange|30|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SunriderConcertedEffortRange|30|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SunriderConcertedEffortSpeed|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SunriderConcertedEffortSpeed|10|PRECLASS:1,Druid=14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 806,
+    "record_key": "Sunrider ~ Concerted Effort"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

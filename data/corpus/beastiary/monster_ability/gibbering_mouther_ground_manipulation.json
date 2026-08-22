@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Gibbering Mouther ~ Ground Manipulation",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:gibbering_mouther"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At will as a standard action, a gibbering mouther can cause stone and earth under its body to grow soft and muddy. The ground remains muddy for 1 minute after the mouther moves off of the location. A gibbering mouther can move through these areas with ease, but other creatures treat them as difficult terrain."
+      },
+      {
+        "key": "KEY",
+        "value": "Gibbering Mouther ~ Ground Manipulation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.AttackOption"
+      }
+    ],
     "source_page": "p.153",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 703,
-    "record_key": "Gibbering Mouther ~ Ground Manipulation"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 703,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Gibbering Mouther ~ Ground Manipulation",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard ~ Lore Master",
+    "name": "Lore Master",
+    "class": "Bard",
+    "description": "You have become a master of lore and can take 10 on any Knowledge skill check that you have ranks in. You can choose not to take 10 and can instead roll normally. In addition, %1 times per day, you can take 20 on any Knowledge skill check as a standard action.|LoreMasterTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard ~ Lore Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LoreMasterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LoreMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have become a master of lore and can take 10 on any Knowledge skill check that you have ranks in. You can choose not to take 10 and can instead roll normally. In addition, %1 times per day, you can take 20 on any Knowledge skill check as a standard action.|LoreMasterTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LoreMasterTimes|min((LoreMasterLVL+1)/6,3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LoreMasterLVL|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 509,
+    "record_key": "Bard ~ Lore Master"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

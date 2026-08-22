@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blood Mantis Form",
+    "name": "Blood Mantis Form",
+    "class": null,
+    "description": "You may transform into a blood-red giant praying mantis once per day as a standard action, as if using vermin shape II (CL%1). In addition to the normal adjustments to Strength, Dexterity, and natural armor, you gain its darkvision 60 ft., grab, lunge, mandibles, and sudden strike abilities, and damage reduction 5/good. You apply the magical enhancements from any sawtooth sabre that you are wielding to the corresponding claw attack and your claw attacks also inflict 1d6 bleed on a hit.|RedMantisLvl",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You may transform into a blood-red giant praying mantis once per day as a standard action, as if using vermin shape II (CL%1). In addition to the normal adjustments to Strength, Dexterity, and natural armor, you gain its darkvision 60 ft., grab, lunge, mandibles, and sudden strike abilities, and damage reduction 5/good. You apply the magical enhancements from any sawtooth sabre that you are wielding to the corresponding claw attack and your claw attacks also inflict 1d6 bleed on a hit.|RedMantisLvl"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 161,
+    "record_key": "Blood Mantis Form"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

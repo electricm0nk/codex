@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tanglebriar Demonslayer ~ Favored Enemy",
+    "name": "Favored Enemy",
+    "class": "Ranger",
+    "description": "At 1st level, a Tanglebriar demonslayer must choose favored enemy (evil outsider). At 5th level and every time he advances his favored enemy bonus, the demonslayer must advance his bonus against evil outsiders. In addition to the normal benefits of favored enemy, a Tanglebriar demonslayer gains a bonus equal to 1/2 his favored enemy bonus on saving throws against spells, spell-like abilities, and supernatural abilities of evil outsiders. This ability is otherwise identical to and replaces the favored enemy ranger class ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tanglebriar Demonslayer ~ Favored Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a Tanglebriar demonslayer must choose favored enemy (evil outsider). At 5th level and every time he advances his favored enemy bonus, the demonslayer must advance his bonus against evil outsiders. In addition to the normal benefits of favored enemy, a Tanglebriar demonslayer gains a bonus equal to 1/2 his favored enemy bonus on saving throws against spells, spell-like abilities, and supernatural abilities of evil outsiders. This ability is otherwise identical to and replaces the favored enemy ranger class ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 226,
+    "record_key": "Tanglebriar Demonslayer ~ Favored Enemy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

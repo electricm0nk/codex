@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Snake",
+    "name": "Snake",
+    "class": "Wild Talent",
+    "description": "Element universal; Type form infusion; Level 3; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Snake"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Universal"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite extended range"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Base,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element universal; Type form infusion; Level 3; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts any Saving Throw none You have fine control over your kinetic blast, allowing you to alter its path to avoid obstacles. You can trace out any path no more than 120 feet long for your blast, potentially allowing you to avoid cover (even total cover). You can choose a path that leads into squares you cannot see."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 717,
+    "record_key": "Wild Talent ~ Snake"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Psychedelia ~ Warped Brain",
+    "name": "Warped Brain",
+    "class": "Psychic",
+    "description": "At 5th level, your mind becomes difficult to comprehend. When another creature uses a mind-affecting spell or ability against you, that creature must attempt a Will save. If it fails, it becomes nauseated for 1 round. This ability triggers even if you succeed at your save (or are otherwise unaffected by the spell or ability), but doesn't apply if you're a willing subject of the spell. This is a mind-affecting effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Psychedelia ~ Warped Brain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, your mind becomes difficult to comprehend. When another creature uses a mind-affecting spell or ability against you, that creature must attempt a Will save. If it fails, it becomes nauseated for 1 round. This ability triggers even if you succeed at your save (or are otherwise unaffected by the spell or ability), but doesn't apply if you're a willing subject of the spell. This is a mind-affecting effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1237,
+    "record_key": "Psychic Discipline Psychedelia ~ Warped Brain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

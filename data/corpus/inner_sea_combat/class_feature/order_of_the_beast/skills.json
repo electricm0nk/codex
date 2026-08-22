@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Beast ~ Skills",
+    "name": "Skills",
+    "class": "Order of the Beast",
+    "description": "An order of the beast cavalier adds Disable Device (Dex) and Stealth (Dex) to his list of class skills. An order of the beast cavalier can make Disable Device checks untrained. If he has ranks in the skill, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1) when using it to sabotage, jam, or destroy a device.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Beast ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the beast cavalier adds Disable Device (Dex) and Stealth (Dex) to his list of class skills. An order of the beast cavalier can make Disable Device checks untrained. If he has ranks in the skill, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1) when using it to sabotage, jam, or destroy a device."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Disable Device|Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 513,
+    "record_key": "Order of the Beast ~ Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

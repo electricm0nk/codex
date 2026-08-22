@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vow of Silence",
+    "name": "Vow of Silence",
+    "class": null,
+    "description": "You must speak no words and attempt to be quiet in your actions. Accidental noises and the sounds of battle (such as the sound of a fist or weapon striking an opponent) do not affect your vow, though most monks with this vow choose their weapons and opponents so as to minimize even these sounds. You are allowed to make a nonvocal noise to warn another of danger (such as by stomping or clapping). You are allowed to use gestures and motions to communicate with others (including sign language) and are allowed to write.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.MonkVow"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "DESC",
+        "value": "You must speak no words and attempt to be quiet in your actions. Accidental noises and the sounds of battle (such as the sound of a fist or weapon striking an opponent) do not affect your vow, though most monks with this vow choose their weapons and opponents so as to minimize even these sounds. You are allowed to make a nonvocal noise to warn another of danger (such as by stomping or clapping). You are allowed to use gestures and motions to communicate with others (including sign language) and are allowed to write."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|max(1,floor(classlevel(\"Monk\")/6))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 435,
+    "record_key": "Vow of Silence"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

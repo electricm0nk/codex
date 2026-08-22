@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Maneuver Training",
+    "name": "Maneuver Training",
+    "class": "Monk",
+    "description": "A monk uses his monk level in place of his base attack bonus when calculating his combat maneuver bonus. Base attack bonuses granted from other classes are unaffected and are added normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Maneuver Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManeuverTrainingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManeuverTrainingBAB|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk uses his monk level in place of his base attack bonus when calculating his combat maneuver bonus. Base attack bonuses granted from other classes are unaffected and are added normally."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_BAB|ManeuverTrainingLVL-ManeuverTrainingBAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManeuverTrainingLVL|MonkLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManeuverTrainingBAB|MonkLVL*3/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1099,
+    "record_key": "Monk ~ Maneuver Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

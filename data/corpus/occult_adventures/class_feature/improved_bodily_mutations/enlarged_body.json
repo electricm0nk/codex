@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Improved Bodily Mutations ~ Enlarged Body",
+    "name": "Enlarged Body",
+    "class": "Improved Bodily Mutations",
+    "description": "The mutation mind's body swells and stretches, enlarging her as the enlarge person spell but up to two size categories larger (maximum Huge).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Improved Bodily Mutations ~ Enlarged Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Mutation Mind Class Feature.Psychic Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Psychic Archetype ~ Mutation Mind"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic=11"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation mind's body swells and stretches, enlarging her as the enlarge person spell but up to two size categories larger (maximum Huge)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1582,
+    "record_key": "Improved Bodily Mutations ~ Enlarged Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

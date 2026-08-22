@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Commander ~ Mount",
+    "name": "Mount",
+    "class": "Warpriest",
+    "description": "A divine commander gains the service of a loyal and trusty steed to carry her into battle. This mount functions as a druid's animal companion, using the divine commander's level as her effective druid level. The creature must be one that she is capable of riding and must be suitable as a mount. A Medium divine commander can select a camel or a horse. A Small divine commander can select a pony or wolf, but can also select a boar or a dog if she is at least 4th level. (The GM might approve other animals as suitable mounts.) A divine commander does not take an armor check penalty on Ride checks while riding this mount. The mount is always considered combat trained, and begins play with Light Armor Proficiency as a bonus feat. A divine commander's mount does not gain the share spells special ability. Should a divine commander's mount die, she can find another mount to serve her after 1 week of mourning. This new mount does not gain the link, evasion, devotion, or improved evasion special abilities until the next time the divine commander gains a level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Commander ~ Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine Commander Class Feature.Warpriest Class Feature.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine commander gains the service of a loyal and trusty steed to carry her into battle. This mount functions as a druid's animal companion, using the divine commander's level as her effective druid level. The creature must be one that she is capable of riding and must be suitable as a mount. A Medium divine commander can select a camel or a horse. A Small divine commander can select a pony or wolf, but can also select a boar or a dog if she is at least 4th level. (The GM might approve other animals as suitable mounts.) A divine commander does not take an armor check penalty on Ride checks while riding this mount. The mount is always considered combat trained, and begins play with Light Armor Proficiency as a bonus feat. A divine commander's mount does not gain the share spells special ability. Should a divine commander's mount die, she can find another mount to serve her after 1 week of mourning. This new mount does not gain the link, evasion, devotion, or improved evasion special abilities until the next time the divine commander gains a level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionLVL|WarpriestLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Camel),Companion (Horse)"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Pony),Companion (Wolf)|PRESIZELTEQ:S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3978,
+    "record_key": "Divine Commander ~ Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

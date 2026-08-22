@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flood Blessing ~ Tsunami Burst",
+    "name": "Tsunami Burst",
+    "class": "Flood Blessing",
+    "description": "When you are hit by a melee attack, you can invoke this blessing as an immediate action. A wave of water blasts out from you at your attacker, attempting a bull rush combat maneuver check using your CMB but adding your Wisdom modifier instead of your Strength modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flood Blessing ~ Tsunami Burst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you are hit by a melee attack, you can invoke this blessing as an immediate action. A wave of water blasts out from you at your attacker, attempting a bull rush combat maneuver check using your CMB but adding your Wisdom modifier instead of your Strength modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1235,
+    "record_key": "Flood Blessing ~ Tsunami Burst"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

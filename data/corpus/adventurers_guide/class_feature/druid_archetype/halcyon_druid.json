@@ -1,0 +1,151 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Halcyon Druid",
+    "name": "Halcyon Druid",
+    "class": "Druid Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Halcyon Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Halcyon Druid],[!PREFACT:1,ABILITIES,Druid_Archetype_NatureBond=True,Druid_Archetype_NatureSense=True,Druid_Archetype_ClassSkills=True,Druid_Archetype_WildEmpathy=True,Druid_Archetype_SpontaneousCasting=True,Druid_Archetype_WildShape=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_AThousandFaces=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Spontaneous Casting|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Bonded Mask|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Magaambya-Trained|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Peacekeeper|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Natural Arcana|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Resist Fiendish Influence|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Embody Mask|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_AThousandFaces|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_NatureSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_AThousandFaces|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 783,
+    "record_key": "Druid Archetype ~ Halcyon Druid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

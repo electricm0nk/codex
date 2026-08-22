@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisition ~ Torture",
+    "name": "Torture Inquisition",
+    "class": "Inquisition",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisition ~ Torture"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain.Inquisition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTortureLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTortureDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTortureTimes|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Torture Domain ~ Torturer's Presence"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Torture Domain ~ Torturer's Touch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Torture Domain ~ Critical Precision|PREVARGTEQ:DomainTortureLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTortureLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTortureDC|10+(DomainTortureLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTortureTimes|DomainPowerTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 336,
+    "record_key": "Inquisition ~ Torture"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maestro Bloodline ~ Grand Maestro",
+    "name": "Grand Maestro",
+    "class": "Maestro Bloodline",
+    "description": "The power of pure magic music flows through you. You cast any spell with a verbal component as if it had the Still Spell metamagic feat applied to it, with no increase to the casting time or spell slot required to cast it. You gain immunity to sonic damage and language-dependent spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maestro Bloodline ~ Grand Maestro"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Maestro Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Maestro"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Maestro_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Maestro_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of pure magic music flows through you. You cast any spell with a verbal component as if it had the Still Spell metamagic feat applied to it, with no increase to the casting time or spell slot required to cast it. You gain immunity to sonic damage and language-dependent spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Sonic|Immunity to Language-Dependent Spells"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|MaestroBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 633,
+    "record_key": "Maestro Bloodline ~ Grand Maestro"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

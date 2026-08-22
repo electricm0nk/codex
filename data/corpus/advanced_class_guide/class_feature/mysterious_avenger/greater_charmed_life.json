@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mysterious Avenger ~ Greater Charmed Life",
+    "name": "Greater Charmed Life",
+    "class": "Swashbuckler",
+    "description": "The mysterious avenger gains three extra uses of charmed life. As an immediate action, she can expend one use of charmed life to gain a +%1 bonus to her AC. She must choose to do this before the attack roll is made against her.|max(1,CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mysterious Avenger ~ Greater Charmed Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mysterious Avenger Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The mysterious avenger gains three extra uses of charmed life. As an immediate action, she can expend one use of charmed life to gain a +%1 bonus to her AC. She must choose to do this before the attack roll is made against her.|max(1,CHA)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|-1|PREVARGTEQ:SwashbucklerLVL,4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3913,
+    "record_key": "Mysterious Avenger ~ Greater Charmed Life"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

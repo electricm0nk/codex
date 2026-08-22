@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Talent ~ Combat Trick",
+    "name": "Combat Trick",
+    "class": "Slayer Talent",
+    "description": "You gain a bonus combat feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Combat Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a bonus combat feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Combat Trick Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1833,
+    "record_key": "Slayer Talent ~ Combat Trick"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

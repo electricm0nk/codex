@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor ~ Bane",
+    "name": "Bane",
+    "class": "Inquisitor",
+    "description": "An inquisitor can imbue one of her weapons with the bane weapon special ability as a swift action. She must select one creature type when she uses this ability (and a subtype if the creature type selected is humanoid or outsider). Once selected, the type can be changed as a swift action. This ability only functions while the inquisitor wields the weapon. If dropped or taken, the weapon resumes granting this ability if it is returned to the inquisitor before the duration expires. This ability lasts for %1 rounds per day. These rounds do not need to be consecutive.|InquisitorBanePool",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor ~ Bane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorBanePool|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An inquisitor can imbue one of her weapons with the bane weapon special ability as a swift action. She must select one creature type when she uses this ability (and a subtype if the creature type selected is humanoid or outsider). Once selected, the type can be changed as a swift action. This ability only functions while the inquisitor wields the weapon. If dropped or taken, the weapon resumes granting this ability if it is returned to the inquisitor before the duration expires. This ability lasts for %1 rounds per day. These rounds do not need to be consecutive.|InquisitorBanePool"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorBanePool|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|InquisitorBanePool"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 305,
+    "record_key": "Inquisitor ~ Bane"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

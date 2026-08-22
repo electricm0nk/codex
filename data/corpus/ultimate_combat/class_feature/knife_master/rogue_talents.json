@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knife Master ~ Rogue Talents",
+    "name": "Rogue Talents",
+    "class": "Rogue",
+    "description": "The following rogue talents complement the knife master archetype - befuddling strike**, combat trick, offensive defense**, surprise attack, underhanded*, and weapon training.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knife Master ~ Rogue Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following rogue talents complement the knife master archetype - befuddling strike**, combat trick, offensive defense**, surprise attack, underhanded*, and weapon training."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1707,
+    "record_key": "Knife Master ~ Rogue Talents"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

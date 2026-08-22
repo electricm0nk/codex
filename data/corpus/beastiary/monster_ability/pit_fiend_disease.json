@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Pit Fiend ~ Disease",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:devil_pit_fiend"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Disease"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DiseaseDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiseaseDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiseaseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Disease)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiseaseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Devil Chills: Bite--injury; save Fort DC %1; onset immediate; frequency 1/day; effect 1d4 Str damage; cure 3 consecutive saves.|DiseaseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Pit Fiend ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.80",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 368,
-    "record_key": "Pit Fiend ~ Disease"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 368,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Pit Fiend ~ Disease",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Mantis Style",
+    "name": "Mantis Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "You have learned to target vital areas with crippling accuracy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Mantis Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Unarmed Strike,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Heal=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to target vital areas with crippling accuracy."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain one additional Stunning Fist attempt per day. While using this style, you gain a +2 bonus to the DC of effects you deliver with your Stunning Fist."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Mantis Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4480,
+    "record_key": "Warpriest Bonus Feat ~ Mantis Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

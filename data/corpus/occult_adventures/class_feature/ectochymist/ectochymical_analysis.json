@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ectochymist ~ Ectochymical Analysis",
+    "name": "Ectochymical Analysis",
+    "class": "Alchemist",
+    "description": "At 10th level, an ectochymist can use alchemical processes to uncover esoteric knowledge from a haunted area that would normally require divinations to ascertain. This process takes 10 minutes and expends one use of ectoplasmic blanche. Treat this effect as speak with hauntAPG with a saving throw DC equal to 10 + 1/2 the ectochymist's class level + the ectochymist's Charisma modifier and a caster level equal to the ectochymist's class level. Because the ectochymist is performing an analysis to answer his questions and not speaking with the haunt directly, he uses Craft (alchemy) rather than Sense Motive to oppose any Bluff checks the spirit might attempt in order to mislead him. This ability replaces poison immunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectochymist ~ Ectochymical Analysis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ectochymist Class Feature.Alchemist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, an ectochymist can use alchemical processes to uncover esoteric knowledge from a haunted area that would normally require divinations to ascertain. This process takes 10 minutes and expends one use of ectoplasmic blanche. Treat this effect as speak with hauntAPG with a saving throw DC equal to 10 + 1/2 the ectochymist's class level + the ectochymist's Charisma modifier and a caster level equal to the ectochymist's class level. Because the ectochymist is performing an analysis to answer his questions and not speaking with the haunt directly, he uses Craft (alchemy) rather than Sense Motive to oppose any Bluff checks the spirit might attempt in order to mislead him. This ability replaces poison immunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1658,
+    "record_key": "Ectochymist ~ Ectochymical Analysis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

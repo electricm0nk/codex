@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daring General ~ Aides-de-Camp",
+    "name": "Aides-de-Camp",
+    "class": "Cavalier",
+    "description": "A daring general gains a modified version of the Leadership feat at 6th level, even if he doesn't meet the prerequisites. All followers that the daring general gains as a result of this version of the Leadership feat can only have levels in the warrior class. All cohorts that the daring general gains from this ability must have levels only in classes that grant a full base attack bonus (such as barbarian, fighter, paladin, or ranger), and must be at least 4 levels lower than the daring general himself. However, at 12th level and 18th level, the daring general gains an additional cohort (up to a maximum of three cohorts at 18th level) and a number of additional followers equal to the number of followers he gained from the Leadership feat (up to a maximum of triple his normal number of followers at 18th level). When determining the kinds of cohorts the daring general can attract, he treats his Leadership score as 3 lower for each subsequent cohort (effectively taking a -3 penalty for the second cohort and a -6 penalty for the third cohort). Additionally, the daring general can grant special roles to his cohorts. Unless otherwise stated, only one cohort can fill any given role at any given time. Designating a cohort as filling a special role requires a 24-hour ceremonial ritual.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring General ~ Aides-de-Camp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DaringGeneralCohortCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A daring general gains a modified version of the Leadership feat at 6th level, even if he doesn't meet the prerequisites. All followers that the daring general gains as a result of this version of the Leadership feat can only have levels in the warrior class. All cohorts that the daring general gains from this ability must have levels only in classes that grant a full base attack bonus (such as barbarian, fighter, paladin, or ranger), and must be at least 4 levels lower than the daring general himself. However, at 12th level and 18th level, the daring general gains an additional cohort (up to a maximum of three cohorts at 18th level) and a number of additional followers equal to the number of followers he gained from the Leadership feat (up to a maximum of triple his normal number of followers at 18th level). When determining the kinds of cohorts the daring general can attract, he treats his Leadership score as 3 lower for each subsequent cohort (effectively taking a -3 penalty for the second cohort and a -6 penalty for the third cohort). Additionally, the daring general can grant special roles to his cohorts. Unless otherwise stated, only one cohort can fill any given role at any given time. Designating a cohort as filling a special role requires a 24-hour ceremonial ritual."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Daring General ~ Followers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Leadership"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Daring General Cohort|DaringGeneralCohortCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DaringGeneralCohortCount|CavalierLVL/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 291,
+    "record_key": "Daring General ~ Aides-de-Camp"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

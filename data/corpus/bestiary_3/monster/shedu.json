@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "9",
@@ -28,6 +26,128 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Shedu"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Auran|Celestial|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|6|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|8|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "10/evil"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LG"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:11"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Natural.Melee.Finesseable.Weapon,*1,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Hooves,Natural.Melee.Finesseable.Weapon,*2,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Wings,Natural.Melee.Finesseable.Weapon,*2,1d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      },
+      {
+        "key": "SR",
+        "value": "20"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Detect Chaos|Detect Evil|Low-Light Vision|True Seeing"
+      }
+    ],
     "size": "L",
     "source_page": "p.242",
     "speeds": [
@@ -41,16 +161,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 250,
-    "record_key": "Shedu"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 250,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Shedu",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

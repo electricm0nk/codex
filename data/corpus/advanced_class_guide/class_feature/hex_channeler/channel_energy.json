@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hex Channeler ~ Channel Energy",
+    "name": "Channel Energy",
+    "class": "Witch",
+    "description": "At 2nd level, a hex channeler can call upon her patron to release a wave of energy from herself or her familiar. A good witch channels positive energy (like a good cleric), and an evil witch channels negative energy (like an evil cleric). A witch who is neither good nor evil must choose whether she channels positive or negative energy; once this choice is made, it cannot be reversed. Channeling energy causes a burst that affects all creatures of one type (either undead or living) in a 30-foot radius centered on the witch. The witch can channel energy a number of times per day equal to 3 + her Charisma modifier (minimum 1). This otherwise functions as a cleric using channel energy, except the witch does not require a holy symbol to use this ability. The hex channeler uses her witch level as her cleric level for all other effects dependent upon channel energy (except increasing the amount of damage healed or dealt). The hex channeler can choose whether or not to include herself or her familiar in this effect. This burst heals or deals 1d6 points of damage. Every time the hex channeler is able to learn a new hex (including major or grand hexes, but not hexes gained through the Extra Hex feat), she can instead increase her channel energy amount by 1d6. This ability replaces the hex gained at 2nd level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hex Channeler ~ Channel Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hex Channeler Class Feature.Witch Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchChannelEnergyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchChannelEnergyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Witch_Channeling|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a hex channeler can call upon her patron to release a wave of energy from herself or her familiar. A good witch channels positive energy (like a good cleric), and an evil witch channels negative energy (like an evil cleric). A witch who is neither good nor evil must choose whether she channels positive or negative energy; once this choice is made, it cannot be reversed. Channeling energy causes a burst that affects all creatures of one type (either undead or living) in a 30-foot radius centered on the witch. The witch can channel energy a number of times per day equal to 3 + her Charisma modifier (minimum 1). This otherwise functions as a cleric using channel energy, except the witch does not require a holy symbol to use this ability. The hex channeler uses her witch level as her cleric level for all other effects dependent upon channel energy (except increasing the amount of damage healed or dealt). The hex channeler can choose whether or not to include herself or her familiar in this effect. This burst heals or deals 1d6 points of damage. Every time the hex channeler is able to learn a new hex (including major or grand hexes, but not hexes gained through the Extra Hex feat), she can instead increase her channel energy amount by 1d6. This ability replaces the hex gained at 2nd level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchChannelEnergyTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchChannelEnergyLVL|WitchLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Witch_Channeling|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4020,
+    "record_key": "Hex Channeler ~ Channel Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Second Oath ~ Dagon",
+    "name": "Second Oath",
+    "class": "Second Oath",
+    "description": "You become immune to damage from water pressure, and gain the ability to breath water, a +2 profane bonus to Constitution, and a swim speed equal to your base land speed (or increase your current swim speed by 30 ft.).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Second Oath ~ Dagon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You become immune to damage from water pressure, and gain the ability to breath water, a +2 profane bonus to Constitution, and a swim speed equal to your base land speed (or increase your current swim speed by 30 ft.)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Second Oath ~ Dagon|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|Constitution|2|TYPE=Profane"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 118,
+    "record_key": "Second Oath ~ Dagon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

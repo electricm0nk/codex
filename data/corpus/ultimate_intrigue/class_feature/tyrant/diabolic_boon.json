@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tyrant ~ Diabolic Boon",
+    "name": "Diabolic Boon",
+    "class": "Antipaladin",
+    "description": "If a tyrant chooses to gain the services of a fiendish servant with his fiendish boon ability, he must choose a fiendish animal or a creature with the lawful and evil subtypes. If a tyrant chooses to be able to enhance their weapon with his fiendish boon ability, he can grant it the axiomatic, rather than anarchic, weapon quality. This ability alters fiendish boon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tyrant ~ Diabolic Boon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Antipaladin Class Features.TyrantClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If a tyrant chooses to gain the services of a fiendish servant with his fiendish boon ability, he must choose a fiendish animal or a creature with the lawful and evil subtypes. If a tyrant chooses to be able to enhance their weapon with his fiendish boon ability, he can grant it the axiomatic, rather than anarchic, weapon quality. This ability alters fiendish boon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 214,
+    "record_key": "Tyrant ~ Diabolic Boon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dirty Fighter ~ Speedy Tricks",
+    "name": "Speedy Tricks",
+    "class": "Fighter",
+    "description": "The dirty fighter has perfected how to quickly perform dirty tricks. He can make a dirty trick combat maneuver as an attack instead of a standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dirty Fighter ~ Speedy Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The dirty fighter has perfected how to quickly perform dirty tricks. He can make a dirty trick combat maneuver as an attack instead of a standard action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 651,
+    "record_key": "Dirty Fighter ~ Speedy Tricks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Gingerbread Witch",
+    "name": "Gingerbread Witch",
+    "class": "Witch Archetype",
+    "description": "A sweet tooth lures the gingerbread witch's victims to doom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Gingerbread Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "DESC",
+        "value": "A sweet tooth lures the gingerbread witch's victims to doom."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Gingerbread Witch],[!PREFACT:1,ABILITIES,Witch_Archetype_Familiar=True,Witch_Archetype_Hex1=True,Witch_Archetype_Hex4=True,Witch_Archetype_Hex8=True,Witch_Archetype_Hex10=True,Witch_Archetype_Hex12=True,Witch_Archetype_Hex16=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gingerbread Witch ~ Gingerbread Familiar|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gingerbread Witch ~ Cauldron Cook|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gingerbread Witch ~ Tricky Treats Hex|PRECLASS:1,Witch=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gingerbread Witch ~ Confection Conjuring|PRECLASS:1,Witch=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gingerbread Witch ~ Gruesome Gobbler|PRECLASS:1,Witch=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gingerbread Witch ~ Horrible Hunger|PRECLASS:1,Witch=16"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex16|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 266,
+    "record_key": "Witch Archetype ~ Gingerbread Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

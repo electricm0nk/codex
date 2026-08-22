@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You summon a swarm of bats, rats, or spiders [your choice], which attacks all other creatures within its area. [You may summon the swarm so that it shares the area of other creatures.] If no living creatures are within its area, the swarm attacks or pursues the nearest creature as best it can. The caster has no control over its target or direction of travel.",
     "key": "Summon Swarm",
-    "school": "Conjuration",
     "level": 2,
-    "description": "You summon a swarm of bats, rats, or spiders [your choice], which attacks all other creatures within its area. [You may summon the swarm so that it shares the area of other creatures.] If no living creatures are within its area, the swarm attacks or pursues the nearest creature as best it can. The caster has no control over its target or direction of travel."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Druid,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon a swarm of bats, rats, or spiders (your choice), which attacks all other creatures within its area.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon a swarm of bats, rats, or spiders [your choice], which attacks all other creatures within its area. [You may summon the swarm so that it shares the area of other creatures.] If no living creatures are within its area, the swarm attacks or pursues the nearest creature as best it can. The caster has no control over its target or direction of travel.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration + 2 rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/summonSwarm.html#_summon-swarm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.354"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Summoning"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One swarm of bats, rats, or spiders"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      },
+      {
+        "key": "VARIANTS",
+        "value": "Bats|Rats|Spiders"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 603,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1353,
-    "record_key": "Summon Swarm.MOD"
+    "record_key": "Summon Swarm",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

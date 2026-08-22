@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Major Hex ~ Ice Tomb",
+    "name": "Major Hex - Ice Tomb",
+    "class": "Witch Major Hex",
+    "description": "DC %1 |WitchHexDC_IceTomb",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Major Hex ~ Ice Tomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.WitchHex.MajorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMajorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,10]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_IceTomb|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_IceTomb"
+      },
+      {
+        "key": "DESC",
+        "value": "A storm of ice and freezing wind envelops one creature within 60 feet, which takes 3d8 points of cold damage and is paralyzed and unconscious but does not need to eat, drink or breathe while the ice lasts. A target that succeeds at a Fortitude save takes half damage and is not imprisoned. The ice has 20 hit points; destroying the ice frees the creature, which is staggered for 1d4 rounds after being released. Under temperate conditions, the ice lasts 1 minute per witch level. In tropical environments it might only last half as long. In cold environments where ice and snow persist without melting, it might last indefinitely. Whether or not the target's saving throw is successful, it cannot be the target of this hex again for 1 day."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Ice Tomb"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_IceTomb|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_IceTomb|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Ice Tomb)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 728,
+    "record_key": "Witch Major Hex ~ Ice Tomb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

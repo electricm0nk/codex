@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Shifter",
+    "description": "A shifter gains the ability to turn herself into the major form of one of her aspects and back again. This ability functions as beast shape II, except as noted here. The shifter can turn into the major form of only one of her aspects at a time. Using wild shape to change to a major form or back is a standard action that doesn't provoke attacks of opportunity. Often a particular aspect's major form grants abilities beyond the normal effect of beast shape II. Each major form details the abilities the shifter gains with that major form and at what level; she gains these instead of the form abilities from beast shape II, but she still gains beast shape II abilities that are size dependent. A shifter loses her ability to speak while in animal form because she is limited to the sounds that a normal, untrained animal of that form can make, but she can communicate with other animals of the same general grouping as her form. She can also communicate in nonverbal ways with allies. A shifters can take feats and other abilities that require wild shape; for the purpose of qualifying for prerequisites, her effective druid level is equal to her shifter level. A shifter can use wild shape for %1 hours each day. It need not be consecutive but must be spent in 1 hour increments. For abilities that function based on 'uses of wild shape,' each hour of wild shape counts as a use.|ShifterWildshapeCount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Supernatural.DruidWildShape"
+      },
+      {
+        "key": "QUALIFY",
+        "value": "ABILITY=FEAT|Natural Spell"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Wild Shape"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterWildShape|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterWildshapeCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shifter gains the ability to turn herself into the major form of one of her aspects and back again. This ability functions as beast shape II, except as noted here. The shifter can turn into the major form of only one of her aspects at a time. Using wild shape to change to a major form or back is a standard action that doesn't provoke attacks of opportunity. Often a particular aspect's major form grants abilities beyond the normal effect of beast shape II. Each major form details the abilities the shifter gains with that major form and at what level; she gains these instead of the form abilities from beast shape II, but she still gains beast shape II abilities that are size dependent. A shifter loses her ability to speak while in animal form because she is limited to the sounds that a normal, untrained animal of that form can make, but she can communicate with other animals of the same general grouping as her form. She can also communicate in nonverbal ways with allies. A shifters can take feats and other abilities that require wild shape; for the purpose of qualifying for prerequisites, her effective druid level is equal to her shifter level. A shifter can use wild shape for %1 hours each day. It need not be consecutive but must be spent in 1 hour increments. For abilities that function based on 'uses of wild shape,' each hour of wild shape counts as a use.|ShifterWildshapeCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterWildShape|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterWildshapeCount|ShifterLVL+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 19,
+    "record_key": "Shifter ~ Wild Shape"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

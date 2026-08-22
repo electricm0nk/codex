@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Symbol of Laughter",
-    "school": "Enchantment",
-    "level": 4,
     "description": "This spell functions as symbol of death, except that all creatures within 60 feet are affected with uncontrollable laughter (as hideous laughter) for 1 round per caster level. Unlike symbol of death, symbol of laughter has no hit point limit; once it is triggered, a symbol of laughter remains active for 1 minute per caster level. Symbol of laughter can be made permanent with a permanency spell by a caster of 10th level or higher at a cost of 5,000 gp.",
-    "full_text": true
+    "full_text": true,
+    "key": "Symbol of Laughter",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as symbol of death, except that all creatures within 60 feet are affected with uncontrollable laughter (as hideous laughter) for 1 round per caster level. Unlike symbol of death, symbol of laughter has no hit point limit; once it is triggered, a symbol of laughter remains active for 1 minute per caster level. Symbol of laughter can be made permanent with a permanency spell by a caster of 10th level or higher at a cost of 5,000 gp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Triggered rune makes nearby creatures lose actions for 1 round/level.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(mercury and phosphorus, plus powdered diamond and opal worth a total of 1,000 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 Ft.; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/symbolOfLaughter.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Charm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One symbol"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 123,
-    "record_key": "Symbol of Laughter"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Symbol of Laughter",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

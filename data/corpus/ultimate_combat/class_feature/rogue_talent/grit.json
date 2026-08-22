@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Grit",
+    "name": "Grit",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent gains the Amateur Gunslinger feat and one grit feat of her choice. She must fulfill the prerequisites of the grit feat in order to choose it. A rogue must have the firearm training talent before choosing this one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Grit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rogue Talent ~ Firearm Training"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent gains the Amateur Gunslinger feat and one grit feat of her choice. She must fulfill the prerequisites of the grit feat in order to choose it. A rogue must have the firearm training talent before choosing this one."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Amateur Gunslinger|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Grit Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1603,
+    "record_key": "Rogue Talent ~ Grit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

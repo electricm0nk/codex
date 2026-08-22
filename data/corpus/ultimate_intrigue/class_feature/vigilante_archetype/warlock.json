@@ -1,0 +1,188 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Warlock",
+    "name": "Warlock",
+    "class": "Vigilante Archetype",
+    "description": "Practicing magic in secret, the warlock obscures her arcane scholarship from public view. Her study of these arts allows her to hide her dual nature and enchant her enemies-or simply blast them with furious magical attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Warlock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Warlock],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ClassSkills=True,Vigilante_Archetype_SkillRanks=True,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_VigilanteTalent4=True,Vigilante_Archetype_VigilanteTalent8=True,Vigilante_Archetype_VigilanteTalent10=True,Vigilante_Archetype_VigilanteTalent14=True,Vigilante_Archetype_VigilanteTalent16=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_Unshakable=True,Vigilante_Archetype_VigilanteTalent=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Practicing magic in secret, the warlock obscures her arcane scholarship from public view. Her study of these arts allows her to hide her dual nature and enchant her enemies-or simply blast them with furious magical attacks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Warlock ~ Class Skills|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Warlock ~ Skill Ranks per Level|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlock ~ Armor Proficiencies|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlock ~ Spellcasting|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlock ~ Spellbook|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlock ~ Mystic Bolts|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlock ~ Piercing Bolts|PRECLASS:1,Vigilante=3"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|VWarlock"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|VWarlock|VigilanteLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|VWarlock|var(\"VigilanteLVL\")-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SkillRanks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Unshakable|true"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|VWarlock"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|VWarlock|VigilanteLVL-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 973,
+    "record_key": "Vigilante Archetype ~ Warlock"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Base Focus Power ~ Sudden Insight",
+    "name": "Sudden Insight [Divination]",
+    "class": "Base Focus Power",
+    "description": "As a swift action, you can expend 1 point of mental focus to gain an insight into your immediate future. You can use this foreknowledge as a free action before you roll any ability check, attack roll, or skill check to gain a +%1 insight bonus on that roll. You can use your foreknowledge only once per turn, and if it's not used by the end of your turn, the insight fades and you gain no benefit.|max(OccultistLVL/2,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Base Focus Power ~ Sudden Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base Focus Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend 1 point of mental focus to gain an insight into your immediate future. You can use this foreknowledge as a free action before you roll any ability check, attack roll, or skill check to gain a +%1 insight bonus on that roll. You can use your foreknowledge only once per turn, and if it's not used by the end of your turn, the insight fades and you gain no benefit.|max(OccultistLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1051,
+    "record_key": "Base Focus Power ~ Sudden Insight"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

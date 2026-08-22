@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodline Choice ~ Brass",
+    "name": "Brass",
+    "class": "Draconic Bloodline Choice",
+    "description": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select one of the chromatic or metallic dragon types (see the Pathfinder RPG Bestiary). This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your dragon type. Brass dragons are associated with the fire energy type and have a 60-foot line breath shape.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline Choice ~ Brass"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Draconic Bloodline Choice"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicBloodlineChoice_Brass|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select one of the chromatic or metallic dragon types (see the Pathfinder RPG Bestiary). This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your dragon type. Brass dragons are associated with the fire energy type and have a 60-foot line breath shape."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBloodlineChoice_Brass|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBreathWeapon_Line|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicDamageType_Fire|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2467,
+    "record_key": "Draconic Bloodline Choice ~ Brass"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

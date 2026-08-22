@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daring Infiltrator ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Swashbuckler",
+    "description": "In addition to combat feats, a daring infiltrator's bonus feats at 4th, 8th, 12th, 16th and 20th level can come from the following list: Alertness, Antagonize, Cosmopolitan, Deceitful, Deft Hands, Disarming Threat, Persuasive, Prodigy, and Skill Focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring Infiltrator ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Infiltrator Class Feature.Swashbuckler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_SwashbucklerBonusFeat|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to combat feats, a daring infiltrator's bonus feats at 4th, 8th, 12th, 16th and 20th level can come from the following list: Alertness, Antagonize, Cosmopolitan, Deceitful, Deft Hands, Disarming Threat, Persuasive, Prodigy, and Skill Focus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3850,
+    "record_key": "Daring Infiltrator ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

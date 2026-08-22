@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hungry Ghost Monk ~ Life Funnel",
+    "name": "Life Funnel",
+    "class": "Monk",
+    "description": "At 7th level, a hungry ghost monk can steal a creature's life force to replenish his own. If the monk has at least 1 ki point in his ki pool and scores a confirmed critical hit against a living enemy or reduces a living enemy to 0 or fewer hit points, he heals a number of hit points equal to his monk level. As with steal ki, some monks believe that life funnel is an unsavory act, no better than what the undead do to the living. A monk with this ability cannot steal both ki and hit points at the same time. This ability replaces wholeness of body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hungry Ghost Monk ~ Life Funnel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkWholenessOfBody"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a hungry ghost monk can steal a creature's life force to replenish his own. If the monk has at least 1 ki point in his ki pool and scores a confirmed critical hit against a living enemy or reduces a living enemy to 0 or fewer hit points, he heals a number of hit points equal to his monk level. As with steal ki, some monks believe that life funnel is an unsavory act, no better than what the undead do to the living. A monk with this ability cannot steal both ki and hit points at the same time. This ability replaces wholeness of body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2313,
+    "record_key": "Hungry Ghost Monk ~ Life Funnel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

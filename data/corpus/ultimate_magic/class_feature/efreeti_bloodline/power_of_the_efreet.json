@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Efreeti Bloodline ~ Power of the Efreet",
+    "name": "Power of the Efreet",
+    "class": "Efreeti Bloodline",
+    "description": "You gain the power of genies to grant wishes. Once per day, you can cast limited wish as a spell-like ability. Such wishes must begin with the words \"I wish,\" and cannot duplicate a wish you have granted within the past 24 hours. If you use this ability to duplicate a spell with a costly material component, you must provide that component.&nl;You also become immune to fire damage, and can use plane shift once per day to travel to or from the Plane of Fire.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Efreeti Bloodline ~ Power of the Efreet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Efreeti Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Efreeti"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Efreeti_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Efreeti_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Bloodline|TIMES=1|CASTERLEVEL=Sorcerer_Efreeti_BloodlinePower20LVL|Limited Wish,17+Sorcerer_Spells_StatBonus|Plane Shift (Plane of Fire Only),17+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the power of genies to grant wishes. Once per day, you can cast limited wish as a spell-like ability. Such wishes must begin with the words \"I wish,\" and cannot duplicate a wish you have granted within the past 24 hours. If you use this ability to duplicate a spell with a costly material component, you must provide that component.&nl;You also become immune to fire damage, and can use plane shift once per day to travel to or from the Plane of Fire."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|EfreetiBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 615,
+    "record_key": "Efreeti Bloodline ~ Power of the Efreet"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

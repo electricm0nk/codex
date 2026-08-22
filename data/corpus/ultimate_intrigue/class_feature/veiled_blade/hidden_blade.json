@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Veiled Blade ~ Hidden Blade",
+    "name": "Hidden Blade",
+    "class": "Swashbuckler",
+    "description": "At 3rd level, whenever she has at least 1 panache point, a veiled blade can hide any light or one-handed piercing melee weapon using Sleight of Hand, and she receives a +4 insight bonus on her check to hide the weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Veiled Blade ~ Hidden Blade"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL03"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, whenever she has at least 1 panache point, a veiled blade can hide any light or one-handed piercing melee weapon using Sleight of Hand, and she receives a +4 insight bonus on her check to hide the weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 961,
+    "record_key": "Veiled Blade ~ Hidden Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

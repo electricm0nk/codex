@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Wrath",
-    "school": "Enchantment",
-    "level": 1,
     "description": "You focus your anger against an enemy. Choose one enemy creature that you can see. You gain a +1 morale bonus on attack rolls and weapon damage rolls against that designated creature for every three caster levels you have (at least +1, maximum +3). You also receive this bonus on caster level checks made to overcome the creature's spell resistance, if any. At 12th level, you gain the benefits of the Improved Critical feat on attack rolls made against the designated creature. This effect doesn't stack with any other effect that expands the threat range of a weapon.",
-    "full_text": true
+    "full_text": true,
+    "key": "Wrath",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 attack and damage against target creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You focus your anger against an enemy. Choose one enemy creature that you can see. You gain a +1 morale bonus on attack rolls and weapon damage rolls against that designated creature for every three caster levels you have (at least +1, maximum +3). You also receive this bonus on caster level checks made to overcome the creature's spell resistance, if any. At 12th level, you gain the benefits of the Improved Critical feat on attack rolls made against the designated creature. This effect doesn't stack with any other effect that expands the threat range of a weapon.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 minute"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a thorny vine)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/wrath.html#_wrath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.257"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 273,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2120,
-    "record_key": "Wrath"
+    "record_key": "Wrath",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

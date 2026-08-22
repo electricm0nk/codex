@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Aura of Repetition",
+    "name": "Aura of Repetition",
+    "class": "Domain Power",
+    "description": "At 8th level, you can emit a 30-foot aura of repetition %1 rounds per day. All enemies within this aura must make a Will save each round or repeat their action from the previous round (if possible). Creatures that attacked on the previous round attack again on the following round, although they may change their target. Creatures that moved the previous round must take the same move action again, although they may change their route. Creatures that drank a potion must do so again, even if they can only drink from an empty bottle. Actions that cannot be repeated are wasted. These rounds do not have to be consecutive.|DomainArtificeLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Aura of Repetition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can emit a 30-foot aura of repetition %1 rounds per day. All enemies within this aura must make a Will save each round or repeat their action from the previous round (if possible). Creatures that attacked on the previous round attack again on the following round, although they may change their target. Creatures that moved the previous round must take the same move action again, although they may change their route. Creatures that drank a potion must do so again, even if they can only drink from an empty bottle. Actions that cannot be repeated are wasted. These rounds do not have to be consecutive.|DomainArtificeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainArtificeLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1875,
+    "record_key": "Domain Power ~ Aura of Repetition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

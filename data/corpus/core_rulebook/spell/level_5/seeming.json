@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like disguise self, except that you can change the appearance of other people as well. Affected creatures resume their normal appearances if slain. Unwilling targets can negate the spell's effect on them by making Will saves or with spell resistance.",
     "key": "Seeming",
-    "school": "Illusion",
     "level": 5,
-    "description": "This spell functions like disguise self, except that you can change the appearance of other people as well. Affected creatures resume their normal appearances if slain. Unwilling targets can negate the spell's effect on them by making Will saves or with spell resistance."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like disguise self, except that you can change the appearance of other people as well. Affected creatures resume their normal appearances if slain. Unwilling targets can negate the spell's effect on them by making Will saves or with spell resistance.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like disguise self, except that you can change the appearance of other people as well.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "12 hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates or Will disbelief (if interacted with);"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/seeming.html#_seeming"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.339"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes or no; see text"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL/2) creatures, no two of which can be more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 525,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1275,
-    "record_key": "Seeming.MOD"
+    "record_key": "Seeming",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

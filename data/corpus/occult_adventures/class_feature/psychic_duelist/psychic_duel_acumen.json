@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Duelist ~ Psychic Duel Acumen",
+    "name": "Psychic Duel Acumen",
+    "class": "Psychic",
+    "description": "[not implemented]At 4th level, a psychic duelist adds instigate psychic duel* to her list of spells known, and the save DC of any instigate psychic duel spell she casts increases by 1. Beginning at 6th level, she can also expend any unused psychic spell slot of 3rd level or higher to cast instigate psychic duel. If she does so, she uses the level of the spell slot expended to determine the Will save DC. In addition, when the psychic duelist sacrifices points from her phrenic pool to generate manifestation points for an offensive manifestation, she uses d8s for damage dice instead of d4s. This ability replaces the 4th-level discipline spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Duelist ~ Psychic Duel Acumen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Duelist Class Feature.Psychic Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]At 4th level, a psychic duelist adds instigate psychic duel* to her list of spells known, and the save DC of any instigate psychic duel spell she casts increases by 1. Beginning at 6th level, she can also expend any unused psychic spell slot of 3rd level or higher to cast instigate psychic duel. If she does so, she uses the level of the spell slot expended to determine the Will save DC. In addition, when the psychic duelist sacrifices points from her phrenic pool to generate manifestation points for an offensive manifestation, she uses d8s for damage dice instead of d4s. This ability replaces the 4th-level discipline spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1601,
+    "record_key": "Psychic Duelist ~ Psychic Duel Acumen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

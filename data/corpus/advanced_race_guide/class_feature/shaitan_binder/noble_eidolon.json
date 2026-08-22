@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaitan Binder ~ Noble Eidolon",
+    "name": "Noble Eidolon",
+    "class": "Summoner",
+    "description": "The shaitan binder's eidolon gains the ability to grant its summoner's wishes. Once per day, the eidolon can cast limited wish as a spelllike ability. The eidolon's caster level is equal to its level. The wish must be spoken aloud by the shaitan binder, beginning with the words \"I wish,\" and cannot duplicate a wish the eidolon has granted within the past 24 hours. If the eidolon uses this ability to duplicate a spell with a costly material component, the shaitan binder must provide that component.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Binder ~ Noble Eidolon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaitan binder's eidolon gains the ability to grant its summoner's wishes. Once per day, the eidolon can cast limited wish as a spelllike ability. The eidolon's caster level is equal to its level. The wish must be spoken aloud by the shaitan binder, beginning with the words \"I wish,\" and cannot duplicate a wish the eidolon has granted within the past 24 hours. If the eidolon uses this ability to duplicate a spell with a costly material component, the shaitan binder must provide that component."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 674,
+    "record_key": "Shaitan Binder ~ Noble Eidolon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

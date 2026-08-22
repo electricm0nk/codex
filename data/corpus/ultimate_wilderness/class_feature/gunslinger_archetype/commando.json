@@ -1,0 +1,155 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Commando",
+    "name": "Commando",
+    "class": "Gunslinger Archetype",
+    "description": "Commandos are those rough and ready gunslingers who excel at hit-and-run tactics and leveraging their expertise in the wild against their enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Commando"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Commando],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_ClassSkills=True,Gunslinger_Archetype_UtilityShotDeed=True,Gunslinger_Archetype_ExpertLoadingDeed=True,Gunslinger_Archetype_LightningReloadDeed=True,Gunslinger_Archetype_SlingersLuckDeed=True,Gunslinger_Archetype_Nimble=True,Gunslinger_Archetype_BonusFeat4=True,Gunslinger_Archetype_GunTraining=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Commandos are those rough and ready gunslingers who excel at hit-and-run tactics and leveraging their expertise in the wild against their enemies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Commando ~ Class Skills|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Commando ~ Trap Shot|PRECLASS:1,Gunslinger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Commando ~ Sniping Shot|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Commando ~ Camouflage|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Commando ~ Hide in Plain Sight|PRECLASS:1,Gunslinger=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Commando ~ Favored Terrain|PRECLASS:1,Gunslinger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Commando ~ Track|PRECLASS:1,Gunslinger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Commando ~ Trapsmith|PRECLASS:1,Gunslinger=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_UtilityShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_ExpertLoadingDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_LightningReloadDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_SlingersLuckDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_UtilityShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_ExpertLoadingDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_LightningReloadDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_SlingersLuckDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 621,
+    "record_key": "Gunslinger Archetype ~ Commando"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

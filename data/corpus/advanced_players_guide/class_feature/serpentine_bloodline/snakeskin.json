@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Serpentine Bloodline ~ Snakeskin",
+    "name": "Snakeskin",
+    "class": "Serpentine Bloodline",
+    "description": "You gain a +%1 bonus to natural armor, a +%2 racial bonus on saves against poison, and a +%3 bonus on Escape Artist checks.|Sorcerer_SerpentineSnakeskin_NaturalArmorBonus|Sorcerer_SerpentineSnakeskin_SaveBonus|Sorcerer_SerpentineSnakeskin_Skillbonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpentine Bloodline ~ Snakeskin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Serpentine Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Serpentine"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Serpentine_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineSnakeskin_NaturalArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineSnakeskin_SaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineSnakeskin_Skillbonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus to natural armor, a +%2 racial bonus on saves against poison, and a +%3 bonus on Escape Artist checks.|Sorcerer_SerpentineSnakeskin_NaturalArmorBonus|Sorcerer_SerpentineSnakeskin_SaveBonus|Sorcerer_SerpentineSnakeskin_Skillbonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|Sorcerer_SerpentineSnakeskin_NaturalArmorBonus|TYPE=NaturalArmor.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|Sorcerer_SerpentineSnakeskin_Skillbonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineSnakeskin_NaturalArmorBonus|floor((Sorcerer_Serpentine_BloodlinePower9LVL-5)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineSnakeskin_SaveBonus|floor((Sorcerer_Serpentine_BloodlinePower9LVL-5)/4)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineSnakeskin_Skillbonus|floor((Sorcerer_Serpentine_BloodlinePower9LVL-5)/4)+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. poison|Sorcerer_SerpentineSnakeskin_SaveBonus|!PREABILITY:1,CATEGORY=Special Ability,Immunity to Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|SerpentineBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3192,
+    "record_key": "Serpentine Bloodline ~ Snakeskin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

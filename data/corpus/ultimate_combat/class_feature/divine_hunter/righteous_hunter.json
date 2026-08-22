@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Hunter ~ Righteous Hunter",
+    "name": "Righteous Hunter",
+    "class": "Paladin",
+    "description": "At 14th level, a divine hunter's ranged weapons are treated as good-aligned for the purposes of overcoming damage reduction. Any ranged attacks made by an ally within 10 feet of her are likewise treated as good-aligned for the purposes of overcoming damage reduction. This ability functions only while the divine hunter is conscious. This ability replaces aura of faith.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Hunter ~ Righteous Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, a divine hunter's ranged weapons are treated as good-aligned for the purposes of overcoming damage reduction. Any ranged attacks made by an ally within 10 feet of her are likewise treated as good-aligned for the purposes of overcoming damage reduction. This ability functions only while the divine hunter is conscious. This ability replaces aura of faith."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1457,
+    "record_key": "Divine Hunter ~ Righteous Hunter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

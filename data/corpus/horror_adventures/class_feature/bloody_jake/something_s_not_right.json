@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloody Jake ~ Something's Not Right",
+    "name": "Something's Not Right",
+    "class": "Slayer",
+    "description": "As a move action,|!PRECLASS:1,Slayer=12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloody Jake ~ Something's Not Right"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "BloodyJake_CruelTrick_4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action,|!PRECLASS:1,Slayer=12"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action,|PRECLASS:1,Slayer=12"
+      },
+      {
+        "key": "DESC",
+        "value": "a bloody jake can spend one use of cruel tricks to cause all foes within 30 feet to become"
+      },
+      {
+        "key": "DESC",
+        "value": "shaken for 1 round. This is a fear effect that doesn't increase in strength by applying other effects that cause creatures to become shaken.|!PRECLASS:1,Slayer=16"
+      },
+      {
+        "key": "DESC",
+        "value": "frightened for 1 round, though such foes receive a Will save (DC %1) to negate the frightened condition; even so, such a foe is still shaken.|10+SlayerLVL/2+CHA|PRECLASS:1,Slayer=16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 214,
+    "record_key": "Bloody Jake ~ Something's Not Right"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Feral Champion",
+    "name": "Feral Champion",
+    "class": "Warpriest Archetype",
+    "description": "When a warpriest devotes himself to a god of the natural world, he is sometimes blessed with supernatural powers that allow him to evoke animalistic power and fury.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Feral Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Feral Champion],[!PREFACT:1,ABILITIES,Warpriest_Archetype_Blessings=True,Warpriest_Archetype_SacredWeapon=True,Warpriest_Archetype_SacredArmor=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "When a warpriest devotes himself to a god of the natural world, he is sometimes blessed with supernatural powers that allow him to evoke animalistic power and fury."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Champion ~ Feral Blessing|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Champion ~ Sacred Claws|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Feral Champion ~ Wild Shape|PRECLASS:1,Swashbuckler=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_Blessings|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_SacredWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_SacredArmor|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_SacredArmor|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1217,
+    "record_key": "Warpriest Archetype ~ Feral Champion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

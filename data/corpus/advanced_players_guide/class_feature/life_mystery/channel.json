@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Life Mystery ~ Channel",
+    "name": "Channel",
+    "class": "Life Mystery",
+    "description": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|OracleChannelDice|OracleChannelDieSize|OracleChannelDC|OracleChannelTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Mystery ~ Channel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.LifeRevelation.Supernatural.PerDayOracleRevelation.Channel Energy"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Channel Positive Energy|Cleric ~ Channel Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleChannelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleChannelDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleChannelLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleChannelTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|OracleChannelDice|OracleChannelDieSize|OracleChannelDC|OracleChannelTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleChannelTimes|1+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleChannelDice|(OracleChannelLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleChannelDC|10+(OracleChannelLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleChannelLVL|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleChannelDieSize|6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40,48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|OracleChannelDice|OracleChannelDieSize|OracleChannelDC|OracleChannelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|OracleChannelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 620,
+    "record_key": "Life Mystery ~ Channel"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

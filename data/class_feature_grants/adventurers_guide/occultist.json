@@ -1,0 +1,92 @@
+[
+  {
+    "key": "Curator ~ Adaptable Powers",
+    "class": "Occultist",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 955
+    }
+  },
+  {
+    "key": "Curator ~ Complex Collection",
+    "class": "Occultist",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 955
+    }
+  },
+  {
+    "key": "Curator ~ Extensive Collection",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 955
+    }
+  },
+  {
+    "key": "Curator ~ Mental Catalog",
+    "class": "Occultist",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 955
+    }
+  },
+  {
+    "key": "Curator ~ Relic Resistance",
+    "class": "Occultist",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 955
+    }
+  },
+  {
+    "key": "Curator ~ Split Focus",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 955
+    }
+  }
+]

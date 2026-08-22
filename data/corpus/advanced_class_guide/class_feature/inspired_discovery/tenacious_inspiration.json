@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inspired Discovery ~ Tenacious Inspiration",
+    "name": "Tenacious Inspiration",
+    "class": "Inspired Discovery",
+    "description": "When an investigator rolls his inspiration die, he can roll an additional inspiration die and take the higher result.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Tenacious Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AlchemistLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "When an investigator rolls his inspiration die, he can roll an additional inspiration die and take the higher result."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2359,
+    "record_key": "Inspired Discovery ~ Tenacious Inspiration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

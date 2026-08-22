@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Animal Purpose Training",
-    "school": "Enchantment",
-    "level": 1,
     "description": "You instill the target animal with a general purpose (see the Handle Animal skill), which can be any purpose except combat training-fighting, guarding, heavy labor, hunting, performance, or riding. This purpose supersedes the animal's previous trained purpose and any tricks it knows. When the spell ends, the animal reverts to its previous trained purpose and known tricks.",
-    "full_text": true
+    "full_text": true,
+    "key": "Animal Purpose Training",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Inquisitor,Paladin,Ranger,Witch=1|Bard,Druid,Shaman=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Animal gains a new general purpose.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You instill the target animal with a general purpose (see the Handle Animal skill), which can be any purpose except combat training-fighting, guarding, heavy labor, hunting, performance, or riding. This purpose supersedes the animal's previous trained purpose and any tricks it knows. When the spell ends, the animal reverts to its previous trained purpose and known tricks.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a swatch of black cloth)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/animalPurposeTraining.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one indifferent or friendly animal"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 19,
-    "record_key": "Animal Purpose Training"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Animal Purpose Training",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Siege Gunner",
+    "name": "Siege Gunner",
+    "class": "Warpriest Bonus Feat",
+    "description": "Aiming outsized siege weapons poses little difficulty for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Siege Gunner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Siege Engineer"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Profession (siege engineer)=5"
+      },
+      {
+        "key": "DESC",
+        "value": "Aiming outsized siege weapons poses little difficulty for you."
+      },
+      {
+        "key": "DESC",
+        "value": " You take no size penalty for aiming a directfire siege weapon larger than yourself. If you operate an indirect-fire siege weapon and miss, you misdirect fire by 1 square per range increment. &nl; [Normal] Direct-fire weapons impose a -2 attack roll penalty per size category by which the weapon is larger than the creature aiming it. An indirect-fire weapon that misses misdirects fire by 1d4 squares per range increment."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Siege Gunner"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4548,
+    "record_key": "Warpriest Bonus Feat ~ Siege Gunner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

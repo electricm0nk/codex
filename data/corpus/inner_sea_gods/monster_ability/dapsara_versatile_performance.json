@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Dapsara ~ Versatile Performance",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "inner_sea_gods:monster:dapsara"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Versatile Performance|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A dapsara has the bard's versatile performance ability, using one Perform bonus in place of the skill bonuses of that Perform skill's associated skills."
+      },
+      {
+        "key": "KEY",
+        "value": "Dapsara ~ Versatile Performance"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 263,
-    "record_key": "Dapsara ~ Versatile Performance"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 263,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Dapsara ~ Versatile Performance",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

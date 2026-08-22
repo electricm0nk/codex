@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weretouched ~ Lycanthropic Wild Shape",
+    "name": "Lycanthropic Wild Shape",
+    "class": "Shifter",
+    "description": "When a weretouched uses wild shape, she can assume only the form of an animal of the same type as her lycanthrope aspect. However, instead of assuming a major form, she can assume a hybrid form that mixes the traits of her natural form and the major form of her aspect. While in a hybrid form, she gain a +2 size bonus to her Strength score, a +2 natural armor bonus to her AC, and all of the natural attacks and abilities listed by her major form. A weretouched also counts as being in her natural form for the purpose of determining whether she can extend her shifter claws. A weretouched's hybrid form is roughly the same size and shape as her natural form, albeit with bestial qualities such as digitigrade legs or shaggy fur, so her equipment does not merge into her new form when she shifts between her natural form and hybrid form. In addition, the size of a weretouched's hybrid form is the same as the size of her natural form. This otherwise counts as assuming a major form using wild shape. This alters wild shape.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weretouched ~ Lycanthropic Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.WeretouchedClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ReplaceMajorShifterAspect|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a weretouched uses wild shape, she can assume only the form of an animal of the same type as her lycanthrope aspect. However, instead of assuming a major form, she can assume a hybrid form that mixes the traits of her natural form and the major form of her aspect. While in a hybrid form, she gain a +2 size bonus to her Strength score, a +2 natural armor bonus to her AC, and all of the natural attacks and abilities listed by her major form. A weretouched also counts as being in her natural form for the purpose of determining whether she can extend her shifter claws. A weretouched's hybrid form is roughly the same size and shape as her natural form, albeit with bestial qualities such as digitigrade legs or shaggy fur, so her equipment does not merge into her new form when she shifts between her natural form and hybrid form. In addition, the size of a weretouched's hybrid form is the same as the size of her natural form. This otherwise counts as assuming a major form using wild shape. This alters wild shape."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ReplaceMajorShifterAspect|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1109,
+    "record_key": "Weretouched ~ Lycanthropic Wild Shape"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

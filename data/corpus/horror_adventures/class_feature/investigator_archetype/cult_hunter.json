@@ -1,0 +1,167 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Cult Hunter",
+    "name": "Cult Hunter",
+    "class": "Investigator Archetype",
+    "description": "Cult hunters seek out heretical secret societies, purging their ideological taint and banishing summoned servants.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Cult Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "Cult hunters seek out heretical secret societies, purging their ideological taint and banishing summoned servants."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Cult Hunter],[!PREFACT:1,ABILITIES,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_PoisonResistance=True,Investigator_Archetype_PoisonImmunity=True,Investigator_Archetype_PoisonLore=True,Investigator_Archetype_TrapSense=True,Investigator_Archetype_SwiftAlchemy=True,Investigator_Archetype_StudiedCombat=True,Investigator_Archetype_StudiedStrike=True,Investigator_Archetype_Talent7=True,Investigator_Archetype_Talent13=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Sense Madness|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Purify Body and Mind|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Student of the Beyond|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Ambush Defenses|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Cultic Study|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Cult Combat|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Cult Strike|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Summoning Sense|PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cult Hunter ~ Extraplanar Expulsion|PRECLASS:1,Investigator=13"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_StudiedCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_StudiedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent13|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 153,
+    "record_key": "Investigator Archetype ~ Cult Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Dandy",
+    "name": "Dandy",
+    "class": "Ranger Archetype",
+    "description": "The antithesis of the gruff and wild woodsmen, a dandy takes effort to master the subtle etiquette of noble courts, the whispers of dark rumors, and the customs of the cultured world. Nonetheless, he is still a ranger at heart, and he hunts for rumors and gossip throughout the grand ballrooms of the wealthy and powerful just as most rangers hunt for enemies in the wilderness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Dandy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Dandy],[!PREFACT:1,ABILITIES,Ranger_Archetype_ClassSkills=True,Ranger_Archetype_FavoredEnemy=True,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_Spells=True,Ranger_Archetype_WoodlandStride=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The antithesis of the gruff and wild woodsmen, a dandy takes effort to master the subtle etiquette of noble courts, the whispers of dark rumors, and the customs of the cultured world. Nonetheless, he is still a ranger at heart, and he hunts for rumors and gossip throughout the grand ballrooms of the wealthy and powerful just as most rangers hunt for enemies in the wilderness."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Dandy ~ Class Skills|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dandy ~ Favored Nation|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dandy ~ Rumor Empathy|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dandy ~ Favored Terrain|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dandy ~ Hobnob|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dandy ~ Dandy Spells|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dandy ~ Party Crasher|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 636,
+    "record_key": "Ranger Archetype ~ Dandy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

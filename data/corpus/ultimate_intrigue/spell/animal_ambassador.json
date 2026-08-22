@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You compel a single animal to travel to a spot you designate and deliver a message to a creature you identify. This spell is similar to animal messenger, but can affect larger animals. In addition, the target animal is temporarily awakened to sentience (as the awaken spell) for the duration of this spell, and it can use its increased mental acuity to come up with creative solutions to overcome obstacles to delivering its message. The awakened target animal speaks any one language you know. In addition, you can imbue the animal with up to 5 ranks in certain skills.|PRERULE:1,DisplayFullSpell",
+    "key": "Animal Ambassador",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=3|Bard,Druid,Shaman=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Grant an animal messenger sentience to deliver your message.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You compel a single animal to travel to a spot you designate and deliver a message to a creature you identify. This spell is similar to animal messenger, but can affect larger animals. In addition, the target animal is temporarily awakened to sentience (as the awaken spell) for the duration of this spell, and it can use its increased mental acuity to come up with creative solutions to overcome obstacles to delivering its message. The awakened target animal speaks any one language you know. In addition, you can imbue the animal with up to 5 ranks in certain skills.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days or until message is delivered"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Animal Ambassador"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One Medium or smaller animal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Animal Ambassador",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

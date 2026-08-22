@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Mud Witch",
+    "name": "Mud Witch",
+    "class": "Witch Hex",
+    "description": "A witch with this hex can assume the form of viscous brown mud. The witch's type changes to ooze and she is able to squeeze through even the smallest cracks, but she can't make attacks or cast spells with verbal, somatic, material, or focus components while in this form, and she loses her supernatural abilities. If the witch has a touch spell ready to use, that spell is discharged harmlessly when she uses this hex. While the witch is in mud form, her speed becomes %1 feet and she gains a swim speed of %2 feet. The witch gains DR 10/slashing and cold resistance 10. She can use this ability for a number of minutes per day equal to her level. The duration doesn't need to be consecutive, but it must be spent in 1-minute increments. This hex affects only the witch.|MudWitchSpeed|MudWitchSpeed*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Mud Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Swamp Hag"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MudWitchSpeed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A witch with this hex can assume the form of viscous brown mud. The witch's type changes to ooze and she is able to squeeze through even the smallest cracks, but she can't make attacks or cast spells with verbal, somatic, material, or focus components while in this form, and she loses her supernatural abilities. If the witch has a touch spell ready to use, that spell is discharged harmlessly when she uses this hex. While the witch is in mud form, her speed becomes %1 feet and she gains a swim speed of %2 feet. The witch gains DR 10/slashing and cold resistance 10. She can use this ability for a number of minutes per day equal to her level. The duration doesn't need to be consecutive, but it must be spent in 1-minute increments. This hex affects only the witch.|MudWitchSpeed|MudWitchSpeed*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MudWitchSpeed|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MudWitchSpeed|10|PREVARGTEQ:WitchHexAbilityLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 161,
+    "record_key": "Witch Hex ~ Mud Witch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

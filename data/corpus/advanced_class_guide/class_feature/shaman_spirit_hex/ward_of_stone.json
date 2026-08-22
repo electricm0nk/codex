@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Ward of Stone",
+    "name": "Ward of Stone",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman touches a willing creature (including herself) and grants a ward of stone. The next",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Ward of Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanStoneHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Ward of Stone"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanStoneSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWardOfStoneTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman touches a willing creature (including herself) and grants a ward of stone. The next"
+      },
+      {
+        "key": "DESC",
+        "value": "time|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times|ShamanWardOfStoneTimes|PREVARGTEQ:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "the warded creature is struck with a melee attack, it is treated as if it has DR 5/adamantine. This ward lasts for 1 minute, after which it fades away if not already expended. A creature affected by this hex cannot be affected by it again for 24 hours."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWardOfStoneTimes|1+min(2,ShamanSpiritLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1656,
+    "record_key": "Shaman Spirit Hex ~ Ward of Stone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

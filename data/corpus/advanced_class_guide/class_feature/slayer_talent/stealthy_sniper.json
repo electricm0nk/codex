@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Talent ~ Stealthy Sniper",
+    "name": "Stealthy Sniper",
+    "class": "Slayer Talent",
+    "description": "When a slayer with this talent uses the Stealth skill to snipe, she only suffers a -10 penalty on the Stealth check, instead of -20.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Stealthy Sniper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.SlayerAdvancedTalent.Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "SlayerTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "When a slayer with this talent uses the Stealth skill to snipe, she only suffers a -10 penalty on the Stealth check, instead of -20."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1873,
+    "record_key": "Slayer Talent ~ Stealthy Sniper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

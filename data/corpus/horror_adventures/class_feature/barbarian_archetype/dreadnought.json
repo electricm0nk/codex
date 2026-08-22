@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Dreadnought",
+    "name": "Dreadnought",
+    "class": "Barbarian Archetype",
+    "description": "Unstoppable and fearless, the dreadnought turns the terror of her enemies into violent physical power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Dreadnought"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "Unstoppable and fearless, the dreadnought turns the terror of her enemies into violent physical power."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Dreadnought],[!PREFACT:1,ABILITIES,Barbarian_Archetype_Rage=True,Barbarian_Archetype_FastMovement=True,Barbarian_Archetype_IndomitableWill=True,Barbarian_Archetype_TirelessRage=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreadnought ~ Dead Calm|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreadnought ~ Steady Gait|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreadnought ~ Fearless Killer|PRECLASS:1,Barbarian=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreadnought ~ Instant Dispassion|PRECLASS:1,Barbarian=17"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_IndomitableWill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TirelessRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_IndomitableWill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TirelessRage|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 28,
+    "record_key": "Barbarian Archetype ~ Dreadnought"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

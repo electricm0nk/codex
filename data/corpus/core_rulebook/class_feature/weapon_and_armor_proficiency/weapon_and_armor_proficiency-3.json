@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weapon and Armor Proficiency ~ Bard",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Weapon and Armor Proficiency",
+    "description": "A bard is proficient with all simple weapons, plus the longsword, rapier, sap, short sword, shortbow, and whip. Bards are proficient with light armor and shields (except tower shields). A bard can cast bard spells while wearing light armor without incurring the normal arcane spell failure chance. However, like any other arcane spellcaster, a bard wearing medium or heavy armor or using a shield incurs a chance of arcane spell failure if the spell in question has a somatic component (most do). A multiclass bard still incurs the normal arcane spell failure chance for arcane spells received from other classes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon and Armor Proficiency ~ Bard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "A bard is proficient with all simple weapons, plus the longsword, rapier, sap, short sword, shortbow, and whip. Bards are proficient with light armor and shields (except tower shields). A bard can cast bard spells while wearing light armor without incurring the normal arcane spell failure chance. However, like any other arcane spellcaster, a bard wearing medium or heavy armor or using a shield incurs a chance of arcane spell failure if the spell in question has a somatic component (most do). A multiclass bard still incurs the normal arcane spell failure chance for arcane spells received from other classes."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Longsword|Rapier|Sap|Sword (Short)|Shortbow|Whip|!PREABILITY:1,CATEGORY=Archetype,TYPE.BardWeaponProficiencies"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon Prof ~ Simple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Light|Shield Prof|!PREABILITY:1,CATEGORY=Archetype,TYPE.BardArmorProficiencies"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2814,
+    "record_key": "Weapon and Armor Proficiency ~ Bard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

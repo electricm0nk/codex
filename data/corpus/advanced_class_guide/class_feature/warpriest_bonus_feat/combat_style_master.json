@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Combat Style Master",
+    "name": "Combat Style Master",
+    "class": "Warpriest Bonus Feat",
+    "description": "You shift between combat styles, combining them to increased effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Combat Style Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,TYPE=Style"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]],[PREVARGTEQ:MonkFeatQualify,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You shift between combat styles, combining them to increased effect."
+      },
+      {
+        "key": "DESC",
+        "value": " You can switch your style as a free action. At the start of combat, pick one of your styles. You start the combat in that style, even in the surprise round. &nl; [Normal] It takes a swift action to begin or switch your styles."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Combat Style Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4413,
+    "record_key": "Warpriest Bonus Feat ~ Combat Style Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

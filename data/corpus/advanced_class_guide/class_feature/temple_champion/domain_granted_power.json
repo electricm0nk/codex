@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Temple Champion ~ Domain Granted Power",
+    "name": "Domain Granted Power",
+    "class": "Paladin",
+    "description": "At 4th level, a temple champion selects one domain granted by her deity (or a domain suitable for her ethos or goals, subject to GM approval). The temple champion gains the 1st-level granted power of that domain and uses her paladin level as her cleric level for determining the effects of that granted power. Any Wisdom-based aspects of that granted power instead use the temple champion's Charisma. The temple champion does not gain access to that domain's spell list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Temple Champion ~ Domain Granted Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Temple Champion Class Feature.Paladin Class Feature.SpecialQuality.CF_Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a temple champion selects one domain granted by her deity (or a domain suitable for her ethos or goals, subject to GM approval). The temple champion gains the 1st-level granted power of that domain and uses her paladin level as her cleric level for determining the effects of that granted power. Any Wisdom-based aspects of that granted power instead use the temple champion's Charisma. The temple champion does not gain access to that domain's spell list."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPowerTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPowerTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAbilityTriggerLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinDomainCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|PaladinLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3525,
+    "record_key": "Temple Champion ~ Domain Granted Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

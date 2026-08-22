@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Trophy Hunter",
+    "name": "Trophy Hunter",
+    "class": "Ranger Archetype",
+    "description": "Some rangers have taken up the mysteries of black powder in order to become big game hunters. Finding firearms useful for taking down large and dangerous prey, they enter the fight with the crack of black powder fire, often ranging far and wide in their safaris and searches for ever-more-dangerous denizens of the wild to track, study, appreciate-and kill. While this might strike some as going against the ranger's usual respect for nature and the creatures of the wild, trophy hunters understand that they are just more pieces in nature's grand puzzle, and that the laws of the jungle-the right to kill and feed on those weaker than you, and the need to establish dominance through cunning and bloodshed-are both their rights and their duty as the current top of the food chain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Trophy Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerCombatStyle.RangerWildEmpathy.RangerHuntersBond"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ TROPHY HUNTER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCombatStyle,TYPE.RangerWildEmpathy,TYPE.RangerHuntersBond]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some rangers have taken up the mysteries of black powder in order to become big game hunters. Finding firearms useful for taking down large and dangerous prey, they enter the fight with the crack of black powder fire, often ranging far and wide in their safaris and searches for ever-more-dangerous denizens of the wild to track, study, appreciate-and kill. While this might strike some as going against the ranger's usual respect for nature and the creatures of the wild, trophy hunters understand that they are just more pieces in nature's grand puzzle, and that the laws of the jungle-the right to kill and feed on those weaker than you, and the need to establish dominance through cunning and bloodshed-are both their rights and their duty as the current top of the food chain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Trophy Hunter ~ Improved Tracking|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Trophy Hunter ~ Firearm Style|PRECLASS:1,Ranger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Trophy Hunter ~ Hunter's Aim|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1514,
+    "record_key": "Ranger Archetype ~ Trophy Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

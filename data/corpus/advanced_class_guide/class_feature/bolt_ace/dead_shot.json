@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bolt Ace ~ Dead Shot",
+    "name": "Dead Shot",
+    "class": "Gunslinger",
+    "description": "As a full-round action, the bolt ace can take careful aim and pool all of her attack potential into a single, deadly shot. When she does this, she shoots the crossbow at a single target, but makes as many attack rolls as she can, based on her base attack bonus. She makes the attack rolls in order from highest bonus to lowest, as if she were making a full attack. If any of the attack rolls hit the target, the bolt ace's single attack is considered to have hit. For each additional successful attack roll beyond the first, the bolt ace increases the damage of the shot by the base damage dice of the crossbow. For instance, if a 7th level bolt ace firing a musket hits with both attacks, she does 2d12 points of damage with the shot, instead of 1d12 points of damage, before adding any damage modifiers. Precision damage and extra damage from weapon special abilities (such as flaming) are added with damage modifiers and are not increased by this deed. If one or more rolls are critical threats, she confirms the critical once using her highest base attack bonus -5. For each critical threat beyond the first, she reduces this penalty by 1 (to a maximum of 0). The bolt ace only misfires on a dead shot if all the attack rolls are misfires. She cannot perform this deed with a blunderbuss or other scatter weapon when attacking creatures in a cone. The bolt ace must spend 1 grit point to perform this deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Dead Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, the bolt ace can take careful aim and pool all of her attack potential into a single, deadly shot. When she does this, she shoots the crossbow at a single target, but makes as many attack rolls as she can, based on her base attack bonus. She makes the attack rolls in order from highest bonus to lowest, as if she were making a full attack. If any of the attack rolls hit the target, the bolt ace's single attack is considered to have hit. For each additional successful attack roll beyond the first, the bolt ace increases the damage of the shot by the base damage dice of the crossbow. For instance, if a 7th level bolt ace firing a musket hits with both attacks, she does 2d12 points of damage with the shot, instead of 1d12 points of damage, before adding any damage modifiers. Precision damage and extra damage from weapon special abilities (such as flaming) are added with damage modifiers and are not increased by this deed. If one or more rolls are critical threats, she confirms the critical once using her highest base attack bonus -5. For each critical threat beyond the first, she reduces this penalty by 1 (to a maximum of 0). The bolt ace only misfires on a dead shot if all the attack rolls are misfires. She cannot perform this deed with a blunderbuss or other scatter weapon when attacking creatures in a cone. The bolt ace must spend 1 grit point to perform this deed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3117,
+    "record_key": "Bolt Ace ~ Dead Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

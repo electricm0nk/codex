@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Scarecrow ~ Fascinating Gaze",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:scarecrow"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Fascinating Gaze"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarecrowFascinatingGazeDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScarecrowFascinatingGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Fascinating Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScarecrowFascinatingGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Target is fascinated, 30 feet, Will DC %1 negates.  Fascination lasts as long as the scarecrow remains within 300 feet of the fascinated creature.  The approach or animation of the scarecrow does not count as an obvious threat to the victim of this particular fascination (although the scarecrow's attack does count as an obvious threat and ends the fascination immediately).  This is a mind-affecting effect.|ScarecrowFascinatingGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Scarecrow ~ Fascinating Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.238",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1099,
-    "record_key": "Scarecrow ~ Fascinating Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1099,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Scarecrow ~ Fascinating Gaze",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

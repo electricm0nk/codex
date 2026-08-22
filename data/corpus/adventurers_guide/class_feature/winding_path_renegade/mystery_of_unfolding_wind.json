@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Winding Path Renegade ~ Mystery of Unfolding Wind",
+    "name": "Mystery of Unfolding Wind",
+    "class": "Winding Path Renegade",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winding Path Renegade ~ Mystery of Unfolding Wind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.WindingPathRenegadeClassFeatures.WindingPathSchoolFocus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winding Path Renegade ~ Unfolding Wind First Power|PRECLASS:1,Brawler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winding Path Renegade ~ Unfolding Wind Second Power|PRECLASS:1,Brawler=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winding Path Renegade ~ Unfolding Wind Third Power|PRECLASS:1,Brawler=14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 729,
+    "record_key": "Winding Path Renegade ~ Mystery of Unfolding Wind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

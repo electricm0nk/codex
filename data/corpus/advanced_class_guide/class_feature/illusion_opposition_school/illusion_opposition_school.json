@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Illusion Opposition Savant School",
+    "name": "Illusion Opposition School",
+    "class": null,
+    "description": "You have chosen illusion spells as an opposition school. Preparing an illusion spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an illusion spell as a prerequisite.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Illusion Opposition Savant School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantOppositionSchool"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.SavantElementalSchool.TYPE.IllusionSavantSchool"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen illusion spells as an opposition school. Preparing an illusion spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an illusion spell as a prerequisite."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2537,
+    "record_key": "Illusion Opposition Savant School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

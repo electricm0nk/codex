@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Oceans Subdomain",
+    "name": "Oceans Subdomain",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Oceans Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Oceans Subdomain],[PREABILITY:1,CATEGORY=Special Ability,Core Domain ~ Oceans Subdomain],[PREVARLT:WaterDomain,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainOceansSubdomain,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oceans Subdomain ~ Surge|PREVARGTEQ:DomainWaterAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Domain ~ Cold Resistance|PREVARGTEQ:DomainWaterAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterDC|10+(DomainWaterLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWaterAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 453,
+    "record_key": "Inquisitor Domain ~ Oceans Subdomain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

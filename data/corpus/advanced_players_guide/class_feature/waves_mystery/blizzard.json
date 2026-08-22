@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Waves Mystery ~ Blizzard",
+    "name": "Blizzard",
+    "class": "Waves Mystery",
+    "description": "As a standard action, you can create a blizzard of snow and ice. You can create %1 10-foot-cube(s) of storm. These cubes can be arranged in any pattern you desire, but each cube must be adjacent to another and one must be adjacent to you. Any creature caught in the blizzard takes %2d4 points of cold damage (Reflex; DC %3; half damage). The storm lasts for %4 rounds; the ground remains icy (+5 to Acrobatics DCs) as long as local conditions permit. The blizzard obscures sight beyond 5 feet, providing total concealment. A creature within 5 feet has concealment. You can use this ability once per day.|OracleBlizzardAreaofEffect|OracleBlizzardDamageDice|OracleRevelationDC|OracleBlizzardDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Mystery ~ Blizzard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WavesRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleBlizzardAreaofEffect|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleBlizzardDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleBlizzardDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a blizzard of snow and ice. You can create %1 10-foot-cube(s) of storm. These cubes can be arranged in any pattern you desire, but each cube must be adjacent to another and one must be adjacent to you. Any creature caught in the blizzard takes %2d4 points of cold damage (Reflex; DC %3; half damage). The storm lasts for %4 rounds; the ground remains icy (+5 to Acrobatics DCs) as long as local conditions permit. The blizzard obscures sight beyond 5 feet, providing total concealment. A creature within 5 feet has concealment. You can use this ability once per day.|OracleBlizzardAreaofEffect|OracleBlizzardDamageDice|OracleRevelationDC|OracleBlizzardDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleBlizzardAreaofEffect|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleBlizzardDamageDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleBlizzardDuration|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 684,
+    "record_key": "Waves Mystery ~ Blizzard"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

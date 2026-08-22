@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Snoop Talent ~ Inspired Intimidator",
+    "name": "Inspired Intimidator",
+    "class": "Snoop Talent",
+    "description": "When the snoop succeeds at an Intimidate check to demoralize an opponent, he can expend one use of inspiration to automatically increase the result of the check by 5 for the purpose of determining the duration of the demoralize effect. He can choose to spend multiple uses to inspiration in this manner to further increase the duration of the demoralize effect.  He must be trained in Intimidate to take this talent. The underworld inspiration snoop talent has no effect on this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Snoop Talent ~ Inspired Intimidator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Snoop ~ Investigator Talents"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=1"
+      },
+      {
+        "key": "DESC",
+        "value": "When the snoop succeeds at an Intimidate check to demoralize an opponent, he can expend one use of inspiration to automatically increase the result of the check by 5 for the purpose of determining the duration of the demoralize effect. He can choose to spend multiple uses to inspiration in this manner to further increase the duration of the demoralize effect.  He must be trained in Intimidate to take this talent. The underworld inspiration snoop talent has no effect on this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 887,
+    "record_key": "Snoop Talent ~ Inspired Intimidator"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

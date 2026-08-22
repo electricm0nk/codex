@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Healing Domain",
+    "name": "Healing",
+    "class": null,
+    "description": "Your touch staves off pain and death, and your healing magic is particularly vital and potent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Healing Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch staves off pain and death, and your healing magic is particularly vital and potent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Rebuke Death|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Healing)|PREVARGTEQ:DomainHealingAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Healer's Blessing|PREVARGTEQ:DomainHealingAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingDC|10+(DomainHealingLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainHealingAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Healing=1|Cure Light Wounds|Healing=2|Cure Moderate Wounds|Healing=3|Cure Serious Wounds|Healing=4|Cure Critical Wounds|Healing=5|Breath of Life|Healing=6|Heal|Healing=7|Regenerate|Healing=8|Cure Critical Wounds (Mass)|Healing=9|Heal (Mass)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 665,
+    "record_key": "Healing Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

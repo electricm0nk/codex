@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guild Agent ~ Pull Rank",
+    "name": "Pull Rank",
+    "class": "Rogue",
+    "description": "A guild agent has attained sufficient rank to call in lesser guild members to assist him with a job. He can call lesser members of a number and level equal to the number of followers he would have if he had the Leadership feat (including the +2 bonus for his guildhouse), to a maximum of a number of lesser members equal to his rogue level. If the guild agent possesses the Leadership feat, he gains twice as many followers as normal. If he spends a favor, he can combine this with the command team organizational influence benefit (see page 114) to gain even more lesser members for a particularly difficult job. Each time the guild agent uses the lesser members recklessly and gets them killed, he loses at least 1 influence with his guild.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guild Agent ~ Pull Rank"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guild agent has attained sufficient rank to call in lesser guild members to assist him with a job. He can call lesser members of a number and level equal to the number of followers he would have if he had the Leadership feat (including the +2 bonus for his guildhouse), to a maximum of a number of lesser members equal to his rogue level. If the guild agent possesses the Leadership feat, he gains twice as many followers as normal. If he spends a favor, he can combine this with the command team organizational influence benefit (see page 114) to gain even more lesser members for a particularly difficult job. Each time the guild agent uses the lesser members recklessly and gets them killed, he loses at least 1 influence with his guild."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 736,
+    "record_key": "Guild Agent ~ Pull Rank"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

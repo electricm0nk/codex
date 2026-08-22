@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Dragon Form",
+    "name": "Dragon Form",
+    "class": "Dragon Disciple",
+    "description": "At 7th level, a dragon disciple can assume the form of a dragon. This ability works like form of the dragon I. At 10th level, this ability functions as form of the dragon II and the dragon disciple can use this ability twice per day. His caster level for this effect is equal to his effective sorcerer levels for his draconic bloodline. Whenever he casts form of the dragon, he must assume the form of a dragon of the same type as his bloodline.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Dragon Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Dragon Disciple Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonFormTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonFormCL|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Dragon Disciple|TIMES=DragonFormTimes|CASTERLEVEL=DragonFormCL|Form of the Dragon I|PREVARGTEQ:DragonDiscipleLVL,7|PREVARLT:DragonDiscipleLVL,10"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Dragon Disciple|TIMES=DragonFormTimes|CASTERLEVEL=DragonFormCL|Form of the Dragon II|PREVARGTEQ:DragonDiscipleLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, a dragon disciple can assume the form of a dragon. This ability works like form of the dragon I. At 10th level, this ability functions as form of the dragon II and the dragon disciple can use this ability twice per day. His caster level for this effect is equal to his effective sorcerer levels for his draconic bloodline. Whenever he casts form of the dragon, he must assume the form of a dragon of the same type as his bloodline."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonFormTimes|(DragonDiscipleLVL-4)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonFormCL|Sorcerer_Draconic_BloodlineLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.382"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2971,
+    "record_key": "Dragon Disciple ~ Dragon Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

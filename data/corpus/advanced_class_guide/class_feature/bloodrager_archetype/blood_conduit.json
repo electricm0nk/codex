@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Archetype ~ Blood Conduit",
+    "name": "Blood Conduit",
+    "class": "Bloodrager Archetype",
+    "description": "Blood conduits learn to channel their arcane might directly through their flesh, without the need for mystical words or gestures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Archetype ~ Blood Conduit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BloodragerArchetype.BloodragerFastMovement.BloodragerUncannyDodge.BloodragerImprovedUncannyDodge.BloodragerIndomitableWill"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Blood Conduit],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerFastMovement,TYPE.BloodragerBloodlineFeats,TYPE.BloodragerUncannyDodge,TYPE.BloodragerImprovedUncannyDodge,TYPE.BloodragerIndomitableWill]"
+      },
+      {
+        "key": "DESC",
+        "value": "Blood conduits learn to channel their arcane might directly through their flesh, without the need for mystical words or gestures."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Blood Conduit ~ Contact Specialist|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Blood Conduit ~ Spell Conduit|PRECLASS:1,Bloodrager=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Blood Conduit ~ Reflexive Conduit|PRECLASS:1,Bloodrager=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2702,
+    "record_key": "Bloodrager Archetype ~ Blood Conduit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

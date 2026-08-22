@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "+% enhancement|DissonanceEnhancementBonusAlt",
+    "key": "PLUSN_DIS_A",
+    "name": "PLUSN_DIS_A",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "DissonanceEnhancementBonusAlt",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "DissonanceEnhancementBonusAlt",
+          "TYPE=ENHANCEMENT"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Dissonance / Enhancement Bonus / Alt"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "WeaponEnhancement.Psionic"
+      },
+      {
+        "key": "SPROP",
+        "value": "+% enhancement|DissonanceEnhancementBonusAlt"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DissonanceEnhancementBonusAlt|0"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 290,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "PLUSN_DIS_A",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

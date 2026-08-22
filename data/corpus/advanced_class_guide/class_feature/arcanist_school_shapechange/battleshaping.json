@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcanist School Shapechange ~ Battleshaping",
+    "name": "Battleshaping",
+    "class": "Arcanist School Shapechange",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcanist School Shapechange ~ Battleshaping"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistSchoolChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Arcanist School ~ Shapechange"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSchoolBoost_Battleshaping|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shapechange School ~ Battleshaping|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistSchoolBoost_Battleshaping|-1|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Battleshaping (Arcanist Boost Only)|!PRECLASS:1,Wizard=1|PREVARGTEQ:ArcanistSchoolBoost_Battleshaping,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 292,
+    "record_key": "Arcanist School Shapechange ~ Battleshaping"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

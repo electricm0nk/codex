@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dune Rider ~ Desert Skirmisher",
+    "name": "Desert Skirmisher",
+    "class": "Slayer",
+    "description": "The dune rider excels in combat in warm deserts, hills, and mountains. While in such terrain, he gains a +%1 bonus on initiative, Perception, and Stealth checks, and a +%2 bonus on attack and damage rolls.|DuneRiderSkirmisherBonus*2|DuneRiderSkirmisherBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dune Rider ~ Desert Skirmisher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.DuneRiderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DuneRiderSkirmisherBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The dune rider excels in combat in warm deserts, hills, and mountains. While in such terrain, he gains a +%1 bonus on initiative, Perception, and Stealth checks, and a +%2 bonus on attack and damage rolls.|DuneRiderSkirmisherBonus*2|DuneRiderSkirmisherBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Warm deserts, hills, and mountains,Stealth=Warm deserts, hills, and mountains|2*DuneRiderSkirmisherBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DuneRiderSkirmisherBonus|1+min(4,SlayerLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 on initiative and a +%2 on attack and damage rolls in warm deserts, hills, and mountains.|DuneRiderSkirmisherBonus*2|DuneRiderSkirmisherBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1157,
+    "record_key": "Dune Rider ~ Desert Skirmisher"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

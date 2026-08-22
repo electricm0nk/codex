@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaitan Bloodline ~ Avalanche",
+    "name": "Avalanche",
+    "class": "Shaitan Bloodline",
+    "description": "Whenever you hit a single target with a spell that deals damage, you may make a bull rush check as a swift action. Your CMB for this maneuver is %1. You can make this maneuver even if the target is not in melee range, and you do not provoke an attack of opportunity for making this maneuver. If the target is in contact with earth, stone, or rock, you gain a +4 bonus on your CMB check.|Sorcerer_ShaitanAvalanche_BullRushCMB",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Bloodline ~ Avalanche"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Shaitan Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Shaitan"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Shaitan_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Shaitan_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ShaitanAvalanche_BullRushCMB|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you hit a single target with a spell that deals damage, you may make a bull rush check as a swift action. Your CMB for this maneuver is %1. You can make this maneuver even if the target is not in melee range, and you do not provoke an attack of opportunity for making this maneuver. If the target is in contact with earth, stone, or rock, you gain a +4 bonus on your CMB check.|Sorcerer_ShaitanAvalanche_BullRushCMB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ShaitanAvalanche_BullRushCMB|Sorcerer_Shaitan_BloodlinePower9LVL+Caster_Level_Bonus+CasterLevelBLSorcerer+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(CMB +%1)|Sorcerer_ShaitanAvalanche_BullRushCMB"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ShaitanBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 685,
+    "record_key": "Shaitan Bloodline ~ Avalanche"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Winterwight ~ Blightfire",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:winterwight"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Blightfire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WinterwightBlightfireDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WinterwightBlightfireDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Blightfire)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WinterwightBlightfireDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a winterwight damages a creature with a bite or claw, the wound erupts with tongues of black fire.  For the next 5 rounds, the victum must make a DC %1 Fortitude saving throw at the start of its turn or take 1d6 points of Constitution drain.  The winterwight gains 10 temporary hit points each time the creature fails a saving throw against blightfire.  A creature cannot be affected by more than one instance of blightfire at a time.|WinterwightBlightfireDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Winterwight ~ Blightfire"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.283",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1367,
-    "record_key": "Winterwight ~ Blightfire"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1367,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Winterwight ~ Blightfire",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

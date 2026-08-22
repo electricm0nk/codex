@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Weapon Master ~ Deadly Critical",
+    "name": "Deadly Critical",
+    "class": "Fighter",
+    "description": "When you confirm a critical hit with your chosen weapon, you can increase the weapon's damage multiplier by +1 as an immediate action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Weapon Master ~ Deadly Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponMasterDeadlyCriticalTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you confirm a critical hit with your chosen weapon, you can increase the weapon's damage multiplier by +1 as an immediate action."
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:WeaponMasterDeadlyCriticalTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|WeaponMasterDeadlyCriticalTimes|PREVARGT:WeaponMasterDeadlyCriticalTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability replaces weapon training 3."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponMasterDeadlyCriticalTimes|(FighterLVL-10)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2237,
+    "record_key": "Fighter Weapon Master ~ Deadly Critical"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

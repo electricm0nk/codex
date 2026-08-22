@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleaner ~ Deceitful",
+    "name": "Deceitful",
+    "class": "Slayer",
+    "description": "A cleaner becomes skilled at deceiving others, and gains Deceitful as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleaner ~ Deceitful"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleaner Class Feature.Slayer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cleaner becomes skilled at deceiving others, and gains Deceitful as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Deceitful"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3740,
+    "record_key": "Cleaner ~ Deceitful"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

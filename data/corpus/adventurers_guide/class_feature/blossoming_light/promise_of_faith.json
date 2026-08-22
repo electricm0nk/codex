@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blossoming Light ~ Promise of Faith",
+    "name": "Promise of Faith",
+    "class": "Cleric",
+    "description": "A blossoming light vows to trust in her deity's protection over arms and armor. She is not proficient with any armor or shields. The blossoming light cannot use or benefit from any of her class features (including spellcasting) while wearing armor or using a shield, or for 1 minute thereafter. This ability alters the cleric's armor proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blossoming Light ~ Promise of Faith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Feature.BlossomingLightClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "DESC",
+        "value": "A blossoming light vows to trust in her deity's protection over arms and armor. She is not proficient with any armor or shields. The blossoming light cannot use or benefit from any of her class features (including spellcasting) while wearing armor or using a shield, or for 1 minute thereafter. This ability alters the cleric's armor proficiencies."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 775,
+    "record_key": "Blossoming Light ~ Promise of Faith"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

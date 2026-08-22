@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterpiece ~ Winds of the Five Heavens",
+    "name": "Winds of the Five Heavens",
+    "class": "Masterpiece",
+    "description": "You control the wind by telling a tale demonstrating the hubris of mortals.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Winds of the Five Heavens"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Winds of the Five Heavens"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DESC",
+        "value": "You control the wind by telling a tale demonstrating the hubris of mortals."
+      },
+      {
+        "key": "DESC",
+        "value": " This short monologue tells the story of a village priest who thought to command the gods. This so annoyed the gods of the weather that they gave him exactly what he wished for, and the priest's long-winded sermons tore apart his temple and scattered his parishioners. When you complete the performance, you conjure a great wind as if you had cast control winds.  Use: 3 bardic performance round.  Action: 3 full rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 184,
+    "record_key": "Masterpiece ~ Winds of the Five Heavens"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

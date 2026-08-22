@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Armor Master ~ Indestructible",
+    "name": "Indestructible",
+    "class": "Fighter",
+    "description": "An armor master gains complete immunity to critical hits and sneak attacks while he is wearing armor. In addition, unless his armor has the fragile armor quality, it cannot be sundered while he is wearing it. This ability replaces weapon mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armor Master ~ Indestructible"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An armor master gains complete immunity to critical hits and sneak attacks while he is wearing armor. In addition, unless his armor has the fragile armor quality, it cannot be sundered while he is wearing it. This ability replaces weapon mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 692,
+    "record_key": "Armor Master ~ Indestructible"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,23 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "This spell functions as the minor creation spell, except the object created is a semi-real illusion. Any creature that interacts with the object may make a Will save, with success causing the object to cease to exist. A gnome casting this spell may make a Spellcraft check in place of any Craft check required to make a complex item.",
     "key": "Minor Phantom Object",
-    "school": "Illusion",
     "level": 4,
-    "description": "This spell functions as the minor creation spell, except the object created is a semi-real illusion. Any creature that interacts with the object may make a Will save, with success causing the object to cease to exist. A gnome casting this spell may make a Spellcraft check in place of any Craft check required to make a complex item."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as the minor creation spell, except the object created is a semi-real illusion. Any creature that interacts with the object may make a Will save, with success causing the object to cease to exist. A gnome casting this spell may make a Spellcraft check in place of any Craft check required to make a complex item."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Shadow"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsGnome=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 Feet"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/coreRaces/gnomes.html#_minor-phantom-object"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Shadow"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to (CASTERLEVEL) cu. ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Illusion"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 27,
-    "record_key": "Minor Phantom Object"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Minor Phantom Object",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

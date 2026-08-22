@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghoul Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Ghoul Bloodline",
+    "description": "The dark energies that fuel your existence and undying hunger form the basis of your power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "The dark energies that fuel your existence and undying hunger form the basis of your power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|GhoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 140,
+    "record_key": "Ghoul Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterful Trick ~ Vision of Blood",
+    "name": "Vision of Blood",
+    "class": "Masterful Trick",
+    "description": "When an enemy is struck by the subject, it believes its wound is far more severe, and the shock overwhelms it. The mesmerist can trigger this trick when the subject hits with an attack using a weapon, a natural weapon, or an unarmed strike. The attack's target must succeed at a Will saving throw or be stunned for 1 round. If the triggering attack was a critical hit, the target doesn't get a saving throw. (Masterful Trick)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterful Trick ~ Vision of Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mesmerist ~ Masterful Tricks"
+      },
+      {
+        "key": "DESC",
+        "value": "When an enemy is struck by the subject, it believes its wound is far more severe, and the shock overwhelms it. The mesmerist can trigger this trick when the subject hits with an attack using a weapon, a natural weapon, or an unarmed strike. The attack's target must succeed at a Will saving throw or be stunned for 1 round. If the triggering attack was a critical hit, the target doesn't get a saving throw. (Masterful Trick)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 975,
+    "record_key": "Masterful Trick ~ Vision of Blood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

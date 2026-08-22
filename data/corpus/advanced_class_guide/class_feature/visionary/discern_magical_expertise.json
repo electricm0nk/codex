@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Visionary ~ Discern Magical Expertise",
+    "name": "Discern Magical Expertise",
+    "class": "Shaman",
+    "description": "The visionary can determine what type of spellcasting expertise a creature possesses by studying the creature for 2 rounds with detect magic or any of the following spells: detect chaos, detect evil, detect good, or detect law (if the creature belongs to the alignment). This ability tells the visionary what bloodlines, domains, hexes, schools, or mysteries (if any) the creature possesses. A successful Will saving throw negates this effect (DC %1). A creature affected by this ability cannot be affected by it again for 24 hours. This ability functions through magical sensors as with clairaudience/clairvoyance and scrying.|10+floor(ShamanLVL/2)+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Visionary ~ Discern Magical Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Visionary Class Feature.Shaman Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The visionary can determine what type of spellcasting expertise a creature possesses by studying the creature for 2 rounds with detect magic or any of the following spells: detect chaos, detect evil, detect good, or detect law (if the creature belongs to the alignment). This ability tells the visionary what bloodlines, domains, hexes, schools, or mysteries (if any) the creature possesses. A successful Will saving throw negates this effect (DC %1). A creature affected by this ability cannot be affected by it again for 24 hours. This ability functions through magical sensors as with clairaudience/clairvoyance and scrying.|10+floor(ShamanLVL/2)+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3660,
+    "record_key": "Visionary ~ Discern Magical Expertise"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

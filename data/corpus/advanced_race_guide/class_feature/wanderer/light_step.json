@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wanderer ~ Light Step",
+    "name": "Light Step",
+    "class": "Monk",
+    "description": "A wanderer leaves no trail and cannot be tracked, though he can leave a trail if desired. By spending 1 point from his ki pool, he can use ant haul, feather step, pass without trace, or tireless pursuit as a spell-like ability (with a caster level equal to his monk level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wanderer ~ Light Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=MonkLVL|Ant Haul|Feather Step|Pass without Trace|Tireless Pursuit"
+      },
+      {
+        "key": "DESC",
+        "value": "A wanderer leaves no trail and cannot be tracked, though he can leave a trail if desired. By spending 1 point from his ki pool, he can use ant haul, feather step, pass without trace, or tireless pursuit as a spell-like ability (with a caster level equal to his monk level)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 397,
+    "record_key": "Wanderer ~ Light Step"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

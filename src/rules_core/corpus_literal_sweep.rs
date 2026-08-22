@@ -50,6 +50,10 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
+use crate::rules_core::pi_screening::classify_field;
+
+use crate::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
+
 /// Token keys this repo synthesizes rather than transcribes, each with the
 /// LST token name its value must be found under in the book's corpus.
 ///
@@ -75,7 +79,10 @@ impl ShippedToken {
 }
 
 /// One shipped JSON corpus record, reduced to what the sweep compares.
-#[derive(Debug, Clone, PartialEq, Eq)]
+///
+/// `PartialEq` only, not `Eq`: `cost_gp`/`weight_lbs` are `Option<f64>`,
+/// which has no total `Eq` impl.
+#[derive(Debug, Clone, PartialEq)]
 pub struct ShippedRecord {
     /// Repo-relative path of the JSON file, for the report.
     pub record_path: String,
@@ -90,6 +97,23 @@ pub struct ShippedRecord {
     pub identities: BTreeSet<String>,
     /// `data.raw_tokens`, in order.
     pub tokens: Vec<ShippedToken>,
+    /// `true` when this record's `license` is `"PI-REDACTED"` and
+    /// `pi_field` is `"description"` -- the declared-PI reader
+    /// (`SD-30 decisions.md §53.5`) redacted `data.description` to
+    /// [`REDACTED_PI_MARKER`]. When true, a `raw_tokens` entry whose value
+    /// is ALSO exactly the marker is expected to differ from the real
+    /// corpus row (that IS the redaction) and is exempted from the
+    /// byte-match check in [`compare_tokens`] -- see that function's own
+    /// doc comment for why this is a narrow, declared exemption and not a
+    /// loosened rule.
+    pub pi_redacted_description: bool,
+    /// `data.cost_gp`, when the record's typed schema carries one. Read
+    /// independently of `raw_tokens` -- see [`compare_tokens`]'s doc
+    /// comment for why this field is checked against the corpus closure
+    /// at all (`OPEN-ISSUES.md` row 91).
+    pub cost_gp: Option<f64>,
+    /// `data.weight_lbs`, the `WT:` sibling of [`Self::cost_gp`].
+    pub weight_lbs: Option<f64>,
 }
 
 /// One way a shipped record failed to byte-match its corpus literal.
@@ -113,6 +137,12 @@ pub enum Finding {
     SynthesizedTokenNotInCorpus { record: String, token: String },
     /// A token key carries a `:` but is not on [`SYNTHESIZED_TOKEN_KEYS`].
     UnknownSynthesizedKey { record: String, key: String },
+    /// A record's own typed field (`data.cost_gp`/`data.weight_lbs`) is not
+    /// byte-derivable from any `<lst_key>:<value>` entry in its token
+    /// closure -- the systemic gap `raw_tokens`-only comparison could never
+    /// catch, since a typed field can be populated from a wholly different
+    /// source than `raw_tokens` (`OPEN-ISSUES.md` row 91).
+    TypedFieldNotInClosure { record: String, field: &'static str, shipped_value: String, lst_key: &'static str },
 }
 
 impl Finding {
@@ -124,7 +154,8 @@ impl Finding {
             | Finding::DigestDrift { record, .. }
             | Finding::TokenNotInClosure { record, .. }
             | Finding::SynthesizedTokenNotInCorpus { record, .. }
-            | Finding::UnknownSynthesizedKey { record, .. } => record,
+            | Finding::UnknownSynthesizedKey { record, .. }
+            | Finding::TypedFieldNotInClosure { record, .. } => record,
         }
     }
 
@@ -149,6 +180,11 @@ impl Finding {
             Finding::UnknownSynthesizedKey { record, key } => {
                 format!("{record}: token key is not an LST token name and is not a declared synthesized key: {key}")
             }
+            Finding::TypedFieldNotInClosure { record, field, shipped_value, lst_key } => {
+                format!(
+                    "{record}: typed field {field}={shipped_value} is not byte-derivable from any {lst_key}: entry in the corpus token closure"
+                )
+            }
         }
     }
 }
@@ -170,6 +206,11 @@ pub struct SweepTally {
     pub synthesized_tokens_compared: usize,
     /// Records whose `source.sha256` claim was checked against the real file.
     pub digests_checked: usize,
+    /// Typed fields (`cost_gp`/`weight_lbs`) checked against the token
+    /// closure -- reported so a run that never exercised the typed-field
+    /// check cannot be misread as one that exercised it and found nothing
+    /// (`OPEN-ISSUES.md` row 91's own fix).
+    pub typed_fields_compared: usize,
 }
 
 /// The tab-separated fields of a `.lst` row that can carry tokens: field 0 is
@@ -179,15 +220,30 @@ pub fn tab_tokens(line: &str) -> Vec<&str> {
     line.trim_end_matches(['\r']).split('\t').skip(1).filter(|f| !f.is_empty()).collect()
 }
 
-/// Every token in one record's closure: its base row plus each `.MOD` row
-/// targeting any of its identities.
+/// Every token in one record's closure: its base row, each `.MOD` row
+/// targeting any of its identities, and — when the base row is itself a
+/// `.COPY=` declaration — the base record's own row it copies from.
 ///
 /// `mod_index` is `wiring_class::build_mod_index`'s output narrowed to one
 /// book — this module does not fork the `.MOD` discovery rule.
+///
+/// `copy_base_row` (`SD31-E6-F6-001`, `OPEN-ISSUES.md` rows 70/103's
+/// `.COPY=` inheritance recovery, generalized): a `.COPY=<name>` row states
+/// only what it overrides; every OTHER field a record built from it ships
+/// (e.g. `equipment_gap_tables`'s `.COPY=` inheritance) comes from the row
+/// it copies, never from the `.COPY=` line itself. Without this, a
+/// genuinely inherited, corpus-real value (`BOWSTR`'s `cost_gp: 0`, real
+/// per `cr_equipmods.lst:34`'s `COST:0`) reads as unprovable — not because
+/// it is wrong, but because the closure this function built never looked at
+/// the row that actually states it. Caller resolves the base row (by the
+/// same `KEY:`-token-or-bare-name identity `.COPY=` itself resolves
+/// against) and passes it here; `None` when the base row is a plain
+/// declaration or its base could not be resolved (never fabricated).
 pub fn token_closure(
     base_row: &str,
     identities: &BTreeSet<String>,
     mod_index: &BTreeMap<String, Vec<String>>,
+    copy_base_row: Option<&str>,
 ) -> BTreeSet<String> {
     let mut closure: BTreeSet<String> =
         tab_tokens(base_row).into_iter().map(str::to_string).collect();
@@ -196,14 +252,114 @@ pub fn token_closure(
             closure.extend(tab_tokens(row).into_iter().map(str::to_string));
         }
     }
+    if let Some(row) = copy_base_row {
+        closure.extend(tab_tokens(row).into_iter().map(str::to_string));
+    }
     closure
 }
 
-/// Compare one record's transcribed tokens against its corpus closure.
+/// Formats an `f64` the way it must appear in an `<LST_KEY>:<value>` token:
+/// an integral value with no trailing `.0` (PCGen corpus rows write bare
+/// integers, e.g. `COST:800`, not `COST:800.0`), a fractional value with its
+/// significant digits and nothing else. Used only to build the finding's own
+/// human-readable `shipped_value` string -- the actual comparison in
+/// [`compare_tokens`] parses the closure's own token text back to `f64` and
+/// compares numerically, so this formatting never drives a pass/fail
+/// decision, only what a failure reads as.
+fn format_lst_number(value: f64) -> String {
+    if value.fract() == 0.0 && value.abs() < 1e15 {
+        format!("{value:.0}")
+    } else {
+        value.to_string()
+    }
+}
+
+/// Every value of `closure` entries shaped `<lst_key>:<value>`, parsed as
+/// `f64` -- multiple entries under the same key are all returned, since a
+/// record whose closure includes a `.MOD` override can legitimately carry
+/// more than one.
+fn closure_numeric_values(closure: &BTreeSet<String>, lst_key: &str) -> Vec<f64> {
+    let prefix = format!("{lst_key}:");
+    closure.iter().filter_map(|t| t.strip_prefix(prefix.as_str())).filter_map(|v| v.parse::<f64>().ok()).collect()
+}
+
+/// Compares one typed numeric field (`cost_gp`/`weight_lbs`) against the
+/// closure's own `lst_key:` entries. `None` on the record side is always
+/// accepted without comparison (a corpus row that states no cost/weight is
+/// not this check's population -- the population is scoped to fields the
+/// record itself claims a value for). `Some` on the record side with NO
+/// matching numeric token anywhere in the closure is the finding this
+/// function exists to raise; a record whose closure carries the key under a
+/// DIFFERENT numeric value is caught the same way (no candidate matches).
+fn compare_typed_numeric_field(
+    record_path: &str,
+    field: &'static str,
+    lst_key: &'static str,
+    shipped: Option<f64>,
+    closure: &BTreeSet<String>,
+    tally: &mut SweepTally,
+) -> Option<Finding> {
+    let shipped = shipped?;
+    tally.typed_fields_compared += 1;
+    let candidates = closure_numeric_values(closure, lst_key);
+    if candidates.iter().any(|c| (*c - shipped).abs() < f64::EPSILON) {
+        return None;
+    }
+    Some(Finding::TypedFieldNotInClosure {
+        record: record_path.to_string(),
+        field,
+        shipped_value: format_lst_number(shipped),
+        lst_key,
+    })
+}
+
+/// Compare one record's transcribed tokens, and its typed `cost_gp`/
+/// `weight_lbs` fields, against its corpus closure.
 ///
 /// `book_corpus_tokens` is every tab field of every `.lst` row in the record's
 /// book — the wider surface a synthesized token is checked against, since by
 /// construction it was read from a file other than the record's own row.
+///
+/// **The one declared exemption.** When `record.pi_redacted_description` is
+/// `true` (its `license`/`pi_field` state a real, declared-PI redaction
+/// already verified by `declared_pi_shipping_audit`'s CHECK A), a `DESC`
+/// token whose value is EXACTLY [`REDACTED_PI_MARKER`] is expected to
+/// differ from the real corpus row — that mismatch IS the redaction, not a
+/// transcription defect — and is skipped rather than reported. Narrow by
+/// construction: only the `DESC` key, only the literal marker byte string,
+/// only when the record's own metadata already declares the redaction, so a
+/// record that merely happens to carry that string coincidentally (and is
+/// NOT `license: "PI-REDACTED"`) is still checked normally, and every OTHER
+/// token on a redacted record still must byte-match.
+///
+/// **A second, narrower exemption for non-`DESC` tokens (`SD31-E6-F10-001`).**
+/// `enrich_spell_raw_tokens.rs`'s `enrich_one` redacts ANY token (not only
+/// `DESC`) whose value hits the shared blacklist term scan, one field at a
+/// time -- so a `FACTSET:`-shaped token naming a deity on an Inner Sea Gods
+/// spell legitimately stores [`REDACTED_PI_MARKER`], the identical shape a
+/// redacted `DESC` uses, but the record-level `pi_redacted_description` flag
+/// only ever describes `DESC`. Rather than trust the marker string alone
+/// (which would let an accidental literal `"[redacted PI]"` value hide a
+/// real transcription defect), this token is exempt ONLY when the real
+/// corpus closure's own same-key value RE-SCREENS as blacklisted through the
+/// identical scan the write path used (`pi_screening::classify_field`) --
+/// so the exemption is re-derived against the oracle every sweep run, never
+/// merely asserted by the shipped record.
+///
+/// **The typed-field cross-check (`OPEN-ISSUES.md` row 91).** Before this,
+/// the sweep compared ONLY `data.raw_tokens` against the closure — and
+/// because the `enrich_*_raw_tokens` binaries harvest `raw_tokens` FROM the
+/// cited row, that comparison is tautological at write time whenever
+/// `raw_tokens` and a record's OTHER typed fields (`cost_gp`/`weight_lbs`)
+/// come from independent sources, exactly as `cache_gen::equipment_gap` and
+/// `cache_gen::hand_authored_equipment` are shaped: `cost_gp`/`weight_lbs`
+/// are read from a hand-transcribed Rust table, `raw_tokens` from whatever
+/// row `find_citation` resolves — so a wrong citation could leave
+/// `raw_tokens` sweep-CLEAN while `cost_gp` silently disagreed with the real
+/// corpus. `cost_gp`/`weight_lbs`, when the record states one, must now be
+/// byte-derivable from a `COST:`/`WT:` entry in the SAME closure `raw_tokens`
+/// is checked against — closing the gap without touching the `raw_tokens`
+/// check itself.
 pub fn compare_tokens(
     record: &ShippedRecord,
     closure: &BTreeSet<String>,
@@ -213,6 +369,19 @@ pub fn compare_tokens(
     let mut findings = Vec::new();
     for token in &record.tokens {
         tally.tokens_compared += 1;
+        if record.pi_redacted_description && token.key == "DESC" && token.value == REDACTED_PI_MARKER {
+            continue;
+        }
+        if token.key != "DESC"
+            && token.value == REDACTED_PI_MARKER
+            && closure.iter().any(|field| {
+                field.split_once(':').is_some_and(|(key, raw_value)| {
+                    key == token.key && classify_field(key, raw_value).0 != License::Ogl
+                })
+            })
+        {
+            continue;
+        }
         let joined = token.joined();
         if let Some((_, lst_name)) =
             SYNTHESIZED_TOKEN_KEYS.iter().find(|(key, _)| *key == token.key)
@@ -241,6 +410,22 @@ pub fn compare_tokens(
             });
         }
     }
+    findings.extend(compare_typed_numeric_field(
+        &record.record_path,
+        "cost_gp",
+        "COST",
+        record.cost_gp,
+        closure,
+        tally,
+    ));
+    findings.extend(compare_typed_numeric_field(
+        &record.record_path,
+        "weight_lbs",
+        "WT",
+        record.weight_lbs,
+        closure,
+        tally,
+    ));
     findings
 }
 
@@ -285,7 +470,9 @@ pub fn parse_record(record_path: &str, text: &str) -> Result<Option<ShippedRecor
 }
 
 /// Both populations one shipped JSON file can belong to, from a single parse.
-#[derive(Debug, Clone, Default, PartialEq, Eq)]
+///
+/// `PartialEq` only, not `Eq`: `ShippedRecord` carries `Option<f64>` fields.
+#[derive(Debug, Clone, Default, PartialEq)]
 pub struct ParsedDocument {
     /// The provenance claim, when the record cites a file and a digest —
     /// checked for every record regardless of `source.kind`.
@@ -358,6 +545,10 @@ fn parse_transcription(
             identities.insert(name.to_string());
         }
     }
+    let pi_redacted_description = value.get("license").and_then(serde_json::Value::as_str) == Some("PI-REDACTED")
+        && value.get("pi_field").and_then(serde_json::Value::as_str) == Some("description");
+    let cost_gp = data.get("cost_gp").and_then(serde_json::Value::as_f64);
+    let weight_lbs = data.get("weight_lbs").and_then(serde_json::Value::as_f64);
     Ok(Some(ShippedRecord {
         record_path: record_path.to_string(),
         source_path,
@@ -368,6 +559,9 @@ fn parse_transcription(
             .map(str::to_string),
         identities,
         tokens,
+        pi_redacted_description,
+        cost_gp,
+        weight_lbs,
     }))
 }
 
@@ -386,6 +580,9 @@ mod tests {
                 .iter()
                 .map(|(k, v)| ShippedToken { key: k.to_string(), value: v.to_string() })
                 .collect(),
+            pi_redacted_description: false,
+            cost_gp: None,
+            weight_lbs: None,
         }
     }
 
@@ -400,7 +597,7 @@ mod tests {
                     .push((*row).to_string());
             }
         }
-        token_closure(rows[0], identities, &index)
+        token_closure(rows[0], identities, &index, None)
     }
 
     // ---- the detection cases: each of these MUST go red on a corrupted record
@@ -427,6 +624,125 @@ mod tests {
         assert_eq!(tally.tokens_compared, 2);
     }
 
+    /// `OPEN-ISSUES.md` row 48/49: a record whose description was
+    /// genuinely PI-redacted (`license: "PI-REDACTED"`,
+    /// `pi_field: "description"`) legitimately carries a `DESC` raw_token
+    /// reading `[redacted PI]`, which by construction differs from the
+    /// real corpus row's own `DESC:` value. That must NOT be reported.
+    #[test]
+    fn a_declared_pi_redacted_desc_token_is_exempt_from_the_byte_match() {
+        let mut rec = record(&[("COST", "5"), ("DESC", "[redacted PI]")]);
+        rec.pi_redacted_description = true;
+        let rows = ["Thing\tCOST:5\tDESC:The real Golarion-specific prose."];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(findings, vec![], "a declared-redacted DESC token must not be flagged");
+    }
+
+    /// `SD31-E6-F10-001`: `enrich_spell_raw_tokens.rs` redacts ANY token
+    /// (not only `DESC`) whose value hits the shared blacklist term scan
+    /// (`enrich_one`'s `blacklisted = blacklist_license != License::Ogl`
+    /// branch, applied per-token) -- so a real `FACTSET:` token naming a
+    /// deity on an Inner Sea Gods spell (`FACTSET:Deity|Sarenrae`-shaped)
+    /// legitimately stores `[redacted PI]`, exactly like a redacted `DESC`
+    /// does. The pre-existing DESC-only exemption above does not cover it,
+    /// so 51 real, correctly-redacted records went `MISMATCH` for a
+    /// redaction that is legitimate, not a transcription defect
+    /// (re-derived against the real pinned oracle,
+    /// `cargo run --locked --bin corpus_literal_sweep`, before this fix).
+    ///
+    /// Narrower than the DESC exemption in one respect and safer in
+    /// another: rather than trusting a record-level flag
+    /// (`pi_redacted_description`, which only ever describes `DESC`), this
+    /// exemption RE-SCREENS the real corpus row's own same-key value
+    /// through the identical blacklist scan the enrichment write path used
+    /// -- so a token that merely happens to read the marker string by
+    /// coincidence, with no real blacklist hit backing it, is still
+    /// reported (see the sibling test below).
+    #[test]
+    fn a_non_desc_token_whose_raw_corpus_value_independently_reconfirms_as_blacklisted_is_exempt() {
+        let rec = record(&[("COST", "5"), ("FACTSET", "[redacted PI]")]);
+        let rows = ["Thing\tCOST:5\tFACTSET:Deity|Sarenrae"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![],
+            "a FACTSET token legitimately redacted for a real deity-name blacklist hit must \
+             not be flagged"
+        );
+    }
+
+    /// The re-screen genuinely runs: a token whose value happens to equal
+    /// the marker string, but whose real corpus row carries a CLEAN
+    /// (non-blacklisted) value under the same key, is not exempt -- proving
+    /// this is a real re-derivation, not a blanket "trust the marker" hole.
+    #[test]
+    fn a_token_merely_reading_the_marker_string_with_no_real_blacklist_backing_it_is_still_flagged() {
+        let rec = record(&[("COST", "5"), ("FACTSET", "[redacted PI]")]);
+        let rows = ["Thing\tCOST:5\tFACTSET:SomeOrdinaryValue"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "FACTSET:[redacted PI]".to_string(),
+            }],
+            "a token reading the marker string with no independently-reconfirmed blacklist \
+             hit on the real corpus row must still be reported"
+        );
+    }
+
+    /// The exemption is narrow: it does not extend to any OTHER drifted
+    /// token on a redacted record, and it does not fire at all unless the
+    /// record's own metadata declares the redaction.
+    #[test]
+    fn the_redaction_exemption_does_not_cover_other_tokens_or_undeclared_records() {
+        // Other tokens on a redacted record still must byte-match.
+        let mut rec = record(&[("COST", "50"), ("DESC", "[redacted PI]")]);
+        rec.pi_redacted_description = true;
+        let rows = ["Thing\tCOST:5\tDESC:The real Golarion-specific prose."];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure { record: rec.record_path.clone(), token: "COST:50".to_string() }],
+            "COST drift on a redacted record must still be reported"
+        );
+
+        // The literal marker string on a record that is NOT declared
+        // redacted is still checked normally (and fails, as it should).
+        let rec2 = record(&[("DESC", "[redacted PI]")]);
+        assert!(!rec2.pi_redacted_description);
+        let rows2 = ["Thing\tDESC:The real prose."];
+        let mut tally2 = SweepTally::default();
+        let findings2 = compare_tokens(&rec2, &closure_of(&rows2, &rec2.identities), &BTreeSet::new(), &mut tally2);
+        assert_eq!(
+            findings2,
+            vec![Finding::TokenNotInClosure {
+                record: rec2.record_path.clone(),
+                token: "DESC:[redacted PI]".to_string()
+            }],
+            "the marker string on an UNDECLARED record must still be checked normally"
+        );
+    }
+
     #[test]
     fn a_token_the_corpus_row_never_carried_is_a_finding() {
         let rec = record(&[("COST", "50"), ("SPELLFAILURE", "35")]);
@@ -440,6 +756,178 @@ mod tests {
         );
         assert_eq!(findings.len(), 1, "{findings:?}");
         assert!(matches!(&findings[0], Finding::TokenNotInClosure { token, .. } if token == "SPELLFAILURE:35"));
+    }
+
+    // ---- SD31-E6-F6-001: `.COPY=` inheritance closure ----
+    //
+    // `gen_equipment_gap_tables.rs`'s `.COPY=` inheritance (rows 70/103's
+    // recovery, generalized to `cost_gp`/`weight_lbs`) ships a value that
+    // genuinely appears in the corpus, but on the BASE row, not the `.COPY=`
+    // row a record's citation names. Without `copy_base_row`, that value is
+    // real but the closure this function builds can never prove it — the
+    // exact "provable one record deep" bar this check exists to enforce.
+
+    /// The reproduction, from the real corpus (`BOWSTR`): the cited row is a
+    /// bare `.COPY=` declaration with no `COST:` token; the shipped
+    /// `cost_gp` (inherited from the base row) is only provable once the
+    /// base row's own tokens join the closure.
+    #[test]
+    fn a_copy_rows_closure_without_its_base_cannot_prove_an_inherited_cost() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(0.0);
+        let rows = ["Special Quality ~ Composite Bow Strength Rating.COPY=BOWSTR\tVISIBLE:NO"];
+        let mut tally = SweepTally::default();
+        let closure = token_closure(rows[0], &rec.identities, &BTreeMap::new(), None);
+        let findings = compare_tokens(&rec, &closure, &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TypedFieldNotInClosure {
+                record: rec.record_path.clone(),
+                field: "cost_gp",
+                shipped_value: "0".to_string(),
+                lst_key: "COST",
+            }],
+            "a .COPY= row's empty own line must not silently prove an inherited value"
+        );
+    }
+
+    /// The fix: passing the resolved base row lets the SAME inherited
+    /// `cost_gp` prove clean — the value is real, only the closure needed
+    /// widening to see where it is actually stated.
+    #[test]
+    fn a_copy_rows_closure_with_its_resolved_base_proves_the_inherited_cost() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(0.0);
+        let copy_row = "Special Quality ~ Composite Bow Strength Rating.COPY=BOWSTR\tVISIBLE:NO";
+        let base_row = "Composite Bow Strength Rating\tKEY:Special Quality ~ Composite Bow Strength Rating\tCOST:0";
+        let mut tally = SweepTally::default();
+        let closure =
+            token_closure(copy_row, &rec.identities, &BTreeMap::new(), Some(base_row));
+        let findings = compare_tokens(&rec, &closure, &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, Vec::new(), "the base row's real COST:0 must now be found");
+    }
+
+    /// A plain (non-`.COPY=`) row is unaffected by a `copy_base_row` that
+    /// happens to be passed anyway — the base's tokens still merge in
+    /// (defensive; in practice the caller only resolves a base for a
+    /// genuine `.COPY=` row), but a normal record's own closure is not
+    /// narrowed or otherwise changed by this parameter's mere presence.
+    #[test]
+    fn a_plain_rows_own_tokens_are_unaffected_by_an_absent_copy_base() {
+        let rec = record(&[("COST", "50")]);
+        let rows = ["Thing\tCOST:50"];
+        let mut tally = SweepTally::default();
+        let closure = token_closure(rows[0], &rec.identities, &BTreeMap::new(), None);
+        let findings = compare_tokens(&rec, &closure, &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, Vec::new());
+    }
+
+    // ---- OPEN-ISSUES.md row 91: the typed-field cross-check ----
+    //
+    // `raw_tokens` and `cost_gp`/`weight_lbs` are, for the modules this
+    // reproduces the real defect from (`cache_gen::equipment_gap`/
+    // `cache_gen::hand_authored_equipment`), populated from INDEPENDENT
+    // sources: `cost_gp` from a hand-transcribed Rust table, `raw_tokens`
+    // from whatever row `find_citation` resolves. Before this fix,
+    // `compare_tokens` never read `cost_gp` at all, so a wrong citation
+    // could leave `raw_tokens` sweep-CLEAN (it was harvested from the same
+    // wrong row it is compared against) while `cost_gp` silently disagreed
+    // with the real corpus -- exactly `OPEN-ISSUES.md` row 90's confirmed,
+    // shipped defect (`catapult_standard.json`'s `cost_gp=800` citing
+    // `uc_profs_weapon.lst`, which never states 800 anywhere).
+
+    /// The reproduction: a record's `cost_gp` is real (800) but its
+    /// `raw_tokens` are empty (so the OLD, `raw_tokens`-only comparison
+    /// finds nothing to check) and its closure states a DIFFERENT cost.
+    /// Byte-equality on `raw_tokens` alone is vacuously satisfied; the
+    /// typed-field check must still catch the drift.
+    #[test]
+    fn a_cost_gp_the_closure_never_states_is_a_finding_even_with_empty_raw_tokens() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(800.0);
+        let rows = ["Thing\tKEY:Thing"]; // no COST: token anywhere
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TypedFieldNotInClosure {
+                record: rec.record_path.clone(),
+                field: "cost_gp",
+                shipped_value: "800".to_string(),
+                lst_key: "COST",
+            }]
+        );
+        assert_eq!(tally.typed_fields_compared, 1, "weight_lbs is None and must not count");
+    }
+
+    /// The real row 90 shape, precisely: `cost_gp` is real (800) but the
+    /// closure (built from the WRONG cited row, a proficiency listing with
+    /// no `COST:` field at all) cannot derive it.
+    #[test]
+    fn the_real_catapult_standard_shape_trips_the_typed_field_check_pre_fix() {
+        let mut rec = record(&[]);
+        rec.identities = ["Catapult (Standard)".to_string()].into_iter().collect();
+        rec.cost_gp = Some(800.0);
+        // the WRONG cited row (a proficiency listing, no COST:)
+        let rows = ["Catapult\tKEY:Catapult (Standard)\tTYPE:Exotic.Ranged.SiegeEngine"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert!(
+            findings.iter().any(|f| matches!(
+                f,
+                Finding::TypedFieldNotInClosure { field, lst_key, .. } if *field == "cost_gp" && *lst_key == "COST"
+            )),
+            "{findings:?}"
+        );
+    }
+
+    /// A `cost_gp` that DOES match a `COST:` entry in the closure is not a
+    /// finding -- the check is real, not a blanket new failure mode.
+    #[test]
+    fn a_cost_gp_present_in_the_closure_is_not_a_finding() {
+        let mut rec = record(&[]);
+        rec.identities = ["Catapult (Standard)".to_string()].into_iter().collect();
+        rec.cost_gp = Some(800.0);
+        rec.weight_lbs = Some(12.0);
+        let rows = ["Catapult (Standard)\tPROFICIENCY:WEAPON|Catapult (Standard)\tCOST:800\tWT:12"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, vec![], "{findings:?}");
+        assert_eq!(tally.typed_fields_compared, 2);
+    }
+
+    /// A record whose typed schema states no `cost_gp`/`weight_lbs` at all
+    /// (`None`) is not in this check's population -- absence on the record
+    /// side is not compared, only a stated value that cannot be derived.
+    #[test]
+    fn a_record_with_no_typed_fields_is_unaffected() {
+        let rec = record(&[("SOURCEPAGE", "p.1")]);
+        assert!(rec.cost_gp.is_none() && rec.weight_lbs.is_none());
+        let rows = ["Thing\tSOURCEPAGE:p.1"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, vec![]);
+        assert_eq!(tally.typed_fields_compared, 0);
+    }
+
+    /// Fractional and negative values round-trip through the finding's own
+    /// display string without a spurious mismatch (a formatting bug here
+    /// would silently widen the check's blast radius past what row 91
+    /// scoped).
+    #[test]
+    fn negative_and_fractional_typed_values_compare_correctly() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(-150.0);
+        rec.weight_lbs = Some(0.5);
+        let rows = ["Thing\tCOST:-150\tWT:.5"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, vec![], "{findings:?}");
     }
 
     #[test]
@@ -636,5 +1124,63 @@ mod tests {
         // `COPY=` token, and must not enter the closure.
         let tokens = tab_tokens("Heavy Pick (Base).COPY=Pick, Heavy\tKEY:Pick (Heavy)");
         assert_eq!(tokens, vec!["KEY:Pick (Heavy)"]);
+    }
+
+    /// `SD31-E6-F10-004`: real corpus reproduction, `inner_sea_gods/
+    /// isg_equip.lst:220`, `Safecamp Wagon`'s `DESC:` field -- the LAST
+    /// tab-delimited field on the row, followed by a single literal
+    /// trailing space before the newline (`cat -A` on the real corpus
+    /// file confirms `...fire resistance 5. $`, one space before the
+    /// line-ending `$`). `tab_tokens` (this sweep's own corpus-side
+    /// reader) correctly keeps that trailing space -- byte-equality means
+    /// byte-equality, per `whitespace_is_not_normalised_away` above; the
+    /// corpus's own literal is not this sweep's to normalize. The real
+    /// defect was upstream, in `src/pcgen_import/lst_parser/equipment.rs`:
+    /// `enrich_equipment_raw_tokens.rs` shipped a TRIMMED value into
+    /// `raw_tokens` (via `EquipmentToken::value`, documented to strip
+    /// surrounding whitespace for its OTHER callers) instead of the
+    /// byte-exact field text `EquipmentToken::raw_pair` is documented to
+    /// carry -- fixed there, not here. This test pins the sweep's own
+    /// unchanged, correct behavior: the corpus-side closure entry for this
+    /// exact real row keeps its trailing space, so a shipped value that
+    /// ALSO keeps it (the fixed parser's own output) matches, and a
+    /// shipped value that drops it (the pre-fix parser's output) does not.
+    #[test]
+    fn a_trailing_space_the_real_corpus_row_carries_is_kept_not_normalised_away() {
+        let tokens = tab_tokens(
+            "Safecamp Wagon\t\t\t\tTYPE:Magic.Wondrous Item.SLOT_None\t\tCOST:3000\tWT:2\t\tDESC:...fire resistance 5. ",
+        );
+        assert_eq!(
+            tokens.last(),
+            Some(&"DESC:...fire resistance 5. "),
+            "the corpus row's own literal trailing space must survive `tab_tokens` unchanged"
+        );
+
+        let rec = record(&[("COST", "3000"), ("DESC", "...fire resistance 5. ")]);
+        let rows = ["Safecamp Wagon\tCOST:3000\tDESC:...fire resistance 5. "];
+        let mut tally = SweepTally::default();
+        assert_eq!(
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally),
+            vec![],
+            "a shipped value that preserves the corpus's own trailing space must match"
+        );
+
+        let trimmed_rec = record(&[("COST", "3000"), ("DESC", "...fire resistance 5.")]);
+        let mut tally2 = SweepTally::default();
+        assert_eq!(
+            compare_tokens(
+                &trimmed_rec,
+                &closure_of(&rows, &trimmed_rec.identities),
+                &BTreeSet::new(),
+                &mut tally2
+            ),
+            vec![Finding::TokenNotInClosure {
+                record: trimmed_rec.record_path.clone(),
+                token: "DESC:...fire resistance 5.".to_string(),
+            }],
+            "a shipped value that DROPPED the corpus's own trailing space (the pre-fix \
+             `enrich_equipment_raw_tokens.rs` behavior) must still be reported by this sweep -- \
+             the fix belongs upstream in the parser, never in loosening this comparison"
+        );
     }
 }

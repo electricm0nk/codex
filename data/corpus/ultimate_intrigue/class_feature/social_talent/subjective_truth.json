@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ Subjective Truth",
+    "name": "Subjective Truth",
+    "class": "Social Talent",
+    "description": "The vigilante's disparate identities allow him to defeat magic that detects lies. As long as what he says is true from the point of view of his current identity, it detects as true to effects such as discern lies, and he can say it in effects such as zone of truth that force him to speak the truth.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Subjective Truth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Feign Innocence"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's disparate identities allow him to defeat magic that detects lies. As long as what he says is true from the point of view of his current identity, it detects as true to effects such as discern lies, and he can say it in effects such as zone of truth that force him to speak the truth."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 67,
+    "record_key": "Social Talent ~ Subjective Truth"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

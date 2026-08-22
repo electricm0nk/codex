@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wishcrafter ~ Twisted Wish",
+    "name": "Twisted Wish",
+    "class": "Sorcerer",
+    "description": "A wishcrafter becomes adept at corrupting wishes to negatively affect the creature that wished them. When a wishcrafter affects a creature with a spell using its wish as a spell component, she may twist the wish, applying a -4 penalty to the creature's saving throws against the spell. The effects of wishes twisted this way are difficult to remove; the DC of caster level checks to dispel them increases by 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wishcrafter ~ Twisted Wish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A wishcrafter becomes adept at corrupting wishes to negatively affect the creature that wished them. When a wishcrafter affects a creature with a spell using its wish as a spell component, she may twist the wish, applying a -4 penalty to the creature's saving throws against the spell. The effects of wishes twisted this way are difficult to remove; the DC of caster level checks to dispel them increases by 5."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 615,
+    "record_key": "Wishcrafter ~ Twisted Wish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

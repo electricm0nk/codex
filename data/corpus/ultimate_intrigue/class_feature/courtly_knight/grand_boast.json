@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Courtly Knight ~ Grand Boast",
+    "name": "Grand Boast",
+    "class": "Cavalier",
+    "description": "Whenever a courtly knight uses her challenge class feature against an opponent who is at full health and under no negative afflictions, conditions, spells, or other effects, she can make a grand boast, declaring that she can defeat her foe with ease. She does not gain the benefits of her challenge (including any additional benefits granted by her order) when making a grand boast. If she successfully defeats the target of her challenge within 1 minute, however, she is vindicated in her boast and gains the benefits of her challenge against all allies of the defeated enemy who witnessed her grand boast and who are of the same or lower CR as the defeated enemy. If any of the courtly knight's allies attack the initial target of the challenge or assist the courtly knight after the boast, this ability has no effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Courtly Knight ~ Grand Boast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.CourtlyKnightClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a courtly knight uses her challenge class feature against an opponent who is at full health and under no negative afflictions, conditions, spells, or other effects, she can make a grand boast, declaring that she can defeat her foe with ease. She does not gain the benefits of her challenge (including any additional benefits granted by her order) when making a grand boast. If she successfully defeats the target of her challenge within 1 minute, however, she is vindicated in her boast and gains the benefits of her challenge against all allies of the defeated enemy who witnessed her grand boast and who are of the same or lower CR as the defeated enemy. If any of the courtly knight's allies attack the initial target of the challenge or assist the courtly knight after the boast, this ability has no effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 288,
+    "record_key": "Courtly Knight ~ Grand Boast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

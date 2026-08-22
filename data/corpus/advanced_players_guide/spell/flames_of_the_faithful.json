@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Flames of the Faithful",
-    "school": "Transmutation",
-    "level": 2,
     "description": "With a touch, you cause a glowing rune to appear on a single weapon, granting that weapon the flaming property (and allowing it to cause an extra 1d6 points of fire damage on a successful hit). If you are using the judgment class feature, your weapon gains the flaming burst property instead. The spell functions only for weapons that you wield. If the weapon leaves your hand for any reason, the spell effect ends. The effects of this spell do not stack with any existing flaming or flaming burst weapon property that the target weapon may already possess.",
-    "full_text": true
+    "full_text": true,
+    "key": "Flames of the Faithful",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Gives weapon flaming property.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "With a touch, you cause a glowing rune to appear on a single weapon, granting that weapon the flaming property (and allowing it to cause an extra 1d6 points of fire damage on a successful hit). If you are using the judgment class feature, your weapon gains the flaming burst property instead. The spell functions only for weapons that you wield. If the weapon leaves your hand for any reason, the spell effect ends. The effects of this spell do not stack with any existing flaming or flaming burst weapon property that the target weapon may already possess.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (object, harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/flamesOfTheFaithful.html#_flames-of-the-faithful"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object, harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "weapon touched"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 120,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1953,
-    "record_key": "Flames of the Faithful"
+    "record_key": "Flames of the Faithful",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

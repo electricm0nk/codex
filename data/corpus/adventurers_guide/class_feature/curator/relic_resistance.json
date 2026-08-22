@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Curator ~ Relic Resistance",
+    "name": "Relic Resistance",
+    "class": "Occultist",
+    "description": "A curator develops a resistance to harmful items. He never gains negative levels due to his alignment as a result of wielding or wearing magic items, and he gains a +4 bonus on Will saves to resolve personality conflicts with intelligent magic items. Whenever a cursed item's harmful condition would trigger, a curator can attempt a Will save (DC = 10 + the item's CL) to suppress the curse just long enough to discard the item before it activates. Finally, when identifying an item, a curator needs to exceed the item's DC by only 5 (instead of 10) to determine whether the item is cursed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Curator ~ Relic Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.CuratorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "A curator develops a resistance to harmful items. He never gains negative levels due to his alignment as a result of wielding or wearing magic items, and he gains a +4 bonus on Will saves to resolve personality conflicts with intelligent magic items. Whenever a cursed item's harmful condition would trigger, a curator can attempt a Will save (DC = 10 + the item's CL) to suppress the curse just long enough to discard the item before it activates. Finally, when identifying an item, a curator needs to exceed the item's DC by only 5 (instead of 10) to determine whether the item is cursed."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 960,
+    "record_key": "Curator ~ Relic Resistance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

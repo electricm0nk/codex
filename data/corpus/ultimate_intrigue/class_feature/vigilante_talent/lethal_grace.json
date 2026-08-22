@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Lethal Grace",
+    "name": "Lethal Grace",
+    "class": "Vigilante Talent",
+    "description": "The vigilante combines strength and speed into incredibly deadly attacks. He gains Weapon Finesse as a bonus feat, and if he already has the Weapon Finesse feat, he can immediately swap it for another feat for which he qualified at the level he chose Weapon Finesse. When using Weapon Finesse to make a melee attack using his Dexterity bonus on attack rolls and his Strength bonus on damage rolls, he also adds half his vigilante level on damage rolls. This bonus damage is not reduced or increased if the vigilante is wielding a weapon two-handed or in an off-hand.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Lethal Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Lethal Grace"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante combines strength and speed into incredibly deadly attacks. He gains Weapon Finesse as a bonus feat, and if he already has the Weapon Finesse feat, he can immediately swap it for another feat for which he qualified at the level he chose Weapon Finesse. When using Weapon Finesse to make a melee attack using his Dexterity bonus on attack rolls and his Strength bonus on damage rolls, he also adds half his vigilante level on damage rolls. This bonus damage is not reduced or increased if the vigilante is wielding a weapon two-handed or in an off-hand."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Finesse"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Finesseable|VigilanteTalentLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 89,
+    "record_key": "Vigilante Talent ~ Lethal Grace"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scion of the Arts",
+    "name": "Scion of the Arts",
+    "class": null,
+    "description": "You gain a +1 bonus on all Perform checks, and Perform is always a class skill for you.|!PREABILITY:1,CATEGORY=Special Ability,Bardic Performance",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.NobleScion"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 bonus on all Perform checks, and Perform is always a class skill for you.|!PREABILITY:1,CATEGORY=Special Ability,Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 bonus on all Perform checks, and Perform is always a class skill for you. You can use your bardic performance ability for an additional 3 rounds/day.|PREABILITY:1,CATEGORY=Special Ability,Bardic Performance"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Perform|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceDuration|3|PREABILITY:1,CATEGORY=Special Ability,Bardic Performance"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Perform"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 185,
+    "record_key": "Scion of the Arts"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

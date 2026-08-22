@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai ~ Order",
+    "name": "Order",
+    "class": "Samurai",
+    "description": "A samurai must pledge himself to a specific order. The order grants the samurai a number of bonuses, class skills, and special abilities. In addition, each order includes a number of edicts the samurai must follow. If he violates these edicts, he loses the benefits of his order's challenge ability for 24 hours. The violation of an edict is subject to GM interpretation. A samurai who wishes to change his order must undertake a lengthy process to dedicate himself to a new cause. When this choice is made, he immediately loses all of the benefits from his old order. He must then follow the edicts of his new order for one entire level without gaining any benefits from that order. Once he has accomplished this, he gains all the bonuses from his new order. The only exception to this is when a samurai decides to become a ronin. A samurai can elect to become a ronin immediately, losing all the benefits from his old order and replacing them with the new benefits from the ronin order. Once a ronin, however, the only way for the samurai to change to another order is through the method described above.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Order"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderAbilityLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A samurai must pledge himself to a specific order. The order grants the samurai a number of bonuses, class skills, and special abilities. In addition, each order includes a number of edicts the samurai must follow. If he violates these edicts, he loses the benefits of his order's challenge ability for 24 hours. The violation of an edict is subject to GM interpretation. A samurai who wishes to change his order must undertake a lengthy process to dedicate himself to a new cause. When this choice is made, he immediately loses all of the benefits from his old order. He must then follow the edicts of his new order for one entire level without gaining any benefits from that order. Once he has accomplished this, he gains all the bonuses from his new order. The only exception to this is when a samurai decides to become a ronin. A samurai can elect to become a ronin immediately, losing all the benefits from his old order and replacing them with the new benefits from the ronin order. Once a ronin, however, the only way for the samurai to change to another order is through the method described above."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Samurai Order|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderAbilityLVL|SamuraiLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 189,
+    "record_key": "Samurai ~ Order"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

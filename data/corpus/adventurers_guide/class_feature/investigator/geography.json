@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Chronicler's Insight ~ Geography",
+    "name": "Geography",
+    "class": "Investigator",
+    "description": "The investigator increases any bonuses to AC and on Reflex saving throws he gains from partial cover, total cover, and improved cover by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Chronicler's Insight ~ Geography"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ChroniclersInsight.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "The investigator increases any bonuses to AC and on Reflex saving throws he gains from partial cover, total cover, and improved cover by 1."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1156,
+    "record_key": "Investigator ~ Chronicler's Insight ~ Geography"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

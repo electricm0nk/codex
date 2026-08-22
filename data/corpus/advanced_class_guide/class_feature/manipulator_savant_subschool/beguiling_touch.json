@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Manipulator Savant Subschool ~ Beguiling Touch",
+    "name": "Beguiling Touch",
+    "class": "Manipulator Savant Subschool",
+    "description": "You can charm a living creature by touching it. Creatures with more than %1 Hit Dice are unaffected, as are creatures in combat and those with an attitude of hostile toward you. Creatures receive a Will save DC %2 to negate the effect. Creatures that fail their save are affected by charm monster for %3 rounds. This is a mind-affecting effect. You can use this ability a %4 per day.|ArcanistSavantSchoolLVL|10+ArcanistSavantSchoolLVL/2+INT|max(ArcanistSavantSchoolLVL/2,1)|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Manipulator Savant Subschool ~ Beguiling Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can charm a living creature by touching it. Creatures with more than %1 Hit Dice are unaffected, as are creatures in combat and those with an attitude of hostile toward you. Creatures receive a Will save DC %2 to negate the effect. Creatures that fail their save are affected by charm monster for %3 rounds. This is a mind-affecting effect. You can use this ability a %4 per day.|ArcanistSavantSchoolLVL|10+ArcanistSavantSchoolLVL/2+INT|max(ArcanistSavantSchoolLVL/2,1)|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2600,
+    "record_key": "Manipulator Savant Subschool ~ Beguiling Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

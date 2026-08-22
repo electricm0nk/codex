@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kitsune Trickster ~ Rogue Talents",
+    "name": "Rogue Talents",
+    "class": "Rogue",
+    "description": "The following rogue talents complement the kitsune trickster archetype: major magic, minor magic (Core Rulebook); false friend, obfuscate story, steal the story (see below); charmer, coax information, honeyed words (Advanced Player's Guide); convincing lie (Ultimate Combat). Advanced Talents: The following advanced rogue talents complement the kitsune trickster archetype: skill mastery, slippery mind (Core Rulebook); master of disguise (Advanced Player's Guide); rumormonger (Ultimate Combat).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune Trickster ~ Rogue Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following rogue talents complement the kitsune trickster archetype: major magic, minor magic (Core Rulebook); false friend, obfuscate story, steal the story (see below); charmer, coax information, honeyed words (Advanced Player's Guide); convincing lie (Ultimate Combat). Advanced Talents: The following advanced rogue talents complement the kitsune trickster archetype: skill mastery, slippery mind (Core Rulebook); master of disguise (Advanced Player's Guide); rumormonger (Ultimate Combat)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.193"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 877,
+    "record_key": "Kitsune Trickster ~ Rogue Talents"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

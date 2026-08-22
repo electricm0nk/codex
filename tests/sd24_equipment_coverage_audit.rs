@@ -60,15 +60,21 @@ fn crb_equipment_is_fully_record_ingested() {
     );
 }
 
-/// The criterion 6.1 "zero weight/description coverage" canary is now
-/// retired: CRB, APG, and ACG have all gained real `weight`/`description`
-/// coverage across three concurrent SD-24 criteria 6.3/6.4 cycles
-/// (`crb-field-completion-cycle`, `apg-field-completion-cycle`,
-/// `acg-field-completion-cycle`). Each book's own dedicated test below
-/// (`equipment_table_entry_weight_and_description_field_coverage_for_crb`,
-/// `apg_equipment_gained_weight_field_and_is_fully_record_ingested`,
-/// `equipment_table_entry_weight_and_description_field_coverage_for_acg`)
-/// asserts its real, book-specific ceiling instead.
+// The criterion 6.1 "zero weight/description coverage" canary is now
+// retired: CRB, APG, and ACG have all gained real `weight`/`description`
+// coverage across three concurrent SD-24 criteria 6.3/6.4 cycles
+// (`crb-field-completion-cycle`, `apg-field-completion-cycle`,
+// `acg-field-completion-cycle`). Each book's own dedicated test below
+// (`equipment_table_entry_weight_and_description_field_coverage_for_crb`,
+// `apg_equipment_gained_weight_field_and_is_fully_record_ingested`,
+// `equipment_table_entry_weight_and_description_field_coverage_for_acg`)
+// asserts its real, book-specific ceiling instead -- this is historical
+// context, not a doc comment for the test below (wave 26 integration
+// cycle: converted from `///` to `//` to clear a real `clippy::
+// empty_line_after_doc_comments` gate failure without changing any
+// semantics; the SECOND doc block immediately below, unchanged, is the
+// one that actually documents `equipment_table_entry_weight_and_
+// description_field_coverage_for_crb`).
 
 /// SD-24 criteria 6.3/6.4 (this cycle, CRB-only file-touch scope): CRB's
 /// `EquipmentTableEntry` gained real `weight_lbs`/`description` fields,
@@ -175,13 +181,21 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_acg() {
 /// total) is **fully record-ingested** as of SD-25 criterion 7.N item 4
 /// -- a plain scope gap (no module existed at all), not a corpus
 /// ceiling, so 4/4 is the honest ceiling for `total_records` itself.
-/// `cost_gp`/`weight_lbs` are 4/4 (every real record carries both `COST:`
-/// and `WT:` tokens, including literal `0` values). `description` is
-/// also 4/4: 3 records source from the corpus's own `SPROP:` token
-/// (register A10, same convention `acg::equipment_data` established),
-/// and the 4th (`Rag Armor (Dark Creeper)`, which has neither `DESC:`
-/// nor `SPROP:`) was closed via an identity-matched web second-source
-/// pass -- see this cycle's receipt for the cited URLs.
+/// `weight_lbs` is 4/4 (every real record carries a `WT:` token,
+/// including literal `0` values). `cost_gp` is **3/4, corrected
+/// `SD31-E6-F5-004`** (`OPEN-ISSUES.md` row 91's typed-field cross-check):
+/// `Poison (Black Smear)` (`b1_equip_general.lst:7`) carries no `COST:`
+/// token at all in the pinned oracle -- the original `Some(0.0)` was a
+/// transcription error (a stated `0` price is not the same fact as no
+/// price being stated), not a genuine gap this test should paper over by
+/// asserting a count the corpus does not support. `description` is 4/4:
+/// 3 records source from the corpus's own `SPROP:` token (register A10,
+/// same convention `acg::equipment_data` established, and the SAME
+/// `SPROP:` token that recovers `Poison (Black Smear)`'s own
+/// description even without a `COST:`), and the 4th (`Rag Armor (Dark
+/// Creeper)`, which has neither `DESC:` nor `SPROP:`) was closed via an
+/// identity-matched web second-source pass -- see this cycle's receipt
+/// for the cited URLs.
 #[test]
 fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage() {
     let report = beastiary1::equipment_tables::field_coverage_report();
@@ -193,7 +207,12 @@ fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage(
         report.total_records, report.records_expected,
         "Bestiary 1 equipment record coverage should be 100% (closed this cycle)"
     );
-    assert_eq!(report.has_cost, 4, "every real record carries a COST: token");
+    assert_eq!(
+        report.has_cost, 3,
+        "3 of 4 real records carry a COST: token -- Poison (Black Smear) genuinely does not \
+         (b1_equip_general.lst:7 has no COST: token in the pinned oracle at all); asserting 4 \
+         here would re-introduce the fabricated-price defect SD31-E6-F5-004 fixed"
+    );
     assert_eq!(report.has_weight, 4, "every real record carries a WT: token");
     assert_eq!(
         report.has_description, 4,
@@ -203,24 +222,28 @@ fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage(
     );
 }
 
-/// CRB's spell list (`cr_spells.lst`) carries 652 of 652 real,
+/// CRB's spell list (`cr_spells.lst`) carries 664 of 664 real,
 /// level-and-school-bearing spell records -- criterion 6.1's original
 /// "675 real / 96.6%" figure was a measurement error (see
 /// `SpellFieldCoverage::records_expected`'s doc comment for the
 /// correction), not a genuine record-coverage gap; this cycle's re-audit
 /// found CRB spell record coverage was already 100%. SD-24 criterion 6.5
-/// (this cycle) additionally replaced every present record's truncated
-/// first-sentence `description` with the fullest text the real corpus
-/// provides -- `full_text_verified` is now 652/652, not the pre-cycle 0.
+/// additionally replaced every present record's truncated first-sentence
+/// `description` with the fullest text the real corpus provides. SD31
+/// decisions.md §15 (2026-08-17) added the 12 `.COPY=` racial
+/// spell-like-ability variant records this book owns (the 13th belongs to
+/// `advanced_race_guide`) as their own distinct entries rather than
+/// merging them into their parent -- the count grew from 652 to 664 for
+/// that reason, not a new coverage gap.
 #[test]
 fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
     let report = crb::spell_list::spell_coverage_report();
     assert_eq!(
-        report.records_expected, 652,
-        "real, level-and-school-bearing cr_spells.lst record count (corrected from the \
-         original 675 measurement-error figure)"
+        report.records_expected, 664,
+        "real, level-and-school-bearing cr_spells.lst record count, including the 12 \
+         `.COPY=` racial SLA variants ingested under decisions.md §15"
     );
-    assert_eq!(report.total_records, 652, "current CRB spell list ingest count");
+    assert_eq!(report.total_records, 664, "current CRB spell list ingest count");
     assert_eq!(
         report.records_expected, report.total_records,
         "CRB spell record coverage should be 100% (already fully ingested, criterion 6.1's \

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daring General ~ Follower ~ Footman",
+    "name": "Footman",
+    "class": "Daring General",
+    "description": "Each follower gains a +2 bonus on attack and damage rolls, but takes a -2 penalty to her AC and on saving throws. A footman unit gains a +2 bonus to its OM and takes a -2 penalty to its DV in mass combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring General ~ Follower ~ Footman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Each follower gains a +2 bonus on attack and damage rolls, but takes a -2 penalty to her AC and on saving throws. A footman unit gains a +2 bonus to its OM and takes a -2 penalty to its DV in mass combat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 299,
+    "record_key": "Daring General ~ Follower ~ Footman"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

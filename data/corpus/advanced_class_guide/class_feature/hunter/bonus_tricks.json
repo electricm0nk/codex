@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter ~ Bonus Tricks",
+    "name": "Bonus Tricks",
+    "class": "Hunter",
+    "description": "At 7th level and every 6 levels thereafter, a hunter's animal companion learns a bonus trick (in addition to the bonus tricks gained from the hunter's effective druid level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Bonus Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterBonusTricks.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterBonusTricks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterBonusTricks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level and every 6 levels thereafter, a hunter's animal companion learns a bonus trick (in addition to the bonus tricks gained from the hunter's effective druid level)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterBonusTricks|floor((HunterLVL-1)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1182,
+    "record_key": "Hunter ~ Bonus Tricks"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

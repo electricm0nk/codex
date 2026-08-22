@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Roaring Drunk",
+    "name": "Roaring Drunk",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains a +1 morale bonus on Intimidate checks and to the save DC of any fear effects she creates for each alcoholic drink she has consumed during her rage, to a maximum of +1 per four barbarian levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Roaring Drunk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains a +1 morale bonus on Intimidate checks and to the save DC of any fear effects she creates for each alcoholic drink she has consumed during her rage, to a maximum of +1 per four barbarian levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1525,
+    "record_key": "Rage Power ~ Roaring Drunk"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

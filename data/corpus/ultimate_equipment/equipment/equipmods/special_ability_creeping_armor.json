@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 5000.0,
+    "description": "check penalty does not apply to stealth. Once per day add enhancement bonus to stealth for 1 minute.",
+    "key": "Special Ability ~ Creeping ~ Armor",
+    "name": "Creeping",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Creeping ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "check penalty does not apply to stealth. Once per day add enhancement bonus to stealth for 1 minute."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Creeping ~ Armor",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

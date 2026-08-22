@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "River Soul ~ River Flow",
+    "name": "River Flow",
+    "class": "Oracle",
+    "description": "As a free action while you are underwater, you can negate the penalties you take for making bludgeoning, piercing, and slashing melee attacks underwater. You can use this ability %1 rounds per day. The rounds do not have to be used consecutively.|max(1,1+CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Soul ~ River Flow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oracle Class Features.RiverSoulClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action while you are underwater, you can negate the penalties you take for making bludgeoning, piercing, and slashing melee attacks underwater. You can use this ability %1 rounds per day. The rounds do not have to be used consecutively.|max(1,1+CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 846,
+    "record_key": "River Soul ~ River Flow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

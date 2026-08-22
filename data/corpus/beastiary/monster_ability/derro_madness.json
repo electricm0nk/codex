@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Derro ~ Madness",
+    "delivery": "Extraordinary",
+    "description": "Derros use their Charisma modifier on Will saves instead of their Wisdom modifier, and are immune to insanity and confusion effects. Only a miracle or wish can remove a derro's madness. If this occurs, the derro gains 6 points of Wisdom and loses 6 points of Charisma.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:derro_madness",
+    "name": "Madness",
+    "owners": [
+      "beastiary:monster:derro"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|CHA-WIS"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Derros use their Charisma modifier on Will saves instead of their Wisdom modifier, and are immune to insanity and confusion effects. Only a miracle or wish can remove a derro's madness. If this occurs, the derro gains 6 points of Wisdom and loses 6 points of Charisma."
+      },
+      {
+        "key": "KEY",
+        "value": "Derro ~ Madness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.70",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 325,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Derro ~ Madness",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

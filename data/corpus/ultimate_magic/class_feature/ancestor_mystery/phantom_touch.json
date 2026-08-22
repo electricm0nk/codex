@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Phantom Touch",
+    "name": "Phantom Touch",
+    "class": "Ancestor Mystery",
+    "description": "As a standard action, you can perform a melee touch attack that causes a living creature to become shaken. This ability lasts for %1 rounds. You can use this ability %2/day.|PhantomTouchDuration|PhantomTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Phantom Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.AncestorRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomTouchDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can perform a melee touch attack that causes a living creature to become shaken. This ability lasts for %1 rounds. You can use this ability %2/day.|PhantomTouchDuration|PhantomTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomTouchDuration|max(1,floor(classlevel(\"Oracle\")/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomTouchTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 454,
+    "record_key": "Ancestor Mystery ~ Phantom Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

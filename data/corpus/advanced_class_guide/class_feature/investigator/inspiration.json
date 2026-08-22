@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Inspiration",
+    "name": "Inspiration",
+    "class": "Investigator",
+    "description": "An investigator is beyond knowledgeable and skilled-he also possesses keen powers of observation and deduction that far surpass the abilities of others. An investigator typically uses these powers to aid in their investigations, but can also use these of flashes of inspiration in other situations.  An investigator has the ability to augment skill checks and ability checks through his brilliant inspiration.  The investigator has an inspiration pool equal to %1.  An investigator's inspiration pool refreshes each day, typically after he gets a restful night's sleep. As a free action, he can expend one use of inspiration from his pool to add %2d%3 to the result of that check, including any on which he takes 10 or 20. This choice is made after the check is rolled and before the results are revealed. An investigator can only use inspiration once per check or roll.  The investigator can use inspiration on any Knowledge, Linguistics, or Spellcraft skill checks without expending a use of inspiration, provided he's trained in the skill.  Inspiration can also be used on attack rolls and saving throws, at the cost of expending two uses of inspiration each time from the investigator's pool. In the case of saving throws, using inspiration is an immediate action rather than a free action.|InvestigatorInspirationPoolBonus|InvestigatorInspirationDice|InvestigatorInspirationDieSize|InvestigatorInspirationBonus|0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorInspirationBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorInspirationDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorInspirationDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorInspirationPoolBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator is beyond knowledgeable and skilled-he also possesses keen powers of observation and deduction that far surpass the abilities of others. An investigator typically uses these powers to aid in their investigations, but can also use these of flashes of inspiration in other situations.  An investigator has the ability to augment skill checks and ability checks through his brilliant inspiration.  The investigator has an inspiration pool equal to %1.  An investigator's inspiration pool refreshes each day, typically after he gets a restful night's sleep. As a free action, he can expend one use of inspiration from his pool to add %2d%3 to the result of that check, including any on which he takes 10 or 20. This choice is made after the check is rolled and before the results are revealed. An investigator can only use inspiration once per check or roll.  The investigator can use inspiration on any Knowledge, Linguistics, or Spellcraft skill checks without expending a use of inspiration, provided he's trained in the skill.  Inspiration can also be used on attack rolls and saving throws, at the cost of expending two uses of inspiration each time from the investigator's pool. In the case of saving throws, using inspiration is an immediate action rather than a free action.|InvestigatorInspirationPoolBonus|InvestigatorInspirationDice|InvestigatorInspirationDieSize|InvestigatorInspirationBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationPoolBonus|max(1,InvestigatorLVL/2+INT)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Points"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|InvestigatorInspirationPoolBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1243,
+    "record_key": "Investigator ~ Inspiration"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

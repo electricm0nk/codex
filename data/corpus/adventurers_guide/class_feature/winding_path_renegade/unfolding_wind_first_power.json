@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Winding Path Renegade ~ Unfolding Wind First Power",
+    "name": "Unfolding Wind First Power",
+    "class": "Brawler",
+    "description": "The winding path renegade adds 10 to the range increment of ranged weapons she wields and gains Deflect Arrows as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winding Path Renegade ~ Unfolding Wind First Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.WindingPathRenegadeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "The winding path renegade adds 10 to the range increment of ranged weapons she wields and gains Deflect Arrows as a bonus feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "RANGEADD|THROWN|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "RANGEADD|PROJECTILE|10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deflect Arrows"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 730,
+    "record_key": "Winding Path Renegade ~ Unfolding Wind First Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

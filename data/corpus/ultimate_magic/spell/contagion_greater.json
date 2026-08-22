@@ -1,0 +1,95 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as contagion, except the victim cannot overcome the disease without magic-making the required number of saves does not cure it. The DC to remove the disease with magic is equal to the save DC + 5.",
+    "key": "Contagion (Greater)",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Witch=5|Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Infect a subject with a magical disease.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as contagion, except the victim cannot overcome the disease without magic-making the required number of saves does not cure it. The DC to remove the disease with magic is equal to the save DC + 5.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Disease|Evil"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Contagion, Greater"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/contagion.html#_contagion,-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Contagion (Greater)",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spellkiller Inquisition ~ Granted Powers",
+    "name": "Granted Powers",
+    "class": "Spellkiller Inquisition",
+    "description": "You gain the Disruptive feat as a bonus feat (even if you do not meet the prerequisites). When you defeat an enemy (whether by reducing it to 0 or fewer hit points, taking the enemy captive, or accepting a truce), you gain a +2 sacred or profane bonus to AC for 1 minute per level. You gain a sacred bonus if you are good, profane if you are evil; if you are neutral, you choose either sacred or profane when you select this inquisition. After you choose which type of bonus you gain, you cannot change the bonus type. When you hit a creature with levels of alchemist or any arcane spellcasting class, or that uses spell-like abilities, you can end this effect to stagger that creature. The creature gets a Fortitude saving throw against this effect on each of its turns (including the turn in which it gained the effect). A successful save ends the staggered condition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellkiller Inquisition ~ Granted Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the Disruptive feat as a bonus feat (even if you do not meet the prerequisites). When you defeat an enemy (whether by reducing it to 0 or fewer hit points, taking the enemy captive, or accepting a truce), you gain a +2 sacred or profane bonus to AC for 1 minute per level. You gain a sacred bonus if you are good, profane if you are evil; if you are neutral, you choose either sacred or profane when you select this inquisition. After you choose which type of bonus you gain, you cannot change the bonus type. When you hit a creature with levels of alchemist or any arcane spellcasting class, or that uses spell-like abilities, you can end this effect to stagger that creature. The creature gets a Fortitude saving throw against this effect on each of its turns (including the turn in which it gained the effect). A successful save ends the staggered condition."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Disruptive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 865,
+    "record_key": "Spellkiller Inquisition ~ Granted Powers"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

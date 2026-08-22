@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Family Subdomain",
+    "name": "Family Subdomain",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Family Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Community],[PREVARLT:CommunityDomain,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainFamilySubdomain,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CommunityDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Family Subdomain ~ Binding Ties|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Community Domain ~ Unity|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CommunityDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityDC|10+(DomainCommunityLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 428,
+    "record_key": "Inquisitor Domain ~ Family Subdomain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

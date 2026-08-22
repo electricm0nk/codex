@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Court Bard ~ Mockery",
+    "name": "Mockery",
+    "class": "Bard",
+    "description": "A court bard of 3rd level or higher can subtly ridicule and defame a specific individual. The bard selects one target who can hear his performance. That individual takes a -2 penalty on Charisma checks and Charisma-related skill checks as long as the bard continues performing. This penalty increases by -1 every four levels after 3rd. Mockery is a language-dependent, mind-affecting ability that relies on audible components. This performance replaces inspire competence.|((BardLVL+1)/4)+2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Court Bard ~ Mockery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardInspireCompetence"
+      },
+      {
+        "key": "DESC",
+        "value": "A court bard of 3rd level or higher can subtly ridicule and defame a specific individual. The bard selects one target who can hear his performance. That individual takes a -2 penalty on Charisma checks and Charisma-related skill checks as long as the bard continues performing. This penalty increases by -1 every four levels after 3rd. Mockery is a language-dependent, mind-affecting ability that relies on audible components. This performance replaces inspire competence.|((BardLVL+1)/4)+2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1653,
+    "record_key": "Court Bard ~ Mockery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wind Spirit ~ Shocking Touch",
+    "name": "Shocking Touch",
+    "class": "Wind Spirit",
+    "description": "As a standard action, the shaman can make a melee touch attack that deals 1d6+%1 points of electricity damage. A shaman can use this ability %2 times per day.|ShamanShockingTouchBonusDamage|ShamanShockingTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Spirit ~ Shocking Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanShockingTouchBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanShockingTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman can make a melee touch attack that deals 1d6+%1 points of electricity damage. A shaman can use this ability %2 times per day.|ShamanShockingTouchBonusDamage|ShamanShockingTouchTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "Any weapon she wields is treated as a shocking weapon.|PREVARGTEQ:ShamanSpiritLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanShockingTouchBonusDamage|ShamanSpiritLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanShockingTouchTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1704,
+    "record_key": "Wind Spirit ~ Shocking Touch"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

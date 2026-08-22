@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:mudlord_engulf",
@@ -26,6 +24,140 @@
     ],
     "race_subtype": "Earth|Elemental|Water",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam|Racial Traits ~ Mudlord"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Terran"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|6|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EngulfBonusDamage|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EngulfDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamAttacks|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "6"
+      },
+      {
+        "key": "DR",
+        "value": "10/Magic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Mudlord"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Bluff|Climb|TYPE.Craft|Escape Artist|Intimidate|Knowledge (planes)|Perception|Sense Motive|Stealth|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):9"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Swim,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Mudball,Natural.Ranged.Weapon.Touch,*1,blindness"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Earth|Elemental|Water"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "SR",
+        "value": "17"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      }
+    ],
     "size": "M",
     "source_page": "p.195",
     "speeds": [
@@ -39,16 +171,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 164,
-    "record_key": "Mudlord"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 164,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Mudlord",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

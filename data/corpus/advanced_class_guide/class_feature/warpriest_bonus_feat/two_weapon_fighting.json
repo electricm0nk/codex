@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Two-Weapon Fighting",
+    "name": "Two-Weapon Fighting",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can fight with a weapon in each of your hands. You can make one extra attack each round with the secondary weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Two-Weapon Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,15],[PREVARGTEQ:FeatDexRequirement,15]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can fight with a weapon in each of your hands. You can make one extra attack each round with the secondary weapon."
+      },
+      {
+        "key": "DESC",
+        "value": " Your penalties on attack rolls for fighting with two weapons are reduced. The penalty for your primary hand lessens by 2 and the one for your off hand lessens by 6. See Two-Weapon Fighting in Chapter 8."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Two-Weapon Fighting"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4299,
+    "record_key": "Warpriest Bonus Feat ~ Two-Weapon Fighting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Ferocious Mount",
+    "name": "Ferocious Mount",
+    "class": "Rage Power",
+    "description": "While raging and mounted, the barbarian's mount also gains the benefits of rage (including greater rage and mighty rage) as long as the barbarian is mounted or adjacent to it. While her mount is raging in this way, she must spend one additional round of rage per round. She can elect not to pay this cost, in which case her mount does not rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Ferocious Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging and mounted, the barbarian's mount also gains the benefits of rage (including greater rage and mighty rage) as long as the barbarian is mounted or adjacent to it. While her mount is raging in this way, she must spend one additional round of rage per round. She can elect not to pay this cost, in which case her mount does not rage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1504,
+    "record_key": "Rage Power ~ Ferocious Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

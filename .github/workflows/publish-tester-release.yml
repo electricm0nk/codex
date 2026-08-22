@@ -70,8 +70,8 @@ jobs:
       # bundled the SD-27 closure work — that was a missed advance, not
       # a wrong scheme; the fix here is to land the SD-27 advance as
       # 0.7.0 in the repo, retroactively matching what the v0.6.120
-      # release actually contained. SD-28/29/30 follow the same
-      # one-advance-per-tranche-cut rule (v0.8.0 / v0.9.0 / v0.10.0).
+      # release actually contained. SD-28/29/30/31 follow the same
+      # one-advance-per-tranche-cut rule (v0.8.0 / v0.9.0 / v0.10.0 / v0.11.0).
       #
       # tranche/8: bumped 0.6 -> 0.8 for the SD-28 bundle cut per operator
       # directive 2026-08-01. The tranche/8 branch is the live branch for SD-28,
@@ -95,6 +95,12 @@ jobs:
       # verifiesWorkflowStampTrancheAgreesWithRepoVersionFiles caught the
       # lockstep violation.
       #
+      # tranche/11: bumped 0.10 -> 0.11 for the SD-31 bundle cut (tranche/11
+      # is a NEW tranche branch, cut from tranche/10's tip 1980d6b95, per
+      # operator ruling 2026-08-15 and the same one-advance-per-tranche-cut
+      # rule). The repo version files moved to 0.11.0 in the same commit
+      # (SD31-E10-F1-001), keeping this stamp in lockstep.
+      #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
       - name: Stamp build version
@@ -102,7 +108,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.10.${GITHUB_RUN_NUMBER}"
+          VERSION="0.11.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dervish Dancer ~ Battle Dance",
+    "name": "Battle Dance",
+    "class": "Bard",
+    "description": "A dervish dancer is trained in the use of the Perform skill, especially dance, to create magical effects on himself. This works like bardic performance, except the dervish dancer only affects himself, and does not need to be able to see or hear his own performance. Battle dancing is treated as bardic performance for the purposes of feats, abilities, effects, and the like that affect bardic performance, except that battle dancing does not benefit from the Lingering Performance feat or any other ability that allows a bardic performance to grant bonuses after it has ended. Battle dancing benefits apply only when the bard is wearing light or no armor. Like bardic performance, it cannot be maintained at the same time as other performance abilities. Starting a battle dance is a move action, but it can be maintained each round as a free action. Changing a battle dance from one effect to another requires the dervish dancer to stop the previous performance and start the new one as a move action. Like a bard, a dervish dancer's performance ends immediately if he is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action each round. A dervish dancer cannot perform more than one battle dance at a time. At 10th level, a dervish dancer can start a battle dance as a swift action instead of a move action. Dervish dancers gain the inspire courage, inspire greatness, and inspire heroics bardic performance types as battle dances, but these only provide benefit to the dervish dancer himself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dervish Dancer ~ Battle Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A dervish dancer is trained in the use of the Perform skill, especially dance, to create magical effects on himself. This works like bardic performance, except the dervish dancer only affects himself, and does not need to be able to see or hear his own performance. Battle dancing is treated as bardic performance for the purposes of feats, abilities, effects, and the like that affect bardic performance, except that battle dancing does not benefit from the Lingering Performance feat or any other ability that allows a bardic performance to grant bonuses after it has ended. Battle dancing benefits apply only when the bard is wearing light or no armor. Like bardic performance, it cannot be maintained at the same time as other performance abilities. Starting a battle dance is a move action, but it can be maintained each round as a free action. Changing a battle dance from one effect to another requires the dervish dancer to stop the previous performance and start the new one as a move action. Like a bard, a dervish dancer's performance ends immediately if he is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action each round. A dervish dancer cannot perform more than one battle dance at a time. At 10th level, a dervish dancer can start a battle dance as a swift action instead of a move action. Dervish dancers gain the inspire courage, inspire greatness, and inspire heroics bardic performance types as battle dances, but these only provide benefit to the dervish dancer himself."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 421,
+    "record_key": "Dervish Dancer ~ Battle Dance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

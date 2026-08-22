@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Recall",
+    "name": "Recall",
+    "class": "Domain Power",
+    "description": "With a touch, you can cause a creature to recall some bit of forgotten lore or information. The creature can retry any Knowledge skill check it has made within the past minute, gaining a +%1 insight bonus on the check. You can use this ability %2 times per day|WIS|DomainKnowledgeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Recall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "With a touch, you can cause a creature to recall some bit of forgotten lore or information. The creature can retry any Knowledge skill check it has made within the past minute, gaining a +%1 insight bonus on the check. You can use this ability %2 times per day|WIS|DomainKnowledgeTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainKnowledgeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1855,
+    "record_key": "Domain Power ~ Recall"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

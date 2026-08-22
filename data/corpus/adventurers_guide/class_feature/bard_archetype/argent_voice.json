@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Argent Voice",
+    "name": "Argent Voice",
+    "class": "Bard Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Argent Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Argent Voice],[!PREFACT:1,ABILITIES,Bard_Archetype_Fascinate=True,Bard_Archetype_Suggestion=True,Bard_Archetype_MassSuggestion=True,Bard_Archetype_DirgeOfDoom=True,Bard_Archetype_FrighteningTune=True,Bard_Archetype_VersatilePerformance=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Argent Voice ~ Limning Verse|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Argent Voice ~ Shattering Crescendo|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Argent Voice ~ Devilbane Refrain|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Argent Voice ~ Dedicated Performance|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance2|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 634,
+    "record_key": "Bard Archetype ~ Argent Voice"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

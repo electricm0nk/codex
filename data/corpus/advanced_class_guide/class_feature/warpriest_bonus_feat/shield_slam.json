@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Shield Slam",
+    "name": "Shield Slam",
+    "class": "Warpriest Bonus Feat",
+    "description": "In the right position, your shield can be used to send opponents flying.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Shield Slam"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Shield Bash,Two-Weapon Fighting"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREPROFWITHSHIELD:3,TYPE.Buckler,TYPE.Light,TYPE.Heavy],[PREABILITY:1,CATEGORY=FEAT,Shield Proficiency]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "In the right position, your shield can be used to send opponents flying."
+      },
+      {
+        "key": "DESC",
+        "value": " Any opponents hit by your shield bash are also hit with a free bull rush attack, substituting your attack roll for the combat maneuver check (see Chapter 8). This bull rush does not provoke an attack of opportunity. Opponents who cannot move back due to a wall or other surface are knocked prone after moving the maximum possible distance. You may choose to move with your target if you are able to take a 5-foot step or to spend an action to move this turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Shield Slam"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4281,
+    "record_key": "Warpriest Bonus Feat ~ Shield Slam"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

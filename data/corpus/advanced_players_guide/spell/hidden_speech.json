@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Hidden Speech",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You greatly enhance the ability of the subjects to communicate hidden messages to each other. Each target gains a +10 competence bonus on Bluff checks to send secret message to other recipients. Others using opposed Sense Motive checks to decipher these messages receive a -5 penalty. All subjects affected by the spell must share a language to be able to pass messages.",
-    "full_text": true
+    "full_text": true,
+    "key": "Hidden Speech",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Witch=2|Inquisitor=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +10 on Bluff to send secret messages.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You greatly enhance the ability of the subjects to communicate hidden messages to each other. Each target gains a +10 competence bonus on Bluff checks to send secret message to other recipients. Others using opposed Sense Motive checks to decipher these messages receive a -5 penalty. All subjects affected by the spell must share a language to be able to pass messages.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a cipher written on a piece of parchment)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/hiddenSpeech.html#_hidden-speech"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You plus (CASTERLEVEL) creatures, no two of which can be more than 30 ft. apart"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 141,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1976,
-    "record_key": "Hidden Speech"
+    "record_key": "Hidden Speech",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

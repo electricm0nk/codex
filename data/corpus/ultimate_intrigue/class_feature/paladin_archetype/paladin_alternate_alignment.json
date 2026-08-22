@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Alternate Alignment",
+    "name": "Paladin Alternate Alignment",
+    "class": "Paladin Archetype",
+    "description": "This option allows you to change your alignment to qualify for other archetypes, such as the Gray Paladin archetype.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Alternate Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "DESC",
+        "value": "This option allows you to change your alignment to qualify for other archetypes, such as the Gray Paladin archetype."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Paladin|1|TYPE=Bypass"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 583,
+    "record_key": "Paladin Archetype ~ Alternate Alignment"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

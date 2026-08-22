@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Synthesist ~ Split Forms",
+    "name": "Split Forms",
+    "class": "Summoner",
+    "description": "As a swift action, the synthesist and his fused eidolon can split into two creatures: the synthesist and the eidolon. Both have the same evolutions. The synthesist emerges in a square adjacent to the eidolon if possible. All effects and spells currently targeting the fused synthesist-eidolon affect both the synthesist and the eidolon.  The synthesist can use this ability for %1 rounds per day. He can end this effect at any time as a full-round action. For the duration of this effect, the eidolon functions as a normal eidolon of the summoner's class level.|SplitFormsDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Synthesist ~ Split Forms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SplitFormsDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, the synthesist and his fused eidolon can split into two creatures: the synthesist and the eidolon. Both have the same evolutions. The synthesist emerges in a square adjacent to the eidolon if possible. All effects and spells currently targeting the fused synthesist-eidolon affect both the synthesist and the eidolon.  The synthesist can use this ability for %1 rounds per day. He can end this effect at any time as a full-round action. For the duration of this effect, the eidolon functions as a normal eidolon of the summoner's class level.|SplitFormsDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SplitFormsDuration|classlevel(\"Summoner\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1892,
+    "record_key": "Synthesist ~ Split Forms"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

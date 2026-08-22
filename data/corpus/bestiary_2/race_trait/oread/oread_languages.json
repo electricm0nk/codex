@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Oread ~ Languages",
+    "name": "Languages",
+    "race_key": "Oread",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Oread Racial Trait",
+      "Oread Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Oread_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Oreads begin play speaking Common and Terran. Oreads with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Undercommon.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oread ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Oread_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Oreads begin play speaking Common and Terran. Oreads with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Undercommon."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aquan|Bonus Language ~ Auran|Bonus Language ~ Dwarven|Bonus Language ~ Elven|Bonus Language ~ Gnome|Bonus Language ~ Halfling|Bonus Language ~ Ignan|Bonus Language ~ Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Terran"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_abilities_race.lst",
+    "sha256": "6df0996010724936a1ddf95c3a26311e2834198b134c95f4bc8b9c06255fa843",
+    "line": 22,
+    "record_key": "Oread ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

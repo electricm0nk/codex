@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Lizard Stride",
+    "name": "Lizard Stride",
+    "class": "Rage Power",
+    "description": "When the barbarian makes a charge or run action while raging, she can move across the surface of water without sinking. She sinks immediately if she ends her turn standing on water.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Lizard Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the barbarian makes a charge or run action while raging, she can move across the surface of water without sinking. She sinks immediately if she ends her turn standing on water."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 167,
+    "record_key": "Rage Power ~ Lizard Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

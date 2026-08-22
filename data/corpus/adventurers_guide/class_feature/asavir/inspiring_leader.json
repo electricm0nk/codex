@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Asavir ~ Inspiring Leader",
+    "name": "Inspiring Leader",
+    "class": "Asavir",
+    "description": "An asavir can call out encouragement to her allies as a move action, bolstering their courage. Allies within 60 feet of the asavir who can hear her receive a +%1 morale bonus on attack and damage rolls with weapons for 1 round. An asavir can use this ability three times per day. This is a mind-affecting, language-dependent effect.|CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Inspiring Leader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "DESC",
+        "value": "An asavir can call out encouragement to her allies as a move action, bolstering their courage. Allies within 60 feet of the asavir who can hear her receive a +%1 morale bonus on attack and damage rolls with weapons for 1 round. An asavir can use this ability three times per day. This is a mind-affecting, language-dependent effect.|CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 53,
+    "record_key": "Asavir ~ Inspiring Leader"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

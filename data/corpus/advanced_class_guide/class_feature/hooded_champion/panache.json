@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hooded Champion ~ Panache",
+    "name": "Panache",
+    "class": "Ranger",
+    "description": "The hooded champion gains the swashbuckler's panache class feature. His panache goes up or down throughout the day, but usually cannot go higher than %1. He regains panache through critical hits and killing blows when using a bow of any kind, rather than when using a light or one-handed piercing melee weapon. If the hooded champion has this ability and the panache ability from another class or archetype, the panache points from the two sources do not stack, but the hooded champion regains panache in any way either class feature allows him to.At the start of each day, a hooded champion gains %1 panache points.|max(1,CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hooded Champion ~ Panache"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hooded Champion Class Feature.Ranger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The hooded champion gains the swashbuckler's panache class feature. His panache goes up or down throughout the day, but usually cannot go higher than %1. He regains panache through critical hits and killing blows when using a bow of any kind, rather than when using a light or one-handed piercing melee weapon. If the hooded champion has this ability and the panache ability from another class or archetype, the panache points from the two sources do not stack, but the hooded champion regains panache in any way either class feature allows him to.At the start of each day, a hooded champion gains %1 panache points.|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3543,
+    "record_key": "Hooded Champion ~ Panache"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

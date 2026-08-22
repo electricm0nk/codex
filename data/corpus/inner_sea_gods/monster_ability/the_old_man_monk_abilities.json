@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "The Old Man ~ Monk Abilities",
     "delivery": null,
@@ -13,19 +11,71 @@
     "owners": [
       "inner_sea_gods:monster:the_old_man"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monk ~ AC Bonus|Monk ~ Flurry of Blows|Monk ~ Stunning Fist|Monk ~ Fast Movement|Monk ~ Ki Pool|Monk ~ Slow Fall|Monk ~ High Jump|Monk ~ Quivering Palm|Monk ~ Evasion|Monk ~ Improved Evasion|Monk ~ Unarmed Strike"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryOfBlows|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolProgression|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolWis|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPool|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkLVL|16"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The Old Man has the following abilities of a 16th-level monk: AC bonus (+4), fast movement (50 ft.), flurry of blows, high jump, ki pool (18 points, adamantine, cold iron, lawful, magic, silver), quivering palm (DC 28), slow fall (80 ft.), stunning fist (blinded, deafened, fatigued, staggered, or stunned), unarmed strike"
+      },
+      {
+        "key": "KEY",
+        "value": "The Old Man ~ Monk Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 192,
-    "record_key": "The Old Man ~ Monk Abilities"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 192,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "The Old Man ~ Monk Abilities",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

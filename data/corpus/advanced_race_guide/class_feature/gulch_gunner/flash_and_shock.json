@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gulch Gunner ~ Flash and Shock",
+    "name": "Flash and Shock",
+    "class": "Gunslinger",
+    "description": "The gulch gunner can take advantage of the flash and sound of a firearm to throw off an attacker's aim at close range. When she makes an attack against a foe within her firearm's first range increment, she may spend 1 grit point to gain a +4 circumstance bonus to AC against that opponent until the beginning of her next turn. She can only perform this deed while wearing medium, light, or no armor, and while carrying no more than a light load.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gulch Gunner ~ Flash and Shock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The gulch gunner can take advantage of the flash and sound of a firearm to throw off an attacker's aim at close range. When she makes an attack against a foe within her firearm's first range increment, she may spend 1 grit point to gain a +4 circumstance bonus to AC against that opponent until the beginning of her next turn. She can only perform this deed while wearing medium, light, or no armor, and while carrying no more than a light load."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 704,
+    "record_key": "Gulch Gunner ~ Flash and Shock"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

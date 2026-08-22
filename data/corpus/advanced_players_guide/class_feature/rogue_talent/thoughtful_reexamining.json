@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Thoughtful Reexamining",
+    "name": "Thoughtful Reexamining",
+    "class": "Rogue Talent",
+    "description": "Once per day, a rogue with this talent can reroll a Knowledge, Sense Motive, or Perception skill check to try to gain new or better information from the roll. This reroll can be made any time during the same day as the original check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Thoughtful Reexamining"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueAdvancedTalent.Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a rogue with this talent can reroll a Knowledge, Sense Motive, or Perception skill check to try to gain new or better information from the roll. This reroll can be made any time during the same day as the original check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2937,
+    "record_key": "Rogue Talent ~ Thoughtful Reexamining"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

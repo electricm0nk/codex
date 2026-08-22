@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Noble Fencer ~ Aristocratic Discipline",
+    "name": "Aristocratic Discipline",
+    "class": "Swashbuckler",
+    "description": "A noble fencer relies on his extremely honed training and discipline to protect his mind, rather than luck. The noble fencer gains a +%1 bonus on Will saves against mind-affecting effects.|(SwashbucklerLVL+2)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Noble Fencer ~ Aristocratic Discipline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Features.NobleFencerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A noble fencer relies on his extremely honed training and discipline to protect his mind, rather than luck. The noble fencer gains a +%1 bonus on Will saves against mind-affecting effects.|(SwashbucklerLVL+2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 956,
+    "record_key": "Noble Fencer ~ Aristocratic Discipline"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

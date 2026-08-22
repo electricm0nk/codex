@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit ~ Wood",
+    "name": "Wood (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: shillelagh (1st), barkskin (2nd), minor creation (wood items only) (3rd), thorn body (4th), tree stride (5th), ironwood (6th), transmute metal to wood (7th), changestaff (8th), wooden phalanx (9th).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Wood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWoodSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWoodSpiritAnimal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: shillelagh (1st), barkskin (2nd), minor creation (wood items only) (3rd), thorn body (4th), tree stride (5th), ironwood (6th), transmute metal to wood (7th), changestaff (8th), wooden phalanx (9th)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wood Spirit ~ Tree Limb"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wood Spirit ~ Bloody Roots|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wood Spirit ~ Tree Form|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wood Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWoodSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWoodSpiritAnimal|FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1008,
+    "record_key": "Shaman Spirit ~ Wood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

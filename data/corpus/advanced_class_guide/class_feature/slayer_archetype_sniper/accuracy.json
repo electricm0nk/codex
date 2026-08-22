@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Archetype Sniper ~ Accuracy",
+    "name": "Accuracy",
+    "class": "Slayer",
+    "description": "A sniper halves all range increment penalties when making ranged attacks with a bow, crossbow, or firearm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype Sniper ~ Accuracy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sniper Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sniper halves all range increment penalties when making ranged attacks with a bow, crossbow, or firearm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tracker ~ Range Penalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangePenaltyValue|1|TYPE=Base|!PREABILITY:1,CATEGORY=FEAT,Farshot"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangePenaltyValue|0.5|TYPE=Base|PREABILITY:1,CATEGORY=FEAT,Farshot"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3762,
+    "record_key": "Slayer Archetype Sniper ~ Accuracy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

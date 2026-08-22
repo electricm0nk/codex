@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Catfolk ~ Nimble Faller",
+    "name": "Nimble Faller",
+    "race_key": "Catfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Catfolk Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Catfolk_ReplaceSprinter"
+    ],
+    "description": "Some catfolk have an amazing sense of balance and keen knowledge of their own center of gravity. Catfolk with this trait land on their feet even when they take lethal damage from a fall. Furthermore, catfolk with this trait gain a +1 bonus to their CMD against trip maneuvers. This racial trait replaces sprinter.",
+    "source_page": "p.91",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Nimble Faller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Nimble Faller],[!PREFACT:1,ABILITIES,Catfolk_ReplaceSprinter=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some catfolk have an amazing sense of balance and keen knowledge of their own center of gravity. Catfolk with this trait land on their feet even when they take lethal damage from a fall. Furthermore, catfolk with this trait gain a +1 bonus to their CMD against trip maneuvers."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sprinter.|!PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Nimble Faller"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "FACT",
+        "value": "Catfolk_ReplaceSprinter|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_Trip",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 363,
+    "record_key": "Catfolk ~ Nimble Faller"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

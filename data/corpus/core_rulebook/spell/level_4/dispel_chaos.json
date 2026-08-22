@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like dispel evil, except that you are surrounded by constant, blue lawful energy, and the spell affects chaotic creatures and spells rather than evil ones.",
     "key": "Dispel Chaos",
-    "school": "Abjuration",
     "level": 4,
-    "description": "This spell functions like dispel evil, except that you are surrounded by constant, blue lawful energy, and the spell affects chaotic creatures and spells rather than evil ones."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=4|Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Shimmering, blue lawful energy surrounds you granting a +4 deflection bonus to AC against attacks by chaotic creatures and you can choose to drive chaotic creatures back to their home plane on making a successful melee touch attack.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like dispel evil, except that you are surrounded by constant, blue lawful energy, and the spell affects chaotic creatures and spells rather than evil ones.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Lawful"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Law=5"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or until discharged, whichever comes first"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "See text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/dispelChaos.html#_dispel-chaos"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "See text"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You and a touched chaotic creature from another plane, or you and an enchantment or chaotic spell on a touched creature or object"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 174,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 935,
-    "record_key": "Dispel Chaos.MOD"
+    "record_key": "Dispel Chaos",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Arrow Deflection ~ Shield",
     "category": "equipmods",
-    "name": "Arrow Deflection",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "This shield protects the wielder as if he had the Deflect Arrows feat. Once per round when he would normally be struck by a ranged weapon, he can make a DC 20 Reflex save. If the ranged weapon (or piece of ammunition) has an enhancement bonus, the DC increases by that amount. If he succeeds, the shield deflects the weapon. He must be aware of the attack and not flat-footed. Attempting to deflect a ranged weapon doesn't count as an action. Exceptional ranged weapons, such as boulders hurled by giants or acid arrows, can't be deflected."
+    "description": "This shield protects the wielder as if he had the Deflect Arrows feat. Once per round when he would normally be struck by a ranged weapon, he can make a DC 20 Reflex save. If the ranged weapon (or piece of ammunition) has an enhancement bonus, the DC increases by that amount. If he succeeds, the shield deflects the weapon. He must be aware of the attack and not flat-footed. Attempting to deflect a ranged weapon doesn't count as an action. Exceptional ranged weapons, such as boulders hurled by giants or acid arrows, can't be deflected.",
+    "key": "Special Ability ~ Arrow Deflection ~ Shield",
+    "name": "Arrow Deflection",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Arrow Deflection ~ Shield"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.462"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ShieldEnhancement,Shield"
+      },
+      {
+        "key": "SPROP",
+        "value": "Reflex save (DC 20 + Missile enhancement) to deflect arrows; 1/round"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deflect Arrows"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/arrow-deflection/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/arrow-deflection/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 310,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Arrow Deflection ~ Shield",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

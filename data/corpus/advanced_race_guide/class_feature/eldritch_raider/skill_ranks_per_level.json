@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Eldritch Raider ~ Skill Ranks per Level",
+    "name": "Skill Ranks per Level",
+    "class": "Rogue",
+    "description": "6 + Int modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Raider ~ Skill Ranks per Level"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "6 + Int modifier."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOINTS|NUMBER|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 846,
+    "record_key": "Eldritch Raider ~ Skill Ranks per Level"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

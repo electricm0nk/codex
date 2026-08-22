@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aquatic Bloodline ~ Aquatic Telepathy",
+    "name": "Aquatic Telepathy",
+    "class": "Aquatic Bloodline",
+    "description": "You gain telepathy (100 feet) and can communicate with creatures with a swim speed or the aquatic or water types regardless of intelligence. You may cast suggestion on such creatures %1 times per day. This ability is telepathic and does not require audible or visual components.|Sorcerer_AquaticAquaticTelepathy_SuggestionTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aquatic Bloodline ~ Aquatic Telepathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aquatic Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Aquatic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aquatic_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aquatic_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticAquaticTelepathy_SuggestionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticAquaticTelepathy_CallTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Sorcerer|TIMES=Sorcerer_AquaticAquaticTelepathy_SuggestionTimes|CASTERLEVEL=Sorcerer_Aquatic_BloodlinePower9LVL|Suggestion,13+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain telepathy (100 feet) and can communicate with creatures with a swim speed or the aquatic or water types regardless of intelligence. You may cast suggestion on such creatures %1 times per day. This ability is telepathic and does not require audible or visual components.|Sorcerer_AquaticAquaticTelepathy_SuggestionTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day you can telepathically call and request a service from an aquatic, water, or swimming creature as if using demand or greater planar ally.|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower9LVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticAquaticTelepathy_SuggestionTimes|Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticAquaticTelepathy_CallTimes|1|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower9LVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_AquaticAquaticTelepathy_CallTimes|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower9LVL,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower9LVL,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AquaticBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3100,
+    "record_key": "Aquatic Bloodline ~ Aquatic Telepathy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

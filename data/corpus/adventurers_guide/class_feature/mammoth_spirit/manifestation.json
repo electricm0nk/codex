@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mammoth Spirit ~ Manifestation",
+    "name": "Manifestation",
+    "class": "Mammoth Spirit",
+    "description": "The shaman can transform into any animal listed under the megafauna or elephant heading. This ability works as beast shape IV, but the shaman can activate and dismiss the ability as often as she likes and the duration is permanent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Spirit ~ Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can transform into any animal listed under the megafauna or elephant heading. This ability works as beast shape IV, but the shaman can activate and dismiss the ability as often as she likes and the duration is permanent."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1221,
+    "record_key": "Mammoth Spirit ~ Manifestation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

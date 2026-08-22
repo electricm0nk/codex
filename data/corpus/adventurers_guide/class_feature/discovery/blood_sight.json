@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Blood Sight",
+    "name": "Blood Sight",
+    "class": "Discovery",
+    "description": "When the crimson chymist is under the effects of her mantis mutagen, her eyes transform, becoming red and multifaceted. This change grants her darkvision to a range of 60 feet and the effects of deathwatch for the duration of her mutagen's effects. If the crimson chymist already has darkvision as a benefit of her race, the range of her darkvision increases by 30 feet while using blood sight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Blood Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Crimson Chymist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "DESC",
+        "value": "When the crimson chymist is under the effects of her mantis mutagen, her eyes transform, becoming red and multifaceted. This change grants her darkvision to a range of 60 feet and the effects of deathwatch for the duration of her mutagen's effects. If the crimson chymist already has darkvision as a benefit of her race, the range of her darkvision increases by 30 feet while using blood sight."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 589,
+    "record_key": "Discovery ~ Blood Sight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

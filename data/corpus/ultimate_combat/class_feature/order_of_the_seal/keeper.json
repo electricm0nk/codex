@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Seal ~ Keeper",
+    "name": "Keeper",
+    "class": "Order of the Seal",
+    "description": "At 2nd level, once per day the cavalier must select a location, or a secret that he has sworn to protect. If he chooses a location, he gains a +2 morale bonus on attack rolls when directly defending his charge. If he chooses a secret, he gains a +2 morale bonus on saving throws and opposed checks to resist revealing information about his charge. He gains these bonuses until he picks a new object, location, or secret to protect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Seal ~ Keeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, once per day the cavalier must select a location, or a secret that he has sworn to protect. If he chooses a location, he gains a +2 morale bonus on attack rolls when directly defending his charge. If he chooses a secret, he gains a +2 morale bonus on saving throws and opposed checks to resist revealing information about his charge. He gains these bonuses until he picks a new object, location, or secret to protect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 451,
+    "record_key": "Order of the Seal ~ Keeper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

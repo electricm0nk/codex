@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Rougarou ~ Change Shape",
+    "name": "Change Shape",
+    "race_key": "Rougarou",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Rougarou Racial Trait",
+      "Rougarou Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Supernatural"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Rougarou_ReplaceChangeShape",
+    "sets_replace_flags": [],
+    "description": "A rougarou can change shape once per day into a wolf as a standard action, as beast shape I. A rougarou can revert to its true form as a swift action.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rougarou ~ Change Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Rougarou_ReplaceChangeShape=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A rougarou can change shape once per day into a wolf as a standard action, as beast shape I. A rougarou can revert to its true form as a swift action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|Change Shape (wolf; beast shape I)"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/rougarou/rougarou_abilities_race.lst",
+    "sha256": "cf4d00ed957c6fc4321ee9e9d7533276951aef7b762fbc2a30c858e40d573d78",
+    "line": 19,
+    "record_key": "Rougarou ~ Change Shape"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

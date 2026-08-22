@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master Summoner ~ Summoning Mastery",
+    "name": "Summoning Mastery",
+    "class": "Master Summoner",
+    "description": "You can cast Summon Monster %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  You can use this ability when his eidolon is summoned. Only one summon monster spell may be in effect while the eidolon is summoned. If your eidolon is not summoned, the number of creatures that can be summoned with this ability is only limited by its uses per day.|SummonMonsterLvl|SummonMonsterTimes|SummonMonsterDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Summoner ~ Summoning Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.SpellLike.Summon Monster SLA"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterLvl|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast Summon Monster %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  You can use this ability when his eidolon is summoned. Only one summon monster spell may be in effect while the eidolon is summoned. If your eidolon is not summoned, the number of creatures that can be summoned with this ability is only limited by its uses per day.|SummonMonsterLvl|SummonMonsterTimes|SummonMonsterDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterDuration|classlevel(\"Summoner\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterLvl|min(9,(classlevel(\"Summoner\")+1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterTimes|CHA+5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SummonMonsterTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1881,
+    "record_key": "Master Summoner ~ Summoning Mastery"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

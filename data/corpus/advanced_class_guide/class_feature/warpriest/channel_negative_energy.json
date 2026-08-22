@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest ~ Channel Negative Energy",
+    "name": "Channel Negative Energy",
+    "class": "Warpriest",
+    "description": "You can unleash a wave of negative energy dealing %1d6 (DC %2 for half). This consumes 2 uses of your Fervor Ability.|1+max(0,min(20,WarpriestLVL)-2)/3|10+(TL/2)+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Channel Negative Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.Warpriest Channel Energy.Supernatural.SpecialAttack.Channel Negative Energy"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE,LN,TN,CN"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDEITYALIGN:LE,NE,CE,LN,TN,CN],[PREDEITY:1,None]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of negative energy dealing %1d6 (DC %2 for half). This consumes 2 uses of your Fervor Ability.|1+max(0,min(20,WarpriestLVL)-2)/3|10+(TL/2)+CHA"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Negative Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2161,
+    "record_key": "Warpriest ~ Channel Negative Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

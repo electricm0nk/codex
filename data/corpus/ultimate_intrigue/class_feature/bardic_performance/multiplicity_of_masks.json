@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Multiplicity of Masks",
+    "name": "Multiplicity of Masks",
+    "class": "Bard",
+    "description": "A masked performer can cause any number of her allies to appear as herself or as another ally within 60 feet. To be affected, an ally must be within 60 feet of the masker performer and able to see her. As long as the masked performer maintains this performance, enemies perceive all affected allies as the chosen character. If an affected ally is a different size or creature type than the chosen character, enemies can attempt a Will save (DC %1) to disbelieve. Otherwise, there is no saving throw, but a successful attack against a disguised ally automatically reveals the ally's true form. If an ally moves out of range, that ally reverts to his original form, and the entire effect ends if the ally providing his appearance to the others moves out of range. Multiplicity of masks is an illusion (glamer) effect that relies on visual components.|10+BardLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Multiplicity of Masks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MaskedPerformerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "A masked performer can cause any number of her allies to appear as herself or as another ally within 60 feet. To be affected, an ally must be within 60 feet of the masker performer and able to see her. As long as the masked performer maintains this performance, enemies perceive all affected allies as the chosen character. If an affected ally is a different size or creature type than the chosen character, enemies can attempt a Will save (DC %1) to disbelieve. Otherwise, there is no saving throw, but a successful attack against a disguised ally automatically reveals the ally's true form. If an ally moves out of range, that ally reverts to his original form, and the entire effect ends if the ally providing his appearance to the others moves out of range. Multiplicity of masks is an illusion (glamer) effect that relies on visual components.|10+BardLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 241,
+    "record_key": "Bardic Performance ~ Multiplicity of Masks"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

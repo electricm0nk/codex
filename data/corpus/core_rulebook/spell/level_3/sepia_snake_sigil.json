@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You cause a small symbol to appear in the text of a written work. The text containing the symbol must be at least 25 words long. When anyone reads the text containing the symbol, the sepia snake sigil springs into being, transforming into a large sepia serpent that strikes at the reader, provided there is line of effect between the symbol and the reader. Simply seeing the enspelled text is not sufficient to trigger the spell; the subject must deliberately read it. The target is entitled to a save to evade the snake's strike. If it succeeds, the sepia snake dissipates in a flash of brown light accompanied by a puff of dun-colored smoke and a loud noise. If the target fails its save, it is engulfed in a shimmering amber field of force and immobilized until released, either at your command or when 1d4 days + 1 day per caster level have elapsed. While trapped in the amber field of force, the subject does not age, breathe, grow hungry, sleep, or regain spells. It is preserved in a state of suspended animation, unaware of its surroundings. It can be damaged by outside forces [and perhaps even killed], since the field provides no protection against physical injury. However, a dying subject does not lose hit points or become stable until the spell ends. The hidden sigil cannot be detected by normal observation, and detect magic reveals only that the entire text is magical. A dispel magic can remove the sigil. An erase spell destroys the entire page of text. Sepia snake sigil can be cast in combination with other spells that hide or garble text, such as secret page.",
     "key": "Sepia Snake Sigil",
-    "school": "Conjuration",
     "level": 3,
-    "description": "You cause a small symbol to appear in the text of a written work. The text containing the symbol must be at least 25 words long. When anyone reads the text containing the symbol, the sepia snake sigil springs into being, transforming into a large sepia serpent that strikes at the reader, provided there is line of effect between the symbol and the reader. Simply seeing the enspelled text is not sufficient to trigger the spell; the subject must deliberately read it. The target is entitled to a save to evade the snake's strike. If it succeeds, the sepia snake dissipates in a flash of brown light accompanied by a puff of dun-colored smoke and a loud noise. If the target fails its save, it is engulfed in a shimmering amber field of force and immobilized until released, either at your command or when 1d4 days + 1 day per caster level have elapsed. While trapped in the amber field of force, the subject does not age, breathe, grow hungry, sleep, or regain spells. It is preserved in a state of suspended animation, unaware of its surroundings. It can be damaged by outside forces [and perhaps even killed], since the field provides no protection against physical injury. However, a dying subject does not lose hit points or become stable until the spell ends. The hidden sigil cannot be detected by normal observation, and detect magic reveals only that the entire text is magical. A dispel magic can remove the sigil. An erase spell destroys the entire page of text. Sepia snake sigil can be cast in combination with other spells that hide or garble text, such as secret page."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause a small symbol to appear in the text of a written work. The text containing the symbol must be at least 25 words long. When anyone reads the text containing the symbol, the sepia snake sigil springs into being, transforming into a large sepia serpent that strikes at the reader, provided there is line of effect between the symbol and the reader. Simply seeing the enspelled text is not sufficient to trigger the spell; the subject must deliberately read it. The target is entitled to a save to evade the snake's strike. If it succeeds, the sepia snake dissipates in a flash of brown light accompanied by a puff of dun-colored smoke and a loud noise. If the target fails its save, it is engulfed in a shimmering amber field of force and immobilized until released, either at your command or when 1d4 days + 1 day per caster level have elapsed. While trapped in the amber field of force, the subject does not age, breathe, grow hungry, sleep, or regain spells. It is preserved in a state of suspended animation, unaware of its surroundings. It can be damaged by outside forces [and perhaps even killed], since the field provides no protection against physical injury. However, a dying subject does not lose hit points or become stable until the spell ends. The hidden sigil cannot be detected by normal observation, and detect magic reveals only that the entire text is magical. A dispel magic can remove the sigil. An erase spell destroys the entire page of text. Sepia snake sigil can be cast in combination with other spells that hide or garble text, such as secret page.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause a small symbol to appear in the text of a written work.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Force"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent or until discharged; until released or 1d4+(CASTERLEVEL) days; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/sepiaSnakeSigil.html#_sepia-snake-sigil"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.339"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One touched book or written work"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 527,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1277,
-    "record_key": "Sepia Snake Sigil.MOD"
+    "record_key": "Sepia Snake Sigil",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

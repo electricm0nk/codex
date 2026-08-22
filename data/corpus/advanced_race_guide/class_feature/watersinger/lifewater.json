@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Watersinger ~ Lifewater",
+    "name": "Lifewater",
+    "class": "Bard",
+    "description": "The watersinger can spend 1 round of bardic performance as a standard action to manipulate the water, blood, and other fluids within a creature's body, causing the target to become sickened for 1d4 rounds. Alternatively, he may use this ability to attempt a reposition combat maneuver, using %1 as his CMB. This ability has a range of 30 feet, only works on creatures whose bodies contain fluid, and does not affect creatures that are immune to critical hits.|BAB+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Watersinger ~ Lifewater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The watersinger can spend 1 round of bardic performance as a standard action to manipulate the water, blood, and other fluids within a creature's body, causing the target to become sickened for 1d4 rounds. Alternatively, he may use this ability to attempt a reposition combat maneuver, using %1 as his CMB. This ability has a range of 30 feet, only works on creatures whose bodies contain fluid, and does not affect creatures that are immune to critical hits.|BAB+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 815,
+    "record_key": "Watersinger ~ Lifewater"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

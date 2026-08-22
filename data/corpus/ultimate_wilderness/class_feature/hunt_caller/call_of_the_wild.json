@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunt Caller ~ Call of the Wild",
+    "name": "Call of the Wild",
+    "class": "Skald",
+    "description": "The hunt caller's raging song can transform herself and her allies within 60 feet into animalistic shapes, as per",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunt Caller ~ Call of the Wild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.HuntCallerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The hunt caller's raging song can transform herself and her allies within 60 feet into animalistic shapes, as per"
+      },
+      {
+        "key": "DESC",
+        "value": "beast shape I (Small animals only)|!PRECLASS:1,Skald=10"
+      },
+      {
+        "key": "DESC",
+        "value": "beast shape I|PRECLASS:1,Skald=10|!PRECLASS:1,Skald=14"
+      },
+      {
+        "key": "DESC",
+        "value": "beast shape I, shapechanger's gift, or beast shape II|PRECLASS:1,Skald=14|!PRECLASS:1,Skald=18"
+      },
+      {
+        "key": "DESC",
+        "value": "beast shape I, shapechanger's gift, beast shape II, or beast shape III|PRECLASS:1,Skald=18"
+      },
+      {
+        "key": "DESC",
+        "value": "at her caster level. The same transformation applies to all targets. By spending 1 round of raging song per target, the hunt caller can affect any number of allies within 60 feet for 1 hour. When in animal form, the hunt caller is treated as able to speak normally for the purpose of using raging song, but not for using other abilities that require speech (such as spellcasting). The skald must continue to perform the song for the remainder of the hour; otherwise, its effects end, but only 1 round of raging song per target is expended for that hour."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1135,
+    "record_key": "Hunt Caller ~ Call of the Wild"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

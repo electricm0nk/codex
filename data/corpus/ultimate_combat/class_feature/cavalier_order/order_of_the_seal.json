@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Order ~ Order of the Seal",
+    "name": "Order of the Seal",
+    "class": "Cavalier Order",
+    "description": "Cavaliers of the order of the seal are a secretive order, each charged with the protection of a specif ic object (such as a dangerous magic item), place (a lost temple), or secret (that a certain peasant is actually the last descendant of the royal line). Such cavaliers are the defenders of ancient traditions or the servants of rulers with important secrets to hide, sometimes having to search out such secrets in order to properly protect and preserve them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Order ~ Order of the Seal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Cavaliers of the order of the seal are a secretive order, each charged with the protection of a specif ic object (such as a dangerous magic item), place (a lost temple), or secret (that a certain peasant is actually the last descendant of the royal line). Such cavaliers are the defenders of ancient traditions or the servants of rulers with important secrets to hide, sometimes having to search out such secrets in order to properly protect and preserve them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Seal ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Seal ~ Challenge|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Seal ~ Skills|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Seal ~ Order Abilities|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Seal ~ Keeper|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Seal ~ I Shall Not Be Moved|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Seal ~ Staggering Assault|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 445,
+    "record_key": "Cavalier Order ~ Order of the Seal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

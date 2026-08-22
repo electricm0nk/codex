@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Bogborn Alchemist",
+    "name": "Bogborn Alchemist",
+    "class": "Alchemist Archetype",
+    "description": "Some grippli alchemists are particularly attuned to the swamps and the dangerous creatures that inhabit them; these serve as their laboratories and research subjects, respectively.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Bogborn Alchemist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype.AlchemistThrowAnything"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Bogborn Alchemist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistThrowAnything]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGrippli=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Some grippli alchemists are particularly attuned to the swamps and the dangerous creatures that inhabit them; these serve as their laboratories and research subjects, respectively."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bogborn Alchemist ~ Class Skills|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bogborn Alchemist ~ Amphibious Mutagen|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bogborn Alchemist ~ Discoveries|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 859,
+    "record_key": "Alchemist Archetype ~ Bogborn Alchemist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

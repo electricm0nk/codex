@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 1700.0,
+    "description": "This large pirate hat bears a skull-and-crossbones on the front. The wearer gains a +2 competence bonus on Acrobatics and Climb checks. If Besmara is the wearer's patron, the wearer automatically floats to the surface of any body of water (at a speed of 30 feet) unless she desires otherwise; this does not prevent the wearer from falling safely into water or interacting with water in any other way.",
+    "key": "Besmara's Bicorne",
+    "name": "Besmara's Bicorne",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Acrobatics,Climb",
+          "2",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Head.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "1700"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "DESC",
+        "value": "This large pirate hat bears a skull-and-crossbones on the front. The wearer gains a +2 competence bonus on Acrobatics and Climb checks. If Besmara is the wearer's patron, the wearer automatically floats to the surface of any body of water (at a speed of 30 feet) unless she desires otherwise; this does not prevent the wearer from falling safely into water or interacting with water in any other way."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 176,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Besmara's Bicorne",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodline ~ Dragon Resistances",
+    "name": "Dragon Resistances",
+    "class": "Draconic Bloodline",
+    "description": "You gain resist %1 against|Sorcerer_DraconicDragonResistances_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline ~ Dragon Resistances"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Draconic Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Draconic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Draconic_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Draconic_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Fire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDragonResistances_ResistanceBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDragonResistances_NaturalArmorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resist %1 against|Sorcerer_DraconicDragonResistances_ResistanceBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "and a +%1 natural armor bonus.|Sorcerer_DraconicDragonResistances_NaturalArmorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|Sorcerer_DraconicDragonResistances_NaturalArmorBonus|TYPE=NaturalArmor.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicDragonResistances_ResistanceBonus|min(floor((Sorcerer_Draconic_BloodlinePower3LVL-3)/6)+1,2)*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicDragonResistances_NaturalArmorBonus|min(floor((Sorcerer_Draconic_BloodlinePower3LVL-3)/6)+1,3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicDragonResistances_NaturalArmorBonus|1|PREVARGTEQ:Sorcerer_Draconic_BloodlinePower3LVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|Sorcerer_DraconicDragonResistances_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|Sorcerer_DraconicDragonResistances_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|Sorcerer_DraconicDragonResistances_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|Sorcerer_DraconicDragonResistances_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2445,
+    "record_key": "Draconic Bloodline ~ Dragon Resistances"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

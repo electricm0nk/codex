@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Tome ~ Specialized Knowledge",
+    "name": "Specialized Knowledge",
+    "class": "Order of the Tome",
+    "description": "At 2nd level, an order of the tome cavalier chooses either Knowledge (arcana) or Knowledge (religion). He can make the chosen skill checks untrained. He cannot change his chosen skill later. If he has ranks in his chosen skill, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1) as long as that check involves a book, tome, scroll, or any other form of written knowledge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Tome ~ Specialized Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an order of the tome cavalier chooses either Knowledge (arcana) or Knowledge (religion). He can make the chosen skill checks untrained. He cannot change his chosen skill later. If he has ranks in his chosen skill, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1) as long as that check involves a book, tome, scroll, or any other form of written knowledge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 462,
+    "record_key": "Order of the Tome ~ Specialized Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

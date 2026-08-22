@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sun Blessing ~ Blinding Strike",
+    "name": "Blinding Strike",
+    "class": "Sun Blessing",
+    "description": "You can create a flash of sunlight in the eyes of one of your opponents. The target is blinded for 1 round. If it succeeds at a Reflex saving throw, it's instead dazzled for 1 round. Creatures with light blindness or light sensitivity take a -4 penalty on this saving throw. This is a light effect. Sightless creatures are unaffected by this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sun Blessing ~ Blinding Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a flash of sunlight in the eyes of one of your opponents. The target is blinded for 1 round. If it succeeds at a Reflex saving throw, it's instead dazzled for 1 round. Creatures with light blindness or light sensitivity take a -4 penalty on this saving throw. This is a light effect. Sightless creatures are unaffected by this ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2279,
+    "record_key": "Sun Blessing ~ Blinding Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

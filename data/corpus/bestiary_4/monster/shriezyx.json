@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:shriezyx_fear_of_fire",
@@ -26,6 +24,128 @@
     ],
     "race_subtype": null,
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw|Racial Traits ~ Shriezyx"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawAttacks|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Shriezyx"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Perception|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:7"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d6,SPROP=plus poison"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
     "size": "M",
     "source_page": "p.244",
     "speeds": [
@@ -39,16 +159,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 212,
-    "record_key": "Shriezyx"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 212,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Shriezyx",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

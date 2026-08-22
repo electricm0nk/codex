@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T13:12:24Z",
   "data": {
     "ability_keys": [
       "inner_sea_combat:companion:unable_to_carry_a_rider_while_flying",
@@ -23,6 +21,120 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Griffon|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Unable to carry a rider while flying|PREVAREQ:MonstrousMountMastery,0"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonstrousMountMastery|1|PREVARGTEQ:MasterLevel,7|PREABILITY:1,CATEGORY=FEAT,Monstrous Mount Mastery"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "2|Griffon Companion|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,40"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      }
+    ],
     "reach_feet": null,
     "record_type": "creature",
     "size": "L",
@@ -65,16 +177,18 @@
     ],
     "type_segments": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_races_companion.lst",
-    "sha256": "94e386d8d30b9a147d7d6e54dd56279524aadad67ff1302f7f8b1db6b11c007e",
-    "line": 5,
-    "record_key": "Companion (Griffon)"
-  },
+  "ingested_at": "2026-08-12T13:12:24Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_races_companion.lst",
+    "record_key": "Companion (Griffon)",
+    "sha256": "94e386d8d30b9a147d7d6e54dd56279524aadad67ff1302f7f8b1db6b11c007e"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

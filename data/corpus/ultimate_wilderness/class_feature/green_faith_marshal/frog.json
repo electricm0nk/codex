@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Frog Domain",
+    "name": "Frog",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Frog Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frog Domain ~ Familiar|PREVARGTEQ:DomainFrogAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frog Domain ~ Sticky Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frog Domain ~ Webfoot|PREVARGTEQ:DomainFrogAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogDC|10+(DomainFrogLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Jump|Inquisitor=2|Delay Poison|Inquisitor=3|Lily Pad Stride|Inquisitor=4|Shout|Inquisitor=5|Blessing of the Salamander|Inquisitor=6|Confusion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 780,
+    "record_key": "Green Faith Marshal ~ Frog Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

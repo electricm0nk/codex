@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wave Warden ~ Watery Summons",
+    "name": "Watery Summons",
+    "class": "Ranger",
+    "description": "A wave warden can summon allies once per day as a full-round action. This functions as summon nature's ally %1, except it can only be used to summon creatures with the aquatic or water subtypes. The warden's caster level is %2.|3+(RangerLVL-8)/3|RangerLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden ~ Watery Summons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A wave warden can summon allies once per day as a full-round action. This functions as summon nature's ally %1, except it can only be used to summon creatures with the aquatic or water subtypes. The warden's caster level is %2.|3+(RangerLVL-8)/3|RangerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 890,
+    "record_key": "Wave Warden ~ Watery Summons"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

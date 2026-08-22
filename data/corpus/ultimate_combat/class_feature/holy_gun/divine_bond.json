@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Gun ~ Divine Bond",
+    "name": "Divine Bond",
+    "class": "Paladin",
+    "description": "At 5th level, a holy gun forms a bond with her deity. This functions as the paladin's divine bond ability, except the bond must always take the form of a firearm. In addition to the listed abilities, a holy gun can add the distance, reliable, or seeking special abilities to her weapon, but she cannot add the defending or disruption special abilities. This ability replaces the standard paladin's divine bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Gun ~ Divine Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a holy gun forms a bond with her deity. This functions as the paladin's divine bond ability, except the bond must always take the form of a firearm. In addition to the listed abilities, a holy gun can add the distance, reliable, or seeking special abilities to her weapon, but she cannot add the defending or disruption special abilities. This ability replaces the standard paladin's divine bond."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Holy Gun ~ Celestial Spirit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1476,
+    "record_key": "Holy Gun ~ Divine Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

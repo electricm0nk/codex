@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gravewalker ~ Deliver Touch Spells",
+    "name": "Deliver Touch Spells",
+    "class": "Witch",
+    "description": "You can use your poppet to deliver touch spells. After casting a touch spell, as a full-round action, you can designate a target and stab a pin into your poppet, delivering the spell as a ranged touch attack. The target must be within range of your aura of desecration ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravewalker ~ Deliver Touch Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your poppet to deliver touch spells. After casting a touch spell, as a full-round action, you can designate a target and stab a pin into your poppet, delivering the spell as a ranged touch attack. The target must be within range of your aura of desecration ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2004,
+    "record_key": "Gravewalker ~ Deliver Touch Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

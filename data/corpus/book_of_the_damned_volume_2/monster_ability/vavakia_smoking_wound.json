@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "corpus_key": "Vavakia ~ Smoking Wound",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "book_of_the_damned_volume_2:monster:demon_vavakia"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Smoking Wound"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VavakiaWoundDC|10+HD/2+CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VavakiaWoundDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Smoking Wound)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VavakiaWoundDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The wounds caused by a vavakia's fangs result in tremendous and eerie wounds. Rather than blood, wisps of green smoke constantly weep from a vavakia's bite wound--a grim manifestation of the demon's effect on a mortal soul. Each time a vavakia bites a creature, it bestows two negative levels--the wounds continue to smoke as long as the victim suffers those negative levels. The smoking wounds cause the victim to become sickened because of the hideous sensation and rank smell of the vapors. An effect that removes this sickened condition only temporarily causes the wounds to stop smoking--they begin smoking again in 1d6 rounds and persist as long as the victim suffers from the associated negative levels. Nonliving creatures bitten by a vavakia are immune to its energy-draining bite and do not exhibit smoking wounds. The Fortitude save to remove these negative levels is DC %1. The save DC is Charisma-based.|VavakiaWoundDC|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "The wounds caused by a vavakia's fangs result in tremendous and eerie wounds.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Vavakia ~ Smoking Wound"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.60",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
-    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
-    "line": 24,
-    "record_key": "Vavakia ~ Smoking Wound"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "record_key": "Vavakia ~ Smoking Wound",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

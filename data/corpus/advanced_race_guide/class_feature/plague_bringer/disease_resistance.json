@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Plague Bringer ~ Disease Resistance",
+    "name": "Disease Resistance",
+    "class": "Plague Bringer",
+    "description": "The plague bringer gains a +%1 bonus on all saving throws against disease.|(1+(AlchemistLVL-2)/3)*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plague Bringer ~ Disease Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The plague bringer gains a +%1 bonus on all saving throws against disease.|(1+(AlchemistLVL-2)/3)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 712,
+    "record_key": "Plague Bringer ~ Disease Resistance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,65 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 30.0,
+    "description": null,
+    "key": "Silken Ceremonial Armor",
+    "name": "Silken Ceremonial Armor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Silken Ceremonial Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "30"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "0"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Silken Ceremonial Armor",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
+}

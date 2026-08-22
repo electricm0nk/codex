@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sin Eater ~ Speak with Dead",
+    "name": "Speak with Dead",
+    "class": "Inquisitor",
+    "description": "When you eat an enemy's sins, within 10 minutes of doing so, you can ask the remnants of the enemy's soul questions as if using speak with dead, with a caster level of %1.  You do not need the enemy's corpse to use this ability (you can eat sin, move away from the corpse, then use speak with dead), though the soul gets a saving throw just as a corpse would.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sin Eater ~ Speak with Dead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "When you eat an enemy's sins, within 10 minutes of doing so, you can ask the remnants of the enemy's soul questions as if using speak with dead, with a caster level of %1.  You do not need the enemy's corpse to use this ability (you can eat sin, move away from the corpse, then use speak with dead), though the soul gets a saving throw just as a corpse would."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1283,
+    "record_key": "Sin Eater ~ Speak with Dead"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

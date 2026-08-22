@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rot Warden ~ Invoke Decay",
+    "name": "Invoke Decay",
+    "class": "Druid",
+    "description": "A rot warden can channel stored spell energy into specific spells he hasn't prepared ahead of time. He can \"lose\" a prepared spell in order to cast the following spells at the indicated levels: 1st-decompose corpse UM , 2nd-warp wood, 3rd-fungal infestation (UM), 4th-explosion of rot, 5th-insect plague, 6th-swarm skin (APG), 7th-creeping doom, 8th-horrid wilting, 9th-massacre (HA). This alters spontaneous casting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rot Warden ~ Invoke Decay"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A rot warden can channel stored spell energy into specific spells he hasn't prepared ahead of time. He can \"lose\" a prepared spell in order to cast the following spells at the indicated levels: 1st-decompose corpse UM , 2nd-warp wood, 3rd-fungal infestation (UM), 4th-explosion of rot, 5th-insect plague, 6th-swarm skin (APG), 7th-creeping doom, 8th-horrid wilting, 9th-massacre (HA). This alters spontaneous casting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 560,
+    "record_key": "Rot Warden ~ Invoke Decay"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

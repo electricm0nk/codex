@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:draconal_celestial_focus",
@@ -30,6 +28,152 @@
     ],
     "race_subtype": "Agathion|Extraplanar|Good",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Draconal ~ Celestial Focus|Draconal ~ Divine Insight|Draconal ~ Protective Aura|Flight Maneuverability|Regeneration ~ Evil"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Cleric"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Draconic|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Cleric|19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|18|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|60"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "DR",
+        "value": "15/evil and silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Intimidate|Knowledge (Arcana)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):24"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,120"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Energy,*1,2d6|Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing,*2,1d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Agathion|Extraplanar|Good"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Cleric"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=24|Control Water|Control Weather|Control Winds|Heal|Plane Shift,17+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=7|CASTERLEVEL=24|Break Enchantment|Cure Serious Wounds|Neutralize Poison|Remove Disease"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=24|Beast Shape II|Command,11+CHA|Detect Thoughts|Elemental Body III (air/water)|Gust of Wind|Hold Monster,14+CHA|Identify|Light|Lightning Bolt,13+CHA|Mage Hand|Message|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "31"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.18",
     "speeds": [
@@ -43,16 +187,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 44,
-    "record_key": "Agathion (Draconal)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Agathion (Draconal)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Mystery ~ Iron Constitution",
+    "name": "Iron Constitution",
+    "class": "Metal Mystery",
+    "description": "You gain a +%1 bonus on Fortitude saves.|IronConstitutionBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Iron Constitution"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.MetalRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronConstitutionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Fortitude saves.|IronConstitutionBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude|IronConstitutionBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronConstitutionBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronConstitutionBonus|min(2,classlevel(\"Oracle\")/7)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 483,
+    "record_key": "Metal Mystery ~ Iron Constitution"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

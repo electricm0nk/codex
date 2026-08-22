@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilance ~ HK",
+    "name": "Vigilance",
+    "class": "Vigilance",
+    "description": "You gain low-light vision. In addition, as a full-round action %1/day, you can see through up to 5 ft. of stone, wood, or similar barriers as if they didn't exist. Metal or denser barriers block this effect. Each use of this ability lasts as long as you concentrate, up to %2 rounds.|HKDiscipline|HellknightLvl",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilance ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.HKAbility.HKOScourge"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain low-light vision. In addition, as a full-round action %1/day, you can see through up to 5 ft. of stone, wood, or similar barriers as if they didn't exist. Metal or denser barriers block this effect. Each use of this ability lasts as long as you concentrate, up to %2 rounds.|HKDiscipline|HellknightLvl"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HKDiscipline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 88,
+    "record_key": "Vigilance ~ HK"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

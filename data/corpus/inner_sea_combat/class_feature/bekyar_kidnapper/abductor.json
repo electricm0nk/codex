@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bekyar Kidnapper ~ Abductor",
+    "name": "Abductor",
+    "class": "Rogue",
+    "description": "At 3rd level, a Bekyar kidnapper gains a +1 bonus on combat maneuver checks to grapple a foe. In addition, the Bekyar kidnapper treats her combat maneuver bonus as 1 higher when a foe tries to grapple her or when a grappled target attempts to break free of her grapple. These bonuses increase by 1 for every 3 levels beyond 3rd. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bekyar Kidnapper ~ Abductor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a Bekyar kidnapper gains a +1 bonus on combat maneuver checks to grapple a foe. In addition, the Bekyar kidnapper treats her combat maneuver bonus as 1 higher when a foe tries to grapple her or when a grappled target attempts to break free of her grapple. These bonuses increase by 1 for every 3 levels beyond 3rd. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 47,
+    "record_key": "Bekyar Kidnapper ~ Abductor"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

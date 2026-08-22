@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skill Unlock ~ Phrenology",
+    "name": "Phrenology (Knowledge [Arcana])",
+    "class": "Skill Unlock",
+    "description": "You examine the skulls of intelligent creatures to analyze the subjects' psychological attributes, since the shape of the brain influences the shape of the skull. Check: Once per day, you can use your fingertips to examine the shape of a creature's skull. Reading a creature's skull requires 1 minute of concentration and scrutiny while you physically manipulate the skull. This technique can be used on a willing, helpless, or paralyzed creature, or on decomposed remains (as long as the skull is intact or can be pieced together). This skill can't be used on creatures without discernible skulls, such as constructs, elementals, oozes, or plants. After the minute is up, the GM attempts a secret Knowledge (arcana) check. The DC is typically modified by the subject's Hit Dice. With a single check, you determine all the information whose DC you meet. For instance, if you had a result of 22 when examining a creature with 2 HD, you would learn that creature's race and age, gender, alignment, and class, but not its level or HD. Action: Reading a creature's cranium requires 1 minute of uninterrupted study. Try Again: Yes. Reexamining a skull may provide new insights. You can attempt only one such check per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill Unlock ~ Phrenology"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillUnlock.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "You examine the skulls of intelligent creatures to analyze the subjects' psychological attributes, since the shape of the brain influences the shape of the skull. Check: Once per day, you can use your fingertips to examine the shape of a creature's skull. Reading a creature's skull requires 1 minute of concentration and scrutiny while you physically manipulate the skull. This technique can be used on a willing, helpless, or paralyzed creature, or on decomposed remains (as long as the skull is intact or can be pieced together). This skill can't be used on creatures without discernible skulls, such as constructs, elementals, oozes, or plants. After the minute is up, the GM attempts a secret Knowledge (arcana) check. The DC is typically modified by the subject's Hit Dice. With a single check, you determine all the information whose DC you meet. For instance, if you had a result of 22 when examining a creature with 2 HD, you would learn that creature's race and age, gender, alignment, and class, but not its level or HD. Action: Reading a creature's cranium requires 1 minute of uninterrupted study. Try Again: Yes. Reexamining a skull may provide new insights. You can attempt only one such check per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1952,
+    "record_key": "Skill Unlock ~ Phrenology"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

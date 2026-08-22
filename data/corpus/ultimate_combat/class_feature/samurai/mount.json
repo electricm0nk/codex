@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai ~ Mount",
+    "name": "Mount",
+    "class": "Samurai",
+    "description": "A samurai gains the service of a loyal and trusty steed to carry him into battle. This mount functions as a druid's animal companion, using the samurai's level as his effective druid level. The creature must be one that he is capable of riding and that is suitable as a mount. A Medium samurai can select a camel or a horse. A Small samurai can select a pony or a wolf, but can also select a boar or a dog if he is at least 4th level. The GM may approve other animals as suitable mounts. A samurai does not take an armor check penalty on Ride checks while riding his mount. The mount is always considered combat trained and begins play with Light Armor Proficiency as a bonus feat. A samurai's mount does not gain the share spells special ability. A samurai's bond with his mount is strong, with the pair learning to anticipate each other's moods and moves. Should a samurai's mount die, the samurai may find another mount to serve him after 1 week of mourning. The new mount does not gain the link, evasion, devotion, or improved evasion special abilities until the next time the samurai gains a level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SamuraiMountLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A samurai gains the service of a loyal and trusty steed to carry him into battle. This mount functions as a druid's animal companion, using the samurai's level as his effective druid level. The creature must be one that he is capable of riding and that is suitable as a mount. A Medium samurai can select a camel or a horse. A Small samurai can select a pony or a wolf, but can also select a boar or a dog if he is at least 4th level. The GM may approve other animals as suitable mounts. A samurai does not take an armor check penalty on Ride checks while riding his mount. The mount is always considered combat trained and begins play with Light Armor Proficiency as a bonus feat. A samurai's mount does not gain the share spells special ability. A samurai's bond with his mount is strong, with the pair learning to anticipate each other's moods and moves. Should a samurai's mount die, the samurai may find another mount to serve him after 1 week of mourning. The new mount does not gain the link, evasion, devotion, or improved evasion special abilities until the next time the samurai gains a level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiMountLVL|SamuraiLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Samurai Mount|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Samurai Mount|Companion (Camel),Companion (Horse)"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Samurai Mount|Companion (Pony),Companion (Wolf)|PRESIZELTEQ:S"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Samurai Mount|Companion (Boar),Companion (Dog)|PRECLASS:1,Samurai=8|PRESIZELTEQ:S"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Samurai Mount"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 188,
+    "record_key": "Samurai ~ Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

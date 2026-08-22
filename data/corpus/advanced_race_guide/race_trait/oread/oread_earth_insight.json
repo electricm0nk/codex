@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Oread ~ Earth Insight",
+    "name": "Earth Insight",
+    "race_key": "Oread",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Oread Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Oread_ReplaceEarthAffinity"
+    ],
+    "description": "Oread spellcasters sometimes find that their elemental heritage makes creatures of earth more willing to serve them. Summon monster and summon nature's ally spells that such oreads cast last 2 rounds longer than normal when used to summon creatures with the earth subtype. This racial trait replaces earth affinity.",
+    "source_page": "p.144",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oread ~ Earth Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Oread Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Oread ~ Earth Insight],[!PREFACT:1,ABILITIES,Oread_ReplaceEarthAffinity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Oread spellcasters sometimes find that their elemental heritage makes creatures of earth more willing to serve them. Summon monster and summon nature's ally spells that such oreads cast last 2 rounds longer than normal when used to summon creatures with the earth subtype."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces earth affinity.|!PREABILITY:1,CATEGORY=Special Ability,Oread ~ Earth Insight"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "FACT",
+        "value": "Oread_ReplaceEarthAffinity|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 630,
+    "record_key": "Oread ~ Earth Insight"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Apocalypse Mystery ~ Doomsayer",
+    "name": "Doomsayer",
+    "class": "Apocalypse Mystery",
+    "description": "As a standard action, you can utter a dire prophecy that strikes fear in your enemies and causes them to become shaken. To be affected, an enemy must be within 30 feet and able to hear you. This effect persists as long as the enemy is within 30 feet and you use a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Apocalypse Mystery ~ Doomsayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can utter a dire prophecy that strikes fear in your enemies and causes them to become shaken. To be affected, an enemy must be within 30 feet and able to hear you. This effect persists as long as the enemy is within 30 feet and you use a"
+      },
+      {
+        "key": "DESC",
+        "value": "move|!PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": "swift|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": "action each round to continue your doomsaying. This ability cannot cause a creature to become frightened or panicked, even if the target was already shaken from another effect. This is a mind-affecting fear effect that relies on audible components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 98,
+    "record_key": "Apocalypse Mystery ~ Doomsayer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

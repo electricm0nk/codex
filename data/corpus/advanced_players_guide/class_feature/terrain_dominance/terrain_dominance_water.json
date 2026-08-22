@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Terrain Dominance ~ Water",
+    "name": "Terrain Dominance (Water)",
+    "class": "Terrain Dominance",
+    "description": "The horizon walker gains a swim speed of 20 feet. If he already has a natural swim speed, his swim speed increases by +20 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Dominance ~ Water"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainDominance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery ~ Water"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker gains a swim speed of 20 feet. If he already has a natural swim speed, his swim speed increases by +20 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "POSTMOVEADD|TYPE=Swim|20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1355,
+    "record_key": "Terrain Dominance ~ Water"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "True Primitive ~ Trophy Fetish",
+    "name": "Trophy Fetish",
+    "class": "Barbarian",
+    "description": "A true primitive collects teeth, bones, hair, and other trophies from vanquished enemies, representing their power and strength. At 3rd level, a true primitive can attach a trophy fetish to one of the traditional true primitive weapons listed above. When wielding that weapon, the true primitive gains a +1 morale bonus on damage rolls. Furthermore, if that weapon has the fragile property, once per day, the true primitive can ignore the effects of a single natural 1 roll. A trophy fetish can also be attached to a suit of hide or bone armor, granting the true primitive a +1 morale bonus on saving throws. Furthermore, if that armor has the fragile property, once per day, the true primitive can chose not to have the armor break on the confirmation of a critical hit made against her. Every five levels beyond 3rd, a true primitive can use an additional trophy fetish. Multiple trophy fetishes can be attached to the same armor or weapon; their effects stack. A trophy fetish can be sundered (hardness 5, 1 hit point) but is not damaged by area attacks or attacks that do not specifically target it. It has no effect if attached to other types of weapons or armor. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "True Primitive ~ Trophy Fetish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrophyFetishCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A true primitive collects teeth, bones, hair, and other trophies from vanquished enemies, representing their power and strength. At 3rd level, a true primitive can attach a trophy fetish to one of the traditional true primitive weapons listed above. When wielding that weapon, the true primitive gains a +1 morale bonus on damage rolls. Furthermore, if that weapon has the fragile property, once per day, the true primitive can ignore the effects of a single natural 1 roll. A trophy fetish can also be attached to a suit of hide or bone armor, granting the true primitive a +1 morale bonus on saving throws. Furthermore, if that armor has the fragile property, once per day, the true primitive can chose not to have the armor break on the confirmation of a critical hit made against her. Every five levels beyond 3rd, a true primitive can use an additional trophy fetish. Multiple trophy fetishes can be attached to the same armor or weapon; their effects stack. A trophy fetish can be sundered (hardness 5, 1 hit point) but is not damaged by area attacks or attacks that do not specifically target it. It has no effect if attached to other types of weapons or armor. This ability replaces trap sense."
+      },
+      {
+        "key": "DESC",
+        "value": "(currently have %1)|TrophyFetishCount|PREVARGT:TrophyFetishCount,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrophyFetishCount|1|PREVARGTEQ:classlevel(\"Barbarian\"),3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrophyFetishCount|1|PREVARGTEQ:classlevel(\"Barbarian\"),8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrophyFetishCount|1|PREVARGTEQ:classlevel(\"Barbarian\"),13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrophyFetishCount|1|PREVARGTEQ:classlevel(\"Barbarian\"),18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 351,
+    "record_key": "True Primitive ~ Trophy Fetish"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

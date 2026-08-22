@@ -1,0 +1,92 @@
+[
+  {
+    "key": "Winter Witch ~ Cantrips",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 388
+    }
+  },
+  {
+    "key": "Winter Witch ~ Cold Flesh",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 388
+    }
+  },
+  {
+    "key": "Winter Witch ~ Familiar",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 388
+    }
+  },
+  {
+    "key": "Winter Witch ~ Hexes",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 388
+    }
+  },
+  {
+    "key": "Winter Witch ~ Ice Magic",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 388
+    }
+  },
+  {
+    "key": "Winter Witch ~ Patron",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 388
+    }
+  }
+]

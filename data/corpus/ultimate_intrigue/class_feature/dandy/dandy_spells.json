@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dandy ~ Dandy Spells",
+    "name": "Dandy Spells",
+    "class": "Ranger",
+    "description": "[NOT IMPLEMENTED] The dandy gains a different sort of spellcasting than most rangers. A dandy uses his Charisma instead of his Wisdom to determine spells per day, DCs, and other factors related to spellcasting. He casts spells spontaneously from the bard spell list (rather than the ranger spell list) with the same number of spells known and spells per day as a medium (Pathfinder RPG Occult Adventures 30) of his ranger level. This ability alters the ranger's spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dandy ~ Dandy Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] The dandy gains a different sort of spellcasting than most rangers. A dandy uses his Charisma instead of his Wisdom to determine spells per day, DCs, and other factors related to spellcasting. He casts spells spontaneously from the bard spell list (rather than the ranger spell list) with the same number of spells known and spells per day as a medium (Pathfinder RPG Occult Adventures 30) of his ranger level. This ability alters the ranger's spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 653,
+    "record_key": "Dandy ~ Dandy Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

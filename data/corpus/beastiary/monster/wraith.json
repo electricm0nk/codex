@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:wraith_constitution_drain",
@@ -27,6 +25,104 @@
     ],
     "race_subtype": "Incorporeal",
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Flight Maneuverability|Wraith ~ Constitution Drain|Wraith ~ Create Spawn|Wraith ~ Lifesense|Wraith ~ Sunlight Powerlessness|Wraith ~ Unnatural Aura"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Incorporeal Touch|DAMAGE|-STR"
+      },
+      {
+        "key": "CR",
+        "value": "5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:5"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Incorporeal Touch,Weapon.Natural.Weapon Group Natural.Melee.Finesseable,*1,1d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Incorporeal"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.281",
     "speeds": [
@@ -36,16 +132,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 420,
-    "record_key": "Wraith"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 420,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Wraith",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

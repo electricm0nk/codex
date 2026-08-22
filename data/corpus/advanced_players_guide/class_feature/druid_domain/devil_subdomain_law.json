@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Domain ~ Devil Subdomain (Law)",
+    "name": "Devil Subdomain (Law)",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Devil Subdomain (Law)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidDevilLawSubdomainAllowed,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Command|Druid=2|Align Weapon (Law Only)|Druid=3|Suggestion|Druid=4|Order's Wrath|Druid=5|Dispel Chaos|Druid=6|Planar Binding|Druid=7|Dictum|Druid=8|Shield of Law|Druid=9|Summon Monster IX (Law Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1195,
+    "record_key": "Druid Domain ~ Devil Subdomain (Law)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

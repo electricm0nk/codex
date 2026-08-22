@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Variant Channeling - Envy",
+    "name": "Variant Channeling - Envy",
+    "class": null,
+    "description": "Heal - Creatures gain a +%1 channel bonus on disarm and steal combat maneuvers, Bluff checks, and Sleight of Hand checks for 1 minute. Harm - Creatures must attempt a steal combat maneuver on their next turn against an adjacent enemy. This is a compulsion effect.|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - Creatures gain a +%1 channel bonus on disarm and steal combat maneuvers, Bluff checks, and Sleight of Hand checks for 1 minute. Harm - Creatures must attempt a steal combat maneuver on their next turn against an adjacent enemy. This is a compulsion effect.|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 208,
+    "record_key": "Variant Channeling - Envy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aquatic Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Aquatic Bloodline",
+    "description": "Whenever you cast a spell of the water type, your effective caster level is increased by one, and summoned creatures with a swim speed or the aquatic or water type gain a +1 morale bonus on attack and damage rolls.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aquatic Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell of the water type, your effective caster level is increased by one, and summoned creatures with a swim speed or the aquatic or water type gain a +1 morale bonus on attack and damage rolls."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(water spells cast at CL+1 and summoned creatures with a swim speed or the aquatic or water type gain a +1 morale bonus on attack and damage rolls)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3095,
+    "record_key": "Aquatic Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Sea Singer",
+    "name": "Sea Singer",
+    "class": "Bard Archetype",
+    "description": "The sea singer calls the blue waters his home, and is much in demand among sea captains wishing good fortune for their crew and hull as they ply the tradewinds far and wide.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Sea Singer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardCounterSong.BardCounterSong.BardSuggestion.BardMassSuggestion.BardBardicKnowledge.BardVersatilePerformance.BardWellVersed.BardInspireCompetence"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Sea Singer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardCounterSong,TYPE.BardCounterSong,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardBardicKnowledge,TYPE.BardVersatilePerformance,TYPE.BardWellVersed,TYPE.BardInspireCompetence]"
+      },
+      {
+        "key": "DESC",
+        "value": "The sea singer calls the blue waters his home, and is much in demand among sea captains wishing good fortune for their crew and hull as they ply the tradewinds far and wide."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sea Singer ~ Sea Shanty|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sea Singer ~ Still Water|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sea Singer ~ Whistle the Wind|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sea Singer ~ Call the Storm|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sea Singer ~ World Traveler|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sea Singer ~ Familiar|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Sea Singer ~ Sea Legs|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1625,
+    "record_key": "Bard Archetype ~ Sea Singer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

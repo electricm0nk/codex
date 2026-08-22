@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ Many Guises",
+    "name": "Many Guises",
+    "class": "Social Talent",
+    "description": "The vigilante can take on any number of mundane guises. Whenever he changes his identity, he has a third option (instead of social or vigilante): he can become mundane. The mundane identity is not a specific individual. Each one is created at the moment it is assumed, and quickly forgotten as soon as it is removed. While in a mundane identity, the vigilante does not gain the benefit of either his social or vigilante identity, but instead appears as a member of his race, usually a common laborer, farmer, or peasant of any gender. His alignment is treated as neutral when he is in his mundane identity. While in this identity, he receives a +20 circumstance bonus on Disguise checks to appear like an ordinary member of his race. Spells and abilities that are looking for the vigilante in either of his other identities fail while he is in his mundane identity. He must build the appearance for this identity using whatever clothing and tools he has at his disposal. While he can use magic (such as a hat of disguise), his mundane identity can never be anything other than an ordinary member of a society or large group (subject to GM discretion).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Many Guises"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can take on any number of mundane guises. Whenever he changes his identity, he has a third option (instead of social or vigilante): he can become mundane. The mundane identity is not a specific individual. Each one is created at the moment it is assumed, and quickly forgotten as soon as it is removed. While in a mundane identity, the vigilante does not gain the benefit of either his social or vigilante identity, but instead appears as a member of his race, usually a common laborer, farmer, or peasant of any gender. His alignment is treated as neutral when he is in his mundane identity. While in this identity, he receives a +20 circumstance bonus on Disguise checks to appear like an ordinary member of his race. Spells and abilities that are looking for the vigilante in either of his other identities fail while he is in his mundane identity. He must build the appearance for this identity using whatever clothing and tools he has at his disposal. While he can use magic (such as a hat of disguise), his mundane identity can never be anything other than an ordinary member of a society or large group (subject to GM discretion)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 61,
+    "record_key": "Social Talent ~ Many Guises"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

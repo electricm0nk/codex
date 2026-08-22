@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Lasting Poison",
+    "name": "Lasting Poison",
+    "class": "Investigator",
+    "description": "An investigator with this talent can apply poison to a weapon in such a way that it is effective for two successful attacks instead of one. The poison has a reduced effect, however, and saves made against the poison receive a +2 circumstance bonus. Applying poison in this way requires a full-round action, or a standard action if the investigator has the swift poison talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Lasting Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An investigator with this talent can apply poison to a weapon in such a way that it is effective for two successful attacks instead of one. The poison has a reduced effect, however, and saves made against the poison receive a +2 circumstance bonus. Applying poison in this way requires a full-round action, or a standard action if the investigator has the swift poison talent."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1358,
+    "record_key": "Investigator ~ Rogue Talent ~ Lasting Poison"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

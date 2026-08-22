@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Storm Dreamer ~ Animal Domain",
+    "name": "Animal",
+    "class": "Storm Dreamer",
+    "description": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storm Dreamer ~ Animal Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "StormDreamerDomain"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Speak with Animals"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAnimalTimes|0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalDC|10+(DomainAnimalLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAnimalTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Medium=1|Calm Animals|Medium=2|Hold Animal|Medium=3|Dominate Animal|Medium=4|Summon Nature's Ally IV (Animals Only)|Medium=5|Beast Shape III (Animals Only)|Medium=6|Antilife Shell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 916,
+    "record_key": "Storm Dreamer ~ Animal Domain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Bane ~ Amulet of Mighty Fists",
     "category": "equipmods",
-    "name": "Bane",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "A bane weapon excels against certain foes. Against a designated foe, the weapon's enhancement bonus is +2 better than its actual bonus. It also deals an extra 2d6 points of damage against such foes. The weapon's designated foe is determined randomly from a table that includes creature types such as aberrations, animals, constructs, dragons, fey, humanoids, magical beasts, monstrous humanoids, oozes, outsiders, plants, undead, and vermin."
+    "description": "A bane weapon excels against certain foes. Against a designated foe, the weapon's enhancement bonus is +2 better than its actual bonus. It also deals an extra 2d6 points of damage against such foes. The weapon's designated foe is determined randomly from a table that includes creature types such as aberrations, animals, constructs, dragons, fey, humanoids, magical beasts, monstrous humanoids, oozes, outsiders, plants, undead, and vermin.",
+    "key": "Special Ability ~ Bane ~ Amulet of Mighty Fists",
+    "name": "Bane",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "+1"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bane ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.469"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Amulet of Mighty Fists Base"
+      },
+      {
+        "key": "SPROP",
+        "value": "unarmed and natural attacks gain a +2 enhancement bonus and do +2d6 bonus damage against %CHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Unarmed Bane"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Aberrations|Animals|Constructs|Dragons|Fey|Humanoids (Aquatic)|Humanoids (Dwarf)|Humanoids (Elf)|Humanoids (Giant)|Humanoids (Gnoll)|Humanoids (Gnome)|Humanoids (Goblinoid)|Humanoids (Halfling)|Humanoids (Human)|Humanoids (Reptilian)|Humanoids (Orc)|Magical Beasts|Monstrous Humanoids|Oozes|Outsiders (Air)|Outsiders (Chaotic)|Outsiders (Earth)|Outsiders (Evil)|Outsiders (Fire)|Outsiders (Good)|Outsiders (Lawful)|Outsiders (Water)|Plants|Undead|Vermin|TITLE=Designated Foe"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/bane/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/bane/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 273,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Bane ~ Amulet of Mighty Fists",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

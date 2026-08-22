@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Verdant Path",
+    "name": "Verdant Path",
+    "class": "Shaman Spirit Hex",
+    "description": "Even the most tangled briars make way for the shaman, and suitable roots and branches appear to support her feet. The shaman gains woodland stride, as the druid ability of the same name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Verdant Path"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWoodHex.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Verdant Path"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWoodSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Even the most tangled briars make way for the shaman, and suitable roots and branches appear to support her feet. The shaman gains woodland stride, as the druid ability of the same name."
+      },
+      {
+        "key": "DESC",
+        "value": "She can use air walk at will whenever she is within 10 feet of a tree, though the effect ends instantly when she moves farther than 10 feet from a tree.|PREVARGTEQ:ShamanLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1015,
+    "record_key": "Shaman Spirit Hex ~ Verdant Path"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

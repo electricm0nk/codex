@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Strix ~ Wing-Clipped",
+    "name": "Wing-Clipped",
+    "race_key": "Strix",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Strix Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Strix_ReplaceFlight"
+    ],
+    "description": "The flight of wing-clipped strix is weaker than normal, whether from deformity or injury. Their fly speed is 20 feet (poor) instead of the normal fly speed, and they must make a DC 30 Fly check to fly upward. Ostracized by their tribes and forced to deal with other races, these strix compensate for their weakness by gaining a +2 racial bonus on Bluff, Climb, and Diplomacy checks.",
+    "source_page": "p.200",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strix ~ Wing-Clipped"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Strix Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Strix ~ Wing-Clipped],[!PREFACT:1,ABILITIES,Strix_ReplaceFlight=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The flight of wing-clipped strix is weaker than normal, whether from deformity or injury. Their fly speed is 20 feet (poor) instead of the normal fly speed, and they must make a DC 30 Fly check to fly upward. Ostracized by their tribes and forced to deal with other races, these strix compensate for their weakness by gaining a +2 racial bonus on Bluff, Climb, and Diplomacy checks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Strix Racial Trait|AUTOMATIC|Wing-Clipped ~ Strix ~ Flight"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Bluff, +2 Climb, +2 Diplomacy"
+      },
+      {
+        "key": "FACT",
+        "value": "Strix_ReplaceFlight|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Bluff,Diplomacy,Climb",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1153,
+    "record_key": "Strix ~ Wing-Clipped"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

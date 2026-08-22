@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin ~ Channel Positive Energy",
+    "name": "Channel Positive Energy",
+    "class": "Paladin",
+    "description": "You can unleash a wave of positive energy dealing %1d%2 (DC %3 for half) %4/day.|PaladinChannelDice|PaladinChannelDieSize|PaladinChannelDC|PaladinChannelPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin ~ Channel Positive Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialAttack.Supernatural.Channel Energy.Channel Energy Positive.Channel Positive Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy dealing %1d%2 (DC %3 for half) %4/day.|PaladinChannelDice|PaladinChannelDieSize|PaladinChannelDC|PaladinChannelPerDay"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. Using this ability consumes two uses of her lay on hands ability.|PaladinChannelDice|PaladinChannelDieSize|PaladinChannelDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Positive Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelDice|(PaladinChannelLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelDC|10+(PaladinChannelLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelLVL|PaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelPerDay|LayOnHandsTimes/2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Lay on Hands"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3)|PaladinChannelDice|PaladinChannelDieSize|PaladinChannelDC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Channel Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1362,
+    "record_key": "Paladin ~ Channel Positive Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

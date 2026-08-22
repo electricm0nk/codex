@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Armor Skin",
+    "name": "Armor Skin",
+    "class": "Vigilante Talent",
+    "description": "The vigilante's armor is like a second skin. He doesn't apply the armor check penalty for light and medium armor on Acrobatics, Escape Artist, or Stealth checks. This penalty applies on other skill checks as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Armor Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Armor Skin"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's armor is like a second skin. He doesn't apply the armor check penalty for light and medium armor on Acrobatics, Escape Artist, or Stealth checks. This penalty applies on other skill checks as normal."
+      },
+      {
+        "key": "DESC",
+        "value": " He can move at full speed in medium armor.|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Vigilante Talent ~ Armor Skin Speed|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Escape Artist,Stealth|-ARMORACCHECK|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1|!PREABILITY:1,CATEGORY=Special Ability,Vigilante Talent ~ Heavy Training"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 73,
+    "record_key": "Vigilante Talent ~ Armor Skin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Charm ~ HKFow3",
+    "name": "Force of Will 3 (Charm)",
+    "class": "Charm",
+    "description": "You gain a +2 bonus on Will saves against spells with the charm subschool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Charm ~ HKFow3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HKFoW3"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Charm ~ HKFow1,Charm ~ HKFoW2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 bonus on Will saves against spells with the charm subschool."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 Will vs. charm spells"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 238,
+    "record_key": "Charm ~ HKFow3"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

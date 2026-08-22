@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic ~ Detect Thoughts",
+    "name": "Detect Thoughts",
+    "class": "Psychic",
+    "description": "At 2nd level, a psychic can use detect thoughts as a spell-like ability once per day. She can also expend any unused spell slot of 1st level or higher to cast detect thoughts. If she does so, she uses the level of the spell slot expended to determine the Will save DC. When a psychic gains this ability, if she knows detect thoughts, she can learn a different 1st-level spell in place of detect thoughts, losing the old spell in exchange for the new one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Detect Thoughts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a psychic can use detect thoughts as a spell-like ability once per day. She can also expend any unused spell slot of 1st level or higher to cast detect thoughts. If she does so, she uses the level of the spell slot expended to determine the Will save DC. When a psychic gains this ability, if she knows detect thoughts, she can learn a different 1st-level spell in place of detect thoughts, losing the old spell in exchange for the new one."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1158,
+    "record_key": "Psychic ~ Detect Thoughts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

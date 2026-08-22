@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Chameleon Adept ~ Terrain Chameleon",
+    "name": "Terrain Chameleon",
+    "class": "Hunter",
+    "description": "Choose one type of terrain from the ranger's list of favored terrains. When in the specified type of terrain, a chameleon adept gains a +%1 bonus on Stealth checks.|HunterLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chameleon Adept ~ Terrain Chameleon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ChameleonAdeptClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose one type of terrain from the ranger's list of favored terrains. When in the specified type of terrain, a chameleon adept gains a +%1 bonus on Stealth checks.|HunterLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 651,
+    "record_key": "Chameleon Adept ~ Terrain Chameleon"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

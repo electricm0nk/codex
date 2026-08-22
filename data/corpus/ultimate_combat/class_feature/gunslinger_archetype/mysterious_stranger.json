@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Mysterious Stranger",
+    "name": "Mysterious Stranger",
+    "class": "Gunslinger Archetype",
+    "description": "Gunslingers use a potent mixture of common sense and manual dexterity in order to control the fickle power of their weapons. But a few rare gunslingers seem to accomplish their chosen tasks purely through willpower and an unwillingness to ever give up. These mysterious strangers use their force of personality to keep going when the chips are down, often moving on from a region as soon as they accomplish their goals-hence the name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Mysterious Stranger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype.GunslingerQuickClearDeed.GunslingerBleedingWoundDeed.GunslingerNimble.GunslingerGunTraining1.GunslingerGrit"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ MYSTERIOUS STRANGER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerQuickClearDeed,TYPE.GunslingerNimble,TYPE.GunslingerGunTraining1,TYPE.GunslingerGrit]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gunslingers use a potent mixture of common sense and manual dexterity in order to control the fickle power of their weapons. But a few rare gunslingers seem to accomplish their chosen tasks purely through willpower and an unwillingness to ever give up. These mysterious strangers use their force of personality to keep going when the chips are down, often moving on from a region as soon as they accomplish their goals-hence the name."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Mysterious Stranger ~ Grit|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Mysterious Stranger ~ Focused Aim|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Mysterious Stranger ~ Clipping Shot|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Mysterious Stranger ~ Lucky|PRECLASS:1,Gunslinger=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Mysterious Stranger ~ Stranger's Fortune|PRECLASS:1,Gunslinger=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Gunslinger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 806,
+    "record_key": "Gunslinger Archetype ~ Mysterious Stranger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

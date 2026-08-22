@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Filcher ~ Filch",
+    "name": "Filch",
+    "class": "Rogue",
+    "description": "A filcher learns how pluck items off her opponents even in combat. She gains Improved Steal (Advanced Player's Guide 163) as a bonus feat and can use her Sleight of Hand bonus instead of her CMB when performing a steal combat maneuver (Advanced Player's Guide 322). If the filcher gains bonuses on combat maneuver checks from any feats, spells, magic items, or similar effects, they are added to the Sleight of Hand bonus when using the steal maneuver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Filcher ~ Filch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A filcher learns how pluck items off her opponents even in combat. She gains Improved Steal (Advanced Player's Guide 163) as a bonus feat and can use her Sleight of Hand bonus instead of her CMB when performing a steal combat maneuver (Advanced Player's Guide 322). If the filcher gains bonuses on combat maneuver checks from any feats, spells, magic items, or similar effects, they are added to the Sleight of Hand bonus when using the steal maneuver."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Steal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 311,
+    "record_key": "Filcher ~ Filch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

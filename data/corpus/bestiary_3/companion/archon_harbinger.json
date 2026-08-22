@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "ability_keys": [
       "bestiary_3:companion:harbinger_archon_blades",
@@ -26,6 +24,140 @@
     ],
     "race_subtype": "Archon|Extraplanar|Good|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Archon (Harbinger)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Draconic|Infernal|Truespeech"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1|TYPE=Dodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy|3|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Religion)|3|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "5/evil"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KEY",
+        "value": "Archon (Harbinger)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LG"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Blades,Melee.Weapon.Natural.Finesseable,*3,1d4"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Harbinger Archon"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Archon|Extraplanar|Good|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Archon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "T",
@@ -66,16 +198,18 @@
       "Outsider"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
-    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb",
-    "line": 14,
-    "record_key": "Archon (Harbinger)"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
+    "record_key": "Archon (Harbinger)",
+    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

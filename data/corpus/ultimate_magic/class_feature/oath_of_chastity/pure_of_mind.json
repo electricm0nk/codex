@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath of Chastity ~ Pure of Mind",
+    "name": "Pure of Mind",
+    "class": "Paladin",
+    "description": "You gain a +4 sacred bonus on saves against charm effects and figments, and gain a +%1 bonus on Will saving throws.|PureOfMindBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath of Chastity ~ Pure of Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PureOfMindBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 sacred bonus on saves against charm effects and figments, and gain a +%1 bonus on Will saving throws.|PureOfMindBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|PureOfMindBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PureOfMindBonus|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1581,
+    "record_key": "Oath of Chastity ~ Pure of Mind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

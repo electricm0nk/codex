@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 7500.0,
+    "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (bird) 1/day",
+    "key": "Zoic Fetish (Bird)",
+    "name": "Zoic Fetish (Bird)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "WildEmpathy",
+          "4",
+          "TYPE=insight"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Zoic Fetish"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "7500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Bird Zoic Fetish|TIMES=1|CASTERLEVEL=5|Dominate Animal,14"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (bird) 1/day"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_magic_items.lst",
+    "record_key": "Zoic Fetish (Bird)",
+    "sha256": "74597707ea44ca43d75cb45d8f39e2262c2ace0c42be46729626f547aa943653"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

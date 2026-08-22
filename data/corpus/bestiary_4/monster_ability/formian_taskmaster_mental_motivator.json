@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Formian Taskmaster ~ Mental Motivator",
     "delivery": "Supernatural",
@@ -15,19 +13,43 @@
     "owners": [
       "bestiary_4:monster:formian_taskmaster"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Inspire competence or inspire courage for %1 rounds/day|16+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A formian taskmaster can inspire competence or inspire courage as a 7th-level bard (%1 rounds/day). The taskmaster's performance is purely mental and only affects formians from its own hive within telepathic range.|16+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Formian Taskmaster ~ Mental Motivator"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 697,
-    "record_key": "Formian Taskmaster ~ Mental Motivator"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 697,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Formian Taskmaster ~ Mental Motivator",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

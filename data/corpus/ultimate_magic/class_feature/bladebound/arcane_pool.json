@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bladebound ~ Arcane Pool",
+    "name": "Arcane Pool",
+    "class": "Magus",
+    "description": "You have a reservoir of mystical arcane energy that you draw upon to fuel your powers and enhance your weapon. This arcane pool has %1 points. The pool refreshes once per day when you prepare your spells. You can expend 1 point from your arcane pool as a swift action to grant any weapon you are holding a +%2 enhancement bonus for 1 minute. These bonuses can be added to the weapon, stacking with existing weapon enhancement to a maximum of +5. Multiple uses of this ability do not stack with themselves.|MagusArcanePool|MagusArcanePoolBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bladebound ~ Arcane Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Supernatural.Magus Arcane Pool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusArcanePoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusArcanePool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusArcanePoolBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a reservoir of mystical arcane energy that you draw upon to fuel your powers and enhance your weapon. This arcane pool has %1 points. The pool refreshes once per day when you prepare your spells. You can expend 1 point from your arcane pool as a swift action to grant any weapon you are holding a +%2 enhancement bonus for 1 minute. These bonuses can be added to the weapon, stacking with existing weapon enhancement to a maximum of +5. Multiple uses of this ability do not stack with themselves.|MagusArcanePool|MagusArcanePoolBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "These bonuses can be also used to add any of the following weapon properties: Dancing, Flaming, Flaming Burst, Frost, Icy Burst, Keen, Shock, Shocking Burst, Speed, or Vorpal. Adding these properties consumes an amount of bonus equal to the property's base price modifier. These properties are added to any the weapon already has, but duplicates do not stack. If the weapon is not magical, at least a +1 enhancement bonus must be added before any other properties can be added. These bonuses and properties are decided when the arcane pool point is spent and cannot be changed until the next time you use this ability. These bonuses do not function if the weapon is wielded by anyone other than you. You can only enhance one weapon in this way at one time. If you use this ability again, the first use immediately ends.|PREVARGTEQ:MagusArcanePoolLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArcanePool|max(floor(MagusArcanePoolLVL/3),1)+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArcanePoolBonus|min(1+((MagusArcanePoolLVL-1)/4),5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArcanePoolLVL|MagusLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MagusArcanePool"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|MagusArcanePool"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1299,
+    "record_key": "Bladebound ~ Arcane Pool"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

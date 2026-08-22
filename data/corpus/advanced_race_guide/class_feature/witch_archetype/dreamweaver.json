@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Dreamweaver",
+    "name": "Dreamweaver",
+    "class": "Witch Archetype",
+    "description": "A changeling dreamweaver draws upon her hag heritage to ply the dream realms in order to touch mortal minds and souls, for good or ill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Dreamweaver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchHex2.WitchHex6.WitchHex10"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Dreamweaver],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchHex2,TYPE.WitchHex6,TYPE.WitchHex10]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsChangeling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A changeling dreamweaver draws upon her hag heritage to ply the dream realms in order to touch mortal minds and souls, for good or ill."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Class Skills|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Patron|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Spells|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Dream Spinner|PRECLASS:1,Witch=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Dream Thief|PRECLASS:1,Witch=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Dream Possession|PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Hexes|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Major Hexes|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamweaver ~ Grand Hexes|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 819,
+    "record_key": "Witch Archetype ~ Dreamweaver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

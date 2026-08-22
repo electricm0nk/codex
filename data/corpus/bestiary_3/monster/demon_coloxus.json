@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "12",
@@ -24,6 +22,136 @@
     ],
     "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Demon (Coloxus)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Celestial|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|7|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "10/good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KEY",
+        "value": "Demon (Coloxus)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Disguise"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):16"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*2,1d4"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Demon|Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Demon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "SR",
+        "value": "23"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ],
     "size": "M",
     "source_page": "p.71",
     "speeds": [
@@ -37,16 +165,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 70,
-    "record_key": "Demon (Coloxus)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Demon (Coloxus)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

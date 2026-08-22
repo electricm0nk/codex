@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Eldritch Scion Aberrant Bloodline",
+    "name": "Eldritch Scion Aberrant Bloodline",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Bloodrager Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "EldritchScionBloodragerBloodlineChoice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bloodrager Bloodline ~ Aberrant"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlineLVL|BloodragerBloodlineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlineProgressionLVL|BloodragerBloodlineProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlineSpellLvl1|if(Bloodrager_Aberrant_BloodlineProgressionLVL>=7),1,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlineSpellLvl2|if(Bloodrager_Aberrant_BloodlineProgressionLVL>=9),1,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlineSpellLvl3|if(Bloodrager_Aberrant_BloodlineProgressionLVL>=11),1,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlineSpellLvl4|if(Bloodrager_Aberrant_BloodlineProgressionLVL>=13),1,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlineSpells1|if(Bloodrager_CF_BloodlineSpells==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePowers|if(Bloodrager_CF_BloodlinePowers==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePower1|if(Bloodrager_CF_BloodlinePower1==0,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePower4|if((Bloodrager_CF_BloodlinePower4==0&&Bloodrager_Aberrant_BloodlineProgressionLVL>=4),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePower8|if((Bloodrager_CF_BloodlinePower8==0&&Bloodrager_Aberrant_BloodlineProgressionLVL>=8),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePower12|if((Bloodrager_CF_BloodlinePower12==0&&Bloodrager_Aberrant_BloodlineProgressionLVL>=12),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePower16|if((Bloodrager_CF_BloodlinePower16==0&&Bloodrager_Aberrant_BloodlineProgressionLVL>=16),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePower20|if((Bloodrager_CF_BloodlinePower20==0&&Bloodrager_Aberrant_BloodlineProgressionLVL>=20),1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Aberrant_BloodlinePower1Times|BloodragerBloodlinePowerTimes+BloodlinePower1TimesBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3420,
+    "record_key": "Eldritch Scion Aberrant Bloodline"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

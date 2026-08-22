@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle ~ Apocalypse Mystery",
+    "name": "Apocalypse Mysteries",
+    "class": "Oracle",
+    "description": "You draw upon the divine mystery of Apocalypse to grant your spells and powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Apocalypse Mystery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleMystery"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ApocalypseMysteriesQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw upon the divine mystery of Apocalypse to grant your spells and powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Apocalypse Mystery ~ Final Revelation|PREMULT:2,[PRECLASS:1,Oracle=20],[PREVAREQ:Oracle_CF_FinalRevelation,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Apocalypse Mysteries Class Skills|PREVAREQ:Oracle_CF_MysterySkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Apocalypse Mystery Revelation|OracleMysteryLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ApocalypseMysteriesQualify|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|Deathwatch|PREMULT:2,[PRECLASS:1,Oracle=2],[PREVAREQ:Oracle_CF_MysterySpell2,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Summon Swarm|PREMULT:2,[PRECLASS:1,Oracle=4],[PREVAREQ:Oracle_CF_MysterySpell4,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Explosive Runes|PREMULT:2,[PRECLASS:1,Oracle=6],[PREVAREQ:Oracle_CF_MysterySpell6,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Ice Storm|PREMULT:2,[PRECLASS:1,Oracle=8],[PREVAREQ:Oracle_CF_MysterySpell8,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|Insect Plague|PREMULT:2,[PRECLASS:1,Oracle=10],[PREVAREQ:Oracle_CF_MysterySpell10,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=6|Circle of Death|PREMULT:2,[PRECLASS:1,Oracle=12],[PREVAREQ:Oracle_CF_MysterySpell12,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=7|Vision|PREMULT:2,[PRECLASS:1,Oracle=14],[PREVAREQ:Oracle_CF_MysterySpell14,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Incendiary Cloud|PREMULT:2,[PRECLASS:1,Oracle=16],[PREVAREQ:Oracle_CF_MysterySpell16,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Meteor Swarm|PREMULT:2,[PRECLASS:1,Oracle=18],[PREVAREQ:Oracle_CF_MysterySpell18,0]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 93,
+    "record_key": "Oracle ~ Apocalypse Mystery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

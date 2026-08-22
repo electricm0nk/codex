@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Trade Subdomain ~ Silver-Tongued Haggler",
+    "name": "Silver-Tongued Haggler",
+    "class": "Trade Subdomain",
+    "description": "Whenever you make a Bluff, Diplomacy or Sense Motive check, you can, as a free action, grant yourself a +%1 bonus on the roll. You can use this ability %2 times per day.|max(floor(DomainTravelLVL/2),1)|DomainTravelTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trade Subdomain ~ Silver-Tongued Haggler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you make a Bluff, Diplomacy or Sense Motive check, you can, as a free action, grant yourself a +%1 bonus on the roll. You can use this ability %2 times per day.|max(floor(DomainTravelLVL/2),1)|DomainTravelTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|DomainTravelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainTravelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1806,
+    "record_key": "Trade Subdomain ~ Silver-Tongued Haggler"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

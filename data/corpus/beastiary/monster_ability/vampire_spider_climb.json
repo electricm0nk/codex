@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Vampire ~ Spider Climb",
     "delivery": "Extraordinary",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:vampire_spawn"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A vampire can climb sheer surfaces as though under the effects of a spider climb spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire ~ Spider Climb"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyMovement"
+      }
+    ],
     "source_page": "p.271",
     "traits": [
       "ModifyMovement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1219,
-    "record_key": "Vampire ~ Spider Climb"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1219,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Vampire ~ Spider Climb",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

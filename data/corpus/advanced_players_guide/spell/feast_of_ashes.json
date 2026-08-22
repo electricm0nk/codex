@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Feast of Ashes",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You curse the target with a hunger no food can assuage. On a failed saving throw, the target begins to starve (see page 444 of the Core Rulebook). The effects of this spell cannot inflict more nonlethal damage than the target has hit points. No amount of eating can counter the effect and, further, even attempting to eat causes the target to become nauseated for 1 round unless they make a DC 12 Fortitude save. The target still experiences the other normal effects of anything consumed (such as poisons or potions).  Feast of ashes can be removed with a break enchantment, limited wish, miracle, remove curse, or wish spell, but effects suffered as a result of starvation must be healed by normal means.",
-    "full_text": true
+    "full_text": true,
+    "key": "Feast of Ashes",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Witch=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "A target starves with an insatiable hunger.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You curse the target with a hunger no food can assuage. On a failed saving throw, the target begins to starve (see page 444 of the Core Rulebook). The effects of this spell cannot inflict more nonlethal damage than the target has hit points. No amount of eating can counter the effect and, further, even attempting to eat causes the target to become nauseated for 1 round unless they make a DC 12 Fortitude save. The target still experiences the other normal effects of anything consumed (such as poisons or potions).  Feast of ashes can be removed with a break enchantment, limited wish, miracle, remove curse, or wish spell, but effects suffered as a result of starvation must be healed by normal means.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) days (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a pinch of ash)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/feastOfAshes.html#_feast-of-ashes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 107,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1942,
-    "record_key": "Feast of Ashes"
+    "record_key": "Feast of Ashes",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

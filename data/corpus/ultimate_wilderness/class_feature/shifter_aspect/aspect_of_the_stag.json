@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Stag",
+    "name": "Aspect of the Stag",
+    "class": "Shifter Aspect",
+    "description": "The stag can outrun or stand its ground against almost any foe. This aspect offers majestic grace and swift speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Stag"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Stag_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterStagAspectLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The stag can outrun or stand its ground against almost any foe. This aspect offers majestic grace and swift speed."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Stag ~ Minor|PREVARLT:ReplaceMinorShifterAspect,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Stag ~ Major|PREVARGTEQ:ShifterAspectLVL,4|PREVARLT:ReplaceMajorShifterAspect,1|PREVARGTEQ:ShifterWildShape,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterStagAspectLVL|ShifterAspectLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 40,
+    "record_key": "Shifter Aspect ~ Stag"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

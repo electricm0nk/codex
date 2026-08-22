@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Gloomwing ~ Implant",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:gloomwing"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Implant"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GloomwingImplantDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GloomwingImplantDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Implant)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GloomwingImplantDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A gloomwing can lay eggs inside a Small or larger helpless or dead creature as a full-round action that provokes attacks of opportunity.  A creature implanted with gloomwing eggs must make a DC %1 Fortitude save each morning to avoid suffering 1d4 points of Constitution damage.  Within 24 hours of a creature's death from this damage, 1d4 young tenebrous worms (see page 259) emerge from the corpse, devouring it completely in the process.  The eggs can be destroyed via any effect that cures disease, but the eggs themselves are not treated as a disease for the purposes of what creatures are immune to this effect.|GloomwingImplantDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Gloomwing ~ Implant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.133",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 583,
-    "record_key": "Gloomwing ~ Implant"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 583,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Gloomwing ~ Implant",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Armored Hulk ~ Improved Armored Swiftness",
+    "name": "Improved Armored Swiftness",
+    "class": "Barbarian",
+    "description": "At 5th level, an armored hulk's land speed is faster than the norm for her race by +10 feet. This benefit applies when she is wearing any armor, including heavy armor, but not while carrying a heavy load. Apply this bonus before modifying the armored hulk's speed because of any load carried or armor worn. This bonus stacks with any other bonuses to the barbarian's land speed. This ability replaces improved uncanny dodge(Encumbered=%1)(WearingArmor=%2)(MoveBonus=%3).|EncumberedHeavy|WearingArmor|IASMoveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armored Hulk ~ Improved Armored Swiftness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EncumberedHeavy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WearingArmor|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IASMoveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, an armored hulk's land speed is faster than the norm for her race by +10 feet. This benefit applies when she is wearing any armor, including heavy armor, but not while carrying a heavy load. Apply this bonus before modifying the armored hulk's speed because of any load carried or armor worn. This bonus stacks with any other bonuses to the barbarian's land speed. This ability replaces improved uncanny dodge(Encumbered=%1)(WearingArmor=%2)(MoveBonus=%3).|EncumberedHeavy|WearingArmor|IASMoveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|IASMoveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EncumberedHeavy|1|PREVARGT:ENCUMBERANCE,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WearingArmor|1|PREEQUIP:1,TYPE=Armor.Heavy,TYPE=Armor.Light,TYPE.Armor.Medium"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IASMoveBonus|10|PREVAREQ:var(\"COUNT[EQTYPE.ARMOR]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 318,
+    "record_key": "Armored Hulk ~ Improved Armored Swiftness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

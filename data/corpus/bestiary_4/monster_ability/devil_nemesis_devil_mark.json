@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Devil (Nemesis) ~ Devil Mark",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:devil_nemesis"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An advodaza can grant worthy servants a measure of its power. As a full-round action, an advodaza can touch a willing creature, marking it with a unique symbol. For as long as the creature is marked, it gains a spell-like ability it can use once per day. This spell-like ability comes from the advodaza's chosen domain (see false divinity). The target can also telepathically communicate with the advodaza over any distance while on the same plane. An advodaza can dismiss its mark as a standard action, no matter where the bearer is. It can also, as a standard action, cause pain to a mark bearer that deals 6d6 points of damage with no saving throw. An advodaza can mark multiple creatures, up to a number equal to its Hit Dice (typically 18)."
+      },
+      {
+        "key": "KEY",
+        "value": "Devil (Nemesis) ~ Devil Mark"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 472,
-    "record_key": "Devil (Nemesis) ~ Devil Mark"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 472,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Devil (Nemesis) ~ Devil Mark",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

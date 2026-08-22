@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Blackstar Bomb",
+    "name": "Blackstar Bomb*",
+    "class": "Discovery",
+    "description": "This bomb crushes the target like a void bomb, then repels nearby creatures with a burst of gravity. The target takes damage as if hit by a void bomb. All other creatures within 5 feet of the target are subject to a bull rush. The alchemist uses his alchemist class level in place of his Combat Maneuver Bonus, and adds his Intelligence modifier in place of his Strength or Dexterity modifier to resolve the bull rush attempts. Creatures moved by a blackstar bomb are pushed directly away from the target's square.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Blackstar Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Void Bomb"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Drow,RACESUBTYPE=Drow"
+      },
+      {
+        "key": "DESC",
+        "value": "This bomb crushes the target like a void bomb, then repels nearby creatures with a burst of gravity. The target takes damage as if hit by a void bomb. All other creatures within 5 feet of the target are subject to a bull rush. The alchemist uses his alchemist class level in place of his Combat Maneuver Bonus, and adds his Intelligence modifier in place of his Strength or Dexterity modifier to resolve the bull rush attempts. Creatures moved by a blackstar bomb are pushed directly away from the target's square."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 32,
+    "record_key": "Discovery ~ Blackstar Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

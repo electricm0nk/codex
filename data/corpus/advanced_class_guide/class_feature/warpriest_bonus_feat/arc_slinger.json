@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Arc Slinger",
+    "name": "Arc Slinger",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can twirl your sling in a way that maximizes its effectiveness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Arc Slinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Point-Blank Shot"
+      },
+      {
+        "key": "PREWEAPONPROF",
+        "value": "1,Sling,Sling Staff (Halfling)"
+      },
+      {
+        "key": "DESC",
+        "value": "You can twirl your sling in a way that maximizes its effectiveness."
+      },
+      {
+        "key": "DESC",
+        "value": " When using a sling or sling staff, you reduce your penalty on ranged attack rolls due to range by 2. Point-Blank Shot's damage bonus applies within the first normal range increment of your sling (50 feet) or sling staff (80 feet)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Arc Slinger"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4407,
+    "record_key": "Warpriest Bonus Feat ~ Arc Slinger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

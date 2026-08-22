@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sun Blessing ~ Cleansing Fire",
+    "name": "Cleansing Fire",
+    "class": "Sun Blessing",
+    "description": "You can touch a weapon and grant it either the flaming or undead-bane weapon special ability for 1 minute. If you spend two uses of your blessing when activating this ability, the weapon can have both weapon special abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sun Blessing ~ Cleansing Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a weapon and grant it either the flaming or undead-bane weapon special ability for 1 minute. If you spend two uses of your blessing when activating this ability, the weapon can have both weapon special abilities."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2280,
+    "record_key": "Sun Blessing ~ Cleansing Fire"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

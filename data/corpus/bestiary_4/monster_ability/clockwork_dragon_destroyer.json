@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Clockwork Dragon ~ Destroyer",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:clockwork_dragon"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "These clockwork dragons are used as highly mobile and powerful siege engines. While the destroyer clockwork dragon lacks a breath weapon, as a full-round action taken while on solid ground, it can move its gears to pull its wings apart and to rise up as a heavy bombard (Ultimate Combat 161). The body of the clockwork is used as the platform for the bombard, and the internal workings of the clockwork can load the bombard without a crew, though it still takes five full-round actions on the part of the clockwork to load the bombard. The clockwork dragon can also take the actions necessary to aim the bombard. A clockwork dragon carries enough ammunition to fire the bombard 10 times."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Dragon ~ Destroyer"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 379,
-    "record_key": "Clockwork Dragon ~ Destroyer"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 379,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Clockwork Dragon ~ Destroyer",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

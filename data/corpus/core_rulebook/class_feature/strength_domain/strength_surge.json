@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Strength Domain ~ Strength Surge",
+    "name": "Strength Surge",
+    "class": "Strength Domain",
+    "description": "As a standard action, you can touch a creature to give it great strength. For 1 round, the target gains a +%1 enhancement bonus to melee attacks. combat maneuver checks that rely on Strength, Stregth-based skills, and Strength checks. You can use this ability %2 times per day.|max(DomainStrengthLVL/2,1)|StrengthSurgeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strength Domain ~ Strength Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthSurgeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can touch a creature to give it great strength. For 1 round, the target gains a +%1 enhancement bonus to melee attacks. combat maneuver checks that rely on Strength, Stregth-based skills, and Strength checks. You can use this ability %2 times per day.|max(DomainStrengthLVL/2,1)|StrengthSurgeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthSurgeTimes|DomainStrengthTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|StrengthSurgeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|StrengthSurgeTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3259,
+    "record_key": "Strength Domain ~ Strength Surge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

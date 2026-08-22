@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "corpus_key": "Crocodile ~ Death Roll",
     "delivery": "Extraordinary",
@@ -14,6 +12,56 @@
     "owners": [
       "core_rulebook:companion:companion_crocodile_alligator"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3 plus trip)|DeathRollDice|DeathRollDie|DeathRollDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathRollDamage|max(STR,0)*1.5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathRollDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathRollDie|6"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathRollDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathRollDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathRollDie|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When grappling a foe of its size or smaller, a crocodile can perform a death roll upon making a successful grapple check. As it clings to its foe, it tucks in its legs and rolls rapidly, twisting and wrenching its victim. The crocodile inflicts its bite damage and knocks the creature prone. If successful, the crocodile maintains its grapple."
+      },
+      {
+        "key": "KEY",
+        "value": "Crocodile ~ Death Roll"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Special Ability.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.51",
     "stat_adjustments": [],
@@ -24,16 +72,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 188,
-    "record_key": "Crocodile ~ Death Roll"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 188,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Crocodile ~ Death Roll",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

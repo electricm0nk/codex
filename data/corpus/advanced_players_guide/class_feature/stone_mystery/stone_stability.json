@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stone Mystery ~ Stone Stability",
+    "name": "Stone Stability",
+    "class": "Stone Mystery",
+    "description": "You receive a +4 bonus to your Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground. At 5th level, you gain Improved Trip as a bonus feat. At 10th level, you gain Greater Trip as a bonus feat. You do not need to meet the prerequisites to gain these feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stone Mystery ~ Stone Stability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.StoneRevelation.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You receive a +4 bonus to your Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground. At 5th level, you gain Improved Trip as a bonus feat. At 10th level, you gain Greater Trip as a bonus feat. You do not need to meet the prerequisites to gain these feats."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Trip|PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Trip|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_BullRush,CMD_Trip|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 678,
+    "record_key": "Stone Mystery ~ Stone Stability"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

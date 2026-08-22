@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Detective ~ Investigator Talents",
+    "name": "Investigator Talents",
+    "class": "Investigator",
+    "description": "A psychic detective selects investigator talents as normal, except she cannot select the alchemist discovery investigator talent. She can select the Expanded Phrenic Pool* feat as a discovery even though she doesn't meet that feat's prerequisites, and she can select an extra phrenic amplification once as a discovery. The following investigator talents, which can be found on pages 32-34 of the Pathfinder RPG Advanced Class Guide, complement the psychic detective archetype: confusing strike, device talent, effortless aid, hidden agendas, inspired intelligence, item lore, and unconventional inspiration. This ability alters investigator talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Detective ~ Investigator Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Detective Class Feature.Investigator Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychic detective selects investigator talents as normal, except she cannot select the alchemist discovery investigator talent. She can select the Expanded Phrenic Pool* feat as a discovery even though she doesn't meet that feat's prerequisites, and she can select an extra phrenic amplification once as a discovery. The following investigator talents, which can be found on pages 32-34 of the Pathfinder RPG Advanced Class Guide, complement the psychic detective archetype: confusing strike, device talent, effortless aid, hidden agendas, inspired intelligence, item lore, and unconventional inspiration. This ability alters investigator talents."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1763,
+    "record_key": "Psychic Detective ~ Investigator Talents"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

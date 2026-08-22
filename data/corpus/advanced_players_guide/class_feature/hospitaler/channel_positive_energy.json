@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hospitaler ~ Channel Positive Energy",
+    "name": "Channel Positive Energy",
+    "class": "Paladin",
+    "description": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|PaladinChannelPositiveEnergyDice|PaladinChannelPositiveEnergyDieSize|PaladinChannelPositiveEnergyDC|PaladinChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hospitaler ~ Channel Positive Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.PaladinClassFeatures.SpecialQuality.Supernatural.Channel Energy.Channel Energy Positive.Channel Positive Energy.PaladinChannelPositiveEnergy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelEnergyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelPositiveEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelPositiveEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelPositiveEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinChannelPositiveEnergyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|PaladinChannelPositiveEnergyDice|PaladinChannelPositiveEnergyDieSize|PaladinChannelPositiveEnergyDC|PaladinChannelEnergyTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Positive Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelEnergyTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelPositiveEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelPositiveEnergyDice|(PaladinChannelPositiveEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelPositiveEnergyDC|10+(PaladinChannelPositiveEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelPositiveEnergyLVL|PaladinLVL-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|PaladinChannelPositiveEnergyDice|PaladinChannelPositiveEnergyDieSize|PaladinChannelPositiveEnergyDC|PaladinChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PaladinChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2488,
+    "record_key": "Hospitaler ~ Channel Positive Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

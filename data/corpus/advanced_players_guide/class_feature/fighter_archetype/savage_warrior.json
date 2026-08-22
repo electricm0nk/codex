@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Savage Warrior",
+    "name": "Savage Warrior",
+    "class": "Fighter Archetype",
+    "description": "Warriors' might is not measured only by their skill with steel, but also by their ability to inflict death with fang and claw, horn and hoof, and every exotic appendage the natural and unnatural world has to offer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Savage Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining_ALL.FighterWeaponMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Savage Warrior],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterWeaponMastery]"
+      },
+      {
+        "key": "DESC",
+        "value": "Warriors' might is not measured only by their skill with steel, but also by their ability to inflict death with fang and claw, horn and hoof, and every exotic appendage the natural and unnatural world has to offer."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter Savage Warrior ~ Spark of Life|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter Savage Warrior ~ Natural Savagery|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter Savage Warrior ~ Savage Charge|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter Savage Warrior ~ Careful Claw|PRECLASS:1,Fighter=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter Savage Warrior ~ Greater Savage Charge|PRECLASS:1,Fighter=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter Savage Warrior ~ Natural Weapon Mastery|PRECLASS:1,Fighter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2109,
+    "record_key": "Fighter Archetype ~ Savage Warrior"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

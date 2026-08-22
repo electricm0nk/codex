@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavern Sniper ~ Sniper Training",
+    "name": "Sniper Training",
+    "class": "Fighter",
+    "description": "The cavern sniper chooses the bow or crossbow weapon group and gains a bonus on attack rolls and damage rolls.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavern Sniper ~ Sniper Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavern sniper chooses the bow or crossbow weapon group and gains a bonus on attack rolls and damage rolls."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Sniper Training Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 499,
+    "record_key": "Cavern Sniper ~ Sniper Training"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

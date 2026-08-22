@@ -1,0 +1,92 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Grab ~ Bite",
+    "delivery": "Extraordinary",
+    "description": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. Unless otherwise noted, grab can only be used on creatures of a size equal to or smaller than you.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:grab_bite",
+    "name": "Grab",
+    "owners": [
+      "bestiary_2:monster:agathion_leonal",
+      "bestiary_2:monster:charybdis",
+      "bestiary_2:monster:chupacabra",
+      "bestiary_2:monster:daemon_astradaemon",
+      "bestiary_2:monster:daemon_hydrodaemon",
+      "bestiary_2:monster:dinosaur_allosaurus",
+      "bestiary_2:monster:dinosaur_tylosaurus",
+      "bestiary_2:monster:dragonfly_giant",
+      "bestiary_2:monster:gar",
+      "bestiary_2:monster:gar_giant",
+      "bestiary_2:monster:gremlin_nuglub",
+      "bestiary_2:monster:hippopotamus_behemoth",
+      "bestiary_2:monster:mandragora",
+      "bestiary_2:monster:moonflower",
+      "bestiary_2:monster:mosquito_giant",
+      "bestiary_2:monster:nightshade_nightcrawler",
+      "bestiary_2:monster:nightshade_nightwave",
+      "bestiary_2:monster:rast",
+      "bestiary_2:monster:snake_giant_anaconda",
+      "bestiary_2:monster:toad_giant",
+      "bestiary_2:monster:toad_glacier",
+      "bestiary_2:monster:turtle_giant_snapping",
+      "bestiary_2:monster:water_orm",
+      "bestiary_2:monster:wendigo"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If You hit with the indicated attack, you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. Unless otherwise noted, grab can only be used on creatures of a size equal to or smaller than you.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Grab ~ Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2087,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Grab ~ Bite",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

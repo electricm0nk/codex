@@ -1,0 +1,81 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You make the targets light enough to be carried by wind. Creatures affected by this spell suffer cumulative penalties for attacking as if under the effects of levitate unless they have a fly speed. Treat each target as two size categories lighter for the purposes of being checked or blown away by wind. If a target has a fly speed, it can fly overland at the wind's speed in the same direction as the wind by succeeding at a DC 20 Fly check. If a creature flying overland this way attempts to change direction, it risks being blown away as usual. By linking hands or creating a connection with rope, creatures affected by this spell can be towed through the air by a flying creature as if each weighed only one-eighth its actual weight.",
+    "key": "Waft",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Magus,Occultist,Shaman,Sorcerer,Spiritualist,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "You make the targets light enough to be carried by wind. Creatures affected by this spell suffer cumulative penalties for attacking as if under the effects of levitate unless they have a fly speed. Treat each target as two size categories lighter for the purposes of being checked or blown away by wind. If a target has a fly speed, it can fly overland at the wind's speed in the same direction as the wind by succeeding at a DC 20 Fly check. If a creature flying overland this way attempts to change direction, it risks being blown away as usual. By linking hands or creating a connection with rope, creatures affected by this spell can be towed through the air by a flying creature as if each weighed only one-eighth its actual weight."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsGathlain=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Up to (CASTERLEVEL/2) creatures, no two of which can be more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 122,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Waft",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

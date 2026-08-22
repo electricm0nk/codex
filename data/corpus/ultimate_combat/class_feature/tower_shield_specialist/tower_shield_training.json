@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tower Shield Specialist ~ Tower Shield Training",
+    "name": "Tower Shield Training",
+    "class": "Fighter",
+    "description": "At 3rd level, a tower shield specialist gains armor training as normal, but while he employs a tower shield, the armor penalty is reduced by 3 and the maximum Dexterity bonus allowed by his armor increases by 2. The benefit increases every four levels thereafter as per standard armor training; if the tower shield specialist is not employing a tower shield, the benefits to armor training revert to the normal bonuses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tower Shield Specialist ~ Tower Shield Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a tower shield specialist gains armor training as normal, but while he employs a tower shield, the armor penalty is reduced by 3 and the maximum Dexterity bonus allowed by his armor increases by 2. The benefit increases every four levels thereafter as per standard armor training; if the tower shield specialist is not employing a tower shield, the benefits to armor training revert to the normal bonuses."
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Tower],[PREVARGTEQ:ArmorTrainingTier,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|2|PREEQUIP:1,TYPE=Tower"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 753,
+    "record_key": "Tower Shield Specialist ~ Tower Shield Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

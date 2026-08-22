@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler ~ Nimble",
+    "name": "Nimble",
+    "class": "Swashbuckler",
+    "description": "A swashbuckler gains a +%1 dodge bonus to AC while wearing light or no armor. Anything that causes the swashbuckler to lose her Dexterity bonus to AC also causes the swashbuckler to lose this dodge bonus.|SwashbucklerDodgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler ~ Nimble"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_2c"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwashbucklerDodgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A swashbuckler gains a +%1 dodge bonus to AC while wearing light or no armor. Anything that causes the swashbuckler to lose her Dexterity bonus to AC also causes the swashbuckler to lose this dodge bonus.|SwashbucklerDodgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|SwashbucklerDodgeBonus|TYPE=Dodge|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.IS.MEDIUM]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwashbucklerDodgeBonus|(SwashbucklerLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1957,
+    "record_key": "Swashbuckler ~ Nimble"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

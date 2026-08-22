@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Quick Identification",
+    "name": "Quick Identification",
+    "class": "Pathfinder Savant",
+    "description": "You may use identify as a swift action. You may do this %1/day.|PaSIdentifyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Quick Identification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaSIdentifyTimes|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use identify as a swift action. You may do this %1/day.|PaSIdentifyTimes"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Pathfinder Savant|TIMES=PaSIdentifyTimes|CASTERLEVEL=PaSLvl|Identify"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 403,
+    "record_key": "Pathfinder Savant ~ Quick Identification"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

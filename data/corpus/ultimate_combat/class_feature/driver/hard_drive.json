@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Driver ~ Hard Drive",
+    "name": "Hard Drive",
+    "class": "Rogue",
+    "description": "When driving a vehicle that uses a group of animals or magical beasts as muscle propulsion, the DCs of all driving checks are reduced by 2, the maximum speed of the vehicle increases by 10 feet, and the acceleration increases by 5 feet. This ability takes the place of trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Driver ~ Hard Drive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When driving a vehicle that uses a group of animals or magical beasts as muscle propulsion, the DCs of all driving checks are reduced by 2, the maximum speed of the vehicle increases by 10 feet, and the acceleration increases by 5 feet. This ability takes the place of trapfinding."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1698,
+    "record_key": "Driver ~ Hard Drive"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

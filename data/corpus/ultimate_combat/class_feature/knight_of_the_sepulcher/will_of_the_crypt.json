@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knight Of The Sepulcher ~ Will Of The Crypt",
+    "name": "Will of the Crypt",
+    "class": "Knight Of The Sepulcher",
+    "description": "At 11th level, a knight of the sepulcher's bonus on saving throws against mind affecting effects and death effects increases to +4. This ability replaces the aura of vengeance ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knight Of The Sepulcher ~ Will Of The Crypt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a knight of the sepulcher's bonus on saving throws against mind affecting effects and death effects increases to +4. This ability replaces the aura of vengeance ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnightSepulcherSaveBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1494,
+    "record_key": "Knight Of The Sepulcher ~ Will Of The Crypt"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

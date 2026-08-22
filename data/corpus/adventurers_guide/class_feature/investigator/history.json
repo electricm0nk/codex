@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Chronicler's Insight ~ History",
+    "name": "History",
+    "class": "Investigator",
+    "description": "The investigator can study a foe using studied combat a second time in 24 hours as a full-round action without expending inspiration. Subsequent uses of studied combat require inspiration as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Chronicler's Insight ~ History"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ChroniclersInsight.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "The investigator can study a foe using studied combat a second time in 24 hours as a full-round action without expending inspiration. Subsequent uses of studied combat require inspiration as normal."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1157,
+    "record_key": "Investigator ~ Chronicler's Insight ~ History"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

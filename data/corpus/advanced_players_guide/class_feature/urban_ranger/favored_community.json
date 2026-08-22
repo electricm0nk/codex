@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Urban Ranger ~ Favored Community",
+    "name": "Favored Community",
+    "class": "Ranger",
+    "description": "At 3rd level, the urban ranger forms a bond with a community. While inside the limits of this community, he gains a +2 bonus on initiative checks and Knowledge (local), Perception, Stealth, and Survival skill checks. An urban ranger traveling through his favored community leaves no trail and cannot be tracked (although he may leave a trail if he so desires). At 8th level, and every five levels thereafter, an urban ranger may select an additional favored community. In addition, at each such interval, the skill bonus and initiative bonus in any one favored community (including the one just selected, if so desired) increases by +2. For the purposes of this ability, a community is any settlement consisting of 100 or more individuals. The community may be larger than this minimum. Outlying farms, fields, and houses are not considered part of a community. This ability replaces favored terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Urban Ranger ~ Favored Community"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerFavoredTerrain"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the urban ranger forms a bond with a community. While inside the limits of this community, he gains a +2 bonus on initiative checks and Knowledge (local), Perception, Stealth, and Survival skill checks. An urban ranger traveling through his favored community leaves no trail and cannot be tracked (although he may leave a trail if he so desires). At 8th level, and every five levels thereafter, an urban ranger may select an additional favored community. In addition, at each such interval, the skill bonus and initiative bonus in any one favored community (including the one just selected, if so desired) increases by +2. For the purposes of this ability, a community is any settlement consisting of 100 or more individuals. The community may be larger than this minimum. Outlying farms, fields, and houses are not considered part of a community. This ability replaces favored terrain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ranger Favored Community"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2876,
+    "record_key": "Urban Ranger ~ Favored Community"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

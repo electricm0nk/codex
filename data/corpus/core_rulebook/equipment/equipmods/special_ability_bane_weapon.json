@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Bane ~ Weapon",
     "category": "equipmods",
-    "name": "Bane",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "A bane weapon excels against certain foes. Against a designated foe, the weapon's enhancement bonus is +2 better than its actual bonus. It also deals an extra 2d6 points of damage against such foes. The weapon's designated foe is determined randomly from a table that includes creature types such as aberrations, animals, constructs, dragons, fey, humanoids, magical beasts, monstrous humanoids, oozes, outsiders, plants, undead, and vermin."
+    "description": "A bane weapon excels against certain foes. Against a designated foe, the weapon's enhancement bonus is +2 better than its actual bonus. It also deals an extra 2d6 points of damage against such foes. The weapon's designated foe is determined randomly from a table that includes creature types such as aberrations, animals, constructs, dragons, fey, humanoids, magical beasts, monstrous humanoids, oozes, outsiders, plants, undead, and vermin.",
+    "key": "Special Ability ~ Bane ~ Weapon",
+    "name": "Bane",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bane ~ Weapon"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NONAME"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.469"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,WeaponEnhancement],[PRETYPE:1,Weapon,Ammunition]"
+      },
+      {
+        "key": "SPROP",
+        "value": "%CHOICE weapons have +2 enhancement bonus and deal +2d6 bonus damage against the chosen foe"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Aberration Bane|Animal Bane|Construct Bane|Dragon Bane|Fey Bane|Aquatic Humanoid Bane|Dwarf Bane|Elf Bane|Giant Bane|Gnoll Bane|Gnome Bane|Goblinoid Bane|Halfling Bane|Human Bane|Reptilian Bane|Orc Bane|Magical Beast Bane|Monstrous Humanoid Bane|Ooze Bane|Air Outsider Bane|Chaotic Outsider Bane|Earth Outsider Bane|Evil Outsider Bane|Fire Outsider Bane|Good Outsider Bane|Lawful Outsider Bane|Water Outsider Bane|Plant Bane|Undead Bane|Vermin Bane|TITLE=Designated Foe"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/bane/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/bane/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 232,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Bane ~ Weapon",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

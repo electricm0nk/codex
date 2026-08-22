@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wildborn ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Barbarian",
+    "description": "At 4th level, 10th level and 16th level, a wildborn can choose a bonus feat from the following rather than select a rage power: Alertness, Animal Affinity, Athletic, Great Fortitude, Improvised Weapon Mastery, Iron Will, Lightning Reflexes, Self-Sufficient, Stealthy, or Throw Anything. This alters rage powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildborn ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.WildbornClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, 10th level and 16th level, a wildborn can choose a bonus feat from the following rather than select a rage power: Alertness, Animal Affinity, Athletic, Great Fortitude, Improvised Weapon Mastery, Iron Will, Lightning Reflexes, Self-Sufficient, Stealthy, or Throw Anything. This alters rage powers."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wildborn Rage Power Choice|1|PRECLASS:1,Barbarian=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wildborn Rage Power Choice|1|PRECLASS:1,Barbarian=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wildborn Rage Power Choice|1|PRECLASS:1,Barbarian=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 226,
+    "record_key": "Wildborn ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

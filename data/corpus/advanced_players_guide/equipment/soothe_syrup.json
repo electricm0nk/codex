@@ -1,27 +1,57 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Soothe Syrup",
     "category": "General",
-    "name": "Soothe Syrup",
     "cost_gp": 25.0,
-    "weight": 0.5,
-    "description": "A sweet, wholesome-tasting blue liquid granting a +5 alchemical bonus on saves against nausea and sickened effects for 1 hour after drinking."
+    "description": "A sweet, wholesome-tasting blue liquid granting a +5 alchemical bonus on saves against nausea and sickened effects for 1 hour after drinking.",
+    "key": "Soothe Syrup",
+    "name": "Soothe Syrup",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Craft DC|15"
+      }
+    ],
+    "weight": 0.5
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 66,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_general.lst",
+    "record_key": "Soothe Syrup",
+    "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

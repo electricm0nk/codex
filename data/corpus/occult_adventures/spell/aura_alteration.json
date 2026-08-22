@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Masks a creature's or an object's alignment, emotion, health, and magic auras.",
+    "key": "Aura Alteration",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Mesmerist=3|Psychic,Spiritualist=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Masks a creature's or an object's alignment, emotion, health, and magic auras."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Aura Alteration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One object or willing creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Aura Alteration",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

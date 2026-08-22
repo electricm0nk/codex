@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Bloodrager Bloodline ~ Bonus Spells",
+    "name": "Arcane Bloodrager Bloodline ~ Bonus Spells",
+    "class": "Arcane Bloodrager Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=1|Magic Missile|PREVAREQ:Bloodrager_CF_BloodlineSpell1,0|PREVARGTEQ:Bloodrager_Arcane_BloodlineSpellLvl1,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=2|Invisibility|PREVAREQ:Bloodrager_CF_BloodlineSpell2,0|PREVARGTEQ:Bloodrager_Arcane_BloodlineSpellLvl2,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Lightning Bolt|PREVAREQ:Bloodrager_CF_BloodlineSpell3,0|PREVARGTEQ:Bloodrager_Arcane_BloodlineSpellLvl3,1"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=4|Dimension Door|PREVAREQ:Bloodrager_CF_BloodlineSpell4,0|PREVARGTEQ:Bloodrager_Arcane_BloodlineSpellLvl4,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 630,
+    "record_key": "Arcane Bloodrager Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

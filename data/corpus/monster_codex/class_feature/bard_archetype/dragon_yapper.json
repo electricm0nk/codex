@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Dragon Yapper",
+    "name": "Dragon Yapper",
+    "class": "Bard Archetype",
+    "description": "Kobolds' yammering songs distract opponents in combat, hindering their ability to attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Dragon Yapper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Dragon Yapper],[!PREFACT:1,ABILITIES,Bard_Archetype_Fascinate=True,Bard_Archetype_DirgeOfDoom=True,Bard_Archetype_VersatilePerformance2=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Kobolds' yammering songs distract opponents in combat, hindering their ability to attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dragon Yapper ~ Yapping Song|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dragon Yapper ~ Frightful Song|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Versatile Performance ~ Sing|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance2|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 60,
+    "record_key": "Bard Archetype ~ Dragon Yapper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

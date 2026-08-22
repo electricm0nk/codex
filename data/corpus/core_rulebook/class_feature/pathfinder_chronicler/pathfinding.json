@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Pathfinding",
+    "name": "Pathfinding",
+    "class": "Pathfinder Chronicler",
+    "description": "Beginning at 2nd level, a Pathfinder chronicler develops an excellent sense of direction and skill at leading others through difficult terrain or by following ancient maps. A Pathfinder chronicler gains a +5 bonus on Survival checks made to avoid becoming lost and to Intelligence checks to escape a maze spell. In addition, she always uses the \"road or trail\" overland movement modifier even when in trackless terrain, whether on foot or mounted. With a DC 15 Survival check, the Pathfinder chronicler can extend this benefit to one companion per class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Pathfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Beginning at 2nd level, a Pathfinder chronicler develops an excellent sense of direction and skill at leading others through difficult terrain or by following ancient maps. A Pathfinder chronicler gains a +5 bonus on Survival checks made to avoid becoming lost and to Intelligence checks to escape a maze spell. In addition, she always uses the \"road or trail\" overland movement modifier even when in trackless terrain, whether on foot or mounted. With a DC 15 Survival check, the Pathfinder chronicler can extend this benefit to one companion per class level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.390"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3053,
+    "record_key": "Pathfinder Chronicler ~ Pathfinding"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

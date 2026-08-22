@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Stone Call",
-    "school": "Conjuration",
-    "level": 2,
     "description": "A rain of dirt, gravel, and small pebbles fills the area, dealing 2d6 points of bludgeoning damage to every creature in the area. This damage only occurs once, when the spell is cast.  For the remaining duration of the spell, this debris covers the ground, making the entire area difficult terrain. At the end of the duration, the rocks disappear, leaving no aftereffects (other than the damage dealt).",
-    "full_text": true
+    "full_text": true,
+    "key": "Stone Call",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "2d6 damage to all creatures in area.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "A rain of dirt, gravel, and small pebbles fills the area, dealing 2d6 points of bludgeoning damage to every creature in the area. This damage only occurs once, when the spell is cast.  For the remaining duration of the spell, this debris covers the ground, making the entire area difficult terrain. At the end of the duration, the rocks disappear, leaving no aftereffects (other than the damage dealt).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "EarthSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/stoneCall.html#_stone-call"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.247"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "cylinder (40-ft. radius, 20 ft. high)"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 230,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2074,
-    "record_key": "Stone Call"
+    "record_key": "Stone Call",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

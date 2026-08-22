@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Companion ~ Eidolon",
+    "name": "Eidolon",
+    "class": "Companion",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion ~ Eidolon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonCompanionBonusHD|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonCompanionBonusHD|(EidolonCompanionLVL>=2)+(EidolonCompanionLVL>=3)+(EidolonCompanionLVL>=5)+(EidolonCompanionLVL>=6)+(EidolonCompanionLVL>=7)+(EidolonCompanionLVL>=9)+(EidolonCompanionLVL>=10)+(EidolonCompanionLVL>=11)+(EidolonCompanionLVL>=13)+(EidolonCompanionLVL>=14)+(EidolonCompanionLVL>=15)+(EidolonCompanionLVL>=17)+(EidolonCompanionLVL>=18)+(EidolonCompanionLVL>=19)"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Eidolon|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Eidolon|Eidolon"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 830,
+    "record_key": "Companion ~ Eidolon"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

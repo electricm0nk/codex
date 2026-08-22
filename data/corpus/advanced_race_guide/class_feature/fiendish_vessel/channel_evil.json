@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fiendish Vessel ~ Channel Evil",
+    "name": "Channel Evil",
+    "class": "Cleric",
+    "description": "A fiendish vessel, rather than channeling positive or negative energy, instead channels the pure evil power of her fiendish patron. This ability is similar to channeling negative energy, but instead of healing undead and dealing damage to living creatures, this blast of evil energy automatically heals evil creatures and debilitates good creatures within its burst. Channeling this evil causes a burst that affects all creatures in a 30-foot radius centered on the fiendish vessel. In the case of evil creatures, the amount of damage healed is equal to %1d4 points of damage. Good creatures in the burst receive a Will saving throw to negate this damage. Good creatures that fail their saving throws are sickened for 1d4 rounds. Good creatures with a number of Hit Dice less than or equal %2 that fail their saving throws are nauseated for 1 round and then sickened for 1d4 rounds instead. The DC of this save is equal to %3. Neutral creatures are unaffected by this burst of evil energy. A fiendish vessel may channel this energy %4 times per day. Doing so is a standard action that does not provoke attacks of opportunity. A fiendish vessel can choose whether or not to include herself in this effect. A fiendish vessel must present her unholy symbol or use her familiar as the divine focus for this ability. For the purposes of feats that affect channel energy, this ability counts as channeling negative energy. If the feat changes the way the fiendish vessel channels or deals damage with her channeling, use the amount of damage this ability heals evil creatures to determine the damage-dealing potential of the affected ability. For instance, if a 5th-level fiendish vessel takes the Channel Smite feat, her channeling deals an additional 3d4 points of damage to living creatures on a successful hit (though they may save to negate the damage). This ability replaces channel energy.|min(10,1+(ClericLVL-1)/2)|ClericLVL-5|10+ClericLVL/2+CHA|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendish Vessel ~ Channel Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A fiendish vessel, rather than channeling positive or negative energy, instead channels the pure evil power of her fiendish patron. This ability is similar to channeling negative energy, but instead of healing undead and dealing damage to living creatures, this blast of evil energy automatically heals evil creatures and debilitates good creatures within its burst. Channeling this evil causes a burst that affects all creatures in a 30-foot radius centered on the fiendish vessel. In the case of evil creatures, the amount of damage healed is equal to %1d4 points of damage. Good creatures in the burst receive a Will saving throw to negate this damage. Good creatures that fail their saving throws are sickened for 1d4 rounds. Good creatures with a number of Hit Dice less than or equal %2 that fail their saving throws are nauseated for 1 round and then sickened for 1d4 rounds instead. The DC of this save is equal to %3. Neutral creatures are unaffected by this burst of evil energy. A fiendish vessel may channel this energy %4 times per day. Doing so is a standard action that does not provoke attacks of opportunity. A fiendish vessel can choose whether or not to include herself in this effect. A fiendish vessel must present her unholy symbol or use her familiar as the divine focus for this ability. For the purposes of feats that affect channel energy, this ability counts as channeling negative energy. If the feat changes the way the fiendish vessel channels or deals damage with her channeling, use the amount of damage this ability heals evil creatures to determine the damage-dealing potential of the affected ability. For instance, if a 5th-level fiendish vessel takes the Channel Smite feat, her channeling deals an additional 3d4 points of damage to living creatures on a successful hit (though they may save to negate the damage). This ability replaces channel energy.|min(10,1+(ClericLVL-1)/2)|ClericLVL-5|10+ClericLVL/2+CHA|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 790,
+    "record_key": "Fiendish Vessel ~ Channel Evil"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

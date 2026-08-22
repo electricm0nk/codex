@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scarred Witch Doctor ~ Fetish Mask 2",
+    "name": "Fetish Mask",
+    "class": "Witch",
+    "description": "The scarred witch doctor gains the ability to add magical abilities to her mask as if she had the Craft Wondrous Item feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Witch Doctor ~ Fetish Mask 2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The scarred witch doctor gains the ability to add magical abilities to her mask as if she had the Craft Wondrous Item feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 660,
+    "record_key": "Scarred Witch Doctor ~ Fetish Mask 2"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

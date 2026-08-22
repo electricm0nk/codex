@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Getaway Master",
+    "name": "Getaway Master",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent gains a +10 bonus on all drive checks. The rogue must have the getaway artist rogue talent before choosing this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Getaway Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent gains a +10 bonus on all drive checks. The rogue must have the getaway artist rogue talent before choosing this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1617,
+    "record_key": "Rogue Talent ~ Getaway Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

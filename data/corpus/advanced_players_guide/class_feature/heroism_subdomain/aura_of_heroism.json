@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heroism Subdomain ~ Aura of Heroism",
+    "name": "Aura of Heroism",
+    "class": "Heroism Subdomain",
+    "description": "At 8th level, you can emit a 30-foot aura of heroism %1 rounds per day. Using this ability is a swift action. Allies in the area are treated as if they were under the effects of heroism. These rounds do not need to be consecutive.|DomainGloryLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heroism Subdomain ~ Aura of Heroism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can emit a 30-foot aura of heroism %1 rounds per day. Using this ability is a swift action. Allies in the area are treated as if they were under the effects of heroism. These rounds do not need to be consecutive.|DomainGloryLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1772,
+    "record_key": "Heroism Subdomain ~ Aura of Heroism"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Geist Channeler ~ Spectral Protection",
+    "name": "Spectral Protection",
+    "class": "Spiritualist",
+    "description": "At 12th level as a standard action, while a geist channeler's phantom is confined within his psyche, he can call upon its power to project an aura of spectral energy that prevents incorporeal creatures from approaching him. This takes the form of a 30-foot-radius emanation centered on the geist channeler. Any incorporeal creature attempting to enter this area must succeed at a Will save (DC = 10 + 1/2 the geist channeler's spiritualist class level + the geist channeler's Wisdom modifier) or be unable to do so. This ability can be used only defensively, not aggressively; forcing the aura against an incorporeal creature collapses the aura. The geist channeler can use this ability for a number of minutes per day equal to his spiritualist level. The minutes don't need to be continuous, but must be spent in 1-minute increments.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geist Channeler ~ Spectral Protection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Geist Channeler Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level as a standard action, while a geist channeler's phantom is confined within his psyche, he can call upon its power to project an aura of spectral energy that prevents incorporeal creatures from approaching him. This takes the form of a 30-foot-radius emanation centered on the geist channeler. Any incorporeal creature attempting to enter this area must succeed at a Will save (DC = 10 + 1/2 the geist channeler's spiritualist class level + the geist channeler's Wisdom modifier) or be unable to do so. This ability can be used only defensively, not aggressively; forcing the aura against an incorporeal creature collapses the aura. The geist channeler can use this ability for a number of minutes per day equal to his spiritualist level. The minutes don't need to be continuous, but must be spent in 1-minute increments."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1631,
+    "record_key": "Geist Channeler ~ Spectral Protection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

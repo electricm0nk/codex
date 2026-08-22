@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Banishment School ~ Unstable Bonds",
+    "name": "Unstable Bonds",
+    "class": "Banishment School",
+    "description": "At 1st level, your touch can disrupt the bonds that hold a summoned or called creature on this plane. As a melee touch attack, you can cause a summoned or called creature to become shaken and staggered for %1 rounds. You can use this ability %2 times per day.|BanishmentUnstableBondsRounds|BanishmentUnstableBondsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banishment School ~ Unstable Bonds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BanishmentUnstableBondsRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BanishmentUnstableBondsTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, your touch can disrupt the bonds that hold a summoned or called creature on this plane. As a melee touch attack, you can cause a summoned or called creature to become shaken and staggered for %1 rounds. You can use this ability %2 times per day.|BanishmentUnstableBondsRounds|BanishmentUnstableBondsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BanishmentUnstableBondsRounds|max(AbjurationSchoolLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BanishmentUnstableBondsTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BanishmentUnstableBondsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3337,
+    "record_key": "Banishment School ~ Unstable Bonds"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

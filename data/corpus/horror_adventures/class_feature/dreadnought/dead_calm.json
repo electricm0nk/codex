@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dreadnought ~ Dead Calm",
+    "name": "Dead Calm",
+    "class": "Barbarian",
+    "description": "A dreadnought can enter a dispassionate killing spree as a free action, granting her additional combat prowess. The dreadnought gains only half the usual bonuses from her rage but takes no penalty to her AC, can use all her normal skills and effects that require concentration, and is not fatigued when her rage ends. The dreadnought cannot enter a rage for 1 minute after she ends her rage, and she cannot charge or run while under the effects of her rage. This ability alters rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreadnought ~ Dead Calm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.DreadnoughtClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DreadnoughtDeadCalmLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeadCalmDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Raging|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreadnought can enter a dispassionate killing spree as a free action, granting her additional combat prowess. The dreadnought gains only half the usual bonuses from her rage but takes no penalty to her AC, can use all her normal skills and effects that require concentration, and is not fatigued when her rage ends. The dreadnought cannot enter a rage for 1 minute after she ends her rage, and she cannot charge or run while under the effects of her rage. This ability alters rage."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DreadnoughtDeadCalmLVL|BarbarianLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadCalmDuration|DreadnoughtDeadCalmLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dead Calm Temp Bonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DeadCalmDuration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 33,
+    "record_key": "Dreadnought ~ Dead Calm"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

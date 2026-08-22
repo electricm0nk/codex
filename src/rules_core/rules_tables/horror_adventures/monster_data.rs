@@ -81,7 +81,7 @@
 //!   * `ha_abilities_race.lst:347`
 //!   * `ha_abilities_race.lst:348`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every horror_adventures monster stat block (3 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
@@ -98,6 +98,10 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Swarm", damage_dice: Some("2d6") }],
         ability_keys: &["Hive Larva Swarm ~ Infest", "Hive Larva Swarm ~ Poison"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: -10 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "CHA", amount: -10 }],
+        has_spell_like_abilities: false,
+        sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "ha_races.lst",
         source_line: 3,
     },
@@ -114,6 +118,10 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: Some("1d10") }, NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Tail Slap", damage_dice: None }],
         ability_keys: &["Hive Queen ~ Egg Layer", "Hive Queen ~ Telepathy"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 18 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: 4 }, StatAdjustment { ability: "WIS", amount: 8 }, StatAdjustment { ability: "CHA", amount: -4 }],
+        has_spell_like_abilities: false,
+        sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "ha_races.lst",
         source_line: 4,
     },
@@ -130,6 +138,10 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Acid Spit", damage_dice: Some("7d6") }, NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Claw", damage_dice: None }, NaturalAttack { name: "Tail Slap", damage_dice: None }],
         ability_keys: &["Hive Warrior ~ Acid Spit", "Hive Warrior ~ Rending Mandibles"],
         external_ability_refs: &[],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: -6 }],
+        has_spell_like_abilities: false,
+        sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "ha_races.lst",
         source_line: 5,
     },

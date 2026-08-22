@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "True Primitive ~ Favored Terrain",
+    "name": "Favored Terrain",
+    "class": "Barbarian",
+    "description": "A true primitive has a favored terrain representing her native homeland. This ability functions as the ranger class feature, and the true primitive's bonuses in that terrain improve by +2 at 5th level and every five levels thereafter. However, she does not gain any additional favored terrains. This ability replaces fast movement.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "True Primitive ~ Favored Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A true primitive has a favored terrain representing her native homeland. This ability functions as the ranger class feature, and the true primitive's bonuses in that terrain improve by +2 at 5th level and every five levels thereafter. However, she does not gain any additional favored terrains. This ability replaces fast movement."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Terrain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainBase|2|PREVARGTEQ:classlevel(\"Barbarian\"),5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainBase|2|PREVARGTEQ:classlevel(\"Barbarian\"),10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainBase|2|PREVARGTEQ:classlevel(\"Barbarian\"),15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainBase|2|PREVARGTEQ:classlevel(\"Barbarian\"),20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 350,
+    "record_key": "True Primitive ~ Favored Terrain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

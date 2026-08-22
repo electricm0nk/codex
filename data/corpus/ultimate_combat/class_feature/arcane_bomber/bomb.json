@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Bomber ~ Bomb",
+    "name": "Bomb",
+    "class": "Wizard",
+    "description": "At 1st level, the arcane bomber gains an ability nearly identical to the alchemist's bomb ability (Advanced Player's Guide 28). Unlike the alchemist, at 1st level, the arcane bomber chooses one type of energy from the following list: acid, cold, fire, and electricity. He can throw bombs of that type, but cannot modify them with discoveries. This ability stacks with the alchemist bomb ability to determine the level of bomb damage, but an arcane bomber that becomes an alchemist does not gain that class's bomb ability, nor does an alchemist that becomes an arcane bomber gain this bomb ability. This ability replaces arcane bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bomber ~ Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, the arcane bomber gains an ability nearly identical to the alchemist's bomb ability (Advanced Player's Guide 28). Unlike the alchemist, at 1st level, the arcane bomber chooses one type of energy from the following list: acid, cold, fire, and electricity. He can throw bombs of that type, but cannot modify them with discoveries. This ability stacks with the alchemist bomb ability to determine the level of bomb damage, but an arcane bomber that becomes an alchemist does not gain that class's bomb ability, nor does an alchemist that becomes an arcane bomber gain this bomb ability. This ability replaces arcane bond."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1745,
+    "record_key": "Arcane Bomber ~ Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

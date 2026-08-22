@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Catoblepas ~ Poison Breath",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:catoblepas"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60-ft. cone, poison, Fortitude DC %1, usable every 1d4 rounds)|CatoblepasPoisonBreathDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CatoblepasPoisonBreathDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CatoblepasPoisonBreathDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CatoblepasPoisonBreathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A catoblepas's horrid, stinking breath is a 60-foot cone of poison gas.  Breath - contact; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d6 Con damage; cure 3 consecutive saves.|CatoblepasPoisonBreathDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Catoblepas ~ Poison Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.52",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 219,
-    "record_key": "Catoblepas ~ Poison Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 219,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Catoblepas ~ Poison Breath",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

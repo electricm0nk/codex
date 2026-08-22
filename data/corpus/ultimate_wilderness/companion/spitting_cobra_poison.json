@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Spitting Cobra ~ Poison",
     "delivery": "Extraordinary",
@@ -33,6 +31,32 @@
     "owners": [
       "ultimate_wilderness:companion:companion_spitting_cobra"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Spit; frequency 1 round [6]; effect blindness 1 round; cure 1 save; Fort DC %1|10+HD/2+CON.|PREVARGTEQ:CompanionAdvancement,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Spit; frequency 1 round [6]; effect blurred vision [20%% miss chance] 1 round; cure 1 save; Fort DC %1|10+HD/2+CON|PREVARLT:CompanionAdvancement,1"
+      },
+      {
+        "key": "KEY",
+        "value": "Spitting Cobra ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.SpittingCobraRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.182",
     "stat_adjustments": [],
@@ -42,16 +66,18 @@
       "SpittingCobraRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 360,
-    "record_key": "Spitting Cobra ~ Poison"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 360,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Spitting Cobra ~ Poison",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

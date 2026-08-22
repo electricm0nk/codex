@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Doppelganger Simulacrum",
+    "name": "Doppelganger Simulacrum",
+    "class": "Discovery",
+    "description": "You learn how to create a simulacrum, a soulless duplicate of your body, into which you can project your consciousness. As a full-round action, you may shift your consciousness from your current body to any one of your available doppelganger simulacra, which must be on the same plane as the alchemist. If killed in a simulacrum, you transfer to your own body automatically; if killed in your own body, you are dead. Unused simulacra (including your abandoned original body) appear to be lifeless corpses, though they do not decay. Creating a duplicate costs 1,000 gp in alchemical materials and requires 1 week to grow. The created simulacrum is a creature, not a supernatual effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Doppelganger Simulacrum"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Alchemical Simulacrum"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to create a simulacrum, a soulless duplicate of your body, into which you can project your consciousness. As a full-round action, you may shift your consciousness from your current body to any one of your available doppelganger simulacra, which must be on the same plane as the alchemist. If killed in a simulacrum, you transfer to your own body automatically; if killed in your own body, you are dead. Unused simulacra (including your abandoned original body) appear to be lifeless corpses, though they do not decay. Creating a duplicate costs 1,000 gp in alchemical materials and requires 1 week to grow. The created simulacrum is a creature, not a supernatual effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 148,
+    "record_key": "Discovery ~ Doppelganger Simulacrum"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

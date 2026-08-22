@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Siege Gunner ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Gunslinger",
+    "description": "At 4th level, a siege gunner gains Siege Engineer as a bonus feat. At 8th level, she gains Master Siege Engineer as a bonus feat. She does not need to meet the prerequisites for these feats. At 12th level and for every 4 levels thereafter, the siege gunner gains a bonus feat in addition to those gained by normal advancement. These additional bonus feats must be combat or grit feats, and she must meet the prerequisites as normal. This replaces the gunslinger's normal bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege Gunner ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gunslinger Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a siege gunner gains Siege Engineer as a bonus feat. At 8th level, she gains Master Siege Engineer as a bonus feat. She does not need to meet the prerequisites for these feats. At 12th level and for every 4 levels thereafter, the siege gunner gains a bonus feat in addition to those gained by normal advancement. These additional bonus feats must be combat or grit feats, and she must meet the prerequisites as normal. This replaces the gunslinger's normal bonus feats."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 208,
+    "record_key": "Siege Gunner ~ Bonus Feats"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

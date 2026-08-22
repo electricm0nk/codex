@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Roof Runner",
+    "name": "Roof Runner",
+    "class": "Hunter Archetype",
+    "description": "Roof runners are skilled ambushers, skirmishers, and spies who eschew heavier types of armor in order to remain light on their feet. They lurk in the shadows of the rooftops to find people or houses to rob, though some use their specialized skills for nobler purposes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Roof Runner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Roof Runner],[!PREFACT:1,ABILITIES,Hunter_Archetype_ClassSkills=True,Hunter_Archetype_ArmorProficiencies=True,Hunter_Archetype_Track=True,Hunter_Archetype_WoodlandStride=True,Hunter_Archetype_SwiftTracker=True,Hunter_Archetype_MasterHunter=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Roof runners are skilled ambushers, skirmishers, and spies who eschew heavier types of armor in order to remain light on their feet. They lurk in the shadows of the rooftops to find people or houses to rob, though some use their specialized skills for nobler purposes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Roof Runner ~ Skilled|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Roof Runner ~ Natural Leaper|PRECLASS:1,Hunter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Roof Runner ~ Shingle Stride|PRECLASS:1,Hunter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Roof Runner ~ Alley Ghost|PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Roof Runner ~ Master Climber|PRECLASS:1,Hunter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_MasterHunter|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_SwiftTracker|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 389,
+    "record_key": "Hunter Archetype ~ Roof Runner"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

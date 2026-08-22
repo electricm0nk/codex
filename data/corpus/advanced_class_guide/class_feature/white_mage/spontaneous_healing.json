@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "White Mage ~ Spontaneous Healing",
+    "name": "Spontaneous Healing",
+    "class": "Arcanist",
+    "description": "A white mage can expend 1 point from her arcane reservoir to use one of her spell slots to cast a cure spell (any spell with \"cure\" in its name) from the cleric spell list as if it were on her spell list and prepared. The spell must be of a level the arcanist can cast. At 10th level, the white mage can expend 5 points from her arcane reservoir and a spell slot of at least 5th level to cast breath of life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "White Mage ~ Spontaneous Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "White Mage Class Feature.Arcanist Class Feature.SpecialQuality.Supernatural.ArcanistExploit1.ArcanistExploit9.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "A white mage can expend 1 point from her arcane reservoir to use one of her spell slots to cast a cure spell (any spell with \"cure\" in its name) from the cleric spell list as if it were on her spell list and prepared. The spell must be of a level the arcanist can cast. At 10th level, the white mage can expend 5 points from her arcane reservoir and a spell slot of at least 5th level to cast breath of life."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2650,
+    "record_key": "White Mage ~ Spontaneous Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

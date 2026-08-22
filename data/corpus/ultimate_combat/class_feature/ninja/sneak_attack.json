@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Ninja",
+    "description": "If a ninja can catch an opponent when he is unable to defend himself effectively from her attack, she can strike a vital spot for extra damage. The ninja's attacks deal extra damage anytime her target would be denied a Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not), or when the ninja flanks her target. This extra damage is %1d6. Bonus damage from sneak attacks is precision damage. Should the ninja score a critical hit with a sneak attack, this precision damage is not multiplied. Ranged attacks count as sneak attacks only if the target is within %2 feet. With a weapon that deals nonlethal damage (such as a sap, whip, or unarmed strike), a ninja can make a sneak attack that deals nonlethal damage instead of lethal damage. She cannot use a weapon that deals lethal damage to deal nonlethal damage in a sneak attack, even with the usual -4 penalty. The ninja must be able to see the target well enough to pick out a vital spot, and must be able to reach this spot. A ninja cannot sneak attack while striking a creature that has concealment.|SneakAttackDice|NinjaSneakAttackRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.ClassFeatures.Sneak Attack"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NinjaSneakAttackLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NinjaSneakAttackRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SneakAttackDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a ninja can catch an opponent when he is unable to defend himself effectively from her attack, she can strike a vital spot for extra damage. The ninja's attacks deal extra damage anytime her target would be denied a Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not), or when the ninja flanks her target. This extra damage is %1d6. Bonus damage from sneak attacks is precision damage. Should the ninja score a critical hit with a sneak attack, this precision damage is not multiplied. Ranged attacks count as sneak attacks only if the target is within %2 feet. With a weapon that deals nonlethal damage (such as a sap, whip, or unarmed strike), a ninja can make a sneak attack that deals nonlethal damage instead of lethal damage. She cannot use a weapon that deals lethal damage to deal nonlethal damage in a sneak attack, even with the usual -4 penalty. The ninja must be able to see the target well enough to pick out a vital spot, and must be able to reach this spot. A ninja cannot sneak attack while striking a creature that has concealment.|SneakAttackDice|NinjaSneakAttackRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NinjaSneakAttackRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|(NinjaSneakAttackLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NinjaSneakAttackLVL|NinjaLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 116,
+    "record_key": "Ninja ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

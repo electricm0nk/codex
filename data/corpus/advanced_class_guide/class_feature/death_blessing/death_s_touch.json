@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Death Blessing ~ Death's Touch",
+    "name": "Death's Touch",
+    "class": "Death Blessing",
+    "description": "You can make a melee touch attack against an opponent to deliver grim suffering. If you succeed, you inflict 1 temporary negative level on the target for 1 minute. Alternatively, you can activate this ability as a swift action upon hitting an opponent with a melee attack. These temporary negative levels stack. You gain no benefit from imposing these negative levels (such as the temporary hit points undead gain from enervation).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Death Blessing ~ Death's Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a melee touch attack against an opponent to deliver grim suffering. If you succeed, you inflict 1 temporary negative level on the target for 1 minute. Alternatively, you can activate this ability as a swift action upon hitting an opponent with a melee attack. These temporary negative levels stack. You gain no benefit from imposing these negative levels (such as the temporary hit points undead gain from enervation)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2240,
+    "record_key": "Death Blessing ~ Death's Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

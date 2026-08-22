@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mongrel Mage ~ Mongrel Reservoir",
+    "name": "Mongrel Reservoir",
+    "class": "Sorcerer",
+    "description": "At 1st level, a mongrel mage has an innate pool of magical energy, known as her mongrel reservoir, that she can draw upon to activate her weakened bloodline. Her mongrel reservoir can hold %1 points of magical energy. Each day when refreshing her spell slots, her mongrel reservoir is restored to full. The mongrel reservoir can never hold more points that the total mentioned above; points gained in excess of this maximum are lost. Each day when she refreshes her spell slots, the mongrel mage selects one sorcerer bloodline. She must select an ordinary bloodline with this ability, not one altered by the wildblooded archetype or any other archetype. She gains this bloodline's 1st-level bloodline power for that day, using it as if she were only a 1st-level sorcerer. (If this ability is used to gain an arcane bond and the bonded item is selected, she can use the item only to cast a 1st-level spell known, as she counts as only a 1st-level sorcerer.) A mongrel mage can have only one bloodline selected at a time. As a swift action, she can expend 1 point from her mongrel reservoir to activate that bloodline, allowing her to use its 1st-level bloodline powers as well as its bloodline arcana at her full sorcerer level, including using a bonded item from an arcane bond. This lasts for %2 rounds. At 3rd level, when activating her selected bloodline, a mongrel mage can instead spend 2 points from her mongrel reservoir to allow her to use the bloodline's 1st- and 3rd-level powers as well as its bloodline arcana at her full sorcerer level for %2 rounds. At 7th level, when a mongrel mage is activating her selected bloodline, the mongrel mage can instead spend 3 points from her mongrel reservoir, allowing her to use the bloodline's 1st-, 3rd-, and 7th-level powers as well as its bloodline arcana at her full sorcerer level %2 of rounds. At 20th level, when activating her selected bloodline, a mongrel mage can instead spend 5 points from her mongrel reservoir, allowing her to use all of the bloodline's powers as well as its bloodline arcana at her full sorcerer level for %2 rounds.|3+SorcererLVL|max(1,CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mongrel Mage ~ Mongrel Reservoir"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mongrel Mage Class Feature.Sorcerer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a mongrel mage has an innate pool of magical energy, known as her mongrel reservoir, that she can draw upon to activate her weakened bloodline. Her mongrel reservoir can hold %1 points of magical energy. Each day when refreshing her spell slots, her mongrel reservoir is restored to full. The mongrel reservoir can never hold more points that the total mentioned above; points gained in excess of this maximum are lost. Each day when she refreshes her spell slots, the mongrel mage selects one sorcerer bloodline. She must select an ordinary bloodline with this ability, not one altered by the wildblooded archetype or any other archetype. She gains this bloodline's 1st-level bloodline power for that day, using it as if she were only a 1st-level sorcerer. (If this ability is used to gain an arcane bond and the bonded item is selected, she can use the item only to cast a 1st-level spell known, as she counts as only a 1st-level sorcerer.) A mongrel mage can have only one bloodline selected at a time. As a swift action, she can expend 1 point from her mongrel reservoir to activate that bloodline, allowing her to use its 1st-level bloodline powers as well as its bloodline arcana at her full sorcerer level, including using a bonded item from an arcane bond. This lasts for %2 rounds. At 3rd level, when activating her selected bloodline, a mongrel mage can instead spend 2 points from her mongrel reservoir to allow her to use the bloodline's 1st- and 3rd-level powers as well as its bloodline arcana at her full sorcerer level for %2 rounds. At 7th level, when a mongrel mage is activating her selected bloodline, the mongrel mage can instead spend 3 points from her mongrel reservoir, allowing her to use the bloodline's 1st-, 3rd-, and 7th-level powers as well as its bloodline arcana at her full sorcerer level %2 of rounds. At 20th level, when activating her selected bloodline, a mongrel mage can instead spend 5 points from her mongrel reservoir, allowing her to use all of the bloodline's powers as well as its bloodline arcana at her full sorcerer level for %2 rounds.|3+SorcererLVL|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3802,
+    "record_key": "Mongrel Mage ~ Mongrel Reservoir"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

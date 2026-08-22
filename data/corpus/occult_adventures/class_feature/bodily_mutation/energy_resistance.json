@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bodily Mutation ~ Energy Resistance",
+    "name": "Energy Resistance",
+    "class": "Bodily Mutation",
+    "description": "The mutation mind's body changes in color and texture, and gains energy resistance 5 to one energy type (acid, cold, electricity, fire, or sonic), chosen when this mutation is selected. This mutation can be selected multiple times. Each time it is selected, the mutation mind either chooses an additional energy type to gain energy resistance 5 against or increases the resistance granted to one existing type by 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bodily Mutation ~ Energy Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Mind Class Feature.Bodily Mutation.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation mind's body changes in color and texture, and gains energy resistance 5 to one energy type (acid, cold, electricity, fire, or sonic), chosen when this mutation is selected. This mutation can be selected multiple times. Each time it is selected, the mutation mind either chooses an additional energy type to gain energy resistance 5 against or increases the resistance granted to one existing type by 5."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1594,
+    "record_key": "Bodily Mutation ~ Energy Resistance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

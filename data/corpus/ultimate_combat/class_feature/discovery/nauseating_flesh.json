@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Nauseating Flesh",
+    "name": "Nauseating Flesh",
+    "class": "Discovery",
+    "description": "The alchemist's body is suffused with poison. Any creature that bites, engulfs, or swallows the alchemist must make a Fortitude saving throw or be nauseated for 1d4 rounds. The alchemist with this discovery does not suffer the effect of the poison of his own nauseating flesh.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Nauseating Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist's body is suffused with poison. Any creature that bites, engulfs, or swallows the alchemist must make a Fortitude saving throw or be nauseated for 1d4 rounds. The alchemist with this discovery does not suffer the effect of the poison of his own nauseating flesh."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 28,
+    "record_key": "Discovery ~ Nauseating Flesh"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

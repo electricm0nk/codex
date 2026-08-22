@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wilderness Explorer ~ Manifest Spirit",
+    "name": "Manifest Spirit",
+    "class": "Ranger",
+    "description": "A wilderness explorer is shielded from magic by those guardian spirits that favor him. He gains spell resistance %1. This ability functions only while the wilderness explorer is within one of his favored terrains. This alters favored terrain even further.|11+RangerLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Explorer ~ Manifest Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildernessExplorerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A wilderness explorer is shielded from magic by those guardian spirits that favor him. He gains spell resistance %1. This ability functions only while the wilderness explorer is within one of his favored terrains. This alters favored terrain even further.|11+RangerLVL"
+      },
+      {
+        "key": "SR",
+        "value": "11+RangerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 949,
+    "record_key": "Wilderness Explorer ~ Manifest Spirit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:sr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "lawfully aligned, +2d6 damage against chaotic targets, 1 negative level bestowed to chaotic wielder",
+    "key": "AXIOM",
+    "name": "AXIOM",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NEGLEVELS",
+          "1",
+          "PREALIGN:CG,CN,CE"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Axiomatic ~ Weapon"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.468"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,WeaponEnhancement],[PRETYPE:1,Weapon,Ammunition]"
+      },
+      {
+        "key": "SPROP",
+        "value": "lawfully aligned, +2d6 damage against chaotic targets, 1 negative level bestowed to chaotic wielder"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Negative Levels|PREALIGN:CG,CN,CE"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 680,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "AXIOM",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

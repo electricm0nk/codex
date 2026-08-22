@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 20000.0,
+    "description": null,
+    "key": "Bracers of Disruption",
+    "name": "Bracers of Disruption",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "EnhancedDisruptionDice",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Wondrous.Bracer"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.407"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 190,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Bracers of Disruption",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

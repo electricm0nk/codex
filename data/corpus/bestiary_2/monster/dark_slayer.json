@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:dark_slayer_death_throes",
@@ -23,6 +21,100 @@
     "natural_attacks": [],
     "race_subtype": "Dark Folk",
     "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dark Folk ~ Poison Use|Dark Folk ~ See in Darkness|Dark Slayer ~ Death Throes|Dark Slayer ~ Magical Knack|Dark Slayer ~ Soul Harvest|Detect Magic ~ Constant|Light Blindness|Sneak Attack"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Dark Folk"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Kukri"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|2"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Humanoid:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Dark Folk"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=4|Daze Monster,12+CHA|Death Knell,12+CHA|Inflict Moderate Wounds,12+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=4|Bleed,10+CHA|Chill Touch,11+CHA|Darkness|Spectral Hand"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "S",
     "source_page": "p.75",
     "speeds": [
@@ -32,16 +124,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 256,
-    "record_key": "Dark Slayer"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 256,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Dark Slayer",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

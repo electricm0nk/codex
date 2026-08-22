@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Cult Leader",
+    "name": "Cult Leader",
+    "class": "Warpriest Archetype",
+    "description": "Referred to as fanatics, lunatics, or obsessives, cultists see themselves as genuine devotees of their deity. And the hierarchs of those devotees, the cult leaders, are the most fanatical of them all. Cult leaders are known for turning reasonable hearts toward corrupted teachings and striking at those that get in the way of their agenda.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Cult Leader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype.WarpriestClassSkills.WarpriestProficiency.WarpriestChannelEnergy.WarpriestFocusWeapon.WarpriestBonusFeat3.WarpriestBonusFeat9.WarpriestBonusFeat12.WarpriestBonusFeat15.CF_WarpriestBonusFeat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Cult Leader],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestClassSkills,TYPE.WarpriestProficiency,TYPE.WarpriestChannelEnergy,TYPE.WarpriestFocusWeapon,TYPE.WarpriestBonusFeat3,TYPE.WarpriestBonusFeat9,TYPE.WarpriestBonusFeat12,TYPE.WarpriestBonusFeat15,TYPE.CF_WarpriestBonusFeat]"
+      },
+      {
+        "key": "DESC",
+        "value": "Referred to as fanatics, lunatics, or obsessives, cultists see themselves as genuine devotees of their deity. And the hierarchs of those devotees, the cult leaders, are the most fanatical of them all. Cult leaders are known for turning reasonable hearts toward corrupted teachings and striking at those that get in the way of their agenda."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Cult Leader ~ Class Skills|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Cult Leader ~ Weapon and Armor Proficiency|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Cult Leader ~ Well-Hidden|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Cult Leader ~ Sneak Attack|PRECLASS:1,Warpriest=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Cult Leader ~ Enthrall|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Cult Leader ~ Hide in Plain Sight|PRECLASS:1,Warpriest=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Warpriest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3931,
+    "record_key": "Warpriest Archetype ~ Cult Leader"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

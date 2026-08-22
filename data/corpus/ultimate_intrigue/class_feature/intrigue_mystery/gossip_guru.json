@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Gossip Guru",
+    "name": "Gossip Guru",
+    "class": "Intrigue Mystery",
+    "description": "You sit in a web of intrigue like a spider, subtly tracing the course of rumors and gossip in order to understand the ties that bind those around you. You can use the rumormonger spell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Gossip Guru"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Rumormonger,12+CHA|!PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Rumormonger,12+CHA|PRECLASS:1,Oracle=11|!PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=TL|Rumormonger,12+CHA|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You sit in a web of intrigue like a spider, subtly tracing the course of rumors and gossip in order to understand the ties that bind those around you. You can use the rumormonger spell"
+      },
+      {
+        "key": "DESC",
+        "value": " once per day|!PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "DESC",
+        "value": " three times per day|PRECLASS:1,Oracle=11|!PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": " at will|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": " as a spell-like ability, using your oracle level as your caster level. Each time you do so, it ends the duration of any previous activation."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 570,
+    "record_key": "Intrigue Mystery ~ Gossip Guru"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

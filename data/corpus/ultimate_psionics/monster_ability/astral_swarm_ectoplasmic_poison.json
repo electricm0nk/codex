@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:27:44Z",
   "data": {
     "corpus_key": "Astral Swarm ~ Ectoplasmic Poison",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "ultimate_psionics:monster:astral_swarm"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(swarm)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EctoplasmicSwarmPoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EctoplasmicSwarmPoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Ectoplasmic Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EctoplasmicSwarmPoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Swarm - injury; save Fort DC %1; frequency 1/round for 2 rounds; effect 1d3 Dexterity drain; cure 1 save.|EctoplasmicSwarmPoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Astral Swarm ~ Ectoplasmic Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.448"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.448",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
-    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
-    "line": 730,
-    "record_key": "Astral Swarm ~ Ectoplasmic Poison"
-  },
+  "ingested_at": "2026-08-13T02:27:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 730,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "Astral Swarm ~ Ectoplasmic Poison",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

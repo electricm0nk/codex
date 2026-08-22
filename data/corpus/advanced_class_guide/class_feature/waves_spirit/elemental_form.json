@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Waves Spirit ~ Elemental Form",
+    "name": "Elemental Form",
+    "class": "Waves Spirit",
+    "description": "As a standard action, the shaman assumes the form of a Huge (or smaller) water elemental, as if using elemental body IV with a duration of %1 hours. The shaman can use this ability once per day.|ShamanWavesElementalFormDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Spirit ~ Elemental Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWavesElementalFormDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman assumes the form of a Huge (or smaller) water elemental, as if using elemental body IV with a duration of %1 hours. The shaman can use this ability once per day.|ShamanWavesElementalFormDuration"
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Swim,*1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWavesElementalFormDuration|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1686,
+    "record_key": "Waves Spirit ~ Elemental Form"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

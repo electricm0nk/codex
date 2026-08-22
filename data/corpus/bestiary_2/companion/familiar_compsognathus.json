@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T14:58:57Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Familiar (Compsognathus)",
@@ -21,6 +19,96 @@
     ],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Compsognathus ~ Poison|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Compsognathus"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Swim,20"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Animal"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "T",
@@ -63,16 +151,18 @@
       "Animal"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
-    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
-    "line": 5,
-    "record_key": "Familiar (Compsognathus)"
-  },
+  "ingested_at": "2026-08-12T14:58:57Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "record_key": "Familiar (Compsognathus)",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Gnasher ~ Greater Lockjaw",
+    "name": "Greater Lockjaw",
+    "class": "Barbarian",
+    "description": "The size of a creature a feral gnasher is able to use her lockjaw's grab ability on increases by %1.|FeralGnasherLockjawSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Gnasher ~ Greater Lockjaw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralGnasherLockjawSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The size of a creature a feral gnasher is able to use her lockjaw's grab ability on increases by %1.|FeralGnasherLockjawSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralGnasherLockjawSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralGnasherLockjawSize|1|[PRECLASS:1,Barbarian=15]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 539,
+    "record_key": "Feral Gnasher ~ Greater Lockjaw"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

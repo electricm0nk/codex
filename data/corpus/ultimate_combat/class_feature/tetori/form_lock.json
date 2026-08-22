@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tetori ~ Form Lock",
+    "name": "Form Lock",
+    "class": "Monk",
+    "description": "At 13th level, a tetori can negate a polymorph effect by touch with a Wisdom check, adding a bonus equal to his monk level, against a DC of 11 + the caster level of the effect (or HD of the creature, for supernatural polymorph effects). This is a standard action requiring 2 points from the tetori's ki pool, or an immediate action if a creature the tetori is grappling attempts to use a polymorph effect. This ability replaces diamond soul.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tetori ~ Form Lock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a tetori can negate a polymorph effect by touch with a Wisdom check, adding a bonus equal to his monk level, against a DC of 11 + the caster level of the effect (or HD of the creature, for supernatural polymorph effects). This is a standard action requiring 2 points from the tetori's ki pool, or an immediate action if a creature the tetori is grappling attempts to use a polymorph effect. This ability replaces diamond soul."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1403,
+    "record_key": "Tetori ~ Form Lock"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

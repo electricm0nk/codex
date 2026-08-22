@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "corpus_key": "Ant Lion (Giant) ~ Sand Trap",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_3:monster:ant_lion_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant ant lion can create a 60-foot-diameter, 20-foot-deep pit in any sand or soft earth surface. Creating a sand trap takes 1 hour. A DC 15 Perception check allows a creature to realize such a depression in the sand is in fact a trap. Any creature that steps into the trap slides to the center if it fails a DC 14 Reflex save-such victims take no damage, but they do fall prone. A giant ant lion can make an attack of opportunity against any creature that falls to the bottom of its sand trap. These creatures can move across sand traps at their normal speed and are immune to the trap's effects. Other creatures can navigate the trap's walls with a DC 20 Climb check."
+      },
+      {
+        "key": "KEY",
+        "value": "Ant Lion (Giant) ~ Sand Trap"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.16",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 370,
-    "record_key": "Ant Lion (Giant) ~ Sand Trap"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 370,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ant Lion (Giant) ~ Sand Trap",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "6",
@@ -20,6 +18,100 @@
     ],
     "race_subtype": null,
     "race_type": "Ooze",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Hungry Fog"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "10/magic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Ooze:7"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,15"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Touch,Weapon.Melee.Natural.Finesseable,*1,6d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Ooze"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ooze"
+      }
+    ],
     "size": "H",
     "source_page": "p.151",
     "speeds": [
@@ -29,16 +121,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 148,
-    "record_key": "Hungry Fog"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 148,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Hungry Fog",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

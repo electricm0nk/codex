@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "when thrown will return just before thrower's next turn",
+    "key": "RETURN",
+    "name": "RETURN",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Returning ~ Thrown"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Thrown"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.348"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Thrown"
+      },
+      {
+        "key": "SPROP",
+        "value": "when thrown will return just before thrower's next turn"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 697,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "RETURN",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

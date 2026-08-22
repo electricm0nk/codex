@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger ~ Grit",
+    "name": "Grit",
+    "class": "Gunslinger",
+    "description": "A gunslinger makes her mark upon the world with daring deeds. Some gunslingers claim they belong to a mystical way of the gun, but it's more likely that the volatile nature of firearms simply prunes the unlucky and careless from their ranks. Whatever the reason, all gunslingers have grit. In game terms, grit is a fluctuating measure of a gunslinger's ability to perform amazing actions in combat. At the start of each day, a gunslinger gains %1 grit points. Her grit goes up or down throughout the day, but usually cannot go higher than %2, though some feats and magic items may affect this maximum. A gunslinger spends grit to accomplish deeds, and regains grit in the following ways.&nl;Critical Hit with a Firearm ~ Each time the gunslinger confirms a critical hit with a firearm attack while in the heat of combat, she regains 1 grit point. Confirming a critical hit on a helpless or unaware creature or on a creature that has fewer Hit Dice than half the gunslinger's character level does not restore grit.&nl;Killing Blow with a Firearm ~ When the gunslinger reduces a creature to 0 or fewer hit points with a firearm attack while in the heat of combat, she regains 1 grit point. Destroying an unattended object, reducing a helpless or unaware creature to 0 or fewer hit points, or reducing a creature that has fewer Hit Dice than half the gunslinger's character level to 0 or fewer hit points does not restore any grit.|GritPoints|GritLimit",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Grit"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_2a"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.Extraordinary.GritShared"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GunslingerGritPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GritPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GunslingerGritLimit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GritLimit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GritPointsFavoredBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GritLimitFavoredBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A gunslinger makes her mark upon the world with daring deeds. Some gunslingers claim they belong to a mystical way of the gun, but it's more likely that the volatile nature of firearms simply prunes the unlucky and careless from their ranks. Whatever the reason, all gunslingers have grit. In game terms, grit is a fluctuating measure of a gunslinger's ability to perform amazing actions in combat. At the start of each day, a gunslinger gains %1 grit points. Her grit goes up or down throughout the day, but usually cannot go higher than %2, though some feats and magic items may affect this maximum. A gunslinger spends grit to accomplish deeds, and regains grit in the following ways.&nl;Critical Hit with a Firearm ~ Each time the gunslinger confirms a critical hit with a firearm attack while in the heat of combat, she regains 1 grit point. Confirming a critical hit on a helpless or unaware creature or on a creature that has fewer Hit Dice than half the gunslinger's character level does not restore grit.&nl;Killing Blow with a Firearm ~ When the gunslinger reduces a creature to 0 or fewer hit points with a firearm attack while in the heat of combat, she regains 1 grit point. Destroying an unattended object, reducing a helpless or unaware creature to 0 or fewer hit points, or reducing a creature that has fewer Hit Dice than half the gunslinger's character level to 0 or fewer hit points does not restore any grit.|GritPoints|GritLimit"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Display Grit Points|!PREABILITY:2,CATEGORY=Special Ability,TYPE=GritShared"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritPoints|GunslingerGritPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunslingerGritLimit|WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritLimit|GunslingerGritLimit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunslingerGritPoints|MAX(1,WIS)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritPoints|GritPointsFavoredBonus/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritLimit|GritLimitFavoredBonus/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 39,
+    "record_key": "Gunslinger ~ Grit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against Savagery ~ Holy Reach",
+    "name": "Holy Reach",
+    "class": "Paladin",
+    "description": "You can expend one use of your smite evil ability to extend your natural reach by 5 feet for 1 minute. This does not stack with the Lunge feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Savagery ~ Holy Reach"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend one use of your smite evil ability to extend your natural reach by 5 feet for 1 minute. This does not stack with the Lunge feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1550,
+    "record_key": "Oath against Savagery ~ Holy Reach"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

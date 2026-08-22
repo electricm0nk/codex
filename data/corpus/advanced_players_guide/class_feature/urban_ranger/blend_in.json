@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Urban Ranger ~ Blend In",
+    "name": "Blend In",
+    "class": "Ranger",
+    "description": "An urban ranger of 12th level or higher can use his Stealth bonus in place of a Disguise skill check in any of his favored communities. This disguise does not take an action to don. He must make a check whenever someone attempts to pick him out from the local citizens. If his check is successful, he blends into the crowd. While not invisible, enemies do not notice his presence and take no actions against him unless they are taking actions against the local citizens in general. This replaces camouflage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Urban Ranger ~ Blend In"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An urban ranger of 12th level or higher can use his Stealth bonus in place of a Disguise skill check in any of his favored communities. This disguise does not take an action to don. He must make a check whenever someone attempts to pick him out from the local citizens. If his check is successful, he blends into the crowd. While not invisible, enemies do not notice his presence and take no actions against him unless they are taking actions against the local citizens in general. This replaces camouflage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2879,
+    "record_key": "Urban Ranger ~ Blend In"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

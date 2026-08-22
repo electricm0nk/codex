@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Watersinger ~ Waterstrike 4",
+    "name": "Waterstrike",
+    "class": "Bard",
+    "description": "The watersinger can spend 1 round of bardic performance to command any water he is currently manipulating with his watersong performance to lash out and strike an opponent with a slam attack. The watersinger uses his base attack bonus and Charisma bonus to make this attack, and deals 2d8 points of bludgeoning damage plus his Charisma bonus. The attack can originate from any square of water the bard is manipulating, and the water can get a flanking bonus or help a combatant get one, but cannot make attacks of opportunity. The water can make multiple attacks per round if your base attack bonus allows you to do so.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Watersinger ~ Waterstrike 4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The watersinger can spend 1 round of bardic performance to command any water he is currently manipulating with his watersong performance to lash out and strike an opponent with a slam attack. The watersinger uses his base attack bonus and Charisma bonus to make this attack, and deals 2d8 points of bludgeoning damage plus his Charisma bonus. The attack can originate from any square of water the bard is manipulating, and the water can get a flanking bonus or help a combatant get one, but cannot make attacks of opportunity. The water can make multiple attacks per round if your base attack bonus allows you to do so."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 814,
+    "record_key": "Watersinger ~ Waterstrike 4"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

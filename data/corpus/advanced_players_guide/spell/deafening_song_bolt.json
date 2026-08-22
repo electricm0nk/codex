@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Deafening Song Bolt",
-    "school": "Evocation",
-    "level": 5,
     "description": "Three notes you sing or perform become tangible bolts of arcane energy that shriek across the battlefield. Each bolt requires a ranged touch attack to hit and deals 3d10 points of sonic damage, deafening the target for 1d6 rounds. The bolts may be fired at the same or different targets, but all must be fired simultaneously.",
-    "full_text": true
+    "full_text": true,
+    "key": "Deafening Song Bolt",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Blast of song deals 3d10 damage and deafens targets.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Three notes you sing or perform become tangible bolts of arcane energy that shriek across the battlefield. Each bolt requires a ranged touch attack to hit and deals 3d10 points of sonic damage, deafening the target for 1d6 rounds. The bolts may be fired at the same or different targets, but all must be fired simultaneously.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Sonic"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/deafeningSongBolt.html#_deafening-song-bolt"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "up to 3 creatures, no two of which can be more than 30 ft. apart"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 81,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1913,
-    "record_key": "Deafening Song Bolt"
+    "record_key": "Deafening Song Bolt",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

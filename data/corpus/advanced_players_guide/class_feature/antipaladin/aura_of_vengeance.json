@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Antipaladin ~ Aura of Vengeance",
+    "name": "Aura of Vengeance",
+    "class": "Antipaladin",
+    "description": "You can expend two uses of your Smite Good ability to grant the ability to smite good to all allies within 10 feet, using your bonuses. Allies must use this Smite Good ability by the start of your next turn, and the bonuses last for 1 minute. Using this ability is a free action. Good creatures gain no benefit from this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin ~ Aura of Vengeance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend two uses of your Smite Good ability to grant the ability to smite good to all allies within 10 feet, using your bonuses. Allies must use this Smite Good ability by the start of your next turn, and the bonuses last for 1 minute. Using this ability is a free action. Good creatures gain no benefit from this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 999,
+    "record_key": "Antipaladin ~ Aura of Vengeance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

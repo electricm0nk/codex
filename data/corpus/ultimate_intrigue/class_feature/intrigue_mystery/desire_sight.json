@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Desire Sight",
+    "name": "Desire Sight",
+    "class": "Intrigue Mystery",
+    "description": "As a standard action, you can learn the desires of any creature you can see within 100 feet, as if you had concentrated until the third round of the detect desires spell. As usual for detect desires, the target can attempt a Will save to negate the effect. You can use this ability %1 times per day.|1+OracleLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Desire Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike.PerDayOracleRevelation.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can learn the desires of any creature you can see within 100 feet, as if you had concentrated until the third round of the detect desires spell. As usual for detect desires, the target can attempt a Will save to negate the effect. You can use this ability %1 times per day.|1+OracleLVL/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 568,
+    "record_key": "Intrigue Mystery ~ Desire Sight"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

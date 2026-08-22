@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Xtabay ~ Devour",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:xtabay"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Devour"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevourSaveDC|10+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevourSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Devour)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevourSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While a creature is under the effects of a xtabay's soporific pollen, the plant may, as a full-round action, occupy the same square as the sleeping creature and slowly sap the life from it.  Every round the xtabay uses this ability, the creature must make DC %1 Fortitude save or take 1d2 Con damage.  This feeding is curiously painless, and normally isn't enough to waken a foe put to sleep by the plant.  Each round this feeding continues, the sleeping victim can attempt a new DC %1 Will save to awaken.|DevourSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Xtabay ~ Devour"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.289",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1400,
-    "record_key": "Xtabay ~ Devour"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1400,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Xtabay ~ Devour",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

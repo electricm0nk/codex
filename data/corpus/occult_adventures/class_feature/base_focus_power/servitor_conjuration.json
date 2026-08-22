@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Base Focus Power ~ Servitor",
+    "name": "Servitor [Conjuration]",
+    "class": "Base Focus Power",
+    "description": "As a standard action, you can expend 1 point of mental focus to summon a servitor. This ability functions as summon monster",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Base Focus Power ~ Servitor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base Focus Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of mental focus to summon a servitor. This ability functions as summon monster"
+      },
+      {
+        "key": "DESC",
+        "value": "I|PREVARLT:OccultistLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "II|PREVARGTEQ:OccultistLVL,4|PREVARLT:OccultistLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "III|PREVARGTEQ:OccultistLVL,7|PREVARLT:OccultistLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "IV|PREVARGTEQ:OccultistLVL,10|PREVARLT:OccultistLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "V|PREVARGTEQ:OccultistLVL,13|PREVARLT:OccultistLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "VI|PREVARGTEQ:OccultistLVL,16|PREVARLT:OccultistLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "VII|PREVARGTEQ:OccultistLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": ", but you can use it only to summon a single creature, and the effect lasts for 1 minute. You can't have more than one servitor in effect at a time. At any time, you can expend 1 point of mental focus as a free action to extend the duration of an active servitor by 1 minute."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1032,
+    "record_key": "Base Focus Power ~ Servitor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

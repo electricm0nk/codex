@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Scion ~ Domain Specialization",
+    "name": "Domain Specialization",
+    "class": "Divine Scion",
+    "description": "A divine scion selects a domain granted by her deity - this domain becomes the divine scion's chosen specialization in representing her deity. Every time a divine scion casts a domain spell from her specialized domain, she heals damage equal to %1 times the spell's level.|DomainSpecBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Scion ~ Domain Specialization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DivineScionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSpecBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine scion selects a domain granted by her deity - this domain becomes the divine scion's chosen specialization in representing her deity. Every time a divine scion casts a domain spell from her specialized domain, she heals damage equal to %1 times the spell's level.|DomainSpecBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Domain Specialization|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSpecBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 30,
+    "record_key": "Divine Scion ~ Domain Specialization"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

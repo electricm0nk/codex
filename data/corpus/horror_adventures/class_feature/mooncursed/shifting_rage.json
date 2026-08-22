@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mooncursed ~ Shifting Rage",
+    "name": "Shifting Rage",
+    "class": "Barbarian",
+    "description": "A mooncursed can call upon an animal totem or inner curse, transforming her into a savage beast. Starting at 1st level, she chooses bear, boar, crocodile, shark, tiger, or wolf. Once chosen, this animal can't be changed. When using rounds of her shifting rage, instead of the usual bonuses and penalties from rage, the mooncursed transforms into a Medium version of this animal's form as if under the influence of beast shape I, treating her class level as her caster level whenever relevant. Other aspects of rage aside from the bonuses and penalties, such as the skill restrictions on skills and effects that require concentration, still apply during a shifting rage. This ability alters rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mooncursed ~ Shifting Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.MooncursedClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Raging|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MooncursedRageMedium|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MooncursedRageLarge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MooncursedRageHuge|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "A mooncursed can call upon an animal totem or inner curse, transforming her into a savage beast. Starting at 1st level, she chooses bear, boar, crocodile, shark, tiger, or wolf. Once chosen, this animal can't be changed. When using rounds of her shifting rage, instead of the usual bonuses and penalties from rage, the mooncursed transforms into a Medium version of this animal's form as if under the influence of beast shape I, treating her class level as her caster level whenever relevant. Other aspects of rage aside from the bonuses and penalties, such as the skill restrictions on skills and effects that require concentration, still apply during a shifting rage. This ability alters rage."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mooncursed Animal Form|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MooncursedRageLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MooncursedRageDuration|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MooncursedRageLVL|BarbarianLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MooncursedRageDuration|MooncursedRageLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MooncursedRageDuration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 47,
+    "record_key": "Mooncursed ~ Shifting Rage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

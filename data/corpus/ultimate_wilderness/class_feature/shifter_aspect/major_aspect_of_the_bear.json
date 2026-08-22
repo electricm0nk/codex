@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Bear ~ Major",
+    "name": "Major Aspect of the Bear",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of a dire bear (Bestiary p31). While in this form, you gain low-light vision and scent (30 feet), you gain two claw attacks (1d6 damage), a bite attack (1d8 damage), grab with your claws, and a 40 feet base speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Bear ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Bear_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of a dire bear (Bestiary p31). While in this form, you gain low-light vision and scent (30 feet), you gain two claw attacks (1d6 damage), a bite attack (1d8 damage), grab with your claws, and a 40 feet base speed."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Improved Natural Attack (Bestiary p315) with your claws.|PREVARGTEQ:ShifterBearAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "The critical multiplier of your claw attack increases by 1 (x2 becomes x3) to a maximum of x4, and you gain the Awesome Blow feat (Bestiary p314).|PREVARGTEQ:ShifterBearAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 51,
+    "record_key": "Shifter Aspect ~ Bear ~ Major"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

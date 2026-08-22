@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mad Scientist ~ Mad Genius",
+    "name": "Mad Genius",
+    "class": "Alchemist",
+    "description": "A mad scientist can deal",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mad Scientist ~ Mad Genius"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.MadScientistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "DESC",
+        "value": "A mad scientist can deal"
+      },
+      {
+        "key": "DESC",
+        "value": "1d3 points of Wisdom|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6 points of sanity|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "damage to herself to create a genius extract as one of her daily 1st-, 2nd-, 3rd-, 4th-, or 5th-level extracts. This otherwise takes the same amount of time and effort as creating a normal extract of its level, but instead of her choosing a formula she knows for it to grant, a genius extract has an unpredictable result. When the alchemist (or an ally, if she has the infusion discovery) drinks the extract, it produces a random effect from the list of alchemist formulae on page 32 of the Advanced Player's Guide of 1 spell level higher than the extract's spell level. For instance, if she creates a genius extract using a 2nd-level extract, it would produce the effect of a random 3rd-level alchemist formula. There is no way to predict which effect a genius extract will produce before drinking it. A genius extract's minimum caster level is equal to the minimum caster level of the extract used, not the effect produced. So, for instance, a genius extract that produced a fox's cunning effect would have a minimum caster level of 1 (for the 1st-level extract used) rather than 4 (for the 2nd-level effect). There are 29 potential 2nd-level extracts, 23 potential 3rd-level extracts, 18 potential 4th-level extracts, 15 potential 5th-level extracts, and 15 potential 6th-level extracts. This ability alters alchemy."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 9,
+    "record_key": "Mad Scientist ~ Mad Genius"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

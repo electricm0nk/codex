@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Combat Style Feat ~ Deadly Aim",
+    "name": "Deadly Aim",
+    "class": "Ranger Combat Style Feat",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style Feat ~ Deadly Aim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Deadly Aim"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Ranger_Combat_Style_Feat_Deadly_Aim,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deadly Aim|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2618,
+    "record_key": "Ranger Combat Style Feat ~ Deadly Aim"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

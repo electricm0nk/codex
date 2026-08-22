@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of War ~ Nemesis",
+    "name": "Nemesis",
+    "class": "Student of War",
+    "description": "You can focus upon a held weapon 1/day as a swift action, rendering it anathema to your studied creature. The weapon gains the bane property against the creature for 1 minute, or until you use know your enemy against a different foe.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of War ~ Nemesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of War Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "DESC",
+        "value": "You can focus upon a held weapon 1/day as a swift action, rendering it anathema to your studied creature. The weapon gains the bane property against the creature for 1 minute, or until you use know your enemy against a different foe."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 526,
+    "record_key": "Student of War ~ Nemesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-11T09:16:36Z",
   "data": {
     "ability_keys": [
       "bonus_bestiary:monster_ability:faithless",
@@ -21,6 +19,84 @@
     ],
     "race_subtype": null,
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Faithless|Huecuva ~ Disease"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,WIS,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DR",
+        "value": "5/Magic or Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Cleric"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=3|Disguise Self,11+CHA"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.12",
     "speeds": [
@@ -30,16 +106,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
-    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
-    "line": 15,
-    "record_key": "Huecuva"
-  },
+  "ingested_at": "2026-08-11T09:16:36Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "record_key": "Huecuva",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

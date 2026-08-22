@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:47:16Z",
+  "ingested_at": "2026-08-15T19:20:15Z",
   "data": {
     "key": "Human ~ Innovative",
     "name": "Innovative",
@@ -43,11 +43,11 @@
       },
       {
         "key": "DESC",
-        "value": "Humans have come to shape the face of Golarion because they are inveterate innovators. Humans with this racial trait gain a +2 racial bonus on Knowledge (arcana) and Spellcraft checks to independently research spells, create magic items they have never encountered before, and identify unique magical effects. They also gain a +2 racial bonus on Charisma-based skill checks to persuade others to adopt a new ideology or further the cause of discovery and progress."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This racial trait replaces skilled.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Innovative"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

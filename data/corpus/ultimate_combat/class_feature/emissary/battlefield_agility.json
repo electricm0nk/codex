@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Emissary ~ Battlefield Agility",
+    "name": "Battlefield Agility",
+    "class": "Cavalier",
+    "description": "At 5th level, an emissary learns to be more aware of the threats that surround him in combat, and shares this awareness with his loyal steed. Both the emissary and his mount gain Mobility as a bonus feat. This ability replaces banner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emissary ~ Battlefield Agility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, an emissary learns to be more aware of the threats that surround him in combat, and shares this awareness with his loyal steed. Both the emissary and his mount gain Mobility as a bonus feat. This ability replaces banner."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Mobility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 487,
+    "record_key": "Emissary ~ Battlefield Agility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

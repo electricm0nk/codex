@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Shadow ~ Unfettered Step",
+    "name": "Unfettered Step",
+    "class": "Ranger",
+    "description": "A wild shadow's woodland stride class feature functions in any difficult terrain within any of his favored terrains, even in areas that are enchanted or magically manipulated to impede motion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Shadow ~ Unfettered Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild shadow's woodland stride class feature functions in any difficult terrain within any of his favored terrains, even in areas that are enchanted or magically manipulated to impede motion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 238,
+    "record_key": "Wild Shadow ~ Unfettered Step"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

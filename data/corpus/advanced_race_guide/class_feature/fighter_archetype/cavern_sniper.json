@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Cavern Sniper",
+    "name": "Cavern Sniper",
+    "class": "Fighter Archetype",
+    "description": "Perfectly at home in the darkness, the cavern sniper capitalizes on stealth and ranged attacks imbued with his spell-like abilities to harass his opponents. The cavern sniper focuses on surprise, his innate magical abilities, and poison to take down unwary foes. The cavern sniper has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Cavern Sniper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4.FighterWeaponMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Cavern Sniper],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterWeaponMastery]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDrow=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Perfectly at home in the darkness, the cavern sniper capitalizes on stealth and ranged attacks imbued with his spell-like abilities to harass his opponents. The cavern sniper focuses on surprise, his innate magical abilities, and poison to take down unwary foes. The cavern sniper has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavern Sniper ~ Class Skills|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavern Sniper ~ Imbued Shot|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavern Sniper ~ Silent Shooter|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavern Sniper ~ Quick and Deadly|PRECLASS:1,Fighter=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavern Sniper ~ Sniper Training|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavern Sniper ~ Greater Imbued Shot|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavern Sniper ~ Weapon Mastery|PRECLASS:1,Fighter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 493,
+    "record_key": "Fighter Archetype ~ Cavern Sniper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

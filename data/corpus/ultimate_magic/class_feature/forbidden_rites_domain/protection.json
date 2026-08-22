@@ -1,0 +1,109 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Protection Domain",
+    "name": "Protection",
+    "class": "Forbidden Rites Domain",
+    "description": "Your faith is your greatest source of protection, and you can use that faith to defend others. In addition, you receive a +1 resistance bonus on saving throws. This bonus increases by 1 for every 5 levels you possess.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Protection Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.ProtectionDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your faith is your greatest source of protection, and you can use that faith to defend others. In addition, you receive a +1 resistance bonus on saving throws. This bonus increases by 1 for every 5 levels you possess."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Resistant Touch|PREDOMAIN:1,Protection|PREVARGTEQ:DomainProtectionAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Aura of Protection|PREDOMAIN:1,Protection|PREVARGTEQ:DomainProtectionAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|DomainProtectionSaveBonus|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionSaveBonus|(DomainProtectionLVL/5)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionDC|10+(DomainProtectionLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Sanctuary|Cleric=2|Shield Other|Cleric=3|Protection from Energy|Cleric=4|Spell Immunity|Cleric=5|Spell Resistance|Cleric=6|Antimagic Field|Cleric=7|Repulsion|Cleric=8|Mind Blank|Cleric=9|Prismatic Sphere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1050,
+    "record_key": "Forbidden Rites Domain ~ Protection Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

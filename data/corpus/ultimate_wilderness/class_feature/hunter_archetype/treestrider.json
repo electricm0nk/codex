@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Treestrider",
+    "name": "Treestrider",
+    "class": "Hunter Archetype",
+    "description": "Some hunters are masters of the wild. Whether raised by apes or having some other link with simian creatures, these hunters glide through the wilderness with ease.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Treestrider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Treestrider],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalCompanion=True,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_SecondAnimalFocus=True,Hunter_Archetype_PreciseCompanion=True,Hunter_Archetype_RaiseAnimalCompanion=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some hunters are masters of the wild. Whether raised by apes or having some other link with simian creatures, these hunters glide through the wilderness with ease."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Treestrider ~ Animal Companion|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Treestrider ~ Brachiation|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Treestrider ~ Improved Unarmed Strike|PRECLASS:1,Hunter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Treestrider ~ Tree Stride|PRECLASS:1,Hunter=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_SecondAnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_SecondAnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_RaiseAnimalCompanion|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 646,
+    "record_key": "Hunter Archetype ~ Treestrider"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deadly Courtesan ~ Inspire Competence",
+    "name": "Inspire Competence",
+    "class": "Rogue",
+    "description": "A deadly courtesan can use her bardic performance to inspire competence with a +%1 bonus.|2+(RogueLVL-3)/6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deadly Courtesan ~ Inspire Competence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A deadly courtesan can use her bardic performance to inspire competence with a +%1 bonus.|2+(RogueLVL-3)/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 993,
+    "record_key": "Deadly Courtesan ~ Inspire Competence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

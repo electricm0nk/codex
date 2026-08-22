@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elementalist Shifter ~ Volcanic Stride",
+    "name": "Volcanic Stride",
+    "class": "Elementalist Shifter",
+    "description": "By combining earth and fire, the elementalist shifter can damage the ground around herself. As a standard action, she can deform a region of natural or artificial rock in her space, turning it into difficult terrain and causing creatures that pass through it to take an amount of fire damage equal to that dealt by her elemental strike with no save. Affected terrain remains transformed until the shifter ends her elemental aspect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elementalist Shifter ~ Volcanic Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "By combining earth and fire, the elementalist shifter can damage the ground around herself. As a standard action, she can deform a region of natural or artificial rock in her space, turning it into difficult terrain and causing creatures that pass through it to take an amount of fire damage equal to that dealt by her elemental strike with no save. Affected terrain remains transformed until the shifter ends her elemental aspect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1059,
+    "record_key": "Elementalist Shifter ~ Volcanic Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

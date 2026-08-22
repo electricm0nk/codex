@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Wendigo ~ Howl",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:wendigo"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Howl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WendigoHowlDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WendigoHowlDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Howl)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WendigoHowlDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a standard action, a wendigo can emit a forlorn howl that can be heard up to a mile away. Any who hear the howl must make a DC %1 Will save to avoid becoming shaken for an hour. Creatures within 120 feet become panicked for 1d4+4 rounds, and those within 30 feet cower with fear for 1d4 rounds. This is a mind-affecting fear effect.|WendigoHowlDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Wendigo ~ Howl"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.281",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1351,
-    "record_key": "Wendigo ~ Howl"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1351,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Wendigo ~ Howl",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

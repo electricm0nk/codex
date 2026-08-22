@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tatterdemalion ~ Lace Weaver",
+    "name": "Lace Weaver",
+    "class": "Witch",
+    "description": "A tatterdemalion can create cloth as per minor creation or create %1 5-foot cubes of tangled skeins of cloth, affecting the target areas as per web, %2 times per day.|WitchLVL|WitchLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tatterdemalion ~ Lace Weaver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_LaceWeaver|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A tatterdemalion can create cloth as per minor creation or create %1 5-foot cubes of tangled skeins of cloth, affecting the target areas as per web, %2 times per day.|WitchLVL|WitchLVL/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_LaceWeaver|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_LaceWeaver|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Lace Weaver)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 286,
+    "record_key": "Tatterdemalion ~ Lace Weaver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

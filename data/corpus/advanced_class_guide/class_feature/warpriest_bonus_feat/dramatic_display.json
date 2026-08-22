@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Dramatic Display",
+    "name": "Dramatic Display",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your skill with your weapon is obvious to enemies and onlookers alike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Dramatic Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Performance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Dazzling Display"
+      },
+      {
+        "key": "DESC",
+        "value": "Your skill with your weapon is obvious to enemies and onlookers alike."
+      },
+      {
+        "key": "DESC",
+        "value": " When you spend a swift action to make a performance check, you exude an aura of awe-inspiring skill. You gain a +2 bonus on your performance check, and gain a +2 bonus on all attack rolls and combat maneuver checks until the end of your next turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Dramatic Display"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4436,
+    "record_key": "Warpriest Bonus Feat ~ Dramatic Display"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

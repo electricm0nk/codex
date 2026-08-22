@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Natural Philosopher ~ Herbalism",
+    "name": "Herbalism",
+    "class": "Investigator",
+    "description": "A natural philosopher augments his knowledge of alchemy with herbal lore. He gains the infusion discovery and can use Knowledge (nature) in place of Craft (alchemy) and Profession (herbalist) checks. He also gains a competence bonus equal to his class level on Craft (alchemy) checks to create alchemical items, and he gains half that bonus on Profession (herbalist) checks to find herbs (for more information on herbalism, see page 152). This alters alchemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Natural Philosopher ~ Herbalism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.NaturalPhilosopherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A natural philosopher augments his knowledge of alchemy with herbal lore. He gains the infusion discovery and can use Knowledge (nature) in place of Craft (alchemy) and Profession (herbalist) checks. He also gains a competence bonus equal to his class level on Craft (alchemy) checks to create alchemical items, and he gains half that bonus on Profession (herbalist) checks to find herbs (for more information on herbalism, see page 152). This alters alchemy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Investigator ~ Discovery ~ Infusion"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Craft (Alchemy)=Create item|InvestigatorLVL|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Profession (herbalist)=Find herbs|InvestigatorLVL/2|TYPE=Competence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 749,
+    "record_key": "Natural Philosopher ~ Herbalism"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

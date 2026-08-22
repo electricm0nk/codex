@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Transporter ~ Hideaway",
+    "name": "Hideaway",
+    "class": "Ranger",
+    "description": "A transporter can spend 1 hour and attempt a DC 20 Survival check to create a hidden shelter, useful for staying unseen by patrols of enemy creatures. The transporter's shelter can hold the transporter and one additional creature for every 2 by which the transporter exceeds the DC. The created shelter incorporates scents from the local area, preventing creatures on the inside from being detected by the scent ability of creatures outside of the shelter, and vice versa. Additionally, its floor is either elevated or constructed of a different substance than the nearby ground, preventing creatures outside of the shelter from using tremorsense to detect creatures inside, and vice versa. Finally, the clever structure of the hideaway causes creatures outside of the shelter to take a -10 penalty on Perception checks to notice creatures inside, as if through a 1-foot-thick wall, while only causing creatures inside to take a -2 penalty on Perception checks to notice creatures outside. These bonuses do not apply if the enemy creatures are intimately familiar with the area in which the hideaway was built (such as an area right near their home).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transporter ~ Hideaway"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A transporter can spend 1 hour and attempt a DC 20 Survival check to create a hidden shelter, useful for staying unseen by patrols of enemy creatures. The transporter's shelter can hold the transporter and one additional creature for every 2 by which the transporter exceeds the DC. The created shelter incorporates scents from the local area, preventing creatures on the inside from being detected by the scent ability of creatures outside of the shelter, and vice versa. Additionally, its floor is either elevated or constructed of a different substance than the nearby ground, preventing creatures outside of the shelter from using tremorsense to detect creatures inside, and vice versa. Finally, the clever structure of the hideaway causes creatures outside of the shelter to take a -10 penalty on Perception checks to notice creatures inside, as if through a 1-foot-thick wall, while only causing creatures inside to take a -2 penalty on Perception checks to notice creatures outside. These bonuses do not apply if the enemy creatures are intimately familiar with the area in which the hideaway was built (such as an area right near their home)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 688,
+    "record_key": "Transporter ~ Hideaway"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

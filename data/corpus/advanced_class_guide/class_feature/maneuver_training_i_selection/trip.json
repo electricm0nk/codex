@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maneuver Training I Selection ~ Trip",
+    "name": "Trip",
+    "class": "Maneuver Training I Selection",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maneuver Training I Selection ~ Trip"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrawlerManeuverTrainingISelection"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "TripManeuverTraining,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TripManeuverTrainingBonus|BrawlerManeuverTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TripManeuverTraining|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Trip,CMD_Trip|TripManeuverTrainingBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1094,
+    "record_key": "Maneuver Training I Selection ~ Trip"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

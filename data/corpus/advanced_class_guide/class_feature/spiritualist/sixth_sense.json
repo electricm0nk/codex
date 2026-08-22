@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Sixth Sense",
+    "name": "Sixth Sense",
+    "class": "Investigator",
+    "description": "A spiritualist can spend one of his uses of the commune with spirits ability to reroll a single saving throw that he has failed. He must take the results of the reroll, even if it is lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Sixth Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.Investigator Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A spiritualist can spend one of his uses of the commune with spirits ability to reroll a single saving throw that he has failed. He must take the results of the reroll, even if it is lower."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3342,
+    "record_key": "Spiritualist ~ Sixth Sense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

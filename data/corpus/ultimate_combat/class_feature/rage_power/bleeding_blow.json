@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Bleeding Blow",
+    "name": "Bleeding Blow",
+    "class": "Rage Power",
+    "description": "When she uses her powerful blow rage power, the barbarian also deals bleed damage equal to her bonus damage with the powerful blow. This bleed damage bypasses damage reduction. A barbarian must have the powerful blow rage power and be at least 8th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Bleeding Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "When she uses her powerful blow rage power, the barbarian also deals bleed damage equal to her bonus damage with the powerful blow. This bleed damage bypasses damage reduction. A barbarian must have the powerful blow rage power and be at least 8th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 272,
+    "record_key": "Rage Power ~ Bleeding Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

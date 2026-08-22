@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier ~ Cavalier's Charge",
+    "name": "Cavalier's Charge",
+    "class": "Cavalier",
+    "description": "A cavalier learns to make more accurate charge attacks while mounted. The cavalier receives a +4 bonus on melee attack rolls on a charge while mounted (instead of the normal +2). In addition, the cavalier does not suffer any penalty to his AC after making a charge attack while mounted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier ~ Cavalier's Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier learns to make more accurate charge attacks while mounted. The cavalier receives a +4 bonus on melee attack rolls on a charge while mounted (instead of the normal +2). In addition, the cavalier does not suffer any penalty to his AC after making a charge attack while mounted."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 199,
+    "record_key": "Cavalier ~ Cavalier's Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

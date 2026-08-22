@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Knacks",
+    "name": "Knacks",
+    "class": "Spiritualist",
+    "description": "A spiritualist learns a number of knacks, or 0-level psychic spells, as noted on Table 1-10 under Spells Known. These spells are cast like any other spell, but they can be cast any number of times per day. Knacks prepared using another spell slot, because of metamagic feats applied to them, for example, consume spell slots as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Knacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A spiritualist learns a number of knacks, or 0-level psychic spells, as noted on Table 1-10 under Spells Known. These spells are cast like any other spell, but they can be cast any number of times per day. Knacks prepared using another spell slot, because of metamagic feats applied to them, for example, consume spell slots as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1274,
+    "record_key": "Spiritualist ~ Knacks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist ~ Painful Stare",
+    "name": "Painful Stare",
+    "class": "Mesmerist",
+    "description": "When an attack that deals damage hits the target of a mesmerist's hypnotic stare, the mesmerist can cause the target to take %1 additional damage. The mesmerist can use this ability as a free action, and can use it even if it isn't his turn.|PainfulStareDam",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist ~ Painful Stare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PainfulStareDam|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PainfulStareDamFCB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PainfulStareBonusDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When an attack that deals damage hits the target of a mesmerist's hypnotic stare, the mesmerist can cause the target to take %1 additional damage. The mesmerist can use this ability as a free action, and can use it even if it isn't his turn.|PainfulStareDam"
+      },
+      {
+        "key": "DESC",
+        "value": "If the mesmerist uses this ability to increase his own damage, the additional damage increases by %1d6 points.|PainfulStareBonusDice|PREVARGTEQ:PainfulStareBonusDice,1"
+      },
+      {
+        "key": "DESC",
+        "value": "This damage is precision damage and is not multiplied on a critical hit. A mesmerist can trigger this ability only once per round, but a single creature can take damage from multiple mesmerists' painful stares in a round."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PainfulStareDam|max(MesmeristLVL/2,1)+PainfulStareDamFCB/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PainfulStareBonusDice|MesmeristLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 921,
+    "record_key": "Mesmerist ~ Painful Stare"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

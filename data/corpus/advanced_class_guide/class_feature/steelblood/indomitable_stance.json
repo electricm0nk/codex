@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Steelblood ~ Indomitable Stance",
+    "name": "Indomitable Stance",
+    "class": "Bloodrager",
+    "description": "A steelblood gains a +1 bonus on combat maneuver checks, to CMD against overrun combat maneuvers, and on Reflex saving throws against trample attacks. He also gains a +1 bonus to his AC against charge attacks and on attack and damage rolls against charging creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steelblood ~ Indomitable Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Steelblood Class Feature.Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerFastMovement"
+      },
+      {
+        "key": "DESC",
+        "value": "A steelblood gains a +1 bonus on combat maneuver checks, to CMD against overrun combat maneuvers, and on Reflex saving throws against trample attacks. He also gains a +1 bonus to his AC against charge attacks and on attack and damage rolls against charging creatures."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_overrun|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+1 on Reflex saving throws against trample attacks."
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 to AC against charge attacks and on attack and damage rolls against charging creatures."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2829,
+    "record_key": "Steelblood ~ Indomitable Stance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

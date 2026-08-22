@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Shaitan Skin",
+    "name": "Shaitan Skin",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can manipulate acid to shield yourself and disable your enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Shaitan Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:3,[PRESTAT:2,CON=15,WIS=15],[PREABILITY:3,CATEGORY=FEAT,Elemental Fist,Improved Unarmed Strike,Shaitan Style],[PREMULT:1,[PREMULT:1,[PRETOTALAB:11],[PREVARGTEQ:WarpriestBonusFeatBAB,11]],[PREVARGTEQ:MonkFeatQualify,9]]]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate acid to shield yourself and disable your enemies."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain one additional Elemental Fist (Advanced Player's Guide 158) attempt per day. While using the Shaitan Style feat, you gain acid resistance equal to your base attack bonus, or your monk level plus BAB gained from levels in classes other than monk, whichever is higher. While denied your Dexterity bonus to AC you are also denied this resistance. Creatures that take acid damage from your Elemental Fist attack must succeed at a Reflex save (DC 10 + 1/2 your character level + your Wis modifier) or be staggered for 1 round."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Shaitan Skin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4533,
+    "record_key": "Warpriest Bonus Feat ~ Shaitan Skin"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

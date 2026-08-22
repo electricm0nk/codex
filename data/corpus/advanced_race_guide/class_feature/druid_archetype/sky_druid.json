@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Sky Druid",
+    "name": "Sky Druid",
+    "class": "Druid Archetype",
+    "description": "Some druids develop ties not to a particular landscape, but instead to the endless blue expanse of the skies. Such are the sky druids, who are more at home soaring through air than standing on the ground.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Sky Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidNatureSense.DruidWoodlandStride.DruidResistNaturesLure.DruidTracklessStep.DruidWildShape.DruidVenomImmunity.DruidThousandFaces"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Sky Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidNatureBond,TYPE.DruidNaturesLure,TYPE.DruidTracklessStep,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsSylph=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Some druids develop ties not to a particular landscape, but instead to the endless blue expanse of the skies. Such are the sky druids, who are more at home soaring through air than standing on the ground."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Weapon and Armor Proficiency|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Nature Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Sky's Embrace|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Resist Storm|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Skymaster|PRECLASS:1,Druid=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Soaring Form|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sky Druid ~ Into the Wild Blue|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 720,
+    "record_key": "Druid Archetype ~ Sky Druid"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

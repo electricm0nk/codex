@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "ability_keys": [
       "core_rulebook:companion:camel_spit",
@@ -23,6 +21,104 @@
     ],
     "race_subtype": null,
     "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Camel ~ Spit|Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Camel|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Camel"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Companion [NAME]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NotAllowed,1],[PRERACE:1,Companion (Camel)]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.AnimalCompanion"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "L",
@@ -60,19 +156,20 @@
       "AnimalCompanion"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
-    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815",
-    "line": 16,
-    "record_key": "Companion (Camel)"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
+    "record_key": "Companion (Camel)",
+    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:bonus"
+    "computed:pre_guard"
   ]
 }

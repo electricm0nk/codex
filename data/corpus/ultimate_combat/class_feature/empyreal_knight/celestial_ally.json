@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Empyreal Knight ~ Celestial Ally",
+    "name": "Celestial Ally",
+    "class": "Paladin",
+    "description": "At 4th level, an empyreal knight can summon a celestial ally as a full-round action. This functions as summon monster I, except it can only be used to summon celestial creatures, archons, and angels. At 6th level, this improves to summon monster II, increasing by one spell level for every two levels thereafter, to a maximum of summon monster IX at 20th level. This ability can be used a number of times per day equal to the empyreal knight's Charisma modifier (minimum 1), but only one ally can be summoned at a time. This ability replaces lay on hands and channel positive energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empyreal Knight ~ Celestial Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, an empyreal knight can summon a celestial ally as a full-round action. This functions as summon monster I, except it can only be used to summon celestial creatures, archons, and angels. At 6th level, this improves to summon monster II, increasing by one spell level for every two levels thereafter, to a maximum of summon monster IX at 20th level. This ability can be used a number of times per day equal to the empyreal knight's Charisma modifier (minimum 1), but only one ally can be summoned at a time. This ability replaces lay on hands and channel positive energy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1464,
+    "record_key": "Empyreal Knight ~ Celestial Ally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

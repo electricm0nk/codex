@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fiendflesh Shifter ~ Fiendish Resilience",
+    "name": "Fiendish Resilience",
+    "class": "Shifter",
+    "description": "A fiendflesh shifter gains a +%1 natural armor bonus to her AC and resistance %2 to electricity and fire, but only while unencumbered and either wearing no armor or wearing light or medium nonmetal armor.|FiendfleshShifterACBonus|FiendfleshShifterResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendflesh Shifter ~ Fiendish Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.FiendfleshShifterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FiendfleshShifterACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FiendfleshShifterResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A fiendflesh shifter gains a +%1 natural armor bonus to her AC and resistance %2 to electricity and fire, but only while unencumbered and either wearing no armor or wearing light or medium nonmetal armor.|FiendfleshShifterACBonus|FiendfleshShifterResistance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|Resistance to Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|FiendfleshShifterACBonus|TYPE=NaturalArmorEnhancement|PREVARLT:ENCUMBERANCE,2,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterACBonus|1+(ShifterLVL>=4)+(ShifterLVL>=12)+(ShifterLVL>=20)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterResistance|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterResistance|5|PRECLASS:1,Shifter=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendfleshShifterResistance|5|PRECLASS:1,Shifter=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1065,
+    "record_key": "Fiendflesh Shifter ~ Fiendish Resilience"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

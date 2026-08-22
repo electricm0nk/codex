@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Evil Domain",
+    "name": "Evil",
+    "class": "Forbidden Rites Domain",
+    "description": "You are sinister and cruel, and have wholly pledged your soul to the cause of evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Evil Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.EvilDomainReplacement"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are sinister and cruel, and have wholly pledged your soul to the cause of evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Evil|PREDOMAIN:1,Evil|PREVARGTEQ:DomainEvilAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Scythe of Evil|PREDOMAIN:1,Evil|PREVARGTEQ:DomainEvilAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilDC|10+(DomainEvilLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEvilAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Protection from Good|Cleric=2|Align Weapon (Evil Only)|Cleric=3|Magic Circle against Good|Cleric=4|Unholy Blight|Cleric=5|Dispel Good|Cleric=6|Create Undead|Cleric=7|Blasphemy|Cleric=8|Unholy Aura|Cleric=9|Summon Monster IX (Evil Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1037,
+    "record_key": "Forbidden Rites Domain ~ Evil Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

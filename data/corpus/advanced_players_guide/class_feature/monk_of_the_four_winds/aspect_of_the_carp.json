@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk of the Four Winds ~ Aspect of the Carp",
+    "name": "Aspect of the Carp",
+    "class": "Monk of the Four Winds",
+    "description": "The monk's skin becomes a coat of golden, iridescent fish scales, his neck grows gills, and his fingers become webbed. He can breathe water and gains a swim speed equal to his land speed. The carp is heroic and adventurous - a monk must be nonevil to take on the aspect of the carp.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Four Winds ~ Aspect of the Carp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.AspectMasterSelection"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,LE,NE"
+      },
+      {
+        "key": "DESC",
+        "value": "The monk's skin becomes a coat of golden, iridescent fish scales, his neck grows gills, and his fingers become webbed. He can breathe water and gains a swim speed equal to his land speed. The carp is heroic and adventurous - a monk must be nonevil to take on the aspect of the carp."
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Swim,Walk,*1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2344,
+    "record_key": "Monk of the Four Winds ~ Aspect of the Carp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

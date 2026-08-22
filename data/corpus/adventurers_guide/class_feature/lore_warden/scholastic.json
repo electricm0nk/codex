@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lore Warden ~ Scholastic ~ AG",
+    "name": "Scholastic",
+    "class": "Fighter",
+    "description": "Lore wardens gain 2 additional skill ranks each level. These ranks must be spent on Intelligence-based skills. All Craft and Knowledge skills are class skills for lore wardens, as are Linguistics and Spellcraft. This ability replaces the lore warden's proficiency with medium armor, heavy armor, and shields.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Warden ~ Scholastic ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Feature.LoreWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "DESC",
+        "value": "Lore wardens gain 2 additional skill ranks each level. These ranks must be spent on Intelligence-based skills. All Craft and Knowledge skills are class skills for lore wardens, as are Linguistics and Spellcraft. This ability replaces the lore warden's proficiency with medium armor, heavy armor, and shields."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Intelligence-Based Skill|FighterLVL*2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE.Knowledge|TYPE.Craft|Linguistics|Spellcraft"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 851,
+    "record_key": "Lore Warden ~ Scholastic ~ AG"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

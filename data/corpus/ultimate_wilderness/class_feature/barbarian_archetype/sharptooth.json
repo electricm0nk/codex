@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Sharptooth",
+    "name": "Sharptooth",
+    "class": "Barbarian Archetype",
+    "description": "Coastal hunters and agents of the ocean's rage, sharptooth barbarians emulate the greatest predators of the sea. Sharks, in particular, are respected and admired by many such tribes, if not as manifestations of divine power, then merely as scions of the power and fury of the natural world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Sharptooth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Sharptooth],[!PREFACT:1,ABILITIES,Barbarian_Archetype_FastMovement=True,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_ImprovedUncannyDodge=True,Barbarian_Archetype_TrapSense=True,Barbarian_Archetype_RagePower6=True,Barbarian_Archetype_RagePower12=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Coastal hunters and agents of the ocean's rage, sharptooth barbarians emulate the greatest predators of the sea. Sharks, in particular, are respected and admired by many such tribes, if not as manifestations of divine power, then merely as scions of the power and fury of the natural world."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharptooth ~ Swim Like a Fish|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharptooth ~ Scent of Blood|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharptooth ~ Ocean Breath|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharptooth ~ Blood in the Water|PRECLASS:1,Barbarian=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower12|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 186,
+    "record_key": "Barbarian Archetype ~ Sharptooth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

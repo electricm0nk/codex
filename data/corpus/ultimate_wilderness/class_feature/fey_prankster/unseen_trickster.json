@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Prankster ~ Unseen Trickster",
+    "name": "Unseen Trickster",
+    "class": "Rogue",
+    "description": "The fey trickster can attempt Stealth checks in areas with plants even if he does not have cover or concealment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Prankster ~ Unseen Trickster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.FeyPranksterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The fey trickster can attempt Stealth checks in areas with plants even if he does not have cover or concealment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 981,
+    "record_key": "Fey Prankster ~ Unseen Trickster"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

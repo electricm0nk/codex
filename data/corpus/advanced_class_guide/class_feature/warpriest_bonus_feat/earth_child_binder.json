@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Earth Child Binder",
+    "name": "Earth Child Binder",
+    "class": "Warpriest Bonus Feat",
+    "description": "Even the greatest giants fear your technique.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Earth Child Binder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dwarf ~ Defensive Training,Gnome ~ Defensive Training"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "6,CATEGORY=FEAT,Earth Child Style,Earth Child Topple,Greater Trip,Improved Trip,Improved Unarmed Strike,Stunning Fist"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true,IsGnome=true"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Acrobatics=9"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Even the greatest giants fear your technique."
+      },
+      {
+        "key": "DESC",
+        "value": " You can trip a creature of the giant subtype no matter its size. While you are using Earth Child Style, when a prone creature of the giant subtype stands up and provokes an attack of opportunity from you, if you make an unarmed strike, you can declare you are making a Stunning Fist attempt after the attack hits. You gain a +4 bonus to the DC of any Stunning Fist effect you deliver in this way. &nl; [Normal] You can only trip opponents who are one size category larger than you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Earth Child Binder"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4437,
+    "record_key": "Warpriest Bonus Feat ~ Earth Child Binder"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

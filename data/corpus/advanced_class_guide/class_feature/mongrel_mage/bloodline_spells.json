@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mongrel Mage ~ Bloodline Spells",
+    "name": "Bloodline Spells",
+    "class": "Sorcerer",
+    "description": "Each day when she selects her bloodline, a mongrel mage adds the 1st-, 2nd-, and 3rd-level spells from her selected bloodline to her current list of spells known.|PREVARLT:SorcererLVL,13",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mongrel Mage ~ Bloodline Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mongrel Mage Class Feature.Sorcerer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Each day when she selects her bloodline, a mongrel mage adds the 1st-, 2nd-, and 3rd-level spells from her selected bloodline to her current list of spells known.|PREVARLT:SorcererLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "Each day when she selects her bloodline, a mongrel mage adds the 1st-, 2nd-, 3rd-, 4th-, 5th-, and 6th-level spells from her selected bloodline to her current list of spells known.|PREVARGTEQ:SorcererLVL,13|PREVARLT:SorcererLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "Each day when she selects her bloodline, a mongrel mage adds all the spells from her selected bloodline to her current list of spells known.|PREVARGTEQ:SorcererLVL,19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3803,
+    "record_key": "Mongrel Mage ~ Bloodline Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sword of Valor ~ Worthy Enemy",
+    "name": "Worthy Enemy",
+    "class": "Paladin",
+    "description": "When a sword of valor critically hits an enemy with a smite, the target must make a Will saving throw (DC %1) or be compelled to surrender to the paladin, as if affected by a suggestion spell (CL %2) to lay down arms and give up the fight. An enemy that succumbs to this ability remains docile until it is injured by the paladin or one of his obvious allies, at which point the compulsion to surrender immediately ends and the enemy is free to make his own choices again. If the enemy makes the save, it is not subject to this ability for 24 hours. Worthy enemy is a mind-affecting effect.|10+PaladinLVL/2+CHA|PaladinLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sword of Valor ~ Worthy Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural.PaladinAuraOfJustice"
+      },
+      {
+        "key": "DESC",
+        "value": "When a sword of valor critically hits an enemy with a smite, the target must make a Will saving throw (DC %1) or be compelled to surrender to the paladin, as if affected by a suggestion spell (CL %2) to lay down arms and give up the fight. An enemy that succumbs to this ability remains docile until it is injured by the paladin or one of his obvious allies, at which point the compulsion to surrender immediately ends and the enemy is free to make his own choices again. If the enemy makes the save, it is not subject to this ability for 24 hours. Worthy enemy is a mind-affecting effect.|10+PaladinLVL/2+CHA|PaladinLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 317,
+    "record_key": "Sword of Valor ~ Worthy Enemy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like symbol of death, except that all creatures within the radius of a symbol of persuasion instead become charmed by the caster [as the charm monster spell] for 1 hour per caster level. Unlike symbol of death, symbol of persuasion has no hit point limit; once triggered, a symbol of persuasion simply remains active for 10 minutes per caster level. Note: Magic traps such as symbol of persuasion are hard to detect and disable. A rogue [only] can use the Perception skill to find a symbol of persuasion and Disable Device to thwart it. The DC in each case is 25 + spell level, or 31 for symbol of persuasion.",
     "key": "Symbol of Persuasion",
-    "school": "Enchantment",
     "level": 6,
-    "description": "This spell functions like symbol of death, except that all creatures within the radius of a symbol of persuasion instead become charmed by the caster [as the charm monster spell] for 1 hour per caster level. Unlike symbol of death, symbol of persuasion has no hit point limit; once triggered, a symbol of persuasion simply remains active for 10 minutes per caster level. Note: Magic traps such as symbol of persuasion are hard to detect and disable. A rogue [only] can use the Perception skill to find a symbol of persuasion and Disable Device to thwart it. The DC in each case is 25 + spell level, or 31 for symbol of persuasion."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like symbol of death, except that all creatures within the radius of a symbol of persuasion instead become charmed by the caster [as the charm monster spell] for 1 hour per caster level. Unlike symbol of death, symbol of persuasion has no hit point limit; once triggered, a symbol of persuasion simply remains active for 10 minutes per caster level. Note: Magic traps such as symbol of persuasion are hard to detect and disable. A rogue [only] can use the Perception skill to find a symbol of persuasion and Disable Device to thwart it. The DC in each case is 25 + spell level, or 31 for symbol of persuasion.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like symbol of death, except that all creatures within the radius of a symbol of persuasion instead become charmed by the caster for 1 hour per caster level.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "See text"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 ft.; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/symbolOfPersuasion.html#_symbol-of-persuasion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.356"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Charm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One symbol"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 610,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1360,
-    "record_key": "Symbol of Persuasion.MOD"
+    "record_key": "Symbol of Persuasion",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

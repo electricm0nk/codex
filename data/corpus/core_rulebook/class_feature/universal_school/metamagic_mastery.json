@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Universal School ~ Metamagic Mastery",
+    "name": "Metamagic Mastery",
+    "class": "Universal School",
+    "description": "You can apply any one metamagic feat that you know to a spell you are about to cast. This does not alter the level of the spell or the casting time. You can use this ability %1 per day. Any time you use this ability to apply a metamagic feat that increases the spell level by more than 1, you must use an additional daily usage for each level above 1 that the feat adds to the spell. Even though this ability does not modify the spell's actual level, you cannot use this ability to cast a spell whose modified spell level would be above the level of the highest-level spell that you are capable of casting.|UniversalMetamagicMasteryTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Universal School ~ Metamagic Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.Supernatural.ArcaneSchoolPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UniversalMetamagicMasteryTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can apply any one metamagic feat that you know to a spell you are about to cast. This does not alter the level of the spell or the casting time. You can use this ability %1 per day. Any time you use this ability to apply a metamagic feat that increases the spell level by more than 1, you must use an additional daily usage for each level above 1 that the feat adds to the spell. Even though this ability does not modify the spell's actual level, you cannot use this ability to cast a spell whose modified spell level would be above the level of the highest-level spell that you are capable of casting.|UniversalMetamagicMasteryTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UniversalMetamagicMasteryTimes|(UniversalSchoolLVL-8)/2+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|UniversalMetamagicMasteryTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2695,
+    "record_key": "Universal School ~ Metamagic Mastery"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

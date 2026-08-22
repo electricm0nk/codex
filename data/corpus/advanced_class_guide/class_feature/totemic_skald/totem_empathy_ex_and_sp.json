@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Totemic Skald ~ Totem Empathy",
+    "name": "Totem Empathy (Ex and Sp)",
+    "class": "Skald",
+    "description": "The totemic skald can improve the attitude of animals of the same type as his totem. This ability functions just like a Diplomacy check to improve the attitude of a person. The skald rolls 1d20 and adds his skald level and his Charisma modifier to determine the totem empathy check result. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. In addition, the totemic skald can cast charm animal as a spell-like ability. This only functions against animals that are of the same type as his totem animal (subject to GM discretion).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Totemic Skald ~ Totem Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Totemic Skald Class Feature.Skald Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotemicSkaldSLA|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=TotemicSkaldSLA|CASTERLEVEL=SkaldLVL|Charm Animal,10+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "The totemic skald can improve the attitude of animals of the same type as his totem. This ability functions just like a Diplomacy check to improve the attitude of a person. The skald rolls 1d20 and adds his skald level and his Charisma modifier to determine the totem empathy check result. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. In addition, the totemic skald can cast charm animal as a spell-like ability. This only functions against animals that are of the same type as his totem animal (subject to GM discretion)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotemicSkaldSLA|floor(SkaldLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3702,
+    "record_key": "Totemic Skald ~ Totem Empathy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

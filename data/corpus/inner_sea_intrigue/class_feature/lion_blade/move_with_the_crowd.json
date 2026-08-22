@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lion Blade ~ Move with the Crowd",
+    "name": "Move with the Crowd",
+    "class": "Lion Blade",
+    "description": "When moving through groups of intelligent Small, Medium, or Large creatures that would normally count as difficult terrain, the Lion Blade instead moves normally. In addition, she gains a +5 competence bonus on Acrobatics checks to avoid attacks of opportunity or move through an enemy's square when moving faster than half speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lion Blade ~ Move with the Crowd"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When moving through groups of intelligent Small, Medium, or Large creatures that would normally count as difficult terrain, the Lion Blade instead moves normally. In addition, she gains a +5 competence bonus on Acrobatics checks to avoid attacks of opportunity or move through an enemy's square when moving faster than half speed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 160,
+    "record_key": "Lion Blade ~ Move with the Crowd"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

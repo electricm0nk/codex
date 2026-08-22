@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Flame Curse",
+    "name": "Flame Curse",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman causes a creature within 30 feet to become vulnerable to fire",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Flame Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanFlameHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Flame Curse"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanFlameSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanFlameCurseDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes a creature within 30 feet to become vulnerable to fire"
+      },
+      {
+        "key": "DESC",
+        "value": "until the end of the shaman's next turn.|PREVARLT:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "for the next %1 rounds.|ShamanFlameCurseDuration|PREVARGTEQ:ShamanSpiritLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "If the creature is already vulnerable to fire, this hex has no effect. Fire immunity and resistances apply as normal, and any saving throw allowed by the effect that caused the damage reduces it as normal. A creature affected by this hex cannot be affected by it again for 24 hours."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanFlameCurseDuration|1+min(2,ShamanSpiritLVL/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1549,
+    "record_key": "Shaman Spirit Hex ~ Flame Curse"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

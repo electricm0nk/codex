@@ -259,20 +259,44 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
     //     -> uc_feats.lst:117 AND up_feats.lst:128
     // A genuinely different feat arriving under an existing key still fails
     // here; this pin is widened to the verified set, not relaxed.
+    //
+    // `SD31-E6-F8-002` widened this further with three more pairs, and NONE
+    // is a reprint -- each is two genuinely DIFFERENT feats sharing a
+    // display name, checked against both corpus records' own `DESC:`/
+    // `BENEFIT:` text (`rules_tables::feats_all`'s own
+    // `cross_book_key_collisions_are_exactly_the_known_set` carries the full
+    // per-pair citation; not duplicated here):
+    //   `Returning Throw` (Upsi marksman feat vs Isr goblinoid teamwork feat)
+    //   `Desert Dweller` (Uw desert-terrain feat vs Iswg heat-resistance feat)
+    //   `Strangler` (Uc grapple/sneak-attack feat vs MonsterCodex lasso feat)
+    let (mythic_cross_book, other_cross_book): (Vec<_>, Vec<_>) =
+        cross_book.into_iter().partition(|(_, _, second)| *second == RuleSetId::Mythic);
     assert_eq!(
-        cross_book,
+        other_cross_book,
         vec![
             ("Endurance", RuleSetId::Crb, RuleSetId::Pu),
             ("Extended Animal Focus", RuleSetId::Acg, RuleSetId::Uw),
             ("Feral Combat Training", RuleSetId::Uc, RuleSetId::Upsi),
+            ("Returning Throw", RuleSetId::Upsi, RuleSetId::Isr),
+            ("Desert Dweller", RuleSetId::Uw, RuleSetId::Iswg),
+            ("Strangler", RuleSetId::Uc, RuleSetId::MonsterCodex),
         ]
     );
+
+    // `SD31-E6-F2-007` -- `RuleSetId::Mythic`'s 142 collisions are the same
+    // mechanically-proven population `feats_all::tests::
+    // cross_book_key_collisions_are_exactly_the_known_set` checks record-by-
+    // record (every colliding Mythic row's own `PREABILITY:` prerequisite
+    // names that exact key under `CATEGORY=FEAT`); not re-verified a second
+    // time here, only counted, so this pin still fails if a future book adds
+    // or removes one.
+    assert_eq!(mythic_cross_book.len(), 142, "re-derive if a book's feat gap rows change");
 }
 
 #[test]
 fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 11);
+    assert_eq!(books.len(), 20);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -290,10 +314,13 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     //   grep -E '^/// [a-z_]+ - [0-9]+ record' src/rules_core/rules_tables/feat_gap_tables.rs
     //   awk '/^pub static /{n=$3} /FeatCatalogRecord \{/{c[n]++} END{for(k in c) print c[k],k}' \
     //     src/rules_core/rules_tables/feat_gap_tables.rs
-    // Both agree: CRB 16, ARG 48, UC 2, UI 3, UM 12, UPsi 1, UW 1 = 83 rows,
-    // matching that file's own stated total. APG/ACG/PU/UCA have no gap rows
+    // Both agree: CRB 1, core_essentials 15, ARG 48, UC 2, UI 3, UM 12, UPsi 1,
+    // UW 1 = 83 rows, matching that file's own stated total (`SD31-E6-F8-001`
+    // re-bucketed 15 of the prior CRB-filed 16 rows to `RuleSetId::Ce`, the
+    // rule set `classify()`'s feat arm actually resolves a `core_essentials`
+    // -directory record's `source_book` to). APG/ACG/PU/UCA have no gap rows
     // and are unmoved.
-    assert_eq!(entries_for(RuleSetId::Crb), 201); // 185 + 16
+    assert_eq!(entries_for(RuleSetId::Crb), 186); // 185 + 1
     assert_eq!(entries_for(RuleSetId::Apg), 172); // unmoved
     assert_eq!(entries_for(RuleSetId::Acg), 129); // unmoved
     assert_eq!(entries_for(RuleSetId::Arg), 235); // 187 + 48
@@ -304,9 +331,27 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     assert_eq!(entries_for(RuleSetId::Uc), 263); // 261 + 2
     assert_eq!(entries_for(RuleSetId::Um), 156); // 144 + 12
     assert_eq!(entries_for(RuleSetId::Upsi), 222); // 221 + 1
+    assert_eq!(entries_for(RuleSetId::Ce), 15); // 0 + 15
+    // `SD31-E6-F8-002` -- five more books already compiled for another kind
+    // that had no feat table at all; every served entry is a gap row.
+    assert_eq!(entries_for(RuleSetId::Ha), 61); // 0 + 61
+    assert_eq!(entries_for(RuleSetId::Isr), 50); // 0 + 50
+    assert_eq!(entries_for(RuleSetId::Oa), 68); // 0 + 68
+    assert_eq!(entries_for(RuleSetId::Iswg), 31); // 0 + 31
+    assert_eq!(entries_for(RuleSetId::MonsterCodex), 32); // 0 + 32
+    // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set of any
+    // kind; every served entry is a gap row (`ma_feats.lst`'s 358 non-`.MOD`
+    // declarations). `SD31-W10-INTEGRATE-001` excluded 159 `VISIBLE:EXPORT`
+    // display-plumbing twins (PCGen's own export-only duplicate of an
+    // auto-granted feat, never independently selectable): 358 -> 199.
+    assert_eq!(entries_for(RuleSetId::Mythic), 199); // 0 + 199
+    // `SD31-E6-F8-003` -- two more books already compiled for another kind
+    // that had no feat table at all; every served entry is a gap row.
+    assert_eq!(entries_for(RuleSetId::Isi), 6); // 0 + 6
+    assert_eq!(entries_for(RuleSetId::Botd2), 1); // 0 + 1
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 1661, "201 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi = 1578 hand-authored + 83 corpus gap rows");
+    assert_eq!(total, 2109, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex + 199 Mythic + 6 Isi + 1 Botd2 = 1578 hand-authored + 531 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199, after SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT twins from the raw 358 + SD31-E6-F8-003's 7)");
 }
 
 #[test]

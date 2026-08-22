@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Picaroon ~ Lightning Reload",
+    "name": "Lightning Reload",
+    "class": "Swashbuckler",
+    "description": "Once per round the picaroon can spend 1 panache point to reload a single barrel of a one-handed firearm as a swift action. If she has the Rapid Reload feat or is using an alchemical cartridge, she can instead reload a single barrel of the weapon as a free action each round. Using this deed doesn't provoke attacks of opportunity. This deed replaces bleeding wound.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Picaroon ~ Lightning Reload"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Picaroon Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round the picaroon can spend 1 panache point to reload a single barrel of a one-handed firearm as a swift action. If she has the Rapid Reload feat or is using an alchemical cartridge, she can instead reload a single barrel of the weapon as a free action each round. Using this deed doesn't provoke attacks of opportunity. This deed replaces bleeding wound."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3923,
+    "record_key": "Picaroon ~ Lightning Reload"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

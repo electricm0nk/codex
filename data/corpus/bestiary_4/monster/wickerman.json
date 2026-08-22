@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:wickerman_burning_brand",
@@ -28,6 +26,112 @@
     ],
     "race_subtype": "Fire",
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Wickerman"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "13"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Wickerman"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:14"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Burning Brand,Natural.Ranged.Weapon,*1,4d6,SPROP=plus burn"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*1,2d8,SPROP=plus burn and grab"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Fire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      },
+      {
+        "key": "TYPE",
+        "value": "Construct"
+      }
+    ],
     "size": "C",
     "source_page": "p.277",
     "speeds": [
@@ -37,16 +141,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 249,
-    "record_key": "Wickerman"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 249,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Wickerman",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

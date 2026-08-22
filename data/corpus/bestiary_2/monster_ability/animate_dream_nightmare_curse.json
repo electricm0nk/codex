@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Animate Dream ~ Nightmare Curse",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:animate_dream"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Nightmare Curse"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(incorporeal touch)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimateDreamNightmareCurseDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimateDreamNightmareCurseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Nightmare Curse)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimateDreamNightmareCurseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An animate dream's touch puts horrifying visions in the target's mind.  Curse - incorporeal touch; save Fortitude DC %1; frequency 1/day; effect 1d4 Wisdom drain and target is fatigued; cure 3 consecutive saves or dispel evil, dream, or remove curse.|AnimateDreamNightmareCurseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Animate Dream ~ Nightmare Curse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.29",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 107,
-    "record_key": "Animate Dream ~ Nightmare Curse"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Animate Dream ~ Nightmare Curse",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lore Warden ~ Know Thy Enemy ~ AG",
+    "name": "Know Thy Enemy",
+    "class": "Lore Warden",
+    "description": "When the lore warden succeeds at a Knowledge check to identify a creature's abilities and weaknesses, she can also use a standard action to grant herself a +%1 insight bonus on all attack and weapon damage rolls made against that enemy. This bonus lasts for %2 rounds, or until the lore warden uses this ability against a different creature.|LoreWardenKnowThyEnemy|max(2,FighterLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Warden ~ Know Thy Enemy ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SwordsSecret.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LoreWardenKnowThyEnemy|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "DESC",
+        "value": "When the lore warden succeeds at a Knowledge check to identify a creature's abilities and weaknesses, she can also use a standard action to grant herself a +%1 insight bonus on all attack and weapon damage rolls made against that enemy. This bonus lasts for %2 rounds, or until the lore warden uses this ability against a different creature.|LoreWardenKnowThyEnemy|max(2,FighterLVL/2)"
+      },
+      {
+        "key": "DESC",
+        "value": "She also gains a +2 bonus to her AC against the creature when using this ability.|PRECLASS:1,Fighter=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LoreWardenKnowThyEnemy|2+(FighterLVL>=19)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 857,
+    "record_key": "Lore Warden ~ Know Thy Enemy ~ AG"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

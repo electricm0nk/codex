@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hellknight Armor Benefits",
+    "name": "Hellknight Armor Benefits",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|HellknightArmorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|HellknightArmorBonus"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "HeavyArmor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 59,
+    "record_key": "Hellknight Armor Benefits"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

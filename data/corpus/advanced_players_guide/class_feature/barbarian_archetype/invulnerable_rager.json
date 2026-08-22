@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Invulnerable Rager",
+    "name": "Invulnerable Rager",
+    "class": "Barbarian Archetype",
+    "description": "Some barbarians learn to take whatever comes their way, shrugging off mortal wounds with ease. These barbarians invite their enemies to attack them, and use pain to fuel their rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Invulnerable Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype.BarbarianCFUncannyDodge.BarbarianCFImprovedUncannyDodge.BarbarianCFDamageReduction.BarbarianCFTrapSense.BarbarianUncannyDodge.BarbarianImprovedUncannyDodge.BarbarianDamageReduction.BarbarianTrapSense"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Invulnerable Rager],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianUncannyDodge,TYPE.BarbarianImprovedUncannyDodge,TYPE.BarbarianDamageReduction,TYPE.BarbarianTrapSense]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some barbarians learn to take whatever comes their way, shrugging off mortal wounds with ease. These barbarians invite their enemies to attack them, and use pain to fuel their rage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Invulnerable Rager ~ Invulnerability|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Invulnerable Rager ~ Extreme Endurance|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Barbarian"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1546,
+    "record_key": "Barbarian Archetype ~ Invulnerable Rager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

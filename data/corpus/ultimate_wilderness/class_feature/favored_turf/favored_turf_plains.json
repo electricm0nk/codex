@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Favored Turf ~ Plains",
+    "name": "Favored Turf (Plains)",
+    "class": "Favored Turf",
+    "description": "You gain a +%1 bonus on combat maneuver checks and to CMD in plains terrain. Likewise, you get a +%2 bonus on initiative checks when in this terrain.|FavoredTurfPlains|FavoredTurfPlains*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Turf ~ Plains"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.TurferClassFeatures.SpecialQuality.Extraordinary.FavoredTurf"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTurfPlains|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on combat maneuver checks and to CMD in plains terrain. Likewise, you get a +%2 bonus on initiative checks when in this terrain.|FavoredTurfPlains|FavoredTurfPlains*2"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTurfPlains|FavoredTurfBaseBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredTurfPlains"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on combat maneuver checks and to CMD, and +%2 on Initiative checks in plains terrain|FavoredTurfPlains|FavoredTurfPlains*2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 387,
+    "record_key": "Favored Turf ~ Plains"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Glory Blessing ~ Glorious Presence",
+    "name": "Glorious Presence",
+    "class": "Glory Blessing",
+    "description": "You can touch an ally and grant it a glorious blessing. For 1 minute, the ally becomes mesmerizing to her foes. This functions as sanctuary, except if the ally attacks an opponent, this effect ends with respect to only that opponent. This is a mind-affecting effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Glory Blessing ~ Glorious Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch an ally and grant it a glorious blessing. For 1 minute, the ally becomes mesmerizing to her foes. This functions as sanctuary, except if the ally attacks an opponent, this effect ends with respect to only that opponent. This is a mind-affecting effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2249,
+    "record_key": "Glory Blessing ~ Glorious Presence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like raise dead, except that you can resurrect a creature that has been dead for as long as 10 years per caster level. This spell can even bring back creatures whose bodies have been destroyed, provided that you unambiguously identify the deceased in some fashion [reciting the deceased's time and place of birth or death is the most common method]. Upon completion of the spell, the creature is immediately restored to full hit points, vigor, and health, with no negative levels [or Constitution points] and all of the prepared spells possessed by the creature when it died. You can revive someone killed by a death effect or someone who has been turned into an undead creature and then destroyed. This spell can also resurrect elementals or outsiders, but it can't resurrect constructs or undead creatures. Even true resurrection can't restore to life a creature who has died of old age.",
     "key": "True Resurrection",
-    "school": "Conjuration",
     "level": 9,
-    "description": "This spell functions like raise dead, except that you can resurrect a creature that has been dead for as long as 10 years per caster level. This spell can even bring back creatures whose bodies have been destroyed, provided that you unambiguously identify the deceased in some fashion [reciting the deceased's time and place of birth or death is the most common method]. Upon completion of the spell, the creature is immediately restored to full hit points, vigor, and health, with no negative levels [or Constitution points] and all of the prepared spells possessed by the creature when it died. You can revive someone killed by a death effect or someone who has been turned into an undead creature and then destroyed. This spell can also resurrect elementals or outsiders, but it can't resurrect constructs or undead creatures. Even true resurrection can't restore to life a creature who has died of old age."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like raise dead, except that you can resurrect a creature that has been dead for as long as (CASTERLEVEL*10) years.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like raise dead, except that you can resurrect a creature that has been dead for as long as 10 years per caster level. This spell can even bring back creatures whose bodies have been destroyed, provided that you unambiguously identify the deceased in some fashion [reciting the deceased's time and place of birth or death is the most common method]. Upon completion of the spell, the creature is immediately restored to full hit points, vigor, and health, with no negative levels [or Constitution points] and all of the prepared spells possessed by the creature when it died. You can revive someone killed by a death effect or someone who has been turned into an undead creature and then destroyed. This spell can also resurrect elementals or outsiders, but it can't resurrect constructs or undead creatures. Even true resurrection can't restore to life a creature who has died of old age.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None, see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/trueResurrection.html#_true-resurrection"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.362"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Dead creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 640,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1389,
-    "record_key": "True Resurrection.MOD"
+    "record_key": "True Resurrection",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

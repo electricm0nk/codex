@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Commander ~ Celestial Mount",
+    "name": "Blessed Mount (Celestial)",
+    "class": "Divine Commander",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Commander ~ Celestial Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine Commander Class Feature.Warpriest Class Feature.Divine Commander Blessed Mount Template"
+      },
+      {
+        "key": "PREDEITYALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineCommanderCelestialMount|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineCommanderCelestialMount|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3984,
+    "record_key": "Divine Commander ~ Celestial Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

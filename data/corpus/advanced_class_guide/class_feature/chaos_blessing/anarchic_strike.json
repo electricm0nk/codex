@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Chaos Blessing ~ Anarchic Strike",
+    "name": "Anarchic Strike",
+    "class": "Chaos Blessing",
+    "description": "You can touch one weapon and grant it a chaotic blessing. For 1 minute, this weapon glows yellow or purple and deals an additional 1d6 points of damage against lawful creatures. During this time, it's treated as chaotic for the purposes of overcoming damage reduction. This blessing's additional damage doesn't stack with the additional damage from the anarchic weapon special ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chaos Blessing ~ Anarchic Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch one weapon and grant it a chaotic blessing. For 1 minute, this weapon glows yellow or purple and deals an additional 1d6 points of damage against lawful creatures. During this time, it's treated as chaotic for the purposes of overcoming damage reduction. This blessing's additional damage doesn't stack with the additional damage from the anarchic weapon special ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2231,
+    "record_key": "Chaos Blessing ~ Anarchic Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

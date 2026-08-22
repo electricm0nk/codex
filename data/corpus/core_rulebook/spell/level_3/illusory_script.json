@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You write instructions or other information on parchment, paper, or any suitable writing material. The illusory script appears to be some form of foreign or magical writing. Only the person [or people] designated by you at the time of the casting can read the writing; it's unintelligible to any other character. Any unauthorized creature attempting to read the script triggers a potent illusory effect and must make a saving throw. A successful saving throw means the creature can look away with only a mild sense of disorientation. Failure means the creature is subject to a suggestion implanted in the script by you at the time the illusory script spell was cast. The suggestion lasts only 30 minutes. Typical suggestions include \"Close the book and leave,\" \"Forget the existence of this note,\" and so forth. If successfully dispelled by dispel magic, the illusory script and its secret message disappear. The hidden message can be read by a combination of the true seeing spell with the read magic or comprehend languages spell.",
     "key": "Illusory Script",
-    "school": "Illusion",
     "level": 3,
-    "description": "You write instructions or other information on parchment, paper, or any suitable writing material. The illusory script appears to be some form of foreign or magical writing. Only the person [or people] designated by you at the time of the casting can read the writing; it's unintelligible to any other character. Any unauthorized creature attempting to read the script triggers a potent illusory effect and must make a saving throw. A successful saving throw means the creature can look away with only a mild sense of disorientation. Failure means the creature is subject to a suggestion implanted in the script by you at the time the illusory script spell was cast. The suggestion lasts only 30 minutes. Typical suggestions include \"Close the book and leave,\" \"Forget the existence of this note,\" and so forth. If successfully dispelled by dispel magic, the illusory script and its secret message disappear. The hidden message can be read by a combination of the true seeing spell with the read magic or comprehend languages spell."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute per page"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You write instructions or other information on parchment, paper, or any suitable writing material. Only the person (or people) designated by you at the time of the casting can read the writing; it's unintelligible to any other character.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You write instructions or other information on parchment, paper, or any suitable writing material. The illusory script appears to be some form of foreign or magical writing. Only the person [or people] designated by you at the time of the casting can read the writing; it's unintelligible to any other character. Any unauthorized creature attempting to read the script triggers a potent illusory effect and must make a saving throw. A successful saving throw means the creature can look away with only a mild sense of disorientation. Failure means the creature is subject to a suggestion implanted in the script by you at the time the illusory script spell was cast. The suggestion lasts only 30 minutes. Typical suggestions include \"Close the book and leave,\" \"Forget the existence of this note,\" and so forth. If successfully dispelled by dispel magic, the illusory script and its secret message disappear. The hidden message can be read by a combination of the true seeing spell with the read magic or comprehend languages spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/illusoryScript.html#_illusory-script"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Phantasm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One touched object weighing no more than 10 lbs."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 318,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1074,
-    "record_key": "Illusory Script.MOD"
+    "record_key": "Illusory Script",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

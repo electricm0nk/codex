@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Flesh Golem ~ Berserk",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "beastiary:monster:golem_flesh"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a flesh golem enters combat, there is a cumulative 1%% chance each round that its elemental spirit breaks free and the golem goes berserk. The uncontrolled golem goes on a rampage, attacking the nearest living creature or smashing some object smaller than itself if no creature is within reach, then moving on to spread more destruction. The golem's creator, if within 60 feet, can try to regain control by speaking firmly and persuasively to the golem, which requires a DC 19 Charisma check. It takes 1 minute of inactivity by the golem to reset the golem's berserk chance to 0%%."
+      },
+      {
+        "key": "KEY",
+        "value": "Flesh Golem ~ Berserk"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.160",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 720,
-    "record_key": "Flesh Golem ~ Berserk"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 720,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Flesh Golem ~ Berserk",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

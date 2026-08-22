@@ -1,0 +1,70 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Scroll Blade",
+    "name": "Scroll Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Scroll Blade"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.Finesseable.Piercing.Sword.BladeLight"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T07:49:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_arms_armor.lst",
+    "record_key": "Scroll Blade",
+    "sha256": "7183ca15e259890adca9f47b3bb7347ca2bb3811552ead90c588c6cc7c7c113f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

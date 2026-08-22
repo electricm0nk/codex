@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Court Bard ~ Satire",
+    "name": "Satire",
+    "class": "Bard",
+    "description": "A court bard can use performance to undermine the confidence of enemies who hear it, causing them to take a -%1 penalty on attack and damage rolls (minimum 1) and a -%1 penalty on saves against fear and charm effects as long as the bard continues performing. This penalty increases by -1 at 5th level and every six levels thereafter. Satire is a language-dependent, mind-affecting ability that uses audible components. This performance replaces inspire courage.|(BardLVL+1)/6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Court Bard ~ Satire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardInspireCourage"
+      },
+      {
+        "key": "DESC",
+        "value": "A court bard can use performance to undermine the confidence of enemies who hear it, causing them to take a -%1 penalty on attack and damage rolls (minimum 1) and a -%1 penalty on saves against fear and charm effects as long as the bard continues performing. This penalty increases by -1 at 5th level and every six levels thereafter. Satire is a language-dependent, mind-affecting ability that uses audible components. This performance replaces inspire courage.|(BardLVL+1)/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1652,
+    "record_key": "Court Bard ~ Satire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

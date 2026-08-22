@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Spirit Totem (Lesser)",
+    "name": "Spirit Totem, Lesser",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian is surrounded by spirit wisps that harass her foes. These spirits make one slam attack each round against a living foe that is adjacent to the barbarian. This slam attack is made using the barbarian's full base attack bonus, plus the barbarian's Charisma modifier. The slam deals 1d4 points of negative energy damage, plus the barbarian's Charisma modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Spirit Totem (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian is surrounded by spirit wisps that harass her foes. These spirits make one slam attack each round against a living foe that is adjacent to the barbarian. This slam attack is made using the barbarian's full base attack bonus, plus the barbarian's Charisma modifier. The slam deals 1d4 points of negative energy damage, plus the barbarian's Charisma modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1531,
+    "record_key": "Rage Power ~ Spirit Totem (Lesser)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

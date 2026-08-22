@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blood Kineticist ~ Blood Tell",
+    "name": "Blood Tell",
+    "class": "Kineticist",
+    "description": "At 6th level, a blood kineticist's connection to blood allows her to learn much from the blood of another. This works as blood biographyAPG, except the blood kineticist suddenly knows the information, rather than having it appear on a parchment. This is a 3rd-level utility wild talent and costs 0 points of burn. She can accept 1 point of burn to reduce the casting time to a standard action instead of 1 minute. This ability replaces the 6th-level utility wild talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Kineticist ~ Blood Tell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blood Kineticist Class Feature.Kineticist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, a blood kineticist's connection to blood allows her to learn much from the blood of another. This works as blood biographyAPG, except the blood kineticist suddenly knows the information, rather than having it appear on a parchment. This is a 3rd-level utility wild talent and costs 0 points of burn. She can accept 1 point of burn to reduce the casting time to a standard action instead of 1 minute. This ability replaces the 6th-level utility wild talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1320,
+    "record_key": "Blood Kineticist ~ Blood Tell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

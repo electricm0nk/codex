@@ -1,27 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Trident of Stability",
     "category": "ArmsArmor",
-    "name": "Trident of Stability",
     "cost_gp": 15.0,
-    "weight": 4.0,
-    "description": "A +1 trident fitted with a footrest bar that functions as an immovable rod when stepped on, granting a large CMD bonus and halting falls."
+    "description": "A +1 trident fitted with a footrest bar that functions as an immovable rod when stepped on, granting a large CMD bonus and halting falls.",
+    "key": "Trident of Stability",
+    "name": "Trident of Stability",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Trident"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Martial.Ranged.Thrown.Specific.Piercing.Trident.Spear"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Brace.Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      }
+    ],
+    "weight": 4.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Trident of Stability",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sensate ~ Centered Senses",
+    "name": "Centered Senses",
+    "class": "Fighter",
+    "description": "At 5th level, a sensate can center his senses as a move action. While centered, a sensate gains a +1 insight bonus on attack rolls, weapon damage rolls, and Will saves. This bonus increases by 1 at 9th level and every 4 levels thereafter. A sensate loses his centered state if he gains the confused, dazed, fascinated, staggered, or stunned condition; falls unconscious; or fails a Will save. This ability replaces weapon training 2, 3, and 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sensate ~ Centered Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sensate Class Feature.Fighter Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a sensate can center his senses as a move action. While centered, a sensate gains a +1 insight bonus on attack rolls, weapon damage rolls, and Will saves. This bonus increases by 1 at 9th level and every 4 levels thereafter. A sensate loses his centered state if he gains the confused, dazed, fascinated, staggered, or stunned condition; falls unconscious; or fails a Will save. This ability replaces weapon training 2, 3, and 4."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1741,
+    "record_key": "Sensate ~ Centered Senses"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai ~ Greater Resolve",
+    "name": "Greater Resolve",
+    "class": "Samurai",
+    "description": "At 9th level, a samurai can spend his resolve to negate some of his most grievous wounds. After a critical hit is confirmed against him, the samurai can spend one use of his resolve as an immediate action to treat that critical hit as a normal hit. Effects that only trigger on a critical hit do not trigger when the samurai uses this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Greater Resolve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a samurai can spend his resolve to negate some of his most grievous wounds. After a critical hit is confirmed against him, the samurai can spend one use of his resolve as an immediate action to treat that critical hit as a normal hit. Effects that only trigger on a critical hit do not trigger when the samurai uses this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 200,
+    "record_key": "Samurai ~ Greater Resolve"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Befuddling Strike",
+    "name": "Befuddling Strike",
+    "class": "Rogue Talent",
+    "description": "When the rogue deals sneak attack damage against an opponent, that opponent takes a -2 penalty on attack rolls against the rogue for 1d4 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Befuddling Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DESC",
+        "value": "When the rogue deals sneak attack damage against an opponent, that opponent takes a -2 penalty on attack rolls against the rogue for 1d4 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2892,
+    "record_key": "Rogue Talent ~ Befuddling Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

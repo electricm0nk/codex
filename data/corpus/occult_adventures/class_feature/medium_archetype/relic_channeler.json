@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium Archetype ~ Relic Channeler",
+    "name": "Relic Channeler",
+    "class": "Medium Archetype",
+    "description": "A relic channeler carries relics of legend around with her. She need not rely on locating the specific spirits that she seeks, but the relics limit the number of unique spirits she can channel.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium Archetype ~ Relic Channeler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Medium Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Medium=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler],[!PREFACT:1,ABILITIES,Medium_Archetype_Spirit=True,Medium_Archetype_HauntChanneler=True,Medium_Archetype_LocationChannel=True,Medium_Archetype_ConnectionChannel=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A relic channeler carries relics of legend around with her. She need not rely on locating the specific spirits that she seeks, but the relics limit the number of unique spirits she can channel."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Relic Channeler ~ Relics|Relic Channeler ~ Powerful Bond|PRECLASS:1,Medium=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Relic Channeler ~ Object Reading|PRECLASS:1,Medium=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Relic Channeler ~ Apport Relic|PRECLASS:1,Medium=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Relic Channeler ~ Connection Specialty|PRECLASS:1,Medium=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Medium"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Spirit|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_LocationChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_ConnectionChannel|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_HauntChanneler|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_LocationChannel|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1393,
+    "record_key": "Medium Archetype ~ Relic Channeler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

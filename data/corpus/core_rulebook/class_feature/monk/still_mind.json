@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Still Mind",
+    "name": "Still Mind",
+    "class": "Monk",
+    "description": "You gain a +2 bonus on saving throws against enchantment spells and effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Still Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Extraordinary.Defensive.Still Mind"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 bonus on saving throws against enchantment spells and effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 vs. enchantment spells and effects"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1100,
+    "record_key": "Monk ~ Still Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

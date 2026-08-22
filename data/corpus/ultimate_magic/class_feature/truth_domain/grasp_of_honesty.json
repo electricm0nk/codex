@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Truth Domain ~ Grasp of Honesty",
+    "name": "Grasp of Honesty",
+    "class": "Truth Domain",
+    "description": "Any creature you are grappling or pinning is affected by zone of truth (Will DC %1 negates). Outside of combat, you may use this ability by touching a target with both hands. You can use this ability %2 rounds per day. These rounds do not need to be consecutive. The effect ends if you stop grappling, pinning, or touching the target.|GraspOfHonestyDC|GraspOfHonestyRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Truth Domain ~ Grasp of Honesty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GraspOfHonestyRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GraspOfHonestyDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature you are grappling or pinning is affected by zone of truth (Will DC %1 negates). Outside of combat, you may use this ability by touching a target with both hands. You can use this ability %2 rounds per day. These rounds do not need to be consecutive. The effect ends if you stop grappling, pinning, or touching the target.|GraspOfHonestyDC|GraspOfHonestyRounds"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Grasp of Honesty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspOfHonestyRounds|DomainTruthLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspOfHonestyDC|DomainTruthDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GraspOfHonestyDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Grasp of Honesty)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 402,
+    "record_key": "Truth Domain ~ Grasp of Honesty"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

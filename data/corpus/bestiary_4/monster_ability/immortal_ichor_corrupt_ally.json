@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Immortal Ichor ~ Corrupt Ally",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:immortal_ichor"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature charmed by an immortal ichor takes 1d6 points of Wisdom damage per day. When a charmed creature's Wisdom damage equals its Wisdom score, it becomes completely subservient to the immortal ichor (as dominate monster, except it even obeys self-destructive orders) and loses the Wisdom damage it has taken from this ability. A subservient ally who is killed rises the next round as a juju zombie under the immortal ichor's control. If the ichor is killed, these zombies are immediately destroyed."
+      },
+      {
+        "key": "KEY",
+        "value": "Immortal Ichor ~ Corrupt Ally"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 891,
-    "record_key": "Immortal Ichor ~ Corrupt Ally"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 891,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Immortal Ichor ~ Corrupt Ally",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

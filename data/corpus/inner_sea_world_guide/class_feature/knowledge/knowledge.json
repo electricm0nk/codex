@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knowledge ~ HK",
+    "name": "Knowledge",
+    "class": "Knowledge",
+    "description": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knowledge ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Domain.HKDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Lore Keeper|PREVARGTEQ:HellknightLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Remote Viewing|PREVARGTEQ:HellknightLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeLVL|HellknightLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeDC|HKDisciplineDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeTimes|HKDiscipline"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Knowledge"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 94,
+    "record_key": "Knowledge ~ HK"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

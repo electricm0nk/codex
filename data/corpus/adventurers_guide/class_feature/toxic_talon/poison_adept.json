@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Toxic Talon ~ Poison Adept",
+    "name": "Poison Adept",
+    "class": "Rogue",
+    "description": "A toxic talon is trained in the use of poison and cannot accidentally poison himself when applying poison to a projectile weapon. He can apply poison to a projectile as a move action. This counts as the poison use ability for the purposes of qualifying for feats, prestige classes, and other options.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxic Talon ~ Poison Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.ToxicTalonClassFeatures.SpecialQuality.Extraordinary.Poison Use"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "A toxic talon is trained in the use of poison and cannot accidentally poison himself when applying poison to a projectile weapon. He can apply poison to a projectile as a move action. This counts as the poison use ability for the purposes of qualifying for feats, prestige classes, and other options."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1027,
+    "record_key": "Toxic Talon ~ Poison Adept"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Shadow's Sight",
+    "name": "Shadow's Sight",
+    "class": "Vigilante Talent",
+    "description": "The vigilante gains low-light vision and darkvision 60 feet. If he already had darkvision, its range increases by 30 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Shadow's Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Shadow's Sight"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains low-light vision and darkvision 60 feet. If he already had darkvision, its range increases by 30 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|30"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (30')"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 100,
+    "record_key": "Vigilante Talent ~ Shadow's Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

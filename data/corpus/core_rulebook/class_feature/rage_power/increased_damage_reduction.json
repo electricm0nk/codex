@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Increased Damage Reduction",
+    "name": "Increased Damage Reduction",
+    "class": "Rage Power",
+    "description": "Your damage reduction increases by %1/--. This increase is always active while you are raging.|IncreasedDRCount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Increased Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "IncreasedDRCount,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IncreasedDRCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your damage reduction increases by %1/--. This increase is always active while you are raging.|IncreasedDRCount"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IncreasedDRCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDR|1|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 473,
+    "record_key": "Rage Power ~ Increased Damage Reduction"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

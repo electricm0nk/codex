@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Storyteller ~ Learn the Story",
+    "name": "Learn the Story",
+    "class": "Medium",
+    "description": "A storyteller becomes a master at learning a place's tales. He can perform for a full minute, spending 10 rounds of storyteller's performance, to gain the effects of retrocognition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storyteller ~ Learn the Story"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A storyteller becomes a master at learning a place's tales. He can perform for a full minute, spending 10 rounds of storyteller's performance, to gain the effects of retrocognition."
+      },
+      {
+        "key": "DESC",
+        "value": "He can spend 1d4 × 10 minutes and 10 rounds of storyteller's performance to gain the effects of legend lore. The subject must be at hand for the legend lore to function.|PRECLASS:1,Medium=10"
+      },
+      {
+        "key": "DESC",
+        "value": "The storyteller can spend a standard action and 1 round of storyteller's performance to gain the effects of vision on any subject.|PRECLASS:1,Medium=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1446,
+    "record_key": "Storyteller ~ Learn the Story"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

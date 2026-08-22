@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Chant of Perfect Recall",
+    "name": "Chant of Perfect Recall",
+    "class": "Bard",
+    "description": "An impervious messenger can spend 1 round of his bardic performance to commit something to memory. This ability functions exactly as per memorize page, but the impervious messenger is the only recipient and he requires only 1 round to commit a single page to memory. An impervious messenger can commit additional pages worth of material to memory by using additional rounds of his bardic performance, but he can never memorize more than %1 pages.|max(1,BardLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Chant of Perfect Recall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ImperviousMessengerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "An impervious messenger can spend 1 round of his bardic performance to commit something to memory. This ability functions exactly as per memorize page, but the impervious messenger is the only recipient and he requires only 1 round to commit a single page to memory. An impervious messenger can commit additional pages worth of material to memory by using additional rounds of his bardic performance, but he can never memorize more than %1 pages.|max(1,BardLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 229,
+    "record_key": "Bardic Performance ~ Chant of Perfect Recall"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

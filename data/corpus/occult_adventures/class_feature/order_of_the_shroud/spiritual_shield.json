@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order Of The Shroud ~ Spiritual Shield",
+    "name": "Spiritual Shield",
+    "class": "Order Of The Shroud",
+    "description": "At 2nd level, the cavalier can call upon the spirits of the fallen for protection. Once per day as an immediate action when attacked by an undead target of his challenge, the cavalier can gain a deflection bonus equal to his Charisma modifier to his AC against that attack. The cavalier must decide to use this ability before the attack roll.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Of The Shroud ~ Spiritual Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order Of The Shroud Class Feature.Cavalier Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, the cavalier can call upon the spirits of the fallen for protection. Once per day as an immediate action when attacked by an undead target of his challenge, the cavalier can gain a deflection bonus equal to his Charisma modifier to his AC against that attack. The cavalier must decide to use this ability before the attack roll."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1719,
+    "record_key": "Order Of The Shroud ~ Spiritual Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger ~ Menacing Shot",
+    "name": "Menacing Shot",
+    "class": "Gunslinger",
+    "description": "At 15th level, the gunslinger can spend 1 grit point, shoot a firearm into the air, and affect all living creatures within a 30-foot-radius burst as if they were subject to the fear spell. The DC of this effect is equal to 10 + 1/2 the gunslinger's level + the gunslinger's Wisdom modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Menacing Shot"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL15"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL15.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, the gunslinger can spend 1 grit point, shoot a firearm into the air, and affect all living creatures within a 30-foot-radius burst as if they were subject to the fear spell. The DC of this effect is equal to 10 + 1/2 the gunslinger's level + the gunslinger's Wisdom modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 74,
+    "record_key": "Gunslinger ~ Menacing Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Arcane Mark (Profane Seal Signet)",
+    "level": null,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Arcane Mark (objects and willing creatures only)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Universal"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One personal rune or mark, all of which must fit within 1 sq. ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Universal"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 105,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Arcane Mark (Profane Seal Signet)",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

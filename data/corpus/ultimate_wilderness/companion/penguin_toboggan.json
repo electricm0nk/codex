@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Penguin ~ Toboggan",
     "delivery": "Extraordinary",
@@ -15,6 +13,28 @@
       "ultimate_wilderness:companion:familiar_penguin",
       "ultimate_wilderness:companion:penguin"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "On snow- or ice-covered terrain, a penguin can move at a rate of 30 feet by sliding on its belly rather than walking."
+      },
+      {
+        "key": "KEY",
+        "value": "Penguin ~ Toboggan"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.PenguinRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.202",
     "stat_adjustments": [],
@@ -24,16 +44,18 @@
       "PenguinRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 300,
-    "record_key": "Penguin ~ Toboggan"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 300,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Penguin ~ Toboggan",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

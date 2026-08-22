@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dare ~ Run Like Hell",
+    "name": "Run Like Hell",
+    "class": "Dare",
+    "description": "While this dare is active, your speed increases by 10 feet, and you retain your Dexterity bonus to your AC while running. You regain 1 grit or panache point the first time you are more than 100 feet away from your closest enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dare ~ Run Like Hell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dare Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary.Dare"
+      },
+      {
+        "key": "DESC",
+        "value": "While this dare is active, your speed increases by 10 feet, and you retain your Dexterity bonus to your AC while running. You regain 1 grit or panache point the first time you are more than 100 feet away from your closest enemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3101,
+    "record_key": "Dare ~ Run Like Hell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

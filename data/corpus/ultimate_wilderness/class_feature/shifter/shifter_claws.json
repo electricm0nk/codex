@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter ~ Shifter Claws",
+    "name": "Shifter Claws",
+    "class": "Shifter",
+    "description": "At will, a shifter in her natural form can extend her claws as a swift action to use as a weapon. This magical transformation is fueled as much by the shifter's faith in the natural world as it is by inborn talent. The claws on each hand can be used as a primary natural attack, dealing 1d%1 points of piercing and slashing damage. If she uses one of her claw attacks in concert with a weapon held in the other hand, the claw acts as a secondary natural attack instead.|ShifterClawDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Shifter Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterClawDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At will, a shifter in her natural form can extend her claws as a swift action to use as a weapon. This magical transformation is fueled as much by the shifter's faith in the natural world as it is by inborn talent. The claws on each hand can be used as a primary natural attack, dealing 1d%1 points of piercing and slashing damage. If she uses one of her claw attacks in concert with a weapon held in the other hand, the claw acts as a secondary natural attack instead.|ShifterClawDamage"
+      },
+      {
+        "key": "DESC",
+        "value": "Her claws count as magic weapons and ignore DR/cold iron, and DR/silver.|PREVARGTEQ:ShifterLVL,3|PREVARLT:ShifterLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "Her claws count as magic weapons and ignore DR/cold iron, DR/silver,DR/adamantine and DR/-.|PREVARGTEQ:ShifterLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "The critical multiplier for her claws becomes x3.|PREVARGTEQ:ShifterLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "While a shifter uses wild shape to assume her aspect's major form, her natural attacks gain the same benefits granted by her shifter claws ability. If the form she takes has claw attacks, she can use either the base damage of her shifter claws or the damage of the form's claws, whichever is greater. If the form does not have claw attacks, she can choose up to two natural attacks that would deal less damage than her shifter claw damage and have those attacks instead deal the same damage as her shifter claws.|PREVARGTEQ:ShifterWildShape,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawDamage|4|PRESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawDamage|3|PRESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawDamage|6|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawDamage|1|PRESIZEEQ:S|PREVARGTEQ:ShifterLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawDamage|2|PRESIZEGTEQ:M|PREVARGTEQ:ShifterLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawDamage|2|PREVARGTEQ:ShifterLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawDamage|2|PREVARGTEQ:ShifterLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawSize|1|PREVARGTEQ:ShifterLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawSize|1|PREVARGTEQ:ShifterLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawSize|1|PREVARGTEQ:ShifterLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shifter Claw|CRITMULTADD|1|PREVARGTEQ:ShifterLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 14,
+    "record_key": "Shifter ~ Shifter Claws"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

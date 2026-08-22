@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Light Lance",
-    "school": "Evocation",
-    "level": 2,
     "description": "You create a glorious beam of brilliant radiance that acts as a +1 holy lance suitable for your size. You must have a free hand when casting the spell and, once you call the lance into being, you cannot switch it to another hand or put it down without prematurely ending the spell. As a standard action while holding a light lance, you can choose not to make an attack and instead hold the lance aloft as a beacon of light and truth, creating an area of bright light with a radius of 90 feet. If you choose to do this for one or more additional rounds the lance also casts a spear of brilliant light up into the sky that grows progressively more visible as it continues to climb toward the heavens. Under cover of night or other darkness, if nothing obstructs the beam, it becomes visible for an additional 2 miles during each round in which you continue to aim your lance skyward (2 miles in the second round, 4 miles in the third round, and so on).",
-    "full_text": true
+    "full_text": true,
+    "key": "Light Lance",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates a soaring beacon of light.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a glorious beam of brilliant radiance that acts as a +1 holy lance suitable for your size. You must have a free hand when casting the spell and, once you call the lance into being, you cannot switch it to another hand or put it down without prematurely ending the spell. As a standard action while holding a light lance, you can choose not to make an attack and instead hold the lance aloft as a beacon of light and truth, creating an area of bright light with a radius of 90 feet. If you choose to do this for one or more additional rounds the lance also casts a spear of brilliant light up into the sky that grows progressively more visible as it continues to climb toward the heavens. Under cover of night or other darkness, if nothing obstructs the beam, it becomes visible for an additional 2 miles during each round in which you continue to aim your lance skyward (2 miles in the second round, 4 miles in the third round, and so on).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good|Light"
+      },
+      {
+        "key": "DURATION",
+        "value": "((CASTERLEVEL)+1) rounds (D)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/lightLance.html#_light-lance-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "lance of light"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 162,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2001,
-    "record_key": "Light Lance"
+    "record_key": "Light Lance",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tempest Druid ~ Druid Domain",
+    "name": "Druid Domain",
+    "class": "Tempest Druid",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Druid Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAirAllowed,DruidWeatherAllowed,DruidCloudSubdomainAllowed,DruidStormsSubdomainAllowed,DruidWindSubdomainAllowed,DruidAquaticAllowed,DruidSwampAllowed,PreventDruidInquisitions|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 248,
+    "record_key": "Tempest Druid ~ Druid Domain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

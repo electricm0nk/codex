@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "As synesthesia, but affecting multiple creatures.",
+    "key": "Synesthesia (Mass)",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Mesmerist=5|Psychic=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "As synesthesia, but affecting multiple creatures."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Synesthesia, Mass"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Phantasm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One or more living creatures, no two of which can be more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 125,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Synesthesia (Mass)",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

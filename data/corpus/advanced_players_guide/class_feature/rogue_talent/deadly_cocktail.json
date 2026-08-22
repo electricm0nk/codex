@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Deadly Cocktail",
+    "name": "Deadly Cocktail",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can apply two doses of poison to a weapon at once. These can be separate poisons, in which case they both affect the target individually, or two doses of the same toxin, in which case the poisons' frequency is extended by 50%% and the save DC increases by +2. This talent is an exception to the rule that injury poisons can only be delivered one dose at a time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Deadly Cocktail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueAdvancedTalent.Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can apply two doses of poison to a weapon at once. These can be separate poisons, in which case they both affect the target individually, or two doses of the same toxin, in which case the poisons' frequency is extended by 50%% and the save DC increases by +2. This talent is an exception to the rule that injury poisons can only be delivered one dose at a time."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2927,
+    "record_key": "Rogue Talent ~ Deadly Cocktail"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

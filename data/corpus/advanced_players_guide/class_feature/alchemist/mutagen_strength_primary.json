@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist ~ Mutagen Strength (First)",
+    "name": "Mutagen Strength/Primary",
+    "class": "Alchemist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist ~ Mutagen Strength (First)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.Internal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|MutagenACBonus|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|MutagenStatBonus|TYPE=Alchemical"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|MutagenStatPenalty"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 82,
+    "record_key": "Alchemist ~ Mutagen Strength (First)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

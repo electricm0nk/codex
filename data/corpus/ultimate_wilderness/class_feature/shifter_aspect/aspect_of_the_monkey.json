@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Monkey",
+    "name": "Aspect of the Monkey",
+    "class": "Shifter Aspect",
+    "description": "The monkey is a climbing trickster who specializes in mobility and manual agility.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Monkey"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Monkey_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterMonkeyAspectLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The monkey is a climbing trickster who specializes in mobility and manual agility."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Monkey ~ Minor|PREVARLT:ReplaceMinorShifterAspect,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shifter Aspect ~ Monkey ~ Major|PREVARGTEQ:ShifterAspectLVL,4|PREVARLT:ReplaceMajorShifterAspect,1|PREVARGTEQ:ShifterWildShape,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterMonkeyAspectLVL|ShifterAspectLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 36,
+    "record_key": "Shifter Aspect ~ Monkey"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

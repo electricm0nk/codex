@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Retain Dex To AC ~ Flat-footed",
+    "name": "Retain Dex To AC ~ Flat-footed",
+    "class": "Retain Dex To AC",
+    "description": "You retain your Dexterity bonus to AC even when flat-footed",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DESC",
+        "value": "You retain your Dexterity bonus to AC even when flat-footed"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2849,
+    "record_key": "Retain Dex To AC ~ Flat-footed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

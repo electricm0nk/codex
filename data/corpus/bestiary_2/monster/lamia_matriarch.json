@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:lamia_wisdom_drain_matriarch"
@@ -26,6 +24,132 @@
     ],
     "race_subtype": "Shapechanger",
     "race_type": "Monstrous Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Change Shape ~ Lama Matriarch|Immunity to Mind-Affecting Effects|Lamia ~ Wisdom Drain Matriarch|Lamia Matriarch ~ Spells|Undersized Weapons"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Sorcerer"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Common|Draconic"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Scimitar"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Sorcerer|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Use Magic Device|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,INT,WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|8|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Touch|DAMAGE|-STR"
+      },
+      {
+        "key": "CR",
+        "value": "8"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Monstrous Humanoid:12"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Climb,40,Swim,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Touch,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Touch,*1,0"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Monstrous Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Sorcerer"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=12|Deep Slumber,13+CHA|Dream|Major Image,13+CHA|Mirror Image|Suggestion,13+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=12|Charm Monster,14+CHA|Ventriloquism,11+CHA"
+      },
+      {
+        "key": "SR",
+        "value": "19"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Sorcerer Cleric Spells"
+      }
+    ],
     "size": "L",
     "source_page": "p.175",
     "speeds": [
@@ -43,16 +167,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 569,
-    "record_key": "Lamia Matriarch"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 569,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Lamia Matriarch",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

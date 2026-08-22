@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Refined Education ~ Heal",
+    "name": "Heal",
+    "class": "Refined Education",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education ~ Heal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Refined Education Selection"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Refined Education ~ Heal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HealRefinedEducationUnlock|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Heal|RogueLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HealRefinedEducationUnlock|1|PRECLASS:1,Rogue=4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 799,
+    "record_key": "Refined Education ~ Heal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

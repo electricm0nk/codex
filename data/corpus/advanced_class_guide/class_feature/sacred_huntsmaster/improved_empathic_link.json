@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Huntsmaster ~ Improved Empathic Link",
+    "name": "Improved Empathic Link",
+    "class": "Inquisitor",
+    "description": "The sacred huntsmaster gains an empathic link with her animal companion. This functions like an empathic link with a familiar, except the sacred huntsmaster can also see through a companion's eyes as a swift action, maintaining this connection as long as she likes (as long as the companion is within 1 mile) and ending it as a free action. The sacred huntsmaster is blinded while maintaining this connection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Huntsmaster ~ Improved Empathic Link"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.ArchetypeAbility.SpecialQuality.Supernatural.InquisitorSecondJudgement"
+      },
+      {
+        "key": "DESC",
+        "value": "The sacred huntsmaster gains an empathic link with her animal companion. This functions like an empathic link with a familiar, except the sacred huntsmaster can also see through a companion's eyes as a swift action, maintaining this connection as long as she likes (as long as the companion is within 1 mile) and ending it as a free action. The sacred huntsmaster is blinded while maintaining this connection."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3292,
+    "record_key": "Sacred Huntsmaster ~ Improved Empathic Link"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

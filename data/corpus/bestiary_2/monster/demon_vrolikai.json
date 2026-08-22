@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:vrolikai_black_flame_knives",
@@ -35,6 +33,152 @@
     ],
     "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability|Immunity to Death Effects|True Seeing ~ Constant|Vrolikai ~ Black Flame Knives|Vrolikai ~ Death-Stealing Gaze|Vrolikai ~ Madness|Vrolikai ~ Multiweapon Mastery"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In scrubland or brush|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT,WIS|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|19|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|60"
+      },
+      {
+        "key": "CR",
+        "value": "19"
+      },
+      {
+        "key": "DR",
+        "value": "15/cold iron and good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "4"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Bluff"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):19"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing,*4,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Sting,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Madness,*1,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Demon|Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=19|Hold Monster (Mass),19+CHA|Summon Monster VI (Vrolikai)|Symbol of Death,19+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=19|Quickened Enervation|Regenerate|Silence,12+CHA|Vampiric Touch"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=19|Deeper Darkness|Enervation|Telekinesis,15+CHA|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "30"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.81",
     "speeds": [
@@ -48,16 +192,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 269,
-    "record_key": "Demon (Vrolikai)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 269,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Demon (Vrolikai)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

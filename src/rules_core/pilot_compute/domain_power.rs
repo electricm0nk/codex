@@ -1,0 +1,920 @@
+//! PCGen domain-power formula interpreter (SD-31 wave 25, OPERATOR-RULINGS
+//! 2026-08-21 section 20 overturning SD-27 decisions.md section 24.1's "no
+//! formula interpreter" ban, for this package only). SD-31 wave 26 widened
+//! [`DOMAIN_POWER_CATALOG`] from Good/War/Strength to five entries
+//! (+Destruction's Destructive Smite, +Glory's Touch of Glory) and wired
+//! Cleric's own domain-power branch (previously Good/Healing-only, unlike
+//! Inquisitor's already-generic one) onto the same shared catalog -- see
+//! `explain_cleric_level1_spell_baseline` in `pilot_compute/mod.rs`. Before
+//! widening the catalog, this lane confirmed the interpreted path still
+//! reproduces Good and Healing's pre-existing pinned values exactly (no
+//! `fixture_check_tests` change was needed for either -- they were, and
+//! remain, green).
+//!
+//! Before this seam, `ground_or_block_cleric_domain_power`'s equivalent (the
+//! inline block inside `explain_cleric_level1_spell_baseline`) and
+//! `ground_or_block_inquisitor_domain_power` each hand-wrote the Good and
+//! Healing domains' granted-power arithmetic as bespoke closed-form Rust
+//! (`(level / 2).max(1)`, `(3 + wisdom_modifier).max(0)`), gated behind a
+//! two-item allowlist (`GOOD_DOMAIN_SELECTION`, `HEALING_DOMAIN_SELECTION`).
+//! Every other domain in every book rode a claim-blocking diagnostic because
+//! extending that pattern meant writing, and independently primary-source
+//! verifying, one MORE bespoke function per domain.
+//!
+//! This module replaces the ARITHMETIC (not the allowlist's two selection
+//! constants, which many existing tests reference by name and which still
+//! name real, already-verified domains) with a small, general PCGen formula
+//! evaluator applied to formula strings TRANSCRIBED VERBATIM from
+//! `data/corpus/core_rulebook/class_feature/domain_power/*.json` and
+//! `data/corpus/core_rulebook/class_feature/<domain>/<domain>.json`'s own
+//! `DESC`/`BONUS:VAR` tokens (see each [`DomainPowerSpec`]'s doc comment for
+//! its own upstream `.lst` line and sha256). Adding a new domain to
+//! [`DOMAIN_POWER_CATALOG`] means transcribing ONE more formula string, not
+//! deriving and independently verifying a new closed-form Rust expression --
+//! the throughput problem `OPERATOR-RULINGS-2026-08-21.md` section 20 names.
+//!
+//! this module's own `fixture_check_tests` inline test module (below) is its fixture gate,
+//! written to the SAME rigor `derived_evaluator_fixture_check` uses without
+//! touching that proof harness (out of this lane's granted write scope): it
+//! embeds the real corpus JSON via `include_str!`, asserts every
+//! [`DomainPowerSpec`] formula string here is byte-for-byte what the corpus
+//! states (the transcription half), and asserts this module's evaluator
+//! reproduces expected numbers computed independently of the evaluator (the
+//! interpretation half) -- both halves `derived_evaluator_fixture_check`'s
+//! own module doc names as the two ways a formula-reading seam can be wrong.
+//!
+//! ## What this interpreter covers
+//! Integer literals, a bound variable environment (any identifier ending in
+//! `LVL` resolves to the granting class's own level -- verified true for
+//! every CRB domain's own `BONUS:VAR|Domain<X>LVL|DomainLVL|TYPE=Domain`
+//! chain by this file's own `domain_header_lvl_chain_matches_the_shared_shape`
+//! test; the six PF1 ability abbreviations resolve to the character's own
+//! ability modifier), `+ - * /` with standard precedence (PCGen integer
+//! division, truncating toward zero -- Rust's own `/` on signed integers,
+//! matching the pre-existing hand-derived arithmetic this seam replaces),
+//! parenthesised sub-expressions, and the two-argument `max(a,b)`/`min(a,b)`
+//! functions.
+//!
+//! ## What it does NOT cover -- refuses (`None`) rather than guesses
+//! - Dice notation (`1d4`) -- Healing's Rebuke Death heal amount stays
+//!   ungrounded for exactly this reason, unchanged from before this seam.
+//! - Multi-`DESC`-token, level-gated formula variants (a `PREVARLT:<var>,<n>`
+//!   token picking between two description texts, e.g. Rebuke Death's own
+//!   heal-amount pair, and Acid Dart/Artificer's Touch/Blast Rune/Fire Bolt/
+//!   Icicle/Lightning Arc/Storm Burst in the wider CRB domain-power corpus).
+//!   `parse_pcgen_expr` never sees a `PREVARLT`/`PREVARGTEQ` fragment because
+//!   [`DOMAIN_POWER_CATALOG`] never carries one as a `magnitude_formula`.
+//! - Domain records whose corpus ingest lacks the header's `Domain<X>LVL`/
+//!   `Domain<X>Times` `BONUS:VAR` chain entirely -- confirmed absent for
+//!   Inner Sea World Guide's Void and Scalykind domains and the Dark
+//!   Tapestry subdomain (their granted-power records carry a bare `ASPECT`
+//!   reference to a `Domain<X>Times`-shaped name with no `BONUS:VAR` token
+//!   anywhere in the book establishing what it resolves to, and no domain
+//!   header record is ingested at all) -- `resolve_domain` returns `None`
+//!   for every selection this catalog does not carry, and the caller's
+//!   pre-existing claim-blocking diagnostic is preserved unchanged for them.
+//! - Any granted power whose real mechanic targets an ENEMY rather than
+//!   applying a buff (Evil's Touch of Evil, Darkness's Touch of Darkness,
+//!   Madness's Vision of Madness all parse cleanly under this grammar --
+//!   `max(Domain<X>LVL/2,1)`, the exact shape Good/War/Strength use -- but
+//!   `active_touch_of_good_bonus`'s "self-application only" approximation,
+//!   honest for a power that helps its target, would misrepresent an
+//!   enemy-facing sicken/conceal/mind-affecting-swap effect as a self-buff.
+//!   [`DOMAIN_POWER_CATALOG`] deliberately omits them; they stay named in
+//!   the surrounding claim-blocking diagnostic, unchanged.
+
+use super::*;
+
+/// A PCGen arithmetic expression, parsed from a formula string transcribed
+/// verbatim from the corpus. Deliberately narrow: see this module's own doc
+/// comment for exactly which corpus formula shapes this covers.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(super) enum Expr {
+    Int(i32),
+    Var(String),
+    Add(Box<Expr>, Box<Expr>),
+    Sub(Box<Expr>, Box<Expr>),
+    Mul(Box<Expr>, Box<Expr>),
+    Div(Box<Expr>, Box<Expr>),
+    Neg(Box<Expr>),
+    Max(Box<Expr>, Box<Expr>),
+    Min(Box<Expr>, Box<Expr>),
+}
+
+/// Parses a PCGen arithmetic formula string (e.g. `"max(DomainGoodLVL/2,1)"`,
+/// `"3+WIS"`) into an [`Expr`]. Returns `None` on ANY syntax this small
+/// recursive-descent grammar does not recognize -- dice notation, a
+/// `PREVARLT`/`PREVARGTEQ` fragment, a function other than `max`/`min`, or
+/// trailing unconsumed input -- refusing rather than guessing, the same
+/// discipline `derived_evaluator_fixture_check::parse_class_feature_level_scaling`
+/// uses for its own narrower grammar.
+pub(super) fn parse_pcgen_expr(input: &str) -> Option<Expr> {
+    let compact: Vec<char> = input.chars().filter(|c| !c.is_whitespace()).collect();
+    let mut pos = 0usize;
+    let expr = parse_expr(&compact, &mut pos)?;
+    if pos != compact.len() {
+        return None; // trailing unconsumed input -- refuse rather than guess
+    }
+    Some(expr)
+}
+
+fn parse_expr(chars: &[char], pos: &mut usize) -> Option<Expr> {
+    let mut node = parse_term(chars, pos)?;
+    loop {
+        match chars.get(*pos) {
+            Some('+') => {
+                *pos += 1;
+                let rhs = parse_term(chars, pos)?;
+                node = Expr::Add(Box::new(node), Box::new(rhs));
+            }
+            Some('-') => {
+                *pos += 1;
+                let rhs = parse_term(chars, pos)?;
+                node = Expr::Sub(Box::new(node), Box::new(rhs));
+            }
+            _ => break,
+        }
+    }
+    Some(node)
+}
+
+fn parse_term(chars: &[char], pos: &mut usize) -> Option<Expr> {
+    let mut node = parse_unary(chars, pos)?;
+    loop {
+        match chars.get(*pos) {
+            Some('*') => {
+                *pos += 1;
+                let rhs = parse_unary(chars, pos)?;
+                node = Expr::Mul(Box::new(node), Box::new(rhs));
+            }
+            Some('/') => {
+                *pos += 1;
+                let rhs = parse_unary(chars, pos)?;
+                node = Expr::Div(Box::new(node), Box::new(rhs));
+            }
+            _ => break,
+        }
+    }
+    Some(node)
+}
+
+fn parse_unary(chars: &[char], pos: &mut usize) -> Option<Expr> {
+    if chars.get(*pos) == Some(&'-') {
+        *pos += 1;
+        let inner = parse_unary(chars, pos)?;
+        return Some(Expr::Neg(Box::new(inner)));
+    }
+    parse_primary(chars, pos)
+}
+
+fn parse_primary(chars: &[char], pos: &mut usize) -> Option<Expr> {
+    match chars.get(*pos) {
+        Some('(') => {
+            *pos += 1;
+            let inner = parse_expr(chars, pos)?;
+            if chars.get(*pos) != Some(&')') {
+                return None;
+            }
+            *pos += 1;
+            Some(inner)
+        }
+        Some(c) if c.is_ascii_digit() => {
+            let start = *pos;
+            while chars.get(*pos).is_some_and(|c| c.is_ascii_digit()) {
+                *pos += 1;
+            }
+            let text: String = chars[start..*pos].iter().collect();
+            text.parse::<i32>().ok().map(Expr::Int)
+        }
+        Some(c) if c.is_ascii_alphabetic() => {
+            let start = *pos;
+            while chars.get(*pos).is_some_and(|c| c.is_ascii_alphanumeric()) {
+                *pos += 1;
+            }
+            let name: String = chars[start..*pos].iter().collect();
+            if chars.get(*pos) == Some(&'(') && (name == "max" || name == "min") {
+                *pos += 1;
+                let a = parse_expr(chars, pos)?;
+                if chars.get(*pos) != Some(&',') {
+                    return None;
+                }
+                *pos += 1;
+                let b = parse_expr(chars, pos)?;
+                if chars.get(*pos) != Some(&')') {
+                    return None;
+                }
+                *pos += 1;
+                return Some(if name == "max" {
+                    Expr::Max(Box::new(a), Box::new(b))
+                } else {
+                    Expr::Min(Box::new(a), Box::new(b))
+                });
+            }
+            Some(Expr::Var(name))
+        }
+        _ => None,
+    }
+}
+
+/// Evaluates a parsed [`Expr`] against `env`, a variable-name resolver.
+/// `env` returning `None` for a name this expression actually references
+/// propagates as `None` (refuse rather than silently treat an unresolved
+/// variable as zero).
+pub(super) fn eval_expr(expr: &Expr, env: &impl Fn(&str) -> Option<i32>) -> Option<i32> {
+    match expr {
+        Expr::Int(n) => Some(*n),
+        Expr::Var(name) => env(name),
+        Expr::Add(a, b) => Some(eval_expr(a, env)? + eval_expr(b, env)?),
+        Expr::Sub(a, b) => Some(eval_expr(a, env)? - eval_expr(b, env)?),
+        Expr::Mul(a, b) => Some(eval_expr(a, env)? * eval_expr(b, env)?),
+        Expr::Div(a, b) => {
+            let denom = eval_expr(b, env)?;
+            if denom == 0 {
+                return None;
+            }
+            Some(eval_expr(a, env)? / denom) // truncates toward zero, PCGen's own semantics
+        }
+        Expr::Neg(a) => Some(-eval_expr(a, env)?),
+        Expr::Max(a, b) => Some(eval_expr(a, env)?.max(eval_expr(b, env)?)),
+        Expr::Min(a, b) => Some(eval_expr(a, env)?.min(eval_expr(b, env)?)),
+    }
+}
+
+/// Resolves a PCGen ability abbreviation (`STR`/`DEX`/`CON`/`INT`/`WIS`/`CHA`)
+/// against an already-computed [`AbilityModifiers`]. `None` for anything else
+/// -- the caller's own `LVL`-suffixed variable names never reach this
+/// function (see [`domain_power_env`]).
+fn ability_abbreviation_modifier(modifiers: &AbilityModifiers, name: &str) -> Option<i32> {
+    match name {
+        "STR" => Some(i32::from(modifiers.strength)),
+        "DEX" => Some(i32::from(modifiers.dexterity)),
+        "CON" => Some(i32::from(modifiers.constitution)),
+        "INT" => Some(i32::from(modifiers.intelligence)),
+        "WIS" => Some(i32::from(modifiers.wisdom)),
+        "CHA" => Some(i32::from(modifiers.charisma)),
+        _ => None,
+    }
+}
+
+/// The variable environment every domain-power formula in
+/// [`DOMAIN_POWER_CATALOG`] resolves against: any name ending in `LVL`
+/// (`Domain<X>LVL`, PCGen's own spelling) is the granting class's level --
+/// correct because every CRB domain header's own
+/// `BONUS:VAR|Domain<X>LVL|DomainLVL|TYPE=Domain` chain resolves `DomainLVL`
+/// to the granting class's level with no per-domain offset (the same
+/// structural fact `active_touch_of_good_bonus`'s own doc comment already
+/// states for Good, reused unmodified here); the six ability abbreviations
+/// resolve to `modifiers`' own field. Any other identifier -- this grammar
+/// never emits one, since [`DOMAIN_POWER_CATALOG`]'s formula strings are
+/// hand-transcribed and fixture-checked -- resolves to `None`.
+fn domain_power_env(
+    class_level: u8,
+    modifiers: &AbilityModifiers,
+) -> impl Fn(&str) -> Option<i32> + use<> {
+    let class_level = i32::from(class_level);
+    let modifiers = *modifiers;
+    move |name: &str| {
+        if let Some(m) = ability_abbreviation_modifier(&modifiers, name) {
+            return Some(m);
+        }
+        if name.ends_with("LVL") {
+            return Some(class_level);
+        }
+        None
+    }
+}
+
+/// PF1 Core Rulebook Domains' shared granted-power uses-per-day formula,
+/// `3+WIS` -- transcribed verbatim from
+/// `data/corpus/core_rulebook/class_feature/domains/domains.json`'s own
+/// `BONUS:VAR|DomainPowerTimes|3+WIS` token. Every one of the 20 CRB domain
+/// headers' own `BONUS:VAR|Domain<X>Times|DomainPowerTimes|TYPE=Domain`
+/// chain resolves to this SAME formula (verified corpus-wide against a
+/// sample of six domain headers besides Good/Healing this cycle: Luck,
+/// Travel, Magic, Madness, Rune, and Healing itself all carry the identical
+/// chain) -- so this is genuinely one shared, corpus-stated formula, not
+/// per-domain content, and every [`DOMAIN_POWER_CATALOG`] entry reuses this
+/// single interpreted call rather than repeating `3+WIS` as a per-domain
+/// constant.
+pub(super) const DOMAIN_POWER_TIMES_FORMULA: &str = "3+WIS";
+
+/// Interprets [`DOMAIN_POWER_TIMES_FORMULA`] for `modifiers`, floored at 0
+/// (PF1's own "times per day" floor -- a formula that would resolve
+/// negative for a very low Wisdom score never grants negative uses). Used
+/// for every [`DomainPowerSpec`] in [`DOMAIN_POWER_CATALOG`], replacing the
+/// THREE separate hand-written `(3 + wisdom_modifier).max(0)` call sites
+/// this seam previously carried (Cleric's Good uses/day, Cleric's Healing
+/// Rebuke Death uses/day, Inquisitor's Good uses/day) with one interpreted
+/// evaluation of the corpus's own formula string.
+pub(super) fn domain_power_uses_per_day(modifiers: &AbilityModifiers) -> i16 {
+    let expr = parse_pcgen_expr(DOMAIN_POWER_TIMES_FORMULA)
+        .expect("DOMAIN_POWER_TIMES_FORMULA is a fixed, fixture-checked literal");
+    let env = domain_power_env(0, modifiers); // LVL never appears in "3+WIS"
+    let value = eval_expr(&expr, &env)
+        .expect("3+WIS resolves under domain_power_env for any AbilityModifiers");
+    i16::try_from(value.max(0)).unwrap_or(i16::MAX)
+}
+
+/// One domain this catalog grounds for real: its granted power's magnitude
+/// formula, transcribed verbatim from the corpus, plus enough provenance for
+/// this module's own `fixture_check_tests` inline test module to pin it against the real
+/// upstream `.lst` bytes.
+pub(super) struct DomainPowerSpec {
+    /// The `choice:cleric_domain`/`choice:inquisitor_domain` selection id
+    /// this spec answers for, e.g. `GOOD_DOMAIN_SELECTION`.
+    pub selection_id: &'static str,
+    /// Lowercase, underscore-safe domain name (e.g. `"good"`, `"war"`),
+    /// used to build this power's `class_feature.domain.<slug>_<ability_id>_*`
+    /// explanation ids -- for Good, this reproduces
+    /// `class_feature.domain.good_touch_of_good_self_application` and its
+    /// siblings byte-for-byte, the ids the pre-existing tests already pin.
+    pub domain_slug: &'static str,
+    pub domain_display_name: &'static str,
+    pub granted_power_name: &'static str,
+    /// The `class_ability_activations` id this power's self-application
+    /// activation is recorded under.
+    pub ability_id: &'static str,
+    /// Verbatim from the granted-power record's own `DESC` embedded
+    /// formula segment (the text after the description's first `|`).
+    pub magnitude_formula: &'static str,
+    /// A short, honest label for what the magnitude number IS -- reused in
+    /// this power's grounded explanation text.
+    pub magnitude_label: &'static str,
+    /// Verbatim-accurate framing of this power's own duration/trigger, as
+    /// the corpus `DESC` text states it -- substituted into the shared
+    /// "actively using {power} ... {effect_duration_phrase}" explanation
+    /// sentence. Added SD-31 wave 26 when widening past Good/War/Strength
+    /// (all three genuinely "for 1 round" per their own DESC text) surfaced
+    /// a real accuracy gap: Destructive Smite is a single declared attack
+    /// with no duration at all, and Touch of Glory's own DESC states "for
+    /// one hour, or until the creature touched elects to apply the bonus
+    /// to a roll" -- reusing a hardcoded "for 1 round" for either would be
+    /// a plausible-looking but WRONG sentence, exactly the failure mode
+    /// this seam exists to avoid.
+    pub effect_duration_phrase: &'static str,
+    // Provenance-only: read by this module's own `fixture_check_tests` (`catalog_provenance_
+    // matches_the_corpus_records_own_source_citation`, below) against the corpus's own `source`
+    // object, never by any PRODUCTION/runtime code path -- `cargo build --lib` (the non-test
+    // profile) correctly flags them `dead_code` because that build never compiles `#[cfg(test)]`
+    // code in. `#[allow]`d deliberately rather than deleted: these fields are load-bearing for the
+    // provenance fixture test that already exists and passes, not unused dead weight.
+    #[allow(dead_code)]
+    pub upstream_lst: &'static str,
+    #[allow(dead_code)]
+    pub upstream_lst_sha256: &'static str,
+    #[allow(dead_code)]
+    pub upstream_line: u64,
+}
+
+/// The domains this seam grounds for real, replacing the previous
+/// Good/Healing-only allowlist's ARITHMETIC. Every entry's `magnitude_formula`
+/// is a self-application-safe, non-dice, single-`DESC`-token formula -- see
+/// this module's own doc comment for exactly why Evil/Darkness/Madness (same
+/// formula shape, enemy-facing effect) and Void/Scalykind (no corpus header
+/// chain) are deliberately absent. Healing carries no `magnitude_formula`
+/// (Rebuke Death's heal amount is a dice roll, `1d4+…`) -- unchanged from
+/// before this seam, its uses-per-day is still grounded via
+/// [`domain_power_uses_per_day`].
+pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
+    DomainPowerSpec {
+        selection_id: GOOD_DOMAIN_SELECTION,
+        domain_slug: "good",
+        domain_display_name: "Good",
+        granted_power_name: "Touch of Good",
+        ability_id: TOUCH_OF_GOOD_ABILITY_ID,
+        magnitude_formula: "max(DomainGoodLVL/2,1)",
+        magnitude_label: "sacred bonus",
+        effect_duration_phrase: "for 1 round",
+        upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+        upstream_line: 713,
+    },
+    DomainPowerSpec {
+        selection_id: WAR_DOMAIN_SELECTION,
+        domain_slug: "war",
+        domain_display_name: "War",
+        granted_power_name: "Battle Rage",
+        ability_id: BATTLE_RAGE_ABILITY_ID,
+        magnitude_formula: "max(DomainWarLVL/2,1)",
+        magnitude_label: "melee damage bonus",
+        effect_duration_phrase: "for 1 round",
+        upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+        upstream_line: 747,
+    },
+    DomainPowerSpec {
+        selection_id: STRENGTH_DOMAIN_SELECTION,
+        domain_slug: "strength",
+        domain_display_name: "Strength",
+        granted_power_name: "Strength Surge",
+        ability_id: STRENGTH_SURGE_ABILITY_ID,
+        magnitude_formula: "max(DomainStrengthLVL/2,1)",
+        magnitude_label: "enhancement bonus",
+        effect_duration_phrase: "for 1 round",
+        upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+        upstream_line: 739,
+    },
+    // SD-31 wave 26 (OPERATOR-RULINGS-2026-08-21.md section 20; "PROVE BEFORE YOU
+    // EXTEND" satisfied first -- see this module's own `fixture_check_tests`, which
+    // reproduce Good/War/Strength's pinned values before either entry below is
+    // added). Both scanned corpus-wide for the SAME self-application-safe shape
+    // Good/War/Strength already establish (a beneficial effect on a touched/self
+    // target, a single non-dice `DESC`-embedded magnitude formula, a real
+    // `Domain<X>LVL`/`Domain<X>Times` header chain) -- confirmed against
+    // `data/corpus/core_rulebook/class_feature/destruction/destruction.json` and
+    // `.../glory/glory.json` respectively, both carrying the identical
+    // `BONUS:VAR|Domain<X>LVL|DomainLVL|TYPE=Domain` /
+    // `BONUS:VAR|Domain<X>Times|DomainPowerTimes|TYPE=Domain` chain Good/War/
+    // Strength's own fixture test already verifies for those three.
+    DomainPowerSpec {
+        selection_id: DESTRUCTION_DOMAIN_SELECTION,
+        domain_slug: "destruction",
+        domain_display_name: "Destruction",
+        granted_power_name: "Destructive Smite",
+        ability_id: DESTRUCTIVE_SMITE_ABILITY_ID,
+        magnitude_formula: "max(DomainDestructionLVL/2,1)",
+        magnitude_label: "morale bonus on damage rolls",
+        // Corpus DESC: "the supernatural ability to make a single melee attack
+        // with a +%1 morale bonus on damage rolls. You must declare the
+        // destructive smite before making the attack." No round-based duration
+        // at all -- unlike Good/War/Strength, this is a single declared attack,
+        // not a buff that persists for a round.
+        effect_duration_phrase: "on a single melee attack, which must be declared before the attack roll is made",
+        upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+        upstream_line: 703,
+    },
+    DomainPowerSpec {
+        selection_id: GLORY_DOMAIN_SELECTION,
+        domain_slug: "glory",
+        domain_display_name: "Glory",
+        granted_power_name: "Touch of Glory",
+        ability_id: TOUCH_OF_GLORY_ABILITY_ID,
+        // Bare `DomainGloryLVL` -- no `max(.../2,1)` wrap, unlike Good/War/
+        // Strength/Destruction. Verified byte-identical to the corpus DESC's
+        // own first formula segment by this module's own fixture test.
+        magnitude_formula: "DomainGloryLVL",
+        magnitude_label: "bonus to a single Charisma-based skill check or Charisma ability check",
+        // Corpus DESC: "This ability lasts for one hour or until the creature
+        // touched elects to apply the bonus to a roll." A real, different
+        // duration shape from Good/War/Strength's "for 1 round".
+        effect_duration_phrase:
+            "for one hour, or until the creature touched elects to apply the bonus to a roll",
+        upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+        upstream_line: 711,
+    },
+];
+
+/// Builds this power's `class_feature.domain.<slug>_<ability_id>_<suffix>`
+/// explanation id -- for Good this reproduces
+/// `class_feature.domain.good_touch_of_good_self_application` (and its
+/// `_not_active`/`_uses_per_day` siblings) byte-for-byte, the exact ids
+/// pre-existing tests already pin, so swapping Good's own call sites over to
+/// this builder changes no observable id.
+pub(super) fn domain_power_explanation_id(spec: &DomainPowerSpec, suffix: &str) -> String {
+    format!("class_feature.domain.{}_{}_{suffix}", spec.domain_slug, spec.ability_id)
+}
+
+/// Looks up `selection_id` (a `choice:*_domain` selection, e.g.
+/// `"domain:good"`) in [`DOMAIN_POWER_CATALOG`]. `None` for Healing (which
+/// has no magnitude formula to look up here -- its own caller grounds
+/// uses/day directly via [`domain_power_uses_per_day`]) and for every domain
+/// this catalog does not carry.
+pub(super) fn resolve_domain_power(selection_id: &str) -> Option<&'static DomainPowerSpec> {
+    DOMAIN_POWER_CATALOG.iter().find(|spec| spec.selection_id == selection_id)
+}
+
+/// Interprets `spec`'s own `magnitude_formula` at `class_level`. `expect`s
+/// success: every catalog entry's formula is a fixed literal this module's
+/// own tests parse-check at `cargo test` time (`domain_power_catalog_formulas_all_parse`),
+/// so a parse failure here would mean the catalog itself is malformed, not a
+/// live-input problem.
+pub(super) fn domain_power_magnitude(
+    spec: &DomainPowerSpec,
+    class_level: u8,
+    modifiers: &AbilityModifiers,
+) -> i16 {
+    let expr = parse_pcgen_expr(spec.magnitude_formula)
+        .unwrap_or_else(|| panic!("catalog formula must parse: {}", spec.magnitude_formula));
+    let env = domain_power_env(class_level, modifiers);
+    let value = eval_expr(&expr, &env).unwrap_or_else(|| {
+        panic!("catalog formula must resolve under domain_power_env: {}", spec.magnitude_formula)
+    });
+    i16::try_from(value).unwrap_or(i16::MAX)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parses_a_bare_ability_sum() {
+        assert_eq!(
+            parse_pcgen_expr("3+WIS"),
+            Some(Expr::Add(Box::new(Expr::Int(3)), Box::new(Expr::Var("WIS".to_owned()))))
+        );
+    }
+
+    #[test]
+    fn parses_max_of_a_division_and_a_literal() {
+        let parsed = parse_pcgen_expr("max(DomainGoodLVL/2,1)").expect("must parse");
+        assert_eq!(
+            parsed,
+            Expr::Max(
+                Box::new(Expr::Div(
+                    Box::new(Expr::Var("DomainGoodLVL".to_owned())),
+                    Box::new(Expr::Int(2))
+                )),
+                Box::new(Expr::Int(1))
+            )
+        );
+    }
+
+    #[test]
+    fn refuses_dice_notation() {
+        assert_eq!(parse_pcgen_expr("1d4"), None, "dice notation is not this grammar's shape");
+    }
+
+    #[test]
+    fn refuses_a_prevar_fragment() {
+        assert_eq!(
+            parse_pcgen_expr("PREVARLT:DomainHealingLVL,2"),
+            None,
+            "a PREVARLT condition is not an arithmetic expression"
+        );
+    }
+
+    #[test]
+    fn refuses_trailing_garbage() {
+        assert_eq!(parse_pcgen_expr("3+WIS,"), None, "an unconsumed trailing comma must refuse");
+        assert_eq!(parse_pcgen_expr("3+WIS)"), None, "an unconsumed trailing paren must refuse");
+    }
+
+    #[test]
+    fn evaluates_max_domain_good_lvl_over_two_floored_at_one() {
+        let expr = parse_pcgen_expr("max(DomainGoodLVL/2,1)").expect("must parse");
+        for (level, expected) in [(1u8, 1i32), (2, 1), (3, 1), (4, 2), (6, 3), (8, 4), (20, 10)] {
+            let env = domain_power_env(level, &AbilityModifiers::default());
+            assert_eq!(
+                eval_expr(&expr, &env),
+                Some(expected),
+                "level {level} should evaluate to {expected}"
+            );
+        }
+    }
+
+    #[test]
+    fn domain_power_uses_per_day_matches_the_pre_existing_hand_arithmetic() {
+        for wisdom in -5i16..=10 {
+            let modifiers = AbilityModifiers { wisdom, ..AbilityModifiers::default() };
+            let interpreted = domain_power_uses_per_day(&modifiers);
+            let hand_written = (3 + wisdom).max(0);
+            assert_eq!(
+                interpreted, hand_written,
+                "interpreted 3+WIS must match the pre-existing hand-written formula at WIS \
+                 modifier {wisdom}"
+            );
+        }
+    }
+
+    /// `cleric_touch_of_good_bonus` now WRAPS this module's own interpreter
+    /// (SD-31 wave 25), so comparing the two directly would be a tautology.
+    /// This pins the interpreted output against an expected table computed
+    /// independently of BOTH `cleric_touch_of_good_bonus` and this module's
+    /// evaluator -- by hand, from PF1 Core Rulebook Good Domain's own rule
+    /// text ("half the cleric's level, minimum 1") -- so a bug shared by
+    /// both the wrapper and the interpreter still fails this test.
+    #[test]
+    fn domain_power_magnitude_for_good_matches_an_independently_hand_computed_table() {
+        let spec = resolve_domain_power(GOOD_DOMAIN_SELECTION).expect("Good must be catalogued");
+        let expected_half_level_min_one: [(u8, i16); 8] =
+            [(1, 1), (2, 1), (3, 1), (4, 2), (5, 2), (10, 5), (19, 9), (20, 10)];
+        for (level, expected) in expected_half_level_min_one {
+            let interpreted = domain_power_magnitude(spec, level, &AbilityModifiers::default());
+            assert_eq!(
+                interpreted, expected,
+                "PF1 Good Domain Touch of Good at cleric level {level}: half level, minimum 1"
+            );
+        }
+    }
+
+    #[test]
+    fn every_catalog_entry_has_a_unique_selection_and_ability_id() {
+        let mut selections: Vec<&str> =
+            DOMAIN_POWER_CATALOG.iter().map(|s| s.selection_id).collect();
+        selections.sort_unstable();
+        let mut deduped = selections.clone();
+        deduped.dedup();
+        assert_eq!(selections, deduped, "no two catalog entries may share a selection id");
+
+        let mut ability_ids: Vec<&str> =
+            DOMAIN_POWER_CATALOG.iter().map(|s| s.ability_id).collect();
+        ability_ids.sort_unstable();
+        let mut deduped_abilities = ability_ids.clone();
+        deduped_abilities.dedup();
+        assert_eq!(
+            ability_ids, deduped_abilities,
+            "no two catalog entries may share an activation ability id"
+        );
+    }
+
+    #[test]
+    fn good_spec_explanation_ids_match_the_pre_existing_pinned_strings() {
+        let spec = resolve_domain_power(GOOD_DOMAIN_SELECTION).expect("Good must be catalogued");
+        assert_eq!(
+            domain_power_explanation_id(spec, "self_application"),
+            "class_feature.domain.good_touch_of_good_self_application"
+        );
+        assert_eq!(
+            domain_power_explanation_id(spec, "not_active"),
+            "class_feature.domain.good_touch_of_good_not_active"
+        );
+        assert_eq!(
+            domain_power_explanation_id(spec, "uses_per_day"),
+            "class_feature.domain.good_touch_of_good_uses_per_day"
+        );
+    }
+
+    #[test]
+    fn domain_power_catalog_formulas_all_parse() {
+        for spec in DOMAIN_POWER_CATALOG {
+            assert!(
+                parse_pcgen_expr(spec.magnitude_formula).is_some(),
+                "catalog formula must parse: {} ({})",
+                spec.magnitude_formula,
+                spec.domain_display_name
+            );
+        }
+    }
+}
+
+/// This module's own fixture gate -- the `derived_evaluator_fixture_check`
+/// rigor, without touching that proof harness (out of this lane's granted
+/// write scope; SD-31 wave 25 brief, "Files: the domain-power functions in
+/// src/rules_core/pilot_compute/ and their fixtures"). Mirrors
+/// `tests/derived_evaluator_fixture_check.rs`'s own module doc's four
+/// independent guarantees:
+///
+/// 1. **Different source artifact.** Every assertion below reads the corpus
+///    JSON via `include_str!`, a file this module's own production code
+///    never opens (the production path takes a formula STRING already
+///    embedded as a Rust `&'static str` constant in [`DOMAIN_POWER_CATALOG`]
+///    -- it performs no file I/O at all, consistent with the rest of
+///    `pilot_compute`, which never reads `data/corpus` at compute time).
+/// 2. **Re-derivable from the pinned corpus text.**
+///    [`good_war_strength_headers_share_the_domainlvl_and_domainpowertimes_chain`]
+///    and [`granted_power_magnitude_formulas_are_byte_identical_to_the_corpus`]
+///    re-read each pinned corpus field and assert this module's own
+///    `&'static str` constants match it byte-for-byte -- a hand-transcribed
+///    formula that drifted from the corpus fails here.
+/// 3. **Anchored to the same upstream bytes.**
+///    [`catalog_provenance_matches_the_corpus_records_own_source_citation`]
+///    compares each [`DomainPowerSpec`]'s `upstream_lst`/`upstream_lst_sha256`/
+///    `upstream_line` against the SAME corpus JSON's own `source` object.
+/// 4. **Independently computed expected values, never read from this
+///    module's own evaluator.**
+///    [`interpreted_magnitude_matches_a_hand_computed_table_derived_from_pf1_rule_text`]
+///    -- the same discipline `good_spec_explanation_ids_match_the_pre_existing_pinned_strings`'s
+///    sibling test above already uses for Good alone, extended here to War
+///    and Strength and tied to the corpus bytes directly.
+///
+/// Mutation-provable: flip `eval_expr`'s `Expr::Div` to multiply, or
+/// `Expr::Max` to `min`, or change any `DOMAIN_POWER_CATALOG` formula
+/// string, and guarantee 2 or guarantee 4 below goes red.
+#[cfg(test)]
+mod fixture_check_tests {
+    use super::*;
+
+    const DOMAINS_HEADER_JSON: &str =
+        include_str!("../../../data/corpus/core_rulebook/class_feature/domains/domains.json");
+    const GOOD_HEADER_JSON: &str =
+        include_str!("../../../data/corpus/core_rulebook/class_feature/good/good.json");
+    const WAR_HEADER_JSON: &str =
+        include_str!("../../../data/corpus/core_rulebook/class_feature/war/war.json");
+    const STRENGTH_HEADER_JSON: &str =
+        include_str!("../../../data/corpus/core_rulebook/class_feature/strength/strength.json");
+    const TOUCH_OF_GOOD_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/domain_power/touch_of_good.json"
+    );
+    const BATTLE_RAGE_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/domain_power/battle_rage.json"
+    );
+    const STRENGTH_SURGE_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/domain_power/strength_surge.json"
+    );
+    // SD-31 wave 26 additions.
+    const DESTRUCTION_HEADER_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/destruction/destruction.json"
+    );
+    const GLORY_HEADER_JSON: &str =
+        include_str!("../../../data/corpus/core_rulebook/class_feature/glory/glory.json");
+    const DESTRUCTIVE_SMITE_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/domain_power/destructive_smite.json"
+    );
+    const TOUCH_OF_GLORY_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/domain_power/touch_of_glory.json"
+    );
+
+    fn parse(json: &str) -> serde_json::Value {
+        serde_json::from_str(json).expect("committed corpus JSON must parse")
+    }
+
+    /// Every `BONUS` token value on a corpus record, in file order.
+    fn bonus_values(doc: &serde_json::Value) -> Vec<String> {
+        doc["data"]["raw_tokens"]
+            .as_array()
+            .expect("raw_tokens array")
+            .iter()
+            .filter(|t| t["key"].as_str() == Some("BONUS"))
+            .map(|t| t["value"].as_str().expect("BONUS value").to_owned())
+            .collect()
+    }
+
+    /// Guarantee 1/2's structural half: confirms `domain_power_env`'s core
+    /// assumption -- "any `LVL`-suffixed variable resolves to the granting
+    /// class's own level, with no per-domain offset" -- is what the corpus
+    /// ACTUALLY states for every domain this module grounds, rather than an
+    /// assumption carried over from Good alone. Also confirms the
+    /// uses-per-day chain (`Domain<X>Times|DomainPowerTimes|TYPE=Domain`)
+    /// for all five. SD-31 wave 26 widened this from three (Good/War/
+    /// Strength) to five (+Destruction/Glory) -- same assertion, more
+    /// domains, per this lane's "prove before you extend" requirement.
+    #[test]
+    fn catalog_domain_headers_share_the_domainlvl_and_domainpowertimes_chain() {
+        for (json, domain) in [
+            (GOOD_HEADER_JSON, "Good"),
+            (WAR_HEADER_JSON, "War"),
+            (STRENGTH_HEADER_JSON, "Strength"),
+            (DESTRUCTION_HEADER_JSON, "Destruction"),
+            (GLORY_HEADER_JSON, "Glory"),
+        ] {
+            let doc = parse(json);
+            let bonuses = bonus_values(&doc);
+            assert!(
+                bonuses.iter().any(|b| {
+                    b.starts_with("VAR|Domain") && b.ends_with("LVL|DomainLVL|TYPE=Domain")
+                }),
+                "{domain} domain header must chain its own LVL var to the shared DomainLVL: {bonuses:?}"
+            );
+            assert!(
+                bonuses.iter().any(|b| {
+                    b.starts_with("VAR|Domain")
+                        && b.ends_with("Times|DomainPowerTimes|TYPE=Domain")
+                }),
+                "{domain} domain header must chain its own Times var to the shared \
+                 DomainPowerTimes: {bonuses:?}"
+            );
+        }
+    }
+
+    /// The shared uses-per-day formula itself: [`DOMAIN_POWER_TIMES_FORMULA`]
+    /// must be byte-for-byte what `domains.json`'s own `BONUS:VAR|DomainPowerTimes|…`
+    /// token states, not a hand-recalled `"3+WIS"`.
+    #[test]
+    fn domain_power_times_formula_constant_is_byte_identical_to_the_corpus() {
+        let doc = parse(DOMAINS_HEADER_JSON);
+        let bonuses = bonus_values(&doc);
+        let corpus_formula = bonuses
+            .iter()
+            .find_map(|b| b.strip_prefix("VAR|DomainPowerTimes|"))
+            .expect("domains.json must carry a BONUS:VAR|DomainPowerTimes| token");
+        assert_eq!(
+            corpus_formula, DOMAIN_POWER_TIMES_FORMULA,
+            "DOMAIN_POWER_TIMES_FORMULA must match the corpus's own DomainPowerTimes formula \
+             byte-for-byte"
+        );
+    }
+
+    /// Each catalog entry's own `magnitude_formula` must be byte-for-byte
+    /// what the granted-power record's `DESC` token embeds as its FIRST
+    /// formula segment (PCGen's own `%1` substitution slot) -- not a
+    /// hand-recalled or hand-simplified rewrite.
+    #[test]
+    fn granted_power_magnitude_formulas_are_byte_identical_to_the_corpus() {
+        for (json, selection_id) in [
+            (TOUCH_OF_GOOD_JSON, GOOD_DOMAIN_SELECTION),
+            (BATTLE_RAGE_JSON, WAR_DOMAIN_SELECTION),
+            (STRENGTH_SURGE_JSON, STRENGTH_DOMAIN_SELECTION),
+            (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
+            (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
+        ] {
+            let doc = parse(json);
+            let desc = doc["data"]["raw_tokens"]
+                .as_array()
+                .expect("raw_tokens")
+                .iter()
+                .find(|t| t["key"].as_str() == Some("DESC"))
+                .expect("a DESC token")["value"]
+                .as_str()
+                .expect("DESC value")
+                .to_owned();
+            let first_formula_segment = desc
+                .split('|')
+                .nth(1)
+                .expect("DESC must carry at least one %N formula segment after the description text");
+            let spec = resolve_domain_power(selection_id).expect("must be catalogued");
+            assert_eq!(
+                first_formula_segment, spec.magnitude_formula,
+                "{}'s magnitude_formula must match the corpus DESC's own %1 formula segment \
+                 byte-for-byte",
+                spec.domain_display_name
+            );
+        }
+    }
+
+    /// Each catalog entry's `upstream_lst`/`upstream_lst_sha256`/`upstream_line`
+    /// must match the SAME corpus JSON's own `source` object -- the anchor
+    /// guarantee 4 names: if the corpus is ever regenerated against a
+    /// different upstream revision, this goes red instead of silently
+    /// comparing two different rows.
+    #[test]
+    fn catalog_provenance_matches_the_corpus_records_own_source_citation() {
+        for (json, selection_id) in [
+            (TOUCH_OF_GOOD_JSON, GOOD_DOMAIN_SELECTION),
+            (BATTLE_RAGE_JSON, WAR_DOMAIN_SELECTION),
+            (STRENGTH_SURGE_JSON, STRENGTH_DOMAIN_SELECTION),
+            (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
+            (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
+        ] {
+            let doc = parse(json);
+            let spec = resolve_domain_power(selection_id).expect("must be catalogued");
+            assert_eq!(
+                doc["source"]["path"].as_str().expect("source.path"),
+                spec.upstream_lst,
+                "{} upstream_lst mismatch",
+                spec.domain_display_name
+            );
+            assert_eq!(
+                doc["source"]["sha256"].as_str().expect("source.sha256"),
+                spec.upstream_lst_sha256,
+                "{} upstream_lst_sha256 mismatch",
+                spec.domain_display_name
+            );
+            assert_eq!(
+                doc["source"]["line"].as_u64().expect("source.line"),
+                spec.upstream_line,
+                "{} upstream_line mismatch",
+                spec.domain_display_name
+            );
+        }
+    }
+
+    /// Guarantee 4: expected values computed BY HAND from PF1 Core Rulebook
+    /// Domains' own granted-power rule text ("half the domain's effective
+    /// level, minimum 1" -- Good, War, Strength, and Destruction all share
+    /// this exact magnitude shape per their own `DESC` text, independently
+    /// confirmed this cycle), never read back from [`eval_expr`] or
+    /// [`domain_power_magnitude`]. A mutated evaluator (e.g. `Div` swapped
+    /// for `Mul`, or `Max` swapped for `Min`) fails this test even though it
+    /// would still satisfy the transcription-only tests above.
+    #[test]
+    fn interpreted_magnitude_matches_a_hand_computed_table_derived_from_pf1_rule_text() {
+        let half_level_min_one = |level: u8| -> i16 { (i16::from(level) / 2).max(1) };
+        for selection_id in [
+            GOOD_DOMAIN_SELECTION,
+            WAR_DOMAIN_SELECTION,
+            STRENGTH_DOMAIN_SELECTION,
+            DESTRUCTION_DOMAIN_SELECTION,
+        ] {
+            let spec = resolve_domain_power(selection_id).expect("must be catalogued");
+            for level in [1u8, 2, 3, 4, 7, 12, 20] {
+                let expected = half_level_min_one(level);
+                let interpreted =
+                    domain_power_magnitude(spec, level, &AbilityModifiers::default());
+                assert_eq!(
+                    interpreted, expected,
+                    "{} magnitude at level {level}: expected half-level-minimum-one = {expected}",
+                    spec.domain_display_name
+                );
+            }
+        }
+    }
+
+    /// Guarantee 4, Glory's own shape: unlike the four half-level-minimum-one
+    /// entries above, Touch of Glory's own `DESC` formula segment is the bare
+    /// `DomainGloryLVL` (no `max(.../2,1)` wrap) -- read directly off the
+    /// pinned corpus text (`granted_power_magnitude_formulas_are_byte_
+    /// identical_to_the_corpus`, above, already pins this exact string), not
+    /// re-derived from an external source this session had no access to
+    /// verify against. `DomainGloryLVL` chains 1:1 to `DomainLVL` (the
+    /// granting class's own level, per `catalog_domain_headers_share_the_
+    /// domainlvl_and_domainpowertimes_chain` above) with no division at all,
+    /// so the expected value here is simply the character level, unhalved.
+    /// A mutated evaluator that silently divided this bare variable by 2
+    /// (the Good/War/Strength/Destruction shape) would still parse and run,
+    /// but fails THIS hand-computed table.
+    #[test]
+    fn interpreted_magnitude_for_glory_matches_a_hand_computed_table_derived_from_pf1_rule_text() {
+        let spec = resolve_domain_power(GLORY_DOMAIN_SELECTION).expect("Glory must be catalogued");
+        for level in [1u8, 2, 3, 4, 7, 12, 20] {
+            let expected = i16::from(level);
+            let interpreted = domain_power_magnitude(spec, level, &AbilityModifiers::default());
+            assert_eq!(
+                interpreted, expected,
+                "Glory magnitude at level {level}: expected the bare cleric level = {expected}"
+            );
+        }
+    }
+}

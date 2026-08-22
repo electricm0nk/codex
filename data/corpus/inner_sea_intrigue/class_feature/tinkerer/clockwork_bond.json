@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tinkerer ~ Clockwork Bond",
+    "name": "Clockwork Bond",
+    "class": "Alchemist",
+    "description": "A tinkerer forms a bond with one of her creations, and begins play with it at no cost. This functions as the familiar option of the wizard's arcane bond class feature, with the tinkerer's effective wizard level equal to her alchemist level. If a tinkerer would gain a familiar through another class, those levels stack for purposes of determining the familiar's abilities. A tinkerer's familiar can take any shape the tinkerer wishes, but its statistics and abilities are identical to a clockwork spy (Bestiary 3 58) with the normal adjustments and abilities for a familiar applied, and it is a construct with the clockwork subtype.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tinkerer ~ Clockwork Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TinkererHealDiceCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TinkererHealDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A tinkerer forms a bond with one of her creations, and begins play with it at no cost. This functions as the familiar option of the wizard's arcane bond class feature, with the tinkerer's effective wizard level equal to her alchemist level. If a tinkerer would gain a familiar through another class, those levels stack for purposes of determining the familiar's abilities. A tinkerer's familiar can take any shape the tinkerer wishes, but its statistics and abilities are identical to a clockwork spy (Bestiary 3 58) with the normal adjustments and abilities for a familiar applied, and it is a construct with the clockwork subtype."
+      },
+      {
+        "key": "DESC",
+        "value": "If the tinkerer has the infusion discovery, a clockwork spy familiar can deliver the tinkerer's extracts with a range of touch for her.|PRECLASS:1,Alchemist=3"
+      },
+      {
+        "key": "DESC",
+        "value": "A clockwork spy can communicate with constructs with the clockwork subtype.|PRECLASS:1,Alchemist=7"
+      },
+      {
+        "key": "DESC",
+        "value": "Unlike most familiars, a clockwork spy does not grant special abilities to its master. With 1 minute of work and a successful DC 15 Heal check, a tinkerer can restore %1d%2 hit points to her clockwork spy familiar. A tinkerer cannot choose the cognatogen or mutagen discoveries.|TinkererHealDiceCount|TinkererHealDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TinkererHealDiceCount|max(1,AlchemistLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TinkererHealDieSize|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TinkererHealDieSize|2|PRECLASS:1,Alchemist=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|AlchemistLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Familiar (Clockwork Spy)|!PRECLASS:1,Alchemist=6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 14,
+    "record_key": "Tinkerer ~ Clockwork Bond"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

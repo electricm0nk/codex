@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Child Brawler ~ Animal Companion",
+    "name": "Animal Companion",
+    "class": "Brawler",
+    "description": "A wild child forms a bond with a loyal companion that accompanies the wild child on his adventures. A wild child can begin play with any of the animals available to a druid. The wild child uses his brawler level as his effective druid level for determining the abilities of his animal companion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Child Brawler ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild child forms a bond with a loyal companion that accompanies the wild child on his adventures. A wild child can begin play with any of the animals available to a druid. The wild child uses his brawler level as his effective druid level for determining the abilities of his animal companion."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Companion ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|BrawlerLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|RACETYPE=Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2930,
+    "record_key": "Wild Child Brawler ~ Animal Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

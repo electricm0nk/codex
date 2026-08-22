@@ -47,6 +47,11 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::derived_evaluator_fixture_check::{
+    format_companion_save_dc_formula, format_companion_skill_ability_diff,
+    format_companion_strength_damage, parse_companion_save_dc_formula,
+    parse_companion_skill_ability_diff, parse_companion_strength_damage,
+};
 use codex::rules_core::rules_tables::companion_chassis::{self, CompanionRecord};
 
 /// Wire code for a companion book's corpus directory.
@@ -82,11 +87,6 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // SD-29 Epic 7 round 6. Ultimate Wilderness — the book's second family,
         // beside the 136 feats SD-28 Epic 26 landed. Same wire code either way.
         "ultimate_wilderness" => "UW",
-        // SD-29 Epic 7 round 7. Core Essentials — the book's second family,
-        // beside the 64 heritage race traits the race-trait lane landed in
-        // `SD29-E6-F2-005`. Same wire code either way: it names the BOOK, and
-        // `CE` is already what `reach_gate`'s `race_traits` claim passes.
-        "core_essentials" => "CE",
         // SD-29 Epic 7 round 8. Core Rulebook — the book's SIXTH family, beside
         // the classes, races, spells, equipment and race traits already landed.
         // `CRB` is not a new code invented here: `race_catalog`, `spell_catalog`
@@ -129,6 +129,91 @@ pub struct CompanionAttackDto {
     /// The die expression only. `None` means the corpus names the attack and
     /// prices it nowhere — the screen prints the name alone, never a stand-in.
     pub damage_dice: Option<String>,
+}
+
+/// One `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` token the creature's row
+/// states — extra damage on a named attack.
+///
+/// # Why the screen shows a rule and not a number
+///
+/// The dominant corpus formula is `max(0,(STR/2))`, PCGen's encoding of PF1 CRB
+/// p.182's *"if a creature has only one natural attack, it adds 1-1/2 times its
+/// Strength bonus on damage rolls"* — the base attack applies the full modifier
+/// and this token adds the other half, clamped at zero because the rule is
+/// stated about a Strength BONUS and a penalty is never multiplied. A catalog
+/// browser has no character, so it has no Strength modifier to evaluate the
+/// formula at; serving a number here would be inventing one. The engine's
+/// `derived_evaluator_fixture_check::format_companion_strength_damage` renders
+/// the rule in words instead, and it is the SAME parse
+/// (`parse_companion_strength_damage`) whose evaluated values 117 committed
+/// fixtures pin — so this column and that gate can never drift apart.
+///
+/// # `attack` is the token's own selector, not a join
+///
+/// It is NOT guaranteed to name one of `naturalAttacks`
+/// (`companion_chassis::NaturalAttackDamageBonus`'s Parrot finding), so this is
+/// served as its own list rather than folded into the attack rows — folding it
+/// would silently drop what the corpus actually says.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionDamageBonusDto {
+    /// The `WEAPONPROF=` selector verbatim: `"Bite"`, `"Claw"`, `"Slam"`, …
+    pub attack: String,
+    /// The rule in words: `"+1/2 Str modifier (minimum +0)"`, `"+Str modifier"`,
+    /// `"+5"`, …
+    pub bonus: String,
+    /// The token's formula half verbatim, for a row whose shape the engine
+    /// refuses to interpret (`STR/2`, `-(STR/2)` — an unclamped halving whose
+    /// negative-odd rounding PCGen does not state). `None` once `bonus` carries
+    /// the rendered rule; `Some` is the honest "the corpus says this and we
+    /// will not guess what it means" state, and the screen prints it as the raw
+    /// token it is.
+    pub unparsed_formula: Option<String>,
+}
+
+/// One `BONUS:SKILL|<skills>|<A>-<B>` token the creature's row states — a
+/// skill-check bonus computed as the DIFFERENCE between two ability
+/// modifiers, rather than a flat number.
+///
+/// **A rule, not a number.** The dominant (and, corpus-wide, only) formula is
+/// `DEX-STR`: familiars and small companions whose Dexterity typically
+/// exceeds their Strength get Climb and Swim checks computed from the
+/// difference between the two rather than from Strength alone, which is what
+/// Climb and Swim otherwise key off. A catalog browser has no character and
+/// therefore no modifiers to subtract, so the engine renders the rule in
+/// words rather than inventing a total — the same posture
+/// [`CompanionDamageBonusDto`] takes for its own formula.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionSkillBonusDto {
+    /// Every skill the token names, e.g. `["Climb", "Swim"]`.
+    pub skills: Vec<String>,
+    /// The rule in words: `"Dex modifier − Str modifier"`.
+    pub bonus: String,
+    /// The token's formula half verbatim, for a shape the engine refuses to
+    /// interpret. `None` once `bonus` carries the rendered rule.
+    pub unparsed_formula: Option<String>,
+}
+
+/// One companion ABILITY's save DC, stated entirely in a `DESC:` argument —
+/// PCGen's `DESC:...%1...|<base>[+HD/2]+<ability>` encoding.
+///
+/// **A rule, not a number**, same posture [`CompanionSkillBonusDto`] and
+/// [`CompanionDamageBonusDto`] both take: a catalog browser has no character
+/// and therefore no Hit Dice or ability modifier to add, so the engine
+/// renders the rule in words. This is the ONLY place the DC reaches a
+/// player at all — `render_pcgen_desc` (`decisions.md §24`, no formula
+/// interpreter) drops the `%1` placeholder from `description` entirely, so
+/// without this field the DC number is silently missing from the ability's
+/// own prose.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionSaveDcDto {
+    /// The rule in words: `"10 + 1/2 HD + Con modifier"`.
+    pub formula: String,
+    /// The token's raw argument, for a shape the engine refuses to
+    /// interpret. `None` once `formula` carries the rendered rule.
+    pub unparsed_formula: Option<String>,
 }
 
 /// One `BONUS:STAT` token. An adjustment, never a score — see the module doc.
@@ -199,6 +284,10 @@ pub struct CompanionAbilityDto {
     pub description_variants: Vec<CompanionDescriptionVariantDto>,
     /// The `BONUS:STAT` tokens this advancement package applies.
     pub stat_adjustments: Vec<CompanionStatAdjustmentDto>,
+    /// Every DESC-embedded save-DC formula this row states (from
+    /// `description`'s own argument list and every `description_variants`
+    /// entry's). Empty for most rows — see [`CompanionSaveDcDto`].
+    pub save_dc_formulas: Vec<CompanionSaveDcDto>,
     pub source_page: Option<String>,
 }
 
@@ -234,6 +323,13 @@ pub struct CompanionCatalogEntryDto {
     /// carry no `TYPE:` token at all.
     pub type_segments: Vec<String>,
     pub natural_attacks: Vec<CompanionAttackDto>,
+    /// Every `BONUS:WEAPONPROF=<attack>|DAMAGE|` token on the creature's row.
+    /// Empty for most rows, which is a real corpus state — see
+    /// [`CompanionDamageBonusDto`].
+    pub natural_attack_damage_bonuses: Vec<CompanionDamageBonusDto>,
+    /// Every `BONUS:SKILL|<skills>|<A>-<B>` token on the creature's row.
+    /// Empty for most rows — see [`CompanionSkillBonusDto`].
+    pub skill_ability_diff_bonuses: Vec<CompanionSkillBonusDto>,
     /// `BONUS:STAT` adjustments from the creature's own row.
     pub stat_adjustments: Vec<CompanionStatAdjustmentDto>,
     /// `BONUS:VAR|AC_Natural_Armor|n|TYPE=Base`, when the row carries one.
@@ -496,6 +592,42 @@ fn serve_desc_variants(
         .collect()
 }
 
+/// Every save-DC formula a companion ability's `DESC:` token(s) state, in
+/// words.
+///
+/// Unlike [`CompanionDamageBonusDto`]/[`CompanionSkillBonusDto`] (whose
+/// tokens are a syntactically distinct `BONUS:` family regardless of
+/// whether the specific formula parses), a `DESC:` argument carries no
+/// independent marker saying "this one is a save DC" — the ONLY signal this
+/// screen has that a given argument belongs to this rule family is that
+/// [`parse_companion_save_dc_formula`] actually parses it as one. So, unlike
+/// those two siblings, this field never serves an `unparsed_formula` row:
+/// doing so for an arbitrary DESC argument this parser does not recognise
+/// (a damage die reference, a duration, an unrelated named variable) would
+/// mislabel it as a save DC it may not be. Deduplicated across
+/// `description`'s own argument list and every `description_variants`
+/// entry's, since a record commonly states the identical formula twice, once
+/// per companion-advancement-tier gate (Assassin Bug (Giant) ~ Poison).
+fn serve_save_dc_formulas(
+    record: &companion_chassis::CompanionAbilityRecord,
+) -> Vec<CompanionSaveDcDto> {
+    let mut candidates: Vec<&'static str> = record.description_variables.to_vec();
+    for variant in record.description_variants {
+        candidates.extend(variant.variables.iter().copied());
+    }
+    let mut rendered: Vec<String> = candidates
+        .iter()
+        .filter_map(|c| parse_companion_save_dc_formula(c))
+        .map(format_companion_save_dc_formula)
+        .collect();
+    rendered.sort();
+    rendered.dedup();
+    rendered
+        .into_iter()
+        .map(|formula| CompanionSaveDcDto { formula, unparsed_formula: None })
+        .collect()
+}
+
 fn map_ability(
     book: &str,
     record: &companion_chassis::CompanionAbilityRecord,
@@ -516,6 +648,7 @@ fn map_ability(
                 amount: a.amount,
             })
             .collect(),
+        save_dc_formulas: serve_save_dc_formulas(record),
         source_page: record.source_page.map(str::to_owned),
     }
 }
@@ -545,6 +678,47 @@ fn map_companion(
             .map(|a| CompanionAttackDto {
                 name: a.name.to_owned(),
                 damage_dice: a.damage_dice.map(str::to_owned),
+            })
+            .collect(),
+        natural_attack_damage_bonuses: record
+            .natural_attack_damage_bonuses
+            .iter()
+            .map(|b| match parse_companion_strength_damage(b.formula) {
+                Some(parsed) => CompanionDamageBonusDto {
+                    attack: b.attack.to_owned(),
+                    bonus: format_companion_strength_damage(parsed),
+                    unparsed_formula: None,
+                },
+                // The engine refuses this shape rather than guessing at it
+                // (`parse_companion_strength_damage`'s own doc). Serving the
+                // token verbatim, labelled as unparsed, is the honest state —
+                // dropping the row would tell the player the corpus says
+                // nothing, which is false.
+                None => CompanionDamageBonusDto {
+                    attack: b.attack.to_owned(),
+                    bonus: b.formula.to_owned(),
+                    unparsed_formula: Some(b.formula.to_owned()),
+                },
+            })
+            .collect(),
+        skill_ability_diff_bonuses: record
+            .skill_ability_diff_bonuses
+            .iter()
+            .map(|b| match parse_companion_skill_ability_diff(b.formula) {
+                Some(parsed) => CompanionSkillBonusDto {
+                    skills: b.skills.iter().map(|s| (*s).to_owned()).collect(),
+                    bonus: format_companion_skill_ability_diff(parsed),
+                    unparsed_formula: None,
+                },
+                // The engine refuses this shape rather than guessing at it.
+                // Serving the token verbatim, labelled as unparsed, is the
+                // honest state — dropping the row would tell the player the
+                // corpus says nothing, which is false.
+                None => CompanionSkillBonusDto {
+                    skills: b.skills.iter().map(|s| (*s).to_owned()).collect(),
+                    bonus: b.formula.to_owned(),
+                    unparsed_formula: Some(b.formula.to_owned()),
+                },
             })
             .collect(),
         stat_adjustments: record
@@ -598,6 +772,136 @@ mod tests {
             .join("../../..")
             .canonicalize()
             .expect("the repo root resolves")
+    }
+
+    /// Every `BONUS:WEAPONPROF=…|DAMAGE|` token the shipped tables carry
+    /// reaches the wire — count for count. Derived from the registry rather
+    /// than pinned to a number, so a regen that dropped the transcription
+    /// fails here as well as in the fixture bar check.
+    #[test]
+    fn every_transcribed_damage_bonus_reaches_the_wire() {
+        let response = build_companion_catalog();
+        let served: usize =
+            response.entries.iter().map(|e| e.natural_attack_damage_bonuses.len()).sum();
+        let expected: usize = companion_chassis::COMPANION_BOOKS
+            .iter()
+            .flat_map(|b| b.companions.iter())
+            .map(|c| c.natural_attack_damage_bonuses.len())
+            .sum();
+        assert_eq!(served, expected);
+        assert!(expected > 0, "a wire carrying zero damage bonuses asserts nothing");
+    }
+
+    /// The rendered text is the RULE, not a number, and it is the shared
+    /// `derived_evaluator_fixture_check` parse that produces it — the same one
+    /// the committed fixtures pin. Checked on a real, resolved record whose
+    /// corpus row is quoted in `companion_chassis::NaturalAttackDamageBonus`.
+    #[test]
+    fn a_half_strength_damage_bonus_reaches_the_screen_as_the_rule_it_states() {
+        let response = build_companion_catalog();
+        let fox = response
+            .entries
+            .iter()
+            .find(|e| e.key == "ultimate_wilderness:companion:arctic_fox")
+            .expect("Ultimate Wilderness ships an Arctic Fox");
+        assert_eq!(fox.natural_attack_damage_bonuses.len(), 1);
+        let bonus = &fox.natural_attack_damage_bonuses[0];
+        assert_eq!(bonus.attack, "Bite");
+        assert_eq!(bonus.bonus, "+1/2 Str modifier (minimum +0)");
+        assert_eq!(bonus.unparsed_formula, None);
+    }
+
+    /// A formula the engine refuses to interpret reaches the screen VERBATIM
+    /// and labelled, never dropped and never rendered as if understood.
+    #[test]
+    fn an_uninterpretable_formula_reaches_the_wire_verbatim_and_labelled() {
+        let response = build_companion_catalog();
+        let unparsed: Vec<&CompanionDamageBonusDto> = response
+            .entries
+            .iter()
+            .flat_map(|e| e.natural_attack_damage_bonuses.iter())
+            .filter(|b| b.unparsed_formula.is_some())
+            .collect();
+        assert!(
+            !unparsed.is_empty(),
+            "the corpus carries formulas this engine refuses (STR/2, -(STR/2)); if none reaches \
+             the wire, either the transcription or the refusal changed"
+        );
+        for b in unparsed {
+            assert_eq!(b.unparsed_formula.as_deref(), Some(b.bonus.as_str()));
+        }
+    }
+
+    /// A save-DC formula stated ONLY in a `DESC:` argument reaches the screen
+    /// as the rule in words -- the same real record
+    /// `run_companion_save_dc_bar_check`'s own scratch tests use. Without
+    /// this field the DC is silently missing: `render_pcgen_desc` drops the
+    /// `%1` placeholder entirely (`decisions.md §24`), so `description`
+    /// alone reads "...save Fort DC ; frequency 1/round for 6 rounds...".
+    #[test]
+    fn a_desc_embedded_save_dc_formula_reaches_the_screen_as_the_rule_it_states() {
+        let response = build_companion_catalog();
+        let dimorphodon = response
+            .entries
+            .iter()
+            .find(|e| e.key == "bestiary_4:companion:companion_dinosaur_dimorphodon")
+            .expect("Bestiary 4 ships a Dimorphodon companion");
+        let poison = dimorphodon
+            .abilities
+            .iter()
+            .find(|a| a.name == "Poison")
+            .expect("Dimorphodon carries a Poison ability");
+        assert_eq!(poison.save_dc_formulas.len(), 1);
+        assert_eq!(poison.save_dc_formulas[0].formula, "10 + 1/2 HD + Con modifier");
+        assert_eq!(poison.save_dc_formulas[0].unparsed_formula, None);
+        // The %1 placeholder must be gone from the rendered prose (the real
+        // reason this field exists) -- but the surrounding text must still
+        // be there, proving this is the ordinary drop-not-corrupt renderer.
+        let description = poison.description.as_deref().unwrap_or("");
+        assert!(!description.contains('%'), "description leaked raw PCGen syntax: {description:?}");
+        assert!(
+            description.contains("save Fort DC"),
+            "description lost its surrounding prose: {description:?}"
+        );
+    }
+
+    /// A record whose ability states the SAME formula on two conditional
+    /// `description_variants` (Assassin Bug (Giant) ~ Poison, gated on
+    /// companion-advancement tier) still serves exactly ONE deduplicated
+    /// entry -- two identical rule-in-words captions would look like a
+    /// second, different DC on the screen.
+    #[test]
+    fn a_formula_repeated_across_conditional_variants_is_served_once() {
+        let response = build_companion_catalog();
+        let bug = response
+            .entries
+            .iter()
+            .find(|e| e.key == "ultimate_wilderness:companion:companion_assassin_bug_giant")
+            .expect("Ultimate Wilderness ships a Giant Assassin Bug companion");
+        let poison = bug
+            .abilities
+            .iter()
+            .find(|a| a.name == "Poison")
+            .expect("Assassin Bug (Giant) carries a Poison ability");
+        assert_eq!(poison.save_dc_formulas.len(), 1, "{:?}", poison.save_dc_formulas);
+        assert_eq!(poison.save_dc_formulas[0].formula, "10 + 1/2 HD + Con modifier");
+    }
+
+    /// Corpus-wide: every save-DC formula this parser recognises reaches SOME
+    /// ability on the wire, and the total is neither zero (asserting
+    /// nothing) nor drifted without this test noticing. **35, not the
+    /// fixture's 25**: an ability is served once PER OWNER (this module's
+    /// own doc comment, `every_registered_ability_reaches_the_wire_under_an_
+    /// owner`'s own distinction) while the fixture pins one row per DISTINCT
+    /// ability RECORD -- a formula whose ability has several owning
+    /// creatures is counted once here per owner, honestly matching what the
+    /// screen actually renders per creature page.
+    #[test]
+    fn every_recognised_save_dc_formula_reaches_the_wire() {
+        let response = build_companion_catalog();
+        let served: usize =
+            response.entries.iter().flat_map(|e| e.abilities.iter()).map(|a| a.save_dc_formulas.len()).sum();
+        assert_eq!(served, 35, "companion save-DC formula count on the wire moved");
     }
 
     /// Every registered creature reaches the wire. Derived from the registry
@@ -732,6 +1036,42 @@ mod tests {
         assert!(described > 0, "no ability carried a description; the check proved nothing");
     }
 
+    /// Same certification as `no_served_description_leaks_pcgen_syntax`, for
+    /// the OTHER half of the render path: a row whose every `DESC:` token is
+    /// conditional has no `description` at all, so a description-only check
+    /// would silently pass it while showing a player nothing. Before this
+    /// test, only one record's variants (`spitting_cobra_poison`, the
+    /// `a_conditional_description_reaches_the_wire_once_per_condition` test
+    /// above) were pinned by name — this exercises EVERY variant this catalog
+    /// serves, corpus-wide, the same blanket-coverage shape the description
+    /// check already had. Written for `SD31-E6-F7-001`'s render-readiness
+    /// report to Epic 6/Epic 2's `Kind::Companion` done-bar rung: the
+    /// zero-magnitude `grounded` population that rung targets includes units
+    /// whose ONLY player-visible text lives here (9 of the 223 re-derived
+    /// this cycle carry `description: None` with real `description_variants`
+    /// instead), and this is the assertion that certifies the render side of
+    /// that population is sound before the rung ever reads it.
+    #[test]
+    fn no_served_description_variant_leaks_pcgen_syntax() {
+        let response = build_companion_catalog();
+        let mut variants_seen = 0;
+        for entry in &response.entries {
+            for ability in &entry.abilities {
+                for variant in &ability.description_variants {
+                    variants_seen += 1;
+                    assert!(!variant.text.is_empty(), "{}: a variant with empty text shows a player nothing", ability.key);
+                    assert!(
+                        codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&variant.text).is_none(),
+                        "{}: {}",
+                        ability.key,
+                        variant.text
+                    );
+                }
+            }
+        }
+        assert!(variants_seen > 0, "no ability carried a description variant; the check proved nothing");
+    }
+
     /// `Some(0)` reach is a real corpus value on the two Tiny familiars, and it
     /// must not be flattened to `None` on the way to the wire — a screen that
     /// cannot tell "reach 0" from "no reach stated" is showing a different fact.
@@ -788,11 +1128,30 @@ mod tests {
         // the Advanced Player's Guide's one `TYPE:SkillChoice` row. Equal
         // deltas a third time, so each of these three is reached through
         // exactly one owner too.
-        assert_eq!(unmodelled.len(), 136);
+        //
+        // `SD31-CE-COMPANION-001` (2026-08-18): 136 -> 141 and 35 -> 39, and
+        // **this is the first time the two deltas are NOT equal** -- which is
+        // exactly the statement this pin exists to make visible. `decisions.md
+        // §9` retired the `core_essentials` book id; its 11 unmodelled-facet
+        // rows moved to Bestiary 1 (10) and Ultimate Magic (1) with no change
+        // to either count, because a re-attribution moves a row, not its owner
+        // graph. What DID move is the Advanced Player's Guide: importing
+        // `ce_races_familiar_apg.lst`'s 8 familiar creature rows gave four
+        // previously-orphan evolution-choice ability rows an owner for the
+        // first time (`TYPE:EvolutionChoice` x1, `TYPE:TempEvolutionChoice`
+        // x3), and ONE of the four -- `Temp Evolution ~ Grab` -- is named by
+        // TWO of this book's creature rows, so it produces two wire rows from
+        // one record. +4 records, +5 rows. Derived twice, independently: the
+        // live catalog reports 141, and a standalone scan of every
+        // `rules_tables/*/companion_data.rs`'s `facet: None` rows joined to
+        // each book's own `ability_keys` ownership graph reports 141 rows over
+        // 39 records with `Temp Evolution ~ Grab` as the single new
+        // two-owner row.
+        assert_eq!(unmodelled.len(), 141);
         let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
         keys.sort_unstable();
         keys.dedup();
-        assert_eq!(keys.len(), 35, "35 distinct records behind the 136 wire rows");
+        assert_eq!(keys.len(), 39, "39 distinct records behind the 141 wire rows");
         // Named, so neither count above can be satisfied by a different record.
         // Asserted on the WIRE rather than only on the table, because the gap
         // this catches is a row that exists in `rules_tables` and never crosses
@@ -909,7 +1268,39 @@ mod tests {
                     //   quality it does not.
                     || ability.type_segments
                         == vec!["RaceAbility".to_owned(), "SpecialAbility".to_owned()]
-                    || ability.type_segments == vec!["SkillChoice".to_owned()],
+                    || ability.type_segments == vec!["SkillChoice".to_owned()]
+                    // `SD31-CE-COMPANION-001` (2026-08-18) adds the NINTH and
+                    // TENTH shapes, and this assertion did its job again: the
+                    // count pins above had already been updated to 141/39 and
+                    // would have accepted any five new rows; this line failed on
+                    // the first desktop run and named the row.
+                    //
+                    // Both arrive from the same cause. Retiring the
+                    // `core_essentials` book id (`decisions.md §9`) imported
+                    // `ce_races_familiar_apg.lst`'s 8 familiar creature rows
+                    // into the Advanced Player's Guide, and those owners reach
+                    // four summoner evolution rows that had no owner before:
+                    //
+                    // * `EvolutionChoice.Extraordinary` (1 row,
+                    //   `Evolution ~ Scent`)
+                    // * `TempEvolutionChoice.Extraordinary` (3 rows,
+                    //   `Temp Evolution ~ Scent` / `~ Constrict` / `~ Grab`)
+                    //
+                    // These are the summoner's EVOLUTION POOL -- the record
+                    // type `decisions.md §65`/`§69` named as the one finding
+                    // behind this book's 208-row shortfall, seen here from the
+                    // other side: four of its rows are reachable after all,
+                    // because a familiar owner names them. They are a CHOICE
+                    // the player spends evolution points on, exactly like
+                    // `SkillChoice` above and for the same reason: mapping
+                    // either onto `SpecialQuality` would claim the eidolon has
+                    // a quality it does not, and `CompanionAbilityFacet` models
+                    // `CompanionAdvancement`/`SpecialQuality`/`SpecialAttack`
+                    // and nothing else.
+                    || ability.type_segments
+                        == vec!["EvolutionChoice".to_owned(), "Extraordinary".to_owned()]
+                    || ability.type_segments
+                        == vec!["TempEvolutionChoice".to_owned(), "Extraordinary".to_owned()],
                 "{} carries an unrecognised unmodelled shape: {:?}",
                 ability.key,
                 ability.type_segments

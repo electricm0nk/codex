@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Halcyon Druid ~ Spontaneous Casting",
+    "name": "Spontaneous Casting",
+    "class": "Druid",
+    "description": "A halcyon druid adds all spells from the Good cleric domain to her druid spell list, and she can focus stored spell energy into spells from the Good domain that she hasn't prepared ahead of time. She can lose a prepared spell to cast any spell of the same level or lower from the Good domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halcyon Druid ~ Spontaneous Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.HalcyonDruidClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "DESC",
+        "value": "A halcyon druid adds all spells from the Good cleric domain to her druid spell list, and she can focus stored spell energy into spells from the Good domain that she hasn't prepared ahead of time. She can lose a prepared spell to cast any spell of the same level or lower from the Good domain."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Protection from Evil|Druid=2|Align Weapon (Good Only)|Druid=3|Magic Circle against Evil|Druid=4|Holy Smite|Druid=5|Dispel Evil|Druid=6|Blade Barrier|Druid=7|Holy Word|Druid=8|Holy Aura|Druid=9|Summon Monster IX (Good Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 791,
+    "record_key": "Halcyon Druid ~ Spontaneous Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

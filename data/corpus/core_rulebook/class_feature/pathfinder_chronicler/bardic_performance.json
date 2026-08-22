@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Bardic Performance",
+    "name": "Bardic Performance",
+    "class": "Pathfinder Chronicler",
+    "description": "At 3rd level, a Pathfinder chronicler gains this ability, which functions like the bard class feature of the same name, except that the chronicler's effective bard level is 2 lower than her class level. Levels in this class stack with levels in any other class that grants a similar ability to determine her effective bard level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Bardic Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a Pathfinder chronicler gains this ability, which functions like the bard class feature of the same name, except that the chronicler's effective bard level is 2 lower than her class level. Levels in this class stack with levels in any other class that grants a similar ability to determine her effective bard level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bard ~ Bardic Performance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceDuration,BardicPerformanceLVL|CL-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.390"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3049,
+    "record_key": "Pathfinder Chronicler ~ Bardic Performance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Amateur Gunslinger",
+    "name": "Amateur Gunslinger",
+    "class": "Warpriest Bonus Feat",
+    "description": "Although you are not a gunslinger, you have and can use grit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Amateur Gunslinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gunslinger ~ Grit"
+      },
+      {
+        "key": "DESC",
+        "value": "Although you are not a gunslinger, you have and can use grit."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain a small amount of grit and the ability to perform a single 1st-level deed from the gunslinger deed class feature. At the start of the day, you gain 1 grit point, though throughout the day you can gain grit points up to a maximum of your Wisdom modifier (%1) (minimum 1). You can regain grit using the rules for the gunslinger's grit class feature (see page 9). You can spend this grit to perform the 1st-level deed you chose upon taking this feat, and any other deed you have gained through feats or magic items. &nl; [Special]If you gain levels in a class that grants the grit class feature, you can immediately trade this feat for the Extra Grit feat.|WIS"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|ABILITY|Special Ability|TYPE=DeedsLVL1"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Amateur Gunslinger (%LIST)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4395,
+    "record_key": "Warpriest Bonus Feat ~ Amateur Gunslinger"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

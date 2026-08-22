@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Automatically detect nearby conscious creatures.",
+    "key": "Thoughtsense",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Mesmerist,Psychic,Spiritualist=4|Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, M (a bit of dried brain tissue)"
+      },
+      {
+        "key": "DESC",
+        "value": "Automatically detect nearby conscious creatures."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Thoughtsense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 139,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Thoughtsense",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

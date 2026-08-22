@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Wandering Spirit ~ Lore",
+    "name": "Lore (Wandering Spirit)",
+    "class": "Shaman Wandering Spirit",
+    "description": "Spirit Magic Spells: identify (1st), tongues (2nd), locate object (3rd), legend lore (4th), contact other plane (5th), mass owl's wisdom (6th), vision (7th), moment of prescience (8th), time stop (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Wandering Spirit ~ Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanWanderingSpirit.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: identify (1st), tongues (2nd), locate object (3rd), legend lore (4th), contact other plane (5th), mass owl's wisdom (6th), vision (7th), moment of prescience (8th), time stop (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lore Spirit ~ Monstrous Insight|PREVARGTEQ:ShamanWanderingSpiritBase,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lore Spirit ~ Automatic Writing|PREVARGTEQ:ShamanWanderingSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lore Spirit ~ Perfect Knowledge|PREVARGTEQ:ShamanWanderingSpiritTrue,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Lore Wandering Hex|ShamanWanderingHexUses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1463,
+    "record_key": "Shaman Wandering Spirit ~ Lore"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

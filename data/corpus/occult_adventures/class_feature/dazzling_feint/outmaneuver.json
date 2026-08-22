@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dazzling Feint ~ Outmaneuver",
+    "name": "Outmaneuver",
+    "class": "Dazzling Feint",
+    "description": "The vexing daredevil's darting movements foil the target's attempt to box her in. If her next attack hits, the vexing daredevil gains a +4 circumstance bonus on Acrobatics checks to move through the target's space or threatened area for 1 round. She can also move up to half her speed after the attack hits as a free action. If she wants to use Acrobatics to move through the target's threatened area or an enemy's space during this movement, she must reduce her speed or the DC of the Acrobatics check increases by 10, as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dazzling Feint ~ Outmaneuver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DazzlingFeint.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The vexing daredevil's darting movements foil the target's attempt to box her in. If her next attack hits, the vexing daredevil gains a +4 circumstance bonus on Acrobatics checks to move through the target's space or threatened area for 1 round. She can also move up to half her speed after the attack hits as a free action. If she wants to use Acrobatics to move through the target's threatened area or an enemy's space during this movement, she must reduce her speed or the DC of the Acrobatics check increases by 10, as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1511,
+    "record_key": "Dazzling Feint ~ Outmaneuver"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

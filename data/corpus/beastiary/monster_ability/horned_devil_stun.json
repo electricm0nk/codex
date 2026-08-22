@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Horned Devil ~ Stun",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:devil_horned"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stun"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|StunDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunDC|10+(HD/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Stun)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StunDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a horned devil hits with a spiked chain attack, the opponent must succeed on a DC %1 Fortitude save or be stunned for 1d4 rounds. This ability is a function of the horned devil, not of the spiked chain.|StunDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Horned Devil ~ Stun"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.76",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 353,
-    "record_key": "Horned Devil ~ Stun"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 353,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Horned Devil ~ Stun",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

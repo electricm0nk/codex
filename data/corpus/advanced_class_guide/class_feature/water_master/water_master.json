@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Water Master",
+    "name": "Water Master",
+    "class": null,
+    "description": "You have chosen to master the elemental powers of elemental water.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.ArcanistArchetype.SpecialQuality.ArcanistElement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to master the elemental powers of elemental water."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Master ~ Elemental Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Master ~ Elemental Attack|PREVARGTEQ:WaterMasterLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Master ~ Powerful Exploit|PREVARGTEQ:WaterMasterLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Master ~ Greater Elemental Attack|PREVARGTEQ:WaterMasterLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Master ~ Elemental Movement|PREVARGTEQ:WaterMasterLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2458,
+    "record_key": "Water Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

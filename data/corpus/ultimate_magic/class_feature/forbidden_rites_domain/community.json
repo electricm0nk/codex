@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Community Domain",
+    "name": "Community",
+    "class": "Forbidden Rites Domain",
+    "description": "Your touch can heal wounds, and your presence instills unity and strengthens emotional bonds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Community Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.CommunityDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCommunityAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch can heal wounds, and your presence instills unity and strengthens emotional bonds."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Calming Touch|PREDOMAIN:1,Community|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Unity|PREDOMAIN:1,Community|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityDC|10+(DomainCommunityLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCommunityAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Bless|Cleric=2|Shield Other|Cleric=3|Prayer|Cleric=4|Imbue with Spell Ability|Cleric=5|Telepathic Bond|Cleric=6|Heroes' Feast|Cleric=7|Refuge|Cleric=8|Cure Critical Wounds (Mass)|Cleric=9|Miracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1032,
+    "record_key": "Forbidden Rites Domain ~ Community Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mooncaller ~ Wolfsbane",
+    "name": "Wolfsbane",
+    "class": "Druid",
+    "description": "You gain DR %1/silver.|MooncallerWolfsbaneDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mooncaller ~ Wolfsbane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MooncallerWolfsbaneDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain DR %1/silver.|MooncallerWolfsbaneDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MooncallerWolfsbaneDR|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MooncallerWolfsbaneDR|1|PRECLASS:1,Druid=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MooncallerWolfsbaneDR|1|PRECLASS:1,Druid=19"
+      },
+      {
+        "key": "DR",
+        "value": "MooncallerWolfsbaneDR/silver"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1129,
+    "record_key": "Mooncaller ~ Wolfsbane"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,23 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "This spell sanctifies an area with heavenly power. The DC to resist spells or spell-like abilities with the good descriptor or channeled energy that damages evil outsiders (as when using Alignment Channel) increases by +2. In addition, evil outsiders take a -1 penalty on attack rolls, damage rolls, and saving throws, and they cannot be called or summoned into a sacred space. If the sacred space contains an altar, shrine, or other permanent fixture dedicated to your deity, pantheon, or good-aligned higher power, the modifiers given above are doubled. You cannot cast sacred space in an area with a permanent fixture dedicated to a deity other than yours.",
     "key": "Sacred Space",
-    "school": "Evocation",
     "level": 2,
-    "description": "This spell sanctifies an area with heavenly power. The DC to resist spells or spell-like abilities with the good descriptor or channeled energy that damages evil outsiders (as when using Alignment Channel) increases by +2. In addition, evil outsiders take a -1 penalty on attack rolls, damage rolls, and saving throws, and they cannot be called or summoned into a sacred space. If the sacred space contains an altar, shrine, or other permanent fixture dedicated to your deity, pantheon, or good-aligned higher power, the modifiers given above are doubled. You cannot cast sacred space in an area with a permanent fixture dedicated to a deity other than yours."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell sanctifies an area with heavenly power. The DC to resist spells or spell-like abilities with the good descriptor or channeled energy that damages evil outsiders (as when using Alignment Channel) increases by +2. In addition, evil outsiders take a -1 penalty on attack rolls, damage rolls, and saving throws, and they cannot be called or summoned into a sacred space. If the sacred space contains an altar, shrine, or other permanent fixture dedicated to your deity, pantheon, or good-aligned higher power, the modifiers given above are doubled. You cannot cast sacred space in an area with a permanent fixture dedicated to a deity other than yours."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) hours"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsAasimar=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/aasimars.html#_sacred-space"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Evocation"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 66,
-    "record_key": "Sacred Space"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 66,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Sacred Space",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

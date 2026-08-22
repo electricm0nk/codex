@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:27:44Z",
   "data": {
     "corpus_key": "Psicrystal ~ Sight Link",
     "delivery": "SpellLike",
@@ -13,19 +11,51 @@
     "owners": [
       "ultimate_psionics:monster:psicrystal"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The owner can remote view the psicrystal 1/day."
+      },
+      {
+        "key": "KEY",
+        "value": "Psicrystal ~ Sight Link"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      }
+    ],
     "source_page": "p.50",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
-    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
-    "line": 749,
-    "record_key": "Psicrystal ~ Sight Link"
-  },
+  "ingested_at": "2026-08-13T02:27:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 749,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "Psicrystal ~ Sight Link",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Serpentine Bloodline ~ Scaled Soul",
+    "name": "Scaled Soul",
+    "class": "Serpentine Bloodline",
+    "description": "You gain the shapechanger subtype, and you can assume the form of a reptilian humanoid (as alter self ) or snake of Diminutive to Huge size (as beast shape III) at will. You retain the power of speech and the ability to use somatic spell components when transformed. You also become immune to poison and paralysis. You may use serpent's fang as often as desired, and you may choose to inflict damage to any ability score.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpentine Bloodline ~ Scaled Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Serpentine Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Serpentine"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Serpentine_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the shapechanger subtype, and you can assume the form of a reptilian humanoid (as alter self ) or snake of Diminutive to Huge size (as beast shape III) at will. You retain the power of speech and the ability to use somatic spell components when transformed. You also become immune to poison and paralysis. You may use serpent's fang as often as desired, and you may choose to inflict damage to any ability score."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Shapechanger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Paralysis|Immunity to Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|SerpentineBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3194,
+    "record_key": "Serpentine Bloodline ~ Scaled Soul"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

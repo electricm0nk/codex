@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Fist of the Avenger",
+    "name": "Fist of the Avenger",
+    "class": "Vigilante Talent",
+    "description": "The vigilante gains Improved Unarmed Strike as a bonus feat, if he doesn't have this feat already. In addition, whenever he successfully attacks with his fist or a gauntlet, he gains a +%1 bonus on damage rolls.|FistOfTheAvengerBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Fist of the Avenger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Fist of the Avenger"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsAvenger,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FistOfTheAvengerBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains Improved Unarmed Strike as a bonus feat, if he doesn't have this feat already. In addition, whenever he successfully attacks with his fist or a gauntlet, he gains a +%1 bonus on damage rolls.|FistOfTheAvengerBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Unarmed Strike"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FistOfTheAvengerBonus|MIN(5,MAX(1,VigilanteTalentLVL/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gauntlet|DAMAGE|FistOfTheAvengerBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Unarmed Strike|DAMAGE|FistOfTheAvengerBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 83,
+    "record_key": "Vigilante Talent ~ Fist of the Avenger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

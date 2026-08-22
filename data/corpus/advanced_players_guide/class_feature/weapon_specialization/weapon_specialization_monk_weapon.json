@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weapon Specialization ~ Weapon Adept",
+    "name": "Weapon Specialization / Monk Weapon",
+    "class": "Weapon Specialization",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon Specialization ~ Weapon Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.WeaponAdeptMonkWeaponChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Weapon Adept ~ Way of the Weapon Master"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=6"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Feat|Weapon Specialization"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|WEAPONPROFICIENCY|EQUIPMENT[TYPE=Monk]|TYPE=Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|DAMAGE|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2377,
+    "record_key": "Weapon Specialization ~ Weapon Adept"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

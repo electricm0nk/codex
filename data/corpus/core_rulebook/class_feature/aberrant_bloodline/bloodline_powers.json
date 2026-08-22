@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aberrant Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Aberrant Bloodline",
+    "description": "Aberrant sorcerers show increasing signs of their tainted heritage as they increase in level, although they are only visible when used.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "Aberrant sorcerers show increasing signs of their tainted heritage as they increase in level, although they are only visible when used."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|AberrantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2342,
+    "record_key": "Aberrant Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

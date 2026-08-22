@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Unearthly Terrain",
+    "name": "Unearthly Terrain",
+    "class": "Outer Rifts Mystery",
+    "description": "You can twist the material world into the harsh, jagged edges and uneven angles of the outer planes. As a standard action, you can turn one 20-foot square into difficult terrain for %1 rounds. You may use this ability %2 times per day.|UnearthlyTerrainDuration|UnearthlyTerrainTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Unearthly Terrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnearthlyTerrainDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnearthlyTerrainTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can twist the material world into the harsh, jagged edges and uneven angles of the outer planes. As a standard action, you can turn one 20-foot square into difficult terrain for %1 rounds. You may use this ability %2 times per day.|UnearthlyTerrainDuration|UnearthlyTerrainTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnearthlyTerrainDuration|OracleLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnearthlyTerrainTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 119,
+    "record_key": "Outer Rifts Mystery ~ Unearthly Terrain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

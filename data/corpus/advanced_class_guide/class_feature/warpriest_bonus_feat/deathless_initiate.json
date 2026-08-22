@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Deathless Initiate",
+    "name": "Deathless Initiate",
+    "class": "Warpriest Bonus Feat",
+    "description": "For you, impending death is a call to wrath.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Deathless Initiate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Diehard,Endurance"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsOrc=true"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,STR=13,CON=13"
+      },
+      {
+        "key": "DESC",
+        "value": "For you, impending death is a call to wrath."
+      },
+      {
+        "key": "DESC",
+        "value": " You are not staggered while using the Diehard feat, but if you take a move and a standard action or a full-round action while you are at 0 or fewer hit points you take 1 point of damage. Further, while using the Diehard feat, you gain a +2 bonus on melee attacks and damage rolls."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Deathless Initiate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4419,
+    "record_key": "Warpriest Bonus Feat ~ Deathless Initiate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

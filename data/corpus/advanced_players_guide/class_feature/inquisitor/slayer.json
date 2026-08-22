@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor ~ Slayer",
+    "name": "Slayer",
+    "class": "Inquisitor",
+    "description": "At 17th level, an inquisitor learns to focus her judgment. Whenever an inquisitor uses her judgment ability, she must select one type of judgment. She is treated as if she were 5 levels higher for the purposes of determining the bonus granted by this judgment. Unlike other types of judgment, the one enhanced by this ability cannot be changed for the remainder of the judgment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor ~ Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, an inquisitor learns to focus her judgment. Whenever an inquisitor uses her judgment ability, she must select one type of judgment. She is treated as if she were 5 levels higher for the purposes of determining the bonus granted by this judgment. Unlike other types of judgment, the one enhanced by this ability cannot be changed for the remainder of the judgment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 312,
+    "record_key": "Inquisitor ~ Slayer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

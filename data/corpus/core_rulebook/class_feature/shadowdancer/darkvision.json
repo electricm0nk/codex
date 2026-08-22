@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shadowdancer ~ Darkvision",
+    "name": "Darkvision",
+    "class": "Shadowdancer",
+    "description": "At 2nd level, a shadowdancer gains darkvision out to a range of 60 feet. If she already has darkvision, the range increases by 30 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowdancer ~ Darkvision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShadowdancerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a shadowdancer gains darkvision out to a range of 60 feet. If she already has darkvision, the range increases by 30 feet."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Shadowdancer Darkvision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.392"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3067,
+    "record_key": "Shadowdancer ~ Darkvision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

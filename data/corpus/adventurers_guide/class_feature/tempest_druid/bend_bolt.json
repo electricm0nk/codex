@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tempest Druid ~ Bend Bolt",
+    "name": "Bend Bolt",
+    "class": "Druid",
+    "description": "A tempest druid can redirect nearby electrical attacks. As an immediate action, the druid can shift the area or target of an electricity attack by 5 feet in any direction. If the electricity affects an area, the druid selects one square to be unaffected and an adjacent square to be affected. If the adjacent square is already in the area, this has no additional effect in that square. If the electricity affects a target, the druid selects an adjacent target. For example, if he were in the line of a wizard's lightning bolt, he could have the spell skip his square and instead affect an adjacent square, even if this meant the spell did not form a continuous line. If another druid attacked him with call lightning, he could shift the called bolt to an adjacent square, affecting a creature in that square (if any). He can't redirect electricity damage conducted to him by physical contact with an object or creature (such as a shocking grasp or a shock weapon). He can use this ability %1 times per day.|WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tempest Druid ~ Bend Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.TempestDruidClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "DESC",
+        "value": "A tempest druid can redirect nearby electrical attacks. As an immediate action, the druid can shift the area or target of an electricity attack by 5 feet in any direction. If the electricity affects an area, the druid selects one square to be unaffected and an adjacent square to be affected. If the adjacent square is already in the area, this has no additional effect in that square. If the electricity affects a target, the druid selects an adjacent target. For example, if he were in the line of a wizard's lightning bolt, he could have the spell skip his square and instead affect an adjacent square, even if this meant the spell did not form a continuous line. If another druid attacked him with call lightning, he could shift the called bolt to an adjacent square, affecting a creature in that square (if any). He can't redirect electricity damage conducted to him by physical contact with an object or creature (such as a shocking grasp or a shock weapon). He can use this ability %1 times per day.|WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 815,
+    "record_key": "Tempest Druid ~ Bend Bolt"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

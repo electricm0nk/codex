@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "ability_keys": [
       "inner_sea_gods:monster_ability:karumzek_change_shape",
@@ -24,6 +22,116 @@
     ],
     "race_subtype": "Evil|Extraplanar|Shapechanger",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Karumzek"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Infernal|Undercommon"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Legs|8"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)|Knowledge (Religion)|Spellcraft|Use Magic Device"
+      },
+      {
+        "key": "DR",
+        "value": "5/Good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):5"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Climb,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d8,SPROP=poison"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Extraplanar|Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "SR",
+        "value": "15"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.301",
     "speeds": [
@@ -37,16 +145,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
-    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
-    "line": 58,
-    "record_key": "Karumzek"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "record_key": "Karumzek",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

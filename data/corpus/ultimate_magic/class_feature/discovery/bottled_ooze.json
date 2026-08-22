@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Bottled Ooze",
+    "name": "Bottled Ooze",
+    "class": "Discovery",
+    "description": "You have learned how to preserve a sample of oozes in a sealed bottle, which you can prepare for use as an extract.  When you activate the extract, you actually throw the bottle at a square within 30 feet, releasing the ooze, which reconstitutes and attacks the closest creature.  The ooze is not under your control, but is otherwise treated as a summoned creature.  The ooze remains for %1 rounds, and decays into powder when the duration expires.  If you have the infusion discovery, another character can use the infused specimen.  Creating a bottled ooze requires an extract with a level equal to the ooze's CR.|BottledOozeDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Bottled Ooze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BottledOozeDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to preserve a sample of oozes in a sealed bottle, which you can prepare for use as an extract.  When you activate the extract, you actually throw the bottle at a square within 30 feet, releasing the ooze, which reconstitutes and attacks the closest creature.  The ooze is not under your control, but is otherwise treated as a summoned creature.  The ooze remains for %1 rounds, and decays into powder when the duration expires.  If you have the infusion discovery, another character can use the infused specimen.  Creating a bottled ooze requires an extract with a level equal to the ooze's CR.|BottledOozeDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BottledOozeDuration|AlchemistDiscoveryLVL+charbonusto(\"PCLEVEL\",\"Alchemist\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=1|Bottled Ooze (1)|!PRESPELL:1,Bottled Ooze (1)"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=2|Bottled Ooze (2)|!PRESPELL:1,Bottled Ooze (2)"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=3|Bottled Ooze (3)|!PRESPELL:1,Bottled Ooze (3)|PREVARGTEQ:AlchemistDiscoveryLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=4|Bottled Ooze (4)|!PRESPELL:1,Bottled Ooze (4)|PREVARGTEQ:AlchemistDiscoveryLVL,10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=5|Bottled Ooze (5)|!PRESPELL:1,Bottled Ooze (5)|PREVARGTEQ:AlchemistDiscoveryLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Alchemist=6|Bottled Ooze (6)|!PRESPELL:1,Bottled Ooze (6)|PREVARGTEQ:AlchemistDiscoveryLVL,17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 127,
+    "record_key": "Discovery ~ Bottled Ooze"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

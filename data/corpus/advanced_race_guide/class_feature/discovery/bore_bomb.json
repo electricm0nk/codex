@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Bore Bomb",
+    "name": "Bore Bomb*",
+    "class": "Discovery",
+    "description": "When the saboteur creates a bomb, he may choose to make it a bore bomb. If a bore bomb strikes a wall, gate, siege engine, or similar large, solid, inanimate structure, it ignores half the target's hardness and deals 1 point of damage per saboteur level. If a bore bomb reduces an inanimate target to half its hit points or fewer, it blows a hole 5 feet wide and 5 feet deep in the target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Bore Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistDiscovery.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Saboteur ~ Saboteur Discoveries"
+      },
+      {
+        "key": "DESC",
+        "value": "When the saboteur creates a bomb, he may choose to make it a bore bomb. If a bore bomb strikes a wall, gate, siege engine, or similar large, solid, inanimate structure, it ignores half the target's hardness and deals 1 point of damage per saboteur level. If a bore bomb reduces an inanimate target to half its hit points or fewer, it blows a hole 5 feet wide and 5 feet deep in the target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 187,
+    "record_key": "Discovery ~ Bore Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

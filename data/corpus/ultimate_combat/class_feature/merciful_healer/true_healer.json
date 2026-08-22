@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Merciful Healer ~ True Healer",
+    "name": "True Healer",
+    "class": "Cleric",
+    "description": "At 8th level, when a merciful healer channels holy energy, she can choose to apply the benefits of merciful healing or to reroll any 1s when determining how much damage she heals with the holy energy. She must choose which benefit to take before she rolls to see how much damage she heals.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Merciful Healer ~ True Healer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, when a merciful healer channels holy energy, she can choose to apply the benefits of merciful healing or to reroll any 1s when determining how much damage she heals with the holy energy. She must choose which benefit to take before she rolls to see how much damage she heals."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 593,
+    "record_key": "Merciful Healer ~ True Healer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

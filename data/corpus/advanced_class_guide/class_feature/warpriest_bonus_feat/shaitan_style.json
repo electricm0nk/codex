@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Shaitan Style",
+    "name": "Shaitan Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "You strike with the caustic forces from within the earth.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Shaitan Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Elemental Fist,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9]],[PREVARGTEQ:MonkFeatQualify,5]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,CON=13,WIS=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You strike with the caustic forces from within the earth."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain one additional Elemental Fist (Advanced Player's Guide 158) attempt per day. While using the Shaitan Style and Elemental Fist feats to deal acid damage, you gain a bonus on acid damage rolls equal to your Wisdom bonus. Further, if your Elemental Fist melee attack misses while you are using it to deal acid damage, you still deal 1d6 points of acid damage to your target."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Shaitan Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4534,
+    "record_key": "Warpriest Bonus Feat ~ Shaitan Style"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

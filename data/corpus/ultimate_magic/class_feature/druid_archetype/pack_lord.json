@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Pack Lord",
+    "name": "Pack Lord",
+    "class": "Druid Archetype",
+    "description": "Some druids bond with many animal companions rather than just one, achieving a level of communion rare even in druidic circles and leading their pack brothers and pack sisters with total authority.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Pack Lord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidNatureBond.DruidWildShape6"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Pack Lord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureBond,TYPE.DruidWildshape6]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some druids bond with many animal companions rather than just one, achieving a level of communion rare even in druidic circles and leading their pack brothers and pack sisters with total authority."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Pack Lord ~ Pack Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Pack Lord ~ Improved Empathic Link|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1091,
+    "record_key": "Druid Archetype ~ Pack Lord"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

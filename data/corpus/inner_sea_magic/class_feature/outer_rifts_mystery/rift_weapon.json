@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Rift Weapon",
+    "name": "Rift Weapon",
+    "class": "Outer Rifts Mystery",
+    "description": "Your understanding of the powers that move through the Outer Rifts allows you to imbue weapons with the ability to penetrate the defenses of creatures native to other planes. %1 per day as a standard action, you can touch one weapon (or a group of up to 20 similar pieces of ammunition) and give it the ability to penetrate DR/cold iron for %2 minutes.|RiftWeaponTimes|RiftWeaponDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Rift Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RiftWeaponTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RiftWeaponDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your understanding of the powers that move through the Outer Rifts allows you to imbue weapons with the ability to penetrate the defenses of creatures native to other planes. %1 per day as a standard action, you can touch one weapon (or a group of up to 20 similar pieces of ammunition) and give it the ability to penetrate DR/cold iron for %2 minutes.|RiftWeaponTimes|RiftWeaponDuration"
+      },
+      {
+        "key": "DESC",
+        "value": "You can also grant the additional ability to bypass either DR/good and DR/law.|PREVARGTEQ:OracleLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RiftWeaponTimes|1+OracleLVL/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RiftWeaponDuration|OracleLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 117,
+    "record_key": "Outer Rifts Mystery ~ Rift Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

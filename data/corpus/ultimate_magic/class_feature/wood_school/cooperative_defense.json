@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood School ~ Cooperative Defense",
+    "name": "Cooperative Defense",
+    "class": "Wood School",
+    "description": "Whenever a spell or effect targets you and one or more allies within 30 feet, you can use this ability to allow your allies to use your saving throw against the effect in place of their own. Each ally must make this choice individually before the rolls are made. Using this ability is an immediate action. You can use this ability %1/day.|CooperativeDefenseTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood School ~ Cooperative Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CooperativeDefenseTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a spell or effect targets you and one or more allies within 30 feet, you can use this ability to allow your allies to use your saving throw against the effect in place of their own. Each ally must make this choice individually before the rolls are made. Using this ability is an immediate action. You can use this ability %1/day.|CooperativeDefenseTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CooperativeDefenseTimes|floor((WoodSchoolLVL-4)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 801,
+    "record_key": "Wood School ~ Cooperative Defense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

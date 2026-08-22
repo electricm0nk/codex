@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Argent Performance ~ Righteous Chord",
+    "name": "Righteous Chord",
+    "class": "Argent Performance",
+    "description": "As a standard action that costs 2 rounds of argent or bardic performance, the argent dramaturge can affect a single evil outsider within 60 feet as per the spell banishment, treating her character level as her caster level. As a free action, the argent dramaturge can attempt a Perform check with a DC equal to 10 + the HD of the targeted outsider. If successful, she is treated as having presented the targeted outsider with one object or substance the target fears or hates for the purpose of determining the effects of the banishment spell. Activating this argent performance does not end a currently active argent or bardic performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Performance ~ Righteous Chord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.Argent Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action that costs 2 rounds of argent or bardic performance, the argent dramaturge can affect a single evil outsider within 60 feet as per the spell banishment, treating her character level as her caster level. As a free action, the argent dramaturge can attempt a Perform check with a DC equal to 10 + the HD of the targeted outsider. If successful, she is treated as having presented the targeted outsider with one object or substance the target fears or hates for the purpose of determining the effects of the banishment spell. Activating this argent performance does not end a currently active argent or bardic performance."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 29,
+    "record_key": "Argent Performance ~ Righteous Chord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Touch of Good",
+    "name": "Touch of Good",
+    "class": "Domain Power",
+    "description": "You can touch a creature as a standard action, granting giving it a +%1 sacred bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. You can use this ability %2 times per day.|max(DomainGoodLVL/2,1)|TouchofGoodTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Touch of Good"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Good Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchofGoodTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a creature as a standard action, granting giving it a +%1 sacred bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. You can use this ability %2 times per day.|max(DomainGoodLVL/2,1)|TouchofGoodTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchofGoodTimes|DomainGoodTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|TouchofGoodTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TouchofGoodTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 713,
+    "record_key": "Domain Power ~ Touch of Good"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

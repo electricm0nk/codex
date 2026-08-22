@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle Archetype ~ Purifier",
+    "name": "Purifier",
+    "class": "Oracle Archetype",
+    "description": "The purifier seeks out signs of possession or mind control that manifest from unwilling (and often unwitting) servants for fiendish corruptors and their mortal minions. A purifier seeks liberation of mind, body, and spirit from the bondage of sin and the taint of the unholy. A purifier gains the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Purifier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleRevelation3.OracleRevelation7.OracleRevelation11"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsAasimar=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The purifier seeks out signs of possession or mind control that manifest from unwilling (and often unwitting) servants for fiendish corruptors and their mortal minions. A purifier seeks liberation of mind, body, and spirit from the bondage of sin and the taint of the unholy. A purifier gains the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Recommended Mysteries|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Bonus Spells|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Diminished Spellcasting|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ See Sin|PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Celestial Armor|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Sin Eater|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Sacred Scourge|PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Holy Terror|PRECLASS:1,Oracle=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Purifier ~ Celestial Master|PRECLASS:1,Oracle=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Oracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 408,
+    "record_key": "Oracle Archetype ~ Purifier"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

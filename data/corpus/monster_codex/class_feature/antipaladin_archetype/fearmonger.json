@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Antipaladin Archetype ~ Fearmonger",
+    "name": "Fearmonger",
+    "class": "Antipaladin Archetype",
+    "description": "The fearmonger wants to do more than cause pain, misery, and confusion. He wishes to spread fear among his foes and infect entire populations with it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin Archetype ~ Fearmonger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AntipaladinArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Antipaladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Antipaladin Archetype ~ Fearmonger],[!PREFACT:1,ABILITIES,Antipaladin_Archetype_TouchOfCorruption=True,Antipaladin_Archetype_Cruelty3=True,Antipaladin_Archetype_Cruelty6=True,Antipaladin_Archetype_Cruelty9=True,Antipaladin_Archetype_Cruelty12=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The fearmonger wants to do more than cause pain, misery, and confusion. He wishes to spread fear among his foes and infect entire populations with it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fearmonger ~ Feed on Fear|PRECLASS:1,Antipaladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fearmonger ~ Frightening Cruelty|PRECLASS:1,Antipaladin=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_TouchOfCorruption|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_Cruelty3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_Cruelty6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_Cruelty9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_Cruelty12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_TouchOfCorruption|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_Cruelty3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_Cruelty6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_Cruelty9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_Cruelty12|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 40,
+    "record_key": "Antipaladin Archetype ~ Fearmonger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

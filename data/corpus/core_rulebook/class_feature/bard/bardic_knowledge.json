@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard ~ Bardic Knowledge",
+    "name": "Bardic Knowledge",
+    "class": "Bard",
+    "description": "You add +%1 to all Knowledge checks and may make all Knowledge skill checks untrained.|BardicKnowledgeSkillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard ~ Bardic Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.Bardic Knowledge"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicKnowledgeSkillBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicKnowledgeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 to all Knowledge checks and may make all Knowledge skill checks untrained.|BardicKnowledgeSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Knowledge|BardicKnowledgeSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicKnowledgeSkillBonus|max(1,BardicKnowledgeLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicKnowledgeLVL|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 503,
+    "record_key": "Bard ~ Bardic Knowledge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

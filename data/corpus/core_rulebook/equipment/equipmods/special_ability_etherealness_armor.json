@@ -1,26 +1,72 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Etherealness ~ Armor",
     "category": "equipmods",
-    "name": "Etherealness",
     "cost_gp": 49000.0,
-    "weight_lbs": null,
-    "description": "On command, this ability allows the wearer of the armor to become ethereal (as the ethereal jaunt spell) once per day. The character can remain ethereal for as long as desired, but once he returns to normal, he cannot become ethereal again that day."
+    "description": "On command, this ability allows the wearer of the armor to become ethereal (as the ethereal jaunt spell) once per day. The character can remain ethereal for as long as desired, but once he returns to normal, he cannot become ethereal again that day.",
+    "key": "Special Ability ~ Etherealness ~ Armor",
+    "name": "Etherealness",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Etherealness ~ Armor"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "49000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.463"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "become ethereal (as Ethereal Jaunt spell) 1/day"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/etherealness/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/etherealness/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 329,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Etherealness ~ Armor",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Invulnerable Rager ~ Extreme Endurance Hot",
+    "name": "Extreme Endurance / Hot",
+    "class": "Invulnerable Rager",
+    "description": "%1|InvulnerableRagerResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Invulnerable Rager ~ Extreme Endurance Hot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "IRagerEndurance"
+      },
+      {
+        "key": "DESC",
+        "value": "%1|InvulnerableRagerResistance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Invulnerable Rager ~ Extreme Endurance Output|Resistance To Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|InvulnerableRagerResistance|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1589,
+    "record_key": "Invulnerable Rager ~ Extreme Endurance Hot"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

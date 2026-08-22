@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blood Kineticist ~ Gut-Wrenching Infusion",
+    "name": "Gut-Wrenching Infusion",
+    "class": "Kineticist",
+    "description": "At 9th level, a blood kineticist can infuse her blasts with the ability to manipulate her opponent's insides to the point of impairing their function. On a failed Fortitude save, the target is sickened for 1 minute. A target that fails its saving throw against the wrack form infusion does not receive a saving throw to avoid the sickened condition from gutwrenching infusion on the same blast. This is a 4th-level substance infusion that costs 3 points of burn and can be used with water and blood blasts. This ability replaces the 9th-level infusion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Kineticist ~ Gut-Wrenching Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blood Kineticist Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a blood kineticist can infuse her blasts with the ability to manipulate her opponent's insides to the point of impairing their function. On a failed Fortitude save, the target is sickened for 1 minute. A target that fails its saving throw against the wrack form infusion does not receive a saving throw to avoid the sickened condition from gutwrenching infusion on the same blast. This is a 4th-level substance infusion that costs 3 points of burn and can be used with water and blood blasts. This ability replaces the 9th-level infusion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1323,
+    "record_key": "Blood Kineticist ~ Gut-Wrenching Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

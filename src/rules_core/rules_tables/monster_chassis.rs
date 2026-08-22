@@ -54,6 +54,14 @@
 //! 4,233 remaining units are orphan ability rows, and 703 of those sit in ten
 //! books that carry no monster row at all.
 
+// `StatAdjustment` is `companion_chassis`'s type, reused rather than duplicated
+// here (SD31-E6-F1-002): both chassis kinds parse the identical
+// `BONUS:STAT|<abbrev-list>|<amount>` PCGen token into the identical shape, and
+// `companion_chassis` already reuses THIS module's `NaturalAttack`/`Speed` the
+// other direction (`pub use super::monster_chassis::{NaturalAttack, Speed};`) —
+// one type per PCGen token shape, not one per consuming module.
+pub use super::companion_chassis::StatAdjustment;
+
 /// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Speed {
@@ -69,6 +77,46 @@ pub struct Speed {
 pub struct NaturalAttack {
     pub name: &'static str,
     pub damage_dice: Option<&'static str>,
+}
+
+/// One spell a monster row grants as a spell-like ability, read from a
+/// `SPELLS:<label>|TIMES=<n>|[TIMEUNIT=<unit>|]CASTERLEVEL=<value>|<spell>[,<dc
+/// formula>]|<spell>[,<dc formula>]…` token. One record per *spell*, not per
+/// token: a single `SPELLS:` token routinely grants several spells that share
+/// the token's label, frequency and caster level.
+///
+/// **Every field is a verbatim substring of the cited row** —
+/// `transcribe_monster_tables.py`'s standing contract. Nothing here is
+/// computed; the rule application lives in
+/// `derived_evaluator_fixture_check::spell_like_ability_save_dc`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct MonsterSpellLikeAbility {
+    /// The token's first segment (`Innate`, `Neothelid`, …) — PCGen's own
+    /// name for the spell-book this grant files under.
+    pub label: &'static str,
+    /// The `TIMES=` segment's value verbatim (`3`, `ATWILL`), `None` when the
+    /// token carries none.
+    pub times: Option<&'static str>,
+    /// The `TIMEUNIT=` segment's value verbatim (`Week`, `Year`), `None` when
+    /// the token carries none — PCGen omits it for the near-universal
+    /// per-day default rather than spelling it out.
+    pub time_unit: Option<&'static str>,
+    /// The `CASTERLEVEL=` segment's value verbatim — a flat literal (`12`) or
+    /// a formula (`(max(TL,1))`, `SLA_CL`, `NabasuCasterLevel`). Never
+    /// resolved here; `spell_like_ability_caster_level` is the rule
+    /// application for the `BONUS:VAR|SLA_CL|` half of the same universal
+    /// monster rule.
+    pub caster_level_token: Option<&'static str>,
+    /// The spell's name as the row spells it, with any trailing `,<dc
+    /// formula>` stripped off into [`Self::save_dc_token`]. PCGen's own
+    /// parenthesised scope qualifiers are kept (`Invisibility (self only)`) —
+    /// they are part of the name the row states.
+    pub spell: &'static str,
+    /// The trailing `,<dc formula>` half of the spell segment, verbatim and
+    /// without the leading comma (`15+CHA`, `11+INT`). `None` when the row
+    /// states no save DC for this spell, which is the honest reading of a
+    /// spell that allows no save.
+    pub save_dc_token: Option<&'static str>,
 }
 
 /// Which of `monster_ability`'s facets a record is, read from the first segment
@@ -167,6 +215,85 @@ pub struct MonsterStatBlock {
     pub monster_class: Option<&'static str>,
     pub source_page: Option<&'static str>,
     pub natural_attacks: &'static [NaturalAttack],
+    /// Every `BONUS:STAT|<abbrev-list>|<amount>` token on the row, one record
+    /// per ability (`companion_chassis::StatAdjustment`, reused rather than
+    /// duplicated — the two chassis kinds parse the identical PCGen token).
+    ///
+    /// **An adjustment, never a score** (SD31-E6-F1-002, `OPEN-ISSUES.md` row
+    /// 26). PCGen computes a monster's actual ability scores at runtime from a
+    /// base template plus these tokens plus whatever the row's other `BONUS:`
+    /// fields add, and this ingest does not compute the result — exactly as
+    /// [`Self::monster_class`] carries the hit-dice token without computing hit
+    /// points. A token whose amount is not a literal integer (a formula, e.g.
+    /// `BONUS:STAT|STR|MutagenicMaulerMutagenStatBonus`) is **skipped**, not
+    /// guessed: there is no formula interpreter here, and a wrong number in an
+    /// ability column is worse than an absent one.
+    pub stat_adjustments: &'static [StatAdjustment],
+    /// Whether the row carries a `BONUS:VAR|SLA_CL|<...>` token — PCGen's
+    /// encoding of PF1's Spell-Like Abilities universal monster rule (caster
+    /// level = Hit Dice, or an arithmetic wrapper of it).
+    ///
+    /// **Not** the more general `SPELLS:` token, deliberately: Linnorm
+    /// (Crag) (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and its
+    /// spell-like effects (`True Seeing ~ Constant`) reach the row only
+    /// through an `ABILITY:` cross-reference, with no `SPELLS:` token
+    /// anywhere on the line — gating on `SPELLS:` answered `false` for one
+    /// of this seam's own already-committed fixtures (TDD red/green anchor,
+    /// `run_monster_bar_check_clears_every_committed_monster_fixture`).
+    ///
+    /// A presence check only — never a count or a list of the spells
+    /// themselves, which this ingest does not capture. Exists so a consumer
+    /// can tell a monster with no spell-like abilities at all from one whose
+    /// `SLA_CL` token simply was not parsed into anything else on this
+    /// struct, which is the same "absence must be honest" reasoning
+    /// `external_ability_refs` already carries for named abilities this book
+    /// does not define. `spell_like_ability_caster_level` in
+    /// `derived_evaluator_fixture_check` reads this field before applying PF1's
+    /// Spell-Like Abilities universal monster rule, so a monster with no
+    /// spell-like abilities at all is never served a caster level it has no
+    /// use for (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44).
+    pub has_spell_like_abilities: bool,
+    /// The row's `BONUS:VAR|SLA_CL|<value>` trailing value, verbatim, when
+    /// [`Self::has_spell_like_abilities`] is `true`; `None` otherwise.
+    ///
+    /// **Load-bearing, not decorative** (SD31-E6-F9-003, `OPEN-ISSUES.md` row
+    /// 44's own follow-on, already forecast in `progress.md`'s
+    /// `SD31-E6-F11-002` receipt as "a follow-on within THIS seam"). PF1's
+    /// Universal Monster Rule states a spell-like ability's caster level
+    /// "equal[s] its Hit Dice" **unless otherwise noted**, and the corpus
+    /// routinely notes otherwise: `BONUS:VAR|SLA_CL|HD` and
+    /// `BONUS:VAR|SLA_CL|max(TL,1)` (PCGen's own two equivalent spellings of
+    /// "apply the generic rule") coexist, record by record, with a bare
+    /// literal override — Couatl (`b1_races.lst:74`) carries
+    /// `BONUS:VAR|SLA_CL|9` while its own `MONSTERCLASS:Couatl Outsider:12`
+    /// states 12 Hit Dice; Demon (Glabrezu) (`b1_races.lst:95`) carries
+    /// `BONUS:VAR|SLA_CL|14` against 12 HD. Neither is a defect — both are
+    /// the corpus correctly stating the printed stat block's actual SLA
+    /// caster level, which sometimes differs from HD exactly as the rule's
+    /// own "unless otherwise noted" clause anticipates. Before this field
+    /// existed, `spell_like_ability_caster_level` had no way to see the
+    /// override and always applied the generic HD rule, which is silently
+    /// WRONG for every monster whose row carries one (re-derived corpus-wide
+    /// this cycle: the majority of the registry's own already-shipped,
+    /// `has_spell_like_abilities`-true monsters carry an override, not the
+    /// bare `HD`/`max(TL,1)` spelling — verified sampling every derived-
+    /// grounded `monster` unit's own corpus row, not assumed from the shape
+    /// of the 7 already-committed fixtures, all of which happen to be the
+    /// bare-`HD` case and so never surfaced the gap).
+    pub sla_cl_token: Option<&'static str>,
+    /// Every spell this row grants as a spell-like ability, one record per
+    /// spell, read from the row's `SPELLS:` tokens
+    /// ([`MonsterSpellLikeAbility`]).
+    ///
+    /// Distinct from [`Self::has_spell_like_abilities`]/[`Self::sla_cl_token`],
+    /// which are about the row's `BONUS:VAR|SLA_CL|` token — the two encode
+    /// different halves of PF1's Spell-Like Abilities universal monster rule
+    /// and a row may carry either without the other. Linnorm (Crag)
+    /// (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and **no** `SPELLS:`
+    /// token at all; Aboleth (`b1_races.lst:7`) carries `SPELLS:` grants and
+    /// **no** `BONUS:VAR|SLA_CL|` token. Neither field may be derived from the
+    /// other.
+    pub spell_like_abilities: &'static [MonsterSpellLikeAbility],
     /// Keys into this book's `monster_abilities`, in row order.
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
@@ -198,6 +325,18 @@ pub struct MonsterBook {
     pub corpus_book: &'static str,
     pub monsters: &'static [MonsterStatBlock],
     pub monster_abilities: &'static [MonsterAbilityRecord],
+    /// Monster NAMES a shipped [`MonsterAbilityRecord::owners`] entry in this
+    /// book may cite even though `monsters` above holds no
+    /// [`MonsterStatBlock`] for them -- their stat block ships from a
+    /// DIFFERENT compiled table entirely (`decisions.md §58.3`'s
+    /// CROSS-TABLE-OWNER class, `SD31-W23-MONSTER-001`). Empty for every
+    /// book except `beastiary`, whose 46 legacy Bestiary 1 monsters ship
+    /// from `rules_tables::beastiary1` instead of from here -- see that
+    /// book's own `cross_table_owner_names()` for the derivation. An owner
+    /// naming a monster in neither `monsters` nor this list is still a real
+    /// defect `the_chassis_link_resolves_in_both_directions_for_every_book`
+    /// catches; this only widens what counts as a KNOWN, cited owner.
+    pub cross_table_owner_names: &'static [&'static str],
 }
 
 impl MonsterBook {
@@ -219,6 +358,31 @@ impl MonsterBook {
             .filter_map(|key| self.monster_ability_resolve(key))
             .collect()
     }
+
+    /// The abilities this book's own `MonsterAbilityRecord::owners` names a
+    /// given monster NAME as granting, independent of whether this table
+    /// holds that monster's own [`MonsterStatBlock`].
+    ///
+    /// [`Self::abilities_of`] walks a `MonsterStatBlock`'s own `ability_keys`
+    /// field forward from the monster; this walks `owners` backward from the
+    /// ability instead, so it also resolves a CROSS-TABLE OWNER row -- one
+    /// whose owning stat block ships from a *different* compiled table
+    /// (`rules_tables::beastiary1`'s 46 legacy Bestiary 1 monsters, here) and
+    /// so has no `ability_keys` list in THIS table to walk
+    /// (`scripts/transcribe_monster_tables.py`'s own cross-table-owner
+    /// screen doc comment on the generated `bestiary` table names the exact
+    /// 55 rows this exists for). A monster this table itself defines could
+    /// call this too, but should not: it would silently skip any ability
+    /// this book's OWN generator dropped from that monster's `ability_keys`
+    /// (an unscreenable `DESC:` shape, e.g.) while `owners` still names it,
+    /// serving a record `abilities_of` correctly refuses. Reserved for a
+    /// monster with no `ability_keys` list of its own to begin with.
+    pub fn abilities_owned_by_name(&self, name: &str) -> Vec<&'static MonsterAbilityRecord> {
+        self.monster_abilities
+            .iter()
+            .filter(|a| a.owners.contains(&name))
+            .collect()
+    }
 }
 
 /// Every book whose `monster` / `monster_ability` rows this repo has ingested.
@@ -231,26 +395,31 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bonus_bestiary",
         monsters: super::bonus_bestiary::monsters_static(),
         monster_abilities: super::bonus_bestiary::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "monster_codex",
         monsters: super::monster_codex::monsters_static(),
         monster_abilities: super::monster_codex::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "book_of_the_damned_volume_1",
         monsters: super::book_of_the_damned_volume_1::monsters_static(),
         monster_abilities: super::book_of_the_damned_volume_1::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "book_of_the_damned_volume_2",
         monsters: super::book_of_the_damned_volume_2::monsters_static(),
         monster_abilities: super::book_of_the_damned_volume_2::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "inner_sea_world_guide",
         monsters: super::inner_sea_world_guide::monsters_static(),
         monster_abilities: super::inner_sea_world_guide::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 4. Bestiary 2 -- 316 monsters and 402 owned
     // abilities, four times every book above it put together. The registry
@@ -261,6 +430,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bestiary_2",
         monsters: super::bestiary_2::monsters_static(),
         monster_abilities: super::bestiary_2::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 5. Bestiary 3 -- 261 monsters and 27 owned
     // abilities, and the first book in the registry to lose no monster row at
@@ -270,6 +440,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bestiary_3",
         monsters: super::bestiary_3::monsters_static(),
         monster_abilities: super::bestiary_3::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 6. Bestiary 4 -- 206 monsters and 543 owned
     // abilities, the largest reachable book left in the lane. It is the first
@@ -282,6 +453,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bestiary_4",
         monsters: super::bestiary_4::monsters_static(),
         monster_abilities: super::bestiary_4::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 7. Inner Sea Bestiary -- 38 monsters and 152
     // owned abilities. The first book in the registry to lose monster rows to
@@ -295,6 +467,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "inner_sea_bestiary",
         monsters: super::inner_sea_bestiary::monsters_static(),
         monster_abilities: super::inner_sea_bestiary::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- 39 monsters and 77 owned
     // abilities. The first book in this registry whose corpus rows do not all
@@ -309,6 +482,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "inner_sea_gods",
         monsters: super::inner_sea_gods::monsters_static(),
         monster_abilities: super::inner_sea_gods::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 8. Bestiary 1 -- 284 monsters and 323 owned
     // abilities, the largest single row in this registry and the only book
@@ -328,6 +502,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "beastiary",
         monsters: super::bestiary::monsters_static(),
         monster_abilities: super::bestiary::monster_abilities_static(),
+        cross_table_owner_names: super::bestiary::cross_table_owner_names(),
     },
     // SD-29 Epic 5 extend, round 10. Ultimate Psionics (Dreamscarred Press) --
     // 21 monsters and 13 owned abilities, and the first NON-PAIZO book in this
@@ -345,6 +520,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "ultimate_psionics",
         monsters: super::ultimate_psionics::monsters_static(),
         monster_abilities: super::ultimate_psionics::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, FINAL round. Horror Adventures -- 3 monsters and 6
     // owned abilities, the smallest row in this registry and the last book in
@@ -365,6 +541,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "horror_adventures",
         monsters: super::horror_adventures::monsters_static(),
         monster_abilities: super::horror_adventures::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
 ];
 
@@ -419,7 +596,12 @@ mod tests {
     /// ability a monster names is defined here, an ability listed as external is
     /// not, and every defined ability has at least one owner. An orphan means
     /// the link was transcribed wrong in one direction and the catalog would
-    /// serve a record no monster row reaches.
+    /// serve a record no monster row reaches. A CROSS-TABLE-OWNER ability
+    /// (`SD31-W23-MONSTER-001`, `decisions.md §58.3`) is the one owner shape
+    /// that legitimately has no `ability_keys` back-reference in THIS book --
+    /// its `MonsterStatBlock` ships from a different one -- and the book's own
+    /// `cross_table_owner_names` is what tells this test apart a real
+    /// dangling owner from that known, cited exception.
     #[test]
     fn the_chassis_link_resolves_in_both_directions_for_every_book() {
         for book in MONSTER_BOOKS {
@@ -450,15 +632,29 @@ mod tests {
                     ability.key
                 );
                 for owner in ability.owners {
-                    let monster = book
-                        .monster_resolve(owner)
-                        .unwrap_or_else(|| panic!("{}: owner {owner:?} is not a monster in this book", book.corpus_book));
-                    assert!(
-                        monster.ability_keys.contains(&ability.key),
-                        "{}: {} claims owner {owner:?}, which does not name it back",
-                        book.corpus_book,
-                        ability.key
-                    );
+                    match book.monster_resolve(owner) {
+                        Some(monster) => assert!(
+                            monster.ability_keys.contains(&ability.key),
+                            "{}: {} claims owner {owner:?}, which does not name it back",
+                            book.corpus_book,
+                            ability.key
+                        ),
+                        // No `MonsterStatBlock` for this owner in THIS book --
+                        // fine only when the book's own registry row names it
+                        // as a known cross-table owner (`SD31-W23-MONSTER-001`,
+                        // `decisions.md §58.3`): its stat block ships from a
+                        // DIFFERENT compiled table, so it has no `ability_keys`
+                        // list here to name the ability back with, by
+                        // construction, not by omission. Anything NOT in that
+                        // named list is still the real dangling-owner defect
+                        // this test exists to catch.
+                        None => assert!(
+                            book.cross_table_owner_names.contains(owner),
+                            "{}: owner {owner:?} is not a monster in this book and not in \
+                             cross_table_owner_names either",
+                            book.corpus_book
+                        ),
+                    }
                 }
             }
         }
@@ -508,5 +704,108 @@ mod tests {
         let seru = book.monster_resolve("Seru").expect("Seru is in this book");
         let names: Vec<_> = book.abilities_of(seru).iter().map(|a| a.name).collect();
         assert_eq!(names, vec!["Poison", "Spit Venom"]);
+    }
+
+    /// **Mutation-proves the ability-score-bonus widening** (SD31-E6-F1-002).
+    /// Re-reads Demon (Balor)'s own row from the pinned PCGen oracle (never
+    /// the corpus JSON cache, never this crate's own output — the independent
+    /// upstream source) and asserts the static table's `stat_adjustments`
+    /// matches it token for token. The static table and this re-read are two
+    /// independently produced artifacts (one baked in by the Python
+    /// transcriber at generation time, one parsed fresh here at test time); a
+    /// corrupted or invented value in either one fails this test, which is
+    /// what makes it a mutation-proof rather than a self-check. Skips (rather
+    /// than fails) when the pinned oracle checkout is absent, matching this
+    /// program's existing convention for oracle-dependent tests — `verify.sh`
+    /// bootstraps the oracle before this test suite runs.
+    #[test]
+    fn demon_balor_stat_adjustments_match_the_live_pinned_corpus_row() {
+        let root = std::env::var("PCGEN_CORPUS_ROOT").unwrap_or_else(|_| {
+            format!("{}/workspace/repos/pcgen/data", std::env::var("HOME").expect("HOME is set"))
+        });
+        let path = std::path::Path::new(&root)
+            .join("pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst");
+        let Ok(text) = std::fs::read_to_string(&path) else {
+            eprintln!("skip: pinned oracle not present at {path:?}");
+            return;
+        };
+        let line = text.lines().nth(92).expect("b1_races.lst has at least 93 lines"); // 1-based line 93
+        assert!(
+            line.starts_with("Demon (Balor)"),
+            "b1_races.lst:93 is no longer Demon (Balor) — the oracle moved: {line:?}"
+        );
+
+        // The SAME parse `parse_stat_adjustments` in
+        // `scripts/transcribe_monster_tables.py` performs, re-implemented
+        // independently here in Rust rather than shelling out to the Python —
+        // an independent re-derivation is the point of a mutation proof.
+        let mut expected: Vec<(String, i16)> = Vec::new();
+        for field in line.split('\t') {
+            let field = field.trim();
+            let Some(rest) = field.strip_prefix("BONUS:STAT|") else { continue };
+            let parts: Vec<&str> = rest.split('|').collect();
+            if parts.len() < 2 {
+                continue;
+            }
+            let Ok(amount) = parts[1].trim().parse::<i16>() else { continue };
+            for ability in parts[0].split(',') {
+                expected.push((ability.trim().to_string(), amount));
+            }
+        }
+        assert!(!expected.is_empty(), "Demon (Balor)'s row carries no readable BONUS:STAT token");
+
+        let book = monster_book("beastiary").expect("bestiary chassis is registered");
+        let balor = book
+            .monster_resolve("Demon (Balor)")
+            .expect("Demon (Balor) is a registered monster in the bestiary chassis");
+        let actual: Vec<(String, i16)> =
+            balor.stat_adjustments.iter().map(|a| (a.ability.to_string(), a.amount)).collect();
+        assert_eq!(
+            actual, expected,
+            "the static table's stat_adjustments diverges from a fresh, independent parse of \
+             the live pinned corpus row"
+        );
+    }
+
+    /// The presence signal `spell_like_ability_caster_level` gates on: a
+    /// monster with a genuine `BONUS:VAR|SLA_CL|` token is `true`, one with
+    /// none is `false` — never guessed from
+    /// `ability_keys`/`external_ability_refs`, which name abilities but do
+    /// not distinguish a spell-like one from any other kind (SD31-E6-F1-002,
+    /// `OPEN-ISSUES.md` row 44).
+    #[test]
+    fn has_spell_like_abilities_is_true_only_for_a_row_with_an_sla_cl_token() {
+        let book = monster_book("beastiary").expect("bestiary chassis is registered");
+        let balor = book
+            .monster_resolve("Demon (Balor)")
+            .expect("Demon (Balor) is a registered monster in the bestiary chassis");
+        assert!(
+            balor.has_spell_like_abilities,
+            "Demon (Balor)'s row carries BONUS:VAR|SLA_CL|HD"
+        );
+
+        // Linnorm (Crag) is the TDD anchor for why the gate is `SLA_CL`, not
+        // the more general `SPELLS:` token: its spell-like effects
+        // (`True Seeing ~ Constant`) reach the row only through an
+        // `ABILITY:` cross-reference, and the row carries no `SPELLS:` token
+        // at all -- an earlier version of this gate answered `false` here
+        // and broke one of this seam's own already-committed fixtures.
+        let linnorm = book
+            .monster_resolve("Linnorm (Crag)")
+            .expect("Linnorm (Crag) is a registered monster in the bestiary chassis");
+        assert!(
+            linnorm.has_spell_like_abilities,
+            "Linnorm (Crag)'s row (b1_races.lst:269) carries BONUS:VAR|SLA_CL|HD but no \
+             SPELLS: token at all"
+        );
+
+        let animated_object = book
+            .monster_resolve("Animated Object (Medium)")
+            .expect("Animated Object (Medium) is a registered monster in the bestiary chassis");
+        assert!(
+            !animated_object.has_spell_like_abilities,
+            "Animated Object (Medium)'s row (b1_races.lst:13) carries no SLA_CL token — it \
+             has no spell-like abilities"
+        );
     }
 }

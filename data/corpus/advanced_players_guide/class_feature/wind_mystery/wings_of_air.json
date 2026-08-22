@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wind Mystery ~ Wings of Air",
+    "name": "Wings of Air",
+    "class": "Wind Mystery",
+    "description": "As a swift action, you can manifest a pair of translucent, cloud-like wings that grant you a fly speed of 60 feet with good maneuverability. You can use these wings for %1 minute(s) per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|OracleWingsofAirDuration|!PRECLASS:1,Oracle=10",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Mystery ~ Wings of Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WindRevelation.Supernatural.MinutesPerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleWingsofAirDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can manifest a pair of translucent, cloud-like wings that grant you a fly speed of 60 feet with good maneuverability. You can use these wings for %1 minute(s) per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|OracleWingsofAirDuration|!PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can manifest a pair of translucent, cloud-like wings that grant you a fly speed of 90 feet with perfect maneuverability. You can use these wings for %1 minute(s) per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|OracleWingsofAirDuration|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleWingsofAirDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 707,
+    "record_key": "Wind Mystery ~ Wings of Air"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

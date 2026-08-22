@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Vrolikai ~ Madness",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:demon_vrolikai"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Madness"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(sting)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VrolikaiMadnessDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VrolikaiMadnessDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Madness)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VrolikaiMadnessDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature stung by a vrolikai's tail must make a DC %1 Will save to resist taking 1d6 points of Charisma drain and becoming confused for 1d4 rounds as strange visions assault its mind.  This is a mind-affecting effect.|VrolikaiMadnessDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vrolikai ~ Madness"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 371,
-    "record_key": "Vrolikai ~ Madness"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 371,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Vrolikai ~ Madness",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

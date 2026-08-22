@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Knockback",
+    "name": "Knockback",
+    "class": "Rage Power",
+    "description": "Once per round, you can make a bull rush attempt against one target in place of a melee attack. If successful, the target takes %1 points of damage and is moved back as normal. You do not need to move with the target if successful. This does not provoke an attack of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Knockback"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, you can make a bull rush attempt against one target in place of a melee attack. If successful, the target takes %1 points of damage and is moved back as normal. You do not need to move with the target if successful. This does not provoke an attack of opportunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 477,
+    "record_key": "Rage Power ~ Knockback"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

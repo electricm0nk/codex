@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Sipping Pet",
+    "name": "Sipping Pet",
+    "class": "Discovery",
+    "description": "As a standard action, the marauder can administer a dose of a liquid (such as an extract, infusion, potion, or an alchemical liquid like antitoxin) to his animal companion, even if the companion is unconscious. The alchemist must be adjacent to or riding the companion to use this ability. An alchemist must have the infusion discovery to select this discovery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Sipping Pet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Winged Marauder ~ Flying Beast Tamer,Discovery ~ Infusion"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the marauder can administer a dose of a liquid (such as an extract, infusion, potion, or an alchemical liquid like antitoxin) to his animal companion, even if the companion is unconscious. The alchemist must be adjacent to or riding the companion to use this ability. An alchemist must have the infusion discovery to select this discovery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 34,
+    "record_key": "Discovery ~ Sipping Pet"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

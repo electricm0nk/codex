@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Death Slayer ~ Channel Energy",
+    "name": "Channel Energy",
+    "class": "Death Slayer",
+    "description": "A death slayer gains the power to harm undead with positive energy. This ability functions as a cleric's ability to channel positive energy to deal damage to undead (but not to heal living creatures), and it counts as channel energy for the purposes of qualifying for feats or determining effects that rely on channel energy. A death slayer uses her class level as her effective cleric level when channeling energy. She can channel energy %1 times per day. She deals %2d%3 points of damage. Death slayer levels stack with levels in any class that grants channel energy (if any) for the purpose of determining the number of damage dice her channel energy ability deals to undead, but this channel energy can never do anything other than harm undead. An undead creature that takes damage from this channeled energy can attempt a Will save to halve the damage; the DC of this save is %4. The death slayer must be able to present either her holy symbol or a sawtooth sabre to use this ability.|DeathSlayerChannelEnergyTimes|DeathSlayerChannelPositiveEnergyDice|DeathSlayerChannelPositiveEnergyDieSize|DeathSlayerChannelPositiveEnergyDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Death Slayer ~ Channel Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Death Slayer Class Feature.SpecialAttack.Supernatural.Channel Positive Energy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "DESC",
+        "value": "A death slayer gains the power to harm undead with positive energy. This ability functions as a cleric's ability to channel positive energy to deal damage to undead (but not to heal living creatures), and it counts as channel energy for the purposes of qualifying for feats or determining effects that rely on channel energy. A death slayer uses her class level as her effective cleric level when channeling energy. She can channel energy %1 times per day. She deals %2d%3 points of damage. Death slayer levels stack with levels in any class that grants channel energy (if any) for the purpose of determining the number of damage dice her channel energy ability deals to undead, but this channel energy can never do anything other than harm undead. An undead creature that takes damage from this channeled energy can attempt a Will save to halve the damage; the DC of this save is %4. The death slayer must be able to present either her holy symbol or a sawtooth sabre to use this ability.|DeathSlayerChannelEnergyTimes|DeathSlayerChannelPositiveEnergyDice|DeathSlayerChannelPositiveEnergyDieSize|DeathSlayerChannelPositiveEnergyDC"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathSlayerChannelEnergyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathSlayerChannelEnergyTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathSlayerChannelEnergyTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathSlayerChannelEnergyLVL|DeathSlayerLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathSlayerChannelPositiveEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathSlayerChannelPositiveEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathSlayerChannelPositiveEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathSlayerChannelPositiveEnergyLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Positive Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathSlayerChannelPositiveEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathSlayerChannelPositiveEnergyDice|(DeathSlayerChannelPositiveEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathSlayerChannelPositiveEnergyDC|10+(DeathSlayerChannelPositiveEnergyLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathSlayerChannelPositiveEnergyLVL|DeathSlayerChannelEnergyLVL+ClericChannelEnergyLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|DeathSlayerChannelPositiveEnergyDice|DeathSlayerChannelPositiveEnergyDieSize|DeathSlayerChannelPositiveEnergyDC|DeathSlayerChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DeathSlayerChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Channel Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 126,
+    "record_key": "Death Slayer ~ Channel Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

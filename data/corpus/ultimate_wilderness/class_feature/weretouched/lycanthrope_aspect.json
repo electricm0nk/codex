@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weretouched ~ Lycanthrope Aspect",
+    "name": "Lycanthrope Aspect",
+    "class": "Shifter",
+    "description": "A weretouched gains the shifter aspect ability, except the animal aspect chosen is the only animal aspect the weretouched can gain. This alters her other class features, as detailed in each relevant class feature. Otherwise, this ability functions identically to shifter aspect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weretouched ~ Lycanthrope Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.WeretouchedClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeretouchedDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A weretouched gains the shifter aspect ability, except the animal aspect chosen is the only animal aspect the weretouched can gain. This alters her other class features, as detailed in each relevant class feature. Otherwise, this ability functions identically to shifter aspect."
+      },
+      {
+        "key": "DESC",
+        "value": "A weretouched gains DR %1/silver.|WeretouchedDR|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "DESC",
+        "value": "Additionally, a weretouched shifter becomes immune to a lycanthrope's curse of lycanthropy. This alters shifter aspect and all of its improvements."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PRECLASS:1,Shifter=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PRECLASS:1,Shifter=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PRECLASS:1,Shifter=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeretouchedDR|min(10,ShifterLVL/2)"
+      },
+      {
+        "key": "DR",
+        "value": "WeretouchedDR/silver"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1107,
+    "record_key": "Weretouched ~ Lycanthrope Aspect"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

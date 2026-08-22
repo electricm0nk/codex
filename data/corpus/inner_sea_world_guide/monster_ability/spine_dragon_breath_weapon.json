@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "corpus_key": "Spine Dragon ~ Breath Weapon",
     "delivery": "Extraordinary",
@@ -17,19 +15,83 @@
     "owners": [
       "inner_sea_world_guide:monster:dragon_spine"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d6 sonic damage &amp; deafened, Reflex DC %3 half)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponCone|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|20"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponCone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds as a standard action, a spine dragon can emit a devastating shriek of powerful sonic energy in a %1-ft. cone. Creatures caught in this cone take %2d6 sonic damage and are permanently deafened. A DC %3 Reflex save halves the damage and negates the deafness. This sonic damage is particularly devastating to constructs--they take a -4 penalty to save against its effects, and if they fail the save, they are staggered for 1d4 rounds as well.|BreathWeaponCone|BreathWeaponDice|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Spine Dragon ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.313"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.313",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
-    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
-    "line": 55,
-    "record_key": "Spine Dragon ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "record_key": "Spine Dragon ~ Breath Weapon",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

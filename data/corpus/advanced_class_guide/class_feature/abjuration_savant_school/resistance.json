@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abjuration Savant School ~ Resistance",
+    "name": "Resistance",
+    "class": "Abjuration Savant School",
+    "description": "You gain resistance %1 to an energy type of your choice, chosen when you prepare spells. This resistance can be changed each day.|AbjurationResistanceBonus|PREVARLTEQ:ArcanistSavantSchoolLVL,19",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abjuration Savant School ~ Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Extraordinary.ArcanistSavantSchoolPower.ArcanistExploit1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resistance %1 to an energy type of your choice, chosen when you prepare spells. This resistance can be changed each day.|AbjurationResistanceBonus|PREVARLTEQ:ArcanistSavantSchoolLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain immunity to an energy type of your choice, chosen when you prepare spells. This immunity can be changed each day.|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationResistanceBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationResistanceBonus|5|PREVARGTEQ:ArcanistSavantSchoolLVL,11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|AbjurationResistanceBonus|PREVARLT:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Immunity|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2553,
+    "record_key": "Abjuration Savant School ~ Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

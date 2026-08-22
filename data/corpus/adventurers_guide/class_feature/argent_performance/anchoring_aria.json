@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Argent Performance ~ Anchoring Aria",
+    "name": "Anchoring Aria",
+    "class": "Argent Performance",
+    "description": "The argent dramaturge can use her knowledge of the magical melodies woven into the Song of Silver to block the dimensional travel of fiends. As long as she maintains the aria, any evil outsider that attempts to use spells or spell-like abilities of the teleportation subschool within a %1-foot radius of the argent dramaturge must succeed at a caster level check (DC %2) or else the spell or spell-like ability fails. An evil outsider that uses a teleportation effect to appear within this %1-foot-radius area or that is summoned into this area must succeed at a Will saving throw or it is staggered for 1 round.|SongOfSilverRadius|11+TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Argent Performance ~ Anchoring Aria"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Argent Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent dramaturge can use her knowledge of the magical melodies woven into the Song of Silver to block the dimensional travel of fiends. As long as she maintains the aria, any evil outsider that attempts to use spells or spell-like abilities of the teleportation subschool within a %1-foot radius of the argent dramaturge must succeed at a caster level check (DC %2) or else the spell or spell-like ability fails. An evil outsider that uses a teleportation effect to appear within this %1-foot-radius area or that is summoned into this area must succeed at a Will saving throw or it is staggered for 1 round.|SongOfSilverRadius|11+TL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 28,
+    "record_key": "Argent Performance ~ Anchoring Aria"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kobold Bloodline ~ Earth Glide",
+    "name": "Earth Glide",
+    "class": "Kobold Bloodline",
+    "description": "You gain the earth glide universal monster ability with a speed equal to your base speed. This does not give you the ability to breathe while passing through earth, so you must hold your breath or use some alternate method to breathe while using this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kobold Bloodline ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Kobold Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Kobold"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Kobold_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Kobold_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the earth glide universal monster ability with a speed equal to your base speed. This does not give you the ability to breathe while passing through earth, so you must hold your breath or use some alternate method to breathe while using this ability."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Earth Glide"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|KoboldBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 643,
+    "record_key": "Kobold Bloodline ~ Earth Glide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

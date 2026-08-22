@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sentinel ~ Sense Intruder",
+    "name": "Sense Intruder",
+    "class": "Ranger",
+    "description": "A sentinel gains the ability to establish an incredibly effective watch by standing still and focusing on all of her senses as once. At any time, she can spend 1 minute setting up this ability. Once she has done so, she must stand still, taking no other actions except to keep track of her surroundings; she can't even take free actions like talking. Her heightened senses grant her a supernatural awareness of her surroundings within %1 feet. If any Tiny or larger creature enters the area over which her awareness extends, she automatically knows that it did so (this part of the ability is a divination effect and can't be deceived by spells that block sensory input, only by extreme effects like mind blank). Furthermore, unless that creature is simultaneously negating its visual, auditory, and scent stimuli (such as by being under invisibility, silence, and negate aroma all at once), the sentinel can attempt a Perception check as an immediate action to pinpoint the intruder's location, ignoring any Stealth bonuses the intruder might gain from effects that obscure only one of those senses, such as invisibility, camouflage, or other spells or abilities. This sort of heightened analysis of sensory stimuli is taxing, as much so as hustling overland for an equivalent period of time, despite not moving from a single spot. The sentinel can use this ability for 1 hour without penalty. Using sense intruder for a second hour in between sleep cycles deals 1 point of nonlethal damage to the sentinel, and each additional hour deals twice the damage taken during the previous hour. A sentinel who takes any nonlethal damage from using this ability becomes fatigued. Each hour the sentinel uses sense intruder also counts as 1 hour of hustling overland for the purpose of determining how much nonlethal damage the sentinel takes in a single day. Starting at 10th level, whenever the sentinel gains a combat style feat, she can choose to trade it for a 10-foot increase in the radius of this ability. This ability replaces the combat style feat gained at 6th level and alters combat style feats.|SentinelSenseIntruderRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Sense Intruder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.SentinelClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SentinelSenseIntruderRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sentinel_Style_Feat_Improved_Sense_Intruder|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sentinel gains the ability to establish an incredibly effective watch by standing still and focusing on all of her senses as once. At any time, she can spend 1 minute setting up this ability. Once she has done so, she must stand still, taking no other actions except to keep track of her surroundings; she can't even take free actions like talking. Her heightened senses grant her a supernatural awareness of her surroundings within %1 feet. If any Tiny or larger creature enters the area over which her awareness extends, she automatically knows that it did so (this part of the ability is a divination effect and can't be deceived by spells that block sensory input, only by extreme effects like mind blank). Furthermore, unless that creature is simultaneously negating its visual, auditory, and scent stimuli (such as by being under invisibility, silence, and negate aroma all at once), the sentinel can attempt a Perception check as an immediate action to pinpoint the intruder's location, ignoring any Stealth bonuses the intruder might gain from effects that obscure only one of those senses, such as invisibility, camouflage, or other spells or abilities. This sort of heightened analysis of sensory stimuli is taxing, as much so as hustling overland for an equivalent period of time, despite not moving from a single spot. The sentinel can use this ability for 1 hour without penalty. Using sense intruder for a second hour in between sleep cycles deals 1 point of nonlethal damage to the sentinel, and each additional hour deals twice the damage taken during the previous hour. A sentinel who takes any nonlethal damage from using this ability becomes fatigued. Each hour the sentinel uses sense intruder also counts as 1 hour of hustling overland for the purpose of determining how much nonlethal damage the sentinel takes in a single day. Starting at 10th level, whenever the sentinel gains a combat style feat, she can choose to trade it for a 10-foot increase in the radius of this ability. This ability replaces the combat style feat gained at 6th level and alters combat style feats.|SentinelSenseIntruderRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SentinelSenseIntruderRange|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sentinel_Style_Feat_Improved_Sense_Intruder|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 679,
+    "record_key": "Sentinel ~ Sense Intruder"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Antipaladin Archetype ~ Blighted Myrmidon",
+    "name": "Blighted Myrmidon",
+    "class": "Antipaladin Archetype",
+    "description": "Blighted myrmidons carry the seed of rot in their black hearts and sap life from the natural world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin Archetype ~ Blighted Myrmidon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AntipaladinArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Antipaladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Antipaladin Archetype ~ Blighted Myrmidon],[!PREFACT:1,ABILITIES,Antipaladin_Archetype_SmiteGood=True,Antipaladin_Archetype_FiendishBoon=True,Antipaladin_Archetype_SmiteGood10=True,Antipaladin_Archetype_AuraOfVengeance=True,Antipaladin_Archetype_Cruelty15=True,Antipaladin_Archetype_UnholyChampion=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Blighted myrmidons carry the seed of rot in their black hearts and sap life from the natural world."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Myrmidon ~ Smite Nature|PRECLASS:1,Antipaladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Myrmidon ~ Corrupted Companion|PRECLASS:1,Antipaladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Myrmidon ~ Feed on Decay|PRECLASS:1,Antipaladin=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Myrmidon ~ Aura of Decay|PRECLASS:1,Antipaladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Myrmidon ~ Enervating Touch|PRECLASS:1,Antipaladin=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Myrmidon ~ Unnatural Champion|PRECLASS:1,Antipaladin=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_SmiteGood|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_FiendishBoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_SmiteGood10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfVengeance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_Cruelty15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_UnholyChampion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_SmiteGood10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfVengeance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_Cruelty15|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 147,
+    "record_key": "Antipaladin Archetype ~ Blighted Myrmidon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

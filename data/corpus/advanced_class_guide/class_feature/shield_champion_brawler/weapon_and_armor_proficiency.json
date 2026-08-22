@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shield Champion Brawler ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Brawler",
+    "description": "A shield champion is proficient with all simple weapons and with shields as weapons. She is also proficient with light armor, and with bucklers, light shields, and heavy shields. This replaces the brawler's weapon and armor proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shield Champion Brawler ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Shield Champion Class Feature.SpecialQuality.BrawlerWeaponProficiencies"
+      },
+      {
+        "key": "DESC",
+        "value": "A shield champion is proficient with all simple weapons and with shields as weapons. She is also proficient with light armor, and with bucklers, light shields, and heavy shields. This replaces the brawler's weapon and armor proficiencies."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Shieldbash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight|TYPE=ShieldProf|TYPE=WeaponProfSimple"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2893,
+    "record_key": "Shield Champion Brawler ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

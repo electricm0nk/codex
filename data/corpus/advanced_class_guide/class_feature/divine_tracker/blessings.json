@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Tracker ~ Blessings",
+    "name": "Blessings",
+    "class": "Ranger",
+    "description": "A divine tracker forms a close bond with his deity's ethos. He selects two warpriest domains from among the domains granted by his deity, and gains the minor blessings of those domains. A divine tracker can select an alignment domain (Chaos, Evil, Good, or Law) only if his alignment matches that domain. If a divine tracker isn't devoted to a particular deity, he still selects two blessings to represent his spiritual inclinations and abilities, subject to GM approval. The restriction on alignment domains still applies. A divine tracker uses his ranger level as his warpriest level to determine the effect of the blessing. At 13th level, a divine tracker gains the major blessing from both of his domains. This ability replaces hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Tracker ~ Blessings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine Tracker Class Feature.Ranger Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine tracker forms a close bond with his deity's ethos. He selects two warpriest domains from among the domains granted by his deity, and gains the minor blessings of those domains. A divine tracker can select an alignment domain (Chaos, Evil, Good, or Law) only if his alignment matches that domain. If a divine tracker isn't devoted to a particular deity, he still selects two blessings to represent his spiritual inclinations and abilities, subject to GM approval. The restriction on alignment domains still applies. A divine tracker uses his ranger level as his warpriest level to determine the effect of the blessing. At 13th level, a divine tracker gains the major blessing from both of his domains. This ability replaces hunter's bond."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Warpriest Blessings Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Blessing|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingLVL|RangerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMinorBlessingGrantedLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMajorBlessingGrantedLVL|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingUses|(WarpriestBlessingLVL/2)+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingDC|(WarpriestBlessingLVL/2)+10+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WarpriestBlessingUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3540,
+    "record_key": "Divine Tracker ~ Blessings"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

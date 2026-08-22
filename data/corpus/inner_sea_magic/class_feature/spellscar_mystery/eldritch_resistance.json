@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Eldritch Resistance",
+    "name": "Eldritch Resistance",
+    "class": "Spellscar Mystery",
+    "description": "You gain resistance %1 to acid, cold, electricity, fire, and sonic.|EldritchResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Eldritch Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resistance %1 to acid, cold, electricity, fire, and sonic.|EldritchResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchResistance|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchResistance|3|PREVARGTEQ:OracleLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchResistance|5|PREVARGTEQ:OracleLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchResistance|10|PREVARGTEQ:OracleLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 99,
+    "record_key": "Spellscar Mystery ~ Eldritch Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

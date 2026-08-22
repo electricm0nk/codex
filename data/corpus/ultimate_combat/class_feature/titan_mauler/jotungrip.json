@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Titan Mauler ~ Jotungrip",
+    "name": "Jotungrip",
+    "class": "Barbarian",
+    "description": "At 2nd level, a titan mauler may choose to wield a two-handed melee weapon in one hand with a -2 penalty on attack rolls while doing so. The weapon must be appropriately sized for her, and it is treated as onehanded when determining the effect of Power Attack, Strength bonus to damage, and the like. This ability replaces uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Titan Mauler ~ Jotungrip"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a titan mauler may choose to wield a two-handed melee weapon in one hand with a -2 penalty on attack rolls while doing so. The weapon must be appropriately sized for her, and it is treated as onehanded when determining the effect of Power Attack, Strength bonus to damage, and the like. This ability replaces uncanny dodge."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.TwoHanded|WIELDCATEGORY|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.TwoHanded|TOHIT|-2|PREEQUIPPRIMARY:1,TYPE=TwoHanded"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 339,
+    "record_key": "Titan Mauler ~ Jotungrip"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

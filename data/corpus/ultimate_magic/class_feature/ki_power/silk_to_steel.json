@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ki Power ~ Silk to Steel",
+    "name": "Silk to Steel",
+    "class": "Ki Power",
+    "description": "Spend 1 ki point to use silk to steel as a spell-like ability (caster level %1).|classlevel(\"Monk\")",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ki Power ~ Silk to Steel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.KiPower.SpellLike"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=8"
+      },
+      {
+        "key": "DESC",
+        "value": "Spend 1 ki point to use silk to steel as a spell-like ability (caster level %1).|classlevel(\"Monk\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1387,
+    "record_key": "Ki Power ~ Silk to Steel"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

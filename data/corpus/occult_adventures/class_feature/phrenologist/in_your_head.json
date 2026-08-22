@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phrenologist ~ In Your Head",
+    "name": "In Your Head",
+    "class": "Bard",
+    "description": "At 3rd level, a phrenologist can use his performance to send his own senses into another's skull, as the spell witnessUM (DC = 10 + 1/2 the phrenologist's class level + his Charisma modifier). At 11th level, this performance's duration increases to 10 minutes per bard level, and at 19th level, the duration increases to 1 hour per bard level. In your head relies on audible components. This ability replaces inspire competence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenologist ~ In Your Head"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenologist Class Feature.Bard Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a phrenologist can use his performance to send his own senses into another's skull, as the spell witnessUM (DC = 10 + 1/2 the phrenologist's class level + his Charisma modifier). At 11th level, this performance's duration increases to 10 minutes per bard level, and at 19th level, the duration increases to 1 hour per bard level. In your head relies on audible components. This ability replaces inspire competence."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1685,
+    "record_key": "Phrenologist ~ In Your Head"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

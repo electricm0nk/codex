@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "8",
@@ -32,6 +30,132 @@
     ],
     "race_subtype": "Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Multiattack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|12|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KEY",
+        "value": "Eidolon (Unfettered/Default)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):10"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Climb,20,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Natural.Melee.Finesseable.Weapon,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*1,1d8|Tail Slap,Natural.Melee.Finesseable.Weapon,*1,1d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Eidolon_Unfettered"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      }
+    ],
     "size": "M",
     "source_page": "p.110",
     "speeds": [
@@ -49,16 +173,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 103,
-    "record_key": "Eidolon (Unfettered/Default)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 103,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Eidolon (Unfettered/Default)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

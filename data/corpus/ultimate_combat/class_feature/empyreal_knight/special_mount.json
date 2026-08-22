@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Empyreal Knight ~ Special Mount",
+    "name": "Special Mount",
+    "class": "Empyreal Knight",
+    "description": "Your divine bond allows you to gain the service of an unusually intelligent, strong, and loyal steed to serve you in your crusade against evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empyreal Knight ~ Special Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpecialMountSpellLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpecialMountSR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EmpyrealCompanion|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your divine bond allows you to gain the service of an unusually intelligent, strong, and loyal steed to serve you in your crusade against evil."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EmpyrealCompanion|DivineBondLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpecialMountSpellLevel|DivineBondLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpecialMountSR|DivineBondLVL+11"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Special Mount|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Special Mount|Companion (Boar),Companion (Cat (Big (Lion))),Companion (Cat (Big (Tiger))),Companion (Dog),Companion (Horse),Companion (Pony),Companion (Shark),Companion (Wolf)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1468,
+    "record_key": "Empyreal Knight ~ Special Mount"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

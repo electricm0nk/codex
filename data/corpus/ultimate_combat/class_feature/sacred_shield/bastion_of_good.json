@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Shield ~ Bastion Of Good",
+    "name": "Bastion of Good",
+    "class": "Sacred Shield",
+    "description": "At 1st level, a sacred shield can call upon the powers of good to defend her and her allies against evil. This ability functions as smite evil, except that the paladin gains no benefit on attack or damage rolls against her target. Instead, any attacks the target makes against allies within 10 feet of the paladin deal half damage. Attacks against the paladin deal full damage, but the paladin gains a deflection bonus to her AC equal to her Charisma bonus (if any) against attacks made by the target of the smite. This bonus increases by +1 for every four paladin levels (to a maximum of +6 at 20th level). As with smite evil, if the paladin targets a creature that is not evil, her bastion of good ability is wasted with no effect. Feats, abilities, and the like that increase a paladin's number of uses of smite evil per day increase a sacred shield's uses of bastion of good per day. This ability replaces smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Shield ~ Bastion Of Good"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a sacred shield can call upon the powers of good to defend her and her allies against evil. This ability functions as smite evil, except that the paladin gains no benefit on attack or damage rolls against her target. Instead, any attacks the target makes against allies within 10 feet of the paladin deal half damage. Attacks against the paladin deal full damage, but the paladin gains a deflection bonus to her AC equal to her Charisma bonus (if any) against attacks made by the target of the smite. This bonus increases by +1 for every four paladin levels (to a maximum of +6 at 20th level). As with smite evil, if the paladin targets a creature that is not evil, her bastion of good ability is wasted with no effect. Feats, abilities, and the like that increase a paladin's number of uses of smite evil per day increase a sacred shield's uses of bastion of good per day. This ability replaces smite evil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1501,
+    "record_key": "Sacred Shield ~ Bastion Of Good"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

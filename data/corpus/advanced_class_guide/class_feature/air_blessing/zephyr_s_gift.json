@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Air Blessing ~ Zephyr's Gift",
+    "name": "Zephyr's Gift",
+    "class": "Air Blessing",
+    "description": "You can touch any one ranged weapon and enhance it with the quality of air. For 1 minute, any attacks made with the weapon take no penalties due to range. In addition, making a ranged attack with this weapon doesn't provoke an attack of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Air Blessing ~ Zephyr's Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch any one ranged weapon and enhance it with the quality of air. For 1 minute, any attacks made with the weapon take no penalties due to range. In addition, making a ranged attack with this weapon doesn't provoke an attack of opportunity."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2225,
+    "record_key": "Air Blessing ~ Zephyr's Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Perceptive Tracking",
+    "name": "Perceptive Tracking",
+    "class": "Investigator",
+    "description": "The investigator can use Perception instead of Survival to both find and follow tracks, using the same DCs listed under the Survival skill (Core Rulebook 107). An investigator must be trained in Perception to select this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Perceptive Tracking"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Perception=1"
+      },
+      {
+        "key": "DESC",
+        "value": "The investigator can use Perception instead of Survival to both find and follow tracks, using the same DCs listed under the Survival skill (Core Rulebook 107). An investigator must be trained in Perception to select this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1298,
+    "record_key": "Investigator ~ Perceptive Tracking"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

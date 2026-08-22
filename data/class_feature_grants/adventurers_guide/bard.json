@@ -1,0 +1,197 @@
+[
+  {
+    "key": "Argent Voice ~ Dedicated Performance",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 634
+    }
+  },
+  {
+    "key": "Argent Voice ~ Devilbane Refrain",
+    "class": "Bard",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 634
+    }
+  },
+  {
+    "key": "Argent Voice ~ Limning Verse",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 634
+    }
+  },
+  {
+    "key": "Argent Voice ~ Shattering Crescendo",
+    "class": "Bard",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 634
+    }
+  },
+  {
+    "key": "Brazen Deceiver ~ Blatant Subtlety",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 635
+    }
+  },
+  {
+    "key": "Brazen Deceiver ~ Deceptive Tale",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 635
+    }
+  },
+  {
+    "key": "Brazen Deceiver ~ Devil's Tongue",
+    "class": "Bard",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 635
+    }
+  },
+  {
+    "key": "Brazen Deceiver ~ Invoke Vyriavaxus",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 635
+    }
+  },
+  {
+    "key": "Brazen Deceiver ~ Shameless Scoundrel",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 635
+    }
+  },
+  {
+    "key": "Ringleader ~ Countless Contingencies",
+    "class": "Bard",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 636
+    }
+  },
+  {
+    "key": "Ringleader ~ Cunning Plan",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 636
+    }
+  },
+  {
+    "key": "Ringleader ~ Never Lose Face",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 636
+    }
+  },
+  {
+    "key": "Ringleader ~ Sinister Mien",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 636
+    }
+  }
+]

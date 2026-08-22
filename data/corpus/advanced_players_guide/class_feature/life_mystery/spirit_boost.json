@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Life Mystery ~ Spirit Boost",
+    "name": "Spirit Boost",
+    "class": "Life Mystery",
+    "description": "Whenever your healing spells heal a target up to its maximum hit points, any excess points persist for %1 round(s) as temporary hit points (up to a maximum of %2 temporary hit points).|OracleSpiritBoostDuration|OracleSpiritBoostHPMax",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Mystery ~ Spirit Boost"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.LifeRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleSpiritBoostDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleSpiritBoostHPMax|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever your healing spells heal a target up to its maximum hit points, any excess points persist for %1 round(s) as temporary hit points (up to a maximum of %2 temporary hit points).|OracleSpiritBoostDuration|OracleSpiritBoostHPMax"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSpiritBoostDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSpiritBoostHPMax|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 629,
+    "record_key": "Life Mystery ~ Spirit Boost"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

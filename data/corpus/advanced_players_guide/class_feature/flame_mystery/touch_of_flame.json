@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flame Mystery ~ Touch of Flame",
+    "name": "Touch of Flame",
+    "class": "Flame Mystery",
+    "description": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of fire damage. You can use this ability a number of times per day equal to 3 + your Charisma modifier.|classlevel(\"Oracle\")/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Mystery ~ Touch of Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.PerDayOracleRevelation.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of fire damage. You can use this ability a number of times per day equal to 3 + your Charisma modifier.|classlevel(\"Oracle\")/2"
+      },
+      {
+        "key": "DESC",
+        "value": "Any weapon that you wield is treated as a flaming weapon.|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 600,
+    "record_key": "Flame Mystery ~ Touch of Flame"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

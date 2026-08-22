@@ -113,6 +113,54 @@ export interface MonsterCatalogEntryDto {
   abilities: MonsterAbilityDto[];
   /** Ability names the row cites that its own book does not define. */
   externalAbilityRefs: string[];
+  /**
+   * PF1's "Spell-Like Abilities" universal monster rule (caster level = Hit
+   * Dice), or `null` when this monster has no `BONUS:VAR|SLA_CL|` token on
+   * its row at all (no spell-like abilities to attach a caster level to) —
+   * or when it is served by Bestiary 1's SD-22 half, whose ingest does not
+   * capture abilities and so cannot honestly answer either way
+   * (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44).
+   */
+  spellLikeAbilityCasterLevel: number | null;
+  /**
+   * Every spell this creature's row grants as a spell-like ability, in row
+   * order. Empty for a creature whose row grants none, and for every record
+   * served by Bestiary 1's SD-22 half, whose ingest captures no `SPELLS:`
+   * tokens at all (SD31-W15-MONSTER-SLA-001).
+   */
+  spellLikeAbilities: MonsterSpellLikeAbilityDto[];
+}
+
+/** One granted spell-like ability. */
+export interface MonsterSpellLikeAbilityDto {
+  /** The spell's name as the corpus row states it, scope qualifiers included. */
+  spell: string;
+  /** The row's `TIMES=` value verbatim (`3`, `ATWILL`), or `null`. */
+  times: string | null;
+  /** The row's `TIMEUNIT=` value verbatim (`Week`), or `null` for the per-day default. */
+  timeUnit: string | null;
+  /**
+   * The row's `CASTERLEVEL=` value verbatim — a flat literal or a PCGen
+   * formula. Shown as the row states it; never resolved to an invented number.
+   */
+  casterLevelToken: string | null;
+  /** The row's save-DC token verbatim (`15+CHA`), or `null` for a spell that allows no save. */
+  saveDcToken: string | null;
+  /**
+   * The spell's own level, derived from `saveDcToken` by PF1's Spell-Like
+   * Abilities universal monster rule (`DC = 10 + spell level + ability
+   * modifier`). `null` when the row states no DC, or states one the engine
+   * refuses to read rather than guess at.
+   */
+  derivedSpellLevel: number | null;
+  /**
+   * The ability whose modifier the DC scales with (`CHA`, or `INT` for the
+   * monsters whose rows exercise the rule's "unless otherwise noted" clause).
+   * Deliberately NOT resolved to a number — a monster's ability scores are not
+   * a corpus-stated fact here, so the screen shows the formula, never a
+   * fabricated DC.
+   */
+  saveDcAbility: string | null;
 }
 
 export interface MonsterCatalogResponse {

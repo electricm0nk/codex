@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Shoggoth ~ Maddening Cacophony",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:shoggoth"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Maddening Cacophony"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. radius; DC %1; confused for 1d6 rounds; 1d6 point wisdom/round)|CacophonySaveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CacophonySaveDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CacophonySaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Maddening Cacophony)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CacophonySaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a shoggoth can give voice to sounds and words sane life was not meant to hear. All creatures in a 60-foot radius must make a DC %1 Will save or be confused for 1d6 rounds. Each round a creature is affected it takes 1d6 points of Wisdom damage. A creature that saves cannot be affected by this shoggoth's maddening cacophony for 24 hours. This is a sonic mind-affecting effect.|CacophonySaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Shoggoth ~ Maddening Cacophony"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.249",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1123,
-    "record_key": "Shoggoth ~ Maddening Cacophony"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1123,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Shoggoth ~ Maddening Cacophony",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

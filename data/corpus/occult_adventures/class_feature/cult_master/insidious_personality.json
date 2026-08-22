@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Master ~ Insidious Personality",
+    "name": "Insidious Personality",
+    "class": "Mesmerist",
+    "description": "A cult master adds %1 as a bonus on all Diplomacy checks.|CMInsidiousBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Master ~ Insidious Personality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMInsidiousBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult master adds %1 as a bonus on all Diplomacy checks.|CMInsidiousBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy|CMInsidiousBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMInsidiousBonus|max(MesmeristLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1466,
+    "record_key": "Cult Master ~ Insidious Personality"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

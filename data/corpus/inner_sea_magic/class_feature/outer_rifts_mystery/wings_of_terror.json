@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Outer Rifts Mystery ~ Wings of Terror",
+    "name": "Wings of Terror",
+    "class": "Outer Rifts Mystery",
+    "description": "You can manifest a pair of enormous, batlike demon wings that grant you a fly speed of",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outer Rifts Mystery ~ Wings of Terror"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WingsOfTerrorDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest a pair of enormous, batlike demon wings that grant you a fly speed of"
+      },
+      {
+        "key": "DESC",
+        "value": "60 feet with average maneuverability and a +4 bonus on Intimidate checks.|PREVARLT:OracleLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "90 feet with good maneuverability and a +8 bonus on Intimidate checks.|PREVARGTEQ:OracleLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use these wings for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|WingsOfTerrorDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WingsOfTerrorDuration|OracleLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 120,
+    "record_key": "Outer Rifts Mystery ~ Wings of Terror"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

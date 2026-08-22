@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stonelord ~ Heartstone",
+    "name": "Heartstone",
+    "class": "Paladin",
+    "description": "A stonelord's flesh becomes progressively rockier. She gains a +%1 natural armor bonus to AC and DR %2/adamantine. These benefits are halved when not touching the ground or a stone structure. This ability replaces divine grace.|1+(PaladinLVL-2)/4|HeartStoneDRLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stonelord ~ Heartstone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeartStoneDRLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A stonelord's flesh becomes progressively rockier. She gains a +%1 natural armor bonus to AC and DR %2/adamantine. These benefits are halved when not touching the ground or a stone structure. This ability replaces divine grace.|1+(PaladinLVL-2)/4|HeartStoneDRLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1+(PaladinLVL-2)/4|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeartStoneDRLevel|PaladinLVL/2"
+      },
+      {
+        "key": "DR",
+        "value": "HeartStoneDRLevel/Adamantine"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 91,
+    "record_key": "Stonelord ~ Heartstone"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

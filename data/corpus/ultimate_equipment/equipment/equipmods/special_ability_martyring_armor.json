@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 18000.0,
+    "description": "Once per day as an immediate action, when an enemy confirms a critical hit against someone wearing martyring armor, the wearer can heal up to nine allies within 30 feet as if using the mass cure light wounds spell (1d8+9 hit points each).",
+    "key": "Special Ability ~ Martyring ~ Armor",
+    "name": "Martyring",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Martyring ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "18000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day as an immediate action, when an enemy confirms a critical hit against someone wearing martyring armor, the wearer can heal up to nine allies within 30 feet as if using the mass cure light wounds spell (1d8+9 hit points each)."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 118,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Martyring ~ Armor",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

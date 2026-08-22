@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heavens Mystery ~ Guiding Star",
+    "name": "Guiding Star",
+    "class": "Heavens Mystery",
+    "description": "Whenever you can see the open sky at night, you can determine your precise location. When the night sky is visible to you, you may also add your Charisma modifier to your Wisdom modifier on all Wisdom-based checks. In addition, once per night while outdoors, you can cast one spell as if it were modified by the Empower Spell, Extend Spell, Silent Spell, or Still spell feat without increasing the spell's casting time or level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Mystery ~ Guiding Star"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you can see the open sky at night, you can determine your precise location. When the night sky is visible to you, you may also add your Charisma modifier to your Wisdom modifier on all Wisdom-based checks. In addition, once per night while outdoors, you can cast one spell as if it were modified by the Empower Spell, Extend Spell, Silent Spell, or Still spell feat without increasing the spell's casting time or level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Add Charisma bonus to Wisdom checks when you can see the night sky"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Will|CHA"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|TYPE=Wisdom|CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 609,
+    "record_key": "Heavens Mystery ~ Guiding Star"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

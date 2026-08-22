@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Prone Slinger",
+    "name": "Prone Slinger",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your sideways sling release allows you to launch bullets and stones even while prone.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Prone Slinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DESC",
+        "value": "Your sideways sling release allows you to launch bullets and stones even while prone."
+      },
+      {
+        "key": "DESC",
+        "value": " While prone, you can use a sling to make ranged attacks. &nl; [Normal] Crossbows and firearms are the only ranged weapons that can be used while prone."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Prone Slinger"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4516,
+    "record_key": "Warpriest Bonus Feat ~ Prone Slinger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

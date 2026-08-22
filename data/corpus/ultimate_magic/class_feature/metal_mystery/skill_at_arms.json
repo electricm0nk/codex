@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Mystery ~ Skill at Arms",
+    "name": "Skill at Arms",
+    "class": "Metal Mystery",
+    "description": "You gain proficiency in all martial weapons and heavy armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Skill at Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.MetalRevelation.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain proficiency in all martial weapons and heavy armor."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Armor Proficiency (Heavy)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Martial Weapon Proficiency Output"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All Martial Weapon Proficiencies"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 488,
+    "record_key": "Metal Mystery ~ Skill at Arms"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

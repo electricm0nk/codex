@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Spiked Pit",
-    "school": "Conjuration",
-    "level": 3,
     "description": "This spell functions as create pit, except that the pit is lined with wickedly sharp spikes along its bottom and walls and has a maximum depth of 50 feet. Creatures who fall into the pit take falling damage as normal, plus 2d6 points of piercing damage from the spikes. Any creature or object coming into contact with the spikes along the walls, such as a creature trying to climb out, or rope or other typical aids to climbing, takes 1d6 points of piercing damage each round they are in contact with the walls. For those willing to accept the damage incurred while climbing, the pit's walls have a Climb DC of 20.",
-    "full_text": true
+    "full_text": true,
+    "key": "Spiked Pit",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as create pit, except that the pit is lined with wickedly sharp spikes along its bottom and walls and has a maximum depth of 50 feet. Creatures who fall into the pit take falling damage as normal, plus 2d6 points of piercing damage from the spikes. Any creature or object coming into contact with the spikes along the walls, such as a creature trying to climb out, or rope or other typical aids to climbing, takes 1d6 points of piercing damage each round they are in contact with the walls. For those willing to accept the damage incurred while climbing, the pit's walls have a Climb DC of 20.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as create pit, except that the pit is lined with wickedly sharp spikes along its bottom and walls. Creatures who fall into the pit take falling damage as normal, plus 2d6 points of piercing damage from the spikes. Any creature or object coming into contact with the spikes along the walls, such as a creature trying to climb out, or rope or other typical aids to climbing, takes 1d6 points of piercing damage each round they are in contact with the walls. For those willing to accept the damage incurred while climbing, the pit's walls have a Climb DC of 20.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Caves Subdomain=3"
+      },
+      {
+        "key": "DURATION",
+        "value": "((CASTERLEVEL)+1) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(miniature shovel costing 10 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "EarthSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/spikedPit.html#_spiked-pit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-by-10-ft. hole, (min(((CASTERLEVEL/2)*10),50)) ft. deep"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 226,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2070,
-    "record_key": "Spiked Pit"
+    "record_key": "Spiked Pit",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

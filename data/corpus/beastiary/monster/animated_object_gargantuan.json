@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:animated_object_hardness",
@@ -21,6 +19,96 @@
     ],
     "race_subtype": null,
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Animated Object ~ Hardness|Construction Points"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|28"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|13|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice,TrampleDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize,TrampleDamageDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstructionPoints|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Animated Object"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:10"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ],
     "size": "G",
     "source_page": "p.14",
     "speeds": [
@@ -30,16 +118,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 16,
-    "record_key": "Animated Object (Gargantuan)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Animated Object (Gargantuan)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

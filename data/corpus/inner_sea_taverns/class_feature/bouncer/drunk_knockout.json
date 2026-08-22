@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bouncer ~ Drunk Knockout",
+    "name": "Drunk Knockout",
+    "class": "Brawler",
+    "description": "A bouncer can use one use of her knockout ability to attempt a similar maneuver in a bar fight against a major participant who is drunk or worse. She must declare her intent before attempting her brawling check, and if she hits and reduces the target's tenacity, that target must succeed at a Fortitude saving throw (DC %1) or immediately be reduced to 0 tenacity.|10+BrawlerLVL/2+max(STR,DEX)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bouncer ~ Drunk Knockout"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "A bouncer can use one use of her knockout ability to attempt a similar maneuver in a bar fight against a major participant who is drunk or worse. She must declare her intent before attempting her brawling check, and if she hits and reduces the target's tenacity, that target must succeed at a Fortitude saving throw (DC %1) or immediately be reduced to 0 tenacity.|10+BrawlerLVL/2+max(STR,DEX)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 26,
+    "record_key": "Bouncer ~ Drunk Knockout"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Terrain Dominance ~ Plane (Earth)",
+    "name": "Terrain Dominance (Plane of Earth)",
+    "class": "Terrain Dominance",
+    "description": "The horizon walker gains tremorsense with a range of 30 feet. He must be at least 5th level before selecting this plane for this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrain Dominance ~ Plane (Earth)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TerrainDominance"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terrain Mastery ~ Plane (Earth)"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Horizon Walker=5"
+      },
+      {
+        "key": "DESC",
+        "value": "The horizon walker gains tremorsense with a range of 30 feet. He must be at least 5th level before selecting this plane for this ability."
+      },
+      {
+        "key": "VISION",
+        "value": "Tremorsense (30')"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1349,
+    "record_key": "Terrain Dominance ~ Plane (Earth)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

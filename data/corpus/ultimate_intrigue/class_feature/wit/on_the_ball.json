@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wit ~ On the Ball",
+    "name": "On the Ball",
+    "class": "Bard",
+    "description": "Rather than roll for initiative, the wit can treat his roll as if it was a %1 (adding any modifiers as usual). The wit can use this ability %2/day.|(1+(BardLVL>=20))*10|(BardLVL+1)/6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wit ~ On the Ball"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.WitClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than roll for initiative, the wit can treat his roll as if it was a %1 (adding any modifiers as usual). The wit can use this ability %2/day.|(1+(BardLVL>=20))*10|(BardLVL+1)/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 259,
+    "record_key": "Wit ~ On the Ball"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

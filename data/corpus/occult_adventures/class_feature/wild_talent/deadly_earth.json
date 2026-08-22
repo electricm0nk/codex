@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Deadly Earth",
+    "name": "Deadly Earth",
+    "class": "Wild Talent",
+    "description": "Element earth; Type form infusion; Level 6; Burn 4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Deadly Earth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Earth"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite extended range"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Earth,12"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type form infusion; Level 6; Burn 4"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts earth, magma, metal, mud Saving Throw none You infuse the ground in a 20-foot radius anywhere within 120 feet of you on an earthen surface (if you are using a metal blast, this infusion affects a metal surface instead). The ground roils and buckles beneath the affected area. All creatures and objects in contact with the ground within the area when you create it automatically take 1/4 of the normal damage from your blast with no saving throw. Any time a creature enters the area, it takes half the normal damage from your blast, as do creatures that end their turns in the area. The entire area counts as difficult terrain. This infusion lasts for a number of rounds equal to your Constitution modifier or until you use it again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 686,
+    "record_key": "Wild Talent ~ Deadly Earth"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

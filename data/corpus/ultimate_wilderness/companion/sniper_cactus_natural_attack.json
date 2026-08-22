@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Sniper Cactus ~ Natural Attack",
     "delivery": "Extraordinary",
@@ -14,6 +12,32 @@
     "owners": [
       "ultimate_wilderness:companion:companion_sniper_cactus"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Sniper Cactus ~ Natural Attack"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Thorn,Natural.Ranged.Weapon.Piercing,*1,1d8,SPROP=60-ft. range"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "CompanionAdvancement,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.SniperCactusRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.183",
     "stat_adjustments": [],
@@ -23,16 +47,18 @@
       "SniperCactusRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 351,
-    "record_key": "Sniper Cactus ~ Natural Attack"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 351,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Sniper Cactus ~ Natural Attack",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

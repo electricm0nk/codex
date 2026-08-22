@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Pull into the Shadows",
+    "name": "Pull into the Shadows",
+    "class": "Vigilante Talent",
+    "description": "As a full-round action, the vigilante can move up to his speed toward an opponent who is unaware of his presence (or who considers him an ally) and make a single attack against that opponent. If the attack hits, he can attempt a drag combat maneuver against that enemy with a +4 bonus and without provoking an attack of opportunity. If the drag succeeds, the vigilante doesn't need to have enough movement remaining to move with the enemy. The vigilante can't use this ability on a true ally or a willing target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Pull into the Shadows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Pull into the Shadows"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, the vigilante can move up to his speed toward an opponent who is unaware of his presence (or who considers him an ally) and make a single attack against that opponent. If the attack hits, he can attempt a drag combat maneuver against that enemy with a +4 bonus and without provoking an attack of opportunity. If the drag succeeds, the vigilante doesn't need to have enough movement remaining to move with the enemy. The vigilante can't use this ability on a true ally or a willing target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 96,
+    "record_key": "Vigilante Talent ~ Pull into the Shadows"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

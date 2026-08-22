@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Spellscar Drifter",
+    "name": "Spellscar Drifter",
+    "class": "Cavalier Archetype",
+    "description": "The Spellscar Desert is a dangerous wasteland into which few venture without a guide. Spellscar drifters have made themselves at home in these badlands. When not scouring the desert for forgotten treasures or magic hidden by the region's shifting magic-dead zones, a Spellscar drifter might hire himself out as a guide, bodyguard, or assassin. There are even a few Spellscar drifters who are temporarily deputized by the Grand Duchy of Alkenstar to perform law enforcement tasks beyond the reach of the city's normal constabulary. Spellscar drifters are self-reliant and always keep their firearms loaded-in the Spellscar Desert, a rider with a slow draw doesn't live long.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Spellscar Drifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype.CavalierProficiencies.Tactician.CavalierCavalier'sCharge.Banner.CavalierBonusFeat.CavalierGreaterTactician.CavalierMightyCharge.CavalierDemandingChallenge.CavalierMasterTactician.CavalierSupremeCharge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Spellscar Drifter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CavalierProficiencies,TYPE.Tactician,TYPE.CavalierCavaliersCharge,TYPE.CavalierBanner,TYPE.CavalierBonusFeat,TYPE.CavalierGreaterTactician,TYPE.CavalierMightyCharge,TYPE.CavalierDemandingChallenge,TYPE.CavalierMasterTactician,TYPE.CavalierSupremeCharge]"
+      },
+      {
+        "key": "DESC",
+        "value": "The Spellscar Desert is a dangerous wasteland into which few venture without a guide. Spellscar drifters have made themselves at home in these badlands. When not scouring the desert for forgotten treasures or magic hidden by the region's shifting magic-dead zones, a Spellscar drifter might hire himself out as a guide, bodyguard, or assassin. There are even a few Spellscar drifters who are temporarily deputized by the Grand Duchy of Alkenstar to perform law enforcement tasks beyond the reach of the city's normal constabulary. Spellscar drifters are self-reliant and always keep their firearms loaded-in the Spellscar Desert, a rider with a slow draw doesn't live long."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Weapon and Armor Proficiency|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Have Gun|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Daring Deeds|PRECLASS:1,Cavalier=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Worn Banner|PRECLASS:1,Cavalier=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Bonus Feats|PRECLASS:1,Cavalier=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Notorious Deeds|PRECLASS:1,Cavalier=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Old Reliable|PRECLASS:1,Cavalier=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Spell Severed|PRECLASS:1,Cavalier=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Infamous Deeds|PRECLASS:1,Cavalier=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Spellscar Drifter ~ Tough as Nails|PRECLASS:1,Cavalier=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 35,
+    "record_key": "Cavalier Archetype ~ Spellscar Drifter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

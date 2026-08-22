@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Warden ~ Laugh at Death",
+    "name": "Laugh at Death",
+    "class": "Shaman",
+    "description": "The spirit warden's familiarity with the dead has filled her with contempt for death itself. She gains a +4 insight bonus on saving throws against death effects and to avoid or remove negative levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Warden ~ Laugh at Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spirit Warden Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The spirit warden's familiarity with the dead has filled her with contempt for death itself. She gains a +4 insight bonus on saving throws against death effects and to avoid or remove negative levels."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 on saves vs. death effects or negative levels."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3646,
+    "record_key": "Spirit Warden ~ Laugh at Death"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mantis Zealot ~ Sneak Attack",
+    "name": "Sneak Attack",
+    "class": "Warpriest",
+    "description": "A mantis zealot can make a sneak attack. This ability functions as the rogue ability of the same name. If the zealot gets a sneak attack bonus from another source, the bonuses on damage stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mantis Zealot ~ Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Features.MantisZealotClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MantisZealotSneakAttackLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "DESC",
+        "value": "A mantis zealot can make a sneak attack. This ability functions as the rogue ability of the same name. If the zealot gets a sneak attack bonus from another source, the bonuses on damage stack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MantisZealotSneakAttackLVL|WarpriestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|MantisZealotSneakAttackLVL/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1122,
+    "record_key": "Mantis Zealot ~ Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Destruction Blessing ~ Destructive Attacks",
+    "name": "Destructive Attacks",
+    "class": "Destruction Blessing",
+    "description": "You can touch an ally and bless it with the power of destruction. For 1 minute, the ally gains a +%1 morale bonus on weapon damage rolls.|max(1,WarpriestLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destruction Blessing ~ Destructive Attacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch an ally and bless it with the power of destruction. For 1 minute, the ally gains a +%1 morale bonus on weapon damage rolls.|max(1,WarpriestLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2241,
+    "record_key": "Destruction Blessing ~ Destructive Attacks"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

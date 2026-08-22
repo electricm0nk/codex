@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:thin_man_vanish"
@@ -28,6 +26,112 @@
     ],
     "race_subtype": null,
     "race_type": "Fey",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bleed|Compression|Immunity to Poison|Thin Man ~ Vanish"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth (Cane Fields)|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BleedDamageDieSize|4"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "HITDIE",
+        "value": "6"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Fey:7"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Burrow,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Piercing.Finesseable,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Slashing.Finesseable,*2,1d4"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ],
     "size": "M",
     "source_page": "p.52",
     "speeds": [
@@ -41,16 +145,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 86,
-    "record_key": "Thin Man"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Thin Man",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

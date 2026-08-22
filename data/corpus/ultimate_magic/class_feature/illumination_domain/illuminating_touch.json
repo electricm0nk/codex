@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Illumination Domain ~ Illuminating Touch",
+    "name": "Illuminating Touch",
+    "class": "Illumination Domain",
+    "description": "You cause your hand to shimmer with divine radiance, allowing you to touch a creature as a standard action and give it a +%1 bonus on a single Will saving throw, Knowledge check, Perception check, or Sense Motive check. This ability lasts for 1 hour or until the creature chooses to apply the bonus to a roll. You can use this ability to grant the bonus %2 times per day.|IlluminatingTouchBonus|DomainIlluminationTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Illumination Domain ~ Illuminating Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IlluminatingTouchBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause your hand to shimmer with divine radiance, allowing you to touch a creature as a standard action and give it a +%1 bonus on a single Will saving throw, Knowledge check, Perception check, or Sense Motive check. This ability lasts for 1 hour or until the creature chooses to apply the bonus to a roll. You can use this ability to grant the bonus %2 times per day.|IlluminatingTouchBonus|DomainIlluminationTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IlluminatingTouchBonus|DomainIlluminationLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 372,
+    "record_key": "Illumination Domain ~ Illuminating Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

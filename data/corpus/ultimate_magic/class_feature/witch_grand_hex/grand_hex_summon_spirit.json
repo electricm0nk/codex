@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Grand Hex ~ Summon Spirit",
+    "name": "Grand Hex - Summon Spirit",
+    "class": "Witch Grand Hex",
+    "description": "DC %1 |WitchHexDC_SummonSpirit",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Grand Hex ~ Summon Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Spelllike.WitchHex.GrandHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchGrandHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,18]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_SummonSpirit|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_SummonSpirit"
+      },
+      {
+        "key": "DESC",
+        "value": "You call forth the ghost of a humanoid creature with no more than 18 Hit Dice. The ghost has its own personality and desires, but is willing to bargain with you, as if you had cast greater planar ally. To seal an agreement with you, the ghost requires life energy equal to 1 temporary negative level (this is in addition to the standard payment for the ghost's service). This negative level persists as long as the ghost remains in your service; you can end the agreement as a standard action, immediately removing the negative level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Summon Spirit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_SummonSpirit|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_SummonSpirit|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Summon Spirit)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 735,
+    "record_key": "Witch Grand Hex ~ Summon Spirit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

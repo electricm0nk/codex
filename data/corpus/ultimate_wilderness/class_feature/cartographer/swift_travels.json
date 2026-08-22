@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cartographer ~ Swift Travels",
+    "name": "Swift Travels",
+    "class": "Investigator",
+    "description": "While in studied terrain, a cartographer intuitively knows the easiest, shortest, and fastest way through the wilderness. For the purpose of determining overland speed, the cartographer treats any trackless terrain as though he were on a trail, and he treats any terrain with a road or trail as though it were a highway. He can extend the benefit to up to %1 creatures traveling with him.|InvestigatorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cartographer ~ Swift Travels"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.CartographerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While in studied terrain, a cartographer intuitively knows the easiest, shortest, and fastest way through the wilderness. For the purpose of determining overland speed, the cartographer treats any trackless terrain as though he were on a trail, and he treats any terrain with a road or trail as though it were a highway. He can extend the benefit to up to %1 creatures traveling with him.|InvestigatorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 738,
+    "record_key": "Cartographer ~ Swift Travels"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

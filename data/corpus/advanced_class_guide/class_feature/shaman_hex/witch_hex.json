@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Hex ~ Witch Hex",
+    "name": "Witch Hex",
+    "class": "Shaman Hex",
+    "description": "The shaman selects any one hex normally available through the witch's hex class feature. She treats her shaman level as her witch level when determining the powers and abilities of the hex. She uses her Wisdom modifier in place of her Intelligence modifier for the hex. She cannot select major hexes or grand hexes using this ability. The shaman cannot select a witch hex that has the same name as a shaman hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Witch Hex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialQuality"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Witch Hex"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexAbilityLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman selects any one hex normally available through the witch's hex class feature. She treats her shaman level as her witch level when determining the powers and abilities of the hex. She uses her Wisdom modifier in place of her Intelligence modifier for the hex. She cannot select major hexes or grand hexes using this ability. The shaman cannot select a witch hex that has the same name as a shaman hex."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Witch Hex|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexAbilityLVL|ShamanHexAbilityLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1441,
+    "record_key": "Shaman Hex ~ Witch Hex"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

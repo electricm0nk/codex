@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Boreal",
+    "name": "Boreal Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "Descended from inhabitants of the lands of ice and snow, you count among your ancestors giant-kin, troll-born, and frost-rimed spirits. Their savage and raw energies flow down through generations to infuse you to the marrow with the chill of the polar wind, crackling auroras, and the long winter's night.|PREVAREQ:Sorcerer_Boreal_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Boreal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Boreal_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Descended from inhabitants of the lands of ice and snow, you count among your ancestors giant-kin, troll-born, and frost-rimed spirits. Their savage and raw energies flow down through generations to infuse you to the marrow with the chill of the polar wind, crackling auroras, and the long winter's night.|PREVAREQ:Sorcerer_Boreal_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Survival|PREVARGTEQ:Sorcerer_Boreal_BloodlineClassSkill1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boreal Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Boreal_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boreal Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Boreal_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Boreal Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Boreal_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Boreal Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Boreal_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Boreal Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Boreal_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Boreal Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Boreal_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Boreal Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Boreal_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Boreal Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Boreal_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Boreal_BloodlinePower1LVL|Sorcerer_Boreal_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Boreal_BloodlinePower3LVL|Sorcerer_Boreal_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Boreal_BloodlinePower9LVL|Sorcerer_Boreal_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Boreal_BloodlinePower15LVL|Sorcerer_Boreal_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Boreal_BloodlinePower20LVL|Sorcerer_Boreal_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Boreal"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3108,
+    "record_key": "Sorcerer Bloodline ~ Boreal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

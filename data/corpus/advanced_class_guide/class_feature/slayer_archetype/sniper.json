@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Archetype ~ Sniper",
+    "name": "Sniper",
+    "class": "Slayer Archetype",
+    "description": "Whether it's with a bullet from a sling, a quarrel from a crossbow, or even an expertly thrown dagger, the sniper ensures that a single shot disables his targets.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Sniper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Sniper],[!PREFACT:1,ABILITIES,Slayer_Archetype_Track=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Whether it's with a bullet from a sling, a quarrel from a crossbow, or even an expertly thrown dagger, the sniper ensures that a single shot disables his targets."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Slayer Archetype Sniper ~ Accuracy|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Slayer Archetype Sniper ~ Deadly Sniper|PRECLASS:1,Slayer=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Slayer"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3729,
+    "record_key": "Slayer Archetype ~ Sniper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

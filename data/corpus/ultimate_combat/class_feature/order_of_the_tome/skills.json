@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Tome ~ Skills",
+    "name": "Skills",
+    "class": "Order of the Tome",
+    "description": "An order of the tome cavalier adds Knowledge (arcana), Knowledge (religion), and Linguistics to his list of class skills. Furthermore, he can use Linguistics untrained. If he has ranks in Linguistics, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Tome ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the tome cavalier adds Knowledge (arcana), Knowledge (religion), and Linguistics to his list of class skills. Furthermore, he can use Linguistics untrained. If he has ranks in Linguistics, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1)."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Linguistics|CavalierLVL/2|PRESKILL:1,Linguistics=1"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (arcana)|Knowledge (religion)|Linguistics"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 460,
+    "record_key": "Order of the Tome ~ Skills"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Stone Sculptor",
+    "name": "Stone Sculptor",
+    "class": "Wild Talent",
+    "description": "Element earth; Type utility (Sp); Level 5; Burn 0 You can sculpt earth into any shape, as the spell stone shape.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Stone Sculptor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Earth,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type utility (Sp); Level 5; Burn 0 You can sculpt earth into any shape, as the spell stone shape."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 780,
+    "record_key": "Wild Talent ~ Stone Sculptor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

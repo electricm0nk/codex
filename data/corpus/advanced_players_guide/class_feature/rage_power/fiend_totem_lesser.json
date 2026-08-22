@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Fiend Totem (Lesser)",
+    "name": "Fiend Totem, Lesser",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian grows a pair of large horns, gaining a gore attack. This attack is a primary attack (unless she is also attacking with weapons, in which case it is a secondary attack) and is made at the barbarian's full base attack bonus (-5 if it is a secondary attack). The gore attack deals 1d8 points of piercing damage (1d6 if Small) plus the barbarian's Strength modifier (1/2 if it is a secondary attack).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Fiend Totem (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian grows a pair of large horns, gaining a gore attack. This attack is a primary attack (unless she is also attacking with weapons, in which case it is a secondary attack) and is made at the barbarian's full base attack bonus (-5 if it is a secondary attack). The gore attack deals 1d8 points of piercing damage (1d6 if Small) plus the barbarian's Strength modifier (1/2 if it is a secondary attack)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Gore|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1510,
+    "record_key": "Rage Power ~ Fiend Totem (Lesser)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

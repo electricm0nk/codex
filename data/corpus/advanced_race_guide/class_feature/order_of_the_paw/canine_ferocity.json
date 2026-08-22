@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Paw ~ Canine Ferocity",
+    "name": "Canine Ferocity",
+    "class": "Order of the Paw",
+    "description": "When the cavalier uses his wolf or dog mount to perform a bull rush or overrun maneuver, the mount is considered to be one size category larger for the purposes of determining the size of creature it is maneuvering against and the mount's CMB. He also receives a bonus feat, chosen from the following list: Mounted Combat, Ride-By Attack, Skill Focus (Ride), Spirited Charge, Trample (the mount can make a bite attack in place of a hoof attack), or Unseat. He must qualify for the feat selected.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Paw ~ Canine Ferocity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the cavalier uses his wolf or dog mount to perform a bull rush or overrun maneuver, the mount is considered to be one size category larger for the purposes of determining the size of creature it is maneuvering against and the mount's CMB. He also receives a bonus feat, chosen from the following list: Mounted Combat, Ride-By Attack, Skill Focus (Ride), Spirited Charge, Trample (the mount can make a bite attack in place of a hoof attack), or Unseat. He must qualify for the feat selected."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Canine Ferocity Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 323,
+    "record_key": "Order of the Paw ~ Canine Ferocity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

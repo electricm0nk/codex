@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Water School ~ Water Supremacy",
+    "name": "Water Supremacy",
+    "class": "Water School",
+    "description": "You gain a +%1 enhancement bonus on Swim skill checks.  In addition, you can hold your breath for %2 rounds before you must start making checks to avoid drowning. At 10th level, you gain a swim speed equal to your base speed. At 20th level, whenever you make a Swim skill check, assume the roll resulted in a natural 20.|2+WaterSchoolLVL/5|CONSCORE*4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water School ~ Water Supremacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus on Swim skill checks.  In addition, you can hold your breath for %2 rounds before you must start making checks to avoid drowning. At 10th level, you gain a swim speed equal to your base speed. At 20th level, whenever you make a Swim skill check, assume the roll resulted in a natural 20.|2+WaterSchoolLVL/5|CONSCORE*4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|2+(WaterSchoolLVL/5)|TYPE=Enhancement"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3296,
+    "record_key": "Water School ~ Water Supremacy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

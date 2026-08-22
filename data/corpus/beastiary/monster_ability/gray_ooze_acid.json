@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Gray Ooze ~ Acid",
     "delivery": "Extraordinary",
@@ -17,19 +15,63 @@
       "beastiary:monster:gray_ooze_crystal_ooze",
       "beastiary:monster:gray_ooze_id_ooze"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Acid"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|AcidGrayOozeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidGrayOozeDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidGrayOozeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Acid)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AcidGrayOozeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The digestive acid that covers a gray ooze dissolves metals and organic material, but not stone. Each slam and constrict attack deals 1d6 additional acid damage. Armor or clothing worn by a creature grappled by a gray ooze takes the same amount of acid damage unless the wearer succeeds on a DC %1 Reflex saving throw. A wooden or metal weapon that strikes a gray ooze takes 1d6 acid damage unless the weapon's wielder succeeds on a DC %1 Reflex save. The ooze's touch deals 12 points of acid damage per round to wooden or metal objects, but the ooze must remain in contact with the material for 1 full round in order to deal this damage.|AcidGrayOozeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Gray Ooze ~ Acid"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.166",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 751,
-    "record_key": "Gray Ooze ~ Acid"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 751,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Gray Ooze ~ Acid",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

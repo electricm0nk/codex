@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tortured Crusader ~ Second Chance",
+    "name": "Second Chance",
+    "class": "Paladin",
+    "description": "Once per day, a tortured crusader can spend two uses of lay on hands and choose an unambiguous trigger such as \"when I am paralyzed\" or \"when I am about to fall unconscious from hit point damage,\" as well as a mercy she knows starting at 3rd level. When the named trigger occurs, the tortured crusader gains the benefits of a lay on hands with the chosen mercy without spending an action. This healing can prevent her from falling unconscious or dying. If the effect doesn't trigger, it expires the next time the tortured crusader recovers uses of lay on hands. This ability alters lay on hands and mercy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tortured Crusader ~ Second Chance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a tortured crusader can spend two uses of lay on hands and choose an unambiguous trigger such as \"when I am paralyzed\" or \"when I am about to fall unconscious from hit point damage,\" as well as a mercy she knows starting at 3rd level. When the named trigger occurs, the tortured crusader gains the benefits of a lay on hands with the chosen mercy without spending an action. This healing can prevent her from falling unconscious or dying. If the effect doesn't trigger, it expires the next time the tortured crusader recovers uses of lay on hands. This ability alters lay on hands and mercy."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 198,
+    "record_key": "Tortured Crusader ~ Second Chance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

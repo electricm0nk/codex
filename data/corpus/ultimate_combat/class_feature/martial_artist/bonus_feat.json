@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Martial Artist ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Monk",
+    "description": "At 12th level, a martial artist gains an additional bonus feat, selected from those available in the monk class feature. This ability replaces abundant step.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Artist ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level, a martial artist gains an additional bonus feat, selected from those available in the monk class feature. This ability replaces abundant step."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1085,
+    "record_key": "Martial Artist ~ Bonus Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sharper ~ Scam Artist",
+    "name": "Scam Artist",
+    "class": "Rogue",
+    "description": "A sharper gains a bonus equal to half her rogue level (minimum +1) on all Bluff and Sleight of Hand checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sharper ~ Scam Artist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.SharperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sharper gains a bonus equal to half her rogue level (minimum +1) on all Bluff and Sleight of Hand checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Sleight of Hand|max(RogueLVL/2,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 755,
+    "record_key": "Sharper ~ Scam Artist"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Atheist Inspiration",
+    "name": "Atheist Inspiration",
+    "class": "Investigator",
+    "description": "The investigator can use her inspiration on saving throws against divine spells without expending uses of inspiration. This talent counts as the Divine Defiance feat (Pathfinder Player Companion: Faiths & Philosophies 7) for the purpose of meeting the prerequisites of other feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Atheist Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=FEAT|Divine Defiance"
+      },
+      {
+        "key": "DESC",
+        "value": "The investigator can use her inspiration on saving throws against divine spells without expending uses of inspiration. This talent counts as the Divine Defiance feat (Pathfinder Player Companion: Faiths & Philosophies 7) for the purpose of meeting the prerequisites of other feats."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 146,
+    "record_key": "Investigator ~ Atheist Inspiration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

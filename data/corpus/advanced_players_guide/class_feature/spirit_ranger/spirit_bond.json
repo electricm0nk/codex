@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Ranger ~ Spirit Bond",
+    "name": "Spirit Bond",
+    "class": "Ranger",
+    "description": "At 4th level, instead of forming a bond with his hunting companions or an animal companion, the spirit ranger forms a bond with the spirits of nature themselves. Each day, as long as he is within one of his favored terrains, the ranger can cast augury (Pathfinder RPG Core Rulebook 245) as a spell-like ability with a caster level equal to his ranger level. In addition, he can call upon these spirits to cast any one ranger spell that he is capable of casting, without having to prepare the spell. At 8th level, and every four levels thereafter, he can cast an additional spell in this way. This replaces hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Ranger ~ Spirit Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerHuntersBond"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, instead of forming a bond with his hunting companions or an animal companion, the spirit ranger forms a bond with the spirits of nature themselves. Each day, as long as he is within one of his favored terrains, the ranger can cast augury (Pathfinder RPG Core Rulebook 245) as a spell-like ability with a caster level equal to his ranger level. In addition, he can call upon these spirits to cast any one ranger spell that he is capable of casting, without having to prepare the spell. At 8th level, and every four levels thereafter, he can cast an additional spell in this way. This replaces hunter's bond."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2871,
+    "record_key": "Spirit Ranger ~ Spirit Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

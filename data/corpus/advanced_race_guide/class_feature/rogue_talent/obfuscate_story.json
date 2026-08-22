@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Obfuscate Story",
+    "name": "Obfuscate Story",
+    "class": "Rogue Talent",
+    "description": "While another individual attempts to give an account of an event, the rogue makes an opposed Diplomacy check to deftly interject comments or statements over the course of the storytelling that cause the individual to muddle his ability to recall accurate or specific details. If the rogue succeeds, her target remains unaware that the rogue's interjections caused the confusion. However, if she fails, the target is allowed a Sense Motive check (DC equal to the rogue's failed Diplomacy check) to figure out that she made deliberate attempts to confuse the story.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Obfuscate Story"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While another individual attempts to give an account of an event, the rogue makes an opposed Diplomacy check to deftly interject comments or statements over the course of the storytelling that cause the individual to muddle his ability to recall accurate or specific details. If the rogue succeeds, her target remains unaware that the rogue's interjections caused the confusion. However, if she fails, the target is allowed a Sense Motive check (DC equal to the rogue's failed Diplomacy check) to figure out that she made deliberate attempts to confuse the story."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.193"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 880,
+    "record_key": "Rogue Talent ~ Obfuscate Story"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

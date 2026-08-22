@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Leshy Warden ~ Leshy Summoner",
+    "name": "Leshy Summoner",
+    "class": "Druid",
+    "description": "A leshy warden is an expert at summoning and growing leshys. She counts as a plant creature for the purpose of growing leshys. She adds leaf leshys, gourd leshys, fungus leshys, seaweed leshys, and lotus leshys to her list of creatures she can summon with summon nature's ally I, II, III, IV, and V, respectively.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshy Warden ~ Leshy Summoner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A leshy warden is an expert at summoning and growing leshys. She counts as a plant creature for the purpose of growing leshys. She adds leaf leshys, gourd leshys, fungus leshys, seaweed leshys, and lotus leshys to her list of creatures she can summon with summon nature's ally I, II, III, IV, and V, respectively."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 520,
+    "record_key": "Leshy Warden ~ Leshy Summoner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

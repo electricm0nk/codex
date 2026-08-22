@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undead Bloodline ~ Grasp of the Dead",
+    "name": "Grasp of the Dead",
+    "class": "Undead Bloodline",
+    "description": "You can cause a swarm of skeletal arms to burst from the ground to rip and tear at your foes. The skeletal arms erupt from the ground in a 20-foot-radius burst. Anyone in this area takes %1d6 points of slashing damage. Those caught in the area receive a Reflex save for half damage. Those who fail the save are unable to move for 1 round. The DC of this save is %2. The skeletal arms disappear after 1 round. The arms must burst up from a solid surface.|Sorcerer_UndeadGraspOfTheDead_Dice|Sorcerer_UndeadGraspOfTheDead_DC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodline ~ Grasp of the Dead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Undead Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Undead_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Undead_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UndeadGraspOfTheDead_Dice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UndeadGraspOfTheDead_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UndeadGraspOfTheDead_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause a swarm of skeletal arms to burst from the ground to rip and tear at your foes. The skeletal arms erupt from the ground in a 20-foot-radius burst. Anyone in this area takes %1d6 points of slashing damage. Those caught in the area receive a Reflex save for half damage. Those who fail the save are unable to move for 1 round. The DC of this save is %2. The skeletal arms disappear after 1 round. The arms must burst up from a solid surface.|Sorcerer_UndeadGraspOfTheDead_Dice|Sorcerer_UndeadGraspOfTheDead_DC"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_UndeadGraspOfTheDead_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_UndeadGraspOfTheDead_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_UndeadGraspOfTheDead_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_UndeadGraspOfTheDead_Times|PREVARGTEQ:Sorcerer_UndeadGraspOfTheDead_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "This power has a range of 60 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UndeadGraspOfTheDead_Dice|Sorcerer_Undead_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UndeadGraspOfTheDead_DC|10+Sorcerer_Undead_BloodlinePower9LVL/2+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UndeadGraspOfTheDead_Times|max(floor((Sorcerer_Undead_BloodlinePower9LVL-11)/3),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%3/day (%1d6 slashing, DC %2)|Sorcerer_UndeadGraspOfTheDead_Dice|Sorcerer_UndeadGraspOfTheDead_DC|Sorcerer_UndeadGraspOfTheDead_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_UndeadGraspOfTheDead_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2555,
+    "record_key": "Undead Bloodline ~ Grasp of the Dead"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

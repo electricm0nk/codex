@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heavens Mystery ~ Mantle of Moonlight",
+    "name": "Mantle of Moonlight",
+    "class": "Heavens Mystery",
+    "description": "Your innate understanding of the moon renders you immune to lycanthropy. Additionally, you may disrupt a lycanthropeUs connection to the moon with a successful touch attack. This action automatically forces the lycanthrope into its humanoid form, which it must remain in for %1 round(s).|OracleMantleofMoonlightDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Mystery ~ Mantle of Moonlight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Supernatural.RevelationTargetOneOnly.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMantleofMoonlightDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMantleofMoonlightTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your innate understanding of the moon renders you immune to lycanthropy. Additionally, you may disrupt a lycanthropeUs connection to the moon with a successful touch attack. This action automatically forces the lycanthrope into its humanoid form, which it must remain in for %1 round(s).|OracleMantleofMoonlightDuration"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability to force others into a rage, as per the spell. Using this ability is a melee touch attack. You can use this ability %1 times per day.|OracleMantleofMoonlightTimes|PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMantleofMoonlightDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMantleofMoonlightTimes|classlevel(\"Oracle\")/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 612,
+    "record_key": "Heavens Mystery ~ Mantle of Moonlight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

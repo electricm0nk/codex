@@ -1,0 +1,120 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Imperious Bloodline ~ Heroic Echo",
+    "name": "Heroic Echo",
+    "class": "Imperious Bloodline",
+    "description": "When you receive a morale",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imperious Bloodline ~ Heroic Echo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Imperious Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Imperious"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Imperious_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Imperious_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ImperiousHeroicEcho_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ImperiousHeroicEcho_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you receive a morale"
+      },
+      {
+        "key": "DESC",
+        "value": "or competence|PREVARGTEQ:Sorcerer_Imperious_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "bonus from any spell, spell-like ability, or magic item, including those you cast on yourself, that bonus increases by +1. If you receive a morale"
+      },
+      {
+        "key": "DESC",
+        "value": "or competence|PREVARGTEQ:Sorcerer_Imperious_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "effect that affects an area or multiple targets, as an immediate action you can share your increased bonus with all other recipients. This increase to other participants lasts %1 rounds.|Sorcerer_ImperiousHeroicEcho_Duration"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_ImperiousHeroicEcho_Times,1|PREVARLT:Sorcerer_ImperiousHeroicEcho_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_ImperiousHeroicEcho_Times,2|PREVARLT:Sorcerer_ImperiousHeroicEcho_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|PREVARGTEQ:Sorcerer_ImperiousHeroicEcho_Times,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ImperiousHeroicEcho_Duration|Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ImperiousHeroicEcho_Times|floor(Sorcerer_Imperious_BloodlinePower3LVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|Sorcerer_ImperiousHeroicEcho_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_ImperiousHeroicEcho_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ImperiousBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 23,
+    "record_key": "Imperious Bloodline ~ Heroic Echo"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

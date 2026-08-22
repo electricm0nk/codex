@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk of the Sacred Mountain ~ Iron Limb Defense",
+    "name": "Iron Limb Defense",
+    "class": "Monk",
+    "description": "At 5th level, a monk of the sacred mountain can deflect blows with an active defense that complements his bastion stance. If the monk starts and ends his turn in the same space, he gains a +2 shield bonus to AC and CMD until the start of his next turn. As a swift action, he can spend 1 ki point to increase this bonus to +4. This ability replaces high jump.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Sacred Mountain ~ Iron Limb Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkHighJump"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a monk of the sacred mountain can deflect blows with an active defense that complements his bastion stance. If the monk starts and ends his turn in the same space, he gains a +2 shield bonus to AC and CMD until the start of his next turn. As a swift action, he can spend 1 ki point to increase this bonus to +4. This ability replaces high jump."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2365,
+    "record_key": "Monk of the Sacred Mountain ~ Iron Limb Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist Primary Element ~ Air",
+    "name": "Air",
+    "class": "Kineticist Primary Element",
+    "description": "Kineticists who focus on the element of air are called aerokineticists. Aerokineticists often control air flow or electricity, specializing in mobility and ranged combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Primary Element ~ Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Kineticist Element.Element ~ Air"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementTracker_Air|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL_Air|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Kineticists who focus on the element of air are called aerokineticists. Aerokineticists often control air flow or electricity, specializing in mobility and ranged combat."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Class Skills: An aerokineticist adds Fly and Knowledge (nature) to her list of class skills."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Wild Talents: 1st-aerial adaptation, air cushion, air shroud, air's leap, air's reach, basic aerokinesis, gusting infusion, pushing infusion, thundering infusion, voice of the wind; 3rd-aerial evasion, celerity, engulfing winds, magnetic infusion, torrent, windsight, wings of air; 4th-cyclone; 5th-air shroud (greater), chain, windsight (greater); 6th-suffocate, wind manipulator; 7th-cloud; 8th-weather master."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Element ~ Universal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Utility Wild Talent|AUTOMATIC|Wild Talent ~ basic aerokinesis|PREVARGTEQ:Kineticist_CFP_Level,1|PREVAREQ:Kineticist_CF_BasicUtilityWildTalent,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementTracker_Air|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL_Air|KineticistLVL_Base|TYPE=Base"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Fly|Knowledge (nature)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 588,
+    "record_key": "Kineticist Primary Element ~ Air"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

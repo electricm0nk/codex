@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rakshasa Bloodline ~ Mind Reader",
+    "name": "Mind Reader",
+    "class": "Rakshasa Bloodline",
+    "description": "You can read minds as a spell-like ability. This ability acts like detect thoughts, except it lasts only 1 round, you use it on a single target as a standard action, and if the target fails its Will save, you gain information as if you had concentrated on it for 3 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rakshasa Bloodline ~ Mind Reader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Rakshasa Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Rakshasa"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Rakshasa_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Rakshasa_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_RakshasaMindReader_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can read minds as a spell-like ability. This ability acts like detect thoughts, except it lasts only 1 round, you use it on a single target as a standard action, and if the target fails its Will save, you gain information as if you had concentrated on it for 3 rounds."
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability once per day.|PREVARGTEQ:Sorcerer_RakshasaMindReader_Times,1|PREVARLT:Sorcerer_RakshasaMindReader_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability twice per day.|PREVARGTEQ:Sorcerer_RakshasaMindReader_Times,2|PREVARLT:Sorcerer_RakshasaMindReader_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability %1 times per day.|Sorcerer_RakshasaMindReader_Times|PREVARGTEQ:Sorcerer_RakshasaMindReader_Times,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_RakshasaMindReader_Times|max(floor(Sorcerer_Rakshasa_BloodlinePower3LVL/4),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|Sorcerer_RakshasaMindReader_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_RakshasaMindReader_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|RakshasaBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 666,
+    "record_key": "Rakshasa Bloodline ~ Mind Reader"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pack Hunter ~ Sympathetic Rage",
+    "name": "Sympathetic Rage",
+    "class": "Barbarian",
+    "description": "If an ally within 30 feet is bloodraging or raging, a pack hunter counts as raging even if knocked unconscious. She has to have been raging when incapacitated to maintain her rage, and she ceases raging normally if she depletes her maximum number of rounds of rage in a day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Hunter ~ Sympathetic Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.PackHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If an ally within 30 feet is bloodraging or raging, a pack hunter counts as raging even if knocked unconscious. She has to have been raging when incapacitated to maintain her rage, and she ceases raging normally if she depletes her maximum number of rounds of rage in a day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 205,
+    "record_key": "Pack Hunter ~ Sympathetic Rage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "First hit each round on a living target restores hp to wielder equal to 1/2 the damage dealt, to a max equal to the wielder's number of HD/day",
+    "key": "Special Ability ~ Vampiric ~ Melee",
+    "name": "Vampiric",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Vampiric ~ Melee"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Piercing.Slashing"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Melee"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Piercing,Slashing"
+      },
+      {
+        "key": "SPROP",
+        "value": "First hit each round on a living target restores hp to wielder equal to 1/2 the damage dealt, to a max equal to the wielder's number of HD/day"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equipmods.lst",
+    "record_key": "Special Ability ~ Vampiric ~ Melee",
+    "sha256": "50fc948cfef6f6f726c94b18ffd254e9c4430d61fb33a8c11ee2181507108281"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

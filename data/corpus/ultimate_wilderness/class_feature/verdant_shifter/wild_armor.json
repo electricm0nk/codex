@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Shifter ~ Wild Armor",
+    "name": "Wild Armor",
+    "class": "Shifter",
+    "description": "A verdant shifter gains a +%1 natural armor bonus to her AC while unencumbered and either wearing no armor or wearing light or medium|VerdantShifterACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Shifter ~ Wild Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.VerdantShifterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerdantShifterACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A verdant shifter gains a +%1 natural armor bonus to her AC while unencumbered and either wearing no armor or wearing light or medium|VerdantShifterACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|VerdantShifterACBonus|TYPE=NaturalArmorEnhancement|PREVARLT:ENCUMBERANCE,2,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerdantShifterACBonus|2+(ShifterLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1103,
+    "record_key": "Verdant Shifter ~ Wild Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

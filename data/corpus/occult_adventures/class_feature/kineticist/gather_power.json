@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist ~ Gather Power",
+    "name": "Gather Power",
+    "class": "Kineticist",
+    "description": "If she has both hands free (or all of her prehensile appendages free, for unusual kineticists), a kineticist can gather energy or elemental matter as a move action. Gathering power creates an extremely loud, visible display in a 20-foot radius centered on the kineticist, as the energy or matter swirls around her. Gathering power in this way allows the kineticist to reduce the total burn cost of a blast wild talent she uses in the same round by 1 point. The kineticist can instead gather power for 1 full round in order to reduce the total burn cost of a blast wild talent used on her next turn by 2 points (to a minimum of 0 points). If she does so, she can also gather power as a move action during her next turn to reduce the burn cost by a total of 3 points. If the kineticist takes damage during or after gathering power and before using the kinetic blast that releases it, she must succeed at a concentration check (DC = 10 + damage taken + effective spell level of her kinetic blast) or lose the energy in a wild surge that forces her to accept a number of points of burn equal to the number of points by which her gathered power would have reduced the burn cost. This ability can never reduce the burn cost of a wild talent below 0 points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Gather Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If she has both hands free (or all of her prehensile appendages free, for unusual kineticists), a kineticist can gather energy or elemental matter as a move action. Gathering power creates an extremely loud, visible display in a 20-foot radius centered on the kineticist, as the energy or matter swirls around her. Gathering power in this way allows the kineticist to reduce the total burn cost of a blast wild talent she uses in the same round by 1 point. The kineticist can instead gather power for 1 full round in order to reduce the total burn cost of a blast wild talent used on her next turn by 2 points (to a minimum of 0 points). If she does so, she can also gather power as a move action during her next turn to reduce the burn cost by a total of 3 points. If the kineticist takes damage during or after gathering power and before using the kinetic blast that releases it, she must succeed at a concentration check (DC = 10 + damage taken + effective spell level of her kinetic blast) or lose the energy in a wild surge that forces her to accept a number of points of burn equal to the number of points by which her gathered power would have reduced the burn cost. This ability can never reduce the burn cost of a wild talent below 0 points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 544,
+    "record_key": "Kineticist ~ Gather Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

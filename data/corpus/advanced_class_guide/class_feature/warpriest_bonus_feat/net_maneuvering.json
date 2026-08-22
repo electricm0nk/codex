@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Net Maneuvering",
+    "name": "Net Maneuvering",
+    "class": "Warpriest Bonus Feat",
+    "description": "With sweeping movements and brute force, you can use your net to put foes at a disadvantage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Net Maneuvering"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Net Adept"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:3],[PREVARGTEQ:WarpriestBonusFeatBAB,3]"
+      },
+      {
+        "key": "PREWEAPONPROF",
+        "value": "1,Net"
+      },
+      {
+        "key": "DESC",
+        "value": "With sweeping movements and brute force, you can use your net to put foes at a disadvantage."
+      },
+      {
+        "key": "DESC",
+        "value": " In melee, you can use a net to trip or disarm opponents instead of entangling them. You gain a +2 bonus on disarm checks made to use a net in this way. Further, if you have an opponent entangled in your net, you can attempt to drag or reposition that opponent as long as he is within your net's reach or you control the trailing rope on your net."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Net Maneuvering"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4497,
+    "record_key": "Warpriest Bonus Feat ~ Net Maneuvering"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

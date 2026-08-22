@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Profiler ~ Divination Analysis",
+    "name": "Divination Analysis",
+    "class": "Investigator",
+    "description": "A profiler has analyzed the workings of the mind. His caster level to determine the duration of his divination extracts increases by %1, and he gains a +%1 bonus on saving throws against divinations.|ProfilerDivinationSaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Profiler ~ Divination Analysis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProfilerDivinationSaveBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "A profiler has analyzed the workings of the mind. His caster level to determine the duration of his divination extracts increases by %1, and he gains a +%1 bonus on saving throws against divinations.|ProfilerDivinationSaveBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "A profiler can expend one use of inspiration to add 1d6 to the result of a concentration check when using a divination extract or investigator spell-like ability.|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProfilerDivinationSaveBonus|1+(InvestigatorLVL>=5)+(InvestigatorLVL>=8)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs divinations.|ProfilerDivinationSaveBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 169,
+    "record_key": "Profiler ~ Divination Analysis"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

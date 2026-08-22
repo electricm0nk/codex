@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist ~ Omnikinesis",
+    "name": "Omnikinesis",
+    "class": "Kineticist",
+    "description": "At 20th level, a kineticist transcends the distinction between the different elements and can bend all creation to her will. By accepting 1 point of burn (in addition to any burn requirement of the kinetic blast she chooses), she can use any blast wild talent she doesn't know. By accepting 1 point of burn as a standard action, she can change any of her wild talents into any other wild talent of the same category (such as simple blasts or defense) for 24 hours, ignoring any elemental requirements or restrictions (but not any other requirements or restrictions).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Omnikinesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a kineticist transcends the distinction between the different elements and can bend all creation to her will. By accepting 1 point of burn (in addition to any burn requirement of the kinetic blast she chooses), she can use any blast wild talent she doesn't know. By accepting 1 point of burn as a standard action, she can change any of her wild talents into any other wild talent of the same category (such as simple blasts or defense) for 24 hours, ignoring any elemental requirements or restrictions (but not any other requirements or restrictions)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 555,
+    "record_key": "Kineticist ~ Omnikinesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

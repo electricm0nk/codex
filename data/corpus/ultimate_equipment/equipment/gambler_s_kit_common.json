@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 75.0,
+    "description": "This small, tightly packed suitcase holds decks of cards, a betting wheel, numbered cloths, colored wooden chips, and a wide variety of other sorts of specialized equipment necessary for many different games of chance.",
+    "key": "Gambler's Kit (Common)",
+    "name": "Gambler's Kit (Common)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "75"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "SPROP",
+        "value": "This small, tightly packed suitcase holds decks of cards, a betting wheel, numbered cloths, colored wooden chips, and a wide variety of other sorts of specialized equipment necessary for many different games of chance."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 594,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Gambler's Kit (Common)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

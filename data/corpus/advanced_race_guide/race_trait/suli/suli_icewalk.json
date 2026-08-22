@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Suli ~ Icewalk",
+    "name": "Icewalk",
+    "race_key": "Suli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Suli Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "The suli can walk on water-based liquids as if using water walk, except instead of hovering above the surface, she creates a temporary layer of ice that supports her and immediately melts once she moves away from it. This ice is not slippery to the suli and does not affect her balance or speed, though other ice affects her normally. Other creatures cannot travel on this ice, but the suli may carry a creature while moving.",
+    "source_page": "p.202",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Suli ~ Icewalk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "The suli can walk on water-based liquids as if using water walk, except instead of hovering above the surface, she creates a temporary layer of ice that supports her and immediately melts once she moves away from it. This ice is not slippery to the suli and does not affect her balance or speed, though other ice affects her normally. Other creatures cannot travel on this ice, but the suli may carry a creature while moving."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Suli ~ Energy Strike"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ColdResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1185,
+    "record_key": "Suli ~ Icewalk"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

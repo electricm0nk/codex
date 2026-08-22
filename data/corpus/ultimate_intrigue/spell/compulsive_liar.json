@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The target becomes unable to speak the truth. Lies the target speaks don't need to be convincing, nor do they even need to be consistent, but they can't be true as far as the target is aware. This extends to non-verbal communication, such as hand signs or written notes. The spell allows talking in metaphors and talking about fictional figures. The spell doesn't affect the target's ability to say things that are neither true nor false, such as questions, commands, or verbal spell components. If the target of this spell is simultaneously compelled to tell the truth (for instance, by being within a zone of truth), the target is only able to say things that are neither true nor false.|PRERULE:1,DisplayFullSpell",
+    "key": "Compulsive Liar",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Mesmerist=1|Psychic,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Prevent target from speaking the truth.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The target becomes unable to speak the truth. Lies the target speaks don't need to be convincing, nor do they even need to be consistent, but they can't be true as far as the target is aware. This extends to non-verbal communication, such as hand signs or written notes. The spell allows talking in metaphors and talking about fictional figures. The spell doesn't affect the target's ability to say things that are neither true nor false, such as questions, commands, or verbal spell components. If the target of this spell is simultaneously compelled to tell the truth (for instance, by being within a zone of truth), the target is only able to say things that are neither true nor false.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Compulsive Liar"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Compulsive Liar",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

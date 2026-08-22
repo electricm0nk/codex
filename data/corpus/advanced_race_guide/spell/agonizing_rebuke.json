@@ -1,23 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "With a word and a gesture, you instill such apprehension about attacking you in your target that doing so causes it mental distress and pain. Each time the target makes an attack against you, targets you with a harmful spell, or otherwise takes and action that would harm you, it takes 2d6 points of nonlethal damage.",
     "key": "Agonizing Rebuke",
-    "school": "Illusion",
     "level": 2,
-    "description": "With a word and a gesture, you instill such apprehension about attacking you in your target that doing so causes it mental distress and pain. Each time the target makes an attack against you, targets you with a harmful spell, or otherwise takes and action that would harm you, it takes 2d6 points of nonlethal damage."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=2|Cleric,Inquisitor,Witch=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "With a word and a gesture, you instill such apprehension about attacking you in your target that doing so causes it mental distress and pain. Each time the target makes an attack against you, targets you with a harmful spell, or otherwise takes and action that would harm you, it takes 2d6 points of nonlethal damage."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Emotion|Mind-Affecting|Pain"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsHobgoblin=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will Negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/hobgoblins.html#_agonizing-rebuke"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Phantasm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Illusion"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 103,
-    "record_key": "Agonizing Rebuke"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 103,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Agonizing Rebuke",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

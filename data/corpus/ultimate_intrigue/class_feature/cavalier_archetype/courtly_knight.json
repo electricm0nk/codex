@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Courtly Knight",
+    "name": "Courtly Knight",
+    "class": "Cavalier Archetype",
+    "description": "Some cavaliers strive to be just as effective at the court of a local lord as on the field of battle. These courtly knights are equally at home in a duel with words or swords.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Courtly Knight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Courtly Knight],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Tactician=True,Cavalier_Archetype_GreaterTactician=True,Cavalier_Archetype_MasterTactician=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some cavaliers strive to be just as effective at the court of a local lord as on the field of battle. These courtly knights are equally at home in a duel with words or swords."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Knight ~ Social Presence|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Knight ~ Imperious Attitude|PRECLASS:1,Cavalier=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Courtly Knight ~ Grand Boast|PRECLASS:1,Cavalier=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MasterTactician|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 281,
+    "record_key": "Cavalier Archetype ~ Courtly Knight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

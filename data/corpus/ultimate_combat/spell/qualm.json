@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The target is suddenly beset with unexplainable doubts about the effectiveness of its actions and the righteousness of its cause. The creature takes a -10 penalty on its ability checks, skill checks, and concentration checks, until the duration ends, or until it spends its entire turn doing absolutely nothing (it spends a full-round action gaining focus). Spending an entire turn doing nothing discharges the spell.",
+    "key": "Qualm",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Inquisitor,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Target gains penalties on ability checks, skill checks, and concentration checks until it spends an entire round doing nothing.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The target is suddenly beset with unexplainable doubts about the effectiveness of its actions and the righteousness of its cause. The creature takes a -10 penalty on its ability checks, skill checks, and concentration checks, until the duration ends, or until it spends its entire turn doing absolutely nothing (it spends a full-round action gaining focus). Spending an entire turn doing nothing discharges the spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes or until discharged"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/qualm.html#_qualm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.241"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Qualm",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

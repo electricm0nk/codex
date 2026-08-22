@@ -1,0 +1,197 @@
+[
+  {
+    "key": "Beast-Bonded ~ Enhanced Familiar",
+    "class": "Witch",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1986
+    }
+  },
+  {
+    "key": "Beast-Bonded ~ Familiar Form",
+    "class": "Witch",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1986
+    }
+  },
+  {
+    "key": "Beast-Bonded ~ Transfer Feats",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1986
+    }
+  },
+  {
+    "key": "Beast-Bonded ~ Twin Soul",
+    "class": "Witch",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1986
+    }
+  },
+  {
+    "key": "Gravewalker ~ Aura of Desecration",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1987
+    }
+  },
+  {
+    "key": "Gravewalker ~ Bonethrall",
+    "class": "Witch",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1987
+    }
+  },
+  {
+    "key": "Gravewalker ~ Deliver Touch Spells",
+    "class": "Witch",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1987
+    }
+  },
+  {
+    "key": "Gravewalker ~ Possess Undead",
+    "class": "Witch",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1987
+    }
+  },
+  {
+    "key": "Gravewalker ~ Spell Poppet",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1987
+    }
+  },
+  {
+    "key": "Hedge Witch ~ Empathic Healing",
+    "class": "Witch",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1988
+    }
+  },
+  {
+    "key": "Hedge Witch ~ Spontaneous Healing",
+    "class": "Witch",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1988
+    }
+  },
+  {
+    "key": "Sea Witch ~ Know Direction",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1989
+    }
+  },
+  {
+    "key": "Sea Witch ~ Sea Creature Empathy",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1989
+    }
+  }
+]

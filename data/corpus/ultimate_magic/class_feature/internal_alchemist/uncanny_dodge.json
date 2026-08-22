@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Internal Alchemist ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Alchemist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Internal Alchemist ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Uncanny Dodge ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeFlankingLevel|classlevel(\"Alchemist\")|TYPE=EachClass.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 867,
+    "record_key": "Internal Alchemist ~ Uncanny Dodge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Divine Commander",
+    "name": "Divine Commander",
+    "class": "Warpriest Archetype",
+    "description": "Some warpriests are called to lead great armies and face legions of foes. These divine commanders live for war and fight for glory. Their hearts quicken at battle cries, and they charge forth with their deity's symbol held high. These leaders of armies do so to promote the agenda of their faith, and lead armies of devoted followers willing to give their lives for the cause. (Several of the divine commander's abilities reference and interact with the mass combat rules in Pathfinder RPG Ultimate Campaign.)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Divine Commander"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype.CF_WarpriestBlessings.WarpriestBlessings.WarpriestBonusFeat3.WarpriestBonusFeat6.WarpriestBonusFeat12.WarpriestBonusFeat15"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Divine Commander],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_WarpriestBlessings,TYPE.WarpriestBlessings,TYPE.WarpriestBonusFeat3,TYPE.WarpriestBonusFeat6,TYPE.WarpriestBonusFeat12,TYPE.WarpriestBonusFeat15]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some warpriests are called to lead great armies and face legions of foes. These divine commanders live for war and fight for glory. Their hearts quicken at battle cries, and they charge forth with their deity's symbol held high. These leaders of armies do so to promote the agenda of their faith, and lead armies of devoted followers willing to give their lives for the cause. (Several of the divine commander's abilities reference and interact with the mass combat rules in Pathfinder RPG Ultimate Campaign.)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Divine Commander ~ Mount|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Divine Commander ~ Battle Tactician|PRECLASS:1,Warpriest=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Divine Commander ~ Blessed Mount|PRECLASS:1,Warpriest=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Divine Commander ~ Greater Battle Tactician|PRECLASS:1,Warpriest=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Divine Commander ~ Bless Army|PRECLASS:1,Warpriest=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Warpriest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3933,
+    "record_key": "Warpriest Archetype ~ Divine Commander"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Travel Blessing ~ Agile Feet",
+    "name": "Agile Feet",
+    "class": "Travel Blessing",
+    "description": "As a swift action you gain increased mobility. For 1 round, you ignore all difficult terrain (including magical terrain) and take no penalties for moving through it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Travel Blessing ~ Agile Feet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action you gain increased mobility. For 1 round, you ignore all difficult terrain (including magical terrain) and take no penalties for moving through it."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2281,
+    "record_key": "Travel Blessing ~ Agile Feet"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

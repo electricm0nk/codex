@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Artifice ~ HK",
+    "name": "Artifice",
+    "class": "Artifice",
+    "description": "You can repair damage to objects, animate objects with life, and create objects from nothing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Artifice ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Domain.HKDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can repair damage to objects, animate objects with life, and create objects from nothing."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Artificer's Touch|PREVARGTEQ:HellknightLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dancing Weapons|PREVARGTEQ:HellknightLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeLVL|HellknightLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeDC|HKDisciplineDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainArtificeTimes|HKDiscipline"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 270,
+    "record_key": "Artifice ~ HK"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

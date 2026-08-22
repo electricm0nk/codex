@@ -1,0 +1,542 @@
+[
+  {
+    "key": "Armored Hulk ~ Armored Swiftness",
+    "class": "Barbarian",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 303
+    }
+  },
+  {
+    "key": "Armored Hulk ~ Improved Armored Swiftness",
+    "class": "Barbarian",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 303
+    }
+  },
+  {
+    "key": "Armored Hulk ~ Indomitable Stance",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 303
+    }
+  },
+  {
+    "key": "Armored Hulk ~ Rage Powers",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 303
+    }
+  },
+  {
+    "key": "Armored Hulk ~ Resilience of Steel",
+    "class": "Barbarian",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 303
+    }
+  },
+  {
+    "key": "Armored Hulk ~ Weapon and Armor Proficiency",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 303
+    }
+  },
+  {
+    "key": "Scarred Rager ~ Improved Tolerance",
+    "class": "Barbarian",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 304
+    }
+  },
+  {
+    "key": "Scarred Rager ~ Rage Powers",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 304
+    }
+  },
+  {
+    "key": "Scarred Rager ~ Scarification",
+    "class": "Barbarian",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 304
+    }
+  },
+  {
+    "key": "Scarred Rager ~ Terrifying Visage",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 304
+    }
+  },
+  {
+    "key": "Scarred Rager ~ Tolerance",
+    "class": "Barbarian",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 304
+    }
+  },
+  {
+    "key": "Sea Reaver ~ Eyes of the Storm",
+    "class": "Barbarian",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 305
+    }
+  },
+  {
+    "key": "Sea Reaver ~ Marine Terror",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 305
+    }
+  },
+  {
+    "key": "Sea Reaver ~ Rage Powers",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 305
+    }
+  },
+  {
+    "key": "Sea Reaver ~ Savage Sailor",
+    "class": "Barbarian",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 305
+    }
+  },
+  {
+    "key": "Sea Reaver ~ Sure-Footed",
+    "class": "Barbarian",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 305
+    }
+  },
+  {
+    "key": "Sea Reaver ~ Weapon and Armor Proficiency",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 305
+    }
+  },
+  {
+    "key": "Titan Mauler ~ Big Game Hunter",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 306
+    }
+  },
+  {
+    "key": "Titan Mauler ~ Evade Reach",
+    "class": "Barbarian",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 306
+    }
+  },
+  {
+    "key": "Titan Mauler ~ Jotungrip",
+    "class": "Barbarian",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 306
+    }
+  },
+  {
+    "key": "Titan Mauler ~ Massive Weapons",
+    "class": "Barbarian",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 306
+    }
+  },
+  {
+    "key": "Titan Mauler ~ Rage Powers",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 306
+    }
+  },
+  {
+    "key": "Titan Mauler ~ Titanic Rage",
+    "class": "Barbarian",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 306
+    }
+  },
+  {
+    "key": "True Primitive ~ Favored Terrain",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 307
+    }
+  },
+  {
+    "key": "True Primitive ~ Illiteracy",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 307
+    }
+  },
+  {
+    "key": "True Primitive ~ Rage Powers",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 307
+    }
+  },
+  {
+    "key": "True Primitive ~ Trophy Fetish",
+    "class": "Barbarian",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 307
+    }
+  },
+  {
+    "key": "True Primitive ~ Weapon and Armor Proficiency",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 307
+    }
+  },
+  {
+    "key": "Urban Barbarian ~ Controlled Rage",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 308
+    }
+  },
+  {
+    "key": "Urban Barbarian ~ Crowd Control",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 308
+    }
+  },
+  {
+    "key": "Urban Barbarian ~ Skills",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 308
+    }
+  },
+  {
+    "key": "Urban Barbarian ~ Weapon and Armor Proficiency",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 308
+    }
+  },
+  {
+    "key": "Wild Rager ~ Rage Conversion",
+    "class": "Barbarian",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 309
+    }
+  },
+  {
+    "key": "Wild Rager ~ Rage Powers",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 309
+    }
+  },
+  {
+    "key": "Wild Rager ~ Uncontrolled Rage",
+    "class": "Barbarian",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 309
+    }
+  },
+  {
+    "key": "Wild Rager ~ Wild Fighting",
+    "class": "Barbarian",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 309
+    }
+  }
+]

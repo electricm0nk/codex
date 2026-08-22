@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Vivisectionist",
+    "name": "Vivisectionist",
+    "class": "Alchemist Archetype",
+    "description": "A vivisectionist studies bodies to better understand their function. Unlike a chirurgeon, a vivisectionist's goals are not related to healing, but rather to experimentation and knowledge that most people would consider evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Vivisectionist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype.AlchemistBomb.AlchemistBombDamageLvl1.AlchemistBombDamageLvl3.AlchemistBombDamageLvl5.AlchemistBombDamageLvl7.AlchemistBombDamageLvl9.AlchemistBombDamageLvl11.AlchemistBombDamageLvl13.AlchemistBombDamageLvl15.AlchemistBombDamageLvl17.AlchemistBombDamageLvl19.AlchemistBombReduction"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Vivisectionist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistBomb,TYPE.AlchemistBombDamageLvl1,TYPE.AlchemistBombDamageLvl3,TYPE.AlchemistBombDamageLvl5,TYPE.AlchemistBombDamageLvl7,TYPE.AlchemistBombDamageLvl9,TYPE.AlchemistBombDamageLvl11,TYPE.AlchemistBombDamageLvl13,TYPE.AlchemistBombDamageLvl15,TYPE.AlchemistBombDamageLvl17,TYPE.AlchemistBombDamageLvl9,TYPE.AlchemistBombReduction]"
+      },
+      {
+        "key": "DESC",
+        "value": "A vivisectionist studies bodies to better understand their function. Unlike a chirurgeon, a vivisectionist's goals are not related to healing, but rather to experimentation and knowledge that most people would consider evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Vivisectionist ~ Sneak Attack|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Vivisectionist ~ Torturer's Eye|PRECLASS:1,Alchemist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Vivisectionist ~ Cruel Anatomist|PRECLASS:1,Alchemist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Vivisectionist ~ Torturous Transformation|PRECLASS:1,Alchemist=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 846,
+    "record_key": "Alchemist Archetype ~ Vivisectionist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood Spirit ~ Tree Limb",
+    "name": "Tree Limb",
+    "class": "Wood Spirit",
+    "description": "As a swift action, the shaman can turn one of her arms into a heavy, branch-like limb. She must drop anything held in that hand, and she can't use this ability if she is wearing a shield on that arm. Until the beginning of her next turn, she gains a slam attack that deals",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Spirit ~ Tree Limb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, the shaman can turn one of her arms into a heavy, branch-like limb. She must drop anything held in that hand, and she can't use this ability if she is wearing a shield on that arm. Until the beginning of her next turn, she gains a slam attack that deals"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6|PRESIZEEQ:S"
+      },
+      {
+        "key": "DESC",
+        "value": "1d8|PRESIZEEQ:M"
+      },
+      {
+        "key": "DESC",
+        "value": "2d6|PRESIZEEQ:L"
+      },
+      {
+        "key": "DESC",
+        "value": " points of damage. A shaman can use this ability %1 times per day.|3+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "The reach of the slam attack is 5 feet longer than the shaman's normal reach. |PREVARGTEQ:ShamanLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can choose to transform both of her arms, gaining two slam attacks.|PREVARGTEQ:ShamanLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1024,
+    "record_key": "Wood Spirit ~ Tree Limb"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

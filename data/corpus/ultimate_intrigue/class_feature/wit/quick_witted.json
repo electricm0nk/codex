@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wit ~ Quick Witted",
+    "name": "Quick Witted",
+    "class": "Bard",
+    "description": "A wit can always act in a surprise round (though he remains flat-footed until he acts). In addition, the wit adds half his bard level on initiative checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wit ~ Quick Witted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.WitClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wit can always act in a surprise round (though he remains flat-footed until he acts). In addition, the wit adds half his bard level on initiative checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|BardLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 258,
+    "record_key": "Wit ~ Quick Witted"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

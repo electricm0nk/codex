@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 90000.0,
+    "description": "Cast % at will|%LIST",
+    "key": "PurposePower_CastFiveAtWill",
+    "name": "PurposePower_CastFiveAtWill",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Purpose Power / 5th Level Spell / At-Will"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "90000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,EQMOD=Intelligent Item ~ Base,EQMOD=Intelligent Item ~ Purpose,DedicatedPurpose"
+      },
+      {
+        "key": "SPROP",
+        "value": "Cast % at will|%LIST"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL|Arcane,Divine|5|5"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 901,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "PurposePower_CastFiveAtWill",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

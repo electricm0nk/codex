@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Luring Cavalier",
+    "name": "Luring Cavalier",
+    "class": "Cavalier Archetype",
+    "description": "Those who study the perfection of strategy and tactics know that picking the battlefield can grant advantages that only overwhelming numbers of allies can eclipse. The luring cavalier is a special type of cavalier that helps accomplish that goal. Typically, he uses a bow or other ranged weapon to lure opponents toward him, and then makes strategic retreats to position his enemies exactly where he wants them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Luring Cavalier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype.CavalierCavaliersCharge.CavalierMightyCharge.CavalierSupremeCharge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Luring Cavalier],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CavalierChallenge,TYPE.CavalierCavaliersCharge,TYPE.CavalierMightyCharge,TYPE.CavalierSupremeCharge]"
+      },
+      {
+        "key": "DESC",
+        "value": "Those who study the perfection of strategy and tactics know that picking the battlefield can grant advantages that only overwhelming numbers of allies can eclipse. The luring cavalier is a special type of cavalier that helps accomplish that goal. Typically, he uses a bow or other ranged weapon to lure opponents toward him, and then makes strategic retreats to position his enemies exactly where he wants them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Luring Cavalier ~ Far Challenge|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Luring Cavalier ~ Careful Aim|PRECLASS:1,Cavalier=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Luring Cavalier ~ Infuriating Aim|PRECLASS:1,Cavalier=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Luring Cavalier ~ Versatile Challenge|PRECLASS:1,Cavalier=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Luring Cavalier ~ Supreme Aim|PRECLASS:1,Cavalier=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cavalier"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 472,
+    "record_key": "Cavalier Archetype ~ Luring Cavalier"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

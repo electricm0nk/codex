@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Location Channel",
+    "name": "Location Channel",
+    "class": "Medium",
+    "description": "A medium can perform a special seance at the site of a person's death-or a location that was precious to that person in life-to call forth that person's spirit into the medium's body so his allies can ask it questions. The effects are similar to the spell call spirit, except that the duration is %1 round(s) and the spirit possesses the medium's body instead of appearing in a wispy form. The other participants of the seance must ask the questions. Once the medium attempts to call a spirit, he cannot attempt to call the same spirit again for 24 hours. Once per round, the medium can attempt to end the seance early by succeeding at a Will save (DC %2).|LocationChannelDuration|LocationChannelDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Location Channel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LocationChannelDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LocationChannelDC|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Medium|TIMES=ATWILL|CASTERLEVEL=MediumLVL|Call Spirit,13+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium can perform a special seance at the site of a person's death-or a location that was precious to that person in life-to call forth that person's spirit into the medium's body so his allies can ask it questions. The effects are similar to the spell call spirit, except that the duration is %1 round(s) and the spirit possesses the medium's body instead of appearing in a wispy form. The other participants of the seance must ask the questions. Once the medium attempts to call a spirit, he cannot attempt to call the same spirit again for 24 hours. Once per round, the medium can attempt to end the seance early by succeeding at a Will save (DC %2).|LocationChannelDuration|LocationChannelDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LocationChannelDuration|MediumLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LocationChannelDC|20+MediumLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 818,
+    "record_key": "Medium ~ Location Channel"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

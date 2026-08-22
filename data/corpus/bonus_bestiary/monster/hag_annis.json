@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-11T09:16:36Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "6",
@@ -25,6 +23,96 @@
     ],
     "race_subtype": null,
     "race_type": "Monstrous Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Rend"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Giant"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "6"
+      },
+      {
+        "key": "DR",
+        "value": "2/Bludgeoning"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Monstrous Humanoid:7"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Hag"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Monstrous Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=7|Disguise Self,11+CHA|Fog Cloud,12+CHA"
+      },
+      {
+        "key": "SR",
+        "value": "17"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.11",
     "speeds": [
@@ -34,16 +122,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
-    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
-    "line": 14,
-    "record_key": "Hag (Annis)"
-  },
+  "ingested_at": "2026-08-11T09:16:36Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "record_key": "Hag (Annis)",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

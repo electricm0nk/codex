@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gravewalker ~ Aura of Desecration",
+    "name": "Aura of Desecration",
+    "class": "Witch",
+    "description": "You can create a %1-foot-radius aura of evil power. This aura increases the DC of channeled negative energy by +1 and the turn resistance of undead by +1.|AuraOfDesecrationRadius",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravewalker ~ Aura of Desecration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfDesecrationRadius|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a %1-foot-radius aura of evil power. This aura increases the DC of channeled negative energy by +1 and the turn resistance of undead by +1.|AuraOfDesecrationRadius"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraOfDesecrationRadius|15+5*floor((classlevel(\"Witch\")+1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraOfDesecrationRadius|5|PRECLASS:1,Witch=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 2006,
+    "record_key": "Gravewalker ~ Aura of Desecration"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

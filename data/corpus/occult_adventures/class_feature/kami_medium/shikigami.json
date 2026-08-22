@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kami Medium ~ Shikigami",
+    "name": "Shikigami",
+    "class": "Medium",
+    "description": "A kami medium learns to fold an origami animal to serve as a temporary ward for a minor shikigami.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kami Medium ~ Shikigami"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A kami medium learns to fold an origami animal to serve as a temporary ward for a minor shikigami."
+      },
+      {
+        "key": "DESC",
+        "value": "Initially, the merged minor shikigami can't leave the paper body and acts in all ways as an ordinary animal familiar of the origami animal's type, although it still appears to be made of paper.|PREVARLT:MediumLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "It gains the abilities of a shikigami improved familiar, even if the kami medium doesn't meet the prerequisites for having a shikigami as a familiar. The shikigami treats the kami medium as its ward. Additionally, it gains the ability to use change shape to change between its full shikigami form and its origami form at will (as beast shape II).|PREVARGTEQ:MediumLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|MediumLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List|PREVARLT:MediumLVL,5"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Kami (Shikigami)|PREVARGTEQ:MediumLVL,5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1401,
+    "record_key": "Kami Medium ~ Shikigami"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

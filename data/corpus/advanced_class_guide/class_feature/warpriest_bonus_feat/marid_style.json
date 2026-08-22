@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Marid Style",
+    "name": "Marid Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "You conjure tendrils of icy water to strike your enemies from a distance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Marid Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Elemental Fist,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9]],[PREVARGTEQ:MonkFeatQualify,5]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,CON=13,WIS=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You conjure tendrils of icy water to strike your enemies from a distance."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain one additional Elemental Fist attempt per day. While using this style and Elemental Fist to deal cold damage, you gain a bonus on cold damage rolls equal to your Wisdom modifier, and your reach with your unarmed strike increases by 5 feet."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Marid Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4485,
+    "record_key": "Warpriest Bonus Feat ~ Marid Style"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

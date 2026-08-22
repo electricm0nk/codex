@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Thulgant ~ Savage Stingers",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:qlippoth_thulgant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Savage Stingers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(sting)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThulgantSavageStingersDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThulgantSavageStingersDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Savage Stingers)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThulgantSavageStingersDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a thulgant hits a single target with all three stings in the same round, it tears through the victim's body, dealing an extra 3d6+12 points of damage and draining an additional 2 ability points from all six of the victim's ability stores.  A single DC %1 Fortitude save negates all of this additional ability drain.|ThulgantSavageStingersDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Thulgant ~ Savage Stingers"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.226",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1029,
-    "record_key": "Thulgant ~ Savage Stingers"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1029,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Thulgant ~ Savage Stingers",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Ironskin Monk",
+    "name": "Ironskin Monk",
+    "class": "Monk Archetype",
+    "description": "Through discipline and training, an ironskin monk hardens his body to withstand punishing blows. Though slow on his feet, his calloused hands and feet can shatter stone and stagger foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Ironskin Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkACBonus.MonkEvasion.MonkKiPool.MonkHighJump.MonkFastMovement.MonkSlowFall.MonkImprovedEvasion.MonkTongueOfTheSunAndMoon.MonkPerfectSelf"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Ironskin Monk],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkACBonus,TYPE.MonkEvasion,TYPE.MonkKiPool,TYPE.MonkHighJump,TYPE.MonkFastMovement,TYPE.MonkSlowFall,TYPE.MonkImprovedEvasion,TYPE.MonkTongueOfTheSunAndMoon,TYPE.MonkPerfectSelf]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHobgoblin=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Through discipline and training, an ironskin monk hardens his body to withstand punishing blows. Though slow on his feet, his calloused hands and feet can shatter stone and stagger foes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Iron Skin|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Bonus Feat|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Resilience|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Ki Pool|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Staggering Blow|PRECLASS:1,Monk=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Tough as Nails|PRECLASS:1,Monk=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Evasion|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Surefooted|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ironskin Monk ~ Unbreakable|PRECLASS:1,Monk=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 578,
+    "record_key": "Monk Archetype ~ Ironskin Monk"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

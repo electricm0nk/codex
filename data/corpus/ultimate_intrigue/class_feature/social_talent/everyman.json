@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ Everyman",
+    "name": "Everyman",
+    "class": "Social Talent",
+    "description": "The vigilante can take on the appearance of a specific individual whenever he assumes a mundane guise using his many guises social talent. The individual must be a farmer, laborer, or peasant. While disguised as this individual, the vigilante receives a +20 circumstance bonus on Disguise checks to appear as that individual. Any spell or ability designed to locate the individual has a 50%% chance of finding the vigilante instead of the actual individual, and divination spells and abilities used on the vigilante give results as if he were the actual individual. Although this doesn't grant the vigilante any special knowledge of the individual, the vigilante's training grants him a +10 circumstance bonus on Bluff checks to properly play the part of the individual.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Everyman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Many Guises"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can take on the appearance of a specific individual whenever he assumes a mundane guise using his many guises social talent. The individual must be a farmer, laborer, or peasant. While disguised as this individual, the vigilante receives a +20 circumstance bonus on Disguise checks to appear as that individual. Any spell or ability designed to locate the individual has a 50%% chance of finding the vigilante instead of the actual individual, and divination spells and abilities used on the vigilante give results as if he were the actual individual. Although this doesn't grant the vigilante any special knowledge of the individual, the vigilante's training grants him a +10 circumstance bonus on Bluff checks to properly play the part of the individual."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 52,
+    "record_key": "Social Talent ~ Everyman"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Water School ~ Cold Blast",
+    "name": "Cold Blast",
+    "class": "Water School",
+    "description": "As a standard action, you can unleash a blast of freezing cold. This blast deals 1d6+%1 points of cold damage to all creatures within 5 feet of you and staggers them for 1 round. A successful Reflex save DC %2 negates the staggered effect and halves the damage. You can use this ability %3 times per day.|WaterSchoolLVL/2|WaterSchoolLVL/2+10+INT|WaterColdBlastTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water School ~ Cold Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterColdBlastTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can unleash a blast of freezing cold. This blast deals 1d6+%1 points of cold damage to all creatures within 5 feet of you and staggers them for 1 round. A successful Reflex save DC %2 negates the staggered effect and halves the damage. You can use this ability %3 times per day.|WaterSchoolLVL/2|WaterSchoolLVL/2+10+INT|WaterColdBlastTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterColdBlastTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WaterColdBlastTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3297,
+    "record_key": "Water School ~ Cold Blast"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

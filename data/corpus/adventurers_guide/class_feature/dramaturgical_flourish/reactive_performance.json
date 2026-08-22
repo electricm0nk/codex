@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dramaturgical Flourish ~ Reactive Performance",
+    "name": "Reactive Performance",
+    "class": "Dramaturgical Flourish",
+    "description": "The argent dramaturge can activate her countersong or distraction bardic performance as an immediate action. When she does so, she must expend 2 rounds of bardic performance rather than 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dramaturgical Flourish ~ Reactive Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DramaturgicalFlourish"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bardic Performance ~ Countersong,Bardic Performance ~ Distraction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent dramaturge can activate her countersong or distraction bardic performance as an immediate action. When she does so, she must expend 2 rounds of bardic performance rather than 1."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 33,
+    "record_key": "Dramaturgical Flourish ~ Reactive Performance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

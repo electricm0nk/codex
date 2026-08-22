@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Zeal Domain ~ Zealous Surge",
+    "name": "Zealous Surge",
+    "class": "Zeal Domain",
+    "description": "Once per day, when you are reduced to 0 or fewer hit points, you heal %1 hit points.|ZealousSurgeHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Zeal Domain ~ Zealous Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ZealousSurgeHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, when you are reduced to 0 or fewer hit points, you heal %1 hit points.|ZealousSurgeHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ZealousSurgeHP|WIS+DomainZealLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 413,
+    "record_key": "Zeal Domain ~ Zealous Surge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

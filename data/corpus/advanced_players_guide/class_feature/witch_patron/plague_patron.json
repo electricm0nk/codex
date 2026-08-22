@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Patron ~ Plague",
+    "name": "Plague Patron",
+    "class": "Witch Patron",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Patron ~ Plague"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchPatron.SpecialQuality"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=1|Detect Undead|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,2],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell2]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=2|Command Undead|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,4],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell4]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=3|Contagion|PREVARGTEQ:WitchPatronLVL,6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=4|Animate Dead|PREVARGTEQ:WitchPatronLVL,8"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=5|Giant Vermin|PREVARGTEQ:WitchPatronLVL,10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=6|Create Undead|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,12],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell12]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=7|Control Undead|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,14],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell14]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=8|Create Greater Undead|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,16],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell16]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=9|Energy Drain|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,18],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell18]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 952,
+    "record_key": "Witch Patron ~ Plague"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

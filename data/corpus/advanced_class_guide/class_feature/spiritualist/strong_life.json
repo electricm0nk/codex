@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Strong Life",
+    "name": "Strong Life",
+    "class": "Investigator",
+    "description": "At 2nd level, his dealings with the other side and knowledge of what lies beyond strengthens the spiritualist's will. He gains a +%1 bonus on saving throws against death effects and negative energy damage.|StrongLifeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Strong Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrongLifeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, his dealings with the other side and knowledge of what lies beyond strengthens the spiritualist's will. He gains a +%1 bonus on saving throws against death effects and negative energy damage.|StrongLifeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrongLifeBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrongLifeBonus|2|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrongLifeBonus|2|PRECLASS:1,Investigator=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 bonus on saving throws against death effects and negative energy damage.|StrongLifeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3341,
+    "record_key": "Spiritualist ~ Strong Life"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

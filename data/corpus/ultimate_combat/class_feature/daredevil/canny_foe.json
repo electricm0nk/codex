@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daredevil ~ Canny Foe",
+    "name": "Canny Foe",
+    "class": "Bard",
+    "description": "At 2nd level, a daredevil can choose one type of combat maneuver. She gains a +2 bonus on her combat maneuver checks to attempt the chosen maneuver and to her CMD to resist that maneuver. At 6th level, and every four levels thereafter, the daredevil gains a +2 bonus for an additional type of combat maneuver. She may not choose the same maneuver twice. This ability replaces versatile performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daredevil ~ Canny Foe"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a daredevil can choose one type of combat maneuver. She gains a +2 bonus on her combat maneuver checks to attempt the chosen maneuver and to her CMD to resist that maneuver. At 6th level, and every four levels thereafter, the daredevil gains a +2 bonus for an additional type of combat maneuver. She may not choose the same maneuver twice. This ability replaces versatile performance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CannyFoeSelection|(BardLVL+2)/4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CannyFoeSelection|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Canny Foe|CannyFoeSelection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 403,
+    "record_key": "Daredevil ~ Canny Foe"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

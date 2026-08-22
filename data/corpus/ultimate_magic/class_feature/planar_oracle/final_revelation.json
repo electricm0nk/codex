@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Planar Oracle ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Oracle",
+    "description": "You become an extraplanar creature. Choose one outer plane, such as Heaven or the Abyss. You gain superficial physical characteristics as appropriate to natives of your chosen outer plane (see the Pathfinder RPG Bestiary). For example, if your chosen plane is Heaven, you gain angelic features such as a halo and metallic skin. This change does not alter your Hit Dice, hit points, saving throws, skill points, class skills, or proficiencies. Your type changes to \"outsider (extraplanar),\" except on your associated plane, where your type is \"outsider (native).\" In addition, you gain immunity to your associated energy type and gain damage reduction 10/magic. Unlike other outsiders, you can still be brought back from the dead as if you were a member of your previous creature type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Planar Oracle ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalPlanarOracleRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You become an extraplanar creature. Choose one outer plane, such as Heaven or the Abyss. You gain superficial physical characteristics as appropriate to natives of your chosen outer plane (see the Pathfinder RPG Bestiary). For example, if your chosen plane is Heaven, you gain angelic features such as a halo and metallic skin. This change does not alter your Hit Dice, hit points, saving throws, skill points, class skills, or proficiencies. Your type changes to \"outsider (extraplanar),\" except on your associated plane, where your type is \"outsider (native).\" In addition, you gain immunity to your associated energy type and gain damage reduction 10/magic. Unlike other outsiders, you can still be brought back from the dead as if you were a member of your previous creature type."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Planar Oracle Final Revelation"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|PREABILITY:1,CATEGORY=Special Ability,Planar Oracle ~ Planar Resistance Acid"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|PREABILITY:1,CATEGORY=Special Ability,Planar Oracle ~ Planar Resistance Cold"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Electricity|PREABILITY:1,CATEGORY=Special Ability,Planar Oracle ~ Planar Resistance Electricity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire|PREABILITY:1,CATEGORY=Special Ability,Planar Oracle ~ Planar Resistance Fire"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Sonic|PREABILITY:1,CATEGORY=Special Ability,Planar Oracle ~ Planar Resistance Sonic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1493,
+    "record_key": "Planar Oracle ~ Final Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

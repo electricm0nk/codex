@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels. Twenty-four hours after gaining them, the subject must make a Fortitude saving throw [DC = energy drain spell's save DC] for each negative level. If the save succeeds, that negative level is removed. If it fails, that negative level becomes permanent. An undead creature struck by the ray gains 2d4 ? 5 temporary hit points for 1 hour.",
     "key": "Energy Drain",
-    "school": "Necromancy",
     "level": 9,
-    "description": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels. Twenty-four hours after gaining them, the subject must make a Fortitude saving throw [DC = energy drain spell's save DC] for each negative level. If the save succeeds, that negative level is removed. If it fails, that negative level becomes permanent. An undead creature struck by the ray gains 2d4 ? 5 temporary hit points for 1 hour."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Sorcerer,Wizard=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels. Twenty-four hours after gaining them, the subject must make a Fortitude saving throw [DC = energy drain spell's save DC] for each negative level. If the save succeeds, that negative level is removed. If it fails, that negative level becomes permanent. An undead creature struck by the ray gains 2d4 ? 5 temporary hit points for 1 hour.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial; see text for enervation"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/energyDrain.html#_energy-drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Ray of negative energy"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ray"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 203,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 963,
-    "record_key": "Energy Drain.MOD"
+    "record_key": "Energy Drain",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

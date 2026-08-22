@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Soul Eater ~ Soul Drain",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:soul_eater"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Soul Drain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulEaterSoulDrainDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulEaterSoulDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Soul Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulEaterSoulDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If the Wisdom damage from a soul eater's claw attack equals or exceeds an opponent's actual Wisdom score, rendering the victim helpless, the soul eater can devour that creature's soul as a standard action that provokes an attack of opportunity.  This attack kills the victim.  The dead victim can resist having her soul eaten by making a (DC %1) Fortitude save; success means she is still dead, but can be restored to life normally.  If she fails this save, her soul is consumed by the eater.  A victim slain in this manner cannot be returned to life with clone, raise dead, or reincarnation.  She can be restored to life via resurrection, true resurrection, miracle, or wish, but only if the caster can succeed on a DC 30 caster level check.  If the soul eater is killed within 120 feet of its victim's corpse, and the victim has been dead for no longer than 1 minute, the victim's soul returns to her body and restores her to life, leaving her unconscious and at -1 hit point.  This is a death effect.|SoulEaterSoulDrainDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Soul Eater ~ Soul Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.254",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1195,
-    "record_key": "Soul Eater ~ Soul Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1195,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Soul Eater ~ Soul Drain",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

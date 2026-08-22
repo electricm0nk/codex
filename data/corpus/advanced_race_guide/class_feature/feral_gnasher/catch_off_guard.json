@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Gnasher ~ Catch Off-Guard",
+    "name": "Catch Off-Guard",
+    "class": "Feral Gnasher",
+    "description": "The Feral Gnasher can take Catch Off-Guard in place of a rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Gnasher ~ Catch Off-Guard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RagePower"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Barbarian Archetype ~ Feral Gnasher"
+      },
+      {
+        "key": "DESC",
+        "value": "The Feral Gnasher can take Catch Off-Guard in place of a rage power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Catch Off-Guard"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 543,
+    "record_key": "Feral Gnasher ~ Catch Off-Guard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

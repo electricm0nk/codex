@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Umbral Bloodline ~ Cloak of Shadows",
+    "name": "Cloak of Shadows",
+    "class": "Umbral Bloodline",
+    "description": "As a standard action, you can grant one target a cloak of shadows. This cloak gives the target a +%1 bonus on Stealth checks made in areas of dim or no light for %2|Sorcerer_UmbralCloakOfShadows_SkillBonus|Sorcerer_UmbralCloakOfShadows_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Umbral Bloodline ~ Cloak of Shadows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Umbral Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Umbral"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Shadow_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Shadow_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Shadow_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UmbralCloakOfShadows_SkillBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UmbralCloakOfShadows_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can grant one target a cloak of shadows. This cloak gives the target a +%1 bonus on Stealth checks made in areas of dim or no light for %2|Sorcerer_UmbralCloakOfShadows_SkillBonus|Sorcerer_UmbralCloakOfShadows_Duration"
+      },
+      {
+        "key": "DESC",
+        "value": "round.|PREVAREQ:Sorcerer_UmbralCloakOfShadows_Duration,1"
+      },
+      {
+        "key": "DESC",
+        "value": "rounds.|PREVARGTEQ:Sorcerer_UmbralCloakOfShadows_Duration,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability %1 times per day. This bloodline power replaces shadowstrike.|Sorcerer_Shadow_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UmbralCloakOfShadows_SkillBonus|max((Sorcerer_Shadow_BloodlinePower1LVL/2),1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UmbralCloakOfShadows_Duration|max((Sorcerer_Shadow_BloodlinePower1LVL/2),1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (+%2 Stealth, %3 rounds)|Sorcerer_Shadow_BloodlinePower1Times|Sorcerer_UmbralCloakOfShadows_SkillBonus|Sorcerer_UmbralCloakOfShadows_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Shadow_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ShadowBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1784,
+    "record_key": "Umbral Bloodline ~ Cloak of Shadows"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

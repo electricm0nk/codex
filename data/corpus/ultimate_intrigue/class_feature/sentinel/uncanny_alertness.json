@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sentinel ~ Uncanny Alertness",
+    "name": "Uncanny Alertness",
+    "class": "Ranger",
+    "description": "A sentinel is always ready to defend against incoming attacks. A sentinel is never flat-footed before acting in combat, even if she is surprised (she can still become flat-footed by any other effect or situation that would render her flat-footed).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Uncanny Alertness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.SentinelClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sentinel is always ready to defend against incoming attacks. A sentinel is never flat-footed before acting in combat, even if she is surprised (she can still become flat-footed by any other effect or situation that would render her flat-footed)."
+      },
+      {
+        "key": "DESC",
+        "value": " The sentinel also always acts on the surprise round. If she would have acted on the surprise round anyway, or if there is no surprise round, she gains a +%1 bonus on initiative checks.|RangerLVL/2|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 678,
+    "record_key": "Sentinel ~ Uncanny Alertness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

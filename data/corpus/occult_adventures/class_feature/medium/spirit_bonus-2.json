@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Champion Spirit Bonus",
+    "name": "Spirit Bonus",
+    "class": "Medium",
+    "description": "When you channel a champion, you gain a +%1 bonus on attack rolls, non-spell damage rolls, Strength checks, Strength-based skill checks, and Fortitude saves.|SpiritBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Champion Spirit Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you channel a champion, you gain a +%1 bonus on attack rolls, non-spell damage rolls, Strength checks, Strength-based skill checks, and Fortitude saves.|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Melee,DAMAGE.Ranged|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Strength|SpiritBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 844,
+    "record_key": "Medium ~ Champion Spirit Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

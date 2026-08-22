@@ -1,0 +1,47 @@
+[
+  {
+    "key": "Bouda ~ Fetish",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 151
+    }
+  },
+  {
+    "key": "Bouda ~ Hyena Shape",
+    "class": "Witch",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 151
+    }
+  },
+  {
+    "key": "Witch Hex ~ Bouda's Eye",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 151
+    }
+  }
+]

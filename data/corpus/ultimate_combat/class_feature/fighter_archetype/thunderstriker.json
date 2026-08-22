@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Thunderstriker",
+    "name": "Thunderstriker",
+    "class": "Fighter Archetype",
+    "description": "The thunderstriker adopts an unusual fighting style, gripping a heavy weapon with both hands and switching to a defensive posture with weapon and buckler, lashing out with the shield with surprising speed and power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Thunderstriker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterArmorTraining1.FighterArmorTraining2.FighterArmorTraining3.FighterArmorTraining4.FighterArmorMastery.FighterWeaponTraining3.FighterWeaponTraining4"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ THUNDERSTRIKER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterArmorMastery,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]"
+      },
+      {
+        "key": "DESC",
+        "value": "The thunderstriker adopts an unusual fighting style, gripping a heavy weapon with both hands and switching to a defensive posture with weapon and buckler, lashing out with the shield with surprising speed and power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Thunderstriker ~ Strapped Shield|PRECLASS:1,Fighter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Thunderstriker ~ Hardbuckler|PRECLASS:1,Fighter=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Thunderstriker ~ Knockback Smash|PRECLASS:1,Fighter=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Thunderstriker ~ Hammer and Anvil|PRECLASS:1,Fighter=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Thunderstriker ~ Buckler Defense|PRECLASS:1,Fighter=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Thunderstriker ~ Balanced Bashing|PRECLASS:1,Fighter=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Thunderstriker ~ Improved Buckler Defense|PRECLASS:1,Fighter=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 681,
+    "record_key": "Fighter Archetype ~ Thunderstriker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Asavir ~ Shaitan's Blessing",
+    "name": "Shaitan's Blessing",
+    "class": "Asavir",
+    "description": "An asavir's mount receives the blessing of the shaitans. It receives a +%1 racial bonus on saving throws against all mind-affecting and fear effects.|AsavirShaitansBlessingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Shaitan's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsavirShaitansBlessingBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "DESC",
+        "value": "An asavir's mount receives the blessing of the shaitans. It receives a +%1 racial bonus on saving throws against all mind-affecting and fear effects.|AsavirShaitansBlessingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirShaitansBlessingBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirShaitansBlessingBonus|2|PREVARGTEQ:AsavirLVL,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 43,
+    "record_key": "Asavir ~ Shaitan's Blessing"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

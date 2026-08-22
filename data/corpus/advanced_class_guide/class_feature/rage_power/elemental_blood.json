@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Elemental Blood",
+    "name": "Elemental Blood",
+    "class": "Rage Power",
+    "description": "While raging the barbarian gains energy resistance 10 against the energy type chosen when she took lesser elemental blood.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Elemental Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageMiddle"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Elemental Blood (Lesser)"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,6"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageMiddle],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Elemental Blood]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging the barbarian gains energy resistance 10 against the energy type chosen when she took lesser elemental blood."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|5|TYPE=Resistance|PREVAREQ:BloodRage Acid,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|5|TYPE=Resistance|PREVAREQ:BloodRage Cold,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|5|TYPE=Resistance|PREVAREQ:BloodRage Electricity,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|5|TYPE=Resistance|PREVAREQ:BloodRage Fire,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2667,
+    "record_key": "Rage Power ~ Elemental Blood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "key": "Karmic Monk ~ Alignment",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  },
+  {
+    "key": "Karmic Monk ~ Balanced Mind",
+    "class": "Monk",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  },
+  {
+    "key": "Karmic Monk ~ Class Skills",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  },
+  {
+    "key": "Karmic Monk ~ Harmonic Self",
+    "class": "Monk",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  },
+  {
+    "key": "Karmic Monk ~ Harmony",
+    "class": "Monk",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  },
+  {
+    "key": "Karmic Monk ~ Karmic Disruption",
+    "class": "Monk",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  },
+  {
+    "key": "Karmic Monk ~ Karmic Strike",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  },
+  {
+    "key": "Karmic Monk ~ Ki Pool",
+    "class": "Monk",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1792
+    }
+  }
+]

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Archetype ~ Unsworn Shaman",
+    "name": "Unsworn Shaman",
+    "class": "Shaman Archetype",
+    "description": "An unsworn shaman never binds herself to one specific spirit, always making new deals as she deems necessary for the circumstances that she finds herself in. While this weakens the powers she can access from any one spirit, it gives her access to a broader overall range of abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Archetype ~ Unsworn Shaman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShamanArchetype.ShamanSpiritMagic.ShamanSpiritAnimal.ShamanWanderingSpirit.ShamanWanderingHex.ShamanSpirit.ShamanHex"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shaman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Unsworn Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanSpiritMagic,TYPE.ShamanSpiritAnimal,TYPE.ShamanWanderingSpirit,TYPE.ShamanWanderingHex,TYPE.ShamanSpirit,TYPE.ShamanHex]"
+      },
+      {
+        "key": "DESC",
+        "value": "An unsworn shaman never binds herself to one specific spirit, always making new deals as she deems necessary for the circumstances that she finds herself in. While this weakens the powers she can access from any one spirit, it gives her access to a broader overall range of abilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Unsworn Shaman ~ Minor Spirit|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Unsworn Shaman ~ Spirit Animal|PRECLASS:1,Shaman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Unsworn Shaman ~ Wandering Spirit|PRECLASS:1,Shaman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Class Feature|AUTOMATIC|Unsworn Shaman ~ Spirit Magic|PRECLASS:1,Shaman=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Shaman"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3590,
+    "record_key": "Shaman Archetype ~ Unsworn Shaman"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

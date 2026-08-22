@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Empiricist",
+    "name": "Empiricist",
+    "class": "Investigator Archetype",
+    "description": "Champions of deductive reasoning and logical insight, empiricists put their faith in facts, data, confirmed observations, and consistently repeatable experiments- these things are their currency of truth.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Empiricist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype.InvestigatorPoisonLore.InvestigatorPoisonResistance.InvestigatorSwiftAlchemy.InvestigatorTrueInspiration"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Empiricist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InvestigatorPoisonLore,TYPE.InvestigatorPoisonResistance,TYPE.InvestigatorSwiftAlchemy,TYPE.InvestigatorTrueInspiration]"
+      },
+      {
+        "key": "DESC",
+        "value": "Champions of deductive reasoning and logical insight, empiricists put their faith in facts, data, confirmed observations, and consistently repeatable experiments- these things are their currency of truth."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Empiricist ~ Ceaseless Observation|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Empiricist ~ Unfailing Logic|PRECLASS:1,Investigator=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Empiricist ~ Master Intellect|PRECLASS:1,Investigator=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Investigator"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3305,
+    "record_key": "Investigator Archetype ~ Empiricist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

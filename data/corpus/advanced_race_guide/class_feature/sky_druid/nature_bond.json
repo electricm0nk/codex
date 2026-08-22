@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sky Druid ~ Nature Bond",
+    "name": "Nature Bond",
+    "class": "Druid",
+    "description": "A sky druid who chooses an animal companion must select one with a fly speed. If choosing a domain, the sky druid must choose from the Air, Animals, Liberation, and Weather domains, or subdomains appropriate to those domains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sky Druid ~ Nature Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.NaturesBondAnimalCompanion.NaturesBondDruidDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAnimalTerrainDomainNotAllowed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sky druid who chooses an animal companion must select one with a fly speed. If choosing a domain, the sky druid must choose from the Air, Animals, Liberation, and Weather domains, or subdomains appropriate to those domains."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAnimalTerrainDomainNotAllowed|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 723,
+    "record_key": "Sky Druid ~ Nature Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

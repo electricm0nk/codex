@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Luring Cavalier ~ Infuriating Aim",
+    "name": "Infuriating Aim",
+    "class": "Cavalier",
+    "description": "At 11th level, when a luring cavalier confirms a critical hit with a ranged attack made at his highest base attack bonus against the target of a far challenge, the target becomes infuriated for 1 round. While infuriated, the target must spend its turn moving closer to the cavalier, making move, run, or charge actions only (challenged creature's choice). This is a mind-affecting effect. This ability replaces mighty charge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Luring Cavalier ~ Infuriating Aim"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, when a luring cavalier confirms a critical hit with a ranged attack made at his highest base attack bonus against the target of a far challenge, the target becomes infuriated for 1 round. While infuriated, the target must spend its turn moving closer to the cavalier, making move, run, or charge actions only (challenged creature's choice). This is a mind-affecting effect. This ability replaces mighty charge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 504,
+    "record_key": "Luring Cavalier ~ Infuriating Aim"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

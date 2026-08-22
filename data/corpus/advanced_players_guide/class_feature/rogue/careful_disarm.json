@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue ~ Careful Disarm",
+    "name": "Careful Disarm",
+    "class": "Rogue",
+    "description": "Whenever you attempt to disarm a trap using Disable Device, you do not spring the trap unless you fail by 10 or more. If you do set off a trap you were attempting to disarm, you adds double your trap sense bonus to avoid the trap. This ability replaces uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue ~ Careful Disarm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RogueClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you attempt to disarm a trap using Disable Device, you do not spring the trap unless you fail by 10 or more. If you do set off a trap you were attempting to disarm, you adds double your trap sense bonus to avoid the trap. This ability replaces uncanny dodge."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3000,
+    "record_key": "Rogue ~ Careful Disarm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

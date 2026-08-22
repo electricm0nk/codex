@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Coach of the Silent ~ Death's Calling",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:dullahan_coach_of_the_silent"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death's Calling"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DullahanDeathsCallingDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DullahanDeathsCallingDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death's Calling)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DullahanDeathsCallingDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a dullahan may place death's calling on a target within 60 feet (DC %1 Fortitude negates).  If the dullahan knows and speaks the target's name, the target takes a -2 penalty on the save.  If the victim fails the save, he becomes staggered for 1d6 rounds.  For the next 24 hours (or until the dullahan is slain), all critical hits against the victim automatically confirm.  Finally, the victim automatically fails all Constitution checks to stabilize while dying.  The coach of the silent can cast trap the soul on those who fail to resists its death's calling.  This is a mind-affecting curse effect.|DullahanDeathsCallingDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Coach of the Silent ~ Death's Calling"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.111",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 518,
-    "record_key": "Coach of the Silent ~ Death's Calling"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 518,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Coach of the Silent ~ Death's Calling",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

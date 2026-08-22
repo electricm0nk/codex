@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Crashing Waves",
+    "name": "Crashing Waves",
+    "class": "Shaman Spirit Hex",
+    "description": "The force of a waves shaman's water spells can bring even the mightiest of foes to the ground. When the shaman casts a spell with the water descriptor, she does so at a higher caster level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Crashing Waves"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWavesHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Crashing Waves"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWavesSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The force of a waves shaman's water spells can bring even the mightiest of foes to the ground. When the shaman casts a spell with the water descriptor, she does so at a higher caster level."
+      },
+      {
+        "key": "DESC",
+        "value": "If that spell|PREVARLT:ShamanSpiritLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "If any spell that the shaman casts|PREVARGTEQ:ShamanSpiritLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "deals damage, the target must succeed at a Fortitude saving throw or be knocked prone."
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|DESCRIPTOR.Water|1+(ShamanSpiritLVL>=8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1673,
+    "record_key": "Shaman Spirit Hex ~ Crashing Waves"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

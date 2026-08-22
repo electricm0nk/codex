@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Mixologist",
+    "name": "Mixologist",
+    "class": "Alchemist Archetype",
+    "description": "Certain alchemists focus on mastering the chemical reactions between alcohol and the physical body. Though the powerful potions they brew can have drawbacks, they are at least pleasurable.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Mixologist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "DESC",
+        "value": "Certain alchemists focus on mastering the chemical reactions between alcohol and the physical body. Though the powerful potions they brew can have drawbacks, they are at least pleasurable."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Mixologist],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Alchemy=True,Alchemist_Archetype_BrewPotion=True,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_Discovery2=True,Alchemist_Archetype_PoisonResistance=True,Alchemist_Archetype_PersistentMutagen=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mixologist ~ Alcoholic Alchemy|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mixologist ~ Alcoholic Bombs|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mixologist ~ Alcoholic Resistance|PRECLASS:1,Alchemist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mixologist ~ Mixologist Master|PRECLASS:1,Alchemist=14"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BrewPotion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PersistentMutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PersistentMutagen|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 7,
+    "record_key": "Alchemist Archetype ~ Mixologist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

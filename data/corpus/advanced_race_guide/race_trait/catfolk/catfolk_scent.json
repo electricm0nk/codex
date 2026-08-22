@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Catfolk ~ Scent",
+    "name": "Scent",
+    "race_key": "Catfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Catfolk Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Catfolk_ReplaceVision"
+    ],
+    "description": "Some catfolk favor a keen sense of smell over sensitive sight. Catfolk with this racial trait gain the scent ability. This racial trait replaces the low-light vision racial trait.",
+    "source_page": "p.91",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Scent],[!PREFACT:1,ABILITIES,Catfolk_ReplaceVision=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some catfolk favor a keen sense of smell over sensitive sight. Catfolk with this racial trait gain the scent ability."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the low-light vision racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "FACT",
+        "value": "Catfolk_ReplaceVision|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 364,
+    "record_key": "Catfolk ~ Scent"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

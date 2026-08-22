@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "20",
@@ -28,6 +26,136 @@
     ],
     "race_subtype": "Evil|Extraplanar|Kyton|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Kyton (Eremite)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|19|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|100"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "15/good and silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton (Eremite)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Diplomacy|Heal|Intimidate|Spellcraft"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):20"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*2,2d6|Wings,Natural.Melee.Finesseable.Weapon,*2,1d8"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Extraplanar|Kyton|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Kyton"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      },
+      {
+        "key": "SR",
+        "value": "31"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|True Seeing"
+      }
+    ],
     "size": "M",
     "source_page": "p.171",
     "speeds": [
@@ -41,16 +169,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 169,
-    "record_key": "Kyton (Eremite)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 169,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Kyton (Eremite)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

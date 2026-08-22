@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Urban Ranger",
+    "name": "Urban Ranger",
+    "class": "Ranger Archetype",
+    "description": "For the urban ranger, the streets and sewers of the city are just as dangerous as the barren wastelands or the deep forests.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Urban Ranger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerClassSkills.RangerFavoredTerrain.RangerEndurance.RangerHideInPlainSight.RangerWoodlandStride.RangerCamouflage"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Urban Ranger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerClassSkills,TYPE.RangerFavoredTerrain,TYPE.RangerEndurance,TYPE.RangerHideInPlainSight,TYPE.RangerWoodlandStride,TYPE.RangerCamouflage]"
+      },
+      {
+        "key": "DESC",
+        "value": "For the urban ranger, the streets and sewers of the city are just as dangerous as the barren wastelands or the deep forests."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Urban Ranger ~ Class Skills|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Urban Ranger ~ Favored Community|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Urban Ranger ~ Trapfinding|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Urban Ranger ~ Push Through|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Urban Ranger ~ Blend In|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Urban Ranger ~ Invisibility Trick|PRECLASS:1,Ranger=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2671,
+    "record_key": "Ranger Archetype ~ Urban Ranger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

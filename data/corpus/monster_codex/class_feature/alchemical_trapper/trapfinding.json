@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemical Trapper ~ Trapfinding",
+    "name": "Trapfinding",
+    "class": "Alchemist",
+    "description": "An alchemical trapper can find and disable traps, as the rogue class feature of the same name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemical Trapper ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.AlchemicalTrapperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An alchemical trapper can find and disable traps, as the rogue class feature of the same name."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue ~ Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingLVL|AlchemistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 26,
+    "record_key": "Alchemical Trapper ~ Trapfinding"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

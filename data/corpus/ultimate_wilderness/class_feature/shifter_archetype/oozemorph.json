@@ -1,0 +1,163 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Archetype ~ Oozemorph",
+    "name": "Oozemorph",
+    "class": "Shifter Archetype",
+    "description": "While most shifters are trained in druidic traditions that allow them to tap into animalistic powers, others look instead to the simplest forms of life for inspiration. Known as oozemorphs, these shifters focus on the ooze-a form of life as simple in construction as it is dangerous in combat. While some shifters consider the oozemorph to be unsettling or even vile, these shifters merely embrace a stranger form of life than most. They are not inherently evil, yet they are often misunderstood by druidic circles and these circles' shifter champions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Archetype ~ Oozemorph"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ShifterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Shifter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shifter Archetype ~ Oozemorph],[!PREFACT:1,ABILITIES,Shifter_Archetype_WeaponProficiencies=True,Shifter_Archetype_ArmorProficiencies=True,Shifter_Archetype_ChimericAspect=True,Shifter_Archetype_GreaterChimericAspect=True,Shifter_Archetype_WildShape=True,Shifter_Archetype_ShifterAspect=True,Shifter_Archetype_ShifterClaws=True,Shifter_Archetype_WildEmpathy=True,Shifter_Archetype_DefensiveInstinct=True,Shifter_Archetype_WoodlandStride=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most shifters are trained in druidic traditions that allow them to tap into animalistic powers, others look instead to the simplest forms of life for inspiration. Known as oozemorphs, these shifters focus on the ooze-a form of life as simple in construction as it is dangerous in combat. While some shifters consider the oozemorph to be unsettling or even vile, these shifters merely embrace a stranger form of life than most. They are not inherently evil, yet they are often misunderstood by druidic circles and these circles' shifter champions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Oozemorph ~ Proficiencies|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oozemorph ~ Compression|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oozemorph ~ Fluidic Body|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oozemorph ~ Morphic Weaponry|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oozemorph ~ Ooze Empathy|PRECLASS:1,Shifter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oozemorph ~ Damage Reduction|PRECLASS:1,Shifter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Oozemorph ~ Clinging Ooze|PRECLASS:1,Shifter=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_GreaterChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_GreaterChimericAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_ShifterClaws|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_DefensiveInstinct|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shifter_CF_WoodlandStride|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1036,
+    "record_key": "Shifter Archetype ~ Oozemorph"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

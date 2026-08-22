@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Star Watcher ~ Shooting Star",
+    "name": "Shooting Star",
+    "class": "Star Watcher",
+    "description": "A star watcher can calculate trajectories with terrifying accuracy. He can apply the benefits of studied combat, studied strike, and investigator talents that add effects to studied combat or studied strike while using a starknife as a thrown weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Star Watcher ~ Shooting Star"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Investigator Archetype ~ Star Watcher"
+      },
+      {
+        "key": "DESC",
+        "value": "A star watcher can calculate trajectories with terrifying accuracy. He can apply the benefits of studied combat, studied strike, and investigator talents that add effects to studied combat or studied strike while using a starknife as a thrown weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 761,
+    "record_key": "Star Watcher ~ Shooting Star"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

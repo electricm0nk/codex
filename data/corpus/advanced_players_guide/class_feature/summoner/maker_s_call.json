@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner ~ Maker's Call",
+    "name": "Maker's Call",
+    "class": "Summoner",
+    "description": "As a standard action, you can call your eidolon to your side. This functions as dimension door, using your caster level. When used, your eidolon appears adjacent to you (or as close as possible if all adjacent spaces are occupied). If your eidolon is out of range, the ability is wasted. (%1/day)|MakersCallTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Maker's Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural.Makers Call"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MakersCallTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can call your eidolon to your side. This functions as dimension door, using your caster level. When used, your eidolon appears adjacent to you (or as close as possible if all adjacent spaces are occupied). If your eidolon is out of range, the ability is wasted. (%1/day)|MakersCallTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MakersCallTimes|((classlevel(\"Summoner\")-2)/4)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MakersCallTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 800,
+    "record_key": "Summoner ~ Maker's Call"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

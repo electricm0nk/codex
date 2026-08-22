@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Champion ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Swashbuckler",
+    "description": "A feral champion gains wild shape, as the druid ability of the same name, and treats his warpriest level - 3 as his effective druid level for the purposes of this ability. However, a feral champion does not gain the ability to take on elemental or plant forms with wild shape. A feral champion can use wild shape once per day at 7th level and one additional time per day every 4 levels thereafter, for a total of four times per day at 19th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Champion ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Features.FeralChampionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWildShape|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoPlantShape|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoElementalShape|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A feral champion gains wild shape, as the druid ability of the same name, and treats his warpriest level - 3 as his effective druid level for the purposes of this ability. However, a feral champion does not gain the ability to take on elemental or plant forms with wild shape. A feral champion can use wild shape once per day at 7th level and one additional time per day every 4 levels thereafter, for a total of four times per day at 19th level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Shape"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoPlantShape|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoElementalShape|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|WarpriestLVL-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeProgression|-1|PREVARGTEQ:DruidWildShape,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeProgression|-1|PREVARGTEQ:DruidWildShape,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeProgression|-1|PREVARGTEQ:DruidWildShape,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeProgression|-1|PREVARGTEQ:DruidWildShape,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeProgression|-1|PREVARGTEQ:DruidWildShape,20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1221,
+    "record_key": "Feral Champion ~ Wild Shape"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

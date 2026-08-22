@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Starsoul Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Starsoul Bloodline",
+    "description": "Your skyward gaze and communion with the heavens focus and enhance your magical talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Starsoul Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "Your skyward gaze and communion with the heavens focus and enhance your magical talents."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|StarsoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3225,
+    "record_key": "Starsoul Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

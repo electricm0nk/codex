@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bladebound ~ Black Blade",
+    "name": "Black Blade",
+    "class": "Magus",
+    "description": "You gains a powerful sentient weapon called a black blade, whose weapon type is chosen by the magus. A magus with this class feature cannot take the familiar magus arcana, and cannot have a familiar of any kind, even from another class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bladebound ~ Black Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarNotAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BBLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gains a powerful sentient weapon called a black blade, whose weapon type is chosen by the magus. A magus with this class feature cannot take the familiar magus arcana, and cannot have a familiar of any kind, even from another class."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Black Blade Selection|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarNotAllowed|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BBLevel|classlevel(\"Magus\")"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Black Blade|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Black Blade|Black Blade"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Blackblade"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1298,
+    "record_key": "Bladebound ~ Black Blade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

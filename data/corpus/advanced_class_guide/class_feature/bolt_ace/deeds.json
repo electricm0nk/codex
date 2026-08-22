@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bolt Ace ~ Deeds",
+    "name": "Deeds",
+    "class": "Gunslinger",
+    "description": "A bolt ace can perform the following deeds with a crossbow instead of a firearm: gunslinger initiative, pistolwhip, dead shot, targeting, bleeding wound, death's shot, and stunning shot. The bolt ace swaps the following deeds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Deeds"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.GunslingerDeeds"
+      },
+      {
+        "key": "DESC",
+        "value": "A bolt ace can perform the following deeds with a crossbow instead of a firearm: gunslinger initiative, pistolwhip, dead shot, targeting, bleeding wound, death's shot, and stunning shot. The bolt ace swaps the following deeds."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Sharp Shoot|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Vigilant Loading|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Gunslinger Initiative|PRECLASS:1,Gunslinger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Pistol-Whip|PRECLASS:1,Gunslinger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Shooter's Resolve|PRECLASS:1,Gunslinger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Dead Shot|PRECLASS:1,Gunslinger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Distracting Shot|PRECLASS:1,Gunslinger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Targeting|PRECLASS:1,Gunslinger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Bleeding Wound|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Vigilant Shooter|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Inexplicable Reload|PRECLASS:1,Gunslinger=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Pinning Shot|PRECLASS:1,Gunslinger=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Death's Shot|PRECLASS:1,Gunslinger=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bolt Ace ~ Stunning Shot|PRECLASS:1,Gunslinger=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3107,
+    "record_key": "Bolt Ace ~ Deeds"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

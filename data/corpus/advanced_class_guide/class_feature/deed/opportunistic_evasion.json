@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deed ~ Opportunistic Evasion",
+    "name": "Opportunistic Evasion",
+    "class": "Investigator",
+    "description": "At 1st level, when a sleuth succeeds at a Reflex saving throw against an effect that still deals damage on a successful save, he can spend 1 luck point as an immediate action to instead take no damage for that effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Opportunistic Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sleuth Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, when a sleuth succeeds at a Reflex saving throw against an effect that still deals damage on a successful save, he can spend 1 luck point as an immediate action to instead take no damage for that effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3333,
+    "record_key": "Deed ~ Opportunistic Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

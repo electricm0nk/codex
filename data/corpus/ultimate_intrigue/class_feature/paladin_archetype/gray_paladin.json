@@ -1,0 +1,155 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Gray Paladin",
+    "name": "Gray Paladin",
+    "class": "Paladin Archetype",
+    "description": "Gray paladins have discovered that in a world of intrigue, a strict code of honor hinders their options. Their divergence from the paladin's normal code still drains them, but somehow, they have found a way to avoid losing all of their powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Gray Paladin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,NG"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREDEITYALIGN",
+        "value": "LG,LN,NG"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Gray Paladin],[!PREFACT:1,ABILITIES,Paladin_Archetype_ClassSkills=True,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_AuraOfCourage=True,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_AuraOfRighteousness=True,Paladin_Archetype_AuraOfGood=True,Paladin_Archetype_DivineGrace=True,Paladin_Archetype_DivineHealth=True,Paladin_Archetype_ChannelPositiveEnergy=True,Paladin_Archetype_AuraOfJustice=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gray paladins have discovered that in a world of intrigue, a strict code of honor hinders their options. Their divergence from the paladin's normal code still drains them, but somehow, they have found a way to avoid losing all of their powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Gray Paladin ~ Class Skills|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Paladin ~ Weakened Grace|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Paladin ~ Code of Conduct|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Paladin ~ Enhanced Health|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Paladin ~ Smite Foe|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gray Paladin ~ Aura of Subtlety|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfRighteousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfGood|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfGood|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 584,
+    "record_key": "Paladin Archetype ~ Gray Paladin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

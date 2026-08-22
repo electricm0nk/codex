@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Totenmaske ~ Shape Flesh",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:totenmaske"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Shape Flesh"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotenmaskeShapeFleshDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotenmaskeShapeFleshDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Shape Flesh)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotenmaskeShapeFleshDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 minute in contact with a helpless creature, a totnmaske can reshape the target's face, causing flesh to cover vital features.  The target may attempt a DC %1 Fortitude save to resist.  Changes are permanent, but can be reversed with heal, restoration, or regeneration, or by surgically opening the flesh with a DC 15 Heal check that takes 1d3 rounds and deals 1d4 points of damage even if the check is not successful.  A totenmaske can use this ability on one of four different features per use: ears (target becomes deaf), eyes (target becomes blind), mouth (target cannot speak or eat), or nose (target cannot smell).  Multiple uses can have increasingly serious effects (such as sealing the mouth and nose, which causes suffocation).|TotenmaskeShapeFleshDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Totenmaske ~ Shape Flesh"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.269",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1291,
-    "record_key": "Totenmaske ~ Shape Flesh"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1291,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Totenmaske ~ Shape Flesh",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

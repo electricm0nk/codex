@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Ill Omen",
-    "school": "Enchantment",
-    "level": 1,
     "description": "You afflict the target with bad luck. On the next d20 roll the target makes, it must roll twice and take the less favorable result. For every five caster levels you have, the target must roll twice on an additional d20 roll (to a maximum of five rolls at 20th level).  A target who can speak and has at least one free hand and who is aware of the spell and its effects (such as from a Spellcraft check to identify the spell as it is cast) can negate one reroll by spending a move action to utter a brief prayer or good luck charm to appease the spirits of ill fortune.",
-    "full_text": true
+    "full_text": true,
+    "key": "Ill Omen",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Target rolls twice for checks and attacks and uses worst roll.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You afflict the target with bad luck. On the next d20 roll the target makes, it must roll twice and take the less favorable result. For every five caster levels you have, the target must roll twice on an additional d20 roll (to a maximum of five rolls at 20th level).  A target who can speak and has at least one free hand and who is aware of the spell and its effects (such as from a Spellcraft check to identify the spell as it is cast) can negate one reroll by spending a move action to utter a brief prayer or good luck charm to appease the spirits of ill fortune.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or until discharged"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(hair from a black cat)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/illOmen.html#_ill-omen"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 150,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1987,
-    "record_key": "Ill Omen"
+    "record_key": "Ill Omen",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

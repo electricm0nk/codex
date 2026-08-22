@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Dolphin ~ Hold Breath",
     "delivery": "Extraordinary",
@@ -17,6 +15,36 @@
       "beastiary:companion:companion_dolphin",
       "beastiary:companion:companion_dolphin_orca"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|HoldBreathDuration|CONSCORE*6"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HoldBreathDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can hold your breath for %1 rounds before it risks drowning.|HoldBreathDuration"
+      },
+      {
+        "key": "KEY",
+        "value": "Dolphin ~ Hold Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.88",
     "stat_adjustments": [],
@@ -25,16 +53,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
-    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
-    "line": 32,
-    "record_key": "Dolphin ~ Hold Breath"
-  },
+  "ingested_at": "2026-08-18T22:35:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Dolphin ~ Hold Breath",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

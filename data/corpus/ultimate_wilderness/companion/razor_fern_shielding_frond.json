@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Razor Fern ~ Shielding Frond",
     "delivery": "Extraordinary",
@@ -15,6 +13,28 @@
       "ultimate_wilderness:companion:familiar_razor_fern",
       "ultimate_wilderness:companion:razor_fern"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A razor fern can deflect incoming attacks as a move action, gaining it a +2 shield bonus to its AC until the beginning of its next turn."
+      },
+      {
+        "key": "KEY",
+        "value": "Razor Fern ~ Shielding Frond"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RazorFernRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.205",
     "stat_adjustments": [],
@@ -24,16 +44,18 @@
       "RazorFernRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 326,
-    "record_key": "Razor Fern ~ Shielding Frond"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 326,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Razor Fern ~ Shielding Frond",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

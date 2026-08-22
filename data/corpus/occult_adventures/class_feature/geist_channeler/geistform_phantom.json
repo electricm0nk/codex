@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Geist Channeler ~ Geistform Phantom",
+    "name": "Geistform Phantom",
+    "class": "Spiritualist",
+    "description": "A geist channeler's phantom can't manifest in ectoplasmic form, and is limited to manifesting in incorporeal form. As a result, the phantom has no Strength score, and has a starting Wisdom score of 12. Instead of gaining two slam attacks, it gains only a single slam attack that deals 1d8 points of damage. The slam attack's damage increases to 1d10 points at 5th level, to 2d6 at 10th level, to 2d8 at 15th level, and 2d10 at 20th level (assuming the phantom is Medium). The phantom does not gain the magic attacks ability at 4th level. While manifested incorporeally, a geist channeler's phantom can attack only other incorporeal creatures. Because the phantom is incorporeal, the damage it deals to such creatures is not reduced as a result of them being incorporeal. At 5th level, the phantom can take a swift action to infuse itself with trace amounts of ectoplasm so it can attack corporeal creatures for 1 round. During that time, it deals half damage to corporeal creatures with its slam, and corporeal creatures with nonmagical weapons deal half damage to the phantom. At 10th level, when the phantom infuses itself, its attacks deal normal damage to corporeal creatures. This ability alters the phantom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geist Channeler ~ Geistform Phantom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Geist Channeler Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A geist channeler's phantom can't manifest in ectoplasmic form, and is limited to manifesting in incorporeal form. As a result, the phantom has no Strength score, and has a starting Wisdom score of 12. Instead of gaining two slam attacks, it gains only a single slam attack that deals 1d8 points of damage. The slam attack's damage increases to 1d10 points at 5th level, to 2d6 at 10th level, to 2d8 at 15th level, and 2d10 at 20th level (assuming the phantom is Medium). The phantom does not gain the magic attacks ability at 4th level. While manifested incorporeally, a geist channeler's phantom can attack only other incorporeal creatures. Because the phantom is incorporeal, the damage it deals to such creatures is not reduced as a result of them being incorporeal. At 5th level, the phantom can take a swift action to infuse itself with trace amounts of ectoplasm so it can attack corporeal creatures for 1 round. During that time, it deals half damage to corporeal creatures with its slam, and corporeal creatures with nonmagical weapons deal half damage to the phantom. At 10th level, when the phantom infuses itself, its attacks deal normal damage to corporeal creatures. This ability alters the phantom."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1627,
+    "record_key": "Geist Channeler ~ Geistform Phantom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

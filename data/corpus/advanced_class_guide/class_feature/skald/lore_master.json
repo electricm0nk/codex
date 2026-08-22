@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald ~ Lore Master",
+    "name": "Lore Master",
+    "class": "Skald",
+    "description": "At 7th level, the skald becomes a master of many different types of lore, and can choose to take 10 on any Knowledge skill check that he has ranks in. Once per day, the skald can take 20 on any Knowledge skill check as a standard action, instead of spending the normal time taking 20 requires. He can use this ability to take 20 on a Knowledge skill check twice per day at 13th level and three times per day 19th level. This ability can be used %1 times per day.|SkaldLoreMasterUsesPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Lore Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldLoreMaster.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkaldLoreMasterUsesPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, the skald becomes a master of many different types of lore, and can choose to take 10 on any Knowledge skill check that he has ranks in. Once per day, the skald can take 20 on any Knowledge skill check as a standard action, instead of spending the normal time taking 20 requires. He can use this ability to take 20 on a Knowledge skill check twice per day at 13th level and three times per day 19th level. This ability can be used %1 times per day.|SkaldLoreMasterUsesPerDay"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldLoreMasterUsesPerDay|min((SkaldLVL-1)/6,3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1732,
+    "record_key": "Skald ~ Lore Master"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

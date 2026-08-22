@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Chronicler ~ Master Scribe",
+    "name": "Master Scribe",
+    "class": "Pathfinder Chronicler",
+    "description": "A Pathfinder chronicler adds her class level as a bonus on all Linguistics and Profession (scribe) checks, as well as Use Magic Device checks involving scrolls or other written magical items. A Pathfinder chronicler can make Linguistics checks to decipher text as a full-round action and can always take 10 on Linguistics and Profession (scribe) checks, even if distracted or endangered.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Chronicler ~ Master Scribe"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder ChroniclerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A Pathfinder chronicler adds her class level as a bonus on all Linguistics and Profession (scribe) checks, as well as Use Magic Device checks involving scrolls or other written magical items. A Pathfinder chronicler can make Linguistics checks to decipher text as a full-round action and can always take 10 on Linguistics and Profession (scribe) checks, even if distracted or endangered."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.390"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3051,
+    "record_key": "Pathfinder Chronicler ~ Master Scribe"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

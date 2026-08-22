@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Basic Aerokinesis",
+    "name": "Basic Aerokinesis",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Sp); Level 1; Burn 0 You can create a light breeze that blows against a creature or object from a direction of your choice that follows the target wherever it goes. The breeze grants the subject a +2 bonus on saves against very hot conditions, severe heat, breath weapons, and cloud vapors and gases (such as cloudkill, stinking cloud, and inhaled poisons). This wild talent doesn't function without air or while underwater. You can have only one such breeze active at any one time. You can also use your aerokinesis to make it harder to detect you or others by scent. You can designate a number of creatures or objects equal to your Constitution bonus. These creatures and objects always count as being downwind for the purpose of determining the distance at which they can be detected by scent. This effect lasts for 1 hour or until you use basic aerokinesis again, whichever comes first.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Basic Aerokinesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Sp); Level 1; Burn 0 You can create a light breeze that blows against a creature or object from a direction of your choice that follows the target wherever it goes. The breeze grants the subject a +2 bonus on saves against very hot conditions, severe heat, breath weapons, and cloud vapors and gases (such as cloudkill, stinking cloud, and inhaled poisons). This wild talent doesn't function without air or while underwater. You can have only one such breeze active at any one time. You can also use your aerokinesis to make it harder to detect you or others by scent. You can designate a number of creatures or objects equal to your Constitution bonus. These creatures and objects always count as being downwind for the purpose of determining the distance at which they can be detected by scent. This effect lasts for 1 hour or until you use basic aerokinesis again, whichever comes first."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 733,
+    "record_key": "Wild Talent ~ Basic Aerokinesis"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

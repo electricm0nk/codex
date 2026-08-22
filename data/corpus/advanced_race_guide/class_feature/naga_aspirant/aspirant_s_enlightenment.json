@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Naga Aspirant ~ Aspirant's Enlightenment",
+    "name": "Aspirant's Enlightenment",
+    "class": "Druid",
+    "description": "A naga aspirant gains a +4 bonus on saving throws against the spell-like abilities, supernatural abilities, and poison of nagas. This ability replaces resist nature's lure.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naga Aspirant ~ Aspirant's Enlightenment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A naga aspirant gains a +4 bonus on saving throws against the spell-like abilities, supernatural abilities, and poison of nagas. This ability replaces resist nature's lure."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 916,
+    "record_key": "Naga Aspirant ~ Aspirant's Enlightenment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

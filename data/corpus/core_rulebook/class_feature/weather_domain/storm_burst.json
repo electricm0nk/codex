@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weather Domain ~ Storm Burst",
+    "name": "Storm Burst",
+    "class": "Weather Domain",
+    "description": "As a standard action, you can create a storm burst targeting any foe within 30 feet as a ranged touch attack. The storm burst deals 1d6 points of nonlethal damage. In addition, the target is buffeted by winds and rain, causing it to take a -2 penalty on attack rolls for 1 round. You can use this ability %2 times per day|StormBurstTimes|PREVARLT:DomainWeatherLVL,2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weather Domain ~ Storm Burst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StormBurstTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a storm burst targeting any foe within 30 feet as a ranged touch attack. The storm burst deals 1d6 points of nonlethal damage. In addition, the target is buffeted by winds and rain, causing it to take a -2 penalty on attack rolls for 1 round. You can use this ability %2 times per day|StormBurstTimes|PREVARLT:DomainWeatherLVL,2"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a storm burst targeting any foe within 30 feet as a ranged touch attack. The storm burst deals 1d6+%1 points of nonlethal damage. In addition, the target is buffeted by winds and rain, causing it to take a -2 penalty on attack rolls for 1 round. You can use this ability %2 times per day|DomainWeatherLVL/2|StormBurstTimes|PREVARGTEQ:DomainWeatherLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StormBurstTimes|DomainWeatherTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|StormBurstTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|StormBurstTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3277,
+    "record_key": "Weather Domain ~ Storm Burst"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

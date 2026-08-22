@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Life Channeler ~ Wicker Talismans",
+    "name": "Wicker Talismans",
+    "class": "Druid",
+    "description": "A life channeler gains a selection of wicker talismans that can store and convert the life energy of sentient creatures into the growth, health, and fertility of plants around her. The life channeler gains one wicker talisman corresponding to each level of druid spells she can cast, starting with 1st-level spells. These talismans are initially empty, but can hold life energy. When the life channeler ritualistically kills a creature with a coup de grace, she can store life energy in a talisman instead of gaining the plant growth effect. The creature must be of a CR equal to at least twice the spell level of the corresponding talisman. For instance, a CR 8 creature's life energy could provide energy for a talisman holding up to a 4th-level spell. A talisman is either full or empty; it can't hold more than one creature's life energy. A life channeler can expend the energy stored in a talisman to cast her domain spell of the talisman's level without expending a spell slot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Channeler ~ Wicker Talismans"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "DESC",
+        "value": "A life channeler gains a selection of wicker talismans that can store and convert the life energy of sentient creatures into the growth, health, and fertility of plants around her. The life channeler gains one wicker talisman corresponding to each level of druid spells she can cast, starting with 1st-level spells. These talismans are initially empty, but can hold life energy. When the life channeler ritualistically kills a creature with a coup de grace, she can store life energy in a talisman instead of gaining the plant growth effect. The creature must be of a CR equal to at least twice the spell level of the corresponding talisman. For instance, a CR 8 creature's life energy could provide energy for a talisman holding up to a 4th-level spell. A talisman is either full or empty; it can't hold more than one creature's life energy. A life channeler can expend the energy stored in a talisman to cast her domain spell of the talisman's level without expending a spell slot."
+      },
+      {
+        "key": "DESC",
+        "value": "A life channeler gathers a flock of willing sacrifices. This grants her the benefits of the Leadership feat, except that using a follower as a human sacrifice with this ability doesn't cause the life channeler to take a penalty to her Leadership score.|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Leadership|PRECLASS:1,Druid=6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 112,
+    "record_key": "Life Channeler ~ Wicker Talismans"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Item Master",
+    "name": "Item Master",
+    "class": "Pathfinder Savant",
+    "description": "You can spend an hour focusing your energies on a single non-charged magic item that requires an action to activate. At the end of this hour, that item becomes attuned to you, and from that point on, that specific item can use your caster level to resolve its effects rather than the item's caster level. You can change which item is attuned to you by repeating the attunement ritual, but you lose attunement to the previous item. You can have only one item attuned to you at a time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Item Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend an hour focusing your energies on a single non-charged magic item that requires an action to activate. At the end of this hour, that item becomes attuned to you, and from that point on, that specific item can use your caster level to resolve its effects rather than the item's caster level. You can change which item is attuned to you by repeating the attunement ritual, but you lose attunement to the previous item. You can have only one item attuned to you at a time."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 411,
+    "record_key": "Pathfinder Savant ~ Item Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

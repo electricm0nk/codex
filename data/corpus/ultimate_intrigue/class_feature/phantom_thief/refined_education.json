@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phantom Thief ~ Refined Education",
+    "name": "Refined Education",
+    "class": "Rogue",
+    "description": "A phantom thief adds Handle Animal, Heal, Ride, Spellcraft, Survival, and all Knowledge skills to her list of class skills. Furthermore, she selects one of her rogue class skills and adds half her rogue level on all skill checks using that skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief ~ Refined Education"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RefinedEducationSkillCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A phantom thief adds Handle Animal, Heal, Ride, Spellcraft, Survival, and all Knowledge skills to her list of class skills. Furthermore, she selects one of her rogue class skills and adds half her rogue level on all skill checks using that skill."
+      },
+      {
+        "key": "DESC",
+        "value": " At 3rd level and every 2 rogue levels thereafter, she selects an additional rogue class skill and adds half her rogue level on all skill checks using that skill as well.|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "DESC",
+        "value": " This ability alters the rogue's class skills."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Refined Education Skill Choice|RefinedEducationSkillCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RefinedEducationSkillCount|(RogueLVL-1)/2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Handle Animal|Heal|Ride|Spellcraft|Survival|TYPE=Knowledge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 749,
+    "record_key": "Phantom Thief ~ Refined Education"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

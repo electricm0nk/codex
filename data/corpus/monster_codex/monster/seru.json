@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-11T19:42:15Z",
   "data": {
     "ability_keys": [
       "monster_codex:monster_ability:seru_poison",
@@ -25,6 +23,120 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Seru"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo (cannot speak)|Common (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In rocky areas|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|-40"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Seru"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d6,SPROP=plus poison"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Venom,Natural.Ranged.Touch.Weapon,*1,Poison"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      }
+    ],
     "size": "S",
     "source_page": "p.208",
     "speeds": [
@@ -38,16 +150,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races.lst",
-    "sha256": "80f24ceace9f3ad0ac120a959781688b5e9fd072a258b48b1638f79a1cde8800",
-    "line": 5,
-    "record_key": "Seru"
-  },
+  "ingested_at": "2026-08-11T19:42:15Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races.lst",
+    "record_key": "Seru",
+    "sha256": "80f24ceace9f3ad0ac120a959781688b5e9fd072a258b48b1638f79a1cde8800"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

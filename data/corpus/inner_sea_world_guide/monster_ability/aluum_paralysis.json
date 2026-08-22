@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "corpus_key": "Aluum ~ Paralysis",
     "delivery": "Supernatural",
@@ -15,19 +13,47 @@
     "owners": [
       "inner_sea_world_guide:monster:aluum"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The touch of an aluum paralyzes living creatures that fail a DC %1 Fortitude save for 1d4 minutes.|10+TL/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Aluum ~ Paralysis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.307"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.307",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
-    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
-    "line": 8,
-    "record_key": "Aluum ~ Paralysis"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "record_key": "Aluum ~ Paralysis",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

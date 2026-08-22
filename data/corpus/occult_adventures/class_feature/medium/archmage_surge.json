@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Archmage Surge",
+    "name": "Archmage Surge",
+    "class": "Medium",
+    "description": "(Intermediate) You can allow the archmage spirit to gain 1 point of influence over you in order to cast one of your medium spells known without expending a spell slot. When you do so, the caster level and DC of the spell increase by 1, and you can't apply metamagic to the spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Archmage Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) You can allow the archmage spirit to gain 1 point of influence over you in order to cast one of your medium spells known without expending a spell slot. When you do so, the caster level and DC of the spell increase by 1, and you can't apply metamagic to the spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 840,
+    "record_key": "Medium ~ Archmage Surge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

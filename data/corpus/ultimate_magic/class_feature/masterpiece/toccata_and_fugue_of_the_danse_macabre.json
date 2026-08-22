@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterpiece ~ Toccata and Fugue of the Danse Macabre",
+    "name": "Toccata and Fugue of the Danse Macabre",
+    "class": "Masterpiece",
+    "description": "Your spooky music blurs the boundaries between life and death, confusing the senses of undead creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Toccata and Fugue of the Danse Macabre"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ToccataAndFugueOfTheDanseMacabreTargets|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your spooky music blurs the boundaries between life and death, confusing the senses of undead creatures."
+      },
+      {
+        "key": "DESC",
+        "value": " The complex notes and layered repetitions of this masterpiece bring to mind the countless dead of ages past and suffuse those who listen to it with a subtle melancholia and grim acceptance of the temporary nature of life. Starting with a trio of notes, repeated frequently and with ever-greater insistence, it becomes a whirling, head-spinning vortex of sound. Upon completing the performance, you and up to %1 allies within listening range become hidden from undead, as if under the effects of a hide from undead spell. As with hide from undead, one creature breaking the effect ends the benefit of the performance for all recipients. But by spending an additional round of bardic performance when you perform or maintain the masterpiece, you can dedicate a refrain to a particular ally; even if one ally breaks the hide from undead effect, the ally receiving the dedication remains hidden so long as he does not break the effect himself. You can dedicate a refrain multiple times in the performance (up to once per round) as long as you spend 1 round of bardic performance each time for the ally receiving a dedication.  Use: 1 bardic performance round per round of the performance, +1 round per ally affected, +1 round per dedicated refrain.  Action: 1 minute.|ToccataAndFugueOfTheDanseMacabreTargets"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ToccataAndFugueOfTheDanseMacabreTargets|MasterpieceLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 182,
+    "record_key": "Masterpiece ~ Toccata and Fugue of the Danse Macabre"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

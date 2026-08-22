@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Packmaster ~ Pack Bond",
+    "name": "Pack Bond",
+    "class": "Hunter",
+    "description": "A packmaster can have more than one animal companion, but she must divide her effective druid level between her companions to determine the abilities of each one. For example, a 4th-level packmaster can have one 4th-level animal companion, two 2nd-level companions, one 3rd-level companion and one 1st-level companion, or four 1st-level companions. A packmaster's precise companion, woodland stride, and teamwork feats each apply to only one of her animal companions at a time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Packmaster ~ Pack Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Extraordinary.HunterAnimalCompanion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_PackmasterCompanion|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A packmaster can have more than one animal companion, but she must divide her effective druid level between her companions to determine the abilities of each one. For example, a 4th-level packmaster can have one 4th-level animal companion, two 2nd-level companions, one 3rd-level companion and one 1st-level companion, or four 1st-level companions. A packmaster's precise companion, woodland stride, and teamwork feats each apply to only one of her animal companions at a time."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_PackmasterCompanion|HunterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3158,
+    "record_key": "Packmaster ~ Pack Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

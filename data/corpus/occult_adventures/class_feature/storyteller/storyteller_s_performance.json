@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Storyteller ~ Storyteller's Performance",
+    "name": "Storyteller's Performance",
+    "class": "Medium",
+    "description": "A storyteller gains the ability to recall snippets of tales that are relevant to the current situation. This ability is similar in all respects to bardic performance as used by a bard of the storyteller's medium level (including interactions with feats, spells, and other abilities), and uses Perform (act), Perform (comedy), or Perform (oratory) as the storyteller's performance skill. However, a storyteller gains only the following types of bardic performance: inspire courage (2nd level), inspire competence (3rd level), inspire greatness (9th level), and inspire heroics (15th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storyteller ~ Storyteller's Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A storyteller gains the ability to recall snippets of tales that are relevant to the current situation. This ability is similar in all respects to bardic performance as used by a bard of the storyteller's medium level (including interactions with feats, spells, and other abilities), and uses Perform (act), Perform (comedy), or Perform (oratory) as the storyteller's performance skill. However, a storyteller gains only the following types of bardic performance: inspire courage (2nd level), inspire competence (3rd level), inspire greatness (9th level), and inspire heroics (15th level)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Courage|PREVARGTEQ:BardicPerformanceLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Competence|PREVARGTEQ:BardicPerformanceLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Greatness|PREVARGTEQ:BardicPerformanceLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Heroics|PREVARGTEQ:BardicPerformanceLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceDuration|2+CHA+(2*BardicPerformanceLVL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceLVL|MediumLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BardicPerformanceDuration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per days"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Bardic Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1445,
+    "record_key": "Storyteller ~ Storyteller's Performance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

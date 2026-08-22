@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Cloistered Cleric",
+    "name": "Cloistered Cleric",
+    "class": "Cleric Archetype",
+    "description": "Cloistered clerics typically live in a temple and rarely interact with the outside world. They are bookish and well learned in the lore of the faith, paying less attention to its magical and martial aspects. A cloistered cleric has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Cloistered Cleric"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericArmorProficiency.ClericWeaponProficiency.ClericClassSkills.ClericSkillRanks.ClericDomains.ClericSpellcasting"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Cloistered Cleric],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericArmorProficiency,TYPE.ClericWeaponProficiency,TYPE.ClericClassSkills,TYPE.ClericSkillRanks,TYPE.ClericSpellcasting,TYPE.ClericDomains]"
+      },
+      {
+        "key": "DESC",
+        "value": "Cloistered clerics typically live in a temple and rarely interact with the outside world. They are bookish and well learned in the lore of the faith, paying less attention to its magical and martial aspects. A cloistered cleric has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Scribe Scroll|PRECLASS:1,Cleric=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cloistered Cleric Proficiencies|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cloistered Cleric Class Skills|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cloistered Cleric Skill Ranks|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cloistered Cleric ~ Diminished Spellcasting|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cloistered Cleric ~ Breadth of Knowledge|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cloistered Cleric ~ Well-Read|PRECLASS:1,Cleric=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Cloistered Cleric ~ Verbal Instruction|PRECLASS:1,Cleric=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1001,
+    "record_key": "Cleric Archetype ~ Cloistered Cleric"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

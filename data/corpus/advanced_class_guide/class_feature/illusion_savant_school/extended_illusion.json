@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Illusion Savant School ~ Extended Illusion",
+    "name": "Extended Illusion",
+    "class": "Illusion Savant School",
+    "description": "Any illusion spell you cast with a duration of \"Concentration\" lasts an additional %1 rounds after you stop maintaining concentration.|IllusionExtendedIllusionBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Illusion Savant School ~ Extended Illusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionExtendedIllusionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any illusion spell you cast with a duration of \"Concentration\" lasts an additional %1 rounds after you stop maintaining concentration.|IllusionExtendedIllusionBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make one illusion spell with a duration of \"Concentration\" become permanent. You can have no more than one illusion made permanent in this way at one time. If you designate another illusion as permanent, the previous permanent illusion ends.|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionExtendedIllusionBonus|max(1,ArcanistSavantSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2568,
+    "record_key": "Illusion Savant School ~ Extended Illusion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

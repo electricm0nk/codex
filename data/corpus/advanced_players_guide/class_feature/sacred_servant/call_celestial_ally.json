@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Servant ~ Call Celestial Ally",
+    "name": "Call Celestial Ally",
+    "class": "Paladin",
+    "description": "At 8th level, a sacred servant can call upon her deity for aid, in the form of a powerful servant. This allows the sacred servant to cast lesser planar ally once per week as a spell-like ability without having to pay the material component cost or the servant (for reasonable tasks). At 12th level, this improves to planar ally and at 16th level, this improves to greater planar ally. The sacred servant's caster level for this effect is equal to her paladin level. This ability replaces aura of resolve.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Servant ~ Call Celestial Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.PaladinClassFeatures.SpecialQuality.SpellLike.PaladinAuraOfResolve"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a sacred servant can call upon her deity for aid, in the form of a powerful servant. This allows the sacred servant to cast lesser planar ally once per week as a spell-like ability without having to pay the material component cost or the servant (for reasonable tasks). At 12th level, this improves to planar ally and at 16th level, this improves to greater planar ally. The sacred servant's caster level for this effect is equal to her paladin level. This ability replaces aura of resolve."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2497,
+    "record_key": "Sacred Servant ~ Call Celestial Ally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

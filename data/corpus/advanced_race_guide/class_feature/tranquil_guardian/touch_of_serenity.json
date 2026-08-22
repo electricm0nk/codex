@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tranquil Guardian ~ Touch of Serenity",
+    "name": "Touch of Serenity",
+    "class": "Paladin",
+    "description": "The tranquil guardian gains Touch of Serenity as a bonus feat, even if she does not meet the prerequisites. At 6th level, and every six levels thereafter, the duration of a tranquil guardian's Touch of Serenity increases by 1 round. Each round on its turn, the target may attempt a new Will save to end the effect. The duration does not stack; only the longest remaining duration applies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tranquil Guardian ~ Touch of Serenity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The tranquil guardian gains Touch of Serenity as a bonus feat, even if she does not meet the prerequisites. At 6th level, and every six levels thereafter, the duration of a tranquil guardian's Touch of Serenity increases by 1 round. Each round on its turn, the target may attempt a new Will save to end the effect. The duration does not stack; only the longest remaining duration applies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Touch of Serenity"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfSerenityDuration|PaladinLVL/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 425,
+    "record_key": "Tranquil Guardian ~ Touch of Serenity"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

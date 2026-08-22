@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Protean Subdomain ~ Aura of Chaos",
+    "name": "Aura of Chaos",
+    "class": "Protean Subdomain",
+    "description": "At 8th level, you can surround yourself with a field of wild energies. These energies manifest as a 30-foot aura of chaos %1 rounds per day. All enemies within this aura must declare one type of action at the start of their turn (attack, cast a spell, move, use an item, or activate a special ability) and make a Will save.  Creatures that fail the Will save must take an action other than their declared action. If they succeed, they must take the declared action. Creatures cannot select actions that they cannot perform.|DomainChaosLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protean Subdomain ~ Aura of Chaos"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can surround yourself with a field of wild energies. These energies manifest as a 30-foot aura of chaos %1 rounds per day. All enemies within this aura must declare one type of action at the start of their turn (attack, cast a spell, move, use an item, or activate a special ability) and make a Will save.  Creatures that fail the Will save must take an action other than their declared action. If they succeed, they must take the declared action. Creatures cannot select actions that they cannot perform.|DomainChaosLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1791,
+    "record_key": "Protean Subdomain ~ Aura of Chaos"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

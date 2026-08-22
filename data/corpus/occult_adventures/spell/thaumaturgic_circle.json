@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "As magic circle, but affecting a non-alignment subtype or outsider race.",
+    "key": "Thaumaturgic Circle",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=3|Cleric,Inquisitor,Sorcerer,Summoner,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M (a 3-ft.-diameter circle of powdered silver), DF"
+      },
+      {
+        "key": "DESC",
+        "value": "As magic circle, but affecting a non-alignment subtype or outsider race."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Thaumaturgic Circle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No; see text"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-radius emanation from touched creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 132,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Thaumaturgic Circle",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

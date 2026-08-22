@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Shield Archon ~ Spear and Shield",
     "delivery": "Supernatural",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_2:monster:archon_shield"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|ATTACK|2|PREEQUIP:1,Tower Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At will as a free action, a shield archon can transform his hands into a +1 tower shield and a +3 shortspear, or either individually, or back to hands again.  He cannot transform both hands into shields or both into shortspears.  A shield archon never takes the typical -2 penalty on attack rolls while wielding a tower shield.  A shield archon's weapons cannot be disarmed, but they can be sundered.  If a shield archon loses his spear or shield, he can manifest a new one as a full-round action.  When a shield archon is slain, these two items fade away - they cannot be looted or wielded by any other creature."
+      },
+      {
+        "key": "KEY",
+        "value": "Shield Archon ~ Spear and Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.31",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 116,
-    "record_key": "Shield Archon ~ Spear and Shield"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 116,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Shield Archon ~ Spear and Shield",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Arcane Redoubt",
+    "name": "Arcane Redoubt",
+    "class": "Magus Arcana",
+    "description": "As a swift action, the magus can expend 1 point from his arcane pool to treat his shield bonus to AC (including any enhancement bonus) as a bonus to touch AC until the beginning of his next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Arcane Redoubt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, the magus can expend 1 point from his arcane pool to treat his shield bonus to AC (including any enhancement bonus) as a bonus to touch AC until the beginning of his next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 905,
+    "record_key": "Magus Arcana ~ Arcane Redoubt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

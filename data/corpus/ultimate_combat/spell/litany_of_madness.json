@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This litany is a sermon of madness. The target is confused. At the start of each of its turns, it can make a Will saving throw against the confused effect (DC of the spell). If the target fails the save, it continues to be confused. If it makes the save, the effect ends. While subject to this spell, the target cannot be the target of another spell that has the word \"litany\" in the title.",
+    "key": "Litany of Madness",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=4|Inquisitor=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "A single target is confused for at least 1 round.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This litany is a sermon of madness. The target is confused. At the start of each of its turns, it can make a Will saving throw against the confused effect (DC of the spell). If the target fails the save, it continues to be confused. If it makes the save, the effect ends. While subject to this spell, the target cannot be the target of another spell that has the word \"litany\" in the title.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 or more rounds (see below)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "no, see below"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/litanyOfMadness.html#_litany-of-madness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Charm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Litany of Madness",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

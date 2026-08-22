@@ -1,0 +1,78 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Living Grimoire Holy Text",
+    "name": "Living Grimoire Holy Text",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Living Grimoire Holy Text"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cold Iron"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Exotic.Light.Finesseable.Bludgeoning"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+    "record_key": "Living Grimoire Holy Text",
+    "sha256": "daa97d61fd7d37ff29702c8b6aeccdd05a6669ded9a95146ff1923072284ee7a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Infiltrator ~ Master of Disguise",
+    "name": "Master of Disguise",
+    "class": "Investigator",
+    "description": "An infiltrator can use disguise with great results. When disguising himself as a different gender, race, age category, or size category, an infiltrator reduces the penalties for each by -2. For example, if the infiltrator disguises himself as a female two age categories older than himself, he would take a -2 to the check instead of a -6. Also, an infiltrator can disguise himself with 1d3 minutes of work (instead of the normal 1d3 x 10 minutes of work). This ability replaces trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Master of Disguise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Infiltrator Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary.InvestigatorTrapfinding"
+      },
+      {
+        "key": "DESC",
+        "value": "An infiltrator can use disguise with great results. When disguising himself as a different gender, race, age category, or size category, an infiltrator reduces the penalties for each by -2. For example, if the infiltrator disguises himself as a female two age categories older than himself, he would take a -2 to the check instead of a -6. Also, an infiltrator can disguise himself with 1d3 minutes of work (instead of the normal 1d3 x 10 minutes of work). This ability replaces trapfinding."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3318,
+    "record_key": "Infiltrator ~ Master of Disguise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

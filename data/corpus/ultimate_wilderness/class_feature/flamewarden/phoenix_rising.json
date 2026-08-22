@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flamewarden ~ Phoenix Rising",
+    "name": "Phoenix Rising",
+    "class": "Ranger",
+    "description": "If a flamewarden dies, his body explodes in a conflagration in a 20-foot spread. Each hostile creature in the area takes 10d6 points of fire damage unless it succeeds at a Reflex save (DC %1) for half damage. The flames don't harm the flamewarden's allies, who instead are healed 5d6 points of damage, and any poisons they are currently suffering are neutralized as per neutralize poison. The flamewarden's body is reduced to ashes by the explosion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flamewarden ~ Phoenix Rising"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.FlamewardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If a flamewarden dies, his body explodes in a conflagration in a 20-foot spread. Each hostile creature in the area takes 10d6 points of fire damage unless it succeeds at a Reflex save (DC %1) for half damage. The flames don't harm the flamewarden's allies, who instead are healed 5d6 points of damage, and any poisons they are currently suffering are neutralized as per neutralize poison. The flamewarden's body is reduced to ashes by the explosion."
+      },
+      {
+        "key": "DESC",
+        "value": "The flamewarden gains immunity to fire, and once per week, the flamewarden rises from the ashes of his own destruction 1 round after dying. The flamewarden's body re-forms with all his equipment, and he returns to life with half his maximum hit points. Any ability scores that were 0 become 1, and nonmagical diseases and poisons are cured. A limited wish, miracle, or wish spell cast before he rises from the ashes prevents him from doing so, as does the area of an unhallow effect.|10+RangerLVL/2+CON|PRECLASS:1,Ranger=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 911,
+    "record_key": "Flamewarden ~ Phoenix Rising"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

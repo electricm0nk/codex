@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Crossbowman ~ Penetrating Shot",
+    "name": "Penetrating Shot",
+    "class": "Fighter",
+    "description": "At 19th level, when a crossbowman confirms a critical hit with a crossbow, the bolt pierces the target and can strike another creature in line behind it. The crossbowman must be able to trace a line starting at his space and passing through both targets to make this additional attack. The secondary attack is made at a -4 penalty, in addition to any modifiers for added range. If this attack is also a critical hit, the bolt can continue to hit another target, but the penalties stack. This ability replaces armor mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Crossbowman ~ Penetrating Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorMastery"
+      },
+      {
+        "key": "DESC",
+        "value": "At 19th level, when a crossbowman confirms a critical hit with a crossbow, the bolt pierces the target and can strike another creature in line behind it. The crossbowman must be able to trace a line starting at his space and passing through both targets to make this additional attack. The secondary attack is made at a -4 penalty, in addition to any modifiers for added range. If this attack is also a critical hit, the bolt can continue to hit another target, but the penalties stack. This ability replaces armor mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2147,
+    "record_key": "Fighter Crossbowman ~ Penetrating Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

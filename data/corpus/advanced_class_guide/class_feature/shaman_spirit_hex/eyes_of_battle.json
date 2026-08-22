@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Eyes of Battle",
+    "name": "Eyes of Battle",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman's senses become magically heightened in the heat of battle. As a swift action, she can grant herself a +10 insight bonus for 1 round on Perception checks made to notice and pinpoint invisible creatures within 30 feet. She can instead use this ability as a swift action to ignore the affects of cover or partial cover (but not total cover) on her next attack, as long as that attack is made before the end of her next turn. The shaman can use this ability %1/day.|ShamanEyesOfBattleTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Eyes of Battle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanBattleSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanEyesOfBattleTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman's senses become magically heightened in the heat of battle. As a swift action, she can grant herself a +10 insight bonus for 1 round on Perception checks made to notice and pinpoint invisible creatures within 30 feet. She can instead use this ability as a swift action to ignore the affects of cover or partial cover (but not total cover) on her next attack, as long as that attack is made before the end of her next turn. The shaman can use this ability %1/day.|ShamanEyesOfBattleTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanEyesOfBattleTimes|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1506,
+    "record_key": "Shaman Spirit Hex ~ Eyes of Battle"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

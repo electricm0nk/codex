@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Thunder Foot",
+    "name": "Thunder Foot",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman's body thickens and becomes more muscular. For the purpose of the overrun combat maneuver, she treats her shaman level as her base attack bonus when calculating her CMB and CMD.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Thunder Foot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanMammothHex.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman's body thickens and becomes more muscular. For the purpose of the overrun combat maneuver, she treats her shaman level as her base attack bonus when calculating her CMB and CMD."
+      },
+      {
+        "key": "DESC",
+        "value": " The shaman gains Improved Overrun as a bonus feat.|PRECLASS:1,Shaman=7"
+      },
+      {
+        "key": "DESC",
+        "value": " The shaman gains Greater Overrun as a bonus feat.|PRECLASS:1,Shaman=11"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Thunder Foot"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanMammothSpirit,1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMB_Overrun|ShamanLVL-BASEAB"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMD_Overrun|ShamanLVL-BASEAB"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1210,
+    "record_key": "Shaman Spirit Hex ~ Thunder Foot"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

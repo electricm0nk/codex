@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Crime Domain ~ Thief's Soul",
+    "name": "Thief's Soul",
+    "class": "Crime Domain",
+    "description": "You gain Improved Steal, Greater Steal, and Quick Steal as bonus feats, even if you don't meet the prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crime Domain ~ Thief's Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Improved Steal, Greater Steal, and Quick Steal as bonus feats, even if you don't meet the prerequisites."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Steal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Steal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Quick Steal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 429,
+    "record_key": "Crime Domain ~ Thief's Soul"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

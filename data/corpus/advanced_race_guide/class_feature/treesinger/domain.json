@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Treesinger ~ Domain",
+    "name": "Domain",
+    "class": "Treesinger",
+    "description": "The treesinger gains a Cleric domain. When determining the powers and bonus spells granted by this domain, the treesinger's effective cleric level is equal to her druid level. A treesinger who selects this option also receives additional domain spell slots, just like a cleric. She must prepare the spell from her domain in this slot, and this spell cannot be used to cast a spell spontaneously.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treesinger ~ Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.PlantBondOption"
+      },
+      {
+        "key": "DESC",
+        "value": "The treesinger gains a Cleric domain. When determining the powers and bonus spells granted by this domain, the treesinger's effective cleric level is equal to her druid level. A treesinger who selects this option also receives additional domain spell slots, just like a cleric. She must prepare the spell from her domain in this slot, and this spell cannot be used to cast a spell spontaneously."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidPlantAllowed,DruidGrowthAllowed,DruidJungleAllowed,DruidSwampAllowed|1,PreventDruidInquisitions|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 146,
+    "record_key": "Treesinger ~ Domain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

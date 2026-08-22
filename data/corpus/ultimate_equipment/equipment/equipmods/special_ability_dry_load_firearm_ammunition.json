@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 30.0,
+    "description": "Dry load cartridges can be used to load guns underwater or in other airless environments, such as a vacuum.",
+    "key": "Special Ability ~ Dry Load ~ Firearm / Ammunition",
+    "name": "Dry Load",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Dry Load ~ Firearm / Ammunition"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.FirearmBullet.FirearmCartridge"
+      },
+      {
+        "key": "COST",
+        "value": "30"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Ammunition,FirearmCartridge"
+      },
+      {
+        "key": "SPROP",
+        "value": "Dry load cartridges can be used to load guns underwater or in other airless environments, such as a vacuum."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 192,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Dry Load ~ Firearm / Ammunition",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

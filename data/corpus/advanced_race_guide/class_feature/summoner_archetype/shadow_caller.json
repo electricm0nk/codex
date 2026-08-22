@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner Archetype ~ Shadow Caller",
+    "name": "Shadow Caller",
+    "class": "Summoner Archetype",
+    "description": "While most summoners can call any manner of creature from across the planes to serve them in combat, supplementing the skills of their eidolon with a diverse range of creatures, others eschew this broad utility and instead concentrate upon calling forth entities from the Shadow Plane. A shadow caller has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Shadow Caller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Shadow Caller],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerEidolon]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsFetchling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "While most summoners can call any manner of creature from across the planes to serve them in combat, supplementing the skills of their eidolon with a diverse range of creatures, others eschew this broad utility and instead concentrate upon calling forth entities from the Shadow Plane. A shadow caller has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Class Skills|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Shadow Summoning|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Shadow Eidolon|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 522,
+    "record_key": "Summoner Archetype ~ Shadow Caller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

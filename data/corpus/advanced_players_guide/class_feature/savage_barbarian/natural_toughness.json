@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savage Barbarian ~ Natural Toughness",
+    "name": "Natural Toughness",
+    "class": "Barbarian",
+    "description": "At 7th level, the savage barbarian gains a +%1 natural armor bonus to AC when wearing no armor (shields are allowed). This bonus increases by +1 for every three levels beyond 7th. This ability replaces damage reduction.|NaturalToughness",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savage Barbarian ~ Natural Toughness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalToughness|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, the savage barbarian gains a +%1 natural armor bonus to AC when wearing no armor (shields are allowed). This bonus increases by +1 for every three levels beyond 7th. This ability replaces damage reduction.|NaturalToughness"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|NaturalToughness|TYPE=NaturalArmor.STACK|!PREEQUIP:1,TYPE=Armor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalToughness|(BarbarianLVL-4)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1600,
+    "record_key": "Savage Barbarian ~ Natural Toughness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

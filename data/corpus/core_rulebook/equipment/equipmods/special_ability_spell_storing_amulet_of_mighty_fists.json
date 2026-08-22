@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Spell Storing ~ Amulet of Mighty Fists",
     "category": "equipmods",
-    "name": "Spell Storing",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "A spell storing weapon allows a spellcaster to store a single targeted spell of up to 3rd level (with a casting time of one standard action or less) in the weapon. When the weapon hits a creature and deals damage, the weapon can immediately cast the spell on that creature as a free action if the wielder desires (this discharges the spell from the weapon). The weapon magically imparts to the wielder the name of the spell currently stored within it. Once discharged, another targeted spell of up to 3rd level can be stored in the weapon later. This special ability can be placed only on melee weapons."
+    "description": "A spell storing weapon allows a spellcaster to store a single targeted spell of up to 3rd level (with a casting time of one standard action or less) in the weapon. When the weapon hits a creature and deals damage, the weapon can immediately cast the spell on that creature as a free action if the wielder desires (this discharges the spell from the weapon). The weapon magically imparts to the wielder the name of the spell currently stored within it. Once discharged, another targeted spell of up to 3rd level can be stored in the weapon later. This special ability can be placed only on melee weapons.",
+    "key": "Special Ability ~ Spell Storing ~ Amulet of Mighty Fists",
+    "name": "Spell Storing",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "+1"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Spell Storing ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.348"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Amulet of Mighty Fists Base"
+      },
+      {
+        "key": "SPROP",
+        "value": "can store a single targeted spell of up to 3rd level with a casting time of 1 standard action"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Unarmed Spell Storing"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/spell-storing/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/spell-storing/"
   },
-  "wiring_class": "ambiguous",
-  "wiring_class_signals": [
-    "no_corpus_line"
-  ],
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 289,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Spell Storing ~ Amulet of Mighty Fists",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

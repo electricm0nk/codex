@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Feral Hunter",
+    "name": "Feral Hunter",
+    "class": "Hunter Archetype",
+    "description": "A feral hunter has forged a bond with nature that's so strong that she doesn't merely channel the aspects of animals-she actually becomes an animal herself. Though she lacks an animal companion, a feral hunter is in tune with the beast lurking within her flesh and spirit, and lives in a near-wild state of being. A feral hunter often resembles a lycanthrope, but her power comes from her own nature and is not influenced by moonlight or silver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Feral Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype.HunterAnimalCompanion.HunterAnimalFocus.HunterHunterTactics.HunterSpeakWithMaster.HunterPreciseCompanion.HunterBonusTricks.HunterImprovedEmpatheticLink.HunterGreaterEmpatheticLink.HunterMasterOfTheWild.HunterRaiseAnimalCompanion.HunterTeamworkFeat6.HunterTeamworkFeat9.HunterTeamworkFeat12.HunterTeamworkFeat15.HunterTeamworkFeat18"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Feral Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterAnimalCompanion,TYPE.HunterAnimalFocus,TYPE.HunterHunterTactics,TYPE.HunterSpeakWithMaster,TYPE.HunterPreciseCompanion,TYPE.HunterBonusTricks,TYPE.HunterImprovedEmpatheticLink,TYPE.HunterGreaterEmpatheticLink,TYPE.HunterMasterOfTheWild,TYPE.HunterRaiseAnimalCompanion,TYPE.HunterTeamworkFeat6,TYPE.HunterTeamworkFeat9,TYPE.HunterTeamworkFeat12,TYPE.HunterTeamworkFeat15,TYPE.HunterTeamworkFeat18]"
+      },
+      {
+        "key": "DESC",
+        "value": "A feral hunter has forged a bond with nature that's so strong that she doesn't merely channel the aspects of animals-she actually becomes an animal herself. Though she lacks an animal companion, a feral hunter is in tune with the beast lurking within her flesh and spirit, and lives in a near-wild state of being. A feral hunter often resembles a lycanthrope, but her power comes from her own nature and is not influenced by moonlight or silver."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Feral Hunter ~ Solitary"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Feral Hunter ~ Feral Focus|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Feral Hunter ~ Precise Summoned Animal|PRECLASS:1,Hunter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Feral Hunter ~ Wild Shape|PRECLASS:1,Hunter=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Class Feature|AUTOMATIC|Feral Hunter ~ Summon Pack|PRECLASS:1,Hunter=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Hunter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3139,
+    "record_key": "Hunter Archetype ~ Feral Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

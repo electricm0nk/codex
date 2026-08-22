@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maneuver Training V Selection ~ Disarm",
+    "name": "Disarm",
+    "class": "Maneuver Training V Selection",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maneuver Training V Selection ~ Disarm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrawlerManeuverTrainingVSelection"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "DisarmManeuverTraining,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisarmManeuverTrainingBonus|BrawlerManeuverTraining-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisarmManeuverTraining|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Disarm,CMD_Disarm|DisarmManeuverTrainingBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1135,
+    "record_key": "Maneuver Training V Selection ~ Disarm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Black Powder Inquisition",
+    "name": "Black Powder Inquisition",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Black Powder Inquisition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain.Inquisition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainBlackPowderLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainBlackPowderDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainBlackPowderTimes|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Black Powder Inquisition ~ Deities|Black Powder Inquisition ~ Granted Powers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainBlackPowderLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainBlackPowderDC|10+(DomainBlackPowderLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainBlackPowderTimes|DomainPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 856,
+    "record_key": "Inquisitor Domain ~ Black Powder Inquisition"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

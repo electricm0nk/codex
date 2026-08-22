@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Ascetic ~ AC Bonus",
+    "name": "AC Bonus",
+    "class": "Kineticist",
+    "description": "At 2nd level, when unarmored, not using a shield, and unencumbered, an elemental ascetic adds his Wisdom bonus (if any) to his AC and his CMD. These bonuses to AC apply even against touch attacks or when the elemental ascetic is flat-footed. He loses these bonuses when he is immobilized or helpless. This bonus increases by 1 for every 4 kineticist levels the elemental ascetic possesses beyond 2nd. The elemental ascetic's kineticist levels stack with monk levels for the purpose of determining when the bonus increases. An elemental ascetic can never take the expanded defense utility wild talent. This ability replaces elemental defense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Ascetic ~ AC Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Ascetic Class Feature.Kineticist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, when unarmored, not using a shield, and unencumbered, an elemental ascetic adds his Wisdom bonus (if any) to his AC and his CMD. These bonuses to AC apply even against touch attacks or when the elemental ascetic is flat-footed. He loses these bonuses when he is immobilized or helpless. This bonus increases by 1 for every 4 kineticist levels the elemental ascetic possesses beyond 2nd. The elemental ascetic's kineticist levels stack with monk levels for the purpose of determining when the bonus increases. An elemental ascetic can never take the expanded defense utility wild talent. This ability replaces elemental defense."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|WIS|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|WIS|PREVAREQ:ENCUMBERANCE,0,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED]\"),0,var(\"COUNT[EQTYPE.SHIELD.EQUIPPED]\"),0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1375,
+    "record_key": "Elemental Ascetic ~ AC Bonus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

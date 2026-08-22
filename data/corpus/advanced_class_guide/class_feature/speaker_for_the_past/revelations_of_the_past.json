@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Speaker for the Past ~ Revelations of the Past",
+    "name": "Revelations of the Past",
+    "class": "Shaman",
+    "description": "At 4th, 6th, 12th, 14th, and 20th levels, the speaker for the past can select a revelation from the ancestor or time mysteries. She uses her shaman level as her oracle level for these revelations, and uses her Wisdom modifier in place of her Charisma modifier for the purposes of the revelation. This ability replaces wandering spirit and wandering hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past ~ Revelations of the Past"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Speaker for the Past Class Feature.Shaman Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th, 6th, 12th, 14th, and 20th levels, the speaker for the past can select a revelation from the ancestor or time mysteries. She uses her shaman level as her oracle level for these revelations, and uses her Wisdom modifier in place of her Charisma modifier for the purposes of the revelation. This ability replaces wandering spirit and wandering hex."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Speaker for the Past Revelation|(ShamanLVL>=4)+(ShamanLVL>=6)+(ShamanLVL>=12)+(ShamanLVL>=14)+(ShamanLVL>=20)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3612,
+    "record_key": "Speaker for the Past ~ Revelations of the Past"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

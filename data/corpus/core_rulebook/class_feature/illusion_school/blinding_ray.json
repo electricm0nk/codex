@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Illusion School ~ Blinding Ray",
+    "name": "Blinding Ray",
+    "class": "Illusion School",
+    "description": "As a standard action you can fire a shimmering ray at any foe within 30 feet as a ranged touch attack. The ray causes creatures to be blinded for 1 round. Creatures with more than %1 Hit Dice are dazzled for 1 round instead. This ability can be used %2 times per day.|IllusionBlindingRayLimit|IllusionBlindingRayTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Illusion School ~ Blinding Ray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.SpellLike.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionBlindingRayLimit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionBlindingRayTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action you can fire a shimmering ray at any foe within 30 feet as a ranged touch attack. The ray causes creatures to be blinded for 1 round. Creatures with more than %1 Hit Dice are dazzled for 1 round instead. This ability can be used %2 times per day.|IllusionBlindingRayLimit|IllusionBlindingRayTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionBlindingRayLimit|IllusionSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionBlindingRayTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|IllusionBlindingRayTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2669,
+    "record_key": "Illusion School ~ Blinding Ray"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

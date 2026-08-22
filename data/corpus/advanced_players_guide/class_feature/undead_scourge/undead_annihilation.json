@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undead Scourge ~ Undead Annihilation",
+    "name": "Undead Annihilation",
+    "class": "Paladin",
+    "description": "At 11th level, an undead scourge can expend one use of her smite evil ability as a standard action and make a single melee attack against an undead creature. If this attack hits, the undead creature must make a Will save DC %1 or be destroyed. The save DC is equal to 10 + 1/2 the undead scourge's level + the undead scourge's Charisma modifier. Undead with twice as many Hit Dice as the undead scourge are unaffected by this ability. If the attack misses, the smite evil is wasted without effect. This ability replaces aura of justice.|10+(PaladinLVL/2)+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Scourge ~ Undead Annihilation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.PaladinClassFeatures.SpecialQuality.Supernatural.PaladinAuraOfJustice"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, an undead scourge can expend one use of her smite evil ability as a standard action and make a single melee attack against an undead creature. If this attack hits, the undead creature must make a Will save DC %1 or be destroyed. The save DC is equal to 10 + 1/2 the undead scourge's level + the undead scourge's Charisma modifier. Undead with twice as many Hit Dice as the undead scourge are unaffected by this ability. If the attack misses, the smite evil is wasted without effect. This ability replaces aura of justice.|10+(PaladinLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2507,
+    "record_key": "Undead Scourge ~ Undead Annihilation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

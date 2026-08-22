@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Esoteric ~ Improved Tattooed Spell",
+    "name": "Improved Tattooed Spell",
+    "class": "Magus",
+    "description": "At 11th level, an esoteric can use each of his spell-like abilities from tattooed spell one additional time per day. This ability replaces improved spell recall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Esoteric ~ Improved Tattooed Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Esoteric Class Feature.Magus Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, an esoteric can use each of his spell-like abilities from tattooed spell one additional time per day. This ability replaces improved spell recall."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1781,
+    "record_key": "Esoteric ~ Improved Tattooed Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

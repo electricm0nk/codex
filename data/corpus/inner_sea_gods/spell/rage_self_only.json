@@ -1,0 +1,72 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "description": null,
+    "key": "Rage (Self only)",
+    "level": null,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration + (CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL/3) willing living creatures, no two of which may be more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 110,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Rage (Self only)",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

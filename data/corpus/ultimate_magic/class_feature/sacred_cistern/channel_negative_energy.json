@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Cistern ~ Channel Negative Energy",
+    "name": "Channel Negative Energy",
+    "class": "Sacred Cistern",
+    "description": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDice|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDieSize|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDC|Sorcerer_EmpyrealSacredCistern_ChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Cistern ~ Channel Negative Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Supernatural.SpecialAttack.Special Attack.Sorcerer Channel Energy Selection.ChannelEnergy.Channel Energy.Channel Energy Negative.Channel Negative Energy"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LN,TN,CN,LE,NE,CE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDEITYALIGN:LN,TN,CN,LE,NE,CE],[PREDEITY:1,None]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDice|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDieSize|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDC|Sorcerer_EmpyrealSacredCistern_ChannelEnergyTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Negative Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDice|(Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDC|10+(Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyLVL|Sorcerer_EmpyrealSacredCistern_ChannelEnergyLVL"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "http://paizo.com/store/downloads/pathfinder/pathfinderRPG/v5748btpy88yj"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%4/day (DC %3, %1d%2)|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDice|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDieSize|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDC|Sorcerer_EmpyrealSacredCistern_ChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_EmpyrealSacredCistern_ChannelEnergyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses perDday"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Channel Energy"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2009-08"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1673,
+    "record_key": "Sacred Cistern ~ Channel Negative Energy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Fight Response",
+    "name": "Fight Response",
+    "class": "Rage Power",
+    "description": "When a barbarian with this rage power attempts a saving throw against a fear effect, she can enter a rage as an immediate action (as long as she would normally be able to enter rage). This consumes 3 rounds of the barbarian's daily allotment of rage rounds, but the barbarian can maintain the rage each round on her turn normally. Any benefits from the barbarian's rage apply immediately, so she gains her bonus on Will saves against the effect that required the initial saving throw. Unlike most rage powers, this rage power's effects are useful only when the barbarian is not raging, so a skald can't grant this rage power to allies with raging song.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Fight Response"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "When a barbarian with this rage power attempts a saving throw against a fear effect, she can enter a rage as an immediate action (as long as she would normally be able to enter rage). This consumes 3 rounds of the barbarian's daily allotment of rage rounds, but the barbarian can maintain the rage each round on her turn normally. Any benefits from the barbarian's rage apply immediately, so she gains her bonus on Will saves against the effect that required the initial saving throw. Unlike most rage powers, this rage power's effects are useful only when the barbarian is not raging, so a skald can't grant this rage power to allies with raging song."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 22,
+    "record_key": "Rage Power ~ Fight Response"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

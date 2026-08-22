@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Destined Bloodline ~ It Was Meant To Be",
+    "name": "It Was Meant To Be",
+    "class": "Destined Bloodline",
+    "description": "You may reroll any one attack roll, critical hit confirmation roll, or level check made to overcome spell resistance. You must decide to use this ability after the first roll is made but before the results are revealed by the GM. You must take the second result, even if it is worse.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destined Bloodline ~ It Was Meant To Be"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Destined Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Destined"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Destined_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Destined_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DestinedItWasMeantToBe_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may reroll any one attack roll, critical hit confirmation roll, or level check made to overcome spell resistance. You must decide to use this ability after the first roll is made but before the results are revealed by the GM. You must take the second result, even if it is worse."
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVARLTEQ:Sorcerer_DestinedItWasMeantToBe_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVARGT:Sorcerer_DestinedItWasMeantToBe_Times,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DestinedItWasMeantToBe_Times|floor((Sorcerer_Destined_BloodlinePower9LVL-1)/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|Sorcerer_DestinedItWasMeantToBe_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DestinedItWasMeantToBe_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DestinedBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2428,
+    "record_key": "Destined Bloodline ~ It Was Meant To Be"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

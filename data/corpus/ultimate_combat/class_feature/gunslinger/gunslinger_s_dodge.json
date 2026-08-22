@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger ~ Gunslinger's Dodge",
+    "name": "Gunslinger's Dodge",
+    "class": "Gunslinger",
+    "description": "At 1st level, the gunslinger gains an uncanny knack for getting out of the way of ranged attacks. When a ranged attack is made against the gunslinger, she can spend 1 grit point to move 5 feet as an immediate action; doing so grants the gunslinger a +2 bonus to AC against the triggering attack. This movement is not a 5-foot step, and provokes attacks of opportunity. Alternatively, the gunslinger can drop prone to gain a +4 bonus to AC against the triggering attack. The gunslinger can only perform this deed while wearing medium or light armor, and while carrying no more than a light load.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Gunslinger's Dodge"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL1.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, the gunslinger gains an uncanny knack for getting out of the way of ranged attacks. When a ranged attack is made against the gunslinger, she can spend 1 grit point to move 5 feet as an immediate action; doing so grants the gunslinger a +2 bonus to AC against the triggering attack. This movement is not a 5-foot step, and provokes attacks of opportunity. Alternatively, the gunslinger can drop prone to gain a +4 bonus to AC against the triggering attack. The gunslinger can only perform this deed while wearing medium or light armor, and while carrying no more than a light load."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 58,
+    "record_key": "Gunslinger ~ Gunslinger's Dodge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

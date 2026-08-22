@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Charlatan ~ Natural Born Liar",
+    "name": "Natural Born Liar",
+    "class": "Rogue",
+    "description": "At 1st level, when a charlatan successfully deceives a creature with a Bluff, that creature takes a - 2 penalty on the charlatan's Bluff checks for the next 24 hours. This ability does not stack with itself. This ability replaces trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Charlatan ~ Natural Born Liar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, when a charlatan successfully deceives a creature with a Bluff, that creature takes a - 2 penalty on the charlatan's Bluff checks for the next 24 hours. This ability does not stack with itself. This ability replaces trapfinding."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1692,
+    "record_key": "Charlatan ~ Natural Born Liar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

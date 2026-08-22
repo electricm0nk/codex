@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 50.0,
+    "description": "A geographically relevant map grants a user a +1 circumstance bonus on Survival checks made to navigate in the wilderness. It also can be used to grant the same bonus on Knowledge (dungeoneering) checks made to navigate underground.",
+    "key": "Area Map",
+    "name": "Area Map",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Survival=Navigate",
+          "1",
+          "TYPE=Circumstance"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Knowledge (Dungeoneering)=Navigate",
+          "1",
+          "TYPE=Circumstance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "SPROP",
+        "value": "A geographically relevant map grants a user a +1 circumstance bonus on Survival checks made to navigate in the wilderness. It also can be used to grant the same bonus on Knowledge (dungeoneering) checks made to navigate underground."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 348,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Area Map",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

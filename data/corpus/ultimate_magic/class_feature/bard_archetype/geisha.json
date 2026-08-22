@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Geisha",
+    "name": "Geisha",
+    "class": "Bard Archetype",
+    "description": "In some cultures, the professional entertainer is a prestigious role. Specially trained entertainers called geisha are praised for their appearance and skill at conversation, music, dancing, singing, poetry, and calligraphy. A geisha provides social intimacy and status but not physical intimacy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Geisha"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardWeaponProficiencies.BardArmorProficiencies.BardBardicKnowledge.BardArmoredCasting"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Geisha],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardWeaponProficiencies,TYPE.BardArmorProficiencies,TYPE.BardBardicKnowledge,TYPE.BardArmoredCasting]"
+      },
+      {
+        "key": "DESC",
+        "value": "In some cultures, the professional entertainer is a prestigious role. Specially trained entertainers called geisha are praised for their appearance and skill at conversation, music, dancing, singing, poetry, and calligraphy. A geisha provides social intimacy and status but not physical intimacy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Scribe Scroll"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Geisha ~ Tea Ceremony|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ADD",
+        "value": "ABILITY|Special Ability|NORMAL|Geisha ~ Geisha Knowledge"
+      },
+      {
+        "key": "ADD",
+        "value": "ABILITY|Internal|NORMAL|Geisha Weapon Proficiency"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 936,
+    "record_key": "Bard Archetype ~ Geisha"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

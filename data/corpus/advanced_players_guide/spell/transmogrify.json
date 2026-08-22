@@ -1,27 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Transmogrify",
-    "school": "Transmutation",
-    "level": null,
     "description": "Your eidolon's form shifts and transforms. This spell allows you to change any of the eidolon's evolutions by allocating its evolution pool on new evolutions. If you have the aspect or greater aspect ability, this spell also allows you to change the evolution points spent to modify you, including removing or adding points as allowed by those abilities.  Your eidolon cannot benefit from this spell more than once per day. This spell does not allow you to change your eidolon's base form.",
-    "full_text": true
+    "full_text": true,
+    "key": "Transmogrify",
+    "level": null,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 hour"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Change your eidolon's evolutions|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This extract causes you to take on a pale, sickly pallor for 1 round. During this time, if you consume a potion, it has no effect. Instead, your mouth fills with a vile poison that you can spit onto a weapon as a free action. If you do not spit out the poison in 1 round, it affects you instead. The effect of the poison depends on the level of spell contained in the potion consumed (see sidebar). If the poison is not used within 1 minute per caster level it becomes inert. You can only create one dose of poison in this way per casting of this spell.  The following poisons are created through the transmute potion to poison spell. The power of the poison depends on the level of the spell contained in the transmuted potion.  0-Level Potion Poison: injury, Fortitude DC 10, 1/round for 2 rounds, 1 Dex damage, Cure 1 save.  1st-Level Potion Poison: injury, Fortitude DC 11, 1/round for 4 rounds, 1d2 Dex damage, Cure 1 save.  2nd-Level Potion Poison: injury, Fortitude DC 13, 1/round for 6 rounds, 1d4 Str damage, Cure 1 save.  3rd-Level Potion Poison: injury, Fortitude DC 14, 1/round for 6 rounds, 1d4 Con damage, Cure 2 consecutive saves.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your eidolon's form shifts and transforms. This spell allows you to change any of the eidolon's evolutions by allocating its evolution pool on new evolutions. If you have the aspect or greater aspect ability, this spell also allows you to change the evolution points spent to modify you, including removing or adding points as allowed by those abilities.  Your eidolon cannot benefit from this spell more than once per day. This spell does not allow you to change your eidolon's base form.|PRERULE:1,DisplayFullSpell Transmute Potion to Poison.MOD"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a flask of quicksilver worth 1,000 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/transmogrify.html#_transmogrify"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Your eidolon"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 248,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2094,
-    "record_key": "Transmogrify"
+    "record_key": "Transmogrify",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:guardian_dragon_agonizing_venom",
@@ -39,6 +37,208 @@
     ],
     "race_subtype": "Aquatic|Mythic",
     "race_type": "Dragon",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw|Tail Slap|Wing|Racial Traits ~ Guardian Dragon"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Celestial|Common|Draconic|Infernal|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|6|TYPE=Armor"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (geography),Perception,Stealth,Survival|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|28"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|31|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsightRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponCone|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|21"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|300"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDamageDie|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDice|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "24"
+      },
+      {
+        "key": "DR",
+        "value": "15/Epic and Magic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Guardian Dragon"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Appraise|Bluff|Climb|TYPE.Craft|Diplomacy|Fly|Heal|Intimidate|TYPE.Knowledge|Linguistics|Perception|Sense Motive|Spellcraft|Stealth|Survival|Swim|Use Magic Device"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Dragon:26"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50,Climb,30,Fly,200,Swim,30"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic|Mythic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Dragon"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "SR",
+        "value": "35"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dragon"
+      }
+    ],
     "size": "G",
     "source_page": "p.146",
     "speeds": [
@@ -60,16 +260,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 117,
-    "record_key": "Guardian Dragon"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 117,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Guardian Dragon",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deed ~ Authoritative Bluff",
+    "name": "Authoritative Bluff",
+    "class": "Swashbuckler",
+    "description": "A daring infiltrator can spend 1 panache point to reroll a Bluff check after the roll is made but before the results are revealed. She must take the result of the second roll, even if it is lower. Additionally, a daring infiltrator with at least 1 panache point gains a +5 bonus on Bluff checks to pretend to be someone's superior (socially or in the military). If she succeeds at the check, the target obeys any reasonable orders she gives as it would those of an actual superior in the situation. This deed replaces bleeding wound.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Authoritative Bluff"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Infiltrator Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A daring infiltrator can spend 1 panache point to reroll a Bluff check after the roll is made but before the results are revealed. She must take the result of the second roll, even if it is lower. Additionally, a daring infiltrator with at least 1 panache point gains a +5 bonus on Bluff checks to pretend to be someone's superior (socially or in the military). If she succeeds at the check, the target obeys any reasonable orders she gives as it would those of an actual superior in the situation. This deed replaces bleeding wound."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3856,
+    "record_key": "Deed ~ Authoritative Bluff"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

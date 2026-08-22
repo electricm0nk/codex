@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Time Shudder",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You cause a ripple in time that affects all creatures in the area. At the start of each creature's turn, there is a 50% chance the creature is hasted (as haste); otherwise it is slowed (as slow).",
-    "full_text": true
+    "full_text": true,
+    "key": "Time Shudder",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Magus,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Nearby creatures are affected by haste or slow each round.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause a ripple in time that affects all creatures in the area. At the start of each creature's turn, there is a 50%% chance the creature is hasted (as haste); otherwise it is slowed (as slow).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a tiny hourglass)"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 Ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/timeShudder.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "30-ft.-radius emanation centered on you"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 128,
-    "record_key": "Time Shudder"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Time Shudder",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daring General ~ Cohort ~ Groom",
+    "name": "Groom",
+    "class": "Daring General",
+    "description": "The groom cares for the daring general's mount. She does not take an armor check penalty on Ride checks while riding the cavalier's mount. Additionally, once per day, the groom can spend 10 minutes preparing the daring general's mount for battle. If she does, the mount's speed increases by 10 feet and its Dexterity score increases by 2. These benefits last for 1 hour.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring General ~ Cohort ~ Groom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.DaringGeneralCohort"
+      },
+      {
+        "key": "DESC",
+        "value": "The groom cares for the daring general's mount. She does not take an armor check penalty on Ride checks while riding the cavalier's mount. Additionally, once per day, the groom can spend 10 minutes preparing the daring general's mount for battle. If she does, the mount's speed increases by 10 feet and its Dexterity score increases by 2. These benefits last for 1 hour."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 295,
+    "record_key": "Daring General ~ Cohort ~ Groom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

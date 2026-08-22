@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Natural Philosopher ~ Inspiration",
+    "name": "Natural Philosopher's Inspiration",
+    "class": "Investigator",
+    "description": "Natural philosophers employ a skill set suited to studying the natural world. A natural philosopher can use inspiration on Heal and Survival checks without expending a use of inspiration, provided he is trained in the skill, but cannot do so for Linguistics or Spellcraft checks. He can later trade an investigator talent for the ability to use inspiration on Linguistics and Spellcraft checks without expending a use of inspiration, provided he is trained in the skill. This alters inspiration.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Natural Philosopher ~ Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.NaturalPhilosopherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Natural philosophers employ a skill set suited to studying the natural world. A natural philosopher can use inspiration on Heal and Survival checks without expending a use of inspiration, provided he is trained in the skill, but cannot do so for Linguistics or Spellcraft checks. He can later trade an investigator talent for the ability to use inspiration on Linguistics and Spellcraft checks without expending a use of inspiration, provided he is trained in the skill. This alters inspiration."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 747,
+    "record_key": "Natural Philosopher ~ Inspiration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

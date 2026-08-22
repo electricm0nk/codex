@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ironskin Monk ~ Iron Skin",
+    "name": "Iron Skin",
+    "class": "Monk",
+    "description": "The ironskin monk gains a +%1 bonus to his natural armor. This bonus stacks with any existing natural armor the ironskin monk already has. At 4th level, and every 4 levels thereafter, this bonus increases by +1. This ability replaces the monk's AC bonus ability and the ability to add his Wisdom bonus to his AC.|IronskinMonkIronSkinBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironskin Monk ~ Iron Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IronskinMonkIronSkinBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The ironskin monk gains a +%1 bonus to his natural armor. This bonus stacks with any existing natural armor the ironskin monk already has. At 4th level, and every 4 levels thereafter, this bonus increases by +1. This ability replaces the monk's AC bonus ability and the ability to add his Wisdom bonus to his AC.|IronskinMonkIronSkinBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|IronskinMonkIronSkinBonus|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IronskinMonkIronSkinBonus|1+MonkLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 580,
+    "record_key": "Ironskin Monk ~ Iron Skin"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

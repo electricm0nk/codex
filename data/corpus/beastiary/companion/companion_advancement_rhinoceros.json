@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Rhinoceros",
     "delivery": null,
@@ -14,6 +12,52 @@
     "owners": [
       "beastiary:companion:companion_rhinoceros"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Powerful Charge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeBonusDamage|STR*1.5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDice|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDieSize|6"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Rhinoceros"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Rhinoceros)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -21,16 +65,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
-    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
-    "line": 25,
-    "record_key": "Companion Advancement ~ Rhinoceros"
-  },
+  "ingested_at": "2026-08-18T22:35:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Rhinoceros",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Strategist ~ Master Tactician",
+    "name": "Master Tactician",
+    "class": "Cleric",
+    "description": "A divine strategist can always act in a surprise round even if she fails to make a Perception check to notice enemies, though she is considered flat-footed until she acts. In addition, the divine strategist gains a bonus on initiative checks equal to +%1. At 20th level, a divine strategist's initiative roll is automatically a natural 20. Allies able to see and hear the divine strategist gain a bonus on initiative checks equal to +%2. This is a language-dependent ability. This ability replaces channel energy.|MasterTacticianInitiativeBonus|MasterTacticianInitiativeBonus/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Strategist ~ Master Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterTacticianInitiativeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine strategist can always act in a surprise round even if she fails to make a Perception check to notice enemies, though she is considered flat-footed until she acts. In addition, the divine strategist gains a bonus on initiative checks equal to +%1. At 20th level, a divine strategist's initiative roll is automatically a natural 20. Allies able to see and hear the divine strategist gain a bonus on initiative checks equal to +%2. This is a language-dependent ability. This ability replaces channel energy.|MasterTacticianInitiativeBonus|MasterTacticianInitiativeBonus/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|MasterTacticianInitiativeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterTacticianInitiativeBonus|ClericLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 574,
+    "record_key": "Divine Strategist ~ Master Tactician"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

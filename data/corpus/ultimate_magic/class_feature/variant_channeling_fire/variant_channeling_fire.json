@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Variant Channeling - Fire",
+    "name": "Variant Channeling - Fire",
+    "class": null,
+    "description": "Heal - The healing effect is enhanced (see page 28) for creatures with the fire subtype. Harm - The damage effect is enhanced for creatures with the cold subtype. Affected creatures who fail their saves catch on fire (see page 444 of the Core Rulebook).|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - The healing effect is enhanced (see page 28) for creatures with the fire subtype. Harm - The damage effect is enhanced for creatures with the cold subtype. Affected creatures who fail their saves catch on fire (see page 444 of the Core Rulebook).|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 211,
+    "record_key": "Variant Channeling - Fire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Self-Perfection ~ AC Bonus",
+    "name": "AC Bonus",
+    "class": "Psychic",
+    "description": "When unarmored and unencumbered, you add your Wisdom bonus (if any) to your AC and CMD. The bonus to AC applies even against touch attacks or when you're flat-footed. You lose these bonuses when you're immobilized or helpless, when you wear any armor, when you carry a shield, or when you carry a medium or heavy load.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Self-Perfection ~ AC Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When unarmored and unencumbered, you add your Wisdom bonus (if any) to your AC and CMD. The bonus to AC applies even against touch attacks or when you're flat-footed. You lose these bonuses when you're immobilized or helpless, when you wear any armor, when you carry a shield, or when you carry a medium or heavy load."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1250,
+    "record_key": "Psychic Discipline Self-Perfection ~ AC Bonus"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

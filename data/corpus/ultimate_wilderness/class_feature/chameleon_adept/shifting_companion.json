@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Chameleon Adept ~ Shifting Companion",
+    "name": "Shifting Companion",
+    "class": "Hunter",
+    "description": "As a standard action, a chameleon adept can cause her companion to assume a humanoid form of the same race as herself. This functions as alter self, except it is used on an adjacent animal companion to have it assume a humanoid form. The companion always assumes the same form, selected when the hunter reaches 3rd level. The hunter can change this form when she gains a new level, but the companion loses the old form and can't resume it unless the chameleon adept chooses that form when she reaches a new level. The companion is no more intelligent or less savage than normal; the hunter still needs to control it as normal, and it still can't activate magic items or wield manufactured weapons. The hunter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 10-minute increments.|10*HunterLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chameleon Adept ~ Shifting Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ChameleonAdeptClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a chameleon adept can cause her companion to assume a humanoid form of the same race as herself. This functions as alter self, except it is used on an adjacent animal companion to have it assume a humanoid form. The companion always assumes the same form, selected when the hunter reaches 3rd level. The hunter can change this form when she gains a new level, but the companion loses the old form and can't resume it unless the chameleon adept chooses that form when she reaches a new level. The companion is no more intelligent or less savage than normal; the hunter still needs to control it as normal, and it still can't activate magic items or wield manufactured weapons. The hunter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 10-minute increments.|10*HunterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 650,
+    "record_key": "Chameleon Adept ~ Shifting Companion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

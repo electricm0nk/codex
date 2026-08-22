@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "ability_keys": [
       "bestiary_4:companion:almiraj_hex_prone",
@@ -21,6 +19,120 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Almiraj"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Sylvan (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gore|TOHIT,DAMAGE|1"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Almiraj"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Fly|Perception|Stealth|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Burrow,10"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Natural.Melee.Finesseable.Weapon,*1,2d4"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.8"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -61,16 +173,18 @@
       "Magical Beast"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
-    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
-    "line": 37,
-    "record_key": "Almiraj"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+    "record_key": "Almiraj",
+    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

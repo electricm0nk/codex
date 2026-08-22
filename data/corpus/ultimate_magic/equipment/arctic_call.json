@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5985.0,
+    "description": "Level 11 Evoker; Protection - fire trap modified to do cold damage (Reflex DC 17); Opposition Schools - Illusion, necromancy; Spells - 6.contingency(S), freezing sphere(S), repulsion; 5.cone of cold(S), mage's private sanctum, permanency, teleport, wall of force(S); 4.ice storm(S), shout(S), stoneskin, symbol of revelation, wall of ice(S); 3.arcane sight, dispel magic, elemental aura(S), fire trap, heroism, lightning bolt(S), phantom steed, seek thoughts; 2.bull's strength, false life(OP), glitterdust, hideous laughter, make whole, resist energy, rope trick; 1.detect secret doors, endure elements, enlarge person, feather fall, mage armor, magic missile(S), obscuring mist, shield, shocking grasp(S); Preparation Ritual - Rime Bite",
+    "key": "Arctic Call",
+    "name": "Arctic Call",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "NUMPAGES",
+        "value": "200"
+      },
+      {
+        "key": "COST",
+        "value": "5985"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Rime Bite"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 11 Evoker"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - fire trap modified to do cold damage (Reflex DC 17)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Illusion, necromancy"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 6.contingency(S), freezing sphere(S), repulsion; 5.cone of cold(S), mage's private sanctum, permanency, teleport, wall of force(S); 4.ice storm(S), shout(S), stoneskin, symbol of revelation, wall of ice(S); 3.arcane sight, dispel magic, elemental aura(S), fire trap, heroism, lightning bolt(S), phantom steed, seek thoughts; 2.bull's strength, false life(OP), glitterdust, hideous laughter, make whole, resist energy, rope trick; 1.detect secret doors, endure elements, enlarge person, feather fall, mage armor, magic missile(S), obscuring mist, shield, shocking grasp(S)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Rime Bite"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Arctic Call",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

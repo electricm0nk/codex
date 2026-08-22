@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shadow Savant Subschool ~ Binding Darkness",
+    "name": "Binding Darkness",
+    "class": "Shadow Savant Subschool",
+    "description": "As a standard action, you cast a weave of shadows at any foe within 30 feet as a ranged touch attack. The shadows entangle your foe for %1 rounds. In conditions of bright light, this duration is halved (minimum 1 round). A creature entangled by your shadows has concealment from those without darkvision or the ability to see in darkness, and other creatures likewise have concealment relative to it. You can use this ability %2 times per day.|ArcanistSavantSchoolLVL/5+1|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Savant Subschool ~ Binding Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you cast a weave of shadows at any foe within 30 feet as a ranged touch attack. The shadows entangle your foe for %1 rounds. In conditions of bright light, this duration is halved (minimum 1 round). A creature entangled by your shadows has concealment from those without darkvision or the ability to see in darkness, and other creatures likewise have concealment relative to it. You can use this ability %2 times per day.|ArcanistSavantSchoolLVL/5+1|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2605,
+    "record_key": "Shadow Savant Subschool ~ Binding Darkness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

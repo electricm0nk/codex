@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heavens Spirit ~ Manifestation",
+    "name": "Manifestation",
+    "class": "Heavens Spirit",
+    "description": "The shaman becomes the spirit of heaven. She receives a bonus on all saving throws equal to +%1. She automatically stabilizes if she is reduced to below 0 hit points. She's immune to fear effects, and she automatically confirms all critical hits she threatens. If she dies, she's reborn 3 days later in the form of a star child, maturing over the course of 7 days (as reincarnate).|ShamanHeavensManifestationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Spirit ~ Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanHeavensManifestationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman becomes the spirit of heaven. She receives a bonus on all saving throws equal to +%1. She automatically stabilizes if she is reduced to below 0 hit points. She's immune to fear effects, and she automatically confirms all critical hits she threatens. If she dies, she's reborn 3 days later in the form of a star child, maturing over the course of 7 days (as reincarnate).|ShamanHeavensManifestationBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fear"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|ShamanHeavensManifestationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHeavensManifestationBonus|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1582,
+    "record_key": "Heavens Spirit ~ Manifestation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

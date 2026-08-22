@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Discovery ~ Extend Potion",
+    "name": "Extend Potion",
+    "class": "Investigator",
+    "description": "%1 times per day, you can cause any potion you drink that does not have an instantaneous duration to function at twice its normal duration. This does not apply to extracts.|InvestigatorPotionExtendingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Discovery ~ Extend Potion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorAlchemistDiscovery.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorPotionExtendingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, you can cause any potion you drink that does not have an instantaneous duration to function at twice its normal duration. This does not apply to extracts.|InvestigatorPotionExtendingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorPotionExtendingBonus|INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1323,
+    "record_key": "Investigator ~ Discovery ~ Extend Potion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

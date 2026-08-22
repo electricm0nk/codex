@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Strength Surge",
+    "name": "Strength Surge",
+    "class": "Rage Power",
+    "description": "You add +%1 on one Strength check or combat maneuver check, or to your Combat Maneuver Defense when an opponent attempts a maneuver against you. This power is used as an immediate action. This power can only be used once per rage.|StrengthSurgeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Strength Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthSurgeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 on one Strength check or combat maneuver check, or to your Combat Maneuver Defense when an opponent attempts a maneuver against you. This power is used as an immediate action. This power can only be used once per rage.|StrengthSurgeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthSurgeBonus|RagePowersLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 492,
+    "record_key": "Rage Power ~ Strength Surge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

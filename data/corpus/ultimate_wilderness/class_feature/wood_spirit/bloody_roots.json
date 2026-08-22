@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood Spirit ~ Bloody Roots",
+    "name": "Bloody Roots",
+    "class": "Wood Spirit",
+    "description": "As a standard action, the shaman can cause a field of thick roots to burrow up from the ground. This ability functions as black tentacles with a caster level equal to the shaman's level. The area is centered on the shaman but remains stationary if she then moves. The shaman is unaffected by the roots. Her allies treat the area as difficult terrain, but the roots don't attack them. The shaman can end the effect as a free action. She can use this ability a number of rounds per day equal to 3 + her Charisma modifier, but these rounds do not need to be consecutive.|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Spirit ~ Bloody Roots"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman can cause a field of thick roots to burrow up from the ground. This ability functions as black tentacles with a caster level equal to the shaman's level. The area is centered on the shaman but remains stationary if she then moves. The shaman is unaffected by the roots. Her allies treat the area as difficult terrain, but the roots don't attack them. The shaman can end the effect as a free action. She can use this ability a number of rounds per day equal to 3 + her Charisma modifier, but these rounds do not need to be consecutive.|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1025,
+    "record_key": "Wood Spirit ~ Bloody Roots"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

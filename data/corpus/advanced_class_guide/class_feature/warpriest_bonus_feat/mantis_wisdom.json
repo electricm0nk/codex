@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Mantis Wisdom",
+    "name": "Mantis Wisdom",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your knowledge of vital areas allows you to land debilitating strikes with precision.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Mantis Wisdom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Improved Unarmed Strike,Mantis Style,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Heal=6"
+      },
+      {
+        "key": "DESC",
+        "value": "Your knowledge of vital areas allows you to land debilitating strikes with precision."
+      },
+      {
+        "key": "DESC",
+        "value": " Treat half your levels in classes other than monk as monk levels for determining effects you can apply to a target of your Stunning Fist per the Stunning Fist monk class feature. You can also use a standard action and a successful melee touch attack to remove any Stunning Fist effect you have applied to a target. While using Mantis Style, you gain a +2 bonus on unarmed attack rolls with which you are using Stunning Fist attempts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Mantis Wisdom"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4482,
+    "record_key": "Warpriest Bonus Feat ~ Mantis Wisdom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

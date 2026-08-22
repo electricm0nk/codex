@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shield Champion Brawler ~ Throw Shield",
+    "name": "Throw Shield",
+    "class": "Brawler",
+    "description": "A shield champion can throw a heavy or light shield as a normal (non-improvised) thrown weapon with a range increment of 10 feet or the shield's range increment, whichever is greater. The thrown shield deals the same damage as a shield bash, and any damage increases from shield spikes apply to this attack. A shield champion is treated as having the Far Shot feat for the purpose of determining range increment penalties for throwing a shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shield Champion Brawler ~ Throw Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Shield Champion Class Feature.SpecialQuality.Extraordinary.SpecialAttack.BrawlerManeuverTraining"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThrowShieldProgression|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A shield champion can throw a heavy or light shield as a normal (non-improvised) thrown weapon with a range increment of 10 feet or the shield's range increment, whichever is greater. The thrown shield deals the same damage as a shield bash, and any damage increases from shield spikes apply to this attack. A shield champion is treated as having the Far Shot feat for the purpose of determining range increment penalties for throwing a shield."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThrowShieldProgression|1+(BrawlerLVL>6)+(BrawlerLVL>10)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2894,
+    "record_key": "Shield Champion Brawler ~ Throw Shield"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

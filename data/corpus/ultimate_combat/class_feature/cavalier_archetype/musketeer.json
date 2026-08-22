@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Musketeer",
+    "name": "Musketeer",
+    "class": "Cavalier Archetype",
+    "description": "Some cavaliers are entrusted by their masters with the care and use of expensive and powerful oddities- firearms. Capable of inflicting shocking amounts of destruction without the aid of magic, these musketeers lead the advance of their troops, firing devastating fusillades long before the enemy can prepare for the armed charge that follows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Musketeer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype.CavalierMount.CavalierExpertTrainer.CavalierHeavyArmorProficiency"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Musketeer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CavalierHeavyArmorProficiency,TYPE.CavalierMount,TYPE.CavalierExpertTrainer]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some cavaliers are entrusted by their masters with the care and use of expensive and powerful oddities- firearms. Capable of inflicting shocking amounts of destruction without the aid of magic, these musketeers lead the advance of their troops, firing devastating fusillades long before the enemy can prepare for the armed charge that follows."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Musketeer ~ Weapon and Armor Proficiency|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Musketeer ~ Gifted Firearm|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Musketeer ~ Swift Powder|PRECLASS:1,Cavalier=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cavalier"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 473,
+    "record_key": "Cavalier Archetype ~ Musketeer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

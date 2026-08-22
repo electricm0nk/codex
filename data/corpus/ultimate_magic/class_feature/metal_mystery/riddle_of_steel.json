@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Mystery ~ Riddle of Steel",
+    "name": "Riddle of Steel",
+    "class": "Metal Mystery",
+    "description": "Your sacred bond with metal gives you insight into its form and function. Once per day, you may spend 10 minutes meditating on the structure of a piece of unworked metal or ore to gain a +5 insight bonus on your next Craft check to make something using that metal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Riddle of Steel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.MetalRevelation.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your sacred bond with metal gives you insight into its form and function. Once per day, you may spend 10 minutes meditating on the structure of a piece of unworked metal or ore to gain a +5 insight bonus on your next Craft check to make something using that metal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 486,
+    "record_key": "Metal Mystery ~ Riddle of Steel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Weapon Adept",
+    "name": "Weapon Adept",
+    "class": "Monk Archetype",
+    "description": "While all monks train in both unarmed combat and with weapons, the weapon adept seeks to become one with his weapons, transforming them into perfect extensions of his own body. Through such training, a weapon adept seeks to attain perfection by becoming a living weapon himself. A weapon adept has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Weapon Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStunningFist.MonkEvasion.MonkImprovedEvasion.MonkTimelessBody.MonkPerfectSelf"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Weapon Adept],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkEvasion,TYPE.MonkImprovedEvasion,TYPE.MonkTimelessBody,TYPE.MonkPerfectSelf]"
+      },
+      {
+        "key": "DESC",
+        "value": "While all monks train in both unarmed combat and with weapons, the weapon adept seeks to become one with his weapons, transforming them into perfect extensions of his own body. Through such training, a weapon adept seeks to attain perfection by becoming a living weapon himself. A weapon adept has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Weapon Adept ~ Perfect Strike|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Weapon Adept ~ Way of the Weapon Master|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Weapon Adept ~ Evasion|PRECLASS:1,Monk=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Weapon Adept ~ Uncanny Initiative|PRECLASS:1,Monk=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Weapon Adept ~ Pure Power|PRECLASS:1,Monk=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2298,
+    "record_key": "Monk Archetype ~ Weapon Adept"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

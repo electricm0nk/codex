@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Favored Terrain ~ Plane (Water)",
+    "name": "Favored Terrain (Plane of Water)",
+    "class": "Favored Terrain",
+    "description": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked on the Plane of Water|FavoredTerrainWaterPlane",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Terrain ~ Plane (Water)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.FavoredTerrain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTerrainWaterPlane|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked on the Plane of Water|FavoredTerrainWaterPlane"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks when using these skills on the Plane of Water. Likewise, you get a +%1 bonus on initiative checks when on this plane. If you desire, you leave no trail on this plane and cannot be tracked.|FavoredTerrainWaterPlane"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWaterPlane|FavoredTerrainBase"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredTerrainWaterPlane"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1303,
+    "record_key": "Favored Terrain ~ Plane (Water)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

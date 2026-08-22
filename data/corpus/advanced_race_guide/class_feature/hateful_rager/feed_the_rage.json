@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hateful Rager ~ Feed the Rage",
+    "name": "Feed the Rage",
+    "class": "Barbarian",
+    "description": "A hateful rager gains 1 additional round of rage for each favored enemy she knocks unconscious or kills in combat. These current rounds of rage can only be used to add to the duration of her rage, and disappear when the rage ends.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hateful Rager ~ Feed the Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hateful rager gains 1 additional round of rage for each favored enemy she knocks unconscious or kills in combat. These current rounds of rage can only be used to add to the duration of her rage, and disappear when the rage ends."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 261,
+    "record_key": "Hateful Rager ~ Feed the Rage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

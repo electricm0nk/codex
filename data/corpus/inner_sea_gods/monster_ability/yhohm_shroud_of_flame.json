@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Yhohm ~ Shroud of Flame",
     "delivery": "Supernatural",
@@ -15,21 +13,61 @@
     "owners": [
       "inner_sea_gods:monster:yhohm"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Shroud of Flame"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(10 ft., DC %1)|FlameShroudDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlameShroudDC|10+(HD/2)+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlameShroudDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Shroud of Flame)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlameShroudDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A yhohm can cause its feathers to burst into fire as a free action. As long as its feathers are burning (up to 10 rounds), it deals an additional 1d6 points of fire damage with each natural attack, and any creature within 5 feet must attempt a DC %1 Reflex save each round or take 1d6 points of fire damage at the start of its turn. A creature that attacks the yhohm with a natural or non-reach melee weapon takes 1d6 points of fire damage (no save) with each successful hit.|FlameShroudDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Yhohm ~ Shroud of Flame"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 249,
-    "record_key": "Yhohm ~ Shroud of Flame"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 249,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Yhohm ~ Shroud of Flame",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

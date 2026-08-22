@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "ability_keys": [
       "core_rulebook:companion:companion_advancement_ray_manta"
@@ -22,6 +20,120 @@
     ],
     "race_subtype": null,
     "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tail Slap"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Animal Traits Output|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Ray (Manta)|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Ray (Manta)"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Swim,60"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Companion Manta Ray"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NotAllowed,1],[PRERACE:1,Companion (Ray (Manta))]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.AnimalCompanion"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "M",
@@ -59,16 +171,18 @@
       "AnimalCompanion"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
-    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815",
-    "line": 64,
-    "record_key": "Companion (Ray (Manta))"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 64,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
+    "record_key": "Companion (Ray (Manta))",
+    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

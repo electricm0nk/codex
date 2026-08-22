@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghost Rider ~ Spirited Mount",
+    "name": "Spirited Mount",
+    "class": "Cavalier",
+    "description": "At 5th level, the ghost rider's mount ignores difficult terrain. At 8th level, it gains the ability to use water walk at will. This ability replaces expert trainer and banner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghost Rider ~ Spirited Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ghost Rider Class Feature.Cavalier Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, the ghost rider's mount ignores difficult terrain. At 8th level, it gains the ability to use water walk at will. This ability replaces expert trainer and banner."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1729,
+    "record_key": "Ghost Rider ~ Spirited Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

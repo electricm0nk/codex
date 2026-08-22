@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:ijiraq_disorienting_gaze",
@@ -29,6 +27,124 @@
     ],
     "race_subtype": "Shapechanger",
     "race_type": "Fey",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Gore|Racial Traits ~ Ijiraq"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|12|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GoreSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|14"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Ijiraq"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Bluff|Climb|TYPE.Craft|Diplomacy|Disguise|Escape Artist|Fly|Knowledge (geography)|Knowledge (local)|Knowledge (nature)|Perception|TYPE.Perform|Sense Motive|Sleight of Hand|Stealth|Swim|Use Magic Device"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Fey:14"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*2,2d4"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fey"
+      }
+    ],
     "size": "M",
     "source_page": "p.155",
     "speeds": [
@@ -38,16 +154,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 128,
-    "record_key": "Ijiraq"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 128,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Ijiraq",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

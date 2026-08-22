@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Pressure Points",
+    "name": "Pressure Points",
+    "class": "Ninja Trick",
+    "description": "* A ninja with this trick can strike at an opponent's vital pressure points, causing weakness and intense pain. Whenever the ninja deals sneak attack damage, she also deals 1 point of Strength or Dexterity damage, decided by the ninja. Unlike normal ability damage, this damage can be healed by a DC 15 Heal check. Each successful check heals 1 point of damage caused by this trick. A ninja with this trick receives a +10 insight bonus on this Heal check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Pressure Points"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Supernatural.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "* A ninja with this trick can strike at an opponent's vital pressure points, causing weakness and intense pain. Whenever the ninja deals sneak attack damage, she also deals 1 point of Strength or Dexterity damage, decided by the ninja. Unlike normal ability damage, this damage can be healed by a DC 15 Heal check. Each successful check heals 1 point of damage caused by this trick. A ninja with this trick receives a +10 insight bonus on this Heal check."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 140,
+    "record_key": "Ninja Trick ~ Pressure Points"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

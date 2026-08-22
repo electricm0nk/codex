@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunting Paladin ~ Tireless Aura",
+    "name": "Tireless Aura",
+    "class": "Paladin",
+    "description": "A hunting paladin becomes immune to fatigue and sleep effects, and allies within 10 feet gain a +4 bonus on saving throws to avoid becoming fatigued or falling asleep.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunting Paladin ~ Tireless Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.HuntingPaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A hunting paladin becomes immune to fatigue and sleep effects, and allies within 10 feet gain a +4 bonus on saving throws to avoid becoming fatigued or falling asleep."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 882,
+    "record_key": "Hunting Paladin ~ Tireless Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

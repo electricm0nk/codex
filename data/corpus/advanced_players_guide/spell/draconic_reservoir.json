@@ -1,27 +1,97 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Draconic Reservoir",
-    "school": "Evocation",
-    "level": 3,
     "description": "Draconic reservoir functions as protection from energy, absorbing 6 points of one type of energy damage per caster level (acid, cold, electricity, or fire, maximum 60 points). Each round, as a swift action, the subject can release 1d6 points of the absorbed energy and apply it to any melee attack, as if using an acidic, flaming, frost, or shock weapon. The first creature the subject strikes with this attack takes the energy damage in addition to any other consequences of the attack.  Releasing energy in this way does not \"free up\" space to absorb still more energy; the maximum amount of energy the spell can absorb remains fixed. The subject cannot release more energy than he currently has absorbed. Once the subject has absorbed all the energy allowed by the spell, he takes damage as normal from that energy type. Once the energy has been released, the spell is discharged.  Draconic reservoir does not stack with protection from energy.  Draconic reservoir overlaps (and does not stack with) resist energy. If a character is warded by draconic reservoir and resist energy, draconic reservoir absorbs damage until it reaches its maximum limit.",
-    "full_text": true
+    "full_text": true,
+    "key": "Draconic Reservoir",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Draconic reservoir functions as protection from energy, absorbing 6 points of one type of energy damage per caster level (acid, cold, electricity, or fire, maximum 60 points). Each round, as a swift action, the subject can release 1d6 points of the absorbed energy and apply it to any melee attack, as if using an acidic, flaming, frost, or shock weapon. The first creature the subject strikes with this attack takes the energy damage in addition to any other consequences of the attack.  Releasing energy in this way does not \"free up\" space to absorb still more energy; the maximum amount of energy the spell can absorb remains fixed. The subject cannot release more energy than he currently has absorbed. Once the subject has absorbed all the energy allowed by the spell, he takes damage as normal from that energy type. Once the energy has been released, the spell is discharged.  Draconic reservoir does not stack with protection from energy.  Draconic reservoir overlaps (and does not stack with) resist energy. If a character is warded by draconic reservoir and resist energy, draconic reservoir absorbs damage until it reaches its maximum limit.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject can absorb energy damage and enhance melee attacks with it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes or until discharged; see text"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a scale from dragon that produces the energy you seek to absorb)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool|EarthSchool|FireSchool|WaterSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/draconicReservoir.html#_draconic-reservoir-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 91,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1924,
-    "record_key": "Draconic Reservoir"
+    "record_key": "Draconic Reservoir",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

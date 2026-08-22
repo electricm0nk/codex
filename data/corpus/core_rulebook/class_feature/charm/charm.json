@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Charm Domain",
+    "name": "Charm",
+    "class": null,
+    "description": "You can baffle and befuddle foes with a touch or a smile, and your beauty and grace are divine.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Charm Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can baffle and befuddle foes with a touch or a smile, and your beauty and grace are divine."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dazing Touch|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Charm)|PREVARGTEQ:DomainCharmAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Charming Smile|PREVARGTEQ:DomainCharmAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCharmLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCharmDC|10+(DomainCharmLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCharmTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCharmAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Charm=1|Charm Person|Charm=2|Calm Emotions|Charm=3|Suggestion|Charm=4|Heroism|Charm=5|Charm Monster|Charm=6|Geas/Quest|Charm=7|Insanity|Charm=8|Demand|Charm=9|Dominate Monster"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 655,
+    "record_key": "Charm Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

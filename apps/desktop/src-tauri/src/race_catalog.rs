@@ -85,7 +85,26 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     "monster_codex",
     "inner_sea_races",
     "horror_adventures",
-    "core_essentials",
+    // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15): the chassis + standard
+    // traits for 6 newly-modelled races (`ingest_races::IN_SCOPE_RACES`),
+    // filed under `bestiary_2` per `advanced_race_guide.pcc`'s own
+    // `# B2 races` section, exactly the way core_rulebook/beastiary already
+    // are.
+    "bestiary_2",
+    // Bestiary 5, SD-31 Epic 1 follow-on batch (2026-08-15): Skinwalker's
+    // chassis + 9 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
+    // Skinwalker's HERITAGE rows are not ingested by this batch (see
+    // `ingest_races.rs`'s `skinwalker` entry doc comment) -- this book
+    // loads the chassis + default-tier trait set only, same shape as the
+    // other flat, non-heritage race books above.
+    "bestiary_5",
+    // Bestiary 6, SD-31 wave-24 integration cycle (2026-08-20): Rougarou's
+    // chassis + 8 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
+    // Confirmed a flat, non-heritage shape (no `*_subrace.lst` file, no
+    // `Rougarou_Replace*` flag ever set to `True` anywhere in the pinned
+    // oracle) -- same shape as Bestiary 2/5 above, not the Dhampir-style
+    // heritage gap an earlier note wrongly grouped it with.
+    "bestiary_6",
 ];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -110,20 +129,32 @@ const BOOK_ISR: &str = "ISR";
 /// records are 41 alternates plus the two `Deep Jungle Halfling ~ …` rows the
 /// resolver classifies from their gates. SD-29 race-trait lane, round 3.
 const BOOK_HA: &str = "HA";
-/// Core Essentials. Loadable like ARG, APG, MC, ISR and HA, and like them it
-/// contributes no *catalog* rows here — its 64 records are Aasimar and
-/// Tiefling *heritage* traits, 16 selectable heritages plus the 48
-/// replacement rows those heritages grant, and none is a racial default. The
-/// book's ordinary standard racial traits are a different thing entirely and
-/// already reach this catalog under the `core_rulebook` and `beastiary` book
-/// ids, which is where `ingest_races` files them (`race_resolver`'s module
-/// doc: a record's book is the corpus directory it was loaded from).
-/// SD-29 race-trait lane, round 4.
-const BOOK_CE: &str = "CE";
+/// Bestiary 2. SD-31 Epic 1-F2 (2026-08-15): the first race-chassis batch
+/// this project has added since the original 18 (`decisions.md §25.3`).
+/// Loaded exactly like `core_rulebook`/`beastiary` — `ingest_races` files
+/// its 6 races' chassis and standard traits here, so unlike ARG/APG/MC/
+/// ISR/HA/CE it DOES contribute catalog rows (see `RACE_CATALOG_BOOKS`
+/// below).
+const BOOK_B2: &str = "B2";
+/// Bestiary 5. SD-31 Epic 1 follow-on batch (2026-08-15): Skinwalker's
+/// chassis + standard traits. Loaded like `core_rulebook`/`beastiary`/
+/// `bestiary_2` -- `ingest_races` files Skinwalker's chassis and 9
+/// standard-tier traits here, so it DOES contribute catalog rows (see
+/// `RACE_CATALOG_BOOKS` below).
+const BOOK_B5: &str = "B5";
+/// Bestiary 6. SD-31 wave-24 integration cycle (2026-08-20): Rougarou's
+/// chassis + 8 standard traits. Loaded like `bestiary_2`/`bestiary_5` --
+/// `ingest_races` files Rougarou's chassis and standard-tier traits here,
+/// so it DOES contribute catalog rows (see `RACE_CATALOG_BOOKS` below).
+const BOOK_B6: &str = "B6";
 
-/// Every book code this catalog can emit. ARG is a *loadable* book here but
-/// contributes no rows — see this module's doc comment.
-pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1];
+/// Every book code this catalog can emit. As of SD-31-E6-F4-002
+/// (2026-08-16) ARG DOES contribute catalog rows: `ingest_races` filed 6
+/// new races' (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang) chassis and
+/// standard traits under `advanced_race_guide`, the first race-catalog
+/// content this book has ever declared. See `BOOK_ARG`'s call site below
+/// and this module's doc comment for why ARG previously contributed none.
+pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2, BOOK_B5, BOOK_B6, BOOK_ARG];
 
 /// Maps a corpus book directory name to its wire code. An unrecognized book
 /// id passes through verbatim rather than being silently relabelled, so a
@@ -143,7 +174,9 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "monster_codex" => BOOK_MC.to_string(),
         "inner_sea_races" => BOOK_ISR.to_string(),
         "horror_adventures" => BOOK_HA.to_string(),
-        "core_essentials" => BOOK_CE.to_string(),
+        "bestiary_2" => BOOK_B2.to_string(),
+        "bestiary_5" => BOOK_B5.to_string(),
+        "bestiary_6" => BOOK_B6.to_string(),
         other => other.to_string(),
     }
 }
@@ -489,12 +522,68 @@ mod tests {
         assert_eq!(count_for(&response, "Tengu"), 10);
         assert_eq!(count_for(&response, "Tiefling"), 10);
 
+        // The 6 Bestiary 2 races, SD-31 Epic 1-F2 (2026-08-15) -- the first
+        // chassis batch since the original 18. Every one of the 57 corpus
+        // rows this batch added is a `<Race> Racial Default` row (re-derived:
+        // `find data/corpus/bestiary_2/race_trait -name '*.json'` gives the
+        // per-race counts below, and every one of the 57 records'
+        // `is_racial_default` is `true`), so `count_for` equals each race's
+        // whole standard-trait count with none held back as non-default.
+        assert_eq!(count_for(&response, "Fetchling"), 11);
+        assert_eq!(count_for(&response, "Grippli"), 10);
+        assert_eq!(count_for(&response, "Ifrit"), 9);
+        assert_eq!(count_for(&response, "Oread"), 9);
+        assert_eq!(count_for(&response, "Sylph"), 9);
+        assert_eq!(count_for(&response, "Undine"), 9);
+        // Skinwalker, the follow-on batch (2026-08-15): 9 standard-tier
+        // records, chassis + default tier only (heritage rows excluded --
+        // see `ingest_races.rs`'s `skinwalker` doc comment).
+        assert_eq!(count_for(&response, "Skinwalker"), 9);
+
+        // Advanced Race Guide's own 6-race batch, SD-31-E6-F4-002
+        // (2026-08-16): Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang --
+        // the same flat chassis+standard-trait shape as Bestiary 2/5 above,
+        // no heritage content. Re-derived, not transcribed:
+        // `find data/corpus/advanced_race_guide/race_trait/{catfolk,kitsune,
+        // ratfolk,strix,suli,wayang} -name '*.json' | wc -l` per race.
+        assert_eq!(count_for(&response, "Catfolk"), 9);
+        assert_eq!(count_for(&response, "Kitsune"), 10);
+        assert_eq!(count_for(&response, "Ratfolk"), 9);
+        assert_eq!(count_for(&response, "Strix"), 11);
+        assert_eq!(count_for(&response, "Suli"), 9);
+        assert_eq!(count_for(&response, "Wayang"), 10);
+
+        // SD31-E6-F4-004 (2026-08-17): 4 more of ARG's own races (Gillman,
+        // Nagaji, Vanara, Vishkanya) -- same flat shape, no heritage
+        // content. Re-derived the same way as the batch above.
+        assert_eq!(count_for(&response, "Gillman"), 9);
+        assert_eq!(count_for(&response, "Nagaji"), 9);
+        assert_eq!(count_for(&response, "Vanara"), 8);
+        assert_eq!(count_for(&response, "Vishkanya"), 12);
+
+        // SD31-E6-F4-007 (2026-08-17): the last 2 of ARG's own races
+        // (Changeling, Samsaran), closing `arg_races.lst`'s full 37-row
+        // playable-race roster. Same flat chassis+standard-trait shape as
+        // the batch above -- Changeling's 3 hag-mother heritage-choice
+        // sub-traits are deliberately excluded (`ingest_races.rs`'s
+        // `is_heritage_choice_subtrait`), so its count is 9, not 12.
+        assert_eq!(count_for(&response, "Changeling"), 9);
+        assert_eq!(count_for(&response, "Samsaran"), 9);
+
+        // SD-31 wave-24 integration cycle (2026-08-20): Rougarou (Bestiary
+        // 6), the same flat chassis+standard-trait shape, all 8 of its
+        // default-trait rows carrying `is_racial_default: true` (re-derived:
+        // `find data/corpus/bestiary_6/race_trait/rougarou -name '*.json' |
+        // wc -l`).
+        assert_eq!(count_for(&response, "Rougarou"), 8);
+
         // Pinned as a total as well as per race so a race silently dropping
         // out cannot be masked by another race growing.
-        assert_eq!(response.entries.len(), 173);
+        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) + 18 (9+9) + 8 = 361.
+        assert_eq!(response.entries.len(), 361);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 18, "18 in-scope races: {races:?}");
+        assert_eq!(races.len(), 38, "38 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -548,23 +637,48 @@ mod tests {
              reach the response — an unreachable code is the exact defect this widening fixes"
         );
 
-        // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows = 173.
+        // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
+        // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) + 9 Bestiary 5 rows
+        // (Skinwalker follow-on batch, 2026-08-15) + 8 Bestiary 6 rows
+        // (Rougarou, SD-31 wave-24, 2026-08-20) + ARG's 12-race total
+        // (58 from SD-31-E6-F4-002's Catfolk/Kitsune/Ratfolk/Strix/Suli/
+        // Wayang batch, 2026-08-16, + 38 from SD31-E6-F4-004's Gillman/
+        // Nagaji/Vanara/Vishkanya batch, 2026-08-17, + 18 from
+        // SD31-E6-F4-007's Changeling/Samsaran batch, 2026-08-17, closing
+        // `arg_races.lst`'s full 37-row playable-race roster).
         let crb = response.entries.iter().filter(|e| e.book == BOOK_CRB).count();
         let b1 = response.entries.iter().filter(|e| e.book == BOOK_B1).count();
+        let b2 = response.entries.iter().filter(|e| e.book == BOOK_B2).count();
+        let b5 = response.entries.iter().filter(|e| e.book == BOOK_B5).count();
+        let b6 = response.entries.iter().filter(|e| e.book == BOOK_B6).count();
+        let arg = response.entries.iter().filter(|e| e.book == BOOK_ARG).count();
         assert_eq!(crb, 67);
         assert_eq!(b1, 106);
-        assert_eq!(crb + b1, response.entries.len());
+        assert_eq!(b2, 57);
+        assert_eq!(b5, 9);
+        assert_eq!(b6, 8);
+        assert_eq!(arg, 114);
+        assert_eq!(crb + b1 + b2 + b5 + b6 + arg, response.entries.len());
     }
 
-    /// ARG declares zero races and zero racial defaults (`decisions.md §25`),
-    /// so it contributes zero rows even though its corpus directory is loaded.
-    /// The alternate traits it *does* declare are not catalog rows — see this
-    /// module's doc comment — and are counted here so that gap stays measured
-    /// rather than forgotten. 158, derived: ARG's 156 corpus records are 153
-    /// `Alternate` plus 3 the resolver classifies otherwise (its
-    /// `FlagGranted`/`Unclassified` rows), Monster Codex's 5 are 4
-    /// `Alternate` plus `Oversized Goblin` (`Unclassified`), and APG's 1 is
-    /// an `Alternate`.
+    /// APG, Monster Codex, ISR and HA declare zero races and zero racial
+    /// defaults, so each contributes zero rows even though its corpus
+    /// directory is loaded. **ARG is no longer in this loop** — as of
+    /// SD-31-E6-F4-002 (2026-08-16) it declares 6 races' worth of racial
+    /// defaults (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang) and its
+    /// row count is asserted at 87 in
+    /// `every_book_code_is_a_declared_one_and_every_declared_code_is_present`
+    /// instead. The alternate traits these books *do* declare are not
+    /// catalog rows — see this module's doc comment — and are counted here
+    /// so that gap stays measured rather than forgotten. 349, derived:
+    /// ARG's 156 corpus records are 153 `Alternate` plus 3 the resolver
+    /// classifies otherwise (its `FlagGranted`/`Unclassified` rows),
+    /// Monster Codex's 5 are 4 `Alternate` plus `Oversized Goblin`
+    /// (`Unclassified`), and APG's 1 is an `Alternate`. **Widened by
+    /// SD-31-E6-F4-003 (2026-08-16): `ingest_race_traits.rs`'s
+    /// `IN_SCOPE_RACES` now carries the same 6 new races, and their real
+    /// ARG alternate-trait content is ingested — +19 `Alternate` (+24
+    /// records total, 5 of them `FlagGranted`).
     ///
     /// **APG's `Half-Orc ~ Plagueborn` is no longer deferred.** SD-27
     /// `decisions.md §39` held it back because `race_resolver.rs`'s
@@ -577,12 +691,12 @@ mod tests {
     #[test]
     fn alternate_only_books_contribute_no_catalog_rows_but_are_loaded_and_counted() {
         let response = build_race_catalog();
-        // ISR and HA belong in this loop for the same reason ARG/APG/MC do:
+        // ISR and HA belong in this loop for the same reason APG/MC do:
         // each is loaded and each declares no racial DEFAULT trait. Round 2
         // added ISR's records without adding it here, so the loop was one book
         // narrower than the list it is a statement about; round 3 adds both
         // rather than leaving a gap it can see (`decisions.md §44.5`).
-        for book in [BOOK_ARG, BOOK_APG, BOOK_MC, BOOK_ISR, BOOK_HA] {
+        for book in [BOOK_APG, BOOK_MC, BOOK_ISR, BOOK_HA] {
             assert_eq!(
                 response.entries.iter().filter(|e| e.book == book).count(),
                 0,
@@ -594,11 +708,19 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 282,
+            alternates, 357,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
              Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
-             (§49). Two loaded records are not \
+             (§49) + SD-31 Epic 1-F2's 6 Bestiary 2 races' 48 (ARG's 42 + Inner Sea Races' 6 \
+             actually-Alternate rows; re-derived by role, not by the raw per-book row counts \
+             `ingest_race_traits` prints, which also include that batch's 8 `Unclassified` rows \
+             -- ARG 3, Inner Sea Races 5) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race \
+             chassis batch's real alternate-trait rows, minus Strix's Wing-Clipped-granted \
+             Flight and Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield, \
+             which are `FlagGranted` not `Alternate`) + SD31-E6-F4-006's 8 (2026-08-17, ARG's \
+             own follow-on 4-race chassis batch's real alternate-trait rows). \
+             Two loaded records are not \
              alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
              `Human ~ Tribalistic Languages`, both of which set no replace flag, so \

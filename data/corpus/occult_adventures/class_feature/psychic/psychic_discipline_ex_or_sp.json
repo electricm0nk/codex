@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic ~ Psychic Discipline",
+    "name": "Psychic Discipline (Ex or Sp)",
+    "class": "Psychic",
+    "description": "Each psychic accesses and improves her mental powers through a particular method, such as rigorous study or attaining a particular mental state. This is called her psychic discipline. She gains additional spells known based on her selected discipline. The choice of discipline must be made at 1st level; once made, it can't be changed. Each psychic discipline gives the psychic a number of discipline powers (at 1st, 5th, and 13th levels), and grants her additional spells known. In addition, the discipline determines which ability score the psychic uses for her phrenic pool and phrenic amplifications abilities. The DC of a saving throw against a psychic discipline ability equals 10 + 1/2 the psychic's level + the psychic's Intelligence modifier. At 1st level, a psychic learns an additional spell determined by her discipline. She learns another additional spell at 4th level and every 2 levels thereafter, until learning the final one at 18th level. These spells are in addition to the number of spells given on Table 1-8. Spells learned from a discipline can't be exchanged for different spells at higher levels. Specific psychic disciplines are further described starting on page 64.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Psychic Discipline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Each psychic accesses and improves her mental powers through a particular method, such as rigorous study or attaining a particular mental state. This is called her psychic discipline. She gains additional spells known based on her selected discipline. The choice of discipline must be made at 1st level; once made, it can't be changed. Each psychic discipline gives the psychic a number of discipline powers (at 1st, 5th, and 13th levels), and grants her additional spells known. In addition, the discipline determines which ability score the psychic uses for her phrenic pool and phrenic amplifications abilities. The DC of a saving throw against a psychic discipline ability equals 10 + 1/2 the psychic's level + the psychic's Intelligence modifier. At 1st level, a psychic learns an additional spell determined by her discipline. She learns another additional spell at 4th level and every 2 levels thereafter, until learning the final one at 18th level. These spells are in addition to the number of spells given on Table 1-8. Spells learned from a discipline can't be exchanged for different spells at higher levels. Specific psychic disciplines are further described starting on page 64."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psychic Discipline|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1157,
+    "record_key": "Psychic ~ Psychic Discipline"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

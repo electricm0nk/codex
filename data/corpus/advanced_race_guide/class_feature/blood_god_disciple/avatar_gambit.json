@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blood God Disciple ~ Avatar Gambit",
+    "name": "Avatar Gambit",
+    "class": "Summoner",
+    "description": "When a blood god disciple dismisses his eidolon, he rages like a barbarian for a number of rounds equal to half his summoner level (he may end this rage early just like a barbarian, but if he does so, any remaining rounds of rage from this ability are lost).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood God Disciple ~ Avatar Gambit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a blood god disciple dismisses his eidolon, he rages like a barbarian for a number of rounds equal to half his summoner level (he may end this rage early just like a barbarian, but if he does so, any remaining rounds of rage from this ability are lost)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 254,
+    "record_key": "Blood God Disciple ~ Avatar Gambit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

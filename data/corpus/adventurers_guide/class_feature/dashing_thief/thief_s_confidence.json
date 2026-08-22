@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dashing Thief ~ Thief's Confidence",
+    "name": "Thief's Confidence",
+    "class": "Swashbuckler",
+    "description": "A dashing thief's panache is fueled by bold acts of thievery. Whenever a dashing thief uses the steal combat maneuver to steal an object worth at least %1 gp from an opponent, she regains 1 panache point. She cannot regain panache in this way from a given opponent more than once per day. This ability alters panache and replaces the swashbuckler's ability to regain panache from a killing blow.|100*SwashbucklerLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dashing Thief ~ Thief's Confidence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.RostlandBravoClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "A dashing thief's panache is fueled by bold acts of thievery. Whenever a dashing thief uses the steal combat maneuver to steal an object worth at least %1 gp from an opponent, she regains 1 panache point. She cannot regain panache in this way from a given opponent more than once per day. This ability alters panache and replaces the swashbuckler's ability to regain panache from a killing blow.|100*SwashbucklerLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1080,
+    "record_key": "Dashing Thief ~ Thief's Confidence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

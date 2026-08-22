@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist Archetype ~ Kinetic Chirurgeon",
+    "name": "Kinetic Chirurgeon",
+    "class": "Kineticist Archetype",
+    "description": "While any hydrokineticist or telekineticist can learn the rudiments of healing, some kineticists are virtuosos of the curative arts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Archetype ~ Kinetic Chirurgeon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Kineticist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Kineticist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Kineticist Archetype ~ Kinetic Chirurgeon],[!PREFACT:1,ABILITIES,Kineticist_Archetype_InfusionSpecialization=True,Kineticist_Archetype_Metakinesis=True,Kineticist_Archetype_Infusion=True,Kineticist_Archetype_InternalBuffer=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While any hydrokineticist or telekineticist can learn the rudiments of healing, some kineticists are virtuosos of the curative arts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kinetic Chirurgeon ~ Kinetic Chirurgery|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kinetic Chirurgeon ~ Metahealer|PRECLASS:1,Kineticist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kinetic Chirurgeon ~ Healing Buffer|PRECLASS:1,Kineticist=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_InfusionSpecialization|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Metakinesis|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Infusion|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_InternalBuffer|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_InfusionSpecialization|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Metakinesis|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Infusion|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1313,
+    "record_key": "Kineticist Archetype ~ Kinetic Chirurgeon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

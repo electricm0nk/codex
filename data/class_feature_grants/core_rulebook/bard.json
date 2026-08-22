@@ -1,0 +1,137 @@
+[
+  {
+    "key": "Bard ~ Armored Casting",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 209
+    }
+  },
+  {
+    "key": "Bard ~ Bardic Countersong",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 207
+    }
+  },
+  {
+    "key": "Bard ~ Bardic Knowledge",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 206
+    }
+  },
+  {
+    "key": "Bard ~ Bardic Performance",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 208
+    }
+  },
+  {
+    "key": "Bard ~ Cantrips",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 210
+    }
+  },
+  {
+    "key": "Bard ~ Jack of All Trades",
+    "class": "Bard",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 214
+    }
+  },
+  {
+    "key": "Bard ~ Lore Master",
+    "class": "Bard",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 213
+    }
+  },
+  {
+    "key": "Bard ~ Versatile Performance",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 211
+    }
+  },
+  {
+    "key": "Bard ~ Well-Versed",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 212
+    }
+  }
+]

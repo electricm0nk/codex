@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Psychopomp (Vanth) ~ Reaper's Scythe",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "bestiary_4:monster:psychopomp_vanth"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scythe|DAMAGE,TOHIT|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Every vanth carries a distinctive adamantine scythe as both a weapon and a symbol of its duty. When the vanth wields its own scythe, the weapon gains a +1 enhancement bonus on attack rolls and damage rolls. As a free action, the vanth can summon its weapon from a personal demiplane or any other location and have it appear in its hands instantly. It can also dismiss its scythe back to its personal demiplane as a free action. If a vanth's scythe is destroyed, it can summon a new one in 24 hours."
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp (Vanth) ~ Reaper's Scythe"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1184,
-    "record_key": "Psychopomp (Vanth) ~ Reaper's Scythe"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1184,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Psychopomp (Vanth) ~ Reaper's Scythe",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

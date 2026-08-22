@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Frog Domain ~ Familiar",
+    "name": "Familiar",
+    "class": "Frog Domain",
+    "description": "You gain a toad familiar (see page 82 of the Core Rulebook). Your effective wizard level for this ability is equal to your druid level. Your druid level stacks with levels from other classes that grant familiars when determining the powers of your familiar.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frog Domain ~ Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DomainPower.Frog Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a toad familiar (see page 82 of the Core Rulebook). Your effective wizard level for this ability is equal to your druid level. Your druid level stacks with levels from other classes that grant familiars when determining the powers of your familiar."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|DomainFrogLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Toad"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 285,
+    "record_key": "Frog Domain ~ Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

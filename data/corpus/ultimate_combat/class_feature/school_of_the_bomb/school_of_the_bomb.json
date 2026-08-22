@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "School Of The Bomb ~ Display",
+    "name": "School of the Bomb",
+    "class": "School Of The Bomb",
+    "description": "The creation and use of bombs is often so engrossing or intellectually taxing that an arcane bomber forsakes four schools of magic. These opposition schools are chosen at 1st level and cannot be changed later. An arcane bomber who prepares spells from his opposition school must use two spell slots of that level to prepare the spell. In addition, the arcane bomber takes a -4 penalty on any skill checks made when crafting a magic item that has a spell from one of his opposition schools. This ability replaces arcane school. Chosen Opposition Schools, %1.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "School Of The Bomb ~ Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The creation and use of bombs is often so engrossing or intellectually taxing that an arcane bomber forsakes four schools of magic. These opposition schools are chosen at 1st level and cannot be changed later. An arcane bomber who prepares spells from his opposition school must use two spell slots of that level to prepare the spell. In addition, the arcane bomber takes a -4 penalty on any skill checks made when crafting a magic item that has a spell from one of his opposition schools. This ability replaces arcane school. Chosen Opposition Schools, %1.|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SCHOOLS|ALL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1748,
+    "record_key": "School Of The Bomb ~ Display"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

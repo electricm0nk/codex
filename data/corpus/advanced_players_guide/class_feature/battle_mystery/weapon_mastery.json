@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Mystery ~ Weapon Mastery",
+    "name": "Weapon Mastery",
+    "class": "Battle Mystery",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Mystery ~ Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BattleRevelation.Extraordinary"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|PC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon Focus(%LIST)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Critical(%LIST)|PRECLASS:1,Oracle=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Weapon Focus(%LIST)|PRECLASS:1,Oracle=12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 549,
+    "record_key": "Battle Mystery ~ Weapon Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

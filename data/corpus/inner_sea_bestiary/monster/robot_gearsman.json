@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:gearsman_adaptive_learning",
@@ -25,6 +23,108 @@
     ],
     "race_subtype": "Robot",
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gearsman ~ Adaptive Learning|Gearsman ~ Charge Weapon|Gearsman ~ Self-Repair|Robot ~ Critical Hit Vulnerability|Robot ~ Electricity Vulnerability|Robot ~ Intelligent"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Hallit"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Spear"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Craft|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|9|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "HITDIE",
+        "value": "10"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Sense Motive"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Robot"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "size": "M",
     "source_page": "p.44",
     "speeds": [
@@ -34,16 +134,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 72,
-    "record_key": "Robot (Gearsman)"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Robot (Gearsman)",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

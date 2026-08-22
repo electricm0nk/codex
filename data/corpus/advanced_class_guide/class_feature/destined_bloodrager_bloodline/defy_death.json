@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Destined Bloodrager Bloodline ~ Defy Death",
+    "name": "Defy Death",
+    "class": "Destined Bloodrager Bloodline",
+    "description": "Once per day when an attack or spell that causes damage would result in your death, you may attempt a DC 20 Will save. If successful, you are instead reduced to 1 hit point; if you succeed and already have fewer than 1 hit point, you take no damage instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destined Bloodrager Bloodline ~ Defy Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Destined Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Destined"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Destined_BloodlineProgressionLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Destined_BloodlinePower12LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day when an attack or spell that causes damage would result in your death, you may attempt a DC 20 Will save. If successful, you are instead reduced to 1 hit point; if you succeed and already have fewer than 1 hit point, you take no damage instead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DestinedBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 689,
+    "record_key": "Destined Bloodrager Bloodline ~ Defy Death"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

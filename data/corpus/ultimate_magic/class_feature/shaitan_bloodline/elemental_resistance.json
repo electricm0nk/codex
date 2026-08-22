@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaitan Bloodline ~ Elemental Resistance",
+    "name": "Elemental Resistance",
+    "class": "Shaitan Bloodline",
+    "description": "You gain acid resistance %1.|Sorcerer_ShaitanElementalResistance_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Bloodline ~ Elemental Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Shaitan Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Extraodrinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Shaitan"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Shaitan_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Shaitan_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ShaitanElementalResistance_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain acid resistance %1.|Sorcerer_ShaitanElementalResistance_ResistanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ShaitanElementalResistance_ResistanceBonus|min(floor((Sorcerer_Shaitan_BloodlinePower3LVL+3)/6),2)*10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|Sorcerer_ShaitanElementalResistance_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ShaitanBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 684,
+    "record_key": "Shaitan Bloodline ~ Elemental Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

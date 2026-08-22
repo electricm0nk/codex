@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Festering Spirit ~ Slime",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:festering_spirit"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A festering spirit's slime resembles the putrefying sludge of decaying corpses. Any creature that is hit by the spirit's incorporeal touch attack, passes through its square, or hits it with a natural weapon or unarmed strike must attempt a DC %1 Fortitude save. On a failure, the creature is nauseated for 1d4 rounds, and on a success the creature is staggered for 1 round. A festering spirit's slime persists on objects and creatures for 1d10 minutes but has no harmful effect after its initial contact. Creatures immune to poison or disease are immune to this ability.|14+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Festering Spirit ~ Slime"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 647,
-    "record_key": "Festering Spirit ~ Slime"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 647,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Festering Spirit ~ Slime",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Gremlin (Monaciello) ~ Magic Bag",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:gremlin_monaciello"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A monaciello always carries its pouch with it. This pouch contains an extradimensional space and operates like a bag of holding (type I). If this pouch is separated from the monaciello, all of its former contents are lost, and it becomes a normal bag that contains a number of coins equal to double the treasure value of a creature of the gremlin's CR. A monaciello that loses its pouch must create a new one, a process that takes 1d4 days. Until the new pouch is finished, it remains a non-magical bag, only becoming a fully functional extradimensional space once completed."
+      },
+      {
+        "key": "KEY",
+        "value": "Gremlin (Monaciello) ~ Magic Bag"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 833,
-    "record_key": "Gremlin (Monaciello) ~ Magic Bag"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 833,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Gremlin (Monaciello) ~ Magic Bag",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

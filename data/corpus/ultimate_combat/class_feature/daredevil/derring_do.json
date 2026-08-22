@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daredevil ~ Derring-Do",
+    "name": "Derring-do",
+    "class": "Daredevil",
+    "description": "A daredevil can use her performance to bring out grace in the clumsiest allies. The daredevil and any allies who see her receive a +1 morale bonus on Reflex saving throws and a +2 competence bonus on Dexterity-based skill checks. Allies who move at least 10 feet during their turn gain a +1 dodge bonus to their Armor Class until the start of their next turn. At 5th level, and every six bard levels thereafter, the saving throw and Armor Class bonuses increase by +1, to a maximum of +4 at 17th level, and the skill check bonuses increase by +2, to a maximum of +8 at 17th level. This is a mind-affecting ability that uses visual components. This ability replaces inspire courage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daredevil ~ Derring-Do"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A daredevil can use her performance to bring out grace in the clumsiest allies. The daredevil and any allies who see her receive a +1 morale bonus on Reflex saving throws and a +2 competence bonus on Dexterity-based skill checks. Allies who move at least 10 feet during their turn gain a +1 dodge bonus to their Armor Class until the start of their next turn. At 5th level, and every six bard levels thereafter, the saving throw and Armor Class bonuses increase by +1, to a maximum of +4 at 17th level, and the skill check bonuses increase by +2, to a maximum of +8 at 17th level. This is a mind-affecting ability that uses visual components. This ability replaces inspire courage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 402,
+    "record_key": "Daredevil ~ Derring-Do"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

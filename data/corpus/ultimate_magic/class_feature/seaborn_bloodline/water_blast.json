@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Seaborn Bloodline ~ Water Blast",
+    "name": "Water Blast",
+    "class": "Seaborn Bloodline",
+    "description": "As a standard action, you can fire a bolt of water at a foe within 30 feet as a ranged touch attack. The foe is knocked prone, and at your option may be pushed 5 feet directly away from you. A reflex save (DC %1) negates this effect. You can use this ability %2 times per day. This bloodline power replaces dehydrating touch.|Sorcerer_SeabornWaterBlast_DC|Sorcerer_Aquatic_BloodlinePower1Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Seaborn Bloodline ~ Water Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Seaborn Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Seaborn"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aquatic_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aquatic_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aquatic_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SeabornWaterBlast_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can fire a bolt of water at a foe within 30 feet as a ranged touch attack. The foe is knocked prone, and at your option may be pushed 5 feet directly away from you. A reflex save (DC %1) negates this effect. You can use this ability %2 times per day. This bloodline power replaces dehydrating touch.|Sorcerer_SeabornWaterBlast_DC|Sorcerer_Aquatic_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SeabornWaterBlast_DC|10+(Sorcerer_Aquatic_BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (DC %2)|Sorcerer_Aquatic_BloodlinePower1Times|Sorcerer_SeabornWaterBlast_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Aquatic_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AquaticBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1769,
+    "record_key": "Seaborn Bloodline ~ Water Blast"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

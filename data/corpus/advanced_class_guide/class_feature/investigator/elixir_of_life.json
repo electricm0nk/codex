@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Discovery ~ Elixir of Life",
+    "name": "Elixir of Life",
+    "class": "Investigator",
+    "description": "Once per day, you can brew an elixir of life. This special concoction costs 25,000 gp to create and takes 1 hour of work. An elixir of life, when administered by the Investigator who brewed it, restores life to a dead creature as per the spell true resurrection. Alternatively, you may drink the elixir of life yourself, after which point you are immediately targeted with a resurrection spell the next time you are killed. Used in this manner, the effects of an elixir of life persist only for a number of days equal to your Intelligence modifier; if you do not die before that time expires, the effects of the elixir of life end.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Discovery ~ Elixir of Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorAlchemistDiscovery.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can brew an elixir of life. This special concoction costs 25,000 gp to create and takes 1 hour of work. An elixir of life, when administered by the Investigator who brewed it, restores life to a dead creature as per the spell true resurrection. Alternatively, you may drink the elixir of life yourself, after which point you are immediately targeted with a resurrection spell the next time you are killed. Used in this manner, the effects of an elixir of life persist only for a number of days equal to your Intelligence modifier; if you do not die before that time expires, the effects of the elixir of life end."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1320,
+    "record_key": "Investigator ~ Discovery ~ Elixir of Life"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

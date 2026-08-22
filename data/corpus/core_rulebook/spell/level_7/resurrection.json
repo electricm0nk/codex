@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like raise dead, except that you are able to restore life and complete strength to any deceased creature. The condition of the remains is not a factor. So long as some small portion of the creature's body still exists, it can be resurrected, but the portion receiving the spell must have been part of the creature's body at the time of death. [The remains of a creature hit by a disintegrate spell count as a small portion of its body.] The creature can have been dead no longer than 10 years per caster level. Upon completion of the spell, the creature is immediately restored to full hit points, vigor, and health, with no loss of prepared spells. The subject of the spell gains one permanent negative level when it is raised, just as if it had been hit by an energy-draining creature. If the subject is 1st level, it takes 2 points of Constitution drain instead [if this would reduce its Con to 0 or less, it can't be resurrected]. You can resurrect someone killed by a death effect or someone who has been turned into an undead creature and then destroyed. You cannot resurrect someone who has died of old age. Constructs, elementals, outsiders, and undead creatures can't be resurrected.",
     "key": "Resurrection",
-    "school": "Conjuration",
     "level": 7,
-    "description": "This spell functions like raise dead, except that you are able to restore life and complete strength to any deceased creature. The condition of the remains is not a factor. So long as some small portion of the creature's body still exists, it can be resurrected, but the portion receiving the spell must have been part of the creature's body at the time of death. [The remains of a creature hit by a disintegrate spell count as a small portion of its body.] The creature can have been dead no longer than 10 years per caster level. Upon completion of the spell, the creature is immediately restored to full hit points, vigor, and health, with no loss of prepared spells. The subject of the spell gains one permanent negative level when it is raised, just as if it had been hit by an energy-draining creature. If the subject is 1st level, it takes 2 points of Constitution drain instead [if this would reduce its Con to 0 or less, it can't be resurrected]. You can resurrect someone killed by a death effect or someone who has been turned into an undead creature and then destroyed. You cannot resurrect someone who has died of old age. Constructs, elementals, outsiders, and undead creatures can't be resurrected."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like raise dead, except that you are able to restore life and complete strength to any deceased creature. The condition of the remains is not a factor. So long as some small portion of the creature's body still exists, it can be resurrected, but the portion receiving the spell must have been part of the creature's body at the time of death. [The remains of a creature hit by a disintegrate spell count as a small portion of its body.] The creature can have been dead no longer than 10 years per caster level. Upon completion of the spell, the creature is immediately restored to full hit points, vigor, and health, with no loss of prepared spells. The subject of the spell gains one permanent negative level when it is raised, just as if it had been hit by an energy-draining creature. If the subject is 1st level, it takes 2 points of Constitution drain instead [if this would reduce its Con to 0 or less, it can't be resurrected]. You can resurrect someone killed by a death effect or someone who has been turned into an undead creature and then destroyed. You cannot resurrect someone who has died of old age. Constructs, elementals, outsiders, and undead creatures can't be resurrected.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like raise dead, except that you are able to restore life and complete strength to any deceased creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None, see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/resurrection.html#_resurrection"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.334"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Dead creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 504,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1255,
-    "record_key": "Resurrection.MOD"
+    "record_key": "Resurrection",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

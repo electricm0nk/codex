@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Disguise Weapon",
-    "school": "Illusion",
-    "level": 1,
     "description": "You make one manufactured weapon look like a different manufactured weapon of the same size and relative encumbrance (light, one-handed, or two-handed). For example, you could make a Small greatsword look like a Small quarterstaff, a Medium club, or a Large dagger. Even the appearance of an improvised weapon is possible. The extent of the apparent change is up to you. You could add or obscure a minor feature or make the item look like it is composed of different materials (stone, wood, adamantine, and so on). The spell does not provide any of the abilities of the chosen form, nor does it alter the perceived tactile or audible properties of the item or how it is wielded. A creature that interacts with the glamer may attempt a Will save to recognize it as an illusion.",
-    "full_text": true
+    "full_text": true,
+    "key": "Disguise Weapon",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Magus,Sorcerer,Witch,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Changes one weapon's appearance.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You make one manufactured weapon look like a different manufactured weapon of the same size and relative encumbrance (light, one-handed, or two-handed). For example, you could make a Small greatsword look like a Small quarterstaff, a Medium club, or a Large dagger. Even the appearance of an improvised weapon is possible. The extent of the apparent change is up to you. You could add or obscure a minor feature or make the item look like it is composed of different materials (stone, wood, adamantine, and so on). The spell does not provide any of the abilities of the chosen form, nor does it alter the perceived tactile or audible properties of the item or how it is wielded. A creature that interacts with the glamer may attempt a Will save to recognize it as an illusion.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/disguiseWeapon.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "manufactured weapon touched"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 48,
-    "record_key": "Disguise Weapon"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Disguise Weapon",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

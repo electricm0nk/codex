@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Underwater Blindsense",
+    "name": "Blindsense",
+    "class": null,
+    "description": "A creature with blindsense notices things it cannot see. The creature usually does not need to succeed at Perception checks to pinpoint the location of a creature within range of its blindsense ability, provided that it has line of effect to that creature. Any opponent the creature with blindsense cannot see still has total concealment from the creature, and the creature still has the normal miss chance when attacking foes that have concealment. Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Underwater Blindsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Vision.Universal Monster Rule"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlindsenseUnderwaterRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with blindsense notices things it cannot see. The creature usually does not need to succeed at Perception checks to pinpoint the location of a creature within range of its blindsense ability, provided that it has line of effect to that creature. Any opponent the creature with blindsense cannot see still has total concealment from the creature, and the creature still has the normal miss chance when attacking foes that have concealment. Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see."
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsense [When Immersed in Water] (BlindsenseUnderwaterRange)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Vision|Blindsense %1 ft. (when immersed in water)|BlindsenseUnderwaterRange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3104,
+    "record_key": "Underwater Blindsense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

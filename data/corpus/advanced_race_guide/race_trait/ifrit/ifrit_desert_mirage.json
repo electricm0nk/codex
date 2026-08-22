@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Ifrit ~ Desert Mirage",
+    "name": "Desert Mirage",
+    "race_key": "Ifrit",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ifrit Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Ifrit_ReplaceFireAffinity"
+    ],
+    "description": "Ifrits thrive in the deserts of the world, where their keen instincts and resistance to heat give them a huge edge over their competitors. Those with this trait gain a +2 racial bonus on Stealth checks in desert environments and on saves to resist starvation and thirst. This racial trait replaces fire affinity.",
+    "source_page": "p.126",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ifrit ~ Desert Mirage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ifrit Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Desert Mirage],[!PREFACT:1,ABILITIES,Ifrit_ReplaceFireAffinity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ifrits thrive in the deserts of the world, where their keen instincts and resistance to heat give them a huge edge over their competitors. Those with this trait gain a +2 racial bonus on Stealth checks in desert environments and on saves to resist starvation and thirst."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces fire affinity.|!PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Desert Mirage"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saves to resist starvation and thirst."
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Stealth in desert environments"
+      },
+      {
+        "key": "FACT",
+        "value": "Ifrit_ReplaceFireAffinity|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Stealth=in desert environments",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_StarvationAndThirst",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 543,
+    "record_key": "Ifrit ~ Desert Mirage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

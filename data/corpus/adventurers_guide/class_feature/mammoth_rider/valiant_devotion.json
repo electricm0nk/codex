@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mammoth Rider ~ Valiant Devotion",
+    "name": "Valiant Devotion",
+    "class": "Mammoth Rider",
+    "description": "A mammoth riderӳ steed gains a +4 morale bonus against charm, compulsion, and fear effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mammoth Rider ~ Valiant Devotion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mammoth Rider Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "DESC",
+        "value": "A mammoth riderӳ steed gains a +4 morale bonus against charm, compulsion, and fear effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 363,
+    "record_key": "Mammoth Rider ~ Valiant Devotion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

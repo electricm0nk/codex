@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Treestrider ~ Brachiation",
+    "name": "Brachiation",
+    "class": "Hunter",
+    "description": "A treestrider can gain a climb speed equal to",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treestrider ~ Brachiation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.TreestriderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A treestrider can gain a climb speed equal to"
+      },
+      {
+        "key": "DESC",
+        "value": "half|!PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "DESC",
+        "value": "her base speed as a free action"
+      },
+      {
+        "key": "DESC",
+        "value": "for %1 minutes per day. This duration must be spent in 1-minute increments.|HunterLVL|!PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "DESC",
+        "value": "for %1 minutes per day. This duration must be spent in 10-minute increments.|HunterLVL*10|PRECLASS:1,Hunter=8|!PRECLASS:1,Hunter=15"
+      },
+      {
+        "key": "DESC",
+        "value": "with no limit on the duration.|PRECLASS:1,Hunter=15"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition, she can use her climb speed to move through the canopies of forests or jungles, provided the limbs of the trees are strong enough to support her weight."
+      },
+      {
+        "key": "DESC",
+        "value": "The treestrider's companion gains a +10-foot enhancement bonus to its climb speed.|!PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "DESC",
+        "value": "The treestrider's companion gains a +20-foot enhancement bonus to its climb speed.|PRECLASS:1,Hunter=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 723,
+    "record_key": "Treestrider ~ Brachiation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abjuration School ~ Energy Absorption",
+    "name": "Energy Absorption",
+    "class": "Abjuration School",
+    "description": "You gain energy absorption %1 per day. Whenever you take energy damage, apply resistance and immunity first and apply the rest to this absorption, reducing your daily total by that amount. Any damage in excess of your absorption is applied to you normally.|AbjurationEnergyAbsorption",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abjuration School ~ Energy Absorption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationEnergyAbsorption|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain energy absorption %1 per day. Whenever you take energy damage, apply resistance and immunity first and apply the rest to this absorption, reducing your daily total by that amount. Any damage in excess of your absorption is applied to you normally.|AbjurationEnergyAbsorption"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationEnergyAbsorption|AbjurationSchoolLVL*3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|AbjurationEnergyAbsorption"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2640,
+    "record_key": "Abjuration School ~ Energy Absorption"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

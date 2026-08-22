@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter's Tricks ~ Sic 'Em",
+    "name": "Sic 'Em",
+    "class": "Hunter's Tricks",
+    "description": "The ranger can use this trick as a swift action. His animal companion makes one melee attack against an adjacent creature. The animal companion must be able to see and hear the ranger to make this attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter's Tricks ~ Sic 'Em"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger can use this trick as a swift action. His animal companion makes one melee attack against an adjacent creature. The animal companion must be able to see and hear the ranger to make this attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Hunter's Trick"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2860,
+    "record_key": "Hunter's Tricks ~ Sic 'Em"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

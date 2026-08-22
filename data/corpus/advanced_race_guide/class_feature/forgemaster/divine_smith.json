@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forgemaster ~ Divine Smith",
+    "name": "Divine Smith",
+    "class": "Cleric",
+    "description": "Whenever a forgemaster casts a spell that targets a weapon, shield, or armor, the spell takes effect at +1 caster level. If the spell has one or more metamagic feats applied, she reduces the total level adjustment to the spell by 1 (minimum 0).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgemaster ~ Divine Smith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a forgemaster casts a spell that targets a weapon, shield, or armor, the spell takes effect at +1 caster level. If the spell has one or more metamagic feats applied, she reduces the total level adjustment to the spell by 1 (minimum 0)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 63,
+    "record_key": "Forgemaster ~ Divine Smith"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

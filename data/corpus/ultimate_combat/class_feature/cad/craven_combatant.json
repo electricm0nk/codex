@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cad ~ Craven Combatant",
+    "name": "Craven Combatant",
+    "class": "Fighter",
+    "description": "At 11th level, when fighting defensively or using Combat Expertise or total defense, a cad cannot be flanked except by a rogue or ninja whose level is four or more higher than the cad's fighter level. This ability replaces armor training 3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cad ~ Craven Combatant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, when fighting defensively or using Combat Expertise or total defense, a cad cannot be flanked except by a rogue or ninja whose level is four or more higher than the cad's fighter level. This ability replaces armor training 3."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 710,
+    "record_key": "Cad ~ Craven Combatant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brawler Archetype ~ Bouncer",
+    "name": "Bouncer",
+    "class": "Brawler Archetype",
+    "description": "Some taverns employ bouncers to keep out undesirables or for when their customers get too rowdy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Bouncer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "Some taverns employ bouncers to keep out undesirables or for when their customers get too rowdy."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Bouncer],[!PREFACT:1,ABILITIES,Brawler_Archetype_MartialFlexibility=True,Brawler_Archetype_BonusFeat2=True,Brawler_Archetype_CloseWeaponMastery=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bouncer ~ Crowd Control|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bouncer ~ Lesser Flexibility|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bouncer ~ Drunk Handler|PRECLASS:1,Brawler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bouncer ~ Drunk Knockout|PRECLASS:1,Brawler=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bouncer ~ Bar Fight Mastery|PRECLASS:1,Brawler=5"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_MartialFlexibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_CloseWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat2|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_abilities_class.lst",
+    "sha256": "1344b6dcf98ada3b51a62cd2169c486eb4896dda4078eee3f7abc062a7d957fa",
+    "line": 21,
+    "record_key": "Brawler Archetype ~ Bouncer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

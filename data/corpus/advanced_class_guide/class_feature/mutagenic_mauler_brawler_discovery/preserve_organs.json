@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mutagenic Mauler Brawler Discovery ~ Preserve Organs",
+    "name": "Preserve Organs",
+    "class": "Mutagenic Mauler Brawler Discovery",
+    "description": "You learn how to preserve and protect your vital organs, reducing the chance of a mortal wound. When a critical hit or sneak attack is scored on you, there is a %1%% chance that the critical hit or sneak attack is negated and damage is instead rolled normally. This does not stack with similar abilities that negate critical hits and sneak attacks (such as fortification armor).|25*count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"NAME=Preserve Organs\")",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagenic Mauler Brawler Discovery ~ Preserve Organs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Mutagenic Mauler Class Feature.MutagenicMaulerDiscovery.Extraordinary"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"NAME=Preserve Organs\"),3"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to preserve and protect your vital organs, reducing the chance of a mortal wound. When a critical hit or sneak attack is scored on you, there is a %1%% chance that the critical hit or sneak attack is negated and damage is instead rolled normally. This does not stack with similar abilities that negate critical hits and sneak attacks (such as fortification armor).|25*count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"NAME=Preserve Organs\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2889,
+    "record_key": "Mutagenic Mauler Brawler Discovery ~ Preserve Organs"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

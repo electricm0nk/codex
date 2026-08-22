@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Sidestep",
+    "name": "Improved Sidestep",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are adept at sidestepping your opponent's melee attacks without compromising your mobility.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Sidestep"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Dodge,Mobility,Sidestep"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,15],[PREVARGTEQ:FeatDexRequirement,15]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are adept at sidestepping your opponent's melee attacks without compromising your mobility."
+      },
+      {
+        "key": "DESC",
+        "value": " After sidestepping an opponent's missed attack using the Sidestep feat, you may still take a 5-foot step during your next turn, or you may move up to your full speed if you take an action to move during your next turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Sidestep"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4348,
+    "record_key": "Warpriest Bonus Feat ~ Improved Sidestep"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

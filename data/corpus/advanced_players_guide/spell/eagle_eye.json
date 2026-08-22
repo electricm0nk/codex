@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Eagle Eye",
-    "school": "Divination",
-    "level": 2,
     "description": "Eagle eye creates a magical sensor directly above you. The sensor can appear anywhere above you, to a maximum height equal to the spell's range. You can see from this vantage as if you were actually there, rotating your viewpoint 360 degrees.  You perceive with your normal visual senses. A caster using eagle eye can easily see for a considerable distance. The spell does not penetrate any solid surface, although it is unaffected by foliage and the like.",
-    "full_text": true
+    "full_text": true,
+    "key": "Eagle Eye",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates a magical sensor high above you.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Eagle eye creates a magical sensor directly above you. The sensor can appear anywhere above you, to a maximum height equal to the spell's range. You can see from this vantage as if you were actually there, rotating your viewpoint 360 degrees.  You perceive with your normal visual senses. A caster using eagle eye can easily see for a considerable distance. The spell does not penetrate any solid surface, although it is unaffected by foliage and the like.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes (D)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/eagleEye.html#_eagle-eye"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "magical sensor"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 94,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1927,
-    "record_key": "Eagle Eye"
+    "record_key": "Eagle Eye",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

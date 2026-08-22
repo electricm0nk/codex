@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "River Druid ~ Ferrier",
+    "name": "Ferrier",
+    "class": "Druid",
+    "description": "A river druid adds Diplomacy to her list of class skills and gains a +2 bonus on Diplomacy and Knowledge (nature) skill checks. This alters the druid's class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Druid ~ Ferrier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.RiverDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A river druid adds Diplomacy to her list of class skills and gains a +2 bonus on Diplomacy and Knowledge (nature) skill checks. This alters the druid's class skills."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Knowledge (nature)|2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Diplomacy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 540,
+    "record_key": "River Druid ~ Ferrier"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

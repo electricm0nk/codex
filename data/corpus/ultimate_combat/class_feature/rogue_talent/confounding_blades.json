@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Confounding Blades",
+    "name": "Confounding Blades*",
+    "class": "Rogue Talent",
+    "description": "When a rogue with this talent hits a creature with a melee weapon that deals sneak attack damage, her target cannot make attacks of opportunity for 1d4+1 rounds. The rogue must have the slow reactions rogue talent before she can choose this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Confounding Blades"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rogue Talent ~ Slow Reactions"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "When a rogue with this talent hits a creature with a melee weapon that deals sneak attack damage, her target cannot make attacks of opportunity for 1d4+1 rounds. The rogue must have the slow reactions rogue talent before she can choose this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1615,
+    "record_key": "Rogue Talent ~ Confounding Blades"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

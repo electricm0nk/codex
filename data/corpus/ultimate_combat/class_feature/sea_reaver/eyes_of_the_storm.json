@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sea Reaver ~ Eyes of the Storm",
+    "name": "Eyes of the Storm",
+    "class": "Barbarian",
+    "description": "At 2nd level, a sea reaver ignores any concealment provided by fog, rain, sleet, mist, wind, or other weather effects that is less than total concealment, and any penalties weather applies on Perception checks are halved. This ability replaces uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sea Reaver ~ Eyes of the Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a sea reaver ignores any concealment provided by fog, rain, sleet, mist, wind, or other weather effects that is less than total concealment, and any penalties weather applies on Perception checks are halved. This ability replaces uncanny dodge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 331,
+    "record_key": "Sea Reaver ~ Eyes of the Storm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Undine ~ Acid Breath",
+    "name": "Acid Breath",
+    "race_key": "Undine",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Undine Racial Trait",
+      "SpecialAttack",
+      "Special Attack"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Undine_ReplaceSpellLikeAbility"
+    ],
+    "description": "Undines whose outsider heritage can be traced to a water mephit can wield acid as a weapon. Such an undine has a breath weapon that is a 5-foot cone of acidic water usable once per day. The breath deals 1d8 points of acid damage per two character levels (maximum 5d8). A Reflex saving throw (DC 10 + 1/2 the undine's level + the undine's Constitution modifier) halves the damage. This racial trait replaces the spell-like ability racial trait.",
+    "source_page": "p.174",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine ~ Acid Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Undine Racial Trait.SpecialAttack.Special Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Undine ~ Acid Breath],[!PREFACT:1,ABILITIES,Undine_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Undine_AcidBreath_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Undine_AcidBreath_Dice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Undine_AcidBreath_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Undines whose outsider heritage can be traced to a water mephit can wield acid as a weapon. Such an undine has a breath weapon that is a 5-foot cone of acidic water usable once per day. The breath deals 1d8 points of acid damage per two character levels (maximum 5d8). A Reflex saving throw (DC 10 + 1/2 the undine's level + the undine's Constitution modifier) halves the damage."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Undine ~ Acid Breath"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(5-ft. cone, %1d6 acid damage, Reflex DC %2 for half, %3/day)|Undine_AcidBreath_Dice|Undine_AcidBreath_DC|Undine_AcidBreath_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Undine_AcidBreath_Times"
+      },
+      {
+        "key": "FACT",
+        "value": "Undine_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Undine_AcidBreath_Times",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Undine_AcidBreath_Dice",
+          "min(floor((TL+1)/2),5)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Undine_AcidBreath_DC",
+          "10+(TL/2)+CON"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 776,
+    "record_key": "Undine ~ Acid Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

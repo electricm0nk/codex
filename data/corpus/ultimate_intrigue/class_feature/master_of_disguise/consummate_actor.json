@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master of Disguise ~ Consummate Actor",
+    "name": "Consummate Actor",
+    "class": "Rogue",
+    "description": "A master of disguise adds half her rogue level (minimum 1) on all Disguise checks and on Bluff checks to stay in character while using Disguise.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master of Disguise ~ Consummate Actor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.MasterOfDisguiseClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A master of disguise adds half her rogue level (minimum 1) on all Disguise checks and on Bluff checks to stay in character while using Disguise."
+      },
+      {
+        "key": "DESC",
+        "value": " She gains the quick disguise rogue talent, and she can create a disguise twice as quickly as normal even for that rogue talent (she can create a disguise that encompasses only minor details as a standard action).|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue Talent ~ Quick Disguise|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Stay in character|max(1,RogueLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|max(1,RogueLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 745,
+    "record_key": "Master of Disguise ~ Consummate Actor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

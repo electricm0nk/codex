@@ -1,27 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Armored Coat",
     "category": "ArmsArmor",
-    "name": "Armored Coat",
     "cost_gp": 50.0,
-    "weight": 20.0,
-    "description": "A sturdy leather coat reinforced with metal plates sewn into the lining; can be donned or removed as a move action, and layers over other armor for better AC at the cost of worse armor check penalties."
+    "description": "A sturdy leather coat reinforced with metal plates sewn into the lining; can be donned or removed as a move action, and layers over other armor for better AC at the cost of worse armor check penalties.",
+    "key": "Armored Coat",
+    "name": "Armored Coat",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Armored Coat"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather|Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      }
+    ],
+    "weight": 20.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Armored Coat",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

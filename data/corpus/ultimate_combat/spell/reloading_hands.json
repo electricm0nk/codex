@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Once per round, phantom hands load a single ranged weapon or firearm with conjured ammunition. This ammunition counts as magical for overcoming damage reduction and attacking incorporeal creatures, but is the standard for its type (a normal bullet or pellets and black powder in the case of firearms). Conjured ammunition ceases to exist 1 round after it is removed from the weapon, or at the end of the duration, whichever comes first.",
+    "key": "Reloading Hands",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Magus,Ranger,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Loads a single shot into your weapon every round.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, phantom hands load a single ranged weapon or firearm with conjured ammunition. This ammunition counts as magical for overcoming damage reduction and attacking incorporeal creatures, but is the standard for its type (a normal bullet or pellets and black powder in the case of firearms). Conjured ammunition ceases to exist 1 round after it is removed from the weapon, or at the end of the duration, whichever comes first.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds (D)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object, harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/reloadingHands.html#_reloading-hands"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object, harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "projectile weapon touched"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 113,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Reloading Hands",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

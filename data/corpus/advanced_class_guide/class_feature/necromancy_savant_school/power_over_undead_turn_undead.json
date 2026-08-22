@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Necromancy Savant School ~ Turn Undead",
+    "name": "Power Over Undead ~ Turn Undead",
+    "class": "Necromancy Savant School",
+    "description": "You can channel energy %1 times per day to turn undead. The DC of the will save for your Turn Undead attempts is %2.|PowerOverUndeadTimes|PowerOverUndeadTurnDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Necromancy Savant School ~ Turn Undead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialAttack.Supernatural.NecromanticSavantChanneling"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Channel Positive Energy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerOverUndeadTurnDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel energy %1 times per day to turn undead. The DC of the will save for your Turn Undead attempts is %2.|PowerOverUndeadTimes|PowerOverUndeadTurnDC"
+      },
+      {
+        "key": "DESC",
+        "value": "Undead cannot add their channel resistance to the save against your Turn ability.|PREVARGTEQ:PowerOverUndeadLVL,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Turn Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerOverUndeadTurnDC|10+PowerOverUndeadLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2575,
+    "record_key": "Necromancy Savant School ~ Turn Undead"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

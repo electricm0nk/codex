@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Survivalist",
+    "name": "Survivalist",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent adds Heal and Survival to her list of class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Survivalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent adds Heal and Survival to her list of class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Heal|Survival"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2919,
+    "record_key": "Rogue Talent ~ Survivalist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

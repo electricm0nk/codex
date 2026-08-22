@@ -10,6 +10,15 @@ import {
 import { previewLevelUp as previewLevelUpGrants } from '../boundary/previewLevelUp';
 import { buildClassFeatureSurface } from './classFeaturesModel';
 import {
+  loadClassFeatureDescriptions,
+  type ClassFeatureDescriptionDto,
+} from '../boundary/loadClassFeatureDescriptions';
+import { loadClassFeatureFeatBridgeDescriptions } from '../boundary/loadClassFeatureFeatBridgeDescriptions';
+import {
+  loadClassFeaturePoolOptions,
+  type ClassFeaturePoolOptionDto,
+} from '../boundary/loadClassFeaturePoolOptions';
+import {
   buildRacialTraitsSurface,
   type RacialTraitRow,
   type RacialTraitsSurface,
@@ -1358,7 +1367,8 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
   if (!props.effects) {
     return null;
   }
-  const { armorClassDelta, armorCheckPenaltyTotal, maxDexCap, spellFailureChance, attackBonusDelta } = props.effects;
+  const { armorClassDelta, armorCheckPenaltyTotal, maxDexCap, spellFailureChance, attackBonusDelta, spellResistanceTotal } =
+    props.effects;
   return (
     <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
@@ -1370,6 +1380,7 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
         {maxDexCap !== undefined ? <StatTile label="Max Dex" value={maxDexCap} /> : null}
         {spellFailureChance !== undefined ? <StatTile label="Spell Failure" value={`${spellFailureChance}%`} /> : null}
         {attackBonusDelta !== undefined ? <StatTile label="Attack Bonus" value={fmt(attackBonusDelta)} /> : null}
+        {spellResistanceTotal !== undefined ? <StatTile label="Spell Resistance" value={spellResistanceTotal} /> : null}
       </div>
     </div>
   );
@@ -1815,6 +1826,111 @@ function RacialTraitsSection(props: { surface: RacialTraitsSurface; raceLabel: s
   );
 }
 
+/**
+ * One registered option pool's own class gate + heading copy for
+ * {@link ClassFeaturePoolReferenceSection} — data-driven so widening
+ * `class_feature_pool_catalog::REGISTERED_POOL_GROUPS` (rules_core) only
+ * needs a new row here, not a new component. `classSlug` matches
+ * `HeldClass.classId`'s trailing segment (`"class:core_rulebook:rogue"` ->
+ * `"rogue"`), the same convention the pre-existing Rogue gate already used.
+ */
+const POOL_REFERENCE_SECTIONS: ReadonlyArray<{
+  poolGroup: string;
+  classSlug: string;
+  heading: string;
+  note: string;
+}> = [
+  {
+    poolGroup: 'Rogue Talent',
+    classSlug: 'rogue',
+    heading: 'Available Rogue Talents (reference)',
+    note: 'Every Rogue Talent this catalog can render without a missing value, whether or not this build has selected one. A talent whose only magnitude depends on a value this catalog cannot compute (e.g. sneak attack dice) is not listed here.',
+  },
+  {
+    // SD31-W23-POOLMEMBER-002
+    poolGroup: 'Rage Power',
+    classSlug: 'barbarian',
+    heading: 'Available Rage Powers (reference)',
+    note: "Every Rage Power this catalog can render without a missing value, whether or not this build has selected one. A rage power whose only magnitude depends on a value this catalog cannot compute (e.g. an unresolved bonus token) is not listed here, nor is one whose magnitude scales on this character's own class level and applies to a value this sheet already tracks (e.g. damage reduction, energy resistance) -- wave-23 integration review finding, pending an operator ruling. A rage power whose scaled value is inflicted on an opponent (e.g. a save DC) is still shown.",
+  },
+];
+
+/**
+ * Browsable option-pool reference — every real pool member a registered
+ * pool's corpus rows declare, described, shown regardless of whether this
+ * character has selected it (`SD31-W22-POOLMEMBER-001`, widened to a second
+ * pool by `SD31-W23-POOLMEMBER-002`).
+ *
+ * Modelled on `RacialTraitsSection`'s own ARG-alternate-trait precedent:
+ * `list_class_feature_pool_options` serves a menu, not a per-character
+ * computation, so each section below renders whenever the character holds a
+ * level in that pool's owning class, independent of `props.explanations` —
+ * a pool member is never named by an `ExplanationDto.id` until it is
+ * actually chosen, which is exactly the gap `class_feature_pool_picker.rs`'s
+ * own doc comment names.
+ */
+function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
+  const [options, setOptions] = useState<ClassFeaturePoolOptionDto[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    loadClassFeaturePoolOptions()
+      .then((loaded) => {
+        if (!cancelled) {
+          setOptions(loaded);
+        }
+      })
+      .catch(() => {
+        // A reference list is a player-visible enhancement, not a
+        // load-bearing dependency of the sheet — swallowed rather than
+        // surfaced as an error banner, matching this file's sibling loaders.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const sections = POOL_REFERENCE_SECTIONS.map((section) => {
+    const holdsClass = props.heldClasses.some(
+      (held) => held.classId.split(':').pop() === section.classSlug
+    );
+    const members = options.filter((option) => option.poolGroup === section.poolGroup);
+    return { section, holdsClass, members };
+  }).filter(({ holdsClass, members }) => holdsClass && members.length > 0);
+
+  if (sections.length === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      {sections.map(({ section, members }) => (
+        <div key={section.poolGroup} style={{ marginTop: '1.25rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+            {section.heading}
+          </p>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
+            {section.note}
+          </p>
+          {members.map((option) => (
+            <div key={`${option.book}:${option.key}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+              <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{option.name}</span>
+              <p
+                style={{
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.72rem',
+                  margin: '0.15rem 0 0',
+                }}
+              >
+                {option.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      ))}
+    </>
+  );
+}
+
 function ActionsTab(props: {
   levelEntries: LevelEntry[];
   explanations: readonly ExplanationDto[];
@@ -1822,9 +1938,52 @@ function ActionsTab(props: {
   racialTraits: RacialTraitsSurface;
   raceLabel: string;
 }) {
-  const surface = buildClassFeatureSurface(props.explanations, props.heldClasses);
+  // SD31-D7-PROSE-003: the real corpus `DESC:` text, fetched once and joined
+  // in `buildClassFeatureSurface` -- a SECOND, additive data source
+  // alongside `props.explanations`, never a replacement for the engine's own
+  // computed `detail`. Self-contained (fetched here rather than threaded
+  // through more prop layers) so a caller with no Tauri runtime (the browser
+  // preview) simply renders with `corpusDescription: null` everywhere,
+  // exactly as `loadClassFeatureDescriptions`'s own empty-array fallback
+  // intends.
+  const [classFeatureDescriptions, setClassFeatureDescriptions] = useState<
+    ClassFeatureDescriptionDto[]
+  >([]);
+  useEffect(() => {
+    let cancelled = false;
+    // SD31-W29-CLASSFEATURE-FEATBRIDGE-001 (THE-BOX §2.1 F2): a SECOND,
+    // disjoint source of the same DTO shape -- records with no local
+    // description whose entire content is a grant of an already-modelled
+    // feat. Fetched alongside and concatenated, exactly the way
+    // `buildClassFeatureSurface`'s own `descriptions` param already
+    // expects a flat list; `findCorpusDescription` picks the first match
+    // by `(classSlug, featureSlug)`, and the two Rust-side populations
+    // never name the same record (see `class_feature_feat_bridge.rs`'s own
+    // doc comment), so concatenation order does not matter here.
+    Promise.all([loadClassFeatureDescriptions(), loadClassFeatureFeatBridgeDescriptions()])
+      .then(([descriptions, bridged]) => {
+        if (!cancelled) {
+          setClassFeatureDescriptions([...descriptions, ...bridged]);
+        }
+      })
+      .catch(() => {
+        // Real corpus prose is a player-visible enhancement, not a
+        // load-bearing dependency of the Class Features section: the
+        // engine's own `detail` still renders either way. Swallowed rather
+        // than surfaced as an error banner, matching `loadClassFeatureDescriptions`'s
+        // own no-Tauri-runtime fallback.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const surface = buildClassFeatureSurface(props.explanations, props.heldClasses, classFeatureDescriptions);
   const generalBenefits = props.levelEntries.flatMap((entry) =>
     entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
+  );
+  const holdsRogue = props.heldClasses.some(
+    (held) => held.classId.split(':').pop() === 'rogue'
   );
 
   if (
@@ -1832,7 +1991,8 @@ function ActionsTab(props: {
     surface.notComputed.length === 0 &&
     generalBenefits.length === 0 &&
     props.racialTraits.rows.length === 0 &&
-    props.racialTraits.unavailableReason === null
+    props.racialTraits.unavailableReason === null &&
+    !holdsRogue
   ) {
     return (
       <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
@@ -1888,6 +2048,29 @@ function ActionsTab(props: {
               >
                 {row.detail}
               </p>
+              {/*
+                SD31-D7-PROSE-003: the real rulebook `DESC:` text, when the
+                corpus row carries one and it joins to this record. A
+                SEPARATE paragraph from `row.detail` above: `detail` is the
+                engine's own computed derivation (sometimes just a bare
+                magnitude with no prose at all), this is the actual printed
+                rules text — never rewritten, never merged with `detail`.
+                Absent entirely (no extra paragraph, no stand-in text) when
+                `corpusDescription` is `null`, matching this file's own
+                "absence is rendered as absence" rule.
+              */}
+              {row.corpusDescription !== null ? (
+                <p
+                  style={{
+                    color: 'var(--color-text-secondary)',
+                    fontSize: '0.72rem',
+                    fontStyle: 'italic',
+                    margin: `0.3rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+                  }}
+                >
+                  {row.corpusDescription}
+                </p>
+              ) : null}
             </div>
           ))}
         </>
@@ -1949,6 +2132,8 @@ function ActionsTab(props: {
           ))}
         </div>
       ) : null}
+
+      <ClassFeaturePoolReferenceSection heldClasses={props.heldClasses} />
     </div>
   );
 }

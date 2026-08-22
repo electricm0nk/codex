@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stalwart Defender ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "class": "Stalwart Defender",
+    "description": "The stalwart defender gains DR %1/-. Damage reduction from different sources does not stack; however, a stalwart defender of 5th or higher level that gains DR from armor (but not from any other source) increases his class-based DR by the value of the armor's DR.|DamageReductionLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stalwart Defender ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DamageReductionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The stalwart defender gains DR %1/-. Damage reduction from different sources does not stack; however, a stalwart defender of 5th or higher level that gains DR from armor (but not from any other source) increases his class-based DR by the value of the armor's DR.|DamageReductionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DamageReductionLVL|(StalwartDefenderLVL>4)+(StalwartDefenderLVL>6)+(StalwartDefenderLVL>6)+(StalwartDefenderLVL>9)+(StalwartDefenderLVL>9)"
+      },
+      {
+        "key": "DR",
+        "value": "DamageReductionLVL/-"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1470,
+    "record_key": "Stalwart Defender ~ Damage Reduction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

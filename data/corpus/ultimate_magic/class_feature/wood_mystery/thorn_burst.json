@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood Mystery ~ Thorn Burst",
+    "name": "Thorn Burst",
+    "class": "Wood Mystery",
+    "description": "As a swift action, you can cause sharp splinters of wood to explode outward from your body. These splinters deal %1d6 points of piercing damage to all creatures within a 10-foot burst. A Reflex save (DC %2) halves this damage. In addition, the sharp splinters count as caltrops (see page 155 of the Core Rulebook) in the area until your next turn. You can use this ability %3/day.|ThornBurstDice|ThornBurstDC|ThornBurstTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Thorn Burst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WoodRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThornBurstDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThornBurstDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThornBurstTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can cause sharp splinters of wood to explode outward from your body. These splinters deal %1d6 points of piercing damage to all creatures within a 10-foot burst. A Reflex save (DC %2) halves this damage. In addition, the sharp splinters count as caltrops (see page 155 of the Core Rulebook) in the area until your next turn. You can use this ability %3/day.|ThornBurstDice|ThornBurstDC|ThornBurstTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThornBurstDice|max(1,classlevel(\"Oracle\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThornBurstDC|10+classlevel(\"Oracle\")/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThornBurstTimes|1+classlevel(\"Oracle\")/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 514,
+    "record_key": "Wood Mystery ~ Thorn Burst"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hamatulatsu Master ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Monk",
+    "description": "A hamatulatsu master replaces the normal monk bonus feats with the following: Deflect Arrows, Dodge, Exotic Weapon Proficiency, Improved Grapple, Intimidating Prowess, Scorpion Style, or Weapon Focus. At 6th level, the following feats are added to the list: Gorgon's Fist, Hamatulatsu (Path.finder Campai13n Settin13: The Inner Sea World Guide 28 7), Improved Sunder, Mobility, Power Attack. At 10th level, the following feats are added to the list: Critical Focus, Impaling Critical (unarmed strike) (Ultimate Combat 105), Improved Critical, Medusa's Wrath, Snatch Arrows. At i4th level, the following feat is added to the list: Improved Impaling Critical (Ultimate Combat 105). Anytime a hamatulatsu master would gain a bonus feat, she can instead choose to gain two additional uses of stunning fist per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hamatulatsu Master ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A hamatulatsu master replaces the normal monk bonus feats with the following: Deflect Arrows, Dodge, Exotic Weapon Proficiency, Improved Grapple, Intimidating Prowess, Scorpion Style, or Weapon Focus. At 6th level, the following feats are added to the list: Gorgon's Fist, Hamatulatsu (Path.finder Campai13n Settin13: The Inner Sea World Guide 28 7), Improved Sunder, Mobility, Power Attack. At 10th level, the following feats are added to the list: Critical Focus, Impaling Critical (unarmed strike) (Ultimate Combat 105), Improved Critical, Medusa's Wrath, Snatch Arrows. At i4th level, the following feat is added to the list: Improved Impaling Critical (Ultimate Combat 105). Anytime a hamatulatsu master would gain a bonus feat, she can instead choose to gain two additional uses of stunning fist per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 81,
+    "record_key": "Hamatulatsu Master ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Powerful Blow",
+    "name": "Powerful Blow",
+    "class": "Rage Power",
+    "description": "You gain a +%1 bonus on a single damage roll. This power is used as a swift action before the roll to hit is made. This power can only be used once per rage.|PowerfulBlowDamageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Powerful Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerfulBlowDamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on a single damage roll. This power is used as a swift action before the roll to hit is made. This power can only be used once per rage.|PowerfulBlowDamageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulBlowDamageBonus|1+RagePowersLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 483,
+    "record_key": "Rage Power ~ Powerful Blow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

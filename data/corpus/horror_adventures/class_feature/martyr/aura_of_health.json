@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Martyr ~ Aura of Health",
+    "name": "Aura of Health",
+    "class": "Paladin",
+    "description": "The martyr and all allies within 20 feet of him gain a +4 morale bonus on saving throws against diseases. This ability functions only when the martyr is conscious.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martyr ~ Aura of Health"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "DESC",
+        "value": "The martyr and all allies within 20 feet of him gain a +4 morale bonus on saving throws against diseases. This ability functions only when the martyr is conscious."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 185,
+    "record_key": "Martyr ~ Aura of Health"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

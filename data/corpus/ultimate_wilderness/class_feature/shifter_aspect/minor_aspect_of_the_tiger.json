@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Tiger ~ Minor",
+    "name": "Minor Aspect of the Tiger",
+    "class": "Shifter Aspect",
+    "description": "You gain a +%1 enhancement bonus to your Dexterity score.|TigerAspectDexBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Tiger ~ Minor"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Tiger_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TigerAspectDexBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to your Dexterity score.|TigerAspectDexBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TigerAspectDexBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TigerAspectDexBonus|2|PREVARGTEQ:ShifterTigerAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TigerAspectDexBonus|2|PREVARGTEQ:ShifterTigerAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 94,
+    "record_key": "Shifter Aspect ~ Tiger ~ Minor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

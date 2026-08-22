@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Stone Stability",
+    "name": "Stone Stability",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_StoneStability",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Stone Stability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Extraordinary.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Witch Archetype ~ Mountain Witch"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_StoneStability|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_StoneStability"
+      },
+      {
+        "key": "DESC",
+        "value": "The mountain witch receives a +4 bonus to her CMD when resisting bull rush or trip attempts as long as she is standing on the ground."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Stone Stability"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Trip|PREVARGTEQ:WitchLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Trip|PREVARGTEQ:WitchLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_StoneStability|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_StoneStability|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Stone Stability)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4032,
+    "record_key": "Witch Hex ~ Stone Stability"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

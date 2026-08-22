@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline ~ Dream",
+    "name": "Dream",
+    "class": "Psychic Discipline",
+    "description": "You discover deeper and more powerful corners of your mind through journeys you make in your dreams. Your consciousness expands outward into other dreaming minds, allowing you to explore the psychic landscapes of unconsciousness or regions of nightmare and horror. Phrenic Pool Ability: Charisma. Discipline Powers: Your mind can powerfully inf luence dreaming consciousnesses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline ~ Dream"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Discipline.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You discover deeper and more powerful corners of your mind through journeys you make in your dreams. Your consciousness expands outward into other dreaming minds, allowing you to explore the psychic landscapes of unconsciousness or regions of nightmare and horror. Phrenic Pool Ability: Charisma. Discipline Powers: Your mind can powerfully inf luence dreaming consciousnesses."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Dream ~ Bonus Spells|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Dream ~ Dream Leech|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Dream ~ Oneiromancy|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Dream ~ Mind Heist|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Dream ~ Waking Dream|PRECLASS:1,Psychic=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhrenicPoolAbility|CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1189,
+    "record_key": "Psychic Discipline ~ Dream"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

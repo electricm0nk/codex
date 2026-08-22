@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Evocation School ~ Force Missile",
+    "name": "Force Missile",
+    "class": "Evocation School",
+    "description": "As a standard action you can unleash a force missile that automatically strikes a foe, as Magic Missile. The force missile deals 1d4+%1 points of damage. This is a force effect. You can use this ability %2 times per day.|EvocationIntenseSpellsBonus|EvocationForceMissileTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evocation School ~ Force Missile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.SpellLike.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EvocationForceMissileTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action you can unleash a force missile that automatically strikes a foe, as Magic Missile. The force missile deals 1d4+%1 points of damage. This is a force effect. You can use this ability %2 times per day.|EvocationIntenseSpellsBonus|EvocationForceMissileTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvocationForceMissileTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1d4+%1, %2/day)|max(1,EvocationSchoolLVL/2)|EvocationForceMissileTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|EvocationForceMissileTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2663,
+    "record_key": "Evocation School ~ Force Missile"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

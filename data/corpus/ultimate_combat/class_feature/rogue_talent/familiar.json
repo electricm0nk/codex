@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Familiar",
+    "name": "Familiar",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent gains a familiar as the familiar option of the wizard's arcane bond class feature. This ability functions exactly like that part of the class feature, but the rogue's effective wizard level is her rogue level -4. The rogue must have the minor magic and major magic talents before she can choose this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Rogue Talent ~ Major Magic,Rogue Talent ~ Minor Magic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent gains a familiar as the familiar option of the wizard's arcane bond class feature. This ability functions exactly like that part of the class feature, but the rogue's effective wizard level is her rogue level -4. The rogue must have the minor magic and major magic talents before she can choose this trick."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Bond ~ Familiar|Wizard ~ Arcane Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Arcane Bond|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|RogueLVL-4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1616,
+    "record_key": "Rogue Talent ~ Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

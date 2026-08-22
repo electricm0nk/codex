@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline ~ Psychedelia",
+    "name": "Psychedelia",
+    "class": "Psychic Discipline",
+    "description": "You ingest hallucinogens to expand your mind. Experimentation and study show you which ones will have the greatest effect. Your psychedelic forays put you into a different mental space from others, and normal people don't really understand you. Phrenic Pool Ability: Wisdom. Discipline Powers: You distort your own mind and perceptions, and can impress your altered states onto others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline ~ Psychedelia"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Discipline.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You ingest hallucinogens to expand your mind. Experimentation and study show you which ones will have the greatest effect. Your psychedelic forays put you into a different mental space from others, and normal people don't really understand you. Phrenic Pool Ability: Wisdom. Discipline Powers: You distort your own mind and perceptions, and can impress your altered states onto others."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Psychedelia ~ Bonus Spells|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Psychedelia ~ Drug Resistance|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Psychedelia ~ Cognatogen|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Psychedelia ~ Warped Brain|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Psychedelia ~ Hallucinogenic Aura|PRECLASS:1,Psychic=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhrenicPoolAbility|WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1193,
+    "record_key": "Psychic Discipline ~ Psychedelia"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

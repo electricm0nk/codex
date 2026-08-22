@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Mystery ~ Speak with Animals",
+    "name": "Speak with Animals",
+    "class": "Nature Mystery",
+    "description": "Choose a specific kind of animal (eagle, fox, dog, and so on). You gain the ability to converse with that type of animal as if you were under the effects of speak with animal. You gain the ability to communicate with an additional kind of animal for every 3 oracle levels you have attained.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Mystery ~ Speak with Animals"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.NatureRevelation.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose a specific kind of animal (eagle, fox, dog, and so on). You gain the ability to converse with that type of animal as if you were under the effects of speak with animal. You gain the ability to communicate with an additional kind of animal for every 3 oracle levels you have attained."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 659,
+    "record_key": "Nature Mystery ~ Speak with Animals"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

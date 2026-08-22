@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Ghost Step",
+    "name": "Ghost Step",
+    "class": "Ninja Trick",
+    "description": "As a swift action, a ninja with this trick can pass through walls as if she were a ghost. Until the end of her turn, she can pass through a wall or other surface that is up to 5 feet thick per level as if she were incorporeal. She must exit the solid material by the end of her turn. Each use of this ability uses up 1 ki point.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Ghost Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NinjaTrickLVL,10],[PREVARGTEQ:RogueTalentLVL,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a ninja with this trick can pass through walls as if she were a ghost. Until the end of her turn, she can pass through a wall or other surface that is up to 5 feet thick per level as if she were incorporeal. She must exit the solid material by the end of her turn. Each use of this ability uses up 1 ki point."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 166,
+    "record_key": "Ninja Trick ~ Ghost Step"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

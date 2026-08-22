@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Primal Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Primal Bloodline",
+    "description": "Whenever you cast a spell with the",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primal Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell with the"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "descriptor, that spell deals +1 point of damage per die rolled."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(acid spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Earth,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(cold spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Water,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(electricity spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Air,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(fire spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_ElementalBloodlineChoice_Fire,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1729,
+    "record_key": "Primal Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

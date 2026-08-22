@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Madness Domain",
+    "name": "Madness",
+    "class": "Forbidden Rites Domain",
+    "description": "You embrace the madness that lurks deep in your heart, and can unleash it to drive your foes insane or to sacrifice certain abilities to hone others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Madness Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.MadnessDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You embrace the madness that lurks deep in your heart, and can unleash it to drive your foes insane or to sacrifice certain abilities to hone others."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Vision of Madness|PREDOMAIN:1,Madness|PREVARGTEQ:DomainMadnessAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Aura of Madness|PREDOMAIN:1,Madness|PREVARGTEQ:DomainMadnessAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessDC|10+(DomainMadnessLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Confusion (Lesser)|Cleric=2|Touch of Idiocy|Cleric=3|Rage|Cleric=4|Confusion|Cleric=5|Nightmare|Cleric=6|Phantasmal Killer|Cleric=7|Insanity|Cleric=8|Scintillating Pattern|Cleric=9|Weird"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1046,
+    "record_key": "Forbidden Rites Domain ~ Madness Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

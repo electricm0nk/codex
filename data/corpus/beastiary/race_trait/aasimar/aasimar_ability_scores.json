@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:54Z",
+  "ingested_at": "2026-08-20T23:30:38Z",
   "data": {
     "key": "Aasimar ~ Ability Scores",
     "name": "+2 Wisdom, +2 Charisma",
@@ -70,8 +70,8 @@
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

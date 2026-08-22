@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Unarmed Fighter ~ Eye Gouge",
+    "name": "Eye Gouge",
+    "class": "Fighter",
+    "description": "If you confirm a critical hit with his unarmed strike or begin your turn grappled, you may attempt a dirty trick maneuver to blind his target as a swift action that does not provoke attacks of opportunity. A target more than one size category larger is unaffected.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unarmed Fighter ~ Eye Gouge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "If you confirm a critical hit with his unarmed strike or begin your turn grappled, you may attempt a dirty trick maneuver to blind his target as a swift action that does not provoke attacks of opportunity. A target more than one size category larger is unaffected."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 767,
+    "record_key": "Unarmed Fighter ~ Eye Gouge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

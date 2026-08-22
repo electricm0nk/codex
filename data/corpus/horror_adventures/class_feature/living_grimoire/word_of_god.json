@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Living Grimoire ~ Word of God",
+    "name": "Word of God",
+    "class": "Inquisitor",
+    "description": "A living grimoire can smite his foes with the holy word of his deity. Up to seven times per day, the inquisitor can make a single melee attack with his holy book against a target. If the attack hits, it deals damage normally and the target must succeed at a Fortitude save or die (DC %1). Regardless of whether the save is successful, the target creature is immune to the living grimoire's word of god ability for 24 hours. Once the living grimoire uses this ability, he can't use it again for 1d4 rounds.|10+InquisitorLVL/2+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Living Grimoire ~ Word of God"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "DESC",
+        "value": "A living grimoire can smite his foes with the holy word of his deity. Up to seven times per day, the inquisitor can make a single melee attack with his holy book against a target. If the attack hits, it deals damage normally and the target must succeed at a Fortitude save or die (DC %1). Regardless of whether the save is successful, the target creature is immune to the living grimoire's word of god ability for 24 hours. Once the living grimoire uses this ability, he can't use it again for 1d4 rounds.|10+InquisitorLVL/2+INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 147,
+    "record_key": "Living Grimoire ~ Word of God"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

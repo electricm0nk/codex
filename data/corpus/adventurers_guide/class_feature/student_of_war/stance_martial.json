@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of War ~ Martial Stance",
+    "name": "Stance / Martial",
+    "class": "Student of War",
+    "description": "+%1 insight bonus on attack and damage rolls against the target.|SoWKnowEnemy|PREVARLT:SoWLvl,4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of War ~ Martial Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 insight bonus on attack and damage rolls against the target.|SoWKnowEnemy|PREVARLT:SoWLvl,4"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 insight bonus on attack and damage rolls against the target. You are treated as having the Critical Focus feat for the purpose of attacks against the studied foe.|SoWKnowEnemy|PREVARGTEQ:SoWLvl,4|!PREABILITY:1,CATEGORY=FEAT,Critical Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 insight bonus on attack and damage rolls against the target. The bonus you gain when confirming critical hits against the studied foe is +6 (rather than the normal +4 from Critical Focus).|SoWKnowEnemy|PREVARGTEQ:SoWLvl,4|!PREABILITY:1,CATEGORY=FEAT,Critical Focus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 530,
+    "record_key": "Student of War ~ Martial Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

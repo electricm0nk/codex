@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer ~ Master Slayer",
+    "name": "Master Slayer",
+    "class": "Slayer",
+    "description": "As a standard action, he can make a single attack against a studied target at his full attack bonus, choosing one of the following effects: kill, knock unconscious for 1d4 hours, or paralyze for 2d6 rounds. If the attack succeeds, the target takes damage normally and must succeed at a DC %1 Fortitude saving throw or suffer the additional effect. Whether or not the target succeeds, it cannot be targeted by this ability again (by any slayer) for 24 hours.|MasterSlayerDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer ~ Master Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterSlayerDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterSlayerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, he can make a single attack against a studied target at his full attack bonus, choosing one of the following effects: kill, knock unconscious for 1d4 hours, or paralyze for 2d6 rounds. If the attack succeeds, the target takes damage normally and must succeed at a DC %1 Fortitude saving throw or suffer the additional effect. Whether or not the target succeeds, it cannot be targeted by this ability again (by any slayer) for 24 hours.|MasterSlayerDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterSlayerLVL|SlayerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterSlayerDC|10+(MasterSlayerLVL/2)+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1794,
+    "record_key": "Slayer ~ Master Slayer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

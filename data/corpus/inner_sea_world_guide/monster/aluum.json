@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "ability_keys": [
       "inner_sea_world_guide:monster_ability:aluum_immunity_to_magic",
@@ -22,6 +20,92 @@
     ],
     "race_subtype": null,
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aluum ~ Immunity to Magic|Aluum ~ Paralysis|Aluum ~ Soul Shriek"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "CR",
+        "value": "10"
+      },
+      {
+        "key": "DR",
+        "value": "10/Adamantine"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:14"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Paralysis,*2,2d10"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.306"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "size": "L",
     "source_page": "p.306",
     "speeds": [
@@ -31,16 +115,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
-    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
-    "line": 10,
-    "record_key": "Aluum"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+    "record_key": "Aluum",
+    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

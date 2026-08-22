@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Serpentine Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Serpentine Bloodline",
+    "description": "Your powers of compulsion can affect even bestial creatures. Whenever you cast a mind-affecting or language-dependent spell, it affects animals, magical beasts, and monstrous humanoids as if they were humanoids who understood your language.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpentine Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your powers of compulsion can affect even bestial creatures. Whenever you cast a mind-affecting or language-dependent spell, it affects animals, magical beasts, and monstrous humanoids as if they were humanoids who understood your language."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(cast mind-affecting or language-dependent spells on animals, magical beasts, and monstrous humanoids as if they were humanoids)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3187,
+    "record_key": "Serpentine Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

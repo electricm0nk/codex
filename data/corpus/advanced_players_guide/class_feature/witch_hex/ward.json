@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Ward",
+    "name": "Ward",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_Ward",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Ward"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchWardBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_Ward|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_Ward"
+      },
+      {
+        "key": "DESC",
+        "value": " The warded creature receives a +%1 deflection bonus to AC and a +%2 resistance bonus on saving throws. This ward lasts until the warded creature is hit or fails a saving throw.|WitchWardBonus|WitchWardBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Ward"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Ward|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_Ward|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Ward)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchWardBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchWardBonus|1|PREVARGTEQ:WitchHexAbilityLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchWardBonus|1|PREVARGTEQ:WitchHexAbilityLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 898,
+    "record_key": "Witch Hex ~ Ward"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

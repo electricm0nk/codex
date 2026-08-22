@@ -1,0 +1,163 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Forester",
+    "name": "Forester",
+    "class": "Hunter Archetype",
+    "description": "While all hunters have a bond with the natural world, a forester has a stronger tie to her environment than to the animals within it. While most foresters feel strong bonds with woodland regions, the archetype functions well in other terrains as well. In such cases, a forester might refer to herself by a different name that more accurately reflects her chosen terrain. For example, a forester who favors bogs and marshes might call herself a \"swamper,\" while one who favors frozen regions might call herself a \"glacier guardian.\" As foresters gain levels and take on new favored terrains, they often eschew such titles completely, viewing them as unnecessary, and merely refer to themselves as guardians of the wild or champions of nature's will-but regardless of the name, their devotion remains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Forester"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Forester],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_AnimalCompanion=True,Hunter_Archetype_PreciseCompanion=True,Hunter_Archetype_HunterTactics=True,Hunter_Archetype_ImprovedEmpathicLink=True,Hunter_Archetype_BonusTricks=True,Hunter_Archetype_RaiseAnimalCompanion=True,Hunter_Archetype_SpeakWithMaster=True,Hunter_Archetype_GreaterEmpathicLink=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While all hunters have a bond with the natural world, a forester has a stronger tie to her environment than to the animals within it. While most foresters feel strong bonds with woodland regions, the archetype functions well in other terrains as well. In such cases, a forester might refer to herself by a different name that more accurately reflects her chosen terrain. For example, a forester who favors bogs and marshes might call herself a \"swamper,\" while one who favors frozen regions might call herself a \"glacier guardian.\" As foresters gain levels and take on new favored terrains, they often eschew such titles completely, viewing them as unnecessary, and merely refer to themselves as guardians of the wild or champions of nature's will-but regardless of the name, their devotion remains."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Animal Focus|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Favored Terrain|PRECLASS:1,Hunter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Bonus Feat|PRECLASS:1,Hunter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Tactician|PRECLASS:1,Hunter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Evasion|PRECLASS:1,Hunter=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Camouflage|PRECLASS:1,Hunter=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Breath of Life|PRECLASS:1,Hunter=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Improved Evasion|PRECLASS:1,Hunter=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Forester ~ Hide in Plain Sight|PRECLASS:1,Hunter=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ImprovedEmpathicLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_BonusTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_SpeakWithMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_GreaterEmpathicLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_ImprovedEmpathicLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_BonusTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_SpeakWithMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_GreaterEmpathicLink|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 642,
+    "record_key": "Hunter Archetype ~ Forester"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

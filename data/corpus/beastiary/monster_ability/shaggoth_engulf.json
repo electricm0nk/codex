@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Shaggoth ~ Engulf",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "beastiary:monster:shoggoth"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(4d6+22 bludgeoning damage plus 8d6 acid damage, AC 19, hp 33)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "To use this ability, the shoggoth must begin its turn grappling a creature or must trample. A shoggoth may attempt to engulf as many creatures as it grapples or tramples in a round. This ability otherwise functions as swallow whole, save that a creature that cuts is way out of a shoggoth leaves no hole in the protoplasmic creature's body."
+      },
+      {
+        "key": "KEY",
+        "value": "Shaggoth ~ Engulf"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.249",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1124,
-    "record_key": "Shaggoth ~ Engulf"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1124,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Shaggoth ~ Engulf",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

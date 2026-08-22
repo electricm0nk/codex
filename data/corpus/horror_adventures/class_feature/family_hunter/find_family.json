@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Family Hunter ~ Find Family",
+    "name": "Find Family",
+    "class": "Slayer",
+    "description": "A family hunter chooses a particular family line of mortal creatures to cleanse (she must choose an actual family line like \"The Montrose family,\" rather than something generic that would cover all creatures of a given kind like \"All humans descended from the first human created by the gods\"). She can target any creature from that family line with discern next of kin (ACG) (with a caster level equal to her slayer level) at will as a spell-like ability. The save DC is Charisma-based and is modified by the slayer's studied target bonus if the creature is also her studied target. A creature that successfully saves against this effect is immune to this ability for 24 hours. If the family hunter's chosen family line is completely eradicated, she can choose a new one after 1 month of studying.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Family Hunter ~ Find Family"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "DESC",
+        "value": "A family hunter chooses a particular family line of mortal creatures to cleanse (she must choose an actual family line like \"The Montrose family,\" rather than something generic that would cover all creatures of a given kind like \"All humans descended from the first human created by the gods\"). She can target any creature from that family line with discern next of kin (ACG) (with a caster level equal to her slayer level) at will as a spell-like ability. The save DC is Charisma-based and is modified by the slayer's studied target bonus if the creature is also her studied target. A creature that successfully saves against this effect is immune to this ability for 24 hours. If the family hunter's chosen family line is completely eradicated, she can choose a new one after 1 month of studying."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 230,
+    "record_key": "Family Hunter ~ Find Family"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

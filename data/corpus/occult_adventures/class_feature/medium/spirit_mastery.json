@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Spirit Mastery",
+    "name": "Spirit Mastery",
+    "class": "Medium",
+    "description": "The medium becomes a legend among spirits, particularly lesser spirits. He can use his spirit surge ability an additional two times per day without incurring influence, regardless of whether he accepts a taboo or channels a weaker spirit. When channeling a weaker spirit, he can use his spirit surge ability an additional four times per day for each power he forgoes, instead of an additional two times.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Spirit Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The medium becomes a legend among spirits, particularly lesser spirits. He can use his spirit surge ability an additional two times per day without incurring influence, regardless of whether he accepts a taboo or channels a weaker spirit. When channeling a weaker spirit, he can use his spirit surge ability an additional four times per day for each power he forgoes, instead of an additional two times."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 825,
+    "record_key": "Medium ~ Spirit Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

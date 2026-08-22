@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bolt Ace ~ Death's Shot",
+    "name": "Death's Shot",
+    "class": "Gunslinger",
+    "description": "When the bolt ace scores a critical hit, she can spend 1 grit point to deal normal damage, and the target must succeed at a Fortitude saving throw with a DC equal to 10 + 1/2 the bolt ace's level + the bolt ace's Dexterity modifier. On a failed saving throw, the target dies. This is a death attack. Performing this deed does not allow the bolt ace to regain grit from confirming a critical hit or making a killing blow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Death's Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the bolt ace scores a critical hit, she can spend 1 grit point to deal normal damage, and the target must succeed at a Fortitude saving throw with a DC equal to 10 + 1/2 the bolt ace's level + the bolt ace's Dexterity modifier. On a failed saving throw, the target dies. This is a death attack. Performing this deed does not allow the bolt ace to regain grit from confirming a critical hit or making a killing blow."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3127,
+    "record_key": "Bolt Ace ~ Death's Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

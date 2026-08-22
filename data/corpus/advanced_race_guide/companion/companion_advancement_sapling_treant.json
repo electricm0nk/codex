@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T09:20:33Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Sapling Treant",
     "delivery": null,
@@ -13,6 +11,52 @@
     "name": "Companion Advancement (Sapling Treant)",
     "owners": [
       "advanced_race_guide:companion:companion_sapling_treant"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sapling Treant ~ Double Damage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Sapling Treant"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Sapling Treant)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -34,16 +78,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
-    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
-    "line": 59,
-    "record_key": "Companion Advancement ~ Sapling Treant"
-  },
+  "ingested_at": "2026-08-13T09:20:33Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Sapling Treant",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,64 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "Material ~ Griffon Mane ~ Clothing",
+    "name": "Griffon Mane",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Fly",
+          "2",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Griffon Mane ~ Clothing"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Clothing.Cloth"
+      },
+      {
+        "key": "COST",
+        "value": "WT*50"
+      },
+      {
+        "key": "ITYPE",
+        "value": "GriffonMane"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Artisan,Spell Component"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 45,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Material ~ Griffon Mane ~ Clothing",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:cost"
+  ]
+}

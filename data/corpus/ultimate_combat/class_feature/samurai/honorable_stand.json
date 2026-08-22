@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai ~ Honorable Stand",
+    "name": "Honorable Stand",
+    "class": "Samurai",
+    "description": "At 11th level, a samurai can make an honorable stand, deciding to fight the target of his challenge to the bitter end, no matter the cost. He can make an honorable stand once per day at 11th level, plus one additional time per day at 16th level. Declaring an honorable stand is a swift action. While making an honorable stand, the samurai is immune to the shaken, frightened, and panicked conditions. He does not fall unconscious while his hit point total is below 0. Finally, whenever a samurai making an honorable stand must make a saving throw, he can spend one daily use of his resolve to reroll the saving throw after the first roll is made. He must take the result of the second roll, even if it is worse. If a samurai making an honorable stand ever retreats from battle against his challenged foe, he loses the ability to make a challenge for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Honorable Stand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a samurai can make an honorable stand, deciding to fight the target of his challenge to the bitter end, no matter the cost. He can make an honorable stand once per day at 11th level, plus one additional time per day at 16th level. Declaring an honorable stand is a swift action. While making an honorable stand, the samurai is immune to the shaken, frightened, and panicked conditions. He does not fall unconscious while his hit point total is below 0. Finally, whenever a samurai making an honorable stand must make a saving throw, he can spend one daily use of his resolve to reroll the saving throw after the first roll is made. He must take the result of the second roll, even if it is worse. If a samurai making an honorable stand ever retreats from battle against his challenged foe, he loses the ability to make a challenge for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 201,
+    "record_key": "Samurai ~ Honorable Stand"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

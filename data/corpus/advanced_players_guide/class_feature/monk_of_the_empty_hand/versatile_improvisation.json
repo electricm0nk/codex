@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk of the Empty Hand ~ Versatile Improvisation",
+    "name": "Versatile Improvisation",
+    "class": "Monk",
+    "description": "At 3rd level, as a swift action, a monk of the empty hand may use an improvised weapon to deal damage as if it were another type (bludgeoning, piercing, or slashing) for 1 round, regardless of the weapon's normal damage type. This ability replaces still mind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk of the Empty Hand ~ Versatile Improvisation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkStillMind"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, as a swift action, a monk of the empty hand may use an improvised weapon to deal damage as if it were another type (bludgeoning, piercing, or slashing) for 1 round, regardless of the weapon's normal damage type. This ability replaces still mind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2330,
+    "record_key": "Monk of the Empty Hand ~ Versatile Improvisation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

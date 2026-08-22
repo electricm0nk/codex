@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bouda ~ Fetish",
+    "name": "Fetish",
+    "class": "Witch",
+    "description": "A bouda keeps a small fetish: sometimes a carved idol, other times a necklace adorned with teeth or bones. A bouda's spells come from the will of evil spirits residing in the fetish, and its ability to hold spells functions in a manner identical to the way a witch's spells are granted by her familiar. The bouda must commune with her fetish each day to prepare her spells and can only prepare spells stored in the fetish.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bouda ~ Fetish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Features.BoudaClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A bouda keeps a small fetish: sometimes a carved idol, other times a necklace adorned with teeth or bones. A bouda's spells come from the will of evil spirits residing in the fetish, and its ability to hold spells functions in a manner identical to the way a witch's spells are granted by her familiar. The bouda must commune with her fetish each day to prepare her spells and can only prepare spells stored in the fetish."
+      },
+      {
+        "key": "DESC",
+        "value": "A bouda can use her fetish to deliver touch spells %1 times per day. When casting a touch spell, as a free action she can use this ability. When she does, she can deliver herspell as a ranged touch spell within a range of|max(1,WitchLVL/4)|PRECLASS:1,Witch=3"
+      },
+      {
+        "key": "DESC",
+        "value": "30 feet.|PRECLASS:1,Witch=3|!PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "DESC",
+        "value": "60 feet.|PRECLASS:1,Witch=10|!PRECLASS:1,Witch=15"
+      },
+      {
+        "key": "DESC",
+        "value": "90 feet.|PRECLASS:1,Witch=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 153,
+    "record_key": "Bouda ~ Fetish"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

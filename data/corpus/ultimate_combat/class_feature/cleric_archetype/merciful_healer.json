@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Merciful Healer",
+    "name": "Merciful Healer",
+    "class": "Cleric Archetype",
+    "description": "The merciful healer is a master of battlefield revivification, sustaining and restoring allies to keep them in the fight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Merciful Healer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericDomains.ClericChannelEnergy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Merciful Healer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericDomains,TYPE.ClericChannelEnergy]"
+      },
+      {
+        "key": "DESC",
+        "value": "The merciful healer is a master of battlefield revivification, sustaining and restoring allies to keep them in the fight."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Merciful Healer ~ Willing Healer|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Merciful Healer ~ Channel Energy|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Merciful Healer ~ Combat Medic|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Merciful Healer ~ Merciful Healing|PRECLASS:1,Cleric=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Merciful Healer ~ True Healer|PRECLASS:1,Cleric=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 531,
+    "record_key": "Cleric Archetype ~ Merciful Healer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cruoromancer ~ Desecrating Infusion",
+    "name": "Desecrating Infusion",
+    "class": "Wizard",
+    "description": "When the cruoromancer uses this infusion, he can choose to center a desecrate effect on himself or a single target of the spell modified by this infusion (he chooses upon casting). This effect is like the desecrate spell, but lasts for %1 minutes and does not interact with altars, shrines, or permanent fixtures that boost the desecrate effect.|CruoromancerDesecrateInfusionTime",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cruoromancer ~ Desecrating Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CruoromancerDesecratingInfusionTime|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When the cruoromancer uses this infusion, he can choose to center a desecrate effect on himself or a single target of the spell modified by this infusion (he chooses upon casting). This effect is like the desecrate spell, but lasts for %1 minutes and does not interact with altars, shrines, or permanent fixtures that boost the desecrate effect.|CruoromancerDesecrateInfusionTime"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CruoromancerDesecratingInfusionTime|WizardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 465,
+    "record_key": "Cruoromancer ~ Desecrating Infusion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

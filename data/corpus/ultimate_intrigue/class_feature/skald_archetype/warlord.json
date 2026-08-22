@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald Archetype ~ Warlord",
+    "name": "Warlord",
+    "class": "Skald Archetype",
+    "description": "The warlord wields his force of personality like a weapon, intimidating his allies and ensuring that his followers heed his commands. The warlord doesn't inspire his followers so much as instill fear in them. Always watching his foes for moments of vulnerability, the warlord seeks to exploit his enemies' weaknesses to gain victory.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Archetype ~ Warlord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SkaldArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Skald=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Warlord],[!PREFACT:1,ABILITIES,Skald_Archetype_ScribeScroll=True,Skald_Archetype_WellVersed=True,Skald_Archetype_SpellKenning=True,Skald_Archetype_LoreMaster=True,Skald_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The warlord wields his force of personality like a weapon, intimidating his allies and ensuring that his followers heed his commands. The warlord doesn't inspire his followers so much as instill fear in them. Always watching his foes for moments of vulnerability, the warlord seeks to exploit his enemies' weaknesses to gain victory."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlord ~ Intimidating Prowess|PRECLASS:1,Skald=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlord ~ Unshakable|PRECLASS:1,Skald=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlord ~ Fear Me|PRECLASS:1,Skald=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlord ~ Minions|PRECLASS:1,Skald=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Warlord ~ Intimidated Push|PRECLASS:1,Skald=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ImprovedUncannyDodge|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 898,
+    "record_key": "Skald Archetype ~ Warlord"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

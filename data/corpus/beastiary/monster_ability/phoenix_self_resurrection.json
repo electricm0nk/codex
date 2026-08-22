@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Phoenix ~ Self-Resurrection",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:phoenix"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A slain phoenix remains dead for only 1d4 rounds unless its body is completely destroyed by an effect such as disintegrate. Otherwise, a fully healed phoenix emerges from the remains 1d4 rounds after death, as if brought back to life via resurrection. The phoenix gains 1 permanent negative level when this occurs, although most use greater restoration to remove this negative level as soon as possible. A phoenix can self-resurrect only once per year. If a phoenix dies a second time before that year passes, its death is permanent. A phoenix that dies within the area of a desecrate spell cannot self-resurrect until the desecrate effect ends, at which point the phoenix immediately resurrects. A phoenix brought back to life by other means never gains negative levels as a result."
+      },
+      {
+        "key": "KEY",
+        "value": "Phoenix ~ Self-Resurrection"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Defensive"
+      }
+    ],
     "source_page": "p.227",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1032,
-    "record_key": "Phoenix ~ Self-Resurrection"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1032,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Phoenix ~ Self-Resurrection",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

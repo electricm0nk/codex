@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Burn! Burn! Burn!",
+    "name": "Burn! Burn! Burn!",
+    "class": "Discovery",
+    "description": "You take the goblin love of arson and fire play to a whole new level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Burn! Burn! Burn!"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Fire Bomber"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Burn! Burn! Burn!"
+      },
+      {
+        "key": "DESC",
+        "value": "You take the goblin love of arson and fire play to a whole new level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Burn! Burn! Burn!"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 557,
+    "record_key": "Discovery ~ Burn! Burn! Burn!"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

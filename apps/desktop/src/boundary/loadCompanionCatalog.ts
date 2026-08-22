@@ -38,6 +38,80 @@ export interface CompanionAttackDto {
 }
 
 /**
+ * One `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` token the creature's row
+ * states — extra damage on a named attack.
+ *
+ * **A rule, not a number.** The dominant corpus formula is `max(0,(STR/2))`,
+ * PCGen's encoding of PF1 CRB p.182's "if a creature has only one natural
+ * attack, it adds 1-1/2 times its Strength bonus on damage rolls": the base
+ * attack applies the full modifier and this token adds the other half, clamped
+ * at zero because the rule is stated about a Strength BONUS. A catalog browser
+ * has no character and therefore no Strength modifier, so the engine renders
+ * the rule in words rather than inventing a total.
+ *
+ * `attack` is the token's OWN selector and is not guaranteed to name one of
+ * `naturalAttacks` — Advanced Player's Guide's Parrot states a Claw damage
+ * bonus and has only a Bite. Served as its own list for exactly that reason.
+ */
+export interface CompanionDamageBonusDto {
+  /** The `WEAPONPROF=` selector verbatim: `"Bite"`, `"Claw"`, `"Slam"`, ... */
+  attack: string;
+  /** The rule in words: `"+1/2 Str modifier (minimum +0)"`, `"+5"`, ... */
+  bonus: string;
+  /**
+   * The formula verbatim for a shape the engine refuses to interpret (`STR/2`
+   * — an unclamped halving whose negative-odd rounding PCGen does not state).
+   * `null` once `bonus` carries the rendered rule.
+   */
+  unparsedFormula: string | null;
+}
+
+/**
+ * One `BONUS:SKILL|<skills>|<A>-<B>` token the creature's row states — a
+ * skill-check bonus computed as the DIFFERENCE between two ability
+ * modifiers, rather than a flat number.
+ *
+ * **A rule, not a number.** The dominant (and, corpus-wide, only) formula is
+ * `DEX-STR`: familiars and small companions whose Dexterity typically
+ * exceeds their Strength get Climb and Swim checks computed from the
+ * difference between the two rather than from Strength alone. A catalog
+ * browser has no character and therefore no modifiers to subtract, so the
+ * engine renders the rule in words rather than inventing a total.
+ */
+export interface CompanionSkillBonusDto {
+  /** Every skill the token names, e.g. `["Climb", "Swim"]`. */
+  skills: string[];
+  /** The rule in words: `"Dex modifier − Str modifier"`. */
+  bonus: string;
+  /**
+   * The formula verbatim for a shape the engine refuses to interpret.
+   * `null` once `bonus` carries the rendered rule.
+   */
+  unparsedFormula: string | null;
+}
+
+/**
+ * One companion ABILITY's save DC, stated entirely in a `DESC:` argument —
+ * PCGen's `DESC:...%1...|<base>[+HD/2]+<ability>` encoding.
+ *
+ * **A rule, not a number**, same posture `CompanionSkillBonusDto` and
+ * `CompanionDamageBonusDto` both take. This is the ONLY place the DC reaches
+ * a player at all: the engine's `render_pcgen_desc` drops the `%1`
+ * placeholder from `description` entirely (no formula interpreter), so
+ * without this field the DC number is silently missing from the ability's
+ * own prose.
+ */
+export interface CompanionSaveDcDto {
+  /** The rule in words: `"10 + 1/2 HD + Con modifier"`. */
+  formula: string;
+  /**
+   * The token's raw argument, for a shape the engine refuses to interpret.
+   * `null` once `formula` carries the rendered rule.
+   */
+  unparsedFormula: string | null;
+}
+
+/**
  * One `BONUS:STAT` token.
  *
  * **An adjustment, never a score.** A Griffon's row states
@@ -82,6 +156,11 @@ export interface CompanionAbilityDto {
    */
   descriptionVariants: CompanionDescriptionVariantDto[];
   statAdjustments: CompanionStatAdjustmentDto[];
+  /**
+   * Every DESC-embedded save-DC formula this row states. Empty for most
+   * rows — see `CompanionSaveDcDto`.
+   */
+  saveDcFormulas: CompanionSaveDcDto[];
   sourcePage: string | null;
 }
 
@@ -123,6 +202,16 @@ export interface CompanionCatalogEntryDto {
   /** Every `TYPE:` segment verbatim; empty for rows carrying no `TYPE:` token. */
   typeSegments: string[];
   naturalAttacks: CompanionAttackDto[];
+  /**
+   * Every `BONUS:WEAPONPROF=<attack>|DAMAGE|` token on the row. Empty for
+   * most rows, which is a real corpus state.
+   */
+  naturalAttackDamageBonuses: CompanionDamageBonusDto[];
+  /**
+   * Every `BONUS:SKILL|<skills>|<A>-<B>` token on the row. Empty for most
+   * rows — see [`CompanionSkillBonusDto`].
+   */
+  skillAbilityDiffBonuses: CompanionSkillBonusDto[];
   statAdjustments: CompanionStatAdjustmentDto[];
   /** `BONUS:VAR|AC_Natural_Armor|n|TYPE=Base`, when the row carries one. */
   naturalArmor: number | null;

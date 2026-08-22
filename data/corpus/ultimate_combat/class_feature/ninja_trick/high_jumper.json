@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ High Jumper",
+    "name": "High Jumper",
+    "class": "Ninja Trick",
+    "description": "When a ninja with this trick makes a high jump, the DC for that jump is half the normal DC. The ninja must have the acrobatic master trick before taking this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ High Jumper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special ABility,Ninja Trick ~ Acrobatic Master"
+      },
+      {
+        "key": "DESC",
+        "value": "When a ninja with this trick makes a high jump, the DC for that jump is half the normal DC. The ninja must have the acrobatic master trick before taking this talent."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 136,
+    "record_key": "Ninja Trick ~ High Jumper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

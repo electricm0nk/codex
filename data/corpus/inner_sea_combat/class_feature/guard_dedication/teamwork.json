@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guard Dedication ~ Teamwork",
+    "name": "Teamwork",
+    "class": "Guard Dedication",
+    "description": "Each time she begins her rage, the Ulfen Guard can select a teamwork feat (Advanced Players Guide i50) that her chosen ally possesses; this must be a teamwork feat for which the Ulfen Guard otherwise qualifies. For the duration of her rage, the Ulfen Guard gains the benefits of that feat. This guard dedication can be chosen multiple times; each additional time allows the Ulfen Guard to select an additional teamwork feat at the start of her rage, thus granting her the use of more than one teamwork feat simultaneously.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Teamwork"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Each time she begins her rage, the Ulfen Guard can select a teamwork feat (Advanced Players Guide i50) that her chosen ally possesses; this must be a teamwork feat for which the Ulfen Guard otherwise qualifies. For the duration of her rage, the Ulfen Guard gains the benefits of that feat. This guard dedication can be chosen multiple times; each additional time allows the Ulfen Guard to select an additional teamwork feat at the start of her rage, thus granting her the use of more than one teamwork feat simultaneously."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 570,
+    "record_key": "Guard Dedication ~ Teamwork"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

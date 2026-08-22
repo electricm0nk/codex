@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sensei ~ Insightful Strike",
+    "name": "Insightful Strike",
+    "class": "Monk",
+    "description": "At 2nd level, a sensei may use his Wisdom bonus in lieu of his Strength or Dexterity on attack rolls and combat maneuver checks with unarmed strikes or monk weapons. This ability replaces evasion and the bonus feat gained at 2nd level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sensei ~ Insightful Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a sensei may use his Wisdom bonus in lieu of his Strength or Dexterity on attack rolls and combat maneuver checks with unarmed strikes or monk weapons. This ability replaces evasion and the bonus feat gained at 2nd level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Choose Attack Rolls Stat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1342,
+    "record_key": "Sensei ~ Insightful Strike"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

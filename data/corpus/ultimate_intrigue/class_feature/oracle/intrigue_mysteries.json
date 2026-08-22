@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle ~ Intrigue Mystery",
+    "name": "Intrigue Mysteries",
+    "class": "Oracle",
+    "description": "You draw upon the divine mystery of Intrigue to grant your spells and powers.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Intrigue Mystery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleMystery"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntrigueMysteriesQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw upon the divine mystery of Intrigue to grant your spells and powers."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Intrigue Mystery ~ Final Revelation|PREMULT:2,[PRECLASS:1,Oracle=20],[PREVAREQ:Oracle_CF_FinalRevelation,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Intrigue Mysteries Class Skills|PREVAREQ:Oracle_CF_MysterySkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Intrigue Mystery Revelation|OracleMysteryLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IntrigueMysteriesQualify|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|Charm Person|PREMULT:2,[PRECLASS:1,Oracle=2],[PREVAREQ:Oracle_CF_MysterySpell2,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|False Belief|PREMULT:2,[PRECLASS:1,Oracle=4],[PREVAREQ:Oracle_CF_MysterySpell4,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Suggestion|PREMULT:2,[PRECLASS:1,Oracle=6],[PREVAREQ:Oracle_CF_MysterySpell6,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Sending|PREMULT:2,[PRECLASS:1,Oracle=8],[PREVAREQ:Oracle_CF_MysterySpell8,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|True Seeing|PREMULT:2,[PRECLASS:1,Oracle=10],[PREVAREQ:Oracle_CF_MysterySpell10,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=6|Symbol of Persuasion|PREMULT:2,[PRECLASS:1,Oracle=12],[PREVAREQ:Oracle_CF_MysterySpell12,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=7|Scrying (Greater)|PREMULT:2,[PRECLASS:1,Oracle=14],[PREVAREQ:Oracle_CF_MysterySpell14,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Mind Blank|PREMULT:2,[PRECLASS:1,Oracle=16],[PREVAREQ:Oracle_CF_MysterySpell16,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Overwhelming Presence|PREMULT:2,[PRECLASS:1,Oracle=18],[PREVAREQ:Oracle_CF_MysterySpell18,0]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 564,
+    "record_key": "Oracle ~ Intrigue Mystery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

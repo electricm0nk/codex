@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Occult Studies III",
+    "name": "Occult Studies",
+    "class": "Rogue Talent",
+    "description": "Your spellcasting ability in a psychic spellcasting class you already have increases by 1 level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Occult Studies III"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Supernatural.RogueTalent"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "WestcrownDevilLVL,10"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rogue Talent ~ Occult Studies II"
+      },
+      {
+        "key": "DESC",
+        "value": "Your spellcasting ability in a psychic spellcasting class you already have increases by 1 level."
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Medium,Mesmerist,Occultist,Psychic,Spiritualist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 577,
+    "record_key": "Rogue Talent ~ Occult Studies III"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

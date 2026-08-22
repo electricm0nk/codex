@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal School",
+    "name": "Metal School",
+    "class": null,
+    "description": "Metal represents firmness, rigidity, persistence, strength, determination, and electricity. It is commonly represented by gold and silver as its purest forms, though lower magic relating to iron and steel is part of the metal school.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MetalSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MetalSchoolProgressionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Metal represents firmness, rigidity, persistence, strength, determination, and electricity. It is commonly represented by gold and silver as its purest forms, though lower magic relating to iron and steel is part of the metal school."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Metal School ~ Iron Skin|Metal School ~ Metal Magic|Metal School ~ Metal Rending"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Metal School ~ Shrapnel Burst|PREVARGTEQ:MetalSchoolProgressionLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Metal Opposition School Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MetalSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MetalSchoolProgressionLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 778,
+    "record_key": "Metal School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

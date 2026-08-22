@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest ~ Aspect of War",
+    "name": "Aspect of War",
+    "class": "Warpriest",
+    "description": "At 20th level, the warpriest can channel an aspect of war, growing in power and martial ability. Once per day as a swift action, a warpriest can treat his level as his base attack bonus, gains DR 10/-, and can move at his full speed regardless of the armor he is wearing or his encumbrance. In addition, the blessings he calls upon don't count against his daily limit during this time. This ability lasts for 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Aspect of War"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, the warpriest can channel an aspect of war, growing in power and martial ability. Once per day as a swift action, a warpriest can treat his level as his base attack bonus, gains DR 10/-, and can move at his full speed regardless of the armor he is wearing or his encumbrance. In addition, the blessings he calls upon don't count against his daily limit during this time. This ability lasts for 1 minute."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2158,
+    "record_key": "Warpriest ~ Aspect of War"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

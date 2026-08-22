@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You call forth a burst of decay that ravages all creatures in the area. Even nonliving creatures such as constructs and undead crumble or wither in this malignant eruption of rotting energy. Creatures in the area of effect take (min(15,CASTERLEVEL))d6 points of damage and are staggered for 1d4 rounds. A target that succeeds at a Reflex saving throw takes half damage and negates the staggered effect. Plant creatures are particularly susceptible to this rotting effect; a plant creature caught in the burst takes a -2 penalty on the saving throw and takes 1 extra point of damage per die.",
+    "key": "Explosion of Rot",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Call forth a burst of decay that damages and can stagger targets.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You call forth a burst of decay that ravages all creatures in the area. Even nonliving creatures such as constructs and undead crumble or wither in this malignant eruption of rotting energy. Creatures in the area of effect take (min(15,CASTERLEVEL))d6 points of damage and are staggered for 1d4 rounds. A target that succeeds at a Reflex saving throw takes half damage and negates the staggered effect. Plant creatures are particularly susceptible to this rotting effect; a plant creature caught in the burst takes a -2 penalty on the saving throw and takes 1 extra point of damage per die.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-radius burst"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Necromancy"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Explosion of Rot",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

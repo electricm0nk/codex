@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bolt Ace ~ Pinning Shot",
+    "name": "Pinning Shot",
+    "class": "Gunslinger",
+    "description": "The bolt ace can spend 1 grit point while shooting a crossbow and attempt to pin down its target with the bolt. If the crossbow attack hits, it pins the target to a nearby object, to a wall, or to the ground, entangling and staggering the target. While pinned by the bolt, the target cannot move out of its space until it takes a standard action to free itself from the pinning bolt, except by means of teleportation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolt Ace ~ Pinning Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The bolt ace can spend 1 grit point while shooting a crossbow and attempt to pin down its target with the bolt. If the crossbow attack hits, it pins the target to a nearby object, to a wall, or to the ground, entangling and staggering the target. While pinned by the bolt, the target cannot move out of its space until it takes a standard action to free itself from the pinning bolt, except by means of teleportation."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3125,
+    "record_key": "Bolt Ace ~ Pinning Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

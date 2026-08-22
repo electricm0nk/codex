@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Snapping Turtle Shell",
+    "name": "Snapping Turtle Shell",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your guarding hand is almost magical in its skill at deflecting incoming blows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Snapping Turtle Shell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Snapping Turtle Clutch,Snapping Turtle Style,Improved Grapple,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:5],[PREVARGTEQ:WarpriestBonusFeatBAB,5]],[PREVARGTEQ:MonkFeatQualify,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your guarding hand is almost magical in its skill at deflecting incoming blows."
+      },
+      {
+        "key": "DESC",
+        "value": " While you are using the Snapping Turtle Style feat, the shield bonus the style grants to your AC increases to +2, and your enemies take a -4 penalty on critical confirmation rolls against you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Snapping Turtle Shell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4554,
+    "record_key": "Warpriest Bonus Feat ~ Snapping Turtle Shell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

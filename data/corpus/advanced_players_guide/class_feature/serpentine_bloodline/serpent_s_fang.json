@@ -1,0 +1,145 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Serpentine Bloodline ~ Serpent's Fang",
+    "name": "Serpent's Fang",
+    "class": "Serpentine Bloodline",
+    "description": "You can grow fangs as a free action. These fangs are treated as a natural weapon inflicting 1d4 points of damage plus your Strength modifier (1d3 if you are Small) plus poison",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpentine Bloodline ~ Serpent's Fang"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Serpentine Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Serpentine"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Serpentine_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Serpentine_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineSerpentsFangs_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineSerpentsFangs_PoisonDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_SerpentineSerpentsFangs_PoisonSaves|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can grow fangs as a free action. These fangs are treated as a natural weapon inflicting 1d4 points of damage plus your Strength modifier (1d3 if you are Small) plus poison"
+      },
+      {
+        "key": "DESC",
+        "value": "(Bite-- injury; save Fort DC %1; frequency 1/round for 6 rounds; effect %2 Con damage; cure 1 save).|Sorcerer_SerpentineSerpentsFangs_DC|Sorcerer_SerpentineSerpentsFangs_PoisonDieSize|PREVARLTEQ:Sorcerer_SerpentineSerpentsFangs_PoisonDieSize,1|PREVARLTEQ:Sorcerer_SerpentineSerpentsFangs_PoisonSaves,1"
+      },
+      {
+        "key": "DESC",
+        "value": "(Bite-- injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d%2 Con damage; cure 1 save).|Sorcerer_SerpentineSerpentsFangs_DC|Sorcerer_SerpentineSerpentsFangs_PoisonDieSize|PREVARGTEQ:Sorcerer_SerpentineSerpentsFangs_PoisonDieSize,2|PREVARLTEQ:Sorcerer_SerpentineSerpentsFangs_PoisonSaves,1"
+      },
+      {
+        "key": "DESC",
+        "value": "(Bite-- injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d%2 Con damage; cure %3 saves).|Sorcerer_SerpentineSerpentsFangs_DC|Sorcerer_SerpentineSerpentsFangs_PoisonDieSize|Sorcerer_SerpentineSerpentsFangs_PoisonSaves|PREVARGTEQ:Sorcerer_SerpentineSerpentsFangs_PoisonDieSize,2|PREVARGTEQ:Sorcerer_SerpentineSerpentsFangs_PoisonSaves,2"
+      },
+      {
+        "key": "DESC",
+        "value": "These fangs are considered magical for the purpose of overcoming DR.|PREVARGTEQ:Sorcerer_Serpentine_BloodlinePower1LVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your fangs for %1 rounds per day.|Sorcerer_Serpentine_BloodlinePower1Times|!PREABILITY:1,CATEGORY=Special Ability,Serpentine Bloodline ~ Scaled Soul"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your fangs at will.|Sorcerer_Serpentine_BloodlinePower1Times|PREABILITY:1,CATEGORY=Special Ability,Serpentine Bloodline ~ Scaled Soul"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineSerpentsFangs_DC|10+(Sorcerer_Serpentine_BloodlinePower1LVL/2)+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineSerpentsFangs_PoisonDieSize|max(min(floor((Sorcerer_Serpentine_BloodlinePower1LVL+1)/6*2),4),1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_SerpentineSerpentsFangs_PoisonSaves|min(floor(Sorcerer_Serpentine_BloodlinePower1LVL/7)+1,2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGESIZE|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|Sorcerer_Serpentine_BloodlinePower1Times|!PREABILITY:1,CATEGORY=Special Ability,Serpentine Bloodline ~ Scaled Soul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Serpentine_BloodlinePower1Times|!PREABILITY:1,CATEGORY=Special Ability,Serpentine Bloodline ~ Scaled Soul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day|!PREABILITY:1,CATEGORY=Special Ability,Serpentine Bloodline ~ Scaled Soul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|At Will|PREABILITY:1,CATEGORY=Special Ability,Serpentine Bloodline ~ Scaled Soul"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBite|plus poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|SerpentineBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3190,
+    "record_key": "Serpentine Bloodline ~ Serpent's Fang"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

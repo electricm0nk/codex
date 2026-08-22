@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Dancer ~ Attaca",
+    "name": "Attaca",
+    "class": "Medium",
+    "description": "A spirit dancer learns how to shift rapidly into the next movement of his dance. He no longer takes a penalty after his spirit dance ends and can enter another spirit dance immediately.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Dancer ~ Attaca"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit dancer learns how to shift rapidly into the next movement of his dance. He no longer takes a penalty after his spirit dance ends and can enter another spirit dance immediately."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1438,
+    "record_key": "Spirit Dancer ~ Attaca"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

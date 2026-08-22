@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Hexenhammer",
+    "name": "Hexenhammer",
+    "class": "Inquisitor Archetype",
+    "description": "Some inquisitors embrace the dark powers of their traditional foes, turning such powers toward their own ends in order to pronounce judgment on those who oppose them. These inquisitors learn to use the hexes and some spells of witches, but must pay the price for dealing with supernatural powers, as they slip ever closer to the evil they seek to destroy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Hexenhammer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "DESC",
+        "value": "Some inquisitors embrace the dark powers of their traditional foes, turning such powers toward their own ends in order to pronounce judgment on those who oppose them. These inquisitors learn to use the hexes and some spells of witches, but must pay the price for dealing with supernatural powers, as they slip ever closer to the evil they seek to destroy."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Hexenhammer],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_Domains=True,Inquisitor_Archetype_CunningInitiative=True,Inquisitor_Archetype_TeamworkFeat=True,Inquisitor_Archetype_SoloTactics=True,Inquisitor_Archetype_Spells=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hexenhammer ~ Withering Gaze|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hexenhammer ~ Pride and Penance|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hexenhammer ~ Cunning Mind|PRECLASS:1,Inquisitor=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hexenhammer ~ Hexcrafter|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hexenhammer ~ Dark Trade|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hexenhammer ~ Witchcraft|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_CunningInitiative|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TeamworkFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SoloTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_CunningInitiative|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TeamworkFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SoloTactics|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 123,
+    "record_key": "Inquisitor Archetype ~ Hexenhammer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Performance Weapon Mastery",
+    "name": "Performance Weapon Mastery",
+    "class": "Warpriest Bonus Feat",
+    "description": "You wield all your weapons with the flair of a performer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Performance Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DESC",
+        "value": "You wield all your weapons with the flair of a performer."
+      },
+      {
+        "key": "DESC",
+        "value": " You treat all weapons you are proficient in as if they had the performance weapon quality (page 144)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Performance Weapon Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4509,
+    "record_key": "Warpriest Bonus Feat ~ Performance Weapon Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

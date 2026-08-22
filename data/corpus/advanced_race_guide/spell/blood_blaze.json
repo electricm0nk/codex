@@ -1,23 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "The target gains a 5-foot-radius aura that causes the blood of creatures in that area to ignite upon contact with air. Any creature (including the spell's target) within the aura that takes at least 5 points of piercing, slashing, or bleed damage from a single attack automatically creates a spray of burning blood. The spray strikes a creature in a randomly determined square adjacent to the injured creature. The spray deals 1d6 points of fire damage to any creature in that square, and 1 point of splash damage to all creatures within 5 feet of the spray's target, including the target of this spell. A creature can only create one spray of burning blood per round. Creatures that do not have blood (including oozes and most constructs and undead) do not create blood sprays when attacked.",
     "key": "Blood Blaze",
-    "school": "Transmutation",
     "level": 1,
-    "description": "The target gains a 5-foot-radius aura that causes the blood of creatures in that area to ignite upon contact with air. Any creature (including the spell's target) within the aura that takes at least 5 points of piercing, slashing, or bleed damage from a single attack automatically creates a spray of burning blood. The spray strikes a creature in a randomly determined square adjacent to the injured creature. The spray deals 1d6 points of fire damage to any creature in that square, and 1 point of splash damage to all creatures within 5 feet of the spray's target, including the target of this spell. A creature can only create one spray of burning blood per round. Creatures that do not have blood (including oozes and most constructs and undead) do not create blood sprays when attacked."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=1|Alchemist,Cleric,Magus,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "The target gains a 5-foot-radius aura that causes the blood of creatures in that area to ignite upon contact with air. Any creature (including the spell's target) within the aura that takes at least 5 points of piercing, slashing, or bleed damage from a single attack automatically creates a spray of burning blood. The spray strikes a creature in a randomly determined square adjacent to the injured creature. The spray deals 1d6 points of fire damage to any creature in that square, and 1 point of splash damage to all creatures within 5 feet of the spray's target, including the target of this spell. A creature can only create one spray of burning blood per round. Creatures that do not have blood (including oozes and most constructs and undead) do not create blood sprays when attacked."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsOrc=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude Negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/orcs.html#_blood-blaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 121,
-    "record_key": "Blood Blaze"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Blood Blaze",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

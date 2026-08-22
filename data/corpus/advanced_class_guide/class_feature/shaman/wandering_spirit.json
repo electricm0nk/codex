@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman ~ Wandering Spirit",
+    "name": "Wandering Spirit",
+    "class": "Shaman",
+    "description": "A shaman can form a temporary bond with a spirit other than the one selected using her spirit class feature. She must make this selection each day when preparing her spells. While this feature is active, she gains the spirit ability granted by the spirit. She also adds the spells granted by that spirit to her list of spells that she can cast using spirit magic. She does not add the hexes from her wandering spirit to her list of hexes that she can choose from with the hex class feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman ~ Wandering Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A shaman can form a temporary bond with a spirit other than the one selected using her spirit class feature. She must make this selection each day when preparing her spells. While this feature is active, she gains the spirit ability granted by the spirit. She also adds the spells granted by that spirit to her list of spells that she can cast using spirit magic. She does not add the hexes from her wandering spirit to her list of hexes that she can choose from with the hex class feature."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Wandering Spirit|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1390,
+    "record_key": "Shaman ~ Wandering Spirit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

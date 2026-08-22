@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tanglebriar Demonslayer ~ Demonologist",
+    "name": "Demonologist",
+    "class": "Ranger",
+    "description": "At 3rd level, a Tanglebriar demonslayer gains insight into his Abyssal enemies. The demonslayer gains a bonus equal to i/2 his class level on Knowledge (planes) checks that relate to demons, Perception checks to pierce a demon's disguise, and Survival checks while tracking demons. This bonus stacks with any bonuses from favored enemy. This ability replaces endurance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tanglebriar Demonslayer ~ Demonologist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a Tanglebriar demonslayer gains insight into his Abyssal enemies. The demonslayer gains a bonus equal to i/2 his class level on Knowledge (planes) checks that relate to demons, Perception checks to pierce a demon's disguise, and Survival checks while tracking demons. This bonus stacks with any bonuses from favored enemy. This ability replaces endurance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 227,
+    "record_key": "Tanglebriar Demonslayer ~ Demonologist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

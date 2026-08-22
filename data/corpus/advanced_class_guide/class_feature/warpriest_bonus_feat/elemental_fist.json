@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Elemental Fist",
+    "name": "Elemental Fist",
+    "class": "Warpriest Bonus Feat",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Elemental Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:ElementalFistGranted,1],[PREABILITY:1,CATEGORY=FEAT,Dragon Ferocity],[PREMULT:3,[PREMULT:1,[PRETOTALAB:8],[PREVARGTEQ:WarpriestBonusFeatBAB,8]],[PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike],[PRESTAT:2,CON=13,WIS=13]]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementalFistFullVersion|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Elemental Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Elemental Fist ~ Dragon Ferocity|PREVAREQ:ElementalFistFullVersion,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Elemental Fist ~ Full Version|PREVARGTEQ:ElementalFistFullVersion,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4329,
+    "record_key": "Warpriest Bonus Feat ~ Elemental Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

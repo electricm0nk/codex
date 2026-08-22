@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Precise Strike ~ 1H",
+    "name": "Precise Strike (One-Handed)",
+    "class": "Precise Strike",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Precise Strike ~ 1H"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PreciseStrikeDamage|0"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "+1 bonus to damage rolls for each duelist level when wielding a one-handed piercing weapon in one hand and leaving your other hand free."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Melee,OneHanded,Piercing|WEAPON|DAMAGE|PreciseStrikeDamage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2994,
+    "record_key": "Precise Strike ~ 1H"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

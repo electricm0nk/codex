@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ Great Renown",
+    "name": "Great Renown",
+    "class": "Social Talent",
+    "description": "The vigilante is known on a broader scale. He can gain renown in a single community of up to 5,000 individuals (a large town) or up to two communities of no more than 2,000 individuals each (two small towns). The bonus while he is in his social identity remains unchanged, but the circumstance bonus on Intimidate checks from his renown social talent while he is in his vigilante identity increases to +6.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Great Renown"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Renown"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante is known on a broader scale. He can gain renown in a single community of up to 5,000 individuals (a large town) or up to two communities of no more than 2,000 individuals each (two small towns). The bonus while he is in his social identity remains unchanged, but the circumstance bonus on Intimidate checks from his renown social talent while he is in his vigilante identity increases to +6."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Intimidate=In Vigilante Identity|2|TYPE=Circumstance.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 55,
+    "record_key": "Social Talent ~ Great Renown"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

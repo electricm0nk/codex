@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Black Dragon ~ Swamp Stride",
+    "delivery": "Extraordinary",
+    "description": "A very young or older black dragon can move through bogs and quicksand without penalty at its normal speed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:black_dragon_swamp_stride",
+    "name": "Swamp Stride",
+    "owners": [
+      "beastiary:monster:dragon_black"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A very young or older black dragon can move through bogs and quicksand without penalty at its normal speed."
+      },
+      {
+        "key": "KEY",
+        "value": "Black Dragon ~ Swamp Stride"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyMovement"
+      }
+    ],
+    "source_page": "p.92",
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 408,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Black Dragon ~ Swamp Stride",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dandy ~ Rumor Empathy",
+    "name": "Rumor Empathy",
+    "class": "Ranger",
+    "description": "A dandy can alter the flow and spread of rumors in his favor. This functions similarly to wild empathy, except that it takes 1 day (8 hours of work), instead of 1 minute, and it affects the general tenor of a rumor instead of a wild animal. A successful rumor empathy check allows the dandy to increase or decrease the rumor's tone by one step. For example, he could make an indifferent rumor friendly and thus positive toward its target, or an unfriendly rumor hostile and thus even more negative toward its target than it was originally. The difficulty of influencing a rumor depends on the size of the community in which it is spreading. The DC of the check is 15 in a village or smaller settlement. This DC increases by 5 and the number of days required to attempt the check increases by 2 for every settlement size category larger than a village-to a maximum of DC 40 and 11 days to affect a rumor spreading through an entire metropolis. If the rumor is only spreading through a smaller segment of the population, such as the elven district in a larger metropolis, use the population of that smaller segment to determine the DC and number of days of work required to use rumor empathy. The DC also increases by 10 if the rumor is about the dandy himself, since the dandy is obviously a biased source with respects to rumors about his own person.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dandy ~ Rumor Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A dandy can alter the flow and spread of rumors in his favor. This functions similarly to wild empathy, except that it takes 1 day (8 hours of work), instead of 1 minute, and it affects the general tenor of a rumor instead of a wild animal. A successful rumor empathy check allows the dandy to increase or decrease the rumor's tone by one step. For example, he could make an indifferent rumor friendly and thus positive toward its target, or an unfriendly rumor hostile and thus even more negative toward its target than it was originally. The difficulty of influencing a rumor depends on the size of the community in which it is spreading. The DC of the check is 15 in a village or smaller settlement. This DC increases by 5 and the number of days required to attempt the check increases by 2 for every settlement size category larger than a village-to a maximum of DC 40 and 11 days to affect a rumor spreading through an entire metropolis. If the rumor is only spreading through a smaller segment of the population, such as the elven district in a larger metropolis, use the population of that smaller segment to determine the DC and number of days of work required to use rumor empathy. The DC also increases by 10 if the rumor is about the dandy himself, since the dandy is obviously a biased source with respects to rumors about his own person."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 650,
+    "record_key": "Dandy ~ Rumor Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

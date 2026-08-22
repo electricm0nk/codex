@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Disable Construct",
-    "school": "Transmutation",
-    "level": 3,
     "description": "You can make a melee touch attack to send a pulse into the target, interfering with the magic that endows it with life. If the construct fails its saving throw, it becomes helpless, but it receives a new save each round at the end of its turn to shake off the errect. If the construct is normally immune to magic, the pulse is less effective and the construc receives a +4 bonus on its saving throw.",
-    "full_text": true
+    "full_text": true,
+    "key": "Disable Construct",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Touch attack makes a construct helpless for 1 round/level.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a melee touch attack to send a pulse into the target, interfering with the magic that endows it with life. If the construct fails its saving throw, it becomes helpless, but it receives a new save each round at the end of its turn to shake off the errect. If the construct is normally immune to magic, the pulse is less effective and the construc receives a +4 bonus on its saving throw.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/disableConstruct.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.179"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "construct touched"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 46,
-    "record_key": "Disable Construct"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Disable Construct",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

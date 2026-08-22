@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Low Profile",
+    "name": "Low Profile",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your small stature helps you avoid ranged attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Low Profile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "PRESIZELTEQ",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "Your small stature helps you avoid ranged attacks."
+      },
+      {
+        "key": "DESC",
+        "value": " You gain a +1 dodge bonus to AC against ranged attacks. In addition, you do not provide soft cover to creatures when ranged attacks pass through your square."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Low Profile"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Aspect Combat Bonus ~ Low Profile"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4353,
+    "record_key": "Warpriest Bonus Feat ~ Low Profile"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

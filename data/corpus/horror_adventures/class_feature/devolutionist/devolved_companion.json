@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Devolutionist ~ Devolved Companion",
+    "name": "Devolved Companion",
+    "class": "Druid",
+    "description": "A devolutionist must choose a devolved humanoid as an animal companion for her nature bond. Use the stats for an ape animal companion, but at 4th level, the devolved humanoid doesn't increase to size Large (it still gains all the other benefits at 4th level). This ability alters nature bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Devolutionist ~ Devolved Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.DevolutionistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "A devolutionist must choose a devolved humanoid as an animal companion for her nature bond. Use the stats for an ape animal companion, but at 4th level, the devolved humanoid doesn't increase to size Large (it still gains all the other benefits at 4th level). This ability alters nature bond."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Nature Bond|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|DruidLVL"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Devolved Humanoid)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 106,
+    "record_key": "Devolutionist ~ Devolved Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Absorb Blow",
+    "name": "Absorb Blow",
+    "class": "Medium",
+    "description": "(Intermediate) You gain DR/- and resistance to acid, cold, electricity, fire, and sonic equal to 1/2 your medium level. Add paladin's sacrifice to your medium spells known as a 2nd-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Absorb Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbsorbBlow|0"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) You gain DR/- and resistance to acid, cold, electricity, fire, and sonic equal to 1/2 your medium level. Add paladin's sacrifice to your medium spells known as a 2nd-level spell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Acid|Resistance to Cold|Resistance to Electricity|Resistance to Fire|Resistance to Sonic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbsorbBlow|MediumLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus,ColdResistanceBonus,ElectricityResistanceBonus,FireResistanceBonus,SonicResistanceBonus|AbsorbBlow|TYPE=Resistance"
+      },
+      {
+        "key": "DR",
+        "value": "AbsorbBlow/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=2|Paladin's Sacrifice"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 854,
+    "record_key": "Medium ~ Absorb Blow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

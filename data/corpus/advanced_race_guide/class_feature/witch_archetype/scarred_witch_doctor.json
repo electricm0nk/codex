@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Scarred Witch Doctor",
+    "name": "Scarred Witch Doctor",
+    "class": "Witch Archetype",
+    "description": "The scarred witch doctor draws power from her ability to endure pain and suffering. She mutilates her own flesh, inflicting horrific scars, in order to attract the attention of her patron. Rather than call forth a familiar, she creates a repulsive fetish mask that she uses as a repository for her power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Scarred Witch Doctor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchFamiliar.WitchHex1"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Scarred Witch Doctor],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchFamiliar,TYPE.WitchHex1]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsOrc=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The scarred witch doctor draws power from her ability to endure pain and suffering. She mutilates her own flesh, inflicting horrific scars, in order to attract the attention of her patron. Rather than call forth a familiar, she creates a repulsive fetish mask that she uses as a repository for her power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Fierce Intelligence|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Hex Scar|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Fetish Mask 1|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Fetish Mask 2|PRECLASS:1,Witch=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Scarshield|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Hexes|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Major Hexes|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scarred Witch Doctor ~ Grand Hexes|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 654,
+    "record_key": "Witch Archetype ~ Scarred Witch Doctor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

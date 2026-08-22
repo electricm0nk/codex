@@ -48,6 +48,9 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::rules_tables::beastiary1::{
     self, natural_attack_provenance, MonsterId, MonsterStatBlock,
 };
+use codex::rules_core::derived_evaluator_fixture_check::{
+    spell_like_ability_caster_level, spell_like_ability_save_dc,
+};
 use codex::rules_core::rules_tables::monster_chassis::{self, MonsterBook};
 use codex::rules_core::rules_tables::RuleSetId;
 
@@ -82,15 +85,18 @@ const BOOK_BOTD2: &str = "BOTD2";
 const BOOK_ISWG: &str = "ISWG";
 
 /// Bestiary 2, the seventh (SD-29 Epic 5 extend, round 4) and the first that
-/// serves more records than every book before it combined: 314 monsters and 401
-/// abilities against a prior total of 80 and 87. Its wire code is the book's own
-/// `SOURCESHORT:B2`, already used by the companion catalog for the same book's
-/// familiars -- one code per book, both catalogs. Of its 316 monster rows, 2 are
-/// `<Base>.COPY=<Variant>` deltas that state no stat block of their own; of its
-/// 466 ability rows, 65 are owned by no monster row this book ships. It is also
-/// the first book here whose abilities have SEVERAL owners -- 19 of them do, and
-/// each is rendered under every monster that claims it. See
-/// `rules_tables::bestiary_2` for the derivation.
+/// serves more records than every book before it combined: 314 monsters and
+/// (SD31-E6-F9-005, wave 12: 401 -> 493, +92 newly-transcribed records)
+/// abilities. Its wire code is the book's own `SOURCESHORT:B2`, already used
+/// by the companion catalog for the same book's familiars -- one code per
+/// book, both catalogs. Of its 316 monster rows, 2 are `<Base>.COPY=<Variant>`
+/// deltas that state no stat block of their own. The prior "65 orphans of 466
+/// raw rows" figure is NOT restated here -- it described the raw-candidate
+/// population before this wave's transcription pass and was not re-derived
+/// against the new total; re-run `scripts/classify_monster_ability_rows.py`
+/// before quoting it again. It is also the first book here whose abilities
+/// have SEVERAL owners -- 19 of them do, and each is rendered under every
+/// monster that claims it. See `rules_tables::bestiary_2` for the derivation.
 const BOOK_B2: &str = "B2";
 
 /// Bestiary 3, the eighth (SD-29 Epic 5 extend, round 5). Its wire code is the
@@ -385,14 +391,73 @@ pub struct MonsterCatalogEntryDto {
     /// not capture it.
     pub monster_class: Option<String>,
     /// The `monster_ability` records this book defines for this monster, in row
-    /// order. Empty for every Bestiary 1 row: that book's abilities are not
-    /// ingested, and an empty list says so rather than implying the creature
-    /// has none.
+    /// order. For a Bestiary 1 (SD-22-half) row this is the CROSS-TABLE-OWNED
+    /// subset only (`SD31-W23-MONSTER-001`, `decisions.md §58.3`) -- the
+    /// legacy monster's own ability rows, resolved by owner NAME out of the
+    /// `bestiary` chassis table because that monster's `MonsterStatBlock`
+    /// ships from a different table than its abilities do. Still empty for a
+    /// legacy monster whose row names none, honestly, not as a blanket "not
+    /// ingested" default.
     pub abilities: Vec<MonsterAbilityDto>,
     /// Ability names the row cites that the book does not define (universal
     /// monster rules such as `Grab` or `Scent`). Kept so the screen can say the
     /// creature has them without this catalog pretending to carry their text.
     pub external_ability_refs: Vec<String>,
+    /// PF1's "Spell-Like Abilities" universal monster rule (caster level = Hit
+    /// Dice), computed by
+    /// `derived_evaluator_fixture_check::spell_like_ability_caster_level` —
+    /// the FIRST production caller that function has ever had (SD31-E6-F1-002,
+    /// `OPEN-ISSUES.md` row 44: the seam that built it had zero, which is why
+    /// this field exists rather than the function being called from a test
+    /// alone).
+    ///
+    /// `None` for a monster with no `BONUS:VAR|SLA_CL|` token on its row at
+    /// all (has no spell-like abilities to attach a caster level to — never shown as a
+    /// bare number with nothing behind it), and for every record served by
+    /// [`map_monster`]'s Bestiary 1 half, whose ingest does not capture
+    /// abilities at all and so cannot honestly answer either way.
+    pub spell_like_ability_caster_level: Option<i32>,
+    /// Every spell this creature's row grants as a spell-like ability, in row
+    /// order, each carrying the derived spell level
+    /// `derived_evaluator_fixture_check::spell_like_ability_save_dc` reads out
+    /// of the row's own save-DC token (SD31-W15-MONSTER-SLA-001).
+    ///
+    /// Empty for every record served by [`map_monster`]'s Bestiary 1 half,
+    /// whose SD-22-era ingest captures no `SPELLS:` tokens at all — an empty
+    /// list there says "this half of the ingest does not carry them", the same
+    /// honest-absence posture `abilities` already takes.
+    pub spell_like_abilities: Vec<MonsterSpellLikeAbilityDto>,
+}
+
+/// One granted spell-like ability, as the screen renders it.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct MonsterSpellLikeAbilityDto {
+    /// The spell's name as the corpus row states it, scope qualifiers
+    /// included (`Invisibility (self only)`).
+    pub spell: String,
+    /// How often, verbatim from the row's `TIMES=` segment (`3`, `ATWILL`),
+    /// paired with `time_unit` when the row states one.
+    pub times: Option<String>,
+    pub time_unit: Option<String>,
+    /// The row's `CASTERLEVEL=` value verbatim — a flat literal or a PCGen
+    /// formula. Never resolved here; a formula is shown as the row states it
+    /// rather than as an invented number.
+    pub caster_level_token: Option<String>,
+    /// The row's save-DC token verbatim (`15+CHA`). `None` for a spell the
+    /// row states no save for.
+    pub save_dc_token: Option<String>,
+    /// The spell's own level, derived from `save_dc_token` by PF1's
+    /// Spell-Like Abilities universal monster rule (`DC = 10 + spell level +
+    /// ability modifier`). `None` when the row states no DC, or states one
+    /// this repo refuses to read rather than guess at.
+    pub derived_spell_level: Option<i32>,
+    /// The ability whose modifier the DC scales with (`CHA`, or `INT` for the
+    /// monsters whose rows exercise the rule's "unless otherwise noted"
+    /// clause). Deliberately NOT resolved to a number: a monster's ability
+    /// scores are not a corpus-stated fact in this repo (`SD31-E6-F1-002`),
+    /// so the screen shows the formula, never a fabricated DC.
+    pub save_dc_ability: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -493,6 +558,26 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
         .map(|attack| map_natural_attack(&key, attack))
         .collect();
 
+    // `SD31-W23-MONSTER-001`: the cross-table-owner remedy `decisions.md
+    // §58.3` named and left unbuilt. This half of the ingest still captures
+    // no `monster_ability` records of its OWN, but 55 real, owned ability
+    // rows across this book's 46 legacy monsters ship from the `bestiary`
+    // chassis table (`scripts/transcribe_monster_tables.py bestiary`'s own
+    // cross-table-owner screen), keyed to their real owner's NAME rather than
+    // to any `MonsterStatBlock` in that table -- `abilities_owned_by_name`
+    // reads exactly that, so this monster's OWN ability rows (when it has
+    // any) now reach the screen through the SAME render path
+    // (`map_chassis_ability` / `serve_ability_description`) every other
+    // book's abilities already use. A monster with none of its 55 stays
+    // correctly empty -- this is a real lookup, not a blanket fill.
+    let bestiary_table = monster_chassis::monster_book("beastiary")
+        .expect("the `bestiary` chassis (this book's OTHER table) is registered in MONSTER_BOOKS");
+    let abilities: Vec<MonsterAbilityDto> = bestiary_table
+        .abilities_owned_by_name(&block.name)
+        .into_iter()
+        .map(|ability| map_chassis_ability(bestiary_table.corpus_book, ability))
+        .collect();
+
     MonsterCatalogEntryDto {
         key,
         book: BOOK_B1.to_owned(),
@@ -510,8 +595,20 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
             Vec::new()
         },
         monster_class: None,
-        abilities: Vec::new(),
+        abilities,
         external_ability_refs: Vec::new(),
+        // Bestiary 1's SD-22 half still captures no `SPELLS:`/spell-like-
+        // ability tokens of its own (only the CROSS-TABLE `abilities` above,
+        // resolved from the OTHER table, are populated), so this catalog
+        // still cannot tell a monster with no spell-like abilities from one
+        // whose abilities were simply never captured. `None` is the honest
+        // answer to a question this half of the ingest cannot answer, not a
+        // claim that none exist.
+        spell_like_ability_caster_level: None,
+        // Same reason: Bestiary 1's SD-22 half captures no `SPELLS:` tokens,
+        // so an empty list is the honest answer rather than a claim the
+        // creature grants none.
+        spell_like_abilities: Vec::new(),
     }
 }
 
@@ -666,6 +763,23 @@ fn map_chassis_monster(
             .external_ability_refs
             .iter()
             .map(|r| (*r).to_owned())
+            .collect(),
+        spell_like_ability_caster_level: spell_like_ability_caster_level(block),
+        spell_like_abilities: block
+            .spell_like_abilities
+            .iter()
+            .map(|sla| {
+                let derived = spell_like_ability_save_dc(sla);
+                MonsterSpellLikeAbilityDto {
+                    spell: sla.spell.to_owned(),
+                    times: sla.times.map(str::to_owned),
+                    time_unit: sla.time_unit.map(str::to_owned),
+                    caster_level_token: sla.caster_level_token.map(str::to_owned),
+                    save_dc_token: sla.save_dc_token.map(str::to_owned),
+                    derived_spell_level: derived.as_ref().map(|d| d.spell_level),
+                    save_dc_ability: derived.map(|d| d.ability),
+                }
+            })
             .collect(),
     }
 }
@@ -1219,6 +1333,188 @@ mod tests {
         assert_eq!(ankheg.natural_attacks.len(), 1);
         assert_eq!(ankheg.natural_attacks[0].name, "Bite");
         assert_eq!(ankheg.natural_attacks[0].damage_dice.as_deref(), Some("2d6"));
+    }
+
+    /// `SD31-W23-MONSTER-001`: the cross-table-owner remedy `decisions.md
+    /// §58.3` scoped and `SD31-W22-MONSTER-001` bounded but did not build.
+    /// Ankheg's two ability rows (`b1_abilities_race.lst:90`/`91`) are
+    /// well-formed and owned, but their owner's `MonsterStatBlock` ships from
+    /// `rules_tables::beastiary1`, not from the `bestiary` chassis that holds
+    /// the `MonsterAbilityRecord`s themselves -- exactly the split this test
+    /// exercises end to end, through the real `map_monster` production path,
+    /// not a chassis-layer-only unit test that a desktop rendering gap could
+    /// still hide behind (`SD31-W22-MONSTER-001`'s own finding about
+    /// `map_beastiary1_monster` hardcoding `Vec::new()`).
+    #[test]
+    fn a_bestiary_1_legacy_monster_carries_its_cross_table_owned_abilities() {
+        let entries = build_monster_catalog().entries;
+        let ankheg = entries
+            .iter()
+            .find(|entry| entry.key == "beastiary1:monster:ankheg")
+            .expect("Ankheg is a real Bestiary 1 record");
+
+        assert_eq!(
+            ankheg.abilities.len(),
+            2,
+            "Ankheg's row names exactly two abilities in `b1_abilities_race.lst`, got {:?}",
+            ankheg.abilities.iter().map(|a| &a.name).collect::<Vec<_>>()
+        );
+        let bite = ankheg
+            .abilities
+            .iter()
+            .find(|a| a.name == "Acid Bite")
+            .expect("Acid Bite reaches the catalog");
+        assert_eq!(
+            bite.description.as_deref(),
+            Some(
+                "An Ankheg's bite does an additional 1d4 acid damage unless it has recently \
+                 used it's spit acid ability."
+            )
+        );
+        let spit = ankheg
+            .abilities
+            .iter()
+            .find(|a| a.name == "Spit Acid")
+            .expect("Spit Acid reaches the catalog");
+        // The row's own DC is a runtime formula (`10+(HD/2)+CON`), which this
+        // ingest does not compute -- `render_pcgen_desc` drops the `%1`
+        // placeholder rather than fabricate a number, so the rendered text
+        // must not carry it. Guards against a regression `serve_ability_
+        // description`'s own leak-panic would otherwise catch loudly, but a
+        // silent value would not.
+        assert!(
+            !spit.description.as_deref().unwrap_or_default().contains('%'),
+            "Spit Acid's rendered description leaks an unresolved placeholder: {:?}",
+            spit.description
+        );
+        assert!(spit.description.as_deref().unwrap_or_default().contains("30-foot line of acid"));
+    }
+
+    /// The first production caller of
+    /// `derived_evaluator_fixture_check::spell_like_ability_caster_level`
+    /// (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44 -- the wave-3 seam that built
+    /// the function had zero). Demon (Balor) is one of the seam's own 7
+    /// committed fixtures: `MONSTERCLASS:Outsider (Fort/Will):20` states 20
+    /// Hit Dice, and its row carries `BONUS:VAR|SLA_CL|HD`
+    /// (`b1_races.lst:93`), so PF1's Spell-Like Abilities universal monster
+    /// rule gives it caster level 20 on the wire, not merely in a test.
+    #[test]
+    fn a_monster_with_spell_like_abilities_serves_its_universal_monster_rule_caster_level() {
+        let entries = build_monster_catalog().entries;
+        let balor = entries
+            .iter()
+            .find(|entry| entry.book == BOOK_B1 && entry.name == "Demon (Balor)")
+            .expect("Demon (Balor) is a real chassis record served under Bestiary 1's wire code");
+        assert_eq!(
+            balor.spell_like_ability_caster_level,
+            Some(20),
+            "Balor's MONSTERCLASS states 20 Hit Dice and its row carries BONUS:VAR|SLA_CL|HD"
+        );
+    }
+
+    /// The save-DC seam's own production reach (SD31-W15-MONSTER-SLA-001):
+    /// a real record's `SPELLS:` grants reach the wire, each carrying the
+    /// spell level PF1's Universal Monster Rule derives from the row's own DC
+    /// constant.
+    ///
+    /// Hag (Annis) (`bb_races.lst:14`) states
+    /// `SPELLS:Innate|TIMES=3|CASTERLEVEL=7|Disguise Self,11+CHA|Fog Cloud,12+CHA`.
+    /// Disguise self is a 1st-level spell and fog cloud a 2nd — which is what
+    /// `11 - 10` and `12 - 10` say AND what `cr_spells.lst`'s own `CLASSES:`
+    /// tokens independently state; this record is one of the 63 the seam's
+    /// committed fixture banks.
+    #[test]
+    fn a_monsters_spell_like_ability_grants_reach_the_wire_with_their_derived_spell_level() {
+        let entries = build_monster_catalog().entries;
+        let annis = entries
+            .iter()
+            .find(|entry| entry.name == "Hag (Annis)")
+            .expect("Hag (Annis) is a real Bonus Bestiary chassis record");
+        assert_eq!(
+            annis.spell_like_abilities.len(),
+            2,
+            "the row grants exactly two spell-like abilities, got {:?}",
+            annis.spell_like_abilities
+        );
+        let disguise = annis
+            .spell_like_abilities
+            .iter()
+            .find(|sla| sla.spell == "Disguise Self")
+            .expect("the row grants Disguise Self");
+        assert_eq!(disguise.derived_spell_level, Some(1));
+        assert_eq!(disguise.save_dc_ability.as_deref(), Some("CHA"));
+        assert_eq!(
+            disguise.save_dc_token.as_deref(),
+            Some("11+CHA"),
+            "the DC reaches the screen as the formula the row states -- a monster's ability \
+             SCORES are not a corpus fact here, so a resolved number would be fabricated"
+        );
+        assert_eq!(disguise.times.as_deref(), Some("3"));
+        assert_eq!(disguise.caster_level_token.as_deref(), Some("7"));
+        let fog = annis
+            .spell_like_abilities
+            .iter()
+            .find(|sla| sla.spell == "Fog Cloud")
+            .expect("the row grants Fog Cloud");
+        assert_eq!(fog.derived_spell_level, Some(2));
+    }
+
+    /// A spell the row states no save for must serve `None` for BOTH the DC
+    /// token and the derived level — never a zero, which would read as a
+    /// cantrip on screen.
+    #[test]
+    fn a_granted_spell_with_no_save_serves_no_dc_and_no_derived_level() {
+        let entries = build_monster_catalog().entries;
+        let served: Vec<&MonsterSpellLikeAbilityDto> = entries
+            .iter()
+            .flat_map(|entry| entry.spell_like_abilities.iter())
+            .filter(|sla| sla.save_dc_token.is_none())
+            .collect();
+        assert!(
+            !served.is_empty(),
+            "the registry serves grants with no save DC; if this is empty the assertion below \
+             is vacuous"
+        );
+        for sla in served {
+            assert_eq!(
+                sla.derived_spell_level, None,
+                "{:?} states no save DC, so no spell level can be derived from one",
+                sla.spell
+            );
+            assert_eq!(sla.save_dc_ability, None, "{:?}", sla.spell);
+        }
+    }
+
+    /// A monster with a perfectly readable `MONSTERCLASS:` token but no
+    /// `BONUS:VAR|SLA_CL|` token at all must not be served a caster level it
+    /// has no spell-like abilities to attach to — a number with nothing
+    /// behind it is exactly the class of defect this file's
+    /// `serve_ability_description` leak-check exists to catch for a
+    /// different field.
+    #[test]
+    fn a_monster_with_no_spell_like_abilities_serves_no_caster_level() {
+        let entries = build_monster_catalog().entries;
+        let animated_object = entries
+            .iter()
+            .find(|entry| entry.book == BOOK_B1 && entry.name == "Animated Object (Medium)")
+            .expect("Animated Object (Medium) is a real chassis record");
+        assert_eq!(
+            animated_object.spell_like_ability_caster_level, None,
+            "Animated Object (Medium)'s row (b1_races.lst:13) carries no SLA_CL token"
+        );
+
+        // And the SD-22 half of Bestiary 1, whose ingest does not capture
+        // abilities at all, must answer the same honest `None` rather than
+        // guessing from a `monster_class` it happens to have.
+        let ankheg = entries
+            .iter()
+            .find(|entry| entry.key == "beastiary1:monster:ankheg")
+            .expect("Ankheg is a real Bestiary 1 record");
+        assert_eq!(
+            ankheg.spell_like_ability_caster_level, None,
+            "Bestiary 1's SD-22 half never ingested monster_ability records, so it cannot \
+             honestly say whether Ankheg has spell-like abilities"
+        );
     }
 
     /// A monster whose row genuinely declares no natural attack is served with

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Heavy Punches",
+    "name": "Heavy Punches",
+    "class": "Vigilante Talent",
+    "description": "The brute eschews civilized combat and prefers to wade into a fight with his fists swinging. While in his vigilante identity, the brute's unarmed strikes deal damage as if he were a monk of his size and vigilante level. If he has levels in other classes that provide monk advancement for unarmed strike damage, his vigilante level stacks with those levels whenever he is in his vigilante identity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Heavy Punches"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Heavy Punches"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsBrute,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The brute eschews civilized combat and prefers to wade into a fight with his fists swinging. While in his vigilante identity, the brute's unarmed strikes deal damage as if he were a monk of his size and vigilante level. If he has levels in other classes that provide monk advancement for unarmed strike damage, his vigilante level stacks with those levels whenever he is in his vigilante identity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk ~ Unarmed Damage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkUnarmedDamageLVL|VigilanteLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 985,
+    "record_key": "Vigilante Talent ~ Heavy Punches"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

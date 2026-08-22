@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Arcane Striker",
+    "name": "Arcane Striker",
+    "class": "Vigilante Talent",
+    "description": "The warlock gains Arcane Strike as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Arcane Striker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Arcane Striker"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsWarlock,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The warlock gains Arcane Strike as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": "When she activates Arcane Strike,she can choose to also give her weapons the flaming, frost, shock, or thundering weapon special ability. She makes this choice each time she activates Arcane Strike, and it lasts for the same duration.|PRECLASS:1,Vigilante=12"
+      },
+      {
+        "key": "DESC",
+        "value": "She adds anarchic, axiomatic, flaming burst, holy, icy burst, shocking burst, and unholy to the list of special abilities she can select. She can choose to apply an alignment-based weapon special ability only while in her vigilante identity, and only if it matches the alignment of her vigilante identity.|PRECLASS:1,Vigilante=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Arcane Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1043,
+    "record_key": "Vigilante Talent ~ Arcane Striker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

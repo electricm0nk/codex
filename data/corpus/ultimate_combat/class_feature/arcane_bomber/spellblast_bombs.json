@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Bomber ~ Spellblast Bombs",
+    "name": "Spellblast Bombs",
+    "class": "Wizard",
+    "description": "At 1st level, as a swift action, an arcane bomber can sacrifice one of his spells to empower the next bomb he throws during his turn. When he does, he gains a bonus to hit with the next bomb he throws before the end of his turn equal to the level of the spell he sacrificed, and a bonus to damage equal to twice the level of the spell. This ability replaces cantrips, but the arcana bomber gains the detect magic and read magic cantrips and places them in his spellbook. He can cast either of these as 1st-level spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bomber ~ Spellblast Bombs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, as a swift action, an arcane bomber can sacrifice one of his spells to empower the next bomb he throws during his turn. When he does, he gains a bonus to hit with the next bomb he throws before the end of his turn equal to the level of the spell he sacrificed, and a bonus to damage equal to twice the level of the spell. This ability replaces cantrips, but the arcana bomber gains the detect magic and read magic cantrips and places them in his spellbook. He can cast either of these as 1st-level spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=1|Detect Magic,Read Magic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1746,
+    "record_key": "Arcane Bomber ~ Spellblast Bombs"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

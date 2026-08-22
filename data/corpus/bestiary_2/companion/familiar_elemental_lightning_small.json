@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T14:58:57Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Familiar (Elemental (Lightning/Small))",
@@ -24,6 +22,116 @@
     ],
     "race_subtype": "Air|Elemental|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Weapon Finesse"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability|Immunity to electricity|Lightning Elemental ~ Electricity|Lightning Elemental ~ Metal Mastery|Lightning Elemental ~ Spark Leap"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Auran"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityDamageDieSize|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Small Lightning Elemental"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Escape Artist|Intimidate|Stealth"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,100"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar Lightning Elemental, Small"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Air|Elemental|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Outsider"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -50,16 +158,18 @@
       "Outsider"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
-    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
-    "line": 16,
-    "record_key": "Familiar (Elemental (Lightning/Small))"
-  },
+  "ingested_at": "2026-08-12T14:58:57Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "record_key": "Familiar (Elemental (Lightning/Small))",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

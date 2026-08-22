@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Impaling Critical",
+    "name": "Impaling Critical",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your critical hits can skewer your foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Impaling Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Critical"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Critical Focus"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Specialization (TYPE=MeleePiercing)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:11],[PREVARGTEQ:WarpriestBonusFeatBAB,11]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your critical hits can skewer your foes."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you score a critical hit with the selected piercing melee weapon, you can impale your opponent on your weapon. While your opponent is impaled in this way, each time he starts his turn, you deal damage equal to your weapon's damage dice plus the extra damage dice from your weapon's properties. As an immediate action, you can pull your weapon out of your opponent. If your opponent is ever outside your reach, you must spend a free action to let go of your weapon or pull it out of him. Your opponent can also spend a move action to pull your weapon out. When the weapon comes out, your opponent takes damage as if starting his turn impaled. While you impale your opponent with your weapon, you cannot use it to attack, and you must hold on to it."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|FEAT|Weapon Specialization"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Impaling Critical (%LIST)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4464,
+    "record_key": "Warpriest Bonus Feat ~ Impaling Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

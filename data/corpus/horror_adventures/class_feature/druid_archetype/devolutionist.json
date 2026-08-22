@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Devolutionist",
+    "name": "Devolutionist",
+    "class": "Druid Archetype",
+    "description": "Full of simmering hatred toward civilization and those who dwell within it, devolutionists believe that the world would be better off without any sentient life at all. They transform intelligent creatures and domesticated animals into throwbacks to their feral ancestors.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Devolutionist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "Full of simmering hatred toward civilization and those who dwell within it, devolutionists believe that the world would be better off without any sentient life at all. They transform intelligent creatures and domesticated animals into throwbacks to their feral ancestors."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Devolutionist],[!PREFACT:1,ABILITIES,Druid_Archetype_NatureBond=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_VenomImmunity=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devolutionist ~ Devolved Companion|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devolutionist ~ Undomesticate|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devolutionist ~ Devolution|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_VenomImmunity|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 102,
+    "record_key": "Druid Archetype ~ Devolutionist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Intrigue Mystery ~ Hidden Magic",
+    "name": "Hidden Magic",
+    "class": "Intrigue Mystery",
+    "description": "You gain the Conceal Spell feat as a bonus feat without needing to meet the prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intrigue Mystery ~ Hidden Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the Conceal Spell feat as a bonus feat without needing to meet the prerequisites."
+      },
+      {
+        "key": "DESC",
+        "value": " You can also hide your use of spell trigger items using the Conceal Spell feat, though onlookers receive a +2 bonus on their skill checks to pierce your subterfuge.|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": " You can even hide the use of spell completion items using the Conceal Spell feat, though in this case, onlookers receive a +5 bonus on their skill checks to pierce your subterfuge.|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Conceal Spell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 571,
+    "record_key": "Intrigue Mystery ~ Hidden Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,24 @@
 //! Spell catalog browser — Tauri command adapter over every ingested PF1
-//! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297),
-//! `acg::spell_list` (144), `advanced_race_guide::spell_list` (92) and
-//! `ultimate_intrigue::spell_list` (101), 1286 in total.
+//! spell table: `crb::spell_list` (664, since SD31-E6-F7-002 -- 652 base
+//! records + 12 `.COPY=` racial spell-like-ability variants, decisions.md
+//! §15), `apg::spell_list` (297), `acg::spell_list` (144),
+//! `advanced_race_guide::spell_list` (93, since SD31-E6-F7-002 -- 92 base
+//! records + the 13th `.COPY=` variant, `Fins to Feet (self only)`),
+//! `ultimate_intrigue::spell_list` (101), `ultimate_magic::spell_list`
+//! (269, since SD31-E6-F2-002), `occult_adventures::spell_list`
+//! (144, since SD31-E6-F2-003), `ultimate_combat::spell_list` (146, since
+//! SD31-E6-F2-004) and, since SD31-E6-F10-001,
+//! `inner_sea_gods::spell_list` (92) and, since SD-31 wave-19
+//! (`ultimate_wilderness` lane), `ultimate_wilderness::spell_list` (61) —
+//! 2011 in total. This adapter
+//! never chains a book by hand; it reads `spell_resolver::spell_catalog_rows()`
+//! (see `build_spell_catalog` below), so a book widening that registry
+//! reaches this DTO automatically. The per-book count is still worth
+//! stating here because it is the sweep target: `SpellCatalogScreen.tsx`'s
+//! `BOOK_ORDER`/`BOOK_LABELS` and its own test's `CHAINED_BOOK_CODES` are
+//! hand-copies by design (their own doc comments explain why an
+//! independent oracle beats a derived one) and do NOT update themselves
+//! when this list grows.
 //!
 //! Pathfinder Unchained is deliberately absent, and that absence is real
 //! rather than an oversight: `pu_spells.lst` is 224 lines and every single
@@ -47,11 +64,24 @@
 //! places on a leveled spell list. The counts below are still properties
 //! of `apg::spell_list` as ingested and are asserted as such.
 
+use std::collections::BTreeMap;
+use std::sync::OnceLock;
+
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::derived_evaluator_fixture_check::{
+    all_spell_caster_level_durations, all_spell_caster_level_ranges,
+    format_caster_level_linear_duration, format_spell_range_formula,
+    spell_book_corpus_dir_for_short_code, CasterLevelLinearFormula, SpellRangeFormula,
+};
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
-use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb, ultimate_intrigue};
+use codex::rules_core::rules_tables::{
+    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures,
+    ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+};
 use codex::rules_core::spell_resolver;
+
+use crate::authoring_workbench::codex_repo_root;
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form; the frontend maps them to display labels.
@@ -60,6 +90,14 @@ const BOOK_APG: &str = "APG";
 const BOOK_ACG: &str = "ACG";
 const BOOK_ARG: &str = "ARG";
 const BOOK_UI: &str = "UI";
+const BOOK_UM: &str = "UM";
+const BOOK_OA: &str = "OA";
+const BOOK_UC: &str = "UC";
+const BOOK_ISG: &str = "ISG";
+const BOOK_UW: &str = "UW";
+/// SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide, the
+/// twelfth book -- this book's first record family of any kind.
+const BOOK_AG: &str = "AG";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -78,6 +116,76 @@ pub struct SpellCatalogEntryDto {
     pub level: Option<u8>,
     /// `None` for an APG record the corpus supplies no `DESC:` text for.
     pub description: Option<String>,
+    /// The corpus's own `DURATION:` formula, rendered as literal text ("N
+    /// <unit> per caster level") when it matches a caster-level-LINEAR
+    /// shape (`derived_evaluator_fixture_check::parse_caster_level_linear_duration`,
+    /// SD31-E6-F2-006). `None` both for spells with no such formula (a
+    /// flat/instantaneous/permanent duration — most of the catalog) and
+    /// for the small population whose formula is more complex than this
+    /// function commits to (`min(`/`max(`/an additive term) — never a
+    /// resolved live number: a spell's actual duration depends on the
+    /// CASTING CHARACTER's caster level, which no corpus row states and
+    /// this reference catalog has no character context for (see that
+    /// function's own doc comment for why fabricating one would repeat
+    /// the ability-score-scaling monster mistake `SD31-E6-F1-002` refused).
+    pub duration: Option<String>,
+    /// The corpus's own `RANGE:` keyword, rendered as literal text ("N ft. +
+    /// N ft. per [N] caster level(s)") when it names one of the three PF1
+    /// caster-level-linear range keywords — `Close`, `Medium`, `Long`
+    /// (`derived_evaluator_fixture_check::spell_range_formula`,
+    /// SD31-E6-F2-008). `None` both for spells whose range is not one of
+    /// those three keywords (`Personal`, `Touch`, a literal distance, "See
+    /// text", ...) and — same posture as `duration` above — never a
+    /// resolved live number: the formula's own base + rate is corpus/
+    /// ruleset-grounded, but the CASTING CHARACTER's actual range in feet
+    /// depends on a caster level this reference catalog has no character
+    /// context for.
+    pub range: Option<String>,
+}
+
+/// `(book corpus dir, record key) -> parsed caster-level-linear DURATION`
+/// for every spell in every ingested book, built once per process. Backs
+/// [`duration_for`]; see [`all_spell_caster_level_durations`]'s own doc
+/// comment for what "parseable" means and why an unparseable/absent
+/// DURATION renders `None` rather than a guess.
+fn spell_caster_level_durations() -> &'static BTreeMap<(String, String), CasterLevelLinearFormula>
+{
+    static DURATIONS: OnceLock<BTreeMap<(String, String), CasterLevelLinearFormula>> =
+        OnceLock::new();
+    DURATIONS.get_or_init(|| match codex_repo_root() {
+        Ok(root) => all_spell_caster_level_durations(&root),
+        Err(_) => BTreeMap::new(),
+    })
+}
+
+/// The rendered duration text for one catalog row, or `None` — see
+/// [`SpellCatalogEntryDto::duration`].
+fn duration_for(book_short_code: &str, key: &str) -> Option<String> {
+    let corpus_dir = spell_book_corpus_dir_for_short_code(book_short_code)?;
+    spell_caster_level_durations()
+        .get(&(corpus_dir.to_string(), key.to_string()))
+        .map(format_caster_level_linear_duration)
+}
+
+/// `(book corpus dir, record key) -> resolved SPELLRANGE formula` for every
+/// spell in every ingested book, built once per process, same
+/// process-lifetime-cached shape as [`spell_caster_level_durations`]. Backs
+/// [`range_for`]; see [`all_spell_caster_level_ranges`]'s own doc comment.
+fn spell_caster_level_ranges() -> &'static BTreeMap<(String, String), SpellRangeFormula> {
+    static RANGES: OnceLock<BTreeMap<(String, String), SpellRangeFormula>> = OnceLock::new();
+    RANGES.get_or_init(|| match codex_repo_root() {
+        Ok(root) => all_spell_caster_level_ranges(&root),
+        Err(_) => BTreeMap::new(),
+    })
+}
+
+/// The rendered range text for one catalog row, or `None` — see
+/// [`SpellCatalogEntryDto::range`].
+fn range_for(book_short_code: &str, key: &str) -> Option<String> {
+    let corpus_dir = spell_book_corpus_dir_for_short_code(book_short_code)?;
+    spell_caster_level_ranges()
+        .get(&(corpus_dir.to_string(), key.to_string()))
+        .map(format_spell_range_formula)
 }
 
 /// Renders one table description into the prose this catalog is allowed to
@@ -111,6 +219,8 @@ fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_CRB, entry.key),
+        range: range_for(BOOK_CRB, entry.key),
     }
 }
 
@@ -121,6 +231,8 @@ fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         school: entry.school.map(|school| format!("{school:?}")),
         level: entry.level,
         description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_APG, entry.key),
+        range: range_for(BOOK_APG, entry.key),
     }
 }
 
@@ -131,6 +243,8 @@ fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_ACG, entry.key),
+        range: range_for(BOOK_ACG, entry.key),
     }
 }
 
@@ -145,6 +259,8 @@ fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> Spe
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_ARG, entry.key),
+        range: range_for(BOOK_ARG, entry.key),
     }
 }
 
@@ -153,6 +269,23 @@ fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> Spe
 /// wrapping in `Some` -- every UI record genuinely carries all three
 /// (every `ui_spells.lst` base record carries `SCHOOL:`, `CLASSES:` and
 /// `DESC:`; see `ultimate_intrigue::spell_list`'s own doc comment).
+/// UM's table types `school`, `level` and `description` optionally, like
+/// APG's -- the real corpus gap this cycle's own ingest found and named
+/// (`Restore Eidolon` and 24 siblings carry neither `CLASSES:` nor
+/// `DOMAINS:`; 15 `Masterpiece` records carry a `SCHOOL:` value ("Masterpiece")
+/// this engine's 9-school enum does not recognize), never fabricated.
+fn map_um_entry(entry: &ultimate_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UM.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UM, entry.key),
+        range: range_for(BOOK_UM, entry.key),
+    }
+}
+
 fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
     SpellCatalogEntryDto {
         key: entry.key.to_string(),
@@ -160,6 +293,92 @@ fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellC
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+        duration: duration_for(BOOK_UI, entry.key),
+        range: range_for(BOOK_UI, entry.key),
+    }
+}
+
+/// OA's table types `school`, `level` and `description` optionally, like
+/// UM's -- the real corpus gaps this cycle's own ingest found and named
+/// (`Talismanic Implement` carries no `CLASSES:` token; `Share Language
+/// (Communal)` carries neither `SCHOOL:` nor `DESC:` of its own), never
+/// fabricated.
+fn map_oa_entry(entry: &occult_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_OA.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_OA, entry.key),
+        range: range_for(BOOK_OA, entry.key),
+    }
+}
+
+/// UC's table types `school`, `level` and `description` optionally, like
+/// OA's -- the real corpus gap this cycle's own ingest found and named
+/// (`Life Conduit` and its two named variants carry neither `SCHOOL:` nor
+/// `CLASSES:` of their own), never fabricated.
+fn map_uc_entry(entry: &ultimate_combat::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UC.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UC, entry.key),
+        range: range_for(BOOK_UC, entry.key),
+    }
+}
+
+/// ISG's table types `school`, `level` and `description` optionally, like
+/// UC's -- the real corpus gap this cycle's own ingest found and named
+/// (`SD31-E6-F10-001`: 31 of 92 records carry no `CLASSES:`/`DOMAINS:`
+/// token of their own, mostly deity-boon variant spells whose base entry
+/// lives in another book), never fabricated.
+fn map_isg_entry(entry: &inner_sea_gods::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISG.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISG, entry.key),
+        range: range_for(BOOK_ISG, entry.key),
+    }
+}
+
+/// UW's table types `school`, `level` and `description` optionally, like
+/// UC's/ISG's -- SD-31 wave-19's `ultimate_wilderness` lane ingest found
+/// every one of the 61 base declarations carries all three, but the table
+/// keeps the `Option` shape every sibling per-book table uses rather than
+/// asserting non-optionality this book's own corpus happens not to
+/// exercise (`src/bin/ingest_ultimate_wilderness_spells.rs`).
+fn map_uw_entry(entry: &ultimate_wilderness::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UW.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UW, entry.key),
+        range: range_for(BOOK_UW, entry.key),
+    }
+}
+
+/// AG's table types `school`, `level` and `description` optionally, like
+/// UW's/UC's/ISG's -- SD-31 wave-29's `lane5-book-onboard` lane ingest
+/// found 2 of the 45 shipped base declarations carry no `CLASSES:`/
+/// `DOMAINS:` level (`Continual Flame (Lantern Bearer)`, `Summon Mantis`).
+fn map_ag_entry(entry: &adventurers_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_AG.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_AG, entry.key),
+        range: range_for(BOOK_AG, entry.key),
     }
 }
 
@@ -191,6 +410,8 @@ pub fn build_spell_catalog() -> SpellCatalogResponse {
             school: row.school.clone(),
             level: row.level,
             description: row.description.map(serve_description),
+            duration: duration_for(row.book, row.key),
+            range: range_for(row.book, row.key),
         })
         .collect();
     SpellCatalogResponse { entries }
@@ -285,6 +506,12 @@ mod tests {
             .chain(acg::spell_list::SPELL_LIST.iter().map(map_acg_entry))
             .chain(advanced_race_guide::spell_list::SPELL_LIST.iter().map(map_arg_entry))
             .chain(ultimate_intrigue::spell_list::SPELL_LIST.iter().map(map_ui_entry))
+            .chain(ultimate_magic::spell_list::SPELL_LIST.iter().map(map_um_entry))
+            .chain(occult_adventures::spell_list::SPELL_LIST.iter().map(map_oa_entry))
+            .chain(ultimate_combat::spell_list::SPELL_LIST.iter().map(map_uc_entry))
+            .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(map_isg_entry))
+            .chain(ultimate_wilderness::spell_list::SPELL_LIST.iter().map(map_uw_entry))
+            .chain(adventurers_guide::spell_list::SPELL_LIST.iter().map(map_ag_entry))
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -300,11 +527,20 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1286);
-        assert_eq!(book_entries(BOOK_CRB).len(), 652);
+        // SD-31 wave-29 (`lane5-book-onboard` lane): +45 AG spells, the
+        // twelfth book, 2011 -> 2056.
+        assert_eq!(response.entries.len(), 2056);
+        assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
-        assert_eq!(book_entries(BOOK_ARG).len(), 92);
+        assert_eq!(book_entries(BOOK_ARG).len(), 93);
+        assert_eq!(book_entries(BOOK_UI).len(), 101);
+        assert_eq!(book_entries(BOOK_UM).len(), 269);
+        assert_eq!(book_entries(BOOK_OA).len(), 144);
+        assert_eq!(book_entries(BOOK_UC).len(), 146);
+        assert_eq!(book_entries(BOOK_ISG).len(), 92);
+        assert_eq!(book_entries(BOOK_UW).len(), 61);
+        assert_eq!(book_entries(BOOK_AG).len(), 45);
     }
 
     #[test]
@@ -315,14 +551,14 @@ mod tests {
                 .filter(|e| e.school.as_deref() == Some(school))
                 .count()
         };
-        assert_eq!(counts("Abjuration"), 73);
-        assert_eq!(counts("Conjuration"), 116);
-        assert_eq!(counts("Divination"), 50);
-        assert_eq!(counts("Enchantment"), 60);
+        assert_eq!(counts("Abjuration"), 74);
+        assert_eq!(counts("Conjuration"), 120);
+        assert_eq!(counts("Divination"), 54);
+        assert_eq!(counts("Enchantment"), 61);
         assert_eq!(counts("Evocation"), 87);
-        assert_eq!(counts("Illusion"), 47);
+        assert_eq!(counts("Illusion"), 48);
         assert_eq!(counts("Necromancy"), 62);
-        assert_eq!(counts("Transmutation"), 152);
+        assert_eq!(counts("Transmutation"), 153);
         assert_eq!(counts("Universal"), 5);
     }
 
@@ -330,7 +566,13 @@ mod tests {
     fn every_entry_has_a_non_empty_key_and_a_known_book() {
         for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
-            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI].contains(&entry.book.as_str()));
+            assert!(
+                [
+                    BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC,
+                    BOOK_ISG, BOOK_UW, BOOK_AG
+                ]
+                .contains(&entry.book.as_str())
+            );
         }
     }
 
@@ -455,7 +697,7 @@ mod tests {
     fn arg_school_counts_match_the_real_ingested_table() {
         // Derived from `advanced_race_guide::spell_list::SPELL_LIST` as
         // served by this adapter, not from any planning figure. The nine
-        // school variants sum to ARG's whole 92; `Universal` is absent
+        // school variants sum to ARG's whole 93; `Universal` is absent
         // from `arg_spells.lst` (the variant exists only for cross-book
         // schema parity), so it is pinned at 0 rather than omitted.
         let arg = book_entries(BOOK_ARG);
@@ -471,7 +713,7 @@ mod tests {
         assert_eq!(counts("Evocation"), 8);
         assert_eq!(counts("Illusion"), 9);
         assert_eq!(counts("Necromancy"), 7);
-        assert_eq!(counts("Transmutation"), 37);
+        assert_eq!(counts("Transmutation"), 38);
         assert_eq!(counts("Universal"), 0);
         assert_eq!(
             counts("Abjuration")
@@ -496,7 +738,7 @@ mod tests {
             book: Some(BOOK_ARG.to_owned()),
         });
 
-        assert_eq!(response.entries.len(), 92);
+        assert_eq!(response.entries.len(), 93);
         for entry in &response.entries {
             assert_eq!(entry.book, BOOK_ARG);
         }
@@ -613,6 +855,64 @@ mod tests {
         assert!(
             description.contains("Hit Points | Duration"),
             "the inline rulebook table's column separators are prose and must survive: {description}"
+        );
+    }
+
+    // SD31-E6-F2-006: the DoD-8 worked example this cycle's on-screen
+    // verification also uses — `OPEN-ISSUES.md` row 119's own traced unit.
+    #[test]
+    fn adhesive_blood_serves_its_caster_level_linear_duration() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Adhesive Blood" && entry.book == BOOK_ACG)
+            .expect("ACG's Adhesive Blood record must reach the catalog");
+        assert_eq!(
+            entry.duration.as_deref(),
+            Some("1 minutes per caster level"),
+            "acg_spells.lst:8 states DURATION:(CASTERLEVEL) minutes"
+        );
+    }
+
+    #[test]
+    fn a_flat_duration_spell_serves_no_caster_level_duration() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Power Word Stun" && entry.book == BOOK_CRB)
+            .expect("CRB's Power Word Stun record must reach the catalog");
+        assert_eq!(
+            entry.duration, None,
+            "Power Word Stun's DURATION is Instantaneous, not caster-level-linear -- must not \
+             be fabricated"
+        );
+    }
+
+    #[test]
+    fn gentle_breeze_serves_its_close_range_formula() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Gentle Breeze" && entry.book == BOOK_ACG)
+            .expect("ACG's Gentle Breeze record must reach the catalog");
+        assert_eq!(
+            entry.range.as_deref(),
+            Some("25 ft. + 5 ft. per 2 caster levels"),
+            "acg_spells.lst:61 states RANGE:Close, PF1's standard SPELLRANGE:CLOSE formula"
+        );
+    }
+
+    #[test]
+    fn a_touch_range_spell_serves_no_range_formula() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Mage Armor" && entry.book == BOOK_CRB)
+            .expect("CRB's Mage Armor record must reach the catalog");
+        assert_eq!(
+            entry.range, None,
+            "Mage Armor's RANGE is Touch, not one of the three caster-level-linear keywords -- \
+             must not be fabricated"
         );
     }
 }

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mounted Fury ~ Bestial Mount",
+    "name": "Bestial Mount",
+    "class": "Barbarian",
+    "description": "At 5th level, the mounted fury gains the service of a feral mount. This ability functions as a druid's animal companion, using the barbarian's level -4 as her effective druid level. This companion must be one that she is capable of riding and is suitable as a mount. A Medium barbarian can select a camel or a horse. A Small barbarian can select a pony or a wolf, but can also select a boar or a dog if she is at least 8th level. Whenever a barbarian is raging while mounted on her bestial mount, the mount gains a +2 morale bonus to its Strength. This ability replaces uncanny dodge and improved uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mounted Fury ~ Bestial Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, the mounted fury gains the service of a feral mount. This ability functions as a druid's animal companion, using the barbarian's level -4 as her effective druid level. This companion must be one that she is capable of riding and is suitable as a mount. A Medium barbarian can select a camel or a horse. A Small barbarian can select a pony or a wolf, but can also select a boar or a dog if she is at least 8th level. Whenever a barbarian is raging while mounted on her bestial mount, the mount gains a +2 morale bonus to its Strength. This ability replaces uncanny dodge and improved uncanny dodge."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|BarbarianLVL-4"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Camel),Companion (Horse)"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Pony),Companion (Wolf)|PRESIZELTEQ:S"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Boar),Companion (Dog)|PRECLASS:1,Barbarian=8|PRESIZELTEQ:S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR|2|TYPE=Morale"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1596,
+    "record_key": "Mounted Fury ~ Bestial Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

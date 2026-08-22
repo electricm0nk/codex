@@ -1,0 +1,164 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Touch Attack (Ray)",
+    "name": "Touch Attack (Ray)",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Natural Attack"
+      },
+      {
+        "key": "TYPE",
+        "value": "NaturalAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RayAttackRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RayAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RayDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RayDamageSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RayDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RayThreatRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RayCritMult|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AttackBonusSize|0"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Spells (Ray)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RayCritMult|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RayAttackRange|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RayAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Spells (Ray))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RayThreatRange|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RayThreatRange|-1|PREABILITY:1,CATEGORY=FEAT,Improved Critical (Spells (Ray))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RayAttackBonus|BAB+DEX+AttackBonusSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|8|PRESIZEEQ:F"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|4|PRESIZEEQ:D"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|2|PRESIZEEQ:T"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|1|PRESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|0|PRESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|-1|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|-2|PRESIZEEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|-4|PRESIZEEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AttackBonusSize|-8|PRESIZEEQ:C"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackName|Touch Attack (Ray)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackToHit|+%1|RayAttackBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackRange|As Spell"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackType|Ray"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackThreatRange|%1|RayThreatRange"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackDamage|As Spell"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackCritMult|/x%1|RayCritMult"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2777,
+    "record_key": "Touch Attack (Ray)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

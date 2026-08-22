@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Suffocation",
-    "school": "Necromancy",
-    "level": 5,
     "description": "This spell extracts the air from the target's lungs, causing swift suffocation. The target can attempt to resist this spell's effects with a Fortitude save-if he succeeds, he is merely staggered for 1 round as he gasps for breath. If the target fails, he immediately begins to suffocate. On the target's next turn, he falls unconscious and is reduced to 0 hit points. One round later, the target drops to -1 hit points and is dying. One round after that, the target dies. Each round, the target can delay that round's effects from occurring by making a successful Fortitude save, but the spell effect continues for 3 rounds, and each time a target fails his Fortitude save, he moves one step further along the track to suffocation. This spell only affects living creatures that must breathe. It is impossible to defeat the effects of this spell by simply holding one's breath-if the victim fails the initial saving throw, the air in his lungs is extracted.",
-    "full_text": true
+    "full_text": true,
+    "key": "Suffocation",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Target quickly suffocates to death.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell extracts the air from the target's lungs, causing swift suffocation. The target can attempt to resist this spell's effects with a Fortitude save-if he succeeds, he is merely staggered for 1 round as he gasps for breath. If the target fails, he immediately begins to suffocate. On the target's next turn, he falls unconscious and is reduced to 0 hit points. One round later, the target drops to -1 hit points and is dying. One round after that, the target dies. Each round, the target can delay that round's effects from occurring by making a successful Fortitude save, but the spell effect continues for 3 rounds, and each time a target fails his Fortitude save, he moves one step further along the track to suffocation. This spell only affects living creatures that must breathe. It is impossible to defeat the effects of this spell by simply holding one's breath-if the victim fails the initial saving throw, the air in his lungs is extracted.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Murder Subdomain=5"
+      },
+      {
+        "key": "DURATION",
+        "value": "3 rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a vial containing a bit of the caster's breath)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/suffocation.html#_suffocation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.248"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one living creature"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 236,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2080,
-    "record_key": "Suffocation"
+    "record_key": "Suffocation",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

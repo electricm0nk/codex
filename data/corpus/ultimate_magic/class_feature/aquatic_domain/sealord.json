@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aquatic Domain ~ Sealord",
+    "name": "Sealord",
+    "class": "Aquatic Domain",
+    "description": "You can channel energy (as a cleric of your druid level) %1 times per day, but only to heal creatures with the aquatic or water subtype or to command them (similar to using the Command Undead feat against undead). You can take other feats to add to this ability, such as Extra Channel and Improved Channel, but not feats that alter this ability, such as Elemental Channel and Alignment Channel. The DC to save against this ability is %2.|SealordTimes|DomainAquaticDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aquatic Domain ~ Sealord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Aquatic Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SealordTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel energy (as a cleric of your druid level) %1 times per day, but only to heal creatures with the aquatic or water subtype or to command them (similar to using the Command Undead feat against undead). You can take other feats to add to this ability, such as Extra Channel and Improved Channel, but not feats that alter this ability, such as Elemental Channel and Alignment Channel. The DC to save against this ability is %2.|SealordTimes|DomainAquaticDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SealordTimes|DomainAquaticTimes+CHA-WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SealordTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 265,
+    "record_key": "Aquatic Domain ~ Sealord"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

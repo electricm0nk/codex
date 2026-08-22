@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghost Rider ~ Ghost Mount",
+    "name": "Ghost Mount",
+    "class": "Cavalier",
+    "description": "At 1st level, a ghost rider gains the ability to manifest a special mount of conjured ectoplasm rather than one of flesh and bone. This spectral companion functions like a spiritualist's phantom companion, using the ghost rider's cavalier level as her effective spiritualist level. The phantom takes the form of a ghostly creature analogous to one of a cavalier's normal mount options for her size and class level, such as a Large horse for a Medium ghost rider or a wolf for a Small ghost rider. A ghost rider must choose a mount that is capable of bearing her weight, that has four or more legs, and that lacks a fly speed (although the GM may allow mounts with a swim speed in certain environments). The GM might approve other animals as suitable mounts. The ghost rider can manifest her ghost mount only in ectoplasmic form, and she gains the spiritualist's etheric tether class feature, applied to her ghost mount. The mount shares the cavalier's alignment. Though the mount cannot speak, it understands its master's verbal commands and gains the phantom's link ability. The ghost mount has good Fortitude and Reflex saves, and can have ranks in any of the following skills: Acrobatics (Dex), Climb (Str), Escape Artist (Dex), Fly (Dex), Intimidate (Cha), Perception (Wis), Stealth (Dex), Survival (Wis), and Swim (Str). The ghost rider's ghost mount does not gain the share spells, deliver touch spells, or incorporeal flight abilities. Ghost mounts do not gain emotional focus abilities. The ghost rider does not take an armor check penalty on Ride checks while riding her mount. The mount is always considered combat trained, and begins play with Endurance as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghost Rider ~ Ghost Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ghost Rider Class Feature.Cavalier Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a ghost rider gains the ability to manifest a special mount of conjured ectoplasm rather than one of flesh and bone. This spectral companion functions like a spiritualist's phantom companion, using the ghost rider's cavalier level as her effective spiritualist level. The phantom takes the form of a ghostly creature analogous to one of a cavalier's normal mount options for her size and class level, such as a Large horse for a Medium ghost rider or a wolf for a Small ghost rider. A ghost rider must choose a mount that is capable of bearing her weight, that has four or more legs, and that lacks a fly speed (although the GM may allow mounts with a swim speed in certain environments). The GM might approve other animals as suitable mounts. The ghost rider can manifest her ghost mount only in ectoplasmic form, and she gains the spiritualist's etheric tether class feature, applied to her ghost mount. The mount shares the cavalier's alignment. Though the mount cannot speak, it understands its master's verbal commands and gains the phantom's link ability. The ghost mount has good Fortitude and Reflex saves, and can have ranks in any of the following skills: Acrobatics (Dex), Climb (Str), Escape Artist (Dex), Fly (Dex), Intimidate (Cha), Perception (Wis), Stealth (Dex), Survival (Wis), and Swim (Str). The ghost rider's ghost mount does not gain the share spells, deliver touch spells, or incorporeal flight abilities. Ghost mounts do not gain emotional focus abilities. The ghost rider does not take an armor check penalty on Ride checks while riding her mount. The mount is always considered combat trained, and begins play with Endurance as a bonus feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Ghost Mount|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Ghost Mount|Ghost Mount (M),Ghost Mount (L)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1726,
+    "record_key": "Ghost Rider ~ Ghost Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

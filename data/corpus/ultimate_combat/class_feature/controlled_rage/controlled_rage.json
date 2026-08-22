@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Controlled Rage",
+    "name": "Controlled Rage",
+    "class": null,
+    "description": "While raging, gain a Morale bonus of Strength +%1, Dexterity +%2, Constitution +%3|ControlledStrBonus|ControlledDexBonus|ControlledConBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RageSelection.RageSelectionAlt.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControlledRageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControlledStrBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControlledDexBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControlledConBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, gain a Morale bonus of Strength +%1, Dexterity +%2, Constitution +%3|ControlledStrBonus|ControlledDexBonus|ControlledConBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Controlled Rage Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControlledRageBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControlledRageBonus|2|PREABILITY:1,CATEGORY=Special Ability,TYPE.Greater Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControlledRageBonus|2|PREABILITY:1,CATEGORY=Special Ability,TYPE.Mighty Rage"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|ControlledStrBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|DEX|ControlledDexBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|ControlledConBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Raging|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 362,
+    "record_key": "Controlled Rage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

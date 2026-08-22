@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scarab Stalker ~ Desert Walker",
+    "name": "Desert Walker",
+    "class": "Hunter",
+    "description": "A scarab stalker and her animal companion can move through desert terrain at normal speed without taking damage or suffering any other impairments unless that terrain has been enchanted or magically manipulated.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarab Stalker ~ Desert Walker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.ScarabStalkerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A scarab stalker and her animal companion can move through desert terrain at normal speed without taking damage or suffering any other impairments unless that terrain has been enchanted or magically manipulated."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 694,
+    "record_key": "Scarab Stalker ~ Desert Walker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin ~ Holy Champion",
+    "name": "Holy Champion",
+    "class": "Paladin",
+    "description": "You are a conduit for the power of your god. Your DR increases to 10/Evil. Whenever you use Smite Evil and successfully strike an evil outsider, the outsider is also subject to a Banishment at caster level %1 (your weapon and holy symbol automatically count as objects that the subject hates). After the Banishment effect and the damage from the attack is resolved, the smite immediately ends. In addition, whenever you channel positive energy or uses Lay on Hands to heal a creature, you heal the maximum possible amount.|HolyChampionCasterLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin ~ Holy Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HolyChampionCasterLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HolyChampionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a conduit for the power of your god. Your DR increases to 10/Evil. Whenever you use Smite Evil and successfully strike an evil outsider, the outsider is also subject to a Banishment at caster level %1 (your weapon and holy symbol automatically count as objects that the subject hates). After the Banishment effect and the damage from the attack is resolved, the smite immediately ends. In addition, whenever you channel positive energy or uses Lay on Hands to heal a creature, you heal the maximum possible amount.|HolyChampionCasterLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Evil|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HolyChampionCasterLevel|HolyChampionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HolyChampionLVL|PaladinLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1363,
+    "record_key": "Paladin ~ Holy Champion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

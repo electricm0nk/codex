@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavern Sniper ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Fighter",
+    "description": "The cavern sniper adds Stealth to his list of class skills and removes Intimidate from his list of class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavern Sniper ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavern sniper adds Stealth to his list of class skills and removes Intimidate from his list of class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Stealth"
+      },
+      {
+        "key": "CCSKILL",
+        "value": "Intimidate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 495,
+    "record_key": "Cavern Sniper ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

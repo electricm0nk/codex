@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Daemon Totem (Greater)",
+    "name": "Daemon Totem, Greater",
+    "class": "Rage Power",
+    "description": "If the barbarian kills an intelligent creature with a CR equal to at least half her character level while raging, she heals 5 hit points. If she is already at her maximum number of hit points, she instead gains 5 temporary hit points, which don't stack if she kills multiple creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Daemon Totem (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Daemon Totem"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "If the barbarian kills an intelligent creature with a CR equal to at least half her character level while raging, she heals 5 hit points. If she is already at her maximum number of hit points, she instead gains 5 temporary hit points, which don't stack if she kills multiple creatures."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DaemonTotemResistance|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 20,
+    "record_key": "Rage Power ~ Daemon Totem (Greater)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

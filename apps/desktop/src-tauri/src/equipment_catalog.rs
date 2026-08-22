@@ -558,8 +558,24 @@ mod tests {
         );
     }
 
-    /// The 54-record `%%` leak, pinned on both sides of the render so the
-    /// fix cannot be mistaken for the corpus having changed.
+    /// The 58-record raw-syntax leak (54 `%%` + 4 `%CHOICE`), pinned on both
+    /// sides of the render so the fix cannot be mistaken for the corpus
+    /// having changed.
+    ///
+    /// **Widened `SD31-W6-INTEGRATE-001`**: `leaked_pcgen_syntax` originally
+    /// only flagged `%%`/`%<digit>`; it was widened to also flag
+    /// `%<UPPERCASE-KEYWORD>` (`%CHOICE`) after this test's own sibling
+    /// (`no_catalog_serves_a_description_carrying_raw_pcgen_syntax`) caught
+    /// the equipment catalog serving `%CHOICE` verbatim to a player. That
+    /// widening makes THIS test's raw-side scan see 4 more real occurrences
+    /// it always contained but never counted (ACG's `Equipmods` category:
+    /// Blood-Hunting/Spirit-Hunting Weapon + Amulet of Mighty Fists, all
+    /// four `+2 enhancement... against %CHOICE bloodline/mystery` shaped) --
+    /// `render_pcgen_desc` was widened in the SAME cycle to drop an
+    /// unresolved `%<KEYWORD>` the same no-fabrication way it already drops
+    /// an unresolved `%N` (there is no `PcgenDisplayValues` slot for a
+    /// chargen-time player selection like a bloodline choice), so the
+    /// SERVED side stays 0 either way.
     ///
     /// The compiled tables still hold the raw escape — that is correct, they
     /// are a transcription of the corpus — and the catalog is what must not
@@ -572,7 +588,8 @@ mod tests {
     /// | CRB | General | 6 | 0 |
     /// | CRB | ArmsArmor | 6 | 0 |
     /// | ARG | ArmsArmor | 1 | 0 |
-    /// | APG / ACG / B1 / PU | all | 0 | 0 |
+    /// | ACG | Equipmods | 4 | 0 |
+    /// | APG / B1 / PU | all | 0 | 0 |
     #[test]
     fn the_raw_percent_escape_stops_at_the_catalog_boundary() {
         use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
@@ -609,11 +626,24 @@ mod tests {
             (("CRB", "General".to_owned()), 6),
             (("CRB", "ArmsArmor".to_owned()), 6),
             (("ARG", "ArmsArmor".to_owned()), 1),
+            (("ACG", "Equipmods".to_owned()), 4),
+            // SD31-W8-INTEGRATE-001: `leaked_pcgen_syntax` widened to catch
+            // a bare '%' hole neither a digit nor an uppercase keyword
+            // follows (wave-8 adversarial review). This surfaced ONE
+            // pre-existing, previously-invisible hand-authored leak:
+            // ACG's "Gloves of Marking" (`equipment_data/magic_items.rs`)
+            // reads "...must save (Will DC %) or be shaken..." -- a
+            // literal unfilled DC placeholder that predates every wave-8
+            // lane and is untouched by any of them. Pinned here, not
+            // fabricated a value for: this repo's own no-stub doctrine
+            // forbids inventing the missing DC, and the source book text
+            // is not available to re-derive it from.
+            (("ACG", "MagicItems".to_owned()), 1),
         ]
         .into_iter()
         .collect();
         assert_eq!(raw_leaks, expected, "the raw tables' own leak profile");
-        assert_eq!(raw_leaks.values().sum::<usize>(), 54);
+        assert_eq!(raw_leaks.values().sum::<usize>(), 59);
 
         let served_leaks: Vec<&str> = build_equipment_catalog()
             .entries
@@ -680,30 +710,70 @@ mod tests {
         // Real corpus coverage, not a target: CRB and ARG carry template and
         // bookkeeping rows with no `DESC:` token at all, and that gap is
         // documented on `crb::equipment_tables::EquipmentTableEntry`.
-        assert_eq!(with_description("CRB"), 2022);
-        assert_eq!(with_description("APG"), 349);
-        assert_eq!(with_description("ACG"), 264);
-        assert_eq!(with_description("B1"), 4);
-        assert_eq!(with_description("ARG"), 194);
+        //
+        // RAISED `SD31-E6-F6-001`, 2026-08-16: `gen_equipment_gap_tables.rs`
+        // gained `.COPY=` inheritance (a `.COPY=` row with no `DESC:`/
+        // `SPROP:` of its own now inherits its base record's real one) --
+        // every book whose gap-lane rows include `.COPY=` variants gained
+        // real, corpus-true descriptions that were previously `None` purely
+        // because the parser never looked at the base row. One newly-
+        // recovered description (`CRB IntItemBase`) was refused rather than
+        // shipped: its base's `SPROP:` states 4 bare (unnumbered) `%`
+        // placeholders with a 4-argument `|` tail `render_pcgen_desc`'s
+        // numbered-reference detection does not resolve, so `gen_equipment_
+        // gap_tables.rs`'s own `safe_description` gate (reusing this exact
+        // module's `leaked_pcgen_syntax` check) ships `None` instead of
+        // broken syntax -- see `no_catalog_serves_a_description_carrying_
+        // raw_pcgen_syntax` immediately below, which is what caught it.
+        // Books untouched by the fix (`B1`, `PU`, `UE`, `UM`) are unpinned-
+        // changed; `UW`'s own 2 recovered fields were `weight_lbs`, not
+        // `description`, so its count is unchanged too. Every figure below
+        // re-derived fresh from the catalog itself, not adjusted by delta.
+        // `SD31-E6-F10-002`: `Poison (Violet Venom)` (has a description)
+        // moved CRB -> B1 (`decisions.md §9`); `Rock (Small)`/`Rock
+        // (Medium)` (no description) moved the same way. 2219 - 1 = 2218;
+        // 4 + 1 = 5.
+        assert_eq!(with_description("CRB"), 2218);
+        assert_eq!(with_description("APG"), 368);
+        assert_eq!(with_description("ACG"), 312);
+        assert_eq!(with_description("B1"), 5);
+        assert_eq!(with_description("ARG"), 205);
         assert_eq!(with_description("PU"), 42);
-        assert_eq!(with_description("UI"), 41);
+        assert_eq!(with_description("UI"), 48);
         assert_eq!(with_description("UE"), 448);
         // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
         // `DESC:` token; all 24 General spellbooks do).
         assert_eq!(with_description("UM"), 24);
-        // 216 of UPsi's 326 equipment + 95 of its 113 equipmods = 311.
-        assert_eq!(with_description("UPSI"), 311);
-        // 88 of UC's 204 (149 ArmsArmor + 26 General + 19 Equipmods + 10
-        // MagicItems) -- most ArmsArmor rows (ammunition, armor, plain
-        // weapons) carry no `SPROP:` token at all, matching every other
-        // book's own weapon-heavy shortfall.
-        assert_eq!(with_description("UC"), 88);
+        assert_eq!(with_description("UPSI"), 406);
+        // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
+        // `SPROP:` token at all, matching every other book's own
+        // weapon-heavy shortfall.
+        assert_eq!(with_description("UC"), 102);
         // UW reaches this catalog only through the corpus gap lane; 57 of its
         // 127 rows carry a real `DESC:`/`SPROP:` token.
         assert_eq!(with_description("UW"), 57);
+        // `SD31-E6-F10-003`: 8 further already-compiled books (`OA`, `HA`,
+        // `ISR`, `ISWG`, `MC`, `B2`, `B3`, `B4`) extended into the corpus
+        // gap lane -- same "no hand-authored table, every row from the gap
+        // lane" shape as `UW` above. Re-derived fresh from the built
+        // catalog, not adjusted by delta: 4235 + 195 = 4430 (`declared_pi_at`'s
+        // own fix in `gen_equipment_gap_tables.rs` redacts/excludes 4 fewer
+        // than the earlier, pre-fix intermediate count -- re-derived fresh,
+        // not hand-adjusted, after that fix landed).
+        // `SD31-E6-F10-004`: 5 further already-compiled books extended into
+        // the corpus gap lane -- same shape. Per-book, re-derived fresh from
+        // the built catalog: `ISG` 72/125, `MYTHIC` 97/252 (most mythic
+        // items are `.MOD`/`NAMEISPI` rows or bare stat-boost items with no
+        // `DESC:`/`SPROP:` token), `ISC` 7/65, `ISI` 9/34, `BOTD2` 3/5.
+        assert_eq!(with_description("ISG"), 72);
+        assert_eq!(with_description("MYTHIC"), 97);
+        assert_eq!(with_description("ISC"), 7);
+        assert_eq!(with_description("ISI"), 9);
+        assert_eq!(with_description("BOTD2"), 3);
+        // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            3844
+            4618
         );
     }
 
@@ -738,10 +808,13 @@ mod tests {
     fn catalog_spans_every_ingested_book_with_their_real_counts() {
         let response = build_equipment_catalog();
 
-        assert_eq!(count_by_book(&response, "CRB"), 3312);
+        // `SD31-E6-F10-002`: 3 corpus-gap rows re-attributed CRB -> B1
+        // (`decisions.md §9`, `tests/equipment_gap_tables.rs` has the full
+        // story). 3312 - 3 = 3309; 4 + 3 = 7. Catalog total is unchanged.
+        assert_eq!(count_by_book(&response, "CRB"), 3309);
         assert_eq!(count_by_book(&response, "APG"), 375);
         assert_eq!(count_by_book(&response, "ACG"), 319);
-        assert_eq!(count_by_book(&response, "B1"), 4);
+        assert_eq!(count_by_book(&response, "B1"), 7);
         assert_eq!(count_by_book(&response, "ARG"), 215);
         assert_eq!(count_by_book(&response, "PU"), 42);
         // 91 equipment + 7 equipmods -- see `ultimate_intrigue::equipment_tables`'s
@@ -752,7 +825,12 @@ mod tests {
         // full raw/dupe/collision reconciliation (1,425 raw - 1 same-book
         // dupe - 55 cross-book collisions = 1,369; 190 raw - 10 collisions
         // = 180).
-        assert_eq!(count_by_book(&response, "UE"), 1614);
+        // `SD31-E6-F10-003`: 1614 -> 1613, `declared_pi_at`'s extension over
+        // this whole compiled table catching a pre-existing PI leak
+        // (`ultimate_equipment:"Elysian Shield"`, `NAMEISPI:YES`) that
+        // predates this cycle -- see `equipment_resolver.rs`'s own comment
+        // on the same number for the full citation.
+        assert_eq!(count_by_book(&response, "UE"), 1613);
         // 24 General (pregenerated spellbooks) + 2 ArmsArmor (Scrollmaster
         // Gear); no `um_equipmods.lst` file exists for this book. Matches
         // `equipment_resolver::EQUIPMENT_BOOK_UM`'s own pinned 26.
@@ -773,14 +851,54 @@ mod tests {
         // compiled rule set whose feats and archetypes reach the player.
         assert_eq!(count_by_book(&response, "UW"), 127);
 
-        // 3312 + 375 + 319 + 4 + 215 + 42 + 105 + 1614 + 26 + 552 + 224 + 127.
+        // `SD31-E6-F10-003`: 8 further already-compiled books extended into
+        // the corpus gap lane, same "no hand-authored table" shape as `UW`
+        // above -- each book's count here is exactly its
+        // `gen_cache_equipment_gap` file count (`find data/corpus/<book>/
+        // equipment -name '*.json' | wc -l`), one catalog row per shipped
+        // JSON file, one to one.
+        assert_eq!(count_by_book(&response, "OA"), 119);
+        assert_eq!(count_by_book(&response, "HA"), 117);
+        assert_eq!(count_by_book(&response, "ISR"), 71);
+        assert_eq!(count_by_book(&response, "ISWG"), 46);
+        assert_eq!(count_by_book(&response, "MC"), 49);
+        // `B2`/`B3`: 7/8, not 8/9 -- each net of 1 bare PFS organized-play
+        // legality OVERLAY row (`is_non_record_line`'s `PFSNotLegal`
+        // extension) that was shipping as a spurious second catalog entry;
+        // see `tests/equipment_gap_tables.rs`'s own `EXPECTED_PER_BOOK` for
+        // the full citation.
+        assert_eq!(count_by_book(&response, "B2"), 7);
+        assert_eq!(count_by_book(&response, "B3"), 8);
+        assert_eq!(count_by_book(&response, "B4"), 5);
+
+        // `SD31-E6-F10-004`: 5 further already-compiled books, the ones
+        // `SD31-E6-F10-003` deliberately left out (`OPEN-ISSUES.md` row 186)
+        // because their real corpus text hit `screen_generated_table`'s
+        // whole-file blacklist hard stop. Reachable now that a per-record
+        // `blacklist_hit` pre-filter excludes/redacts only the individual
+        // offending rows; see `tests/equipment_gap_tables.rs`'s own
+        // `EXPECTED_PER_BOOK` for the full citation.
+        assert_eq!(count_by_book(&response, "ISG"), 125);
+        assert_eq!(count_by_book(&response, "MYTHIC"), 252);
+        assert_eq!(count_by_book(&response, "ISC"), 65);
+        assert_eq!(count_by_book(&response, "ISI"), 34);
+        assert_eq!(count_by_book(&response, "BOTD2"), 5);
+
+        // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1613 + 26 + 552 + 224 + 127
+        // + 119 + 117 + 71 + 46 + 49 + 7 + 8 + 5 + 125 + 252 + 65 + 34 + 5.
         // Pinned as a total as well as per book so that a book silently
         // dropping out of the chain cannot be masked by another book
         // growing. The +769 over the previous 6146 is exactly the corpus
         // gap lane's row count (`tests/equipment_gap_tables.rs` pins the
         // per-book split against `docs/work-inventory.json`'s own
-        // `not-ingested` population).
-        assert_eq!(response.entries.len(), 6915);
+        // `not-ingested` population); the further +421 (6915 -> 7336) is
+        // `SD31-E6-F10-003`'s 8-book extension of that same lane, net of
+        // the 1 pre-existing UE PI leak (`"Elysian Shield"`) and the 2 bare
+        // PFS legality overlay rows this cycle's fixes also caught. The
+        // further +481 (7336 -> 7817) is `SD31-E6-F10-004`'s 5-book
+        // extension, net of 35 declared-PI name exclusions and 9 new
+        // per-record blacklist name/key exclusions corpus-wide.
+        assert_eq!(response.entries.len(), 7817);
     }
 
     #[test]
@@ -801,9 +919,11 @@ mod tests {
     fn per_book_category_counts_are_pinned() {
         let response = build_equipment_catalog();
 
-        // CRB — unchanged by the widening; the pre-existing pins.
-        assert_eq!(count_by_book_category(&response, "CRB", "ArmsArmor"), 312);
-        assert_eq!(count_by_book_category(&response, "CRB", "General"), 454);
+        // CRB — `SD31-E6-F10-002` moved 2 ArmsArmor rows (`Rock (Small)`,
+        // `Rock (Medium)`) and 1 General row (`Poison (Violet Venom)`) to
+        // B1 below (`decisions.md §9` re-attribution).
+        assert_eq!(count_by_book_category(&response, "CRB", "ArmsArmor"), 310);
+        assert_eq!(count_by_book_category(&response, "CRB", "General"), 453);
         assert_eq!(count_by_book_category(&response, "CRB", "MagicItems"), 1556);
         assert_eq!(count_by_book_category(&response, "CRB", "Equipmods"), 990);
 
@@ -818,10 +938,13 @@ mod tests {
         assert_eq!(count_by_book_category(&response, "ACG", "MagicItems"), 141);
         assert_eq!(count_by_book_category(&response, "ACG", "Equipmods"), 96);
 
-        // Bestiary 1 — 4 monster-intrinsic items, and genuinely no
-        // `b1_equipmods.lst` file at all.
-        assert_eq!(count_by_book_category(&response, "B1", "ArmsArmor"), 2);
-        assert_eq!(count_by_book_category(&response, "B1", "General"), 1);
+        // Bestiary 1 — 4 hand-authored monster-intrinsic items plus, as of
+        // `SD31-E6-F10-002`, 3 corpus-gap rows re-attributed from CRB
+        // (`Rock (Small)`/`Rock (Medium)` ArmsArmor, `Poison (Violet
+        // Venom)` General; `decisions.md §9`) — genuinely no
+        // `b1_equipmods.lst` file at all, so Equipmods stays 0.
+        assert_eq!(count_by_book_category(&response, "B1", "ArmsArmor"), 4);
+        assert_eq!(count_by_book_category(&response, "B1", "General"), 2);
         assert_eq!(count_by_book_category(&response, "B1", "MagicItems"), 1);
         assert_eq!(count_by_book_category(&response, "B1", "Equipmods"), 0);
 
@@ -1072,7 +1195,21 @@ mod tests {
         // asserted here is that every collision the lane introduced actually
         // involves a gap row -- a new collision between two hand tables would
         // still fail, above.
-        assert_eq!(cross_book.len(), 203);
+        // `SD31-E6-F10-003`: +12 new cross-book collisions from the 8
+        // newly-extended gap-lane books (203 -> 215), every one verified
+        // below to involve a gap row.
+        // 213 -> 212: `bestiary_2`'s bare `Maul of the Titans` PFS legality
+        // overlay row (removed, `is_non_record_line`'s `PFSNotLegal`
+        // extension) was one of the 12 new cross-book collisions; the
+        // `bestiary_3` `Ranged Cannon` removal did not change this count
+        // (it never collided with another book's key).
+        // `SD31-E6-F10-004`: 212 -> 213, +1 new cross-book collision from
+        // the 5 newly-extended gap-lane books (`inner_sea_gods`/
+        // `mythic_adventures`/`inner_sea_combat`/`inner_sea_intrigue`/
+        // `book_of_the_damned_volume_2`), verified below (the loop over
+        // `cross_book.difference(&expected_cross_book)`) to involve a gap
+        // row, same discipline as every prior growth of this count.
+        assert_eq!(cross_book.len(), 213);
         for key in cross_book.difference(&expected_cross_book) {
             assert!(
                 gap_pairs.iter().any(|(_, gap_key)| gap_key == key),
@@ -1140,9 +1277,19 @@ mod tests {
             book: None,
         });
 
-        // 312 CRB + 75 APG + 20 ACG + 2 B1 + 29 ARG + 0 PU + 14 UI + 281 UE
-        // + 2 UM + 52 UPSI + 149 UC + 1 UW.
-        assert_eq!(response.entries.len(), 937);
+        // 310 CRB + 75 APG + 20 ACG + 4 B1 + 29 ARG + 0 PU + 14 UI + 281 UE
+        // + 2 UM + 52 UPSI + 149 UC + 1 UW. (`SD31-E6-F10-002`: 2 ArmsArmor
+        // rows moved CRB -> B1, `decisions.md §9`; the 937 total is
+        // unchanged.) `SD31-E6-F10-003`: +86 ArmsArmor rows across the 8
+        // newly-extended gap-lane books (937 -> 1023), re-derived fresh from
+        // the built catalog, not adjusted by a hand count.
+        // 1017 -> 1015: both removed PFS legality overlay rows
+        // (`bestiary_2`'s `Maul of the Titans`, `bestiary_3`'s `Ranged
+        // Cannon`) were `ArmsArmor` category.
+        // `SD31-E6-F10-004`: +35 ArmsArmor rows across the 5 newly-extended
+        // gap-lane books (1015 -> 1050), re-derived fresh from the built
+        // catalog, not adjusted by a hand count.
+        assert_eq!(response.entries.len(), 1050);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }
@@ -1151,10 +1298,11 @@ mod tests {
     #[test]
     fn filter_equipment_catalog_narrows_to_one_book() {
         for (book, expected) in [
-            ("CRB", 3312),
+            // `SD31-E6-F10-002`: 3 rows moved CRB -> B1 (`decisions.md §9`).
+            ("CRB", 3309),
             ("APG", 375),
             ("ACG", 319),
-            ("B1", 4),
+            ("B1", 7),
             ("ARG", 215),
             ("PU", 42),
             // UW is filterable only because the corpus gap lane put it in

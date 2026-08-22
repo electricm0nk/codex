@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Major Amplification ~ Dispelling Pulse",
+    "name": "Dispelling Pulse",
+    "class": "Major Amplification",
+    "description": "The psychic can spend 3 points from her phrenic pool to entwine dispelling magic with a targeted spell. If the target is hit by the linked spell or fails its saving throw, it's affected as though the psychic had cast a targeted dispel magic spell on it. This effect can dispel only spells of the linked spell's level or lower. If the linked spell doesn't already require an attack roll or allow a saving throw, the target can attempt a Will saving throw to avoid the dispelling effect only; the DC is calculated using the linked spell's level (and all other bonuses that would apply if the linked spell allowed a Will save). This amplification can be linked only to a spell that targets one creature or object.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Major Amplification ~ Dispelling Pulse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Major Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PsychicLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can spend 3 points from her phrenic pool to entwine dispelling magic with a targeted spell. If the target is hit by the linked spell or fails its saving throw, it's affected as though the psychic had cast a targeted dispel magic spell on it. This effect can dispel only spells of the linked spell's level or lower. If the linked spell doesn't already require an attack roll or allow a saving throw, the target can attempt a Will saving throw to avoid the dispelling effect only; the DC is calculated using the linked spell's level (and all other bonuses that would apply if the linked spell allowed a Will save). This amplification can be linked only to a spell that targets one creature or object."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1178,
+    "record_key": "Major Amplification ~ Dispelling Pulse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

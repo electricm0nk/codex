@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Transmutation Savant School ~ Telekinetic Fist",
+    "name": "Telekinetic Fist",
+    "class": "Transmutation Savant School",
+    "description": "As a standard action you can strike with a telekinetic fist, targeting any foe within 30 feet as a ranged touch attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transmutation Savant School ~ Telekinetic Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialAttack.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationTelekineticFistBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationTelekineticFistTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action you can strike with a telekinetic fist, targeting any foe within 30 feet as a ranged touch attack."
+      },
+      {
+        "key": "DESC",
+        "value": "The telekinetic fist deals 1d4 points of bludgeoning damage.|PREVAREQ:TransmutationTelekineticFistBonus,0"
+      },
+      {
+        "key": "DESC",
+        "value": "The telekinetic fist deals 1d4+%1 points of bludgeoning damage.|TransmutationTelekineticFistBonus|PREVARGTEQ:TransmutationTelekineticFistBonus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|TransmutationTelekineticFistTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationTelekineticFistBonus|ArcanistSavantSchoolLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationTelekineticFistTimes|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|1d4+%1|TransmutationTelekineticFistBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TransmutationTelekineticFistTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2580,
+    "record_key": "Transmutation Savant School ~ Telekinetic Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

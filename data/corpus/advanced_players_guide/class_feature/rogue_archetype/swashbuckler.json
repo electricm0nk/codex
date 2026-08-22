@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ Swashbuckler",
+    "name": "Swashbuckler",
+    "class": "Rogue Archetype",
+    "description": "A paragon of mobile swordplay, the swashbuckler is a rogue who focuses almost exclusively on honing her skill at arms and perfecting daring acrobatic moves and elaborate flourishes that border on performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Swashbuckler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype.RogueTrapfinding.RogueTrapSense"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Swashbuckler],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"
+      },
+      {
+        "key": "DESC",
+        "value": "A paragon of mobile swordplay, the swashbuckler is a rogue who focuses almost exclusively on honing her skill at arms and perfecting daring acrobatic moves and elaborate flourishes that border on performance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Swashbuckler ~ Martial Training|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Swashbuckler ~ Daring|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Rogue"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2950,
+    "record_key": "Rogue Archetype ~ Swashbuckler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

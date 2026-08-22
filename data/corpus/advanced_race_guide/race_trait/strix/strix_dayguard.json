@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Strix ~ Dayguard",
+    "name": "Dayguard",
+    "race_key": "Strix",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Strix Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Strix_ReplaceNocturnal"
+    ],
+    "description": "Familiar with watching over its tribe during the day, the strix gains a +2 racial bonus on Perception checks and treats Perception as a class skill. This racial trait replaces nocturnal.",
+    "source_page": "p.200",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strix ~ Dayguard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Strix Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Strix ~ Dayguard],[!PREFACT:1,ABILITIES,Strix_ReplaceNocturnal=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Familiar with watching over its tribe during the day, the strix gains a +2 racial bonus on Perception checks and treats Perception as a class skill."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces nocturnal.|!PREABILITY:1,CATEGORY=Special Ability,Strix ~ Dayguard"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Perception"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Perception"
+      },
+      {
+        "key": "FACT",
+        "value": "Strix_ReplaceNocturnal|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perception",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1149,
+    "record_key": "Strix ~ Dayguard"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

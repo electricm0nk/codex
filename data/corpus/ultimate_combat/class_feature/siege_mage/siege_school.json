@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Siege Mage ~ Siege School",
+    "name": "Siege School",
+    "class": "Wizard",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege Mage ~ Siege School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Siege Mage Opposition School Choice|3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1754,
+    "record_key": "Siege Mage ~ Siege School"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Speaker for the Past ~ Mysteries of the Past",
+    "name": "Mysteries of the Past",
+    "class": "Shaman",
+    "description": "A speaker for the past gains Linguistics, Knowledge (history), Knowledge (local), Perception, and Use Magic Device as class skills. She also adds the spells from the ancestorUM and timeUM oracle mysteries to her class spell list (as the cleric level for those spells). This ability replaces the shaman's familiar. The speaker for the past must choose a time when she must spend 1 hour each day in quiet contemplation to regain her daily allotment of spells, but does not need to commune with a familiar during this time. Because she has no familiar, she does not gain a spirit familiar feature from any spirit she bonds with.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past ~ Mysteries of the Past"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Speaker for the Past Class Feature.Shaman Class Feature.SpecialQuality.Oracle's Mystery"
+      },
+      {
+        "key": "DESC",
+        "value": "A speaker for the past gains Linguistics, Knowledge (history), Knowledge (local), Perception, and Use Magic Device as class skills. She also adds the spells from the ancestorUM and timeUM oracle mysteries to her class spell list (as the cleric level for those spells). This ability replaces the shaman's familiar. The speaker for the past must choose a time when she must spend 1 hour each day in quiet contemplation to regain her daily allotment of spells, but does not need to commune with a familiar during this time. Because she has no familiar, she does not gain a spirit familiar feature from any spirit she bonds with."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Linguistics|Knowledge (history)|Knowledge (local)|Perception|Use Magic Device"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=1|Unseen Servant|PRECLASS:1,Shaman=2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=2|Spiritual Weapon|PRECLASS:1,Shaman=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=3|Heroism|PRECLASS:1,Shaman=6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=4|Spiritual Ally|PRECLASS:1,Shaman=8"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=5|Telekinesis|PRECLASS:1,Shaman=10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=6|Heroism (Greater)|PRECLASS:1,Shaman=12"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=7|Ethereal Jaunt|PRECLASS:1,Shaman=14"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=8|Vision|PRECLASS:1,Shaman=16"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Shaman=9|Astral Projection|PRECLASS:1,Shaman=18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3611,
+    "record_key": "Speaker for the Past ~ Mysteries of the Past"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Kick Up",
+    "name": "Kick Up",
+    "class": "Warpriest Bonus Feat",
+    "description": "As long as you have at least one hand free, you can use a swift action to retrieve a single unattended item or weapon that weighs 10 pounds or less from the ground, either in your square or in any adjacent square not occupied or threatened by an enemy. Additionally, when you kick up a weapon and attempt a feint before the end of your turn, you receive a +2 circumstance bonus on the feint attempt.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Kick Up"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Acrobatic"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Acrobatics=1"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you have at least one hand free, you can use a swift action to retrieve a single unattended item or weapon that weighs 10 pounds or less from the ground, either in your square or in any adjacent square not occupied or threatened by an enemy. Additionally, when you kick up a weapon and attempt a feint before the end of your turn, you receive a +2 circumstance bonus on the feint attempt."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Kick Up"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4169,
+    "record_key": "Warpriest Bonus Feat ~ Kick Up"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

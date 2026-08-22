@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Purified Calling",
-    "school": "Conjuration",
-    "level": null,
     "description": "Your eidolon is restored to full health when you summon it. Upon casting this spell, you must immediately begin the ritual to summon your eidolon. Upon completion of the ritual, your eidolon appears at full hit points and without any damage or penalties to its ability scores, regardless of its previous condition. In addition, any temporary negative conditions affecting your eidolon are immediately removed.  Permanent conditions and ability drain are not affected by this spell.",
-    "full_text": true
+    "full_text": true,
+    "key": "Purified Calling",
+    "level": null,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Eidolon summoned is fully healed.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your eidolon is restored to full health when you summon it. Upon casting this spell, you must immediately begin the ritual to summon your eidolon. Upon completion of the ritual, your eidolon appears at full hit points and without any damage or penalties to its ability scores, regardless of its previous condition. In addition, any temporary negative conditions affecting your eidolon are immediately removed.  Permanent conditions and ability drain are not affected by this spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 minute"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a stick of incense)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/purifiedCalling.html#_purified-calling"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 187,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2029,
-    "record_key": "Purified Calling"
+    "record_key": "Purified Calling",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

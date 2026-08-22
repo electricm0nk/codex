@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mud Elemental ~ Entrap",
+    "delivery": "Extraordinary",
+    "description": "The mud from an elemntal's entrap ability can be washed away in 1d3 rounds of immersion in water.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:mud_elemental_entrap",
+    "name": "Entrap",
+    "owners": [
+      "bestiary_2:monster:elemental_mud_small",
+      "bestiary_2:monster:elemental_mud_medium",
+      "bestiary_2:monster:elemental_mud_large",
+      "bestiary_2:monster:elemental_mud_huge",
+      "bestiary_2:monster:elemental_mud_greater",
+      "bestiary_2:monster:elemental_mud_elder"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1, 10 minutes, hardness %2, hp %3)|MudElementalEntrapDC|MudElementalEntrapHardness|MudElementalEntrapHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MudElementalEntrapDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MudElementalEntrapHP|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MudElementalEntrapHardness|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MudElementalEntrapDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MudElementalEntrapHP|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MudElementalEntrapHardness|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The mud from an elemntal's entrap ability can be washed away in 1d3 rounds of immersion in water."
+      },
+      {
+        "key": "KEY",
+        "value": "Mud Elemental ~ Entrap"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2139,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Mud Elemental ~ Entrap",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

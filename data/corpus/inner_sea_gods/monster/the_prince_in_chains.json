@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "15",
@@ -22,6 +20,132 @@
     ],
     "race_subtype": "Evil|Extraplanar|Kyton|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ The Prince in Chains"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Auran|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Tracking|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|20|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsightRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Legs|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tentacle|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Intimidate|Knowledge (Religion)|Survival"
+      },
+      {
+        "key": "DR",
+        "value": "15/Good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):15"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Trip,*1,6d6,SPROP=plus trip and vicious critical|Tentacle,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,3d6,SPROP=plus vicious critical"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Extraplanar|Kyton|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.314",
     "speeds": [
@@ -35,16 +159,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
-    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
-    "line": 85,
-    "record_key": "The Prince in Chains"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 85,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "record_key": "The Prince in Chains",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Beast Master ~ Strong Bond",
+    "name": "Strong Bond",
+    "class": "Ranger",
+    "description": "At 12th level, the ranger strengthens his bond with his animal companions. The ranger's effective druid level for his animal companions is now equal to his ranger level; he may immediately allocate these additional levels to his companions as he sees fit. This ability replaces camouflage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beast Master ~ Strong Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerCamouflage"
+      },
+      {
+        "key": "DESC",
+        "value": "At 12th level, the ranger strengthens his bond with his animal companions. The ranger's effective druid level for his animal companions is now equal to his ranger level; he may immediately allocate these additional levels to his companions as he sees fit. This ability replaces camouflage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2681,
+    "record_key": "Beast Master ~ Strong Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

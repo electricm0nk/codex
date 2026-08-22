@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tactical Leader ~ Battle Acumen",
+    "name": "Battle Acumen",
+    "class": "Inquisitor",
+    "description": "A tactical leader can grant his judgment benefits to a single other ally within 30 feet who can see and hear the tactical leader as an immediate action. These benefits last until the beginning of the tactical leader's next turn. A tactical leader must have a judgment active to use this ability and the benefits granted are the same as those selected by his judgment. A tactical leader can use this ability %1 times per day.|max(1,WIS)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactical Leader ~ Battle Acumen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.TacticalLeaderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A tactical leader can grant his judgment benefits to a single other ally within 30 feet who can see and hear the tactical leader as an immediate action. These benefits last until the beginning of the tactical leader's next turn. A tactical leader must have a judgment active to use this ability and the benefits granted are the same as those selected by his judgment. A tactical leader can use this ability %1 times per day.|max(1,WIS)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 469,
+    "record_key": "Tactical Leader ~ Battle Acumen"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

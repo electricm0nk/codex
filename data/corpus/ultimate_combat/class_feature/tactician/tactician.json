@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tactician ~ Tactician",
+    "name": "Tactician",
+    "class": "Fighter",
+    "description": "At 5th level, a tactician gains this ability as the cavalier class feature (Advanced Player's Guide 33). He may use this ability once per day at 5th level, plus one additional time for every five levels after 5th (to a maximum of four times at 20th level). If the tactician also has cavalier levels, these levels stack for determining the number of uses per day, and he can take the better progression. This ability replaces weapon training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactician ~ Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cavalier ~ Tactician"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a tactician gains this ability as the cavalier class feature (Advanced Player's Guide 33). He may use this ability once per day at 5th level, plus one additional time for every five levels after 5th (to a maximum of four times at 20th level). If the tactician also has cavalier levels, these levels stack for determining the number of uses per day, and he can take the better progression. This ability replaces weapon training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactician Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 738,
+    "record_key": "Tactician ~ Tactician"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

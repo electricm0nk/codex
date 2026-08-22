@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "When you cast this spell, you gain the ability to step into a tree, magically infusing yourself with the plant. Once within a tree, you can teleport from that particular tree to another tree. The trees you enter must be of the same kind, must be living, and must have girth at least equal to yours. By moving into an oak tree [for example], you instantly know the location of all other oak trees within transport range [see below] and may choose whether you want to pass into one or simply step back out of the tree you moved into. You may choose to pass to any tree of the appropriate kind within the transport range as shown on the following table. [Type of Tree Transport Range]; [Oak, ash, yew 3,000 feet]; [Elm, linden 2,000 feet]; [Other deciduous 1,500 feet]; [Any coniferous 1,000 feet] You may move into a tree up to one time per caster level [passing from one tree to another counts only as moving into one tree]. The spell lasts until the duration expires or you exit a tree. Each transport is a full-round action. You can, at your option, remain within a tree without transporting yourself, but you are forced out when the spell ends. If the tree in which you are concealed is chopped down or burned, you are slain if you do not exit before the process is complete.",
     "key": "Tree Stride",
-    "school": "Conjuration",
     "level": 4,
-    "description": "When you cast this spell, you gain the ability to step into a tree, magically infusing yourself with the plant. Once within a tree, you can teleport from that particular tree to another tree. The trees you enter must be of the same kind, must be living, and must have girth at least equal to yours. By moving into an oak tree [for example], you instantly know the location of all other oak trees within transport range [see below] and may choose whether you want to pass into one or simply step back out of the tree you moved into. You may choose to pass to any tree of the appropriate kind within the transport range as shown on the following table. [Type of Tree Transport Range]; [Oak, ash, yew 3,000 feet]; [Elm, linden 2,000 feet]; [Other deciduous 1,500 feet]; [Any coniferous 1,000 feet] You may move into a tree up to one time per caster level [passing from one tree to another counts only as moving into one tree]. The spell lasts until the duration expires or you exit a tree. Each transport is a full-round action. You can, at your option, remain within a tree without transporting yourself, but you are forced out when the spell ends. If the tree in which you are concealed is chopped down or burned, you are slain if you do not exit before the process is complete."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=4|Druid=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this spell, you gain the ability to step into a tree, magically infusing yourself with the plant. Once within a tree, you can teleport from that particular tree to another tree. The trees you enter must be of the same kind, must be living, and must have girth at least equal to yours. By moving into an oak tree [for example], you instantly know the location of all other oak trees within transport range [see below] and may choose whether you want to pass into one or simply step back out of the tree you moved into. You may choose to pass to any tree of the appropriate kind within the transport range as shown on the following table. [Type of Tree Transport Range]; [Oak, ash, yew 3,000 feet]; [Elm, linden 2,000 feet]; [Other deciduous 1,500 feet]; [Any coniferous 1,000 feet] You may move into a tree up to one time per caster level [passing from one tree to another counts only as moving into one tree]. The spell lasts until the duration expires or you exit a tree. Each transport is a full-round action. You can, at your option, remain within a tree without transporting yourself, but you are forced out when the spell ends. If the tree in which you are concealed is chopped down or burned, you are slain if you do not exit before the process is complete.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this spell, you gain the ability to step into a tree, magically infusing yourself with the plant.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours or until expended; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/treeStride.html#_tree-stride"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.362"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Teleportation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 639,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1388,
-    "record_key": "Tree Stride.MOD"
+    "record_key": "Tree Stride",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

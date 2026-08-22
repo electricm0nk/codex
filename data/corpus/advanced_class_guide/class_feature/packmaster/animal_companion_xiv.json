@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Packmaster ~ Animal Companion 14",
+    "name": "Animal Companion / XIV",
+    "class": "Packmaster",
+    "description": "Total Levels Assigned to Companion %1|AnimalCompanionLVLN",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Packmaster ~ Animal Companion 14"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PackmasterCompanionChoice"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AnimalCompanionLVLM,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionLVLN,HunterLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVLN|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Total Levels Assigned to Companion %1|AnimalCompanionLVLN"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Packmaster Follower ~ 14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionLVLN|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3182,
+    "record_key": "Packmaster ~ Animal Companion 14"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

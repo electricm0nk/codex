@@ -16,8 +16,11 @@
 //! against (computed directly from the live PCGen corpus this cycle, not
 //! taken from the scoping brief's rough estimate — see each
 //! `rules_tables::advanced_race_guide::*` module's own doc comment for the
-//! full accounting): 92 spells, 200 equipment (28 ArmsArmor + 79 General +
-//! 78 MagicItems + 15 Equipmods), 187 feats (132 General + 52 Combat + 3
+//! full accounting): 93 spells (92 base records + 1 `.COPY=` racial
+//! spell-like-ability variant, `Fins to Feet (self only)`, ingested under
+//! SD31 decisions.md §15, 2026-08-17), 200 equipment (28 ArmsArmor + 79
+//! General + 78 MagicItems + 15 Equipmods), 187 feats (132 General + 52
+//! Combat + 3
 //! Teamwork).
 
 use std::collections::BTreeSet;
@@ -156,7 +159,7 @@ fn assert_shape_b_v1_record(path: &Path, record: &Value) {
 #[test]
 fn spell_cache_has_all_92_real_records() {
     let records = load_all("spell");
-    assert_eq!(records.len(), 92, "real, de-duplicated arg_spells.lst record count (re-measured this cycle directly from the live corpus)");
+    assert_eq!(records.len(), 93, "real, de-duplicated arg_spells.lst record count (92 base + 1 `.COPY=` racial SLA variant, decisions.md §15)");
 
     let mut slugs = BTreeSet::new();
     for (path, record) in &records {
@@ -176,7 +179,12 @@ fn spell_cache_has_all_92_real_records() {
 #[test]
 fn equipment_cache_has_all_200_real_records_across_4_categories() {
     let records = load_all("equipment");
-    assert_eq!(records.len(), 200, "real, de-duplicated ARG equipment record count across arg_equip_arms_armor.lst (28) + arg_equip_general.lst (79) + arg_equip_magic_items.lst (78) + arg_equipmods.lst (15)");
+    // SD-31 `SD31-E6-F5-002`: `cache_gen::equipment_gap` separately added
+    // 15 real, oracle-cited `equipment_gap_tables.rs` records for ARG
+    // (residue the hand-authored table this file's own generator reads
+    // never held) into this same directory -- 200 + 15 = 215
+    // (`git diff --stat 89846f5c9 ca261b3d7 -- data/corpus/advanced_race_guide/`).
+    assert_eq!(records.len(), 215, "real, de-duplicated ARG equipment record count across arg_equip_arms_armor.lst (28) + arg_equip_general.lst (79) + arg_equip_magic_items.lst (78) + arg_equipmods.lst (15), PLUS 15 SD31-E6-F5-002 equipment_gap_tables records");
 
     let mut by_category: std::collections::HashMap<String, u32> = std::collections::HashMap::new();
     let mut slugs: std::collections::HashMap<String, BTreeSet<String>> = std::collections::HashMap::new();
@@ -292,6 +300,11 @@ fn every_v1_record_passes_the_shared_validate_license_gate() {
             audited += 1;
         }
     }
-    assert_eq!(audited, 92 + 200 + 187);
+    // 200 -> 215: SD31-E6-F5-002's equipment_gap_tables ARG addition, see
+    // `equipment_cache_has_all_200_real_records_across_4_categories`'s
+    // comment above. 92 -> 93: SD31-E6-F7-002's `.COPY=` racial SLA
+    // variant addition (decisions.md §15), see
+    // `spell_cache_has_all_92_real_records`'s comment above.
+    assert_eq!(audited, 93 + 215 + 187);
     let _ = dir;
 }

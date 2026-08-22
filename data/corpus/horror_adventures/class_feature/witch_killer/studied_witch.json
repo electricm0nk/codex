@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Killer ~ Studied Witch",
+    "name": "Studied Witch",
+    "class": "Slayer",
+    "description": "A witch killer's studied combat bonus applies on Spellcraft checks and saving throws against arcane spells and spell-like abilities and hexes. This bonus is reduced by 1 (minimum 0) if the target is not an arcane spellcaster, or a being called or summoned by arcane magic. He does not gain the increases to the maximum number of studied targets he can have at a time normally attained at 5th, 10th, 15th, and 20th levels, but his bonuses still increase at those levels. This ability alters studied target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Killer ~ Studied Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "DESC",
+        "value": "A witch killer's studied combat bonus applies on Spellcraft checks and saving throws against arcane spells and spell-like abilities and hexes. This bonus is reduced by 1 (minimum 0) if the target is not an arcane spellcaster, or a being called or summoned by arcane magic. He does not gain the increases to the maximum number of studied targets he can have at a time normally attained at 5th, 10th, 15th, and 20th levels, but his bonuses still increase at those levels. This ability alters studied target."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 237,
+    "record_key": "Witch Killer ~ Studied Witch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weapon Choice ~ Weapon Training",
+    "name": "Weapon Choice",
+    "class": "Weapon Choice",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon Choice ~ Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.WeaponMasterChosenWeapon"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|PC"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=%LIST|TOHIT,DAMAGE|WeaponTrainingBase"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2241,
+    "record_key": "Weapon Choice ~ Weapon Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

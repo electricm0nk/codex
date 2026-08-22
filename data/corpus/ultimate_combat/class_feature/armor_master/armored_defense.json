@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Armor Master ~ Armored Defense",
+    "name": "Armored Defense",
+    "class": "Fighter",
+    "description": "An armor master gains DR 1/- when wearing light armor, DR 2/- when wearing medium armor, and DR 3/- when wearing heavy armor.|PREVARLT:FighterLVL,19",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armor Master ~ Armored Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArmoredDefenseMult|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An armor master gains DR 1/- when wearing light armor, DR 2/- when wearing medium armor, and DR 3/- when wearing heavy armor.|PREVARLT:FighterLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "An armor master gains DR 4/- when wearing light armor, DR 8/- when wearing medium armor, and DR 12/- when wearing heavy armor.|PREVARGTEQ:FighterLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "This damage reduction stacks with that provided by adamantine armor, but not with other forms of damage reduction. This damage reduction does not apply if the armor master is stunned, unconscious, or helpless. This ability replaces weapon training 1 and 3, and armor mastery."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmoredDefenseMult|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmoredDefenseMult|3|PRECLASS:1,Fighter=19"
+      },
+      {
+        "key": "DR",
+        "value": "1*ArmoredDefenseMult/-|PREVAREQ:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.LIGHT]\"),1"
+      },
+      {
+        "key": "DR",
+        "value": "2*ArmoredDefenseMult/-|PREVAREQ:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),1"
+      },
+      {
+        "key": "DR",
+        "value": "3*ArmoredDefenseMult/-|PREVAREQ:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 690,
+    "record_key": "Armor Master ~ Armored Defense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

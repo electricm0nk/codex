@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 80.0,
+    "description": "Reduces penalty to Disguise checks for looking younger or older by 2.",
+    "key": "Age Ointment",
+    "name": "Age Ointment",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "80"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPROP",
+        "value": "Reduces penalty to Disguise checks for looking younger or older by 2."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_general.lst",
+    "record_key": "Age Ointment",
+    "sha256": "9d6286b856677f00d123eba26e6b4662c403dc79461dcaa5289ea793ecaea5e2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Groveborn Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Groveborn Bloodline",
+    "description": "Your powers of compulsion can affect even plant creatures. Whenever you cast a mind-affecting or language-dependent spell, it affects creatures of the plant type as if they were humanoids that understood your language.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Groveborn Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your powers of compulsion can affect even plant creatures. Whenever you cast a mind-affecting or language-dependent spell, it affects creatures of the plant type as if they were humanoids that understood your language."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(mind-affecting or language-dependent spells affect plants as humanoids)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1686,
+    "record_key": "Groveborn Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

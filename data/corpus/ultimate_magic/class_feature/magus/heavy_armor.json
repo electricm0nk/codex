@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus ~ Heavy Armor",
+    "name": "Heavy Armor",
+    "class": "Magus",
+    "description": "At level %1|MagusHeavyArmorText",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus ~ Heavy Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At level %1|MagusHeavyArmorText"
+      },
+      {
+        "key": "DESC",
+        "value": ", a magus gains proficiency with heavy armor. A magus can cast magus spells while wearing heavy armor without incurring the normal arcane spell failure chance. Like any other arcane spellcaster, a magus using a shield incurs a chance of arcane spell failure if the spell in question has a somatic component.|MagusHeavyArmorText"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusHeavyArmorText|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusHeavyArmorText|13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfHeavy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 36,
+    "record_key": "Magus ~ Heavy Armor"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

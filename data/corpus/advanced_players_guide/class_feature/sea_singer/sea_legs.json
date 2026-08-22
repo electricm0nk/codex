@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sea Singer ~ Sea Legs",
+    "name": "Sea Legs",
+    "class": "Bard",
+    "description": "At 2nd level, a sea singer gains a +4 bonus on saving throws against air and water effects and effects that would cause the sea singer to slip, trip, or otherwise be knocked prone. He gains a +2 bonus to CMD against grapple, overrun, and trip. This ability replaces well-versed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sea Singer ~ Sea Legs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardWellVersed"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a sea singer gains a +4 bonus on saving throws against air and water effects and effects that would cause the sea singer to slip, trip, or otherwise be knocked prone. He gains a +2 bonus to CMD against grapple, overrun, and trip. This ability replaces well-versed."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Grapple,CMD_Overrun,CMD_Trip|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1724,
+    "record_key": "Sea Singer ~ Sea Legs"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abjuration School ~ Resistance",
+    "name": "Resistance",
+    "class": "Abjuration School",
+    "description": "You gain resistance %1 to an energy type of your choice, chosen when you prepare spells. This resistance can be changed each day.|AbjurationResistanceBonus|PREVARLTEQ:AbjurationProgressionSchoolLVL,19",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abjuration School ~ Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Extraordinary.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resistance %1 to an energy type of your choice, chosen when you prepare spells. This resistance can be changed each day.|AbjurationResistanceBonus|PREVARLTEQ:AbjurationProgressionSchoolLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain immunity to an energy type of your choice, chosen when you prepare spells. This immunity can be changed each day.|PREVARGTEQ:AbjurationProgressionSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationResistanceBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationResistanceBonus|5|PREVARGTEQ:AbjurationProgressionSchoolLVL,11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|AbjurationResistanceBonus|PREVARLT:AbjurationProgressionSchoolLVL,20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Immunity|PREVARGTEQ:AbjurationProgressionSchoolLVL,20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2637,
+    "record_key": "Abjuration School ~ Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

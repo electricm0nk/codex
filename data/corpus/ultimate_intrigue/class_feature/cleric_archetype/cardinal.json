@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Cardinal",
+    "name": "Cardinal",
+    "class": "Cleric Archetype",
+    "description": "While a cleric's faith is her highest priority, her church may wield significant political power in some regions. In these cases, cardinals arise from the ranks of the clergy, engaging in the game of intrigue on behalf of their churches. While some cardinals manage to join the world of politics and retain the purity of their faith, many cardinals find that they must compromise some part of their beliefs in pursuit of their church's political power, and some cardinals even fall prey to the corrupting influence of their power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Cardinal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Cardinal],[!PREFACT:1,ABILITIES,Cleric_Archetype_SpontaneousCasting=True,Cleric_Archetype_Domains=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While a cleric's faith is her highest priority, her church may wield significant political power in some regions. In these cases, cardinals arise from the ranks of the clergy, engaging in the game of intrigue on behalf of their churches. While some cardinals manage to join the world of politics and retain the purity of their faith, many cardinals find that they must compromise some part of their beliefs in pursuit of their church's political power, and some cardinals even fall prey to the corrupting influence of their power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cardinal ~ Armor Proficiency|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cardinal ~ Political Skill|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_SpontaneousCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ArmorProficiency|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 313,
+    "record_key": "Cleric Archetype ~ Cardinal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

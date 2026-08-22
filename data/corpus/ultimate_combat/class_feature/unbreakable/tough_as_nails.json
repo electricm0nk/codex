@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Unbreakable ~ Tough As Nails",
+    "name": "Tough as Nails",
+    "class": "Unbreakable",
+    "description": "An unbreakable gains Endurance and Die Hard as bonus feats. This ability replaces the fighter's 1st-level bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unbreakable ~ Tough As Nails"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An unbreakable gains Endurance and Die Hard as bonus feats. This ability replaces the fighter's 1st-level bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Diehard|Endurance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 792,
+    "record_key": "Unbreakable ~ Tough As Nails"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

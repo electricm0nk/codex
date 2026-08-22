@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager ~ Greater Bloodrage",
+    "name": "Greater Bloodrage",
+    "class": "Bloodrager",
+    "description": "At 11th level, when a bloodrager enters a bloodrage, the morale bonus to his Strength, Constitution, and the morale bonus on his Will saves increases. In addition, upon entering a bloodrage, the bloodrager can apply the effects a bloodrager spell he knows of 2nd level or lower to himself. The spell must have a range of touch or personal. If the spell's duration is greater than 1 round, it instead lasts for the duration of the bloodrage. This use consumes a bloodrager spell slot, as if he had cast the spell; he must have the spell slot available to take advantage of this effect.&nl;Greater bloodrage counts as the barbarian's greater rage ability for the purposes of feat prerequisites, feat abilities, magic item abilities, and spell effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Greater Bloodrage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.SpecialQuality.Supernatural.Rage.Bloodrage"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, when a bloodrager enters a bloodrage, the morale bonus to his Strength, Constitution, and the morale bonus on his Will saves increases. In addition, upon entering a bloodrage, the bloodrager can apply the effects a bloodrager spell he knows of 2nd level or lower to himself. The spell must have a range of touch or personal. If the spell's duration is greater than 1 round, it instead lasts for the duration of the bloodrage. This use consumes a bloodrager spell slot, as if he had cast the spell; he must have the spell slot available to take advantage of this effect.&nl;Greater bloodrage counts as the barbarian's greater rage ability for the purposes of feat prerequisites, feat abilities, magic item abilities, and spell effects."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageStrBonus,BloodrageConBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageSaveBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageStage|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 342,
+    "record_key": "Bloodrager ~ Greater Bloodrage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

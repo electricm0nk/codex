@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Season Sage ~ Season's Veil",
+    "name": "Season's Veil",
+    "class": "Druid",
+    "description": "A season sage can radiate an aura of seasonal power as a standard action %1 times per day. This affects a %2-foot-radius burst centered on the season sage and lasts in that area for 10 minutes, regardless of where the season sage moves afterward.|(DruidLVL-4)/2|SeasonsVeilRadius",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Season Sage ~ Season's Veil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeasonsVeilRadius|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A season sage can radiate an aura of seasonal power as a standard action %1 times per day. This affects a %2-foot-radius burst centered on the season sage and lasts in that area for 10 minutes, regardless of where the season sage moves afterward.|(DruidLVL-4)/2|SeasonsVeilRadius"
+      },
+      {
+        "key": "DESC",
+        "value": "[Vernal Bloom] The area surges with life. Plants form vibrant, heavy undergrowth (page 426 of the Core Rulebook) while in the aura. If the area can support plants, a circle of minor plants lingers afterward."
+      },
+      {
+        "key": "DESC",
+        "value": "The season sage can affect the area with plant growth as a swift action at will, which can linger after the aura passes.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "DESC",
+        "value": "[Summer Heat] The area of effect is treated as if it were under the effects of extreme heat."
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action the season sage can have the area deal 1d6 points of fire damage each round to other creatures in the area.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "DESC",
+        "value": "[Autumn Squall] The area is filled with fog, rain, and blown leaves. All creatures in the area gain concealment (abilities to specifically see through fog or rain don't apply)."
+      },
+      {
+        "key": "DESC",
+        "value": "The season sage can affect the area with diminish plants as a swift action at will, which also lingers after the aura passes.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "DESC",
+        "value": "[Winter Chill] The area of effect is treated as if it were under the effects of extreme cold."
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action the season sage can have the area deal 1d6 points of cold damage each round to other creatures in the area.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeasonsVeilRadius|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeasonsVeilRadius|20|PRECLASS:1,Druid=10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 556,
+    "record_key": "Season Sage ~ Season's Veil"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

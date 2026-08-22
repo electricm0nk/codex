@@ -1,0 +1,89 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 25305.0,
+    "description": null,
+    "key": "Elysian Maul of the Titans",
+    "name": "Maul of the Titans",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "-4",
+          "TYPE=StrengthPenalty",
+          "!PRESTAT:1,STR=18"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elysian Maul of the Titans"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greatclub"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Tool.Weapon.Martial.Melee.TwoHanded.Bludgeoning.Specific.Club.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "25305"
+      },
+      {
+        "key": "WT",
+        "value": "320"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "4"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "6d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +3 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      }
+    ],
+    "weight_lbs": 320.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_equip_arms_armor.lst",
+    "record_key": "Elysian Maul of the Titans",
+    "sha256": "93b8cccb460b161062fb770d4823006fa42316df408c177ec8743d5c4a321c4f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause the target object and the object used as a focus for the spell to immediately swap places. The target object appears in your hand (or falls to the ground in your square if you are unable to hold it). The stronger the connection between the two objects, the more difficult the spell is to resist, as indicated below. The modifiers are cumulative. The two objects are the same type of object (such as \"keys,\" \"swords,\" \"scrolls\"), +1 DC;  The two objects are made of the same material, +1 DC; The two objects have the same weight (accurate to the nearest ounce), +1 DC; The two objects are part of the same set or made in the exact same mold, +2 DC; The target object has a higher gp value than the focus item, -2 DC; The target object is tied its holder, such as a bonded item, -2 DC.|PRERULE:1,DisplayFullSpell",
+    "key": "Trade Items",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Mesmerist,Summoner=3|Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F"
+      },
+      {
+        "key": "DESC",
+        "value": "Swap a focus object with a target object.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause the target object and the object used as a focus for the spell to immediately swap places. The target object appears in your hand (or falls to the ground in your square if you are unable to hold it). The stronger the connection between the two objects, the more difficult the spell is to resist, as indicated below. The modifiers are cumulative. The two objects are the same type of object (such as \"keys,\" \"swords,\" \"scrolls\"), +1 DC;  The two objects are made of the same material, +1 DC; The two objects have the same weight (accurate to the nearest ounce), +1 DC; The two objects are part of the same set or made in the exact same mold, +2 DC; The target object has a higher gp value than the focus item, -2 DC; The target object is tied its holder, such as a bonded item, -2 DC.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Trade Items"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Teleportation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One object weighing no more than (CASTERLEVEL*5) lbs."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 103,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Trade Items",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

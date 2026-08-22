@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic ~ Phrenic Amplifications",
+    "name": "Phrenic Amplifications",
+    "class": "Psychic",
+    "description": "A psychic develops particular techniques to empower her spellcasting, called phrenic amplifications. The psychic can activate a phrenic amplification only while casting a spell using psychic magic, and the amplification modifies either the spell's effects or the process of casting it. The spell being cast is called the linked spell. The psychic can activate only one amplification each time she casts a spell, and doing so is part of the action used to cast the spell. She can use any amplification she knows with any psychic spell, unless the amplification's description states that it can be linked only to certain types of spells. A psychic learns one phrenic amplification at 1st level, selected from the list below. At 3rd level and every 4 levels thereafter, the psychic learns a new phrenic amplification. A phrenic amplification can't be selected more than once. Once a phrenic amplification has been selected, it can't be changed. Phrenic amplifications require the psychic to expend 1 or more points from her phrenic pool to function.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Phrenic Amplifications"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychic develops particular techniques to empower her spellcasting, called phrenic amplifications. The psychic can activate a phrenic amplification only while casting a spell using psychic magic, and the amplification modifies either the spell's effects or the process of casting it. The spell being cast is called the linked spell. The psychic can activate only one amplification each time she casts a spell, and doing so is part of the action used to cast the spell. She can use any amplification she knows with any psychic spell, unless the amplification's description states that it can be linked only to certain types of spells. A psychic learns one phrenic amplification at 1st level, selected from the list below. At 3rd level and every 4 levels thereafter, the psychic learns a new phrenic amplification. A phrenic amplification can't be selected more than once. Once a phrenic amplification has been selected, it can't be changed. Phrenic amplifications require the psychic to expend 1 or more points from her phrenic pool to function."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|1+((PsychicLVL-1)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1156,
+    "record_key": "Psychic ~ Phrenic Amplifications"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

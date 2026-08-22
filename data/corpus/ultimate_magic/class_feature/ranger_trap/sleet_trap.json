@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Trap ~ Sleet Trap",
+    "name": "Sleet Trap",
+    "class": "Ranger Trap",
+    "description": "The detonating trap creates a 20-foot-radius burst of sleet with the effects of a sleet storm. The driving sleet lasts for 1 round, but the icy ground persists for %1 rounds.|SleetTrapDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Sleet Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Sleet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.RangerTrap.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SleetTrapDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The detonating trap creates a 20-foot-radius burst of sleet with the effects of a sleet storm. The driving sleet lasts for 1 round, but the icy ground persists for %1 rounds.|SleetTrapDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SleetTrapDuration|RangerTrapLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1621,
+    "record_key": "Ranger Trap ~ Sleet Trap"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

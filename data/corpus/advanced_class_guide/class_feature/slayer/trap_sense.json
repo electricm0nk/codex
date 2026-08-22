@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer ~ Trap Sense",
+    "name": "Trap Sense",
+    "class": "Slayer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer ~ Trap Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.Slayer Class Feature"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerTrapSenseLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Trap Sense"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerTrapSenseLVL|SlayerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|max(1,SlayerTrapSenseLVL/3)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1883,
+    "record_key": "Slayer ~ Trap Sense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

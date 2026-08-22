@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Soul ~ Break the Interloper",
+    "name": "Break the Interloper",
+    "class": "Ranger",
+    "description": "When a wild soul hits an arcane spellcaster, a creature with extract slots, or a creature with grit (but not grit-like pools such as panache) with a weapon attack, the target either loses its highest-level available spell or extract slot or loses 1 point of grit, and the wild soul gains 5 temporary hit points. A target of this ability can negate this effect with a successful Fortitude save (DC %1). Regardless of the outcome of the saving throw, the target is immune to this ability for 24 hours.|10+RangerLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Soul ~ Break the Interloper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.WildSoulClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a wild soul hits an arcane spellcaster, a creature with extract slots, or a creature with grit (but not grit-like pools such as panache) with a weapon attack, the target either loses its highest-level available spell or extract slot or loses 1 point of grit, and the wild soul gains 5 temporary hit points. A target of this ability can negate this effect with a successful Fortitude save (DC %1). Regardless of the outcome of the saving throw, the target is immune to this ability for 24 hours.|10+RangerLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 955,
+    "record_key": "Wild Soul ~ Break the Interloper"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

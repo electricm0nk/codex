@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Focused Arcane School ~ Deception School",
+    "name": "Deception School",
+    "class": "Focused Arcane School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Focused Arcane School ~ Deception School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Focused Arcane School.WizardIllusion.WizardBlindingRay.WizardExtendedIllusion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Focused Arcane School ~ Deception School],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardIllusion]"
+      },
+      {
+        "key": "PRESUBCLASS",
+        "value": "1,Illusionist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Deception School ~ Deceptive Flourish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Deception School ~ Subtle Misdirection"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BlindingRay|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ExtendedIllusion|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1236,
+    "record_key": "Focused Arcane School ~ Deception School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "key": "Knight Of The Sepulcher ~ Cloak of the Crypt",
+    "class": "Antipaladin",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  },
+  {
+    "key": "Knight Of The Sepulcher ~ Crypt Lord",
+    "class": "Antipaladin",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  },
+  {
+    "key": "Knight Of The Sepulcher ~ Fortitude of the Crypt",
+    "class": "Antipaladin",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  },
+  {
+    "key": "Knight Of The Sepulcher ~ Soul of the Crypt",
+    "class": "Antipaladin",
+    "level": 17,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  },
+  {
+    "key": "Knight Of The Sepulcher ~ Touch of the Crypt",
+    "class": "Antipaladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  },
+  {
+    "key": "Knight Of The Sepulcher ~ Undying Champion",
+    "class": "Antipaladin",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  },
+  {
+    "key": "Knight Of The Sepulcher ~ Weapons of Sin",
+    "class": "Antipaladin",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  },
+  {
+    "key": "Knight Of The Sepulcher ~ Will of the Crypt",
+    "class": "Antipaladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "line": 1446
+    }
+  }
+]

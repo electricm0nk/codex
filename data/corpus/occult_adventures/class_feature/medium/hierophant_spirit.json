@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Hierophant Spirit",
+    "name": "Hierophant Spirit",
+    "class": "Medium",
+    "description": "A hierophant spirit is a being of true and pure faith.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Hierophant Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit"
+      },
+      {
+        "key": "DESC",
+        "value": "A hierophant spirit is a being of true and pure faith.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: Altars, churches, sacred groves, shrines.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Influence Penalty: Whether the spirit hopes to offer a chance for redemption or to sacrifice foes later on a dark altar, You must strike for nonlethal damage in combat whenever possible. You take a -%1 penalty on all Charisma checks and Charisma-based skill checks involving worshipers of faiths other than the spirit's, except checks to convince others to convert to the spirit's faith.&nl; Taboos: Choose one: you must strongly revere nature and may not wear metal armor or shields; you must follow a paladin or antipaladin code as appropriate for the spirit's deity; you may not deliberately speak any lies, including bluffing, exaggerating, stating half-truths with intent to deceive, lies by omission, and so on, and if you know the answer to a question that someone asks you, you must give the answer.|SpiritBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Hierophant Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Hierophant Seance Boon|Medium ~ Divine Surge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Energy Font|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Overflowing Grace|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Hierophant|PREVARGTEQ:MediumLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 832,
+    "record_key": "Medium ~ Hierophant Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

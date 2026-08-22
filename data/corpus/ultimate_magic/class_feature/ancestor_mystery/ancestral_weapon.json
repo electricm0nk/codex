@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Ancestral Weapon",
+    "name": "Ancestral Weapon",
+    "class": "Ancestor Mystery",
+    "description": "You can summon a simple or martial weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|!PRECLASS:1,Oracle=3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Ancestral Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.AncestorRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AncestralWeaponEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AncestralWeaponDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|!PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial masterwork weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|PREMULT:2,[PRECLASS:1,Oracle=3],[!PRECLASS:1,Oracle=7]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial +%2 weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|AncestralWeaponEnhancement|PREMULT:2,[PRECLASS:1,Oracle=7],[!PRECLASS:1,Oracle=11]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a simple or martial +%2 ghost touch weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|AncestralWeaponEnhancement|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponEnhancement|1|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponEnhancement|1|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AncestralWeaponEnhancement|1|PRECLASS:1,Oracle=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 452,
+    "record_key": "Ancestor Mystery ~ Ancestral Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

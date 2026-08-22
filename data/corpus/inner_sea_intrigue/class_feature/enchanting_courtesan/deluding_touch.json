@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Enchanting Courtesan ~ Deluding Touch",
+    "name": "Deluding Touch",
+    "class": "Enchanting Courtesan",
+    "description": "An enchanting courtesan can subtly deliver an attack by touch. His caress is so pleasurable that the target doesn't automatically realize it was attacked. If the target succeeds at a saving throw against a spell delivered via enchanting touch or a contact poison delivered via the contact poison wielder ability, there is a chance it doesn't notice the attack. The target attempts the saving throw again using all the same modifiers; if it fails this saving throw, it doesn't notice that anything is amiss even though it successfully resisted the effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchanting Courtesan ~ Deluding Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan can subtly deliver an attack by touch. His caress is so pleasurable that the target doesn't automatically realize it was attacked. If the target succeeds at a saving throw against a spell delivered via enchanting touch or a contact poison delivered via the contact poison wielder ability, there is a chance it doesn't notice the attack. The target attempts the saving throw again using all the same modifiers; if it fails this saving throw, it doesn't notice that anything is amiss even though it successfully resisted the effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 64,
+    "record_key": "Enchanting Courtesan ~ Deluding Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

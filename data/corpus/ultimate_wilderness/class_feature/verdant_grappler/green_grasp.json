@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Grappler ~ Green Grasp",
+    "name": "Green Grasp",
+    "class": "Brawler",
+    "description": "A verdant grappler gains Improved Grapple as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Grappler ~ Green Grasp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.VerdantGrapplerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A verdant grappler gains Improved Grapple as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": "She must choose grapple as her first combat maneuver for maneuver training. When she pins a creature, she can cause roots and vines to burst from the ground (no matter the surrounding terrain), allowing the verdant grappler to attempt to tie up the creature without needing to retrieve rope or use a hand to hold the rope; as usual, a tied-up creature is pinned and not helpless. The verdant grappler must remain within 30 feet of the tied-up creature, or the vines automatically release it. She can tie up only one creature at a time with green grasp. This alters maneuver training.|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Grapple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuver Training I Selection ~ Grapple|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Maneuver Training I Selection|-1|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 410,
+    "record_key": "Verdant Grappler ~ Green Grasp"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Armor Master",
+    "name": "Armor Master",
+    "class": "Fighter Archetype",
+    "description": "All fighters have two main tools of their trade-weapons and armor. While many fighters hone their weapon skills to a point of inescapable grace and lethality, there are those who live under the maxim that a good offense can be accomplished though an impenetrable defense. To these fighters, proper use of armor and shields ensures that they can fight another day, and that the frustration of enemies who can't seem to crack an armor master's superior defenses is just the first symptom of his foes' eventual defeat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Armor Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining_ALL.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4.FighterArmorMastery.FighterWeaponMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ ARMOR MASTER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining3,TYPE.FighterArmorMastery,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining4,TYPE.FighterWeaponMastery]"
+      },
+      {
+        "key": "DESC",
+        "value": "All fighters have two main tools of their trade-weapons and armor. While many fighters hone their weapon skills to a point of inescapable grace and lethality, there are those who live under the maxim that a good offense can be accomplished though an impenetrable defense. To these fighters, proper use of armor and shields ensures that they can fight another day, and that the frustration of enemies who can't seem to crack an armor master's superior defenses is just the first symptom of his foes' eventual defeat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Armor Master ~ Deflective Shield|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Armor Master ~ Armored Defense|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Armor Master ~ Fortification|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Armor Master ~ Indestructible|PRECLASS:1,Fighter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 675,
+    "record_key": "Fighter Archetype ~ Armor Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

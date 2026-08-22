@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Marshal Spirit Bonus",
+    "name": "Spirit Bonus",
+    "class": "Medium",
+    "description": "When you channel a marshal, you gain a +%1 bonus on Charisma checks and Charisma-based skill checks, as well as on spirit surge rolls. This allows the bonus to apply twice to the total result if you use a spirit surge on a Charisma check or on a Charisma-based skill check.|SpiritBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Marshal Spirit Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you channel a marshal, you gain a +%1 bonus on Charisma checks and Charisma-based skill checks, as well as on spirit surge rolls. This allows the bonus to apply twice to the total result if you use a spirit surge on a Charisma check or on a Charisma-based skill check.|SpiritBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Charisma|SpiritBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 865,
+    "record_key": "Medium ~ Marshal Spirit Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

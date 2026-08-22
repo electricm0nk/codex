@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Waves Spirit ~ Manifestation",
+    "name": "Manifestation",
+    "class": "Waves Spirit",
+    "description": "The shaman becomes a master of cold and water. The shaman gains cold resistance 30. She can also apply any one of the following feats to any cold or water spell she casts without increasing the spell's level or casting time: Enlarge Spell, Extend Spell, Silent Spell, or Still Spell. She doesn't need to possess these feats to use this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Spirit ~ Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman becomes a master of cold and water. The shaman gains cold resistance 30. She can also apply any one of the following feats to any cold or water spell she casts without increasing the spell's level or casting time: Enlarge Spell, Extend Spell, Silent Spell, or Still Spell. She doesn't need to possess these feats to use this ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1687,
+    "record_key": "Waves Spirit ~ Manifestation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

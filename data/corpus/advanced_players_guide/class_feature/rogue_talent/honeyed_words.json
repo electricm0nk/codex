@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Honeyed Words",
+    "name": "Honeyed Words",
+    "class": "Rogue Talent",
+    "description": "Once per day, the rogue can roll two dice while making a Bluff check, and take the better result. She must choose to use this talent before making the Bluff check. A rogue can use this ability one additional time per day for every five rogue levels she possesses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Honeyed Words"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, the rogue can roll two dice while making a Bluff check, and take the better result. She must choose to use this talent before making the Bluff check. A rogue can use this ability one additional time per day for every five rogue levels she possesses."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2907,
+    "record_key": "Rogue Talent ~ Honeyed Words"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

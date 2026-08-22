@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stormborn Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Stormborn Bloodline",
+    "description": "Your mastery of the storm is reflected in the unique panoply of powers you manifest.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormborn Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mastery of the storm is reflected in the unique panoply of powers you manifest."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|StormbornBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3243,
+    "record_key": "Stormborn Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

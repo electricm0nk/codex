@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magic Blessing ~ Hand of the Acolyte",
+    "name": "Hand of the Acolyte",
+    "class": "Magic Blessing",
+    "description": "You can cause your melee weapon to fly from your grasp and strike an opponent, then instantly return to you. You can make a single attack using a melee weapon at a range of 30 feet. This attack is treated as a ranged attack with a thrown weapon, except that you add your Wisdom modifier to the attack roll instead of your Dexterity modifier (you still add your Strength modifier to the damage roll as normal). This ability cannot be used to perform a combat maneuver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magic Blessing ~ Hand of the Acolyte"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause your melee weapon to fly from your grasp and strike an opponent, then instantly return to you. You can make a single attack using a melee weapon at a range of 30 feet. This attack is treated as a ranged attack with a thrown weapon, except that you add your Wisdom modifier to the attack roll instead of your Dexterity modifier (you still add your Strength modifier to the damage roll as normal). This ability cannot be used to perform a combat maneuver."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2265,
+    "record_key": "Magic Blessing ~ Hand of the Acolyte"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

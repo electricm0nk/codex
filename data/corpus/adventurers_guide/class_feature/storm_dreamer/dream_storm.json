@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Storm Dreamer ~ Dream Storm",
+    "name": "Dream Storm",
+    "class": "Medium",
+    "description": "A storm dreamer's thoughts can cause magical weather effects to manifest. While in a storm trance, she can cast call lightning, sleet storm, and wind wall as spell-like abilities (CL =her character level). Each time she casts one of these spell-like abilities, she reduces the number of remaining minutes for her storm trance by 1 minute; she can't use these spell-like abilities if she has less than 1 minute remaining for the day to use her storm trance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Storm Dreamer ~ Dream Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Medium Class Feature.StormDreamerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "DESC",
+        "value": "A storm dreamer's thoughts can cause magical weather effects to manifest. While in a storm trance, she can cast call lightning, sleet storm, and wind wall as spell-like abilities (CL =her character level). Each time she casts one of these spell-like abilities, she reduces the number of remaining minutes for her storm trance by 1 minute; she can't use these spell-like abilities if she has less than 1 minute remaining for the day to use her storm trance."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 912,
+    "record_key": "Storm Dreamer ~ Dream Storm"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

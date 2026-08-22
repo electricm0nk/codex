@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Mobile Fighter",
+    "name": "Mobile Fighter",
+    "class": "Fighter Archetype",
+    "description": "Where some fighters focus on strength and raw power, the mobile fighter relies on swiftness and mobility, gliding across the battlefield like a steel whirlwind and leaving destruction in his wake.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Mobile Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining1.FighterArmorTraining3.FighterArmorTraining4.FighterWeaponMastery.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Mobile Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponMastery,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]"
+      },
+      {
+        "key": "DESC",
+        "value": "Where some fighters focus on strength and raw power, the mobile fighter relies on swiftness and mobility, gliding across the battlefield like a steel whirlwind and leaving destruction in his wake."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Mobile Fighter ~ Agility|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Mobile Fighter ~ Leaping Attack|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Mobile Fighter ~ Rapid Attack|PRECLASS:1,Fighter=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Mobile Fighter ~ Fleet Footed|PRECLASS:1,Fighter=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Mobile Fighter ~ Whirlwind Blitz|PRECLASS:1,Fighter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2105,
+    "record_key": "Fighter Archetype ~ Mobile Fighter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

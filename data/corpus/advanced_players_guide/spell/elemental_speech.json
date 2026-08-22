@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Elemental Speech",
-    "school": "Divination",
-    "level": 2,
     "description": "This spell enables you to converse with creatures associated with a chosen element, including but not limited to true elemental creatures. This spell gains the elemental subtype based on the version of the spell you cast. Elemental speech does not guarantee a friendly reaction; it merely enables communication. You may converse with all creatures of the selected type with an Intelligence score of 1 or greater, even if they do not understand one another.  When cast as an air spell, you can converse in Auran and with any creature that has the air subtype or a fly speed.  When cast as an earth spell, you can converse in Terran and with any creature that has the earth subtype or a burrow speed.  When cast as a fire spell, you can converse in Ignan and with any creature that has the fire subtype.  When cast as a water spell, you can converse in Aquan and with any creature that has the water subtype or a swim speed.",
-    "full_text": true
+    "full_text": true,
+    "key": "Elemental Speech",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=2|Bard,Cleric=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Enables you to speak to elementals and some creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell enables you to converse with creatures associated with a chosen element, including but not limited to true elemental creatures. This spell gains the elemental subtype based on the version of the spell you cast. Elemental speech does not guarantee a friendly reaction; it merely enables communication. You may converse with all creatures of the selected type with an Intelligence score of 1 or greater, even if they do not understand one another.  When cast as an air spell, you can converse in Auran and with any creature that has the air subtype or a fly speed.  When cast as an earth spell, you can converse in Terran and with any creature that has the earth subtype or a burrow speed.  When cast as a fire spell, you can converse in Ignan and with any creature that has the fire subtype.  When cast as a water spell, you can converse in Aquan and with any creature that has the water subtype or a swim speed.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Air|Earth|Fire|Water"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(iron filings)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool|EarthSchool|FireSchool|WaterSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/elementalSpeech.html#_elemental-speech"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 96,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1929,
-    "record_key": "Elemental Speech"
+    "record_key": "Elemental Speech",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

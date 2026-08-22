@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cultivator ~ Resist Nature's Lure",
+    "name": "Resist Nature's Lure",
+    "class": "Bard",
+    "description": "You gain a +%1 bonus on saving throws against the spell-like and supernatural abilities of fey. This bonus also applies to spells and effects that utilize and target plants, such as Blight, Entangle, Spike Growth, and Warp Wood.|CultivatorResistLureBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cultivator ~ Resist Nature's Lure"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.CultivatorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CultivatorResistLureBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on saving throws against the spell-like and supernatural abilities of fey. This bonus also applies to spells and effects that utilize and target plants, such as Blight, Entangle, Spike Growth, and Warp Wood.|CultivatorResistLureBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CultivatorResistLureBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CultivatorResistLureBonus|2|PRECLASS:1,Bard=4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. spell-like and supernatural abilities of fey and spells and effects that utilize and target plants|CultivatorResistLureBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 255,
+    "record_key": "Cultivator ~ Resist Nature's Lure"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

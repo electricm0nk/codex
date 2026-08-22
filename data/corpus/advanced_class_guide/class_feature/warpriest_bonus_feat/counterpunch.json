@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Counterpunch",
+    "name": "Counterpunch",
+    "class": "Warpriest Bonus Feat",
+    "description": "Once per round, when you are fighting unarmed with both hands free and an opponent misses you with a melee attack, it provokes an attack of opportunity from you. You must use an unarmed strike for this attack of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Counterpunch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "3,[PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,18],[PREVARGTEQ:FeatDexRequirement,18]],[PREABILITY:3,CATEGORY=FEAT,Combat Reflexes,Weapon Focus (Unarmed Strike),Improved Unarmed Strike],[PREMULT:1,[PRETOTALAB:16],[PRECLASS:1,Brawler=12],[PREVARGTEQ:WarpriestBonusFeatBAB,16]]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, when you are fighting unarmed with both hands free and an opponent misses you with a melee attack, it provokes an attack of opportunity from you. You must use an unarmed strike for this attack of opportunity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Counterpunch"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4147,
+    "record_key": "Warpriest Bonus Feat ~ Counterpunch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

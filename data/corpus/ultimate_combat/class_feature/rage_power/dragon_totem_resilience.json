@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Dragon Totem Resilience",
+    "name": "Dragon Totem Resilience",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains resistance to the energy type that is associated with her dragon totem-acid (black, copper, green), cold (silver, white), electricity (blue, bronze), or fire (brass, gold, red). This resistance equals double her current DR/- from her barbarian damage reduction class feature; this DR increases by 2 for each dragon totem rage power she possesses, including this one. A barbarian must have the dragon totem rage power and be at least 8th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Dragon Totem Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Dragon Totem"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains resistance to the energy type that is associated with her dragon totem-acid (black, copper, green), cold (silver, white), electricity (blue, bronze), or fire (brass, gold, red). This resistance equals double her current DR/- from her barbarian damage reduction class feature; this DR increases by 2 for each dragon totem rage power she possesses, including this one. A barbarian must have the dragon totem rage power and be at least 8th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 277,
+    "record_key": "Rage Power ~ Dragon Totem Resilience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

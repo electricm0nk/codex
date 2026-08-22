@@ -46,6 +46,19 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
     // any book's retrofit has found, and a future book carrying the same
     // name is caught too.
     "Jarn",
+    // Per-book addition, `ogl-pi-blacklist.md`'s per-book-override
+    // template: Inner Sea Gods's own SD31-E6-F10-001/SD31-W9-INTEGRATE-001
+    // retrofit found the pinned oracle's OWN typo variants of two already-
+    // blacklisted deity names surviving the exact-substring scan because
+    // `classify_field` does not normalize case or spelling before
+    // matching -- `isg_spells.lst:46`'s `FACTSET:Deity|Cayden CaiLean`
+    // (capital L) shipped unredacted under `license:"OGL"` while its 51
+    // correctly-spelled siblings redacted, and `isg_spells.lst:8`'s own
+    // OCR of "Irori" as "lrori" (lowercase L) in `abstemiousness.json`'s
+    // DESC shipped unredacted the same way. Folded into the shared list
+    // per the same union-not-book-scoped rationale as "Jarn" above.
+    "Cayden CaiLean",
+    "lrori",
 ];
 
 /// `(license, pi_field, pi_marker, stored_value)` for one free-text field
@@ -241,13 +254,33 @@ mod tests {
     fn term_list_matches_the_reference_copy_plus_the_documented_acg_addition() {
         // 20 deities + 34 place/nation names (the shared 54-term list
         // every existing fork carries) + 1 ACG-specific per-book addition
-        // ("Jarn", `ogl-pi-blacklist.md`'s per-book-override template).
-        assert_eq!(PI_BLACKLIST_TERMS.len(), 55);
+        // ("Jarn", `ogl-pi-blacklist.md`'s per-book-override template) + 2
+        // Inner Sea Gods-specific per-book additions ("Cayden CaiLean",
+        // "lrori" -- the oracle's own typo/OCR variants of two already-
+        // blacklisted deity names).
+        assert_eq!(PI_BLACKLIST_TERMS.len(), 57);
     }
 
     #[test]
     fn jarn_is_redacted() {
         let (license, ..) = classify_field("description", "an NPC named Jarn appears here");
+        assert_eq!(license, License::PiRedacted);
+    }
+
+    #[test]
+    fn cayden_cailean_s_oracle_typo_variant_is_redacted() {
+        // isg_spells.lst:46's own FACTSET:Deity|Cayden CaiLean (capital L)
+        // must redact exactly like the correctly-spelled form does --
+        // this is the exact shape that shipped unredacted before this fix.
+        let (license, ..) = classify_field("value", "Deity|Cayden CaiLean");
+        assert_eq!(license, License::PiRedacted);
+    }
+
+    #[test]
+    fn irori_s_oracle_ocr_typo_variant_is_redacted() {
+        // isg_spells.lst:8's own OCR of "Irori" as "lrori" (lowercase L)
+        // must redact like the correctly-spelled form does.
+        let (license, ..) = classify_field("description", "Sometimes lrori smiles on his worshipers");
         assert_eq!(license, License::PiRedacted);
     }
 

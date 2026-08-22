@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Doctor ~ Countering Hex",
+    "name": "Countering Hex",
+    "class": "Shaman",
+    "description": "The witch doctor can use her hex magic to counterspell as a readied action as dispel magic instead. She must succeed at a dispel check (1d20 + her shaman level) with a DC equal to 11 + the spell's caster level. If countering hex succeeds, the spell fizzles away and is lost. Failure means the spell is not countered. In either case, the witch doctor cannot attempt to use this hex against any of that caster's spells again for 24 hours. The witch doctor cannot use countering hex on an ongoing effect, a magic item, or a hex.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Doctor ~ Countering Hex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Doctor Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch doctor can use her hex magic to counterspell as a readied action as dispel magic instead. She must succeed at a dispel check (1d20 + her shaman level) with a DC equal to 11 + the spell's caster level. If countering hex succeeds, the spell fizzles away and is lost. Failure means the spell is not countered. In either case, the witch doctor cannot attempt to use this hex against any of that caster's spells again for 24 hours. The witch doctor cannot use countering hex on an ongoing effect, a magic item, or a hex."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3669,
+    "record_key": "Witch Doctor ~ Countering Hex"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

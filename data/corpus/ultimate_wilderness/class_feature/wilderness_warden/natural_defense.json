@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wilderness Warden ~ Natural Defense",
+    "name": "Natural Defense",
+    "class": "Paladin",
+    "description": "Once per day, a wilderness warden can grant herself energy resistance %1 to cold, electricity, or fire and a +%2 insight bonus to her CMD for %3 minutes.|WildernessWardenResistanceBonus|WildernessWardenCMDBonus|PaladinLVLDEFINE:WildernessWardenResistanceBonus|0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilderness Warden ~ Natural Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.WildernessWardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildernessWardenCMDBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a wilderness warden can grant herself energy resistance %1 to cold, electricity, or fire and a +%2 insight bonus to her CMD for %3 minutes.|WildernessWardenResistanceBonus|WildernessWardenCMDBonus|PaladinLVLDEFINE:WildernessWardenResistanceBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildernessWardenResistanceBonus|10+(5*PaladinLVL/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildernessWardenCMDBonus|2+(PaladinLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 886,
+    "record_key": "Wilderness Warden ~ Natural Defense"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

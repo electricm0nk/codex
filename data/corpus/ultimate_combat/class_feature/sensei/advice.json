@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sensei ~ Advice",
+    "name": "Advice",
+    "class": "Monk",
+    "description": "A sensei's advice is identical to bardic performance (using oratory), allowing him to inspire courage at 1st level, inspire competence at 3rd level, and inspire greatness at 9th level, as a bard of the sensei's level, usable a total number of rounds per day equal to his level + his Wisdom modifier (minimum 1). This ability replaces flurry of blows, fast movement, and improved evasion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sensei ~ Advice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A sensei's advice is identical to bardic performance (using oratory), allowing him to inspire courage at 1st level, inspire competence at 3rd level, and inspire greatness at 9th level, as a bard of the sensei's level, usable a total number of rounds per day equal to his level + his Wisdom modifier (minimum 1). This ability replaces flurry of blows, fast movement, and improved evasion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1341,
+    "record_key": "Sensei ~ Advice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

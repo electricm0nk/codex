@@ -749,14 +749,28 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
     fn catalog_rows_span_every_ingested_book_with_their_real_counts() {
         let rows = equipment_catalog_rows();
         let count = |book: &str| rows.iter().filter(|row| row.book == book).count();
-        assert_eq!(count(EQUIPMENT_BOOK_CRB), 3312);
+        // `SD31-E6-F10-002`: 3 rows moved CRB -> B1 (`decisions.md §9`
+        // re-attribution; `tests/equipment_gap_tables.rs`'s own doc comment
+        // has the full story). 3312 - 3 = 3309; 4 + 3 = 7.
+        assert_eq!(count(EQUIPMENT_BOOK_CRB), 3309);
         assert_eq!(count(EQUIPMENT_BOOK_APG), 375);
         assert_eq!(count(EQUIPMENT_BOOK_ACG), 319);
-        assert_eq!(count(EQUIPMENT_BOOK_B1), 4);
+        assert_eq!(count(EQUIPMENT_BOOK_B1), 7);
         assert_eq!(count(EQUIPMENT_BOOK_ARG), 215);
         assert_eq!(count(EQUIPMENT_BOOK_PU), 42);
         assert_eq!(count(EQUIPMENT_BOOK_UI), 105);
-        assert_eq!(count(EQUIPMENT_BOOK_UE), 1614);
+        // `SD31-E6-F10-003`: 1614 -> 1613. Extending this generator's own
+        // `declared_pi_at` check (built for the 8 new books this cycle)
+        // over the FULL compiled table caught a genuine, PRE-EXISTING PI
+        // leak this cycle did not introduce: `ultimate_equipment:"Elysian
+        // Shield"` declares `NAMEISPI:YES` in the real corpus
+        // (`ue_equip_arms_armor.lst`) and was shipping unscreened in this
+        // compiled table (and therefore live in the desktop catalog, which
+        // reads `equipment_catalog_rows()` -- chaining this table directly,
+        // never through `data/corpus/`'s own, separately-screened JSON) --
+        // `gen_cache_equipment_gap`'s JSON-write path already excluded it
+        // correctly; this generator's OWN output did not, until now.
+        assert_eq!(count(EQUIPMENT_BOOK_UE), 1613);
         // SD28-E15: UM's 26-record equipment table (24 General + 2
         // ArmsArmor). Re-derived from the catalog itself, not by hand-adding
         // 26 to the old 5,477 total -- also independently confirmed the 26
@@ -788,8 +802,25 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `docs/work-inventory.json`'s `not-ingested` equipment /
         // equipment_modifier population across the nine already-compiled
         // books; `tests/equipment_gap_tables.rs` pins the per-book split.
+        // `SD31-E6-F10-003`: the gap lane's own row count grew by 421
+        // (769 -> 1,190; 8 further already-compiled books, net of 12
+        // declared-PI exclusions AND 2 bare PFS organized-play legality
+        // OVERLAY rows this cycle's own fixes caught -- see
+        // `gen_equipment_gap_tables.rs`'s `declared_pi_at` and its
+        // `is_non_record_line` `PFSNotLegal` extension), so the total grows
+        // by the same 421 (6,915 -> 7,336). Hand-authored count is
+        // unchanged; this card's file grant never touches a hand-authored
+        // table.
+        // `SD31-E6-F10-004`: the gap lane's own row count grew by another
+        // 481 (1,190 -> 1,671; the 5 books `SD31-E6-F10-003` deliberately
+        // left out, `OPEN-ISSUES.md` row 186, now reachable via a
+        // per-record blacklist pre-filter rather than the whole-file hard
+        // stop -- see `gen_equipment_gap_tables.rs`'s `blacklist_hit`), so
+        // the total grows by the same 481 (7,336 -> 7,817). Hand-authored
+        // count is unchanged; this card's file grant never touches a
+        // hand-authored table.
         assert_eq!(hand_authored_equipment_rows().len(), 6_146);
-        assert_eq!(rows.len(), 6_915);
+        assert_eq!(rows.len(), 7_817);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.
@@ -877,7 +908,7 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         }
         disagreements.sort_unstable();
         disagreements.dedup();
-        // SD-29 `epic-4-proven-equip-mod` grew this list from 1 to 36, and
+        // SD-29 `epic-4-proven-equip-mod` grew this list from 1 to 28, and
         // every addition is one shape: a corpus gap row whose `KEY:` equals
         // some hand-authored row's display NAME. `Cold Iron` is the worked
         // example — CRB's hand table has a row *named* `Cold Iron` (0 gp);
@@ -890,45 +921,111 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `purchase_equipment_at_root` already follow: a caller holding a
         // catalog key from a picker prices via `equipment_catalog_row_by_key`,
         // never via the free-form resolver. Pinned by name, not by count, so
-        // a 37th — which would be a genuinely new ambiguity — still fails.
+        // a 29th — which would be a genuinely new ambiguity — still fails.
+        //
+        // CORRECTED `SD31-W4-INTEGRATE-001`, 2026-08-16 (found already red
+        // at this integration cycle's own inherited tip, `40771d3bf`,
+        // predating every wave-4 branch): a prior pass added 8 ACG
+        // equipment_modifier names (Amorphous, Burdenless, Exclusionary,
+        // Prehensile, Restful, Sneaky, Spiteful, Trackless) to this pinned
+        // list, apparently anticipating a KEY/NAME collision by the same
+        // shape as `Cold Iron`. Traced one deep: `acg/equipment_data/
+        // equipmods.rs`'s hand-authored `Amorphous` row and
+        // `equipment_gap_tables.rs`'s gap row both cost 4500 gp -- the two
+        // lookups AGREE (both resolve to 4500), so there is no real pricing
+        // ambiguity for any of these 8, only a coincidental KEY/NAME name
+        // reuse with an identical price. Removed the 8 phantom entries;
+        // `disagreements` reproduces this 28-item list exactly, verified by
+        // an isolated `cargo test --lib
+        // equipment_resolver::tests::the_two_lookups_agree` run.
+        //
+        // SHRUNK 28 -> 14, `SD31-E6-F6-001`, 2026-08-16 (this fix's own
+        // `.COPY=` inheritance in `gen_equipment_gap_tables.rs`, generalized
+        // from `OPEN-ISSUES.md` rows 70/103's description recovery to
+        // `cost_gp`/`weight_lbs`). The SAME shape the wave-4 correction
+        // above already established for its own 8 entries: "Amorphous"
+        // etc. agreed because both lookups happened to already carry the
+        // real price. These 14 gap rows previously shipped `cost_gp: None`
+        // (a `.COPY=` row with no `COST:` token of its own, no inheritance
+        // mechanism to recover its base's real value) — `by_key` returned
+        // `None` while `equipment_cost_gp_headless_resolve` found the SAME
+        // real price via a hand-authored row's NAME match, so the two
+        // lookups genuinely disagreed. Now the gap row inherits its base's
+        // real `COST:` token (verified one record deep for every removed
+        // entry, e.g. `Cold Iron` inherits `COST:0` from
+        // `cr_equipmods.lst:109`'s `KEY:Material ~ Cold Iron` row, the
+        // SAME row `equipment_cost_gp_headless_resolve`'s CRB-name-match
+        // tier already finds) — both lookups now return the IDENTICAL real
+        // value, so there is no more pricing ambiguity to disambiguate.
+        // Removed: `Adamantine (Ammo)`, `Alchemical Silver`, `BRACE`,
+        // `CLOTH`, `Cold Iron`, `DISARM`, `LEATHER`, `MONK`, `Mithral
+        // (Light Armor)`, `Mithral (Shield)`, `NONLETHAL`, `STEEL`, `TRIP`,
+        // `WOOD` — each individually re-verified via a scratch print
+        // (`by_key.cost_gp == headless`, both `Some(<same value>)`) before
+        // removal, not assumed from the count alone. The remaining 14 are
+        // untouched by this cycle's file territory (no `equipment_gap`
+        // record shares their key) and still genuinely disagree.
+        //
+        // GREW 14 -> 16, `SD31-E6-F10-003` (8 further already-compiled
+        // books extended into the gap lane): `"Bullet (Sling/Alchemical)"`
+        // (Monster Codex's `KEY:` for its alchemical sling-bullet row,
+        // `mc_equip_arms_armor.lst`) and `"Incense (10 sticks)"` (Occult
+        // Adventures' `oa_equip.lst`) are the same shape as every entry
+        // above -- a corpus gap row's `KEY:` coincidentally matches a
+        // string `equipment_cost_gp_headless_resolve`'s free-form,
+        // CRB-precedence matching resolves to a DIFFERENT real row. Both
+        // records are real, both belong in the catalog, and neither this
+        // cycle's file grant nor its own new rows are the wrong side of the
+        // disagreement -- verified by direct construction: re-derived this
+        // exact list from a fresh `cargo test --lib equipment_resolver::
+        // tests::the_two_lookups_agree` run against this cycle's own final
+        // state (not copied from an earlier, mid-edit gate run that also
+        // transiently showed a THIRD, now-gone name -- `"Bolas (Shoanti)"`,
+        // `inner_sea_world_guide`'s own declared-PI-excluded row, correctly
+        // absent from the compiled table once `declared_pi_at` landed, so
+        // it was never a real disagreement to pin).
+        //
+        // GREW 16 -> 19, `SD31-E6-F10-004` (5 further already-compiled
+        // books extended into the gap lane): `"Feather Token (Catapult)"`,
+        // `"Feather Token (Ram)"`, `"Feather Token (Siege Tower)"` --
+        // `inner_sea_combat`'s `isc_equip_magic.lst:9-11`, three real, keyed-
+        // by-name, priced rows (400/500/1000 gp) whose display name is the
+        // same shape as every entry above: a parenthetical-qualified
+        // variant name the free-form resolver's CRB-precedence tiers
+        // resolve to a DIFFERENT real row (CRB's own base `Feather Token`
+        // family) than the catalog's own by-key lookup returns for the
+        // SAME string. Both records are real and both belong in the
+        // catalog; the ambiguity is only in the free-form string, exactly
+        // the shape this test's own doc comment already prescribes the
+        // remedy for (resolve by catalog key, never the free-form
+        // resolver, when a caller holds one) -- not this cycle's file
+        // grant to fix (the free-form matcher lives in this file's own
+        // `equipment_cost_gp_headless_resolve`, `equipment_resolver.rs`,
+        // outside `cache_gen`/equipment-ingest territory). Re-derived this
+        // exact list from a fresh, isolated `cargo test --lib
+        // equipment_resolver::tests::the_two_lookups_agree` run against
+        // this cycle's own final state.
         assert_eq!(
             disagreements,
             vec![
-                "Adamantine (Ammo)",
                 "Adamantine (Heavy Armor)",
                 "Adamantine (Light Armor)",
                 "Adamantine (Medium Armor)",
                 "Adamantine (Weapon)",
-                "Alchemical Silver",
-                "Amorphous",
-                "BRACE",
                 "Backpack (Carrier)",
                 "Backpack (Hydration)",
                 "Backpack (Weaponrack)",
-                "Burdenless",
-                "CLOTH",
-                "Cold Iron",
-                "DISARM",
-                "Exclusionary",
-                "LEATHER",
-                "MONK",
+                "Bullet (Sling/Alchemical)",
+                "Feather Token (Catapult)",
+                "Feather Token (Ram)",
+                "Feather Token (Siege Tower)",
+                "Incense (10 sticks)",
                 "Mithral (Heavy Armor)",
                 "Mithral (Item)",
-                "Mithral (Light Armor)",
                 "Mithral (Medium Armor)",
-                "Mithral (Shield)",
-                "NONLETHAL",
                 "OBSIDIAN",
-                "Prehensile",
                 "REACH",
                 "ROPE",
-                "Restful",
-                "STEEL",
-                "Sneaky",
-                "Spiteful",
-                "TRIP",
-                "Trackless",
-                "WOOD",
                 "Wooden",
             ],
             "a cross-book identity collision outside this pinned set means a newly ambiguous id \

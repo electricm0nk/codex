@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feyspeaker ~ Fey Magic",
+    "name": "Fey Magic",
+    "class": "Druid",
+    "description": "[Unable to implement added wizard/sorcerer spell] A feyspeaker allows the strange idylls of the fey to guide her magic. The feyspeaker uses her Charisma score instead of her Wisdom score as her key spellcasting ability score (to determine her spell DCs, bonus spells per day, concentration checks, and so on). At 4th, 6th, 8th, 10th, 12th, 14th, 16th, and 18th levels, a feyspeaker adds one enchantment or illusion spell from the sorcerer/wizard spell list to her druid spell list as a spell of 1 level higher (for instance, at 4th level, she could add color spray as a 2nd-level druid spell). In order to select a spell, she must be of a level high enough (including the increased spell level) to cast it. Once selected, the spell cannot be changed. A feyspeaker loses the ability to spontaneously cast summon nature's ally spells. She gains the wild shape ability at 6th level and gains all benefits related to wild shape 2 druid levels later than usual. She can never use wild shape to transform into an elemental.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feyspeaker ~ Fey Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.FeyspeakerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoElementalShape|0"
+      },
+      {
+        "key": "DESC",
+        "value": "[Unable to implement added wizard/sorcerer spell] A feyspeaker allows the strange idylls of the fey to guide her magic. The feyspeaker uses her Charisma score instead of her Wisdom score as her key spellcasting ability score (to determine her spell DCs, bonus spells per day, concentration checks, and so on). At 4th, 6th, 8th, 10th, 12th, 14th, 16th, and 18th levels, a feyspeaker adds one enchantment or illusion spell from the sorcerer/wizard spell list to her druid spell list as a spell of 1 level higher (for instance, at 4th level, she could add color spray as a 2nd-level druid spell). In order to select a spell, she must be of a level high enough (including the increased spell level) to cast it. Once selected, the spell cannot be changed. A feyspeaker loses the ability to spontaneously cast summon nature's ally spells. She gains the wild shape ability at 6th level and gains all benefits related to wild shape 2 druid levels later than usual. She can never use wild shape to transform into an elemental."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Druid|CHASCORE+(((CHASCORE-10)/2)-WIS)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Druid|-WISSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoElementalShape|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 328,
+    "record_key": "Feyspeaker ~ Fey Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

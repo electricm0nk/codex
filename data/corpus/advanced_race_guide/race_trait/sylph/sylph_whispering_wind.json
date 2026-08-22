@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Sylph ~ Whispering Wind",
+    "name": "Whispering Wind",
+    "race_key": "Sylph",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Sylph Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Sylph_ReplaceSpellLikeAbility"
+    ],
+    "description": "Some sylphs are especially thin and wispy, as though they were made more of air than flesh. Sylphs with this racial trait gain a +4 racial bonus on Stealth checks. This racial trait replaces the sylph's spell-like ability racial trait.",
+    "source_page": "p.157",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylph ~ Whispering Wind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Sylph Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Whispering Wind],[!PREFACT:1,ABILITIES,Sylph_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some sylphs are especially thin and wispy, as though they were made more of air than flesh. Sylphs with this racial trait gain a +4 racial bonus on Stealth checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the sylph's spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Whispering Wind"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+4 Stealth"
+      },
+      {
+        "key": "FACT",
+        "value": "Sylph_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Stealth",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 692,
+    "record_key": "Sylph ~ Whispering Wind"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

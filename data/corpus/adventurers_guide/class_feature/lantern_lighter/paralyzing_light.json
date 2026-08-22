@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lantern Lighter ~ Paralyzing Light",
+    "name": "Paralyzing Light",
+    "class": "Ranger",
+    "description": "A lantern lighter can stop light-blind enemies in their tracks, often gaining a great edge in battle. Daylight spells cast by the lantern lighter or sources of bright light wielded by him cause creatures with light blindness within the area of bright light to become paralyzed for 1 round in addition to being blinded and stunned.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lantern Lighter ~ Paralyzing Light"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.LanternLighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "DESC",
+        "value": "A lantern lighter can stop light-blind enemies in their tracks, often gaining a great edge in battle. Daylight spells cast by the lantern lighter or sources of bright light wielded by him cause creatures with light blindness within the area of bright light to become paralyzed for 1 round in addition to being blinded and stunned."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 992,
+    "record_key": "Lantern Lighter ~ Paralyzing Light"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

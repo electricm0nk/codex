@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Snoop Talent ~ Empathy",
+    "name": "Empathy",
+    "class": "Snoop Talent",
+    "description": "When attempting a Sense Motive check, the snoop makes two d20 rolls and takes the higher result. If a snoop uses inspiration on a Sense Motive check, he rolls the inspiration dice twice and takes the higher result. Once per day, the snoop can expend one use of inspiration to target a single creature that he can see and hear within 30 feet. Upon doing so, the snoop detects the surface thoughts of the target's mind, as if he concentrated for 3 rounds while using the detect thoughts spell, unless the creature succeeds on a DC %1 Will saving throw.  If the target fails, the snoop can continue to detect the surface thoughts of the target creature for %2 rounds.|SnoopEmpathyDC|SnoopEmpathyDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Snoop Talent ~ Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Snoop ~ Investigator Talents"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "InvestigatorTalentLVL,5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SnoopEmpathyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SnoopEmpathyDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When attempting a Sense Motive check, the snoop makes two d20 rolls and takes the higher result. If a snoop uses inspiration on a Sense Motive check, he rolls the inspiration dice twice and takes the higher result. Once per day, the snoop can expend one use of inspiration to target a single creature that he can see and hear within 30 feet. Upon doing so, the snoop detects the surface thoughts of the target's mind, as if he concentrated for 3 rounds while using the detect thoughts spell, unless the creature succeeds on a DC %1 Will saving throw.  If the target fails, the snoop can continue to detect the surface thoughts of the target creature for %2 rounds.|SnoopEmpathyDC|SnoopEmpathyDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SnoopEmpathyDC|InvestigatorTalentLVL/2+INT+10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SnoopEmpathyDuration|InvestigatorTalentLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 884,
+    "record_key": "Snoop Talent ~ Empathy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

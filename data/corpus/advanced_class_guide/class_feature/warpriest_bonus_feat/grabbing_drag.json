@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Grabbing Drag",
+    "name": "Grabbing Drag",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can move easily with a grappled enemy in tow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Grabbing Drag"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Grabbing Style,Improved Grapple"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:8],[PREVARGTEQ:WarpriestBonusFeatBAB,8],[PREVARGTEQ:MonkFeatQualify,4],[PRECLASS:1,Monk=4,Brawler=4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can move easily with a grappled enemy in tow."
+      },
+      {
+        "key": "DESC",
+        "value": " When you are using Grabbing Style, if you use the move grapple action, you can move both yourself and a single target that you're grappling your full speed instead of half your speed. After you have done so, you can use a move action to move yourself and the target of your grapple half your speed without needing to attempt an additional combat maneuver check. You cannot use this feat if you are grappling two targets."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Grabbing Drag"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4156,
+    "record_key": "Warpriest Bonus Feat ~ Grabbing Drag"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

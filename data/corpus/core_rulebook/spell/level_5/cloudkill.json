@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell generates a bank of fog, similar to a fog cloud, except that its vapors are yellowish green and poisonous. These vapors automatically kill any living creature with 3 or fewer HD [no save]. A living creature with 4 to 6 HD is slain unless it succeeds on a Fortitude save [in which case it takes 1d4 points of Constitution damage on your turn each round while in the cloud]. A living creature with 6 or more HD takes 1d4 points of Constitution damage on your turn each round while in the cloud [a successful Fortitude save halves this damage]. Holding one's breath doesn't help, but creatures immune to poison are unaffected by the spell. Unlike a fog cloud, the cloudkill moves away from you at 10 feet per round, rolling along the surface of the ground. Figure out the cloud's new spread each round based on its new point of origin, which is 10 feet farther away from the point of origin where you cast the spell. Because the vapors are heavier than air, they sink to the lowest level of the land, even pouring down den or sinkhole openings. It cannot penetrate liquids, nor can it be cast underwater.",
     "key": "Cloudkill",
-    "school": "Conjuration",
     "level": 5,
-    "description": "This spell generates a bank of fog, similar to a fog cloud, except that its vapors are yellowish green and poisonous. These vapors automatically kill any living creature with 3 or fewer HD [no save]. A living creature with 4 to 6 HD is slain unless it succeeds on a Fortitude save [in which case it takes 1d4 points of Constitution damage on your turn each round while in the cloud]. A living creature with 6 or more HD takes 1d4 points of Constitution damage on your turn each round while in the cloud [a successful Fortitude save halves this damage]. Holding one's breath doesn't help, but creatures immune to poison are unaffected by the spell. Unlike a fog cloud, the cloudkill moves away from you at 10 feet per round, rolling along the surface of the ground. Figure out the cloud's new spread each round based on its new point of origin, which is 10 feet farther away from the point of origin where you cast the spell. Because the vapors are heavier than air, they sink to the lowest level of the land, even pouring down den or sinkhole openings. It cannot penetrate liquids, nor can it be cast underwater."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell generates a bank of fog, similar to a fog cloud, except that its vapors are yellowish green and poisonous. These vapors automatically kill any living creature with 3 or fewer HD [no save]. A living creature with 4 to 6 HD is slain unless it succeeds on a Fortitude save [in which case it takes 1d4 points of Constitution damage on your turn each round while in the cloud]. A living creature with 6 or more HD takes 1d4 points of Constitution damage on your turn each round while in the cloud [a successful Fortitude save halves this damage]. Holding one's breath doesn't help, but creatures immune to poison are unaffected by the spell. Unlike a fog cloud, the cloudkill moves away from you at 10 feet per round, rolling along the surface of the ground. Figure out the cloud's new spread each round based on its new point of origin, which is 10 feet farther away from the point of origin where you cast the spell. Because the vapors are heavier than air, they sink to the lowest level of the land, even pouring down den or sinkhole openings. It cannot penetrate liquids, nor can it be cast underwater.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell generates a bank of fog, similar to a fog cloud, except that its vapors are yellowish green and poisonous.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/cloudkill.html#_cloudkill"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.256"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Cloud spreads in 20-ft. radius, 20 ft. high"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 95,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 857,
-    "record_key": "Cloudkill.MOD"
+    "record_key": "Cloudkill",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

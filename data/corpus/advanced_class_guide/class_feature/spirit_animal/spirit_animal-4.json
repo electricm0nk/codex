@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Animal ~ Heavens",
+    "name": "Spirit Animal",
+    "class": "Spirit Animal",
+    "description": "The flesh of the spirit animal accurately reflects the stars that would be visible in the night sky, no matter where the animal is or the time of day.  Due to this, it can be used as a star map.  While the animal is flying, a small nimbus of light surrounds it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Animal ~ Heavens"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The flesh of the spirit animal accurately reflects the stars that would be visible in the night sky, no matter where the animal is or the time of day.  Due to this, it can be used as a star map.  While the animal is flying, a small nimbus of light surrounds it."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Heavens Spirit Animal ~ Add Fly Speed|Heavens Spirit Animal ~ Enhance Fly Speed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1399,
+    "record_key": "Spirit Animal ~ Heavens"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

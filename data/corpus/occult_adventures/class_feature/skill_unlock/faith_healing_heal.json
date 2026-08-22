@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skill Unlock ~ Faith Healing",
+    "name": "Faith Healing (Heal)",
+    "class": "Skill Unlock",
+    "description": "You apply esoteric principles to temporarily suspend or remove curses, diseases, and ability damage. Check: You can use faith healing once per day. The DC and effect of the Heal check depend on the task you attempt. You can't use faith healing on yourself. Restore Vitality: You suppress ability damage. You perform a 1-hour ceremony, after which you attempt a Heal check against the DC of the effect that caused the ability damage. If you succeed at the check, you temporarily suppress 1 point of ability damage for 1 hour, plus 1 additional point and hour for every 5 by which the check result exceeds the DC. A creature can benefit from this treatment no more than once per day. Suspend Affliction: You treat one curse, disease, or poison affecting a creature. You enter into a deep trance for 1 hour while you treat the subject, after which you attempt your Heal check. If the check is successful, you suspend the effects of the affliction by 1 hour, plus 1 hour for every 5 by which you exceed the DC. This time doesn't count against the effect's duration (if any). The affliction can still be cured by other means while it's suspended. Remove Affliction: You can attempt to permanently remove an affliction in an 8-hour ceremony, after which you attempt a Heal check. If the result of the check is at least double the DC of the original affliction, the sufferer can attempt another saving throw using the original DC to permanently cast off the effect. Action: Restoring vitality and suspending afflictions each require 1 hour in a quiet environment. Permanent removal of afflictions requires 8 hours of heavy activity. Try Again: Varies. A creature can't be the subject of faith healing more than once per day. You can't try to permanently remove an affliction again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill Unlock ~ Faith Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillUnlock.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "You apply esoteric principles to temporarily suspend or remove curses, diseases, and ability damage. Check: You can use faith healing once per day. The DC and effect of the Heal check depend on the task you attempt. You can't use faith healing on yourself. Restore Vitality: You suppress ability damage. You perform a 1-hour ceremony, after which you attempt a Heal check against the DC of the effect that caused the ability damage. If you succeed at the check, you temporarily suppress 1 point of ability damage for 1 hour, plus 1 additional point and hour for every 5 by which the check result exceeds the DC. A creature can benefit from this treatment no more than once per day. Suspend Affliction: You treat one curse, disease, or poison affecting a creature. You enter into a deep trance for 1 hour while you treat the subject, after which you attempt your Heal check. If the check is successful, you suspend the effects of the affliction by 1 hour, plus 1 hour for every 5 by which you exceed the DC. This time doesn't count against the effect's duration (if any). The affliction can still be cured by other means while it's suspended. Remove Affliction: You can attempt to permanently remove an affliction in an 8-hour ceremony, after which you attempt a Heal check. If the result of the check is at least double the DC of the original affliction, the sufferer can attempt another saving throw using the original DC to permanently cast off the effect. Action: Restoring vitality and suspending afflictions each require 1 hour in a quiet environment. Permanent removal of afflictions requires 8 hours of heavy activity. Try Again: Varies. A creature can't be the subject of faith healing more than once per day. You can't try to permanently remove an affliction again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1950,
+    "record_key": "Skill Unlock ~ Faith Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

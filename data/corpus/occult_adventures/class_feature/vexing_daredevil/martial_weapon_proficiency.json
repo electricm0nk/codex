@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vexing Daredevil ~ Martial Weapon Proficiency",
+    "name": "Martial Weapon Proficiency",
+    "class": "Vexing Daredevil",
+    "description": "A vexing daredevil picks one martial weapon and becomes proficient in its use.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vexing Daredevil ~ Martial Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.VexingDaredevilWpnProf.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A vexing daredevil picks one martial weapon and becomes proficient in its use."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|TYPE=Martial"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|%LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1503,
+    "record_key": "Vexing Daredevil ~ Martial Weapon Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

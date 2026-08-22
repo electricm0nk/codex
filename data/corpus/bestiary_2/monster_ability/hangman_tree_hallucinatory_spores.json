@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Hangman Tree ~ Hallucinatory Spores",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:hangman_tree"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Hallucinatory Spores"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HangmanTreeHallucinatorySporesDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HangmanTreeHallucinatorySporesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Hallucinatory Spores)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HangmanTreeHallucinatorySporesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a hangman tree can release a cloud of spores in a 50-foot-radius spread.  Creatures in the area must make a DC %1 Will save or believe the hangman tree to be a perfectly ordinary tree - or at worst, a treant or some other friendly tree-like creature.  An affected creature becomes passive for 2d6 minutes and refuses to attack the hangman tree during this time.  An affected creature can attempt a new Will save each round that the tree attacks an ally - if a hallucinating creature is attacked by the tree, it gains a +4 bonus on its Will save to see through the hallucination.  This is a mind-affecting compulsion effect.|HangmanTreeHallucinatorySporesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Hangman Tree ~ Hallucinatory Spores"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.152",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 665,
-    "record_key": "Hangman Tree ~ Hallucinatory Spores"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 665,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Hangman Tree ~ Hallucinatory Spores",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

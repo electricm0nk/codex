@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Onmyoji ~ Divine Teachings",
+    "name": "Divine Teachings",
+    "class": "Spiritualist",
+    "description": "An onmyoji gains the ability to call upon her phantom to help her cast spells she normally couldn't. At 4th level and every 3 levels thereafter, an onmyoji can choose a single spell from the cleric spell list with a spell level she is currently able to cast, and add that spell to her list of spells known, at the same spell level as it appears on the cleric spell list. Because the onmyoji relies on her phantom's influence in order to cast these spells, she can cast spells added in this way only while the phantom is confined within her consciousness (not stranded on the Ethereal Plane or fully manifested). This ability replaces spiritual interference and greater spiritual interference.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Onmyoji ~ Divine Teachings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Onmyoji Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An onmyoji gains the ability to call upon her phantom to help her cast spells she normally couldn't. At 4th level and every 3 levels thereafter, an onmyoji can choose a single spell from the cleric spell list with a spell level she is currently able to cast, and add that spell to her list of spells known, at the same spell level as it appears on the cleric spell list. Because the onmyoji relies on her phantom's influence in order to cast these spells, she can cast spells added in this way only while the phantom is confined within her consciousness (not stranded on the Ethereal Plane or fully manifested). This ability replaces spiritual interference and greater spiritual interference."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1642,
+    "record_key": "Onmyoji ~ Divine Teachings"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

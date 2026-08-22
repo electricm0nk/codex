@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Versatile Weapon",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You transform the physical makeup of a weapon as you desire.  This spell functions like greater magic weapon, except that it subtly alters the physical properties of a weapon, enabling it to bypass damage reduction of one the following types: bludgeoning, cold iron, piercing, silver, or slashing. The affected weapon still inflicts damage of its normal type and its hardness and hit points are unchanged. This spell can be cast on a natural weapon or unarmed strike.",
-    "full_text": true
+    "full_text": true,
+    "key": "Versatile Weapon",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Ranger=2|Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Weapon bypasses some DR.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You transform the physical makeup of a weapon as you desire.  This spell functions like greater magic weapon, except that it subtly alters the physical properties of a weapon, enabling it to bypass damage reduction of one the following types: bludgeoning, cold iron, piercing, silver, or slashing. The affected weapon still inflicts damage of its normal type and its hardness and hit points are unchanged. This spell can be cast on a natural weapon or unarmed strike.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(iron filings)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/versatileWeapon.html#_versatile-weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one weapon or 50 projectiles, all of which must be together at the time of casting"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 262,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2109,
-    "record_key": "Versatile Weapon"
+    "record_key": "Versatile Weapon",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Survivalist ~ Endure Elements",
+    "name": "Endure Elements",
+    "class": "Rogue",
+    "description": "At 3rd level, a survivalist rogue can use Endure Elements once per day as a spell-like ability. The survivalist's caster level is the same as her rogue level. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Survivalist ~ Endure Elements"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpellLike.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=RogueLvl|Endure Elements"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a survivalist rogue can use Endure Elements once per day as a spell-like ability. The survivalist's caster level is the same as her rogue level. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1731,
+    "record_key": "Survivalist ~ Endure Elements"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

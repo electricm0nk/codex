@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Occultist Archetype ~ Necroccultist",
+    "name": "Necroccultist",
+    "class": "Occultist Archetype",
+    "description": "Necroccultists' fascination with death and the undead drives them to explore the forbidden necromantic arts as they search for secrets they can use to manipulate the natural cycle of life and death. They contact and learn from the dead, rather than from items or outsiders, allowing them to drain the life of their foes to feed their own power, and even call forth phantasmal hordes of spirits to destroy their enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Necroccultist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Occultist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Necroccultist],[!PREFACT:1,ABILITIES,Occultist_Archetype_Implements=true,Occultist_Archetype_ImplementMastery=true,Occultist_Archetype_ObjectReading=true,Occultist_Archetype_OutsideContact=true,Occultist_Archetype_AuraSight=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Necroccultists' fascination with death and the undead drives them to explore the forbidden necromantic arts as they search for secrets they can use to manipulate the natural cycle of life and death. They contact and learn from the dead, rather than from items or outsiders, allowing them to drain the life of their foes to feed their own power, and even call forth phantasmal hordes of spirits to destroy their enemies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Necroccultist ~ Necromantic Bond|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Necroccultist ~ Deadspeaker|PRECLASS:1,Occultist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Necroccultist ~ Ghostly Horde|PRECLASS:1,Occultist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Necroccultist ~ Life Drain|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ImplementMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_AuraSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_AuraSight|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1519,
+    "record_key": "Occultist Archetype ~ Necroccultist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

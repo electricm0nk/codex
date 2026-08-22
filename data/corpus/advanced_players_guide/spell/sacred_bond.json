@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Sacred Bond",
-    "school": "Conjuration",
-    "level": 2,
     "description": "To use this spell, you first touch the intended recipient, creating a sympathetic field of healing energies between you.  Once the spell has been cast, you and the target may cast conjuration (healing) spells with a range of touch upon each other so long as you are within close range (25 ft. + 5 ft./2 levels). Should either you or the target remove your bracelet, the spell immediately ends.",
-    "full_text": true
+    "full_text": true,
+    "key": "Sacred Bond",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor,Paladin=2|Cleric=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, F"
+      },
+      {
+        "key": "DESC",
+        "value": "Cast touch healing spells from a distance.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "To use this spell, you first touch the intended recipient, creating a sympathetic field of healing energies between you.  Once the spell has been cast, you and the target may cast conjuration (healing) spells with a range of touch upon each other so long as you are within close range (25 ft. + 5 ft./2 levels). Should either you or the target remove your bracelet, the spell immediately ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a pair of golden bracelets worth 100 gp each worn by both you and the target)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/sacredBond.html#_sacred-bond"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Healing"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 204,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2048,
-    "record_key": "Sacred Bond"
+    "record_key": "Sacred Bond",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

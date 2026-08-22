@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wave Warden ~ Deep Sentinel",
+    "name": "Deep Sentinel",
+    "class": "Ranger",
+    "description": "A wave warden adds %1 on Perception checks made to notice creatures underwater.|1+(RangerLVL-1)/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden ~ Deep Sentinel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wave warden adds %1 on Perception checks made to notice creatures underwater.|1+(RangerLVL-1)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 886,
+    "record_key": "Wave Warden ~ Deep Sentinel"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

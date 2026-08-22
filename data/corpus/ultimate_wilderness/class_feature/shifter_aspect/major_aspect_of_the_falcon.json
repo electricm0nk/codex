@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Falcon ~ Major",
+    "name": "Major Aspect of the Falcon",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of a Small falcon (see page 179). While in this form, you gain a bite attack (1d4 damage), two claw attacks (1d3 damage), low-light vision,",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Falcon ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Falcon_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of a Small falcon (see page 179). While in this form, you gain a bite attack (1d4 damage), two claw attacks (1d3 damage), low-light vision,"
+      },
+      {
+        "key": "DESC",
+        "value": "a fly speed of 60 feet (good), and a +4 racial bonus on vision-based Perception checks.|PREVARLT:ShifterFalconAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "darkvision with a range of 120 feet, a fly speed of 60 feet (good), and a +6 racial bonus on vision-based Perception checks.|PREVARLT:ShifterFalconAspectLVL,15|PREVARGTEQ:ShifterFalconAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "darkvision with a range of 120 feet, blindsense with a range of 60 feet, a fly speed of 90 feet (perfect), and a +6 racial bonus on vision-based Perception checks.|PREVARGTEQ:ShifterFalconAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 63,
+    "record_key": "Shifter Aspect ~ Falcon ~ Major"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Lion ~ For the King",
+    "name": "For the King",
+    "class": "Order of the Lion",
+    "description": "At 8th level, an order of the lion cavalier can call out to his allies, inspiring them to greatness. As a swift action, the cavalier can grant a competence bonus equal to his Charisma modifier on all attack and damage rolls to all allies within 30 feet. This bonus lasts for 1 round. This ability can be used once per combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Lion ~ For the King"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, an order of the lion cavalier can call out to his allies, inspiring them to greatness. As a swift action, the cavalier can grant a competence bonus equal to his Charisma modifier on all attack and damage rolls to all allies within 30 feet. This bonus lasts for 1 round. This ability can be used once per combat."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 257,
+    "record_key": "Order of the Lion ~ For the King"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

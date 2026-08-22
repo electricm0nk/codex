@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skulking Slayer ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Rogue",
+    "description": "The skulking slayer gains proficiency with greatclubs and whips, but loses proficiency with rapiers and hand crossbows.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skulking Slayer ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The skulking slayer gains proficiency with greatclubs and whips, but loses proficiency with rapiers and hand crossbows."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Martial Weapon Proficiency (Greatclub)|Martial Weapon Proficiency (Whip)"
+      },
+      {
+        "key": "REMOVE",
+        "value": "FEAT|2|Martial Weapon Proficiency (Crossbow (Hand)),Martial Weapon Proficiency (Rapier)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 275,
+    "record_key": "Skulking Slayer ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

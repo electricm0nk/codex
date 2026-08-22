@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Marilith ~ Crushing Coils",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:demon_marilith"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Crushing Coils"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|CrushingCoilsDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrushingCoilsDC|10+(HD/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrushingCoilsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Crushing Coils)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrushingCoilsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that takes damage from a marilith's constrict attack must succeed on a DC %1 Fortitude save or lose consciousness for 1d8 rounds.|CrushingCoilsDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Marilith ~ Crushing Coils"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.63",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 286,
-    "record_key": "Marilith ~ Crushing Coils"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 286,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Marilith ~ Crushing Coils",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

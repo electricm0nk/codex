@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Champion of the Faith ~ Chosen Alignment ~ Good",
+    "name": "Champion of the Faith (Good)",
+    "class": "Champion of the Faith",
+    "description": "You can call upon the power of your blessings %1 times per day. The DC for these blessings is %2|WarpriestBlessingUses|WarpriestBlessingDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Champion of the Faith ~ Chosen Alignment ~ Good"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Champion of the Faith Class Feature.Warpriest Class Feature.Champion of the Faith Alignment Choice"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PREDEITYALIGN:LG],[PREALIGN:LG,NG]],[PREMULT:2,[PREDEITYALIGN:NG],[PREALIGN:LG,NG,CG,TN]],[PREMULT:2,[PREDEITYALIGN:CG],[PREALIGN:NG,CG]],[PREMULT:2,[PREDEITYALIGN:TN],[PREALIGN:NG,TN]]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChampionOfTheFaithGood|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the power of your blessings %1 times per day. The DC for these blessings is %2|WarpriestBlessingUses|WarpriestBlessingDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blessings ~ Good Blessing"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Blessing|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingLVL|WarpriestLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMinorBlessingGrantedLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestMajorBlessingGrantedLVL|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingUses|(WarpriestBlessingLVL/2)+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingDC|(WarpriestBlessingLVL/2)+10+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChampionOfTheFaithGood|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WarpriestBlessingUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3946,
+    "record_key": "Champion of the Faith ~ Chosen Alignment ~ Good"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

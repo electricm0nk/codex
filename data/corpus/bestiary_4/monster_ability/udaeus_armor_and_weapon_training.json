@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Udaeus ~ Armor and Weapon Training",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_4:monster:udaeus"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon Prof ~ Simple|Armor Prof ~ Heavy|Armor Prof ~ Medium|Armor Prof ~ Light|Shield Prof|Shield Prof ~ Tower|Weapon Prof ~ Martial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Udaeoi are proficient with simple weapons, martial weapons, light armor, medium armor, heavy armor, and shields (including tower shields)."
+      },
+      {
+        "key": "KEY",
+        "value": "Udaeus ~ Armor and Weapon Training"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1397,
-    "record_key": "Udaeus ~ Armor and Weapon Training"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1397,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Udaeus ~ Armor and Weapon Training",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

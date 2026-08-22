@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aquatic Bloodline",
+    "name": "Aquatic Bloodline",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Arcanist Bloodline Development"
+      },
+      {
+        "key": "TYPE",
+        "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Aquatic Bloodline ~ Power LVL 01"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorcerer Bloodline ~ Aquatic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Aquatic_BloodlineLVL|1|!PREABILITY:1,CATEGORY=Sorcerer Bloodline,Aquatic Bloodline|!PREABILITY:1,CATEGORY=Crossblooded Bloodline,Aquatic Bloodline"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Aquatic_BloodlineLVL|ArcanistLVL|PREMULT:1,[PREABILITY:1,CATEGORY=Sorcerer Bloodline,Aquatic Bloodline],[PREABILITY:1,CATEGORY=Crossblooded Bloodline,Aquatic Bloodline]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Aquatic_BloodlinePower1LVL|1|!PREABILITY:1,CATEGORY=Sorcerer Bloodline,Aquatic Bloodline|!PREABILITY:1,CATEGORY=Crossblooded Bloodline,Aquatic Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 167,
+    "record_key": "Aquatic Bloodline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

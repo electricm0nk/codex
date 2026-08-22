@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger ~ Expert Loading",
+    "name": "Expert Loading",
+    "class": "Gunslinger",
+    "description": "At 11th level, whenever the gunslinger rolls a misfire with a gun that has the broken condition, she can spend 1 grit point to keep the gun from exploding, though it retains the broken condition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger ~ Expert Loading"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL11"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL11.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, whenever the gunslinger rolls a misfire with a gun that has the broken condition, she can spend 1 grit point to keep the gun from exploding, though it retains the broken condition."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 70,
+    "record_key": "Gunslinger ~ Expert Loading"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

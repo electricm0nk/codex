@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Archer ~ Hail of Arrows",
+    "name": "Hail of Arrows",
+    "class": "Arcane Archer",
+    "description": "In lieu of his regular attacks, %2 per day an arcane archer of 8th level or higher can fire an arrow at each and every target within range, to a maximum of %1 targets. Each attack uses the archer's primary attack bonus, and each enemy may only be targeted by a single arrow.|HailArrowsTargets|HailArrowsTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Archer ~ Hail of Arrows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HailArrowsTargets|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HailArrowsTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In lieu of his regular attacks, %2 per day an arcane archer of 8th level or higher can fire an arrow at each and every target within range, to a maximum of %1 targets. Each attack uses the archer's primary attack bonus, and each enemy may only be targeted by a single arrow.|HailArrowsTargets|HailArrowsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HailArrowsTargets|ArcaneArcherLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HailArrowsTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.376"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 maxium targets %2/day)|HailArrowsTargets|HailArrowsTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2927,
+    "record_key": "Arcane Archer ~ Hail of Arrows"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

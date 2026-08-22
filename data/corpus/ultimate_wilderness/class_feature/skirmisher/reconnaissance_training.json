@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skirmisher ~ Reconnaissance Training",
+    "name": "Reconnaissance Training",
+    "class": "Fighter",
+    "description": "A skirmisher operating in heavily trapped or naturally hazardous areas learns to expertly avoid them. He gains a +%1 bonus on Reflex saving throws to avoid traps, natural hazards, and environmental effects.|(FighterLVL+2)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirmisher ~ Reconnaissance Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Features.SkirmisherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A skirmisher operating in heavily trapped or naturally hazardous areas learns to expertly avoid them. He gains a +%1 bonus on Reflex saving throws to avoid traps, natural hazards, and environmental effects.|(FighterLVL+2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Reflex to avoid traps, natural hazards, and environmental effects.|(FighterLVL+2)/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 578,
+    "record_key": "Skirmisher ~ Reconnaissance Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

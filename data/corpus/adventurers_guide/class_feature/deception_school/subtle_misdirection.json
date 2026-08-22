@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deception School ~ Subtle Misdirection",
+    "name": "Subtle Misdirection",
+    "class": "Deception School",
+    "description": "As a standard action, you can touch a creature or an object that weighs no more than %1 pounds to impart an illusory ward that lasts for 1 minute. Attacks against a warded creature suffer a 20%% miss chance, and the ward ends once it negates an attack. The DC of any caster level check, skill check, or saving throw to detect or determine the properties of a warded item increases by %2. You can use this ability %3 times per day.|25*IllusionSchoolLVL|1+IllusionSchoolLVL/5|3+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deception School ~ Subtle Misdirection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can touch a creature or an object that weighs no more than %1 pounds to impart an illusory ward that lasts for 1 minute. Attacks against a warded creature suffer a 20%% miss chance, and the ward ends once it negates an attack. The DC of any caster level check, skill check, or saving throw to detect or determine the properties of a warded item increases by %2. You can use this ability %3 times per day.|25*IllusionSchoolLVL|1+IllusionSchoolLVL/5|3+INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1239,
+    "record_key": "Deception School ~ Subtle Misdirection"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

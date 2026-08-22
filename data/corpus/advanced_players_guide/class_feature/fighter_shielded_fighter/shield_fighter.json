@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Shielded Fighter ~ Shield Fighter",
+    "name": "Shield Fighter",
+    "class": "Fighter",
+    "description": "At 5th level, a shielded fighter gains a +1 bonus on attack and damage rolls when making a shield bash. These bonuses increase by +1 every four levels beyond 5th. With a full attack action, a shielded fighter may alternate between using his weapon or his shield for each attack. This action does not grant additional attacks or incur penalties as two-weapon fighting does. This ability replaces weapon training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Shielded Fighter ~ Shield Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining1"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a shielded fighter gains a +1 bonus on attack and damage rolls when making a shield bash. These bonuses increase by +1 every four levels beyond 5th. With a full attack action, a shielded fighter may alternate between using his weapon or his shield for each attack. This action does not grant additional attacks or incur penalties as two-weapon fighting does. This ability replaces weapon training 1."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2207,
+    "record_key": "Fighter Shielded Fighter ~ Shield Fighter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shoanti Burn Rider ~ Mount",
+    "name": "Mount",
+    "class": "Barbarian",
+    "description": "At 4th level, a burn rider gains a loyal mount. This ability functions like the druid's animal companion ability (as described in the nature bond class feature), except that the burn rider always gains a horse or pony (though she can gain additional options at the GM's discretion) and her effective druid level is equal to her Shoanti burn rider level - 3. This ability replaces the rage powers gained at 4th, 8th, 12th, and i6th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shoanti Burn Rider ~ Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a burn rider gains a loyal mount. This ability functions like the druid's animal companion ability (as described in the nature bond class feature), except that the burn rider always gains a horse or pony (though she can gain additional options at the GM's discretion) and her effective druid level is equal to her Shoanti burn rider level - 3. This ability replaces the rage powers gained at 4th, 8th, 12th, and i6th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 198,
+    "record_key": "Shoanti Burn Rider ~ Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

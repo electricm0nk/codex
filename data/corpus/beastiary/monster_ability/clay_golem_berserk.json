@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Clay Golem ~ Berserk",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "beastiary:monster:golem_clay"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a clay golem enters combat, there is a cumulative 1%% chance each round that its elemental spirit breaks free and the golem goes berserk. This chance resets to 0%% after one minute of inactivity. A berserk golem attacks the nearest living creature or smashes some object smaller than itself if no creature is within reach. Once it goes berserk, no known method can reestablish control."
+      },
+      {
+        "key": "KEY",
+        "value": "Clay Golem ~ Berserk"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.159",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 713,
-    "record_key": "Clay Golem ~ Berserk"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 713,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Clay Golem ~ Berserk",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

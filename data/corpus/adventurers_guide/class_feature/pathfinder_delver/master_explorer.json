@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Delver ~ Master Explorer",
+    "name": "Master Explorer",
+    "class": "Pathfinder Delver",
+    "description": "You add %1 to all Disable Device and Perception checks. You can disable traps in half the normal amount of time (minimum 1 round) and open a lock as a standard action. You can always take 10 on Disable Device and Stealth checks. You can use Disable Device to disarm magical traps.|PaDSkillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Delver ~ Master Explorer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Delver Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaDSkillBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "DESC",
+        "value": "You add %1 to all Disable Device and Perception checks. You can disable traps in half the normal amount of time (minimum 1 round) and open a lock as a standard action. You can always take 10 on Disable Device and Stealth checks. You can use Disable Device to disarm magical traps.|PaDSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device,Perception|PaDSkillBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 379,
+    "record_key": "Pathfinder Delver ~ Master Explorer"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

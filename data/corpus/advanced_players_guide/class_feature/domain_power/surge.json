@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Surge",
+    "name": "Surge",
+    "class": "Domain Power",
+    "description": "As a standard action, you can cause a mighty wave to appear that pushes or pulls a single creature. Make a combat maneuver check against the target, using %1 as your CMB. If successful, you may pull or push the creature as if using the bull rush or drag combat maneuver. You can use this ability %2 times per day.|DomainWaterLVL+WIS|DomainWaterTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can cause a mighty wave to appear that pushes or pulls a single creature. Make a combat maneuver check against the target, using %1 as your CMB. If successful, you may pull or push the creature as if using the bull rush or drag combat maneuver. You can use this ability %2 times per day.|DomainWaterLVL+WIS|DomainWaterTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainWaterTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1860,
+    "record_key": "Domain Power ~ Surge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

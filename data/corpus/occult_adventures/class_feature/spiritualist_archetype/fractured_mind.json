@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Fractured Mind",
+    "name": "Fractured Mind",
+    "class": "Spiritualist Archetype",
+    "description": "Most spiritualists harbor the spirits of the deceased in their psyches, but a small number of them-known as fractured minds-draw their powers instead from a fraction of their own souls that resonates with extremely powerful emotions. These spiritualists' phantoms are not spiritual allies, but rather extensions of the fractured minds' own inner thoughts and emotions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Fractured Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpiritualistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Fractured Mind],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_Spellcasting=true,Spiritualist_Archetype_DetectUndead=true,Spiritualist_Archetype_CalmSpirit=true,Spiritualist_Archetype_SeeInvisibility=true,Spiritualist_Archetype_CallSpirit=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most spiritualists harbor the spirits of the deceased in their psyches, but a small number of them-known as fractured minds-draw their powers instead from a fraction of their own souls that resonates with extremely powerful emotions. These spiritualists' phantoms are not spiritual allies, but rather extensions of the fractured minds' own inner thoughts and emotions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Fractured Mind ~ Emotional Spellcasting|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Fractured Mind ~ Emotional Power|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_DetectUndead|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_CalmSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SeeInvisibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_CallSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_DetectUndead|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_CalmSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SeeInvisibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_CallSpirit|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1612,
+    "record_key": "Spiritualist Archetype ~ Fractured Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

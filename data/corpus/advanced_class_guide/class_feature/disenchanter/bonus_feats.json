@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Disenchanter ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Warpriest",
+    "description": "Whenever a disenchanter gains a bonus feat, he must choose from a special list. He need not meet the prerequisites for these feats. This ability alters bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Disenchanter ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Disenchanter Class Feature.Warpriest Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a disenchanter gains a bonus feat, he must choose from a special list. He need not meet the prerequisites for these feats. This ability alters bonus feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Disenchanter Bonus Feat|(WarpriestLVL>=3)+(WarpriestLVL>=6)+(WarpriestLVL>=9)+(WarpriestLVL>=12)+(WarpriestLVL>=15)+(WarpriestLVL>=18)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3958,
+    "record_key": "Disenchanter ~ Bonus Feats"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

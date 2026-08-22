@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Fire Domain",
+    "name": "Fire",
+    "class": "Forbidden Rites Domain",
+    "description": "You can call forth fire, command creatures of the inferno, and your flesh does not burn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Fire Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.FireDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFireLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFireDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFireTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFireAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call forth fire, command creatures of the inferno, and your flesh does not burn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Fire Bolt|PREDOMAIN:1,Fire|PREVARGTEQ:DomainFireAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Fire Resistance|PREDOMAIN:1,Fire|PREVARGTEQ:DomainFireAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFireLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFireDC|10+(DomainFireLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFireTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFireAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Burning Hands|Cleric=2|Produce Flame|Cleric=3|Fireball|Cleric=4|Wall of Fire|Cleric=5|Fire Shield|Cleric=6|Fire Seeds|Cleric=7|Elemental Body IV (Fire Only)|Cleric=8|Incendiary Cloud|Cleric=9|Elemental Swarm (Fire Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1038,
+    "record_key": "Forbidden Rites Domain ~ Fire Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

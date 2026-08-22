@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lore Spirit ~ Perfect Knowledge",
+    "name": "Perfect Knowledge",
+    "class": "Lore Spirit",
+    "description": "The shaman gains the benefit of the tongues spell permanently. She also gains a +10 competence bonus on all Knowledge, Linguistics, and Spellcraft checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Spirit ~ Perfect Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman gains the benefit of the tongues spell permanently. She also gains a +10 competence bonus on all Knowledge, Linguistics, and Spellcraft checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Knowledge,Linguistics,Spellcraft|10|TYPE=Insight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1625,
+    "record_key": "Lore Spirit ~ Perfect Knowledge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

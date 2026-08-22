@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Relentless Casting",
+    "name": "Relentless Casting",
+    "class": "Phrenic Amplification",
+    "description": "The psychic can spend 1 point from her phrenic pool to roll twice on any caster level checks to overcome spell resistance required for the linked spell and take the better result. Because she must decide to spend points from her phrenic pool when she starts casting a spell, the psychic must decide to use this ability before the GM calls for the caster level check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Relentless Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can spend 1 point from her phrenic pool to roll twice on any caster level checks to overcome spell resistance required for the linked spell and take the better result. Because she must decide to spend points from her phrenic pool when she starts casting a spell, the psychic must decide to use this ability before the GM calls for the caster level check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1174,
+    "record_key": "Phrenic Amplification ~ Relentless Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

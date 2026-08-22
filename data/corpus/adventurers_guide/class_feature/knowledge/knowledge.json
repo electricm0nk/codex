@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knowledge ~ HK",
+    "name": "Knowledge",
+    "class": "Knowledge",
+    "description": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knowledge ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Domain.HKDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainKnowledgeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Lore Keeper|PREVARGTEQ:HellknightLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Remote Viewing|PREVARGTEQ:HellknightLvl,8"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Knowledge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeLVL|HellknightLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeDC|HKDisciplineDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainKnowledgeTimes|HKDiscipline"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 272,
+    "record_key": "Knowledge ~ HK"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

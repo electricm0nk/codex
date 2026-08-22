@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:hyakume_drain_memory",
@@ -23,6 +21,140 @@
     ],
     "race_subtype": null,
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Hyakume"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Undercommon"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|14|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|90|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuiveringPalmLVL|19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|-40"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Hyakume"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Knowledge (arcana)|Perception|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:19"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*2,3d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SR",
+        "value": "26"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
     "size": "L",
     "source_page": "p.153",
     "speeds": [
@@ -32,16 +164,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 125,
-    "record_key": "Hyakume"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 125,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Hyakume",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

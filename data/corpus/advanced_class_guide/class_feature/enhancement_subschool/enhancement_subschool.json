@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Enhancement Savant Subschool",
+    "name": "Enhancement Subschool",
+    "class": null,
+    "description": "You have chosen to specialize in transmutation spells of the enhancement subschool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enhancement Savant Subschool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.TransmutationSavantSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistSavantSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in transmutation spells of the enhancement subschool."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Transmutation Savant School ~ Physical Enhancement|Enhancement Savant Subschool ~ Augment"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Enhancement Savant Subschool ~ Perfection of Self|PREVARGTEQ:ArcanistSavantSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Arcanist Savant Opposition School|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=0|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=3|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=4|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=5|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=6|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=7|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=8|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Arcanist;LEVEL=9|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistSavantSchoolLVL|ArcanistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2507,
+    "record_key": "Enhancement Savant Subschool"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

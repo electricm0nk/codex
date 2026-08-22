@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "20",
@@ -28,6 +26,148 @@
     ],
     "race_subtype": "Div|Evil|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Div (Akvan)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Celestial|Common|Draconic|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "15/cold iron and good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "KEY",
+        "value": "Div (Akvan)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Knowledge (Arcana)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):24"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50,Fly,120"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*2,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail Slap,Natural.Melee.Finesseable.Weapon,*1,2d10"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Div|Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Div"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ],
     "size": "G",
     "source_page": "p.84",
     "speeds": [
@@ -41,16 +181,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 82,
-    "record_key": "Div (Akvan)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 82,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Div (Akvan)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

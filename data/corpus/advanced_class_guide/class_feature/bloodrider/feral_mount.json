@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrider ~ Feral Mount",
+    "name": "Feral Mount",
+    "class": "Bloodrager",
+    "description": "At 5th level, the bloodrider gains the service of a feral mount. This ability functions as the druid's animal companion, using the bloodrager's level - 4 as his effective druid level. This companion must be one he is capable of riding and suitable as a mount. A Medium bloodrider can select a camel or a horse. A Small bloodrider can select a pony or wolf, but can also select a boar or riding dog if he is at least 8th level. Whenever a bloodrider is bloodraging, this feral mount gains a +2 morale bonus to its Strength.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrider ~ Feral Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerUncannyDodge.BloodragerImprovedUncannyDodge.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, the bloodrider gains the service of a feral mount. This ability functions as the druid's animal companion, using the bloodrager's level - 4 as his effective druid level. This companion must be one he is capable of riding and suitable as a mount. A Medium bloodrider can select a camel or a horse. A Small bloodrider can select a pony or wolf, but can also select a boar or riding dog if he is at least 8th level. Whenever a bloodrider is bloodraging, this feral mount gains a +2 morale bonus to its Strength."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|BloodragerLVL-4"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Camel),Companion (Horse)"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Pony),Companion (Wolf)|PRESIZELTEQ:S"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Boar),Companion (Dog)|PRECLASS:1,Barbarian=8|PRESIZELTEQ:S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2739,
+    "record_key": "Bloodrider ~ Feral Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

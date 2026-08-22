@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "ability_keys": [
       "inner_sea_gods:monster_ability:mother_s_maw_spell_deflection",
@@ -25,6 +23,112 @@
     ],
     "race_subtype": "Evil|Extraplanar|Herald",
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Mother's Maw"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|14|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Intimidate|Knowledge (Religion)"
+      },
+      {
+        "key": "DR",
+        "value": "15/Bludgeoning"
+      },
+      {
+        "key": "DR",
+        "value": "15/Good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:18"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Grab.Bleed,*1,5d6,SPROP=plus bleed disease drain and grab"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Extraplanar|Herald"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.312"
+      },
+      {
+        "key": "SR",
+        "value": "26"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.312",
     "speeds": [
@@ -38,16 +142,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
-    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
-    "line": 80,
-    "record_key": "Mother's Maw"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 80,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "record_key": "Mother's Maw",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

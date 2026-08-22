@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knight Of The Sepulcher ~ Undying Champion",
+    "name": "Undying Champion",
+    "class": "Antipaladin",
+    "description": "At 20th level, a knight of the sepulcher joins the ranks of the undead. His DR increases to 10/bludgeoning and good. His type changes to undead, and he acquires all undead traits. Although immune to disease, he can still carry and spread diseases with the antipaladin's plague bringer ability. The undying champion no longer has a Constitution score. He uses his Charisma score for calculating hit points, Fortitude saves, and any special abilities that rely on Constitution. This ability replaces unholy champion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knight Of The Sepulcher ~ Undying Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a knight of the sepulcher joins the ranks of the undead. His DR increases to 10/bludgeoning and good. His type changes to undead, and he acquires all undead traits. Although immune to disease, he can still carry and spread diseases with the antipaladin's plague bringer ability. The undying champion no longer has a Constitution score. He uses his Charisma score for calculating hit points, Fortitude saves, and any special abilities that rely on Constitution. This ability replaces unholy champion."
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Bludgeoning and Good|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1498,
+    "record_key": "Knight Of The Sepulcher ~ Undying Champion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

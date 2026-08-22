@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 2000.0,
+    "description": "Misfire 1-2 (10 ft); Scatter 15' cone",
+    "key": "Blunderbuss",
+    "name": "Blunderbuss",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Blunderbuss"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Bludgeoning.Container.Projectile.Firearm.Weapon Group Firearms.Blunderbuss.Scatter"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "1|FirearmBullet=1|FirearmPellet=1"
+      },
+      {
+        "key": "COST",
+        "value": "2000"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Scatter ~ Firearm.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHandsOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "SPROP",
+        "value": "Misfire 1-2 (10 ft); Scatter 15' cone"
+      }
+    ],
+    "weight_lbs": 8.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 294,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Blunderbuss",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Composite Blast ~ Sandstorm Blast",
+    "name": "Sandstorm Blast",
+    "class": "Composite Blast",
+    "description": "Elements air and earth; Type composite blast (Sp); Level -; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Composite Blast ~ Sandstorm Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Composite Blast"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisites air blast, earth blast"
+      },
+      {
+        "key": "DESC",
+        "value": "Elements air and earth; Type composite blast (Sp); Level -; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Blast Type physical; Damage piercing and slashing You use your air to churn up sand, firing a flensing gust at a foe."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 667,
+    "record_key": "Composite Blast ~ Sandstorm Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

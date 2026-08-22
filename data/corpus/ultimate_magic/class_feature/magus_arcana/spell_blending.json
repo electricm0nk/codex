@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Spell Blending",
+    "name": "Spell Blending",
+    "class": "Magus Arcana",
+    "description": "You select one spell from the wizard spell list that is of a magus spell level you can cast. You add this spell to your spellbook and list of magus spells known as a magus spell of its wizard spell level. You can instead select two spells to add in this way, but both must be at least one level lower than the highest-level magus spell you can cast. You can select this magus arcana more than once.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Spell Blending"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.MagusArcana"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_SpellBlending|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You select one spell from the wizard spell list that is of a magus spell level you can cast. You add this spell to your spellbook and list of magus spells known as a magus spell of its wizard spell level. You can instead select two spells to add in this way, but both must be at least one level lower than the highest-level magus spell you can cast. You can select this magus arcana more than once."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SpellBlending|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 106,
+    "record_key": "Magus Arcana ~ Spell Blending"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

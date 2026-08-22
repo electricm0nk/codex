@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Roof Runner ~ Tumbling Descent",
+    "name": "Tumbling Descent",
+    "class": "Rogue",
+    "description": "At 2nd level, a roof runner can use her acrobatics skill to attempt a rapid descent from a rooftop or another surface, ricocheting against another surface and then diving through an opening (such as a balcony or window) directly below. So long as she has at least two surfaces no farther than 10 feet apart to bounce against, she can ricochet her body back from one to the next, descending great distances with a single check. The DC is 10 + 5 for every additional 10-foot increment descended beyond the initial 10 feet dropped. If she fails, she falls the full distance. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Roof Runner ~ Tumbling Descent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a roof runner can use her acrobatics skill to attempt a rapid descent from a rooftop or another surface, ricocheting against another surface and then diving through an opening (such as a balcony or window) directly below. So long as she has at least two surfaces no farther than 10 feet apart to bounce against, she can ricochet her body back from one to the next, descending great distances with a single check. The DC is 10 + 5 for every additional 10-foot increment descended beyond the initial 10 feet dropped. If she fails, she falls the full distance. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1719,
+    "record_key": "Roof Runner ~ Tumbling Descent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

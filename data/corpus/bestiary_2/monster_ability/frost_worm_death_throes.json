@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Frost Worm ~ Death Throes",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:frost_worm"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death Throes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrostWormDeathThroesDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrostWormDeathThroesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death Throes)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FrostWormDeathThroesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When killed, a frost worm explodes in a 100-foot-radius burst that deals 12d6 cold damage and 8d6 piercing damage (DC %1 Reflex half).|FrostWormDeathThroesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Frost Worm ~ Death Throes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.126",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 555,
-    "record_key": "Frost Worm ~ Death Throes"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 555,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Frost Worm ~ Death Throes",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Wings Of Air",
+    "name": "Wings Of Air",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Sp); Level 3; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Wings Of Air"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ air cushion,Wild Talent ~ air's leap"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite air cushion or air's leap"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Sp); Level 3; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;The air bends to your will, allowing you to soar to great heights. You are constantly under the effects of fly. If this effect is dispelled, you can call it forth again as a standard action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 804,
+    "record_key": "Wild Talent ~ Wings Of Air"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

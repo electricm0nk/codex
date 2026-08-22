@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stormborn Bloodline ~ Storm Lord",
+    "name": "Storm Lord",
+    "class": "Stormborn Bloodline",
+    "description": "You are one with the storm. You gain immunity to deafness, stunning, and wind effects and gain blindsight 120 feet against concealment from natural or magical fog, mist, or weather. Once per day, when attacked with an electricity or sonic effect, you may forgo your saving throw and absorb the energies of the attack, healing 1 point of damage for every 3 points of damage the attack would otherwise have dealt.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormborn Bloodline ~ Storm Lord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Stormborn Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Stormborn"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Stormborn_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Stormborn_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StormbornStormLord_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are one with the storm. You gain immunity to deafness, stunning, and wind effects and gain blindsight 120 feet against concealment from natural or magical fog, mist, or weather. Once per day, when attacked with an electricity or sonic effect, you may forgo your saving throw and absorb the energies of the attack, healing 1 point of damage for every 3 points of damage the attack would otherwise have dealt."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Deafness|Immunity to Stunning|Immunity to Wind Effects"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StormbornStormLord_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_StormbornStormLord_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StormbornBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3248,
+    "record_key": "Stormborn Bloodline ~ Storm Lord"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

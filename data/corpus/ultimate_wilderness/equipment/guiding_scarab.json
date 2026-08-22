@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 13000.0,
+    "description": "Divination effect 1/week, sacrifice scarab to find location.",
+    "key": "Guiding Scarab",
+    "name": "Guiding Scarab",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Survival=Avoid Getting Lost",
+          "5",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Knowledge (geography)",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "13000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "SPROP",
+        "value": "Divination effect 1/week, sacrifice scarab to find location."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equip_magic_items.lst",
+    "record_key": "Guiding Scarab",
+    "sha256": "b4a89925cbeaf8414d1ed1c161a031d1f1c75401939e8ec4fa14c45b69962c90"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

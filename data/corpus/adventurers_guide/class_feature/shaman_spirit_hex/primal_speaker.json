@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Primal Speaker",
+    "name": "Primal Speaker",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman can speak with mammoths and any other megafauna or elephant creatures as if she were under the effects of speak with animals.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Primal Speaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanMammothHex.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can speak with mammoths and any other megafauna or elephant creatures as if she were under the effects of speak with animals."
+      },
+      {
+        "key": "DESC",
+        "value": " The shaman gains a +%1 bonus on Handle Animal checks when dealing with those animals.|ShamanLVL/2|PRECLASS:1,Shaman=5"
+      },
+      {
+        "key": "DESC",
+        "value": " The shaman can affect one such animal within 30 feet as if she'd cast charm animal. A successful Will saving throw (DC %1) negates this effect. Whether or not the save is successful, the creature can't be the target of this hex again for 24 hours.|ShamanHexDC|PRECLASS:1,Shaman=10"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Primal Speaker"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanMammothSpirit,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1209,
+    "record_key": "Shaman Spirit Hex ~ Primal Speaker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

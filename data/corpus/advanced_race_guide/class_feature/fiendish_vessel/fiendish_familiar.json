@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fiendish Vessel ~ Fiendish Familiar",
+    "name": "Fiendish Familiar",
+    "class": "Cleric",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fiendish Vessel ~ Fiendish Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|ClericLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Devil (Imp)|PREDEITYALIGN:LE"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Demon (Quasit)|PREDEITYALIGN:CE"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Familiar (Cacodaemon)|PREDEITYALIGN:NE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 791,
+    "record_key": "Fiendish Vessel ~ Fiendish Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

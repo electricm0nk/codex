@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dashing Thief ~ Swaying Charm Deed",
+    "name": "Swaying Charm Deed",
+    "class": "Swashbuckler",
+    "description": "A dashing thief eventually becomes truly irresistible. When a dashing thief successfully dazes a creature using her dazing charm deed, she can instead charm the target for 1 day (as per charm monster). Only one creature can be charmed this way at a time; if the dashing thief charms another creature this way, the first charm effect immediately ends.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dashing Thief ~ Swaying Charm Deed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Swashbuckler Class Feature.RostlandBravoClassFeatures.SpecialQuality.SwashbucklerDeedsLVL15.Supernatural"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Swashbuckler_Deed_LVL15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "DESC",
+        "value": "A dashing thief eventually becomes truly irresistible. When a dashing thief successfully dazes a creature using her dazing charm deed, she can instead charm the target for 1 day (as per charm monster). Only one creature can be charmed this way at a time; if the dashing thief charms another creature this way, the first charm effect immediately ends."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1083,
+    "record_key": "Dashing Thief ~ Swaying Charm Deed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

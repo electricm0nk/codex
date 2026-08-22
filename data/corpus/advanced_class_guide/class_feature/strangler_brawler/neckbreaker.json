@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Strangler Brawler ~ Neckbreaker",
+    "name": "Neckbreaker",
+    "class": "Brawler",
+    "description": "A strangler can attempt to instantly kill a pinned opponent. This works like the sleeper hold ability, but imposes a -5 penalty on her grapple combat maneuver check. If the opponent succeeds at its Fortitude save, the strangler deals damage as if she had attempted the grapple check to damage her opponent; if the opponent fails its Fortitude save, it dies. Creatures that are immune to critical hits are immune to this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strangler Brawler ~ Neckbreaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Strangler Class Feature.Extraordinary.SpecialQuality.BrawlerAwesomeBlow.BrawlerImprovedAwesomeBlow"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NeckbreakerProgression|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A strangler can attempt to instantly kill a pinned opponent. This works like the sleeper hold ability, but imposes a -5 penalty on her grapple combat maneuver check. If the opponent succeeds at its Fortitude save, the strangler deals damage as if she had attempted the grapple check to damage her opponent; if the opponent fails its Fortitude save, it dies. Creatures that are immune to critical hits are immune to this ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NeckbreakerProgression|1+(BrawlerLVL>19)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2923,
+    "record_key": "Strangler Brawler ~ Neckbreaker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

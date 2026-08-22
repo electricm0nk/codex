@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter ~ Teamwork Feats",
+    "name": "Teamwork Feats",
+    "class": "Hunter",
+    "description": "At 3rd level and every three levels thereafter, the hunter gains a bonus teamwork feat in addition to those gained from normal advancement. The hunter must meet the prerequisites of the selected bonus feat. As a standard action, the hunter can choose to learn a new bonus teamwork feat in place of the most recent bonus teamwork feat she has already learned. In effect, the hunter loses the bonus feat in exchange for the new one. She can only change the most recent teamwork feat gained, and must meet the prerequisites for the newly selected feat. A hunter can change her most recent teamwork feat a number of times per day equal to her Wisdom modifier. Whenever she gains a new teamwork feat, the previous teamwork feat becomes permanent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Teamwork Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterTeamworkFeats.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level and every three levels thereafter, the hunter gains a bonus teamwork feat in addition to those gained from normal advancement. The hunter must meet the prerequisites of the selected bonus feat. As a standard action, the hunter can choose to learn a new bonus teamwork feat in place of the most recent bonus teamwork feat she has already learned. In effect, the hunter loses the bonus feat in exchange for the new one. She can only change the most recent teamwork feat gained, and must meet the prerequisites for the newly selected feat. A hunter can change her most recent teamwork feat a number of times per day equal to her Wisdom modifier. Whenever she gains a new teamwork feat, the previous teamwork feat becomes permanent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1179,
+    "record_key": "Hunter ~ Teamwork Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

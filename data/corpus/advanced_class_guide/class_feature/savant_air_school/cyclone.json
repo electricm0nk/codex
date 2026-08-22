@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant Air School ~ Cyclone",
+    "name": "Cyclone",
+    "class": "Savant Air School",
+    "description": "At 8th level, you can create a vortex of turbulent wind around yourself as a standard action. This vortex has a radius of up to 10 feet and a maximum height of %1 feet. Any ranged attack passing through this vortex automatically misses. Any flying creature moving through the vortex must make a Fly skill check or immediately fall from the sky, taking falling damage (the creature cannot make a Fly check to reduce or negate this damage). Creatures on the ground cannot pass through the vortex without first making a Strength check DC %2. The vortex is faintly visible and can be spotted with a DC 15 Perception skill check. You can use this ability for a %3 rounds per day. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL*10|10+ArcanistSavantSchoolLVL|ArcanistSavantSchoolLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Air School ~ Cyclone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can create a vortex of turbulent wind around yourself as a standard action. This vortex has a radius of up to 10 feet and a maximum height of %1 feet. Any ranged attack passing through this vortex automatically misses. Any flying creature moving through the vortex must make a Fly skill check or immediately fall from the sky, taking falling damage (the creature cannot make a Fly check to reduce or negate this damage). Creatures on the ground cannot pass through the vortex without first making a Strength check DC %2. The vortex is faintly visible and can be spotted with a DC 15 Perception skill check. You can use this ability for a %3 rounds per day. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL*10|10+ArcanistSavantSchoolLVL|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2612,
+    "record_key": "Savant Air School ~ Cyclone"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

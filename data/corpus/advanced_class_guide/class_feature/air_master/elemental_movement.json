@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Air Master ~ Elemental Movement",
+    "name": "Elemental Movement",
+    "class": "Air Master",
+    "description": "You gain a fly speed of 90 feet (average maneuverability).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Air Master ~ Elemental Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.ArcanistArchetype.SpecialQuality.Supernatural.ArcanistExploit15"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a fly speed of 90 feet (average maneuverability)."
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,60"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2464,
+    "record_key": "Air Master ~ Elemental Movement"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

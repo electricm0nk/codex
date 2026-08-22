@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ouat ~ Spurn Tradition",
+    "name": "Spurn Tradition",
+    "class": "Monk",
+    "description": "Ouat dwarves strive to separate themselves from the rest of their race and the traditions that bind them. The bonuses for nonmagical effects that target or specifically affect dwarf subtype creatures (such as a ranger's favored enemy class feature) are all reduced by half. In addition, an Ouat becomes proficient in one martial weapon with the monk property. This ability replaces the dwarf's defensive training, stonecunning, and weapon familiarity racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ouat ~ Spurn Tradition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Monk Class Feature.Ouat Class Feature.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Ouat dwarves strive to separate themselves from the rest of their race and the traditions that bind them. The bonuses for nonmagical effects that target or specifically affect dwarf subtype creatures (such as a ranger's favored enemy class feature) are all reduced by half. In addition, an Ouat becomes proficient in one martial weapon with the monk property. This ability replaces the dwarf's defensive training, stonecunning, and weapon familiarity racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Ouat Weapon Proficiency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 161,
+    "record_key": "Ouat ~ Spurn Tradition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

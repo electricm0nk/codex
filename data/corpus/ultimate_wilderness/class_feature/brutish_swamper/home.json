@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brutish Swamper ~ Home",
+    "name": "Home",
+    "class": "Barbarian",
+    "description": "A brutish swamper gains a +%1 bonus on initiative checks and Knowledge (geography), Perception, Stealth, and Survival checks when in swamps.|BrutishSwamperHomeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brutish Swamper ~ Home"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Features.BrutishSwamperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrutishSwamperHomeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A brutish swamper gains a +%1 bonus on initiative checks and Knowledge (geography), Perception, Stealth, and Survival checks when in swamps.|BrutishSwamperHomeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Knowledge (geography)=In swamps,Perception=In swamps,Stealth=In swamps,Survival=Swamps|BrutishSwamperHomeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrutishSwamperHomeBonus|1+(min(7,(BarbarianLVL+1)/3))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 on initiative in swamps|BrutishSwamperHomeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 192,
+    "record_key": "Brutish Swamper ~ Home"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

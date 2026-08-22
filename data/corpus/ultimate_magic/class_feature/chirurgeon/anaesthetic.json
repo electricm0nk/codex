@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Chirurgeon ~ Anaesthetic",
+    "name": "Anaesthetic",
+    "class": "Alchemist",
+    "description": "You know how to supplement uses of the Heal skill with pain-killing drugs. You gain Skill Focus (Heal) as a bonus feat. Any use of the Heal skill that has a risk of harming the patient (such as extracting a barb) only deals the minimum damage when performed by you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chirurgeon ~ Anaesthetic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You know how to supplement uses of the Heal skill with pain-killing drugs. You gain Skill Focus (Heal) as a bonus feat. Any use of the Heal skill that has a risk of harming the patient (such as extracting a barb) only deals the minimum damage when performed by you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Skill Focus (Heal)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 853,
+    "record_key": "Chirurgeon ~ Anaesthetic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

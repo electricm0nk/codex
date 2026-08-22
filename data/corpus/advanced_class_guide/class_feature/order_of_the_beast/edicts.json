@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Beast ~ ACG ~ Edicts",
+    "name": "Edicts",
+    "class": "Order of the Beast",
+    "description": "An order of the of the beast cavalier must strive to protect nature-including animals and magical beasts-from the encroachment of civilization and from those that seek to harm it. He can slay enraged animals and magical beasts only when attempts to calm or pacify them fail.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Beast ~ ACG ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the of the beast cavalier must strive to protect nature-including animals and magical beasts-from the encroachment of civilization and from those that seek to harm it. He can slay enraged animals and magical beasts only when attempts to calm or pacify them fail."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2967,
+    "record_key": "Order of the Beast ~ ACG ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

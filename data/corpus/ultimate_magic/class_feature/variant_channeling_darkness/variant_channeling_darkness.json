@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Variant Channeling - Darkness",
+    "name": "Variant Channeling - Darkness",
+    "class": null,
+    "description": "Heal - Creatures gain low-light vision until the end of your next turn. At cleric level 5, they gain darkvision 30 feet as well, increasing this range by 30 feet for every 5 cleric levels thereafter. Harm - The illumination level in the area drops by 1 step, as darkness, for 1 minute. At cleric level 10, the light level drops by 2 steps. At cleric level 15, it drops by 3 steps, and areas of dim light or darkness become supernaturally dark (even creatures with darkvision cannot see within it).|ChannelModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VariantChanneling"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal - Creatures gain low-light vision until the end of your next turn. At cleric level 5, they gain darkvision 30 feet as well, increasing this range by 30 feet for every 5 cleric levels thereafter. Harm - The illumination level in the area drops by 1 step, as darkness, for 1 minute. At cleric level 10, the light level drops by 2 steps. At cleric level 15, it drops by 3 steps, and areas of dim light or darkness become supernaturally dark (even creatures with darkvision cannot see within it).|ChannelModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelModifier|min(5,1+floor(ClericChannelEnergyLVL/5))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 202,
+    "record_key": "Variant Channeling - Darkness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ Sharper",
+    "name": "Sharper",
+    "class": "Rogue Archetype",
+    "description": "Sharpers use trickery and deception to part an owner from his valuables. Pathological risk-takers, they distinguish themselves from con artists and burglars by virtue of the simplicity and boldness of their schemes, which are usually impromptu, rather than carefully orchestrated. Many sharpers consider themselves romantic figures and foster the image of a resourceful, dashing rogue living by wits and luck while subverting authority at every turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Sharper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Sharper],[!PREFACT:1,ABILITIES,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_TrapSense=True,Rogue_Archetype_RogueTalent2=True,Rogue_Archetype_RogueTalent4=True,Rogue_Archetype_RogueTalent6=True,Rogue_Archetype_RogueTalent8=True,Rogue_Archetype_RogueTalent10=True,Rogue_Archetype_RogueTalent16=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sharpers use trickery and deception to part an owner from his valuables. Pathological risk-takers, they distinguish themselves from con artists and burglars by virtue of the simplicity and boldness of their schemes, which are usually impromptu, rather than carefully orchestrated. Many sharpers consider themselves romantic figures and foster the image of a resourceful, dashing rogue living by wits and luck while subverting authority at every turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharper ~ Scam Artist|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharper ~ Sticky Fingers|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharper ~ Lucky Save|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sharper ~ Audacious Overconfidence|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent16|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 720,
+    "record_key": "Rogue Archetype ~ Sharper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

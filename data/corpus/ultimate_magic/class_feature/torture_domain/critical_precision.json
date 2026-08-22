@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Torture Domain ~ Critical Precision",
+    "name": "Critical Precision",
+    "class": "Torture Domain",
+    "description": "When you roll a critical threat, you may expend one use of your torturer's touch ability to add +4 on your critical confirmation roll. This does not stack with Critical Focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Torture Domain ~ Critical Precision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When you roll a critical threat, you may expend one use of your torturer's touch ability to add +4 on your critical confirmation roll. This does not stack with Critical Focus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 398,
+    "record_key": "Torture Domain ~ Critical Precision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

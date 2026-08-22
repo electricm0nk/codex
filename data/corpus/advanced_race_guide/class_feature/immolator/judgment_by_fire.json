@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Immolator ~ Judgment by Fire",
+    "name": "Judgment by Fire",
+    "class": "Inquisitor",
+    "description": "An immolator can call fiery judgment down upon a foe during combat. Whenever an immolator uses her judgment ability, she can invoke a judgment by fire on a foe as a swift action. Once declared, the immolator can make a single melee (or ranged attack, if the foe is within 30 feet) against the target. If the attack hits, the attack deals fire damage instead of weapon damage, and the target must make a successful Fortitude save or die (creatures immune to fire do not have to save). The DC of this save is %1. Regardless of whether the save is successful, the target creature is immune to the immolator's judgment by fire ability for 24 hours. Creatures killed in this manner explode in a burst of fire, dealing 10d6 points of fire damage to every creature within 5 feet (Reflex save for half damage, DC %1). Once this ability has been used, it cannot be used again for 1d4 rounds.|10+Inquisitor/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Immolator ~ Judgment by Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An immolator can call fiery judgment down upon a foe during combat. Whenever an immolator uses her judgment ability, she can invoke a judgment by fire on a foe as a swift action. Once declared, the immolator can make a single melee (or ranged attack, if the foe is within 30 feet) against the target. If the attack hits, the attack deals fire damage instead of weapon damage, and the target must make a successful Fortitude save or die (creatures immune to fire do not have to save). The DC of this save is %1. Regardless of whether the save is successful, the target creature is immune to the immolator's judgment by fire ability for 24 hours. Creatures killed in this manner explode in a burst of fire, dealing 10d6 points of fire damage to every creature within 5 feet (Reflex save for half damage, DC %1). Once this ability has been used, it cannot be used again for 1d4 rounds.|10+Inquisitor/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 608,
+    "record_key": "Immolator ~ Judgment by Fire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

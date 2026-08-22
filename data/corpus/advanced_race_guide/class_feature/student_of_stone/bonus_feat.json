@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of Stone ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Monk",
+    "description": "A student of stone adds Elemental Fist (Advanced Player's Guide) to his list of available bonus feats. If the student of stone selects Elemental Fist as a bonus feat, he may only deal acid damage when using the feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Stone ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A student of stone adds Elemental Fist (Advanced Player's Guide) to his list of available bonus feats. If the student of stone selects Elemental Fist as a bonus feat, he may only deal acid damage when using the feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 682,
+    "record_key": "Student of Stone ~ Bonus Feat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

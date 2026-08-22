@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tracker ~ HK",
+    "name": "Tracker",
+    "class": "Tracker",
+    "description": "You can summon a creature to aid you %1/day, either in battle or to track an enemy, as if using a summon monster spell, save that the summoned creature lingers for 1 hour before vanishing. You can summon either an eagle, a riding dog, a wolf, or a leopard.|HKDiscipline|PREVARLT:HellknightLvl,9",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tracker ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.HKAbility.HKOAny"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a creature to aid you %1/day, either in battle or to track an enemy, as if using a summon monster spell, save that the summoned creature lingers for 1 hour before vanishing. You can summon either an eagle, a riding dog, a wolf, or a leopard.|HKDiscipline|PREVARLT:HellknightLvl,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HKDiscipline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 86,
+    "record_key": "Tracker ~ HK"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

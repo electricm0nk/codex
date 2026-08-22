@@ -1,26 +1,100 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Geyser",
-    "school": "Conjuration",
-    "level": 4,
     "description": "You cause a column of boiling water to spring forth from any horizontal surface, knocking over creatures directly over it and exposing nearby creatures to searing droplets as its spray falls back to the ground.  Any creature entering the geyser, or occupying the square it appears in, must make a Reflex saving throw to avoid being hurled into the air and then tossed to the ground. If the creature fails its saving throw, it takes 3d6 points of fire damage from the boiling water and also takes falling damage based upon the height of the geyser (e.g., if the geyser is 50 feet tall, the creature takes 5d6 falling damage), landing prone in a random square adjacent to the geyser. A successful saving throw halves the damage and negates the falling damage, and the creature is moved to the closest square adjacent to the geyser (Large-sized or larger creatures are moved enough so that they are not on top of the geyser but still adjacent to it).  This movement does not provoke attacks of opportunity and does not count toward the creature's normal movement.  In addition, the geyser sprays boiling water in a hemispherical emanation around its square. The radius of this emanation is equal to one-half the geyser's height (e.g., a 50-foot geyser has a 25-foot-radius emanation). Any creature within this area, including yourself, takes 1d6 points of fire damage each round as droplets of boiling water cascade on them.  You can choose to make a smaller geyser than your level permits if an obstruction prevents it from reaching its full height, or if you simply want to create a spread of boiling rain that's smaller than what would be created by a full-height geyser spell.",
-    "full_text": true
+    "full_text": true,
+    "key": "Geyser",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid=4|Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates a geyser of boiling water.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause a column of boiling water to spring forth from any horizontal surface, knocking over creatures directly over it and exposing nearby creatures to searing droplets as its spray falls back to the ground.  Any creature entering the geyser, or occupying the square it appears in, must make a Reflex saving throw to avoid being hurled into the air and then tossed to the ground. If the creature fails its saving throw, it takes 3d6 points of fire damage from the boiling water and also takes falling damage based upon the height of the geyser (e.g., if the geyser is 50 feet tall, the creature takes 5d6 falling damage), landing prone in a random square adjacent to the geyser. A successful saving throw halves the damage and negates the falling damage, and the creature is moved to the closest square adjacent to the geyser (Large-sized or larger creatures are moved enough so that they are not on top of the geyser but still adjacent to it).  This movement does not provoke attacks of opportunity and does not count toward the creature's normal movement.  In addition, the geyser sprays boiling water in a hemispherical emanation around its square. The radius of this emanation is equal to one-half the geyser's height (e.g., a 50-foot geyser has a 25-foot-radius emanation). Any creature within this area, including yourself, takes 1d6 points of fire damage each round as droplets of boiling water cascade on them.  You can choose to make a smaller geyser than your level permits if an obstruction prevents it from reaching its full height, or if you simply want to create a spread of boiling rain that's smaller than what would be created by a full-height geyser spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire|Water"
+      },
+      {
+        "key": "DURATION",
+        "value": "concentration + (CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a piece of lava rock)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex partial (see below)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "WaterSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/geyser.html#_geyser-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "spout of boiling water filling a 5 ft. square and spraying upward ((CASTERLEVEL/2) *10) ft."
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 131,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1966,
-    "record_key": "Geyser"
+    "record_key": "Geyser",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

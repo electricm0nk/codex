@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Desert Druid ~ Dunemeld",
+    "name": "Dunemeld",
+    "class": "Druid",
+    "description": "At 13th level, a desert druid can assume the form of a swirling mass of sand at will. This is equivalent to gaseous form, but the druid gains a land and burrow speed of 10 feet rather than a fly speed. While in this form, the druid gains a circumstance bonus on Stealth checks made in desert terrain equal to her druid level. This ability replaces a thousand faces.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Desert Druid ~ Dunemeld"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary.DruidThousandFaces"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, a desert druid can assume the form of a swirling mass of sand at will. This is equivalent to gaseous form, but the druid gains a land and burrow speed of 10 feet rather than a fly speed. While in this form, the druid gains a circumstance bonus on Stealth checks made in desert terrain equal to her druid level. This ability replaces a thousand faces."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1962,
+    "record_key": "Desert Druid ~ Dunemeld"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Hunter ~ Aura Of Care",
+    "name": "Aura of Care",
+    "class": "Divine Hunter",
+    "description": "At 8th level, a divine hunter and her allies gain a preternatural awareness of each other's position in battle. She and any allies within 10 feet of her no longer provide cover against each other's ranged attacks unless they wish to. Allies who cannot move or otherwise take actions still provide cover, as do flat-footed allies. The divine hunter and her allies must be able to see or hear each other to use this ability. This ability replaces aura of resolve.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Hunter ~ Aura Of Care"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a divine hunter and her allies gain a preternatural awareness of each other's position in battle. She and any allies within 10 feet of her no longer provide cover against each other's ranged attacks unless they wish to. Allies who cannot move or otherwise take actions still provide cover, as do flat-footed allies. The divine hunter and her allies must be able to see or hear each other to use this ability. This ability replaces aura of resolve."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1455,
+    "record_key": "Divine Hunter ~ Aura Of Care"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

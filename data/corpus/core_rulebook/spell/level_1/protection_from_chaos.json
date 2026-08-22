@@ -1,25 +1,95 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like protection from evil, except that the deflection and resistance bonuses apply to attacks made by chaotic creatures. The target receives a new saving throw against control by chaotic creatures and chaotic summoned creatures cannot touch the target.",
     "key": "Protection from Chaos",
-    "school": "Abjuration",
     "level": 1,
-    "description": "This spell functions like protection from evil, except that the deflection and resistance bonuses apply to attacks made by chaotic creatures. The target receives a new saving throw against control by chaotic creatures and chaotic summoned creatures cannot touch the target."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Paladin,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like protection from evil, except that the deflection and resistance bonuses apply to attacks made by chaotic creatures. The target receives a new saving throw against control by chaotic creatures and chaotic summoned creatures cannot touch the target.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell wards a creature from attacks by chaotic creatures, from mental control, and from summoned creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Lawful"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Law=1"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/protectionFromChaos.html#_protection-from-chaos"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.327"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No; see text"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 464,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1214,
-    "record_key": "Protection from Chaos.MOD"
+    "record_key": "Protection from Chaos",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

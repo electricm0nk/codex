@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magic Domain",
+    "name": "Magic",
+    "class": null,
+    "description": "You are a true student of all things mystical, and see divinity in the purity of magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magic Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a true student of all things mystical, and see divinity in the purity of magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Hand of the Acolyte|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Magic)|PREVARGTEQ:DomainMagicAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dispelling Touch|PREVARGTEQ:DomainMagicAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicDC|10+(DomainMagicLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMagicAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Magic=1|Identify|Magic=2|Magic Mouth|Magic=3|Dispel Magic|Magic=4|Imbue with Spell Ability|Magic=5|Spell Resistance|Magic=6|Antimagic Field|Magic=7|Spell Turning|Magic=8|Protection from Spells|Magic=9|Mage's Disjunction"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 671,
+    "record_key": "Magic Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

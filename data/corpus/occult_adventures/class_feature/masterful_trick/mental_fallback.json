@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterful Trick ~ Mental Fallback",
+    "name": "Mental Fallback",
+    "class": "Masterful Trick",
+    "description": "Mental commands placed deep in the subject's mind trigger when she would fall under mind control, allowing the mesmerist to control her instead. The mesmerist can trigger this trick when the subject is affected by a charm or compulsion effect created by an enemy. The subject acts as thought the mesmerist had cast the spell instead of the enemy. For instance, if the subject were affected by charm monster cast by an enemy, that enemy can't try to give her orders, but the mesmerist could. If the charm or compulsion causes penalties or conditions (such as those imposed by confusion, crushing despair, or hold person), the subject can ignore any of those penalties or conditions the mesmerist chooses. This trick overrides the charm or compulsion for %1 rounds or until the duration of the triggering effect elapses, whichever comes first. The mesmerist can't implant this trick on himself. (Masterful Trick)|MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterful Trick ~ Mental Fallback"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mesmerist ~ Masterful Tricks"
+      },
+      {
+        "key": "DESC",
+        "value": "Mental commands placed deep in the subject's mind trigger when she would fall under mind control, allowing the mesmerist to control her instead. The mesmerist can trigger this trick when the subject is affected by a charm or compulsion effect created by an enemy. The subject acts as thought the mesmerist had cast the spell instead of the enemy. For instance, if the subject were affected by charm monster cast by an enemy, that enemy can't try to give her orders, but the mesmerist could. If the charm or compulsion causes penalties or conditions (such as those imposed by confusion, crushing despair, or hold person), the subject can ignore any of those penalties or conditions the mesmerist chooses. This trick overrides the charm or compulsion for %1 rounds or until the duration of the triggering effect elapses, whichever comes first. The mesmerist can't implant this trick on himself. (Masterful Trick)|MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 972,
+    "record_key": "Masterful Trick ~ Mental Fallback"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

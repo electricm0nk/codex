@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master of Disguise ~ Grandmaster of Disguise",
+    "name": "Grandmaster of Disguise",
+    "class": "Rogue",
+    "description": "A master of disguise gains the master of disguise APG advanced rogue talent and can use it an unlimited number of times per day. Because she must still don a physical disguise to gain this bonus, it doesn't stack with the bonuses from spells like alter self and disguise self, but since it is completely nonmagical, it is more reliable when scrutinized under magical detection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master of Disguise ~ Grandmaster of Disguise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.MasterOfDisguiseClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A master of disguise gains the master of disguise APG advanced rogue talent and can use it an unlimited number of times per day. Because she must still don a physical disguise to gain this bonus, it doesn't stack with the bonuses from spells like alter self and disguise self, but since it is completely nonmagical, it is more reliable when scrutinized under magical detection."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rogue Talent ~ Master of Disguise"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 746,
+    "record_key": "Master of Disguise ~ Grandmaster of Disguise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

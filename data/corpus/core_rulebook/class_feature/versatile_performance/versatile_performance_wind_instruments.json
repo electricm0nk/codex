@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Versatile Performance ~ Wind Instruments",
+    "name": "Versatile Performance (Wind Instruments)",
+    "class": "Versatile Performance",
+    "description": "You can use your bonus in the Perform (Wind Instruments) skill in place of your bonus in the Diplomacy or Handle Animal skills. When substituting in this way, you use your total Perform (Wind Instruments) skill bonus, including class skill bonus, in place of your Diplomacy or Handle Animal skill bonus, whether or not you have ranks in that skill or if it is a class skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Versatile Performance ~ Wind Instruments"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.VersatilePerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your bonus in the Perform (Wind Instruments) skill in place of your bonus in the Diplomacy or Handle Animal skills. When substituting in this way, you use your total Perform (Wind Instruments) skill bonus, including class skill bonus, in place of your Diplomacy or Handle Animal skill bonus, whether or not you have ranks in that skill or if it is a class skill."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy (Perform (Wind Instruments))|var(\"SKILL.Perform (Wind Instruments).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Handle Animal (Perform (Wind Instruments))|var(\"SKILL.Perform (Wind Instruments).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Diplomacy (Perform (Wind Instruments))|skillinfo(\"TOTALRANK\", \"Perform (Wind Instruments)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Versatile Performance ~ Wind Instruments"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Handle Animal (Perform (Wind Instruments))|skillinfo(\"TOTALRANK\", \"Perform (Wind Instruments)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Versatile Performance ~ Wind Instruments"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 557,
+    "record_key": "Versatile Performance ~ Wind Instruments"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

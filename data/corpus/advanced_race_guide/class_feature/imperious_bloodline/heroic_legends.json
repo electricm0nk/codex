@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Imperious Bloodline ~ Heroic Legends",
+    "name": "Heroic Legends",
+    "class": "Imperious Bloodline",
+    "description": "You may inspire greatness or inspire heroics as a bard of %1th level by sacrificing a spell slot as a swift or move action. The effect lasts a number of rounds equal to the sacrificed spell's level; this duration is doubled for human recipients.|Sorcerer_Imperious_BloodlinePower15LVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imperious Bloodline ~ Heroic Legends"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Imperious Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Imperious"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Imperious_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Imperious_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may inspire greatness or inspire heroics as a bard of %1th level by sacrificing a spell slot as a swift or move action. The effect lasts a number of rounds equal to the sacrificed spell's level; this duration is doubled for human recipients.|Sorcerer_Imperious_BloodlinePower15LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ImperiousBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 25,
+    "record_key": "Imperious Bloodline ~ Heroic Legends"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

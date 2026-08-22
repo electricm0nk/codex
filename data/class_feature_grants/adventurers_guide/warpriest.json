@@ -1,0 +1,77 @@
+[
+  {
+    "key": "Mantis Zealot ~ Aspect of the Mantis",
+    "class": "Warpriest",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1118
+    }
+  },
+  {
+    "key": "Mantis Zealot ~ Mantis Sworn",
+    "class": "Warpriest",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1118
+    }
+  },
+  {
+    "key": "Mantis Zealot ~ Sacred Reflexes",
+    "class": "Warpriest",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1118
+    }
+  },
+  {
+    "key": "Mantis Zealot ~ Sneak Attack",
+    "class": "Warpriest",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1118
+    }
+  },
+  {
+    "key": "Mantis Zealot ~ Weapon and Armor Proficiency",
+    "class": "Warpriest",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1118
+    }
+  }
+]

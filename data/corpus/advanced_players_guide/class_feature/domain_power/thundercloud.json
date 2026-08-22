@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Thundercloud",
+    "name": "Thundercloud",
+    "class": "Domain Power",
+    "description": "At 8th level, you can, as a standard action, summon a storm cloud. This power functions as fog cloud except that creatures inside the cloud are deafened and take 2d6 points of electricity damage each round from the flashes of thunder and lightning. Once created, you can concentrate on the cloud to move it up to 30 feet each round. You can use this ability %1 rounds per day. These rounds do not need to be consecutive.|DomainAirLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Thundercloud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can, as a standard action, summon a storm cloud. This power functions as fog cloud except that creatures inside the cloud are deafened and take 2d6 points of electricity damage each round from the flashes of thunder and lightning. Once created, you can concentrate on the cloud to move it up to 30 feet each round. You can use this ability %1 rounds per day. These rounds do not need to be consecutive.|DomainAirLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainAirLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1823,
+    "record_key": "Domain Power ~ Thundercloud"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

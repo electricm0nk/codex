@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Shield ~ Protect the Meek",
+    "name": "Protect the Meek",
+    "class": "Order of the Shield",
+    "description": "At 15th level, the cavalier can move to intercept foes. As an immediate action, he can move up to his speed (or his mount's speed, if mounted) and make a single melee attack. This movement provokes attacks of opportunity as normal. The cavalier must end his movement adjacent to an enemy. On his next turn, the cavalier is staggered and cannot use this ability again for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Shield ~ Protect the Meek"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, the cavalier can move to intercept foes. As an immediate action, he can move up to his speed (or his mount's speed, if mounted) and make a single melee attack. This movement provokes attacks of opportunity as normal. The cavalier must end his movement adjacent to an enemy. On his next turn, the cavalier is staggered and cannot use this ability again for 1 round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 267,
+    "record_key": "Order of the Shield ~ Protect the Meek"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

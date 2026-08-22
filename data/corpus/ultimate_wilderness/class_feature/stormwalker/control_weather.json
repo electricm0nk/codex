@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stormwalker ~ Control Weather",
+    "name": "Control Weather",
+    "class": "Ranger",
+    "description": "A stormwalker can cast control weather as a spell-like ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormwalker ~ Control Weather"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=RangerLVL|Control Weather"
+      },
+      {
+        "key": "DESC",
+        "value": "A stormwalker can cast control weather as a spell-like ability once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 918,
+    "record_key": "Stormwalker ~ Control Weather"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

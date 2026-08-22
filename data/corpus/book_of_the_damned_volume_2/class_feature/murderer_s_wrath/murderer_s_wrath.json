@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Murderer's Wrath ~ Shax",
+    "name": "Murderer's Wrath",
+    "class": "Murderer's Wrath",
+    "description": "You gain sneak attack +3d6. This increase to sneak attack damage stacks with sneak attack damage you may have from other sources. Whenever you inflict sneak attack damage with a slashing weapon, you inflict +2 points of damage per sneak attack dice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Murderer's Wrath ~ Shax"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain sneak attack +3d6. This increase to sneak attack damage stacks with sneak attack damage you may have from other sources. Whenever you inflict sneak attack damage with a slashing weapon, you inflict +2 points of damage per sneak attack dice."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 177,
+    "record_key": "Murderer's Wrath ~ Shax"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Giant Frilled Lizard ~ Intimidating Charge",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:lizard_giant_frilled"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Intimidating Charge"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|IntimidatingChargeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IntimidatingChargeDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IntimidatingChargeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Intimidating Charge)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IntimidatingChargeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a giant frilled lizard charges, it hisses ferociously, extends its neck frills, and darts forward on its hind legs, increasing its base speed to 50 feet for that round. In addition to the normal effects of a charge, the creature charged must make a DC %1 Will save or be shaken for 1d6 rounds. This is a fear effect.|IntimidatingChargeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Frilled Lizard ~ Intimidating Charge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.194",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 863,
-    "record_key": "Giant Frilled Lizard ~ Intimidating Charge"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 863,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Giant Frilled Lizard ~ Intimidating Charge",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

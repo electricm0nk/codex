@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Soul Sentinel ~ Reprieve",
+    "name": "Reprieve",
+    "class": "Paladin",
+    "description": "A soul sentinel relieves manic and tortured souls exposed to the harsh evil of the world. When the soul sentinel uses her lay on hands ability to heal a living creature, she can remove confusion effects in place of applying one of her other mercies. If used on a creature suffering from a permanent confusion effect, this removes the effect for only 1 minute.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soul Sentinel ~ Reprieve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.SoulSentinelClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "A soul sentinel relieves manic and tortured souls exposed to the harsh evil of the world. When the soul sentinel uses her lay on hands ability to heal a living creature, she can remove confusion effects in place of applying one of her other mercies. If used on a creature suffering from a permanent confusion effect, this removes the effect for only 1 minute."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 189,
+    "record_key": "Soul Sentinel ~ Reprieve"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

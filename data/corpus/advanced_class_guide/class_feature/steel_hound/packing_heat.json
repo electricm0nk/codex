@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Steel Hound ~ Packing Heat",
+    "name": "Packing Heat",
+    "class": "Investigator",
+    "description": "At 2nd level, the steel hound gains both the Amateur Gunslinger and Gunsmithing feats as bonus feats. He also gains a battered gun identical to the one gained by the gunslinger. This ability replaces poison lore.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steel Hound ~ Packing Heat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Steel Hound Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, the steel hound gains both the Amateur Gunslinger and Gunsmithing feats as bonus feats. He also gains a battered gun identical to the one gained by the gunslinger. This ability replaces poison lore."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Gunsmithing"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Amateur Gunslinger|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3349,
+    "record_key": "Steel Hound ~ Packing Heat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

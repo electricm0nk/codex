@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master Chymist ~ Bomb-Thrower",
+    "name": "Bomb-Thrower",
+    "class": "Master Chymist",
+    "description": "The destructive power of bombs appeals to the violent urges of a master chymist. Add the character's alchemist and master chymist levels together to determine the damage done by her bombs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Chymist ~ Bomb-Thrower"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The destructive power of bombs appeals to the violent urges of a master chymist. Add the character's alchemist and master chymist levels together to determine the damage done by her bombs."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombLVL|MasterChymistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1363,
+    "record_key": "Master Chymist ~ Bomb-Thrower"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

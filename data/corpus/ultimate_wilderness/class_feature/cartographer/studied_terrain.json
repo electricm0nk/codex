@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cartographer ~ Studied Terrain",
+    "name": "Studied Terrain",
+    "class": "Investigator",
+    "description": "A cartographer can expend one use of inspiration to sketch a map and take notes of his surroundings. Drawing the map takes 10 minutes. While he is within the studied area, the cartographer can use inspiration on Acrobatics, Climb, Fly, Ride, Stealth, Survival, and Swim checks without expending a use of inspiration, provided he is trained in the skill. If he already has the ability to use inspiration on any of these skills without expending a use of inspiration, he gains an additional +1 bonus on checks with that skill while in the studied area. A cartographer can draw three types of maps. He cannot combine different map types in the same map, and areas within range that would belong in the other categories are excluded. Much like alchemy, cartography requires materials, but the cost of those materials is negligible. However, knowing an area so well as to gain these benefits requires more than just paper and ink-a great deal of memorization and a bit of inspiration are also required. For this reason, a cartographer can maintain these benefits in only one area at a time. The benefits remain in effect until the cartographer studies a new area or refreshes his inspiration pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cartographer ~ Studied Terrain"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cartographer_Studied_Terrain_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.CartographerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A cartographer can expend one use of inspiration to sketch a map and take notes of his surroundings. Drawing the map takes 10 minutes. While he is within the studied area, the cartographer can use inspiration on Acrobatics, Climb, Fly, Ride, Stealth, Survival, and Swim checks without expending a use of inspiration, provided he is trained in the skill. If he already has the ability to use inspiration on any of these skills without expending a use of inspiration, he gains an additional +1 bonus on checks with that skill while in the studied area. A cartographer can draw three types of maps. He cannot combine different map types in the same map, and areas within range that would belong in the other categories are excluded. Much like alchemy, cartography requires materials, but the cost of those materials is negligible. However, knowing an area so well as to gain these benefits requires more than just paper and ink-a great deal of memorization and a bit of inspiration are also required. For this reason, a cartographer can maintain these benefits in only one area at a time. The benefits remain in effect until the cartographer studies a new area or refreshes his inspiration pool."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cartographer ~ Dungeon Map"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cartographer ~ Overland Map"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cartographer ~ Town Map"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 736,
+    "record_key": "Cartographer ~ Studied Terrain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

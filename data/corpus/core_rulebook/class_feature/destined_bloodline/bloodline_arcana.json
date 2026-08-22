@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Destined Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Destined Bloodline",
+    "description": "Whenever you cast a spell with a range of \"personal,\" you gain a luck bonus equal to the spell's level on all your saving throws for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destined Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell with a range of \"personal,\" you gain a luck bonus equal to the spell's level on all your saving throws for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(gain luck bonus to saves when casting personal-range spells)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2423,
+    "record_key": "Destined Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

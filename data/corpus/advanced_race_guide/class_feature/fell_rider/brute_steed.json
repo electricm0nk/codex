@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fell Rider ~ Brute Steed",
+    "name": "Brute Steed",
+    "class": "Cavalier",
+    "description": "A fell rider's mount is unusually large and fierce. It gains a +2 bonus to Strength, but takes a -2 penalty to Dexterity. This otherwise works like the cavalier's mount ability and alters that ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fell Rider ~ Brute Steed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CavalierMountLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A fell rider's mount is unusually large and fierce. It gains a +2 bonus to Strength, but takes a -2 penalty to Dexterity. This otherwise works like the cavalier's mount ability and alters that ability."
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Cavalier Mount|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Cavalier Mount|Brute Steed (Camel),Brute Steed (Horse)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 570,
+    "record_key": "Fell Rider ~ Brute Steed"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

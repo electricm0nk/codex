@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Disenchanter ~ Banish Enchantment",
+    "name": "Banish Enchantment",
+    "class": "Warpriest",
+    "description": "A disenchanter learns to focus his mystic interference. As a standard action, he can consume two uses of his fervor ability to target a single creature within 30 feet with a targeted dispel magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Disenchanter ~ Banish Enchantment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Disenchanter Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A disenchanter learns to focus his mystic interference. As a standard action, he can consume two uses of his fervor ability to target a single creature within 30 feet with a targeted dispel magic."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3960,
+    "record_key": "Disenchanter ~ Banish Enchantment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Impervious Messenger",
+    "name": "Impervious Messenger",
+    "class": "Bard Archetype",
+    "description": "The impervious messenger is capable of harnessing the unique qualities of bardic magic to keep, transport, and communicate the most precious of secrets and messages, even when subject to the most vigorous forms of observation, be they magical or mundane.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Impervious Messenger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Impervious Messenger],[!PREFACT:1,ABILITIES,Bard_Archetype_Fascinate=True,Bard_Archetype_Suggestion=True,Bard_Archetype_MassSuggestion=True,Bard_Archetype_DirgeOfDoom=True,Bard_Archetype_FrighteningTune=True,Bard_Archetype_BardicKnowledge=True,Bard_Archetype_WellVersed=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The impervious messenger is capable of harnessing the unique qualities of bardic magic to keep, transport, and communicate the most precious of secrets and messages, even when subject to the most vigorous forms of observation, be they magical or mundane."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Chant of Perfect Recall|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Impervious Messenger ~ Cryptic Whisper|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Song of Subterfuge|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Unbroken Stride|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 220,
+    "record_key": "Bard Archetype ~ Impervious Messenger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

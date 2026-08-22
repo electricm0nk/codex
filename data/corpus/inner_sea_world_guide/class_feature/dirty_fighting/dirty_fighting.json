@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dirty Fighting ~ Low",
+    "name": "Dirty Fighting",
+    "class": "Dirty Fighting",
+    "description": "You meld the stately forms of combat with a down-and-dirty style; no trick is beneath you. You never take a non-proficiency penalty on attack rolls with improvised weapons and you gain a +2 bonus on all combat maneuver checks. In addition, whenever you land a critical hit, you may choose to apply a random effect rather than dealing extra damage [d6: 1 - staggered 1 rnd; 2 - nauseated 1 rnd; 3 - deafened 1 rnd; 4 - blinded 1 rnd; 5 - sickened 1 min; 6 - fatigued]; these durations are doubled if the crit multiplier is x3, and tripled if it is x4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dirty Fighting ~ Low"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You meld the stately forms of combat with a down-and-dirty style; no trick is beneath you. You never take a non-proficiency penalty on attack rolls with improvised weapons and you gain a +2 bonus on all combat maneuver checks. In addition, whenever you land a critical hit, you may choose to apply a random effect rather than dealing extra damage [d6: 1 - staggered 1 rnd; 2 - nauseated 1 rnd; 3 - deafened 1 rnd; 4 - blinded 1 rnd; 5 - sickened 1 min; 6 - fatigued]; these durations are doubled if the crit multiplier is x3, and tripled if it is x4."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 134,
+    "record_key": "Dirty Fighting ~ Low"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

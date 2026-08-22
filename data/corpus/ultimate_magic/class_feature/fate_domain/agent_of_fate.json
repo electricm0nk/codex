@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fate Domain ~ Agent of Fate",
+    "name": "Agent of Fate",
+    "class": "Fate Domain",
+    "description": "When you use your augury spell-like ability, you gain a benefit that lasts until the end of your next combat. If the result was \"weal,\" all curing effects used on you cure an additional +1d10 hit points. If the result was \"woe,\" your melee attacks deal an additional +1d6 points of damage. If the result is \"weal and woe\" or \"nothing,\" you gain a +2 insight bonus to your Armor Class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fate Domain ~ Agent of Fate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use your augury spell-like ability, you gain a benefit that lasts until the end of your next combat. If the result was \"weal,\" all curing effects used on you cure an additional +1d10 hit points. If the result was \"woe,\" your melee attacks deal an additional +1d6 points of damage. If the result is \"weal and woe\" or \"nothing,\" you gain a +2 insight bonus to your Armor Class."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|2|TYPE=Insight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 356,
+    "record_key": "Fate Domain ~ Agent of Fate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Woodland Sniper ~ Ranged Sneak Attack",
+    "name": "Ranged Sneak Attack",
+    "class": "Slayer",
+    "description": "Whenever a woodland sniper makes a ranged attack against a creature within %1 feet that is denied its Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not), he deals an additional %2d6 points of damage. Should the woodland sniper score a critical hit with his ranged attack, this additional damage is not multiplied. A woodland sniper cannot use sneak attack with a melee attack. This alters sneak attack.|WoodlandSniperSARange|SlayerSneakAttackLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Woodland Sniper ~ Ranged Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.WoodlandSniperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodlandSniperSARange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a woodland sniper makes a ranged attack against a creature within %1 feet that is denied its Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not), he deals an additional %2d6 points of damage. Should the woodland sniper score a critical hit with his ranged attack, this additional damage is not multiplied. A woodland sniper cannot use sneak attack with a melee attack. This alters sneak attack.|WoodlandSniperSARange|SlayerSneakAttackLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodlandSniperSARange|20+(10*(SlayerLVL/3))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1169,
+    "record_key": "Woodland Sniper ~ Ranged Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

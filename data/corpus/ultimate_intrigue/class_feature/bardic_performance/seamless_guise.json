@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Seamless Guise",
+    "name": "Seamless Guise",
+    "class": "Bard",
+    "description": "A masked performer learns to behave in a way that appears perfectly proper and normal for her current role, on stage or off. She can maintain this performance for 1 hour for every 3 rounds of bardic performance she spends. While this performance is active, she receives a +10 bonus on Disguise and Perform (act) checks to remain in character after she has already established her character. For instance, this bonus does not apply against the initial Perception check when meeting a creature paying attention to her but does apply on the automatic additional Perception check each hour of interacting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Seamless Guise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MaskedPerformerClassFeatures.SpecialQuality.Extraordinary.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "A masked performer learns to behave in a way that appears perfectly proper and normal for her current role, on stage or off. She can maintain this performance for 1 hour for every 3 rounds of bardic performance she spends. While this performance is active, she receives a +10 bonus on Disguise and Perform (act) checks to remain in character after she has already established her character. For instance, this bonus does not apply against the initial Perception check when meeting a creature paying attention to her but does apply on the automatic additional Perception check each hour of interacting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 238,
+    "record_key": "Bardic Performance ~ Seamless Guise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

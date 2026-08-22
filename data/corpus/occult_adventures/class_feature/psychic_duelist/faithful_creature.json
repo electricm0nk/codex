@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Duelist ~ Faithful Creature",
+    "name": "Faithful Creature",
+    "class": "Psychic",
+    "description": "When she manifests a thoughtform creature, the psychic duelist can spend 1 point from her phrenic pool to give that creature the ability to persist even if it doesn't attack. She can concentrate to maintain the creature as a swift action instead of as a full-round action, but the creature can attack only if the psychic duelist concentrates as a full-round action. In addition, the psychic backlash damage from that thought-form creature is halved. This amplification can be linked only to thoughtform creature manifestations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Duelist ~ Faithful Creature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Duelist Class Feature.Psychic Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When she manifests a thoughtform creature, the psychic duelist can spend 1 point from her phrenic pool to give that creature the ability to persist even if it doesn't attack. She can concentrate to maintain the creature as a swift action instead of as a full-round action, but the creature can attack only if the psychic duelist concentrates as a full-round action. In addition, the psychic backlash damage from that thought-form creature is halved. This amplification can be linked only to thoughtform creature manifestations."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1604,
+    "record_key": "Psychic Duelist ~ Faithful Creature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

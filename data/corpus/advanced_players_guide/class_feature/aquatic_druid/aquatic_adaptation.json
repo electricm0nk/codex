@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aquatic Druid ~ Aquatic Adaptation",
+    "name": "Aquatic Adaptation",
+    "class": "Druid",
+    "description": "At 2nd level, an aquatic druid gains an insight bonus on Initiative checks and Knowledge (geography), Perception, Stealth, Survival, and Swim checks equal to 1/2 her druid level in aquatic terrain, and she cannot be tracked such environments. This ability replaces woodland stride.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aquatic Druid ~ Aquatic Adaptation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeAquaticDruid.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an aquatic druid gains an insight bonus on Initiative checks and Knowledge (geography), Perception, Stealth, Survival, and Swim checks equal to 1/2 her druid level in aquatic terrain, and she cannot be tracked such environments. This ability replaces woodland stride."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|INITIATIVE|min(1,DruidLVL)|TYPE=Insight"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Knowledge (Geography),Perception,Stealth,Survival,Swim|min(1,DruidLVL)|TYPE=Insight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1910,
+    "record_key": "Aquatic Druid ~ Aquatic Adaptation"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

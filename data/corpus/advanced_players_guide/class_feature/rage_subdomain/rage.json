@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Subdomain ~ Rage",
+    "name": "Rage",
+    "class": "Rage Subdomain",
+    "description": "At 8th level, you can enter a fearsome rage, like a barbarian, %1 rounds per day. At 12th and 16th level, you can select one rage power. You cannot select any rage power that possesses a level requirement, but otherwise your barbarian level is %2. These rounds of rage stack with any rounds of rage you might have from levels of barbarian.|DomainDestructionLVL|DomainDestructionLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Subdomain ~ Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can enter a fearsome rage, like a barbarian, %1 rounds per day. At 12th and 16th level, you can select one rage power. You cannot select any rage power that possesses a level requirement, but otherwise your barbarian level is %2. These rounds of rage stack with any rounds of rage you might have from levels of barbarian.|DomainDestructionLVL|DomainDestructionLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1793,
+    "record_key": "Rage Subdomain ~ Rage"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

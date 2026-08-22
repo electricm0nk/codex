@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Commander ~ Battle Tactician",
+    "name": "Battle Tactician",
+    "class": "Warpriest",
+    "description": "A divine commander gains a teamwork feat as a bonus feat. She must meet the prerequisites for this feat. As a standard action, the divine commander can grant this feat to all allies within 30 feet who can see and hear her. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. The divine commander can use this ability|3+floor((WarpriestLVL-1)/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Commander ~ Battle Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine Commander Class Feature.Warpriest Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine commander gains a teamwork feat as a bonus feat. She must meet the prerequisites for this feat. As a standard action, the divine commander can grant this feat to all allies within 30 feet who can see and hear her. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. The divine commander can use this ability|3+floor((WarpriestLVL-1)/2)"
+      },
+      {
+        "key": "DESC",
+        "value": " once per day.|PREVARLT:WarpriestLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": " twice per day.|PREVARLT:WarpriestLVL,15|PREVARGTEQ:WarpriestLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": " three times per day.|PREVARGTEQ:WarpriestLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Divine Commander Teamwork Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3979,
+    "record_key": "Divine Commander ~ Battle Tactician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

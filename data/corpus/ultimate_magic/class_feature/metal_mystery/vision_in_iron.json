@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Mystery ~ Vision in Iron",
+    "name": "Vision in Iron",
+    "class": "Metal Mystery",
+    "description": "You can use any piece of polished metal at least the size of a dagger as a scrying device, as if using the spell scrying. You can scry for %1 rounds per day; these rounds do not need to be consecutive.|VisionInIronDuration|!PRECLASS:1,Oracle=15",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Vision in Iron"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.MetalRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VisionInIronDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use any piece of polished metal at least the size of a dagger as a scrying device, as if using the spell scrying. You can scry for %1 rounds per day; these rounds do not need to be consecutive.|VisionInIronDuration|!PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use any piece of polished metal at least the size of a dagger as a scrying device, as if using the spell greater scrying. You can scry for %1 rounds per day; these rounds do not need to be consecutive.|VisionInIronDuration|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VisionInIronDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 491,
+    "record_key": "Metal Mystery ~ Vision in Iron"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

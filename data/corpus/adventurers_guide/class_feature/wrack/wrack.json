@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wrack ~ HK",
+    "name": "Wrack",
+    "class": "Wrack",
+    "description": "You may make a touch attack %1/day as a standard action to cause a creature to suffer incredible pain. The creature touched takes 1d6+%2 points of damage, and must make a Will save (DC %3) to avoid being staggered for 1d4 rounds.|HKDiscipline|CHA|HKDisciplineDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wrack ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.HKAbility.HKOAny"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "DESC",
+        "value": "You may make a touch attack %1/day as a standard action to cause a creature to suffer incredible pain. The creature touched takes 1d6+%2 points of damage, and must make a Will save (DC %3) to avoid being staggered for 1d4 rounds.|HKDiscipline|CHA|HKDisciplineDC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HKDiscipline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 217,
+    "record_key": "Wrack ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

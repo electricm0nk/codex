@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Bloodline ~ Fleeting Glance",
+    "name": "Fleeting Glance",
+    "class": "Fey Bloodline",
+    "description": "You can turn invisible for %1 rounds per day. This ability functions as greater invisibility. These rounds need not be consecutive.|Sorcerer_FeyFleetingGlance_Time",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Bloodline ~ Fleeting Glance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Fey Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Fey"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Fey_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Fey_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_FeyFleetingGlance_Time|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can turn invisible for %1 rounds per day. This ability functions as greater invisibility. These rounds need not be consecutive.|Sorcerer_FeyFleetingGlance_Time"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_FeyFleetingGlance_Time|Sorcerer_Fey_BloodlinePower9LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_FeyFleetingGlance_Time"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|FeyBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2519,
+    "record_key": "Fey Bloodline ~ Fleeting Glance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

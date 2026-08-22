@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Confusion Bomb",
+    "name": "Confusion Bomb*",
+    "class": "Discovery",
+    "description": "Your bombs twist the target's perception of friend and foe. A creature that takes a direct hit from a confusion bomb takes damage from the bomb and is under the effect of a Confusion spell for %1 rounds. Reduce the amount of normal damage dealt by the bomb by 2d6 (so a bomb that would normally deal 6d6+4 points of damage deals 4d6+4 points of damage instead).|ConfusionBombDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Confusion Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.AlchemistDiscovery.Supernatural.AlchemistBombModifier"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConfusionBombDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your bombs twist the target's perception of friend and foe. A creature that takes a direct hit from a confusion bomb takes damage from the bomb and is under the effect of a Confusion spell for %1 rounds. Reduce the amount of normal damage dealt by the bomb by 2d6 (so a bomb that would normally deal 6d6+4 points of damage deals 4d6+4 points of damage instead).|ConfusionBombDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConfusionBombDuration|AlchemistDiscoveryLVL+charbonusto(\"PCLEVEL\",\"Alchemist\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 147,
+    "record_key": "Discovery ~ Confusion Bomb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Charnel Colossus ~ Voice of the Ancients",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "inner_sea_bestiary:monster:charnel_colossus"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Voice of the Ancients"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoiceOfTheAncientsDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoiceOfTheAncientsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Voice of the Ancients)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoiceOfTheAncientsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any one creature within 100 ft must make DC 34 Will save or be paralyzed as per Hold Monster. [DC %1]|VoiceOfTheAncientsDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Charnel Colossus ~ Voice of the Ancients"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.10",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 69,
-    "record_key": "Charnel Colossus ~ Voice of the Ancients"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 69,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Charnel Colossus ~ Voice of the Ancients",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

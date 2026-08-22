@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Menhir Savant",
+    "name": "Menhir Savant",
+    "class": "Druid Archetype",
+    "description": "Some druids study the paths of nature's power through the nodes and ley lines that connect standing stones and megalithic circles, learning to tap into their energies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Menhir Savant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidNatureSense.DruidWildEmpathy.DruidWoodlandStride.DruidTracklessStep.DruidThousandFaces"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Menhir Savant],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureSense,TYPE.DruidWildEmpathy,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidThousandFaces]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some druids study the paths of nature's power through the nodes and ley lines that connect standing stones and megalithic circles, learning to tap into their energies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Menhir Savant ~ Spirit Sense|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Menhir Savant ~ Place Magic|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Menhir Savant ~ Walk the Lines|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Menhir Savant ~ Empty Body|PRECLASS:1,Druid=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1089,
+    "record_key": "Druid Archetype ~ Menhir Savant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

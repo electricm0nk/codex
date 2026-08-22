@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Mystery ~ Dance of the Blades",
+    "name": "Dance of the Blades",
+    "class": "Metal Mystery",
+    "description": "Your base speed increases by 10 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Dance of the Blades"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.MetalRevelation.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DanceOfTheBladesBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your base speed increases by 10 feet."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on attack rolls with a metal weapon in any round in which you move at least 10 feet.|DanceOfTheBladesBonus|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can maneuver your weapon to create a shield of whirling steel around yourself until the start of your next turn; non-incorporeal melee and ranged attacks against you have a 20%% miss chance while the shield is active.|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "DESC",
+        "value": "You must be wielding a metal weapon to use this ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|10|PREEQUIP:1,TYPE=Weapon.Metal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DanceOfTheBladesBonus|(classlevel(\"Oracle\")-3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 482,
+    "record_key": "Metal Mystery ~ Dance of the Blades"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

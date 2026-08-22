@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Crossbow Mastery",
+    "name": "Crossbow Mastery",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can load crossbows with blinding speed and even fire them in melee with little fear of reprisal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Crossbow Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Point-Blank Shot,Rapid Reload,Rapid Shot"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,15],[PREVARGTEQ:FeatDexRequirement,15]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can load crossbows with blinding speed and even fire them in melee with little fear of reprisal."
+      },
+      {
+        "key": "DESC",
+        "value": " The time required for you to reload any type of crossbow is reduced to a free action, regardless of the type of crossbow used. You can fire a crossbow as many times in a full attack action as you could attack if you were using a bow. Reloading a crossbow for the type of crossbow you chose when you took Rapid Reload no longer provokes attacks of opportunity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Crossbow Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4322,
+    "record_key": "Warpriest Bonus Feat ~ Crossbow Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

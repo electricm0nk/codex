@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Yellow Musk Zombie ~ Pollen Spray",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, a yellow musk creeper can spray a cloud of pollen at a single creature within 30 feet. It must make a +4 ranged touch attack to strike the target, who must then succeed on a DC %1 Will save or be entranced for 1d6 rounds. An entranced creature can take no action other than to move at its normal speed into a space within the yellow musk creeper's reach, at which point an entranced creature remains motionless and allows the creeper to insert tendrils into its brain.",
+    "description_variables": [
+      "PollenSprayDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:yellow_musk_zombie_pollen_spray",
+    "name": "Pollen Spray",
+    "owners": [
+      "beastiary:monster:yellow_musk_creeper"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Pollen Spray"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|PollenSprayDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PollenSprayDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PollenSprayDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Pollen Spray)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PollenSprayDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a yellow musk creeper can spray a cloud of pollen at a single creature within 30 feet. It must make a +4 ranged touch attack to strike the target, who must then succeed on a DC %1 Will save or be entranced for 1d6 rounds. An entranced creature can take no action other than to move at its normal speed into a space within the yellow musk creeper's reach, at which point an entranced creature remains motionless and allows the creeper to insert tendrils into its brain.|PollenSprayDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Yellow Musk Zombie ~ Pollen Spray"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.285"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.285",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1279,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Yellow Musk Zombie ~ Pollen Spray",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

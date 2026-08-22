@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Nature's Ally",
+    "name": "Nature's Ally",
+    "class": "Inquisitor",
+    "description": "The Green Faith marshal gains the ability to cast commune with nature once per week.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Nature's Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.GreenFaithMarshalClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=Week|CASTERLEVEL=TL|Commune with Nature"
+      },
+      {
+        "key": "DESC",
+        "value": "The Green Faith marshal gains the ability to cast commune with nature once per week."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 771,
+    "record_key": "Green Faith Marshal ~ Nature's Ally"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Divine Tracker ~ Alignment",
+    "name": "Alignment",
+    "class": "Ranger",
+    "description": "A divine tracker's alignment must be within one step of his deity's, along either the law/chaos axis or the good/evil axis.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Divine Tracker ~ Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine Tracker Class Feature.Ranger Class Feature.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PREDEITYALIGN:LG],[PREALIGN:LG,NG,LN]],[PREMULT:2,[PREDEITYALIGN:NG],[PREALIGN:LG,NG,CG,TN]],[PREMULT:2,[PREDEITYALIGN:CG],[PREALIGN:NG,CG,CN]],[PREMULT:2,[PREDEITYALIGN:LN],[PREALIGN:LG,LN,TN,LE]],[PREMULT:2,[PREDEITYALIGN:TN],[PREALIGN:NG,LN,TN,CN,NE]],[PREMULT:2,[PREDEITYALIGN:CN],[PREALIGN:CG,TN,CN,CE]],[PREMULT:2,[PREDEITYALIGN:LE],[PREALIGN:LN,LE,NE]],[PREMULT:2,[PREDEITYALIGN:NE],[PREALIGN:TN,LE,NE,CE]],[PREMULT:2,[PREDEITYALIGN:CE],[PREALIGN:CN,NE,CE]]"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine tracker's alignment must be within one step of his deity's, along either the law/chaos axis or the good/evil axis."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3538,
+    "record_key": "Divine Tracker ~ Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

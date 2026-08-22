@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Decay Subdomain",
+    "name": "Decay Subdomain",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Decay Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Decay Subdomain],[PREABILITY:1,CATEGORY=Special Ability,Core Domain ~ Decay Subdomain],[PREVARLT:PlantDomain,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainDecaySubdomain,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlantDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Plant Domain ~ Wooden Fist|PREVARGTEQ:DomainPlantAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Decay Subdomain ~ Aura of Decay|PREVARGTEQ:DomainPlantAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantDC|10+(DomainPlantLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 419,
+    "record_key": "Inquisitor Domain ~ Decay Subdomain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

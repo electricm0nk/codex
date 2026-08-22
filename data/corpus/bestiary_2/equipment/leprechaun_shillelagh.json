@@ -1,0 +1,82 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Leprechaun Shillelagh",
+    "name": "Leprechaun Shillelagh",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leprechaun Shillelagh"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Club"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Weapon.Melee.OneHanded.Ranged.Thrown.Simple.Standard.Bludgeoning.Club.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_equip_arms_armor.lst",
+    "record_key": "Leprechaun Shillelagh",
+    "sha256": "93b8cccb460b161062fb770d4823006fa42316df408c177ec8743d5c4a321c4f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

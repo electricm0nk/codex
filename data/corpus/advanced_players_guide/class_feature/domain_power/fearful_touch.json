@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Fearful Touch",
+    "name": "Fearful Touch",
+    "class": "Domain Power",
+    "description": "As a standard action, you can make a melee touch attack against a creature, causing it to experience terrible hallucinations for 1 round. During this time, the creature loses any immunity to fear effects it might possess and takes a -2 penalty on attack rolls made against you. In addition, the creature takes a -%1 penalty on Will saves made against fear effects. This power is a mind-affecting effect. You can use this ability %2 times per day.|max(DomainLVL/2,1)|DomainMadnessTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Fearful Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can make a melee touch attack against a creature, causing it to experience terrible hallucinations for 1 round. During this time, the creature loses any immunity to fear effects it might possess and takes a -2 penalty on attack rolls made against you. In addition, the creature takes a -%1 penalty on Will saves made against fear effects. This power is a mind-affecting effect. You can use this ability %2 times per day.|max(DomainLVL/2,1)|DomainMadnessTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainMadnessTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1859,
+    "record_key": "Domain Power ~ Fearful Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

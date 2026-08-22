@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Mystery ~ Iron Skin",
+    "name": "Iron Skin",
+    "class": "Battle Mystery",
+    "description": "%1 time(s) per day, your skin hardens and takes on the appearance of iron.|OracleIronSkinTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Mystery ~ Iron Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BattleRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleIronSkinTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Soothsayer's Raiment|TIMES=OracleIronSkinTimes|CASTERLEVEL=classlevel(\"Oracle\")|Stoneskin|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 time(s) per day, your skin hardens and takes on the appearance of iron.|OracleIronSkinTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleIronSkinTimes|1|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 543,
+    "record_key": "Battle Mystery ~ Iron Skin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

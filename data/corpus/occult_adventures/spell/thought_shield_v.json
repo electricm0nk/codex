@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "As thought shield IV, but lasts 1 round per level.",
+    "key": "Thought Shield V",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 immediate action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psychic=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "As thought shield IV, but lasts 1 round per level."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Thought Shield V"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 138,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Thought Shield V",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr"
+  ]
+}

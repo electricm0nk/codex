@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aerie Protector ~ Wind at Her Back",
+    "name": "Wind at Her Back",
+    "class": "Druid",
+    "description": "An aerie protector gains a +4 bonus to CMD and on saving throws against the effects of high altitude and effects that rely on air pressure or strong wind to move her or impede her flight. This bonus also applies on Reflex saves against effects that deal electricity damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aerie Protector ~ Wind at Her Back"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An aerie protector gains a +4 bonus to CMD and on saving throws against the effects of high altitude and effects that rely on air pressure or strong wind to move her or impede her flight. This bonus also applies on Reflex saves against effects that deal electricity damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 vs. effects that deal electricity damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 507,
+    "record_key": "Aerie Protector ~ Wind at Her Back"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

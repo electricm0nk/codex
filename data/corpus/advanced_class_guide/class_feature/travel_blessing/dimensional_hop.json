@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Travel Blessing ~ Dimensional Hop",
+    "name": "Dimensional Hop",
+    "class": "Travel Blessing",
+    "description": "You can teleport up to 20 feet as a move action. You can increase this distance by expending another use of your blessing-each use spent grants an additional 20 feet. You must have line of sight to your destination. This teleportation doesn't provoke attacks of opportunity. You can bring other willing creatures with you, but each such creature requires expending one additional use of your blessing, regardless of the distance traveled. (For example, transporting yourself 40 feet costs 2 uses of your blessing, and transporting an additional person this distance costs 1 more use.)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Travel Blessing ~ Dimensional Hop"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can teleport up to 20 feet as a move action. You can increase this distance by expending another use of your blessing-each use spent grants an additional 20 feet. You must have line of sight to your destination. This teleportation doesn't provoke attacks of opportunity. You can bring other willing creatures with you, but each such creature requires expending one additional use of your blessing, regardless of the distance traveled. (For example, transporting yourself 40 feet costs 2 uses of your blessing, and transporting an additional person this distance costs 1 more use.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2282,
+    "record_key": "Travel Blessing ~ Dimensional Hop"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

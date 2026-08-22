@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": "Must be used as primary weapon",
+    "key": "Heavy Hammer",
+    "name": "Heavy Hammer",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MOVEADD",
+          "TYPE.All",
+          "-10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPONPROF=Warhammer",
+          "TOHIT",
+          "-2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPONPROF=Warhammer",
+          "DAMAGE",
+          "4"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Warhammer"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Cursed.Weapon.Resizable.Melee.OneHanded.Martial.Standard.Bludgeoning.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.346"
+      },
+      {
+        "key": "SPROP",
+        "value": "Must be used as primary weapon"
+      }
+    ],
+    "weight_lbs": 20.0
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 557,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Heavy Hammer",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

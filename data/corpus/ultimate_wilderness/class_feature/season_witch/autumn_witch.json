@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Season Witch ~ Autumn Witch",
+    "name": "Autumn Witch",
+    "class": "Season Witch",
+    "description": "An autumn witch has dominion over the provision of the land and the passing of life. The save DCs of her spells that deal acid damage increase by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Season Witch ~ Autumn Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SeasonWitchType.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An autumn witch has dominion over the provision of the land and the passing of life. The save DCs of her spells that deal acid damage increase by 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Autumn Witch Hex Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1258,
+    "record_key": "Season Witch ~ Autumn Witch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

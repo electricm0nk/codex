@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ True Mutagen",
+    "name": "True Mutagen",
+    "class": "Discovery",
+    "description": "The alchemist's mutagen now grants a +8 natural armor bonus and a +8 alchemical bonus to Strength, Dexterity, and Constitution. The alchemist takes a -2 penalty to his Intelligence, Wisdom, and Charisma as long as the mutagen persists (see Mutagen).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ True Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistGrandDiscovery.AlchemistMutagenMod"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Grand Mutagen"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist's mutagen now grants a +8 natural armor bonus and a +8 alchemical bonus to Strength, Dexterity, and Constitution. The alchemist takes a -2 penalty to his Intelligence, Wisdom, and Charisma as long as the mutagen persists (see Mutagen)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenTierLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenACBonus|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 185,
+    "record_key": "Discovery ~ True Mutagen"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

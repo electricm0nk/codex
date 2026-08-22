@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Onmyoji",
+    "name": "Onmyoji",
+    "class": "Spiritualist Archetype",
+    "description": "Though most spiritualists are chosen by their phantoms, others deliberately call phantoms to them through years of careful preparation and study in obscure divine traditions. These spiritualists, known as onmyoji, form close bonds with their phantoms, as any other spiritualist does, but see the phantoms as partners and tools in their work. Onmyoji serve as emissaries between the mundane world and the spiritual one, either working to ensure that troubles in the spiritual world do not spill over into the world of mortals, or stirring up spiritual trouble in order to achieve their ends among the living.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Onmyoji"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpiritualistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Onmyoji],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_Spellcasting=true,Spiritualist_Archetype_SpiritualInterference=true,Spiritualist_Archetype_GreaterSpiritualInterference=true,Spiritualist_Archetype_SharedConsciousness=true,Spiritualist_Archetype_FusedConsciousness=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Though most spiritualists are chosen by their phantoms, others deliberately call phantoms to them through years of careful preparation and study in obscure divine traditions. These spiritualists, known as onmyoji, form close bonds with their phantoms, as any other spiritualist does, but see the phantoms as partners and tools in their work. Onmyoji serve as emissaries between the mundane world and the spiritual one, either working to ensure that troubles in the spiritual world do not spill over into the world of mortals, or stirring up spiritual trouble in order to achieve their ends among the living."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Onmyoji ~ Divine Spellcasting|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Onmyoji ~ Spiritual Resistance|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Onmyoji ~ Divine Teachings|PRECLASS:1,Spiritualist=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_GreaterSpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SharedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_FusedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_GreaterSpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SharedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_FusedConsciousness|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1615,
+    "record_key": "Spiritualist Archetype ~ Onmyoji"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Archetype ~ Grave Warden",
+    "name": "Grave Warden",
+    "class": "Slayer Archetype",
+    "description": "While paladins and inquisitors use their connection with the divine to fight undead hordes and other horrors of the night, a grave warden relies on knowledge, skill with weapons, and tenacity to put an end to these night-born terrors.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Grave Warden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Grave Warden],[!PREFACT:1,ABILITIES,Slayer_Archetype_Stalker=true,Slayer_Archetype_Talent2=true,Slayer_Archetype_Talent10=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "While paladins and inquisitors use their connection with the divine to fight undead hordes and other horrors of the night, a grave warden relies on knowledge, skill with weapons, and tenacity to put an end to these night-born terrors."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Grave Warden ~ Holy Water Sprinkler|PRECLASS:1,Slayer=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Grave Warden ~ Death Ward|PRECLASS:1,Slayer=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Grave Warden ~ Dustbringer|PRECLASS:1,Slayer=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Slayer"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent10|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3728,
+    "record_key": "Slayer Archetype ~ Grave Warden"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

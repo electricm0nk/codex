@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Cavalier",
+    "description": "A cavalier gains %1 bonus feat(s) in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The cavalier must meet the prerequisites of these bonus feats.|CavalierLVL/6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier gains %1 bonus feat(s) in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The cavalier must meet the prerequisites of these bonus feats.|CavalierLVL/6"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cavalier Feat|CavalierLVL/6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 208,
+    "record_key": "Cavalier ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

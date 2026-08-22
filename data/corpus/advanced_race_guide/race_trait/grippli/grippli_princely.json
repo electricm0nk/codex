@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Grippli ~ Princely",
+    "name": "Princely",
+    "race_key": "Grippli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Grippli Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Grippli_ReplaceSwampStride",
+      "Grippli_ReplaceWeaponFamiliarity"
+    ],
+    "description": "The grippli gains proficiency with rapiers and a +2 racial bonus on Diplomacy and Intimidate checks. This racial trait replaces swamp stride and weapon familiarity.",
+    "source_page": "p.190",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grippli ~ Princely"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Grippli Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Grippli ~ Princely],[!PREFACT:1,ABILITIES,Grippli_ReplaceSwampStride=True,Grippli_ReplaceWeaponFamiliarity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The grippli gains proficiency with rapiers and a +2 racial bonus on Diplomacy and Intimidate checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces swamp stride and weapon familiarity.|!PREABILITY:1,CATEGORY=Special Ability,Grippli ~ Princely"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Rapier"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Diplomacy, +2 Intimidate"
+      },
+      {
+        "key": "FACT",
+        "value": "Grippli_ReplaceSwampStride|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Grippli_ReplaceWeaponFamiliarity|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Diplomacy,Intimidate",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 907,
+    "record_key": "Grippli ~ Princely"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

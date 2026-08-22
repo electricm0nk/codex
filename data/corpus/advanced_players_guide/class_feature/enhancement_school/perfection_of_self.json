@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Enhancement School ~ Perfection of Self",
+    "name": "Perfection of Self",
+    "class": "Enhancement School",
+    "description": "At 8th level, as a swift action you can grant yourself a +%1 enhancement bonus to a single ability score for one round. You may use this ability %1 times per day.|EnchantmentPerfectionofSelfBonus|EnchantmentPerfectionofSelfTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enhancement School ~ Perfection of Self"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentPerfectionofSelfBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentPerfectionofSelfTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, as a swift action you can grant yourself a +%1 enhancement bonus to a single ability score for one round. You may use this ability %1 times per day.|EnchantmentPerfectionofSelfBonus|EnchantmentPerfectionofSelfTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentPerfectionofSelfBonus|min(TransmutationSchoolLVL/2,10)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentPerfectionofSelfTimes|TransmutationSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|EnchantmentPerfectionofSelfTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3354,
+    "record_key": "Enhancement School ~ Perfection of Self"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

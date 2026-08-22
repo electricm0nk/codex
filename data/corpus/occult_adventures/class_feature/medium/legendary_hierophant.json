@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Legendary Hierophant",
+    "name": "Legendary Hierophant",
+    "class": "Medium",
+    "description": "(Supreme) Once per day, You can request a minor miracle. This request must be in line with the options for miracle that don't cost powdered diamond. As usual for a miracle, the deity or other being the spirit worships can choose whether or not to grant the request at its whim.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Legendary Hierophant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hierophant|TIMES=1|CASTERLEVEL=MediumLVL|Miracle,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "(Supreme) Once per day, You can request a minor miracle. This request must be in line with the options for miracle that don't cost powdered diamond. As usual for a miracle, the deity or other being the spirit worships can choose whether or not to grant the request at its whim."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 863,
+    "record_key": "Medium ~ Legendary Hierophant"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

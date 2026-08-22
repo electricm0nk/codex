@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Counterspell Savant Subschool ~ Counterspell Mastery",
+    "name": "Counterspell Mastery",
+    "class": "Counterspell Savant Subschool",
+    "description": "You gain Improved Counterspell as a bonus feat. You may attempt to counterspell an opponent's spell once per day as an immediate action (instead of a readied action). You must use a spell at least one level higher than the spell being countered to use this ability. You can use this ability %1 times per day.|(ArcanistSavantSchoolLVL-2)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Counterspell Savant Subschool ~ Counterspell Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Improved Counterspell as a bonus feat. You may attempt to counterspell an opponent's spell once per day as an immediate action (instead of a readied action). You must use a spell at least one level higher than the spell being countered to use this ability. You can use this ability %1 times per day.|(ArcanistSavantSchoolLVL-2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2589,
+    "record_key": "Counterspell Savant Subschool ~ Counterspell Mastery"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

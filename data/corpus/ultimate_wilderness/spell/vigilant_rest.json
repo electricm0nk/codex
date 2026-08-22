@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "While the target of this spell is asleep, she retains some of her normal powers of perception. While she tunes out harmless sounds such as the crackling of the campfire, crickets, or light breezes, she does not take the normal +10 modifier to the DC of Perception checks she attempts while asleep. If the target detects a threat or unexplained noise while sleeping, she can wake immediately and stand up from her sleeping position as a free action. If the target is roused but returns to sleep during the spell's duration, she falls asleep immediately and does not count as having her sleep interrupted, even if she engaged in combat while she was awake.",
+    "key": "Vigilant Rest",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Medium,Occultist,Paladin,Ranger=3|Bard,Mesmerist,Psychic,Shaman,Witch=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Cause a sleeping creature to retain some perception of its surroundings.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "While the target of this spell is asleep, she retains some of her normal powers of perception. While she tunes out harmless sounds such as the crackling of the campfire, crickets, or light breezes, she does not take the normal +10 modifier to the DC of Perception checks she attempts while asleep. If the target detects a threat or unexplained noise while sleeping, she can wake immediately and stand up from her sleeping position as a free action. If the target is roused but returns to sleep during the spell's duration, she falls asleep immediately and does not count as having her sleep interrupted, even if she engaged in combat while she was awake.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "8 hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "1 living creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Vigilant Rest",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

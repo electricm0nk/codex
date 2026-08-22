@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:47:16Z",
+  "ingested_at": "2026-08-15T19:20:15Z",
   "data": {
     "key": "Half-Elf ~ Sea Legs",
     "name": "Sea Legs",
@@ -44,11 +44,11 @@
       },
       {
         "key": "DESC",
-        "value": "Many half-elves find their way onto the water early in their youth, whether they live with trader families in or near Kyonin, work as smugglers around Lake Encarthan or the Inner Sea, or plunder alongside pirates. These half-elves receive a +2 racial bonus on Swim checks, as well as a +4 racial bonus on Acrobatics checks to move on narrow or slippery surfaces, and on Climb checks on docks and ships."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This racial trait replaces adaptability.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Sea Legs"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

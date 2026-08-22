@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Spellblade",
+    "name": "Spellblade",
+    "class": "Magus Archetype",
+    "description": "A spellblade magus can manifest a ghostly blade of force that can be used as an off-hand weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Spellblade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpellstrike"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Spellblade],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusSpellstrike]"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellblade magus can manifest a ghostly blade of force that can be used as an off-hand weapon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Spellblade ~ Force Athame|PRECLASS:1,Magus=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1290,
+    "record_key": "Magus Archetype ~ Spellblade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

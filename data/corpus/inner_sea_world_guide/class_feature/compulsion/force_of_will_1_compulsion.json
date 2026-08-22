@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Compulsion ~ HKFow1",
+    "name": "Force of Will 1 (Compulsion)",
+    "class": "Compulsion",
+    "description": "You gain a +%1 bonus on Will saves against spells with the compulsion descriptor.|HKForceOfWill*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Compulsion ~ HKFow1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HKFoW1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Will saves against spells with the compulsion descriptor.|HKForceOfWill*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Will vs. compulsion spells|HKForceOfWill*2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 106,
+    "record_key": "Compulsion ~ HKFow1"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

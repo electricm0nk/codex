@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ River Rat",
+    "name": "River Rat",
+    "class": "Rogue Archetype",
+    "description": "What highway robbers are to roads, river rats are to waterways. Skilled at hiding amid reeds and roots, these rogues strike the unwary from the shallows as others would from the shadows. Despite their strong association with banditry, river rats make excellent guides and hunters.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ River Rat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ River Rat],[!PREFACT:1,ABILITIES,Rogue_Archetype_ClassSkills=True,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "What highway robbers are to roads, river rats are to waterways. Skilled at hiding amid reeds and roots, these rogues strike the unwary from the shallows as others would from the shadows. Despite their strong association with banditry, river rats make excellent guides and hunters."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|River Rat ~ Class Skills|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|River Rat ~ Swamper|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|River Rat ~ Rat's Resilience|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 965,
+    "record_key": "Rogue Archetype ~ River Rat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

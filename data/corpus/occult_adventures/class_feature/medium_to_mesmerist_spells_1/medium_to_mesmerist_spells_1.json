@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium To Mesmerist Spells 1",
+    "name": "Medium To Mesmerist Spells 1",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=1|1|PREMULT:2,[PREVARGTEQ:MediumLVL,2],[PREVARLTEQ:MediumLVL,16]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=1|1|PREMULT:1,[PREVAREQ:MediumLVL,3],[PREMULT:2,[PREVARGTEQ:MediumLVL,5],[PREVARLTEQ:MediumLVL,12]]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 880,
+    "record_key": "Medium To Mesmerist Spells 1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

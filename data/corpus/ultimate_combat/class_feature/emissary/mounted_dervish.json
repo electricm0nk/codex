@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Emissary ~ Mounted Dervish",
+    "name": "Mounted Dervish",
+    "class": "Cavalier",
+    "description": "At 14th level, an emissary becomes a fearsome, mobile foe on the battlefield. He gains Mounted Skirmisher as a bonus feat, even if he does not meet the prerequisites. In addition, whenever the emissary is mounted and takes the charge action, he adds 10 feet to his mount's speed. This ability replaces greater banner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emissary ~ Mounted Dervish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, an emissary becomes a fearsome, mobile foe on the battlefield. He gains Mounted Skirmisher as a bonus feat, even if he does not meet the prerequisites. In addition, whenever the emissary is mounted and takes the charge action, he adds 10 feet to his mount's speed. This ability replaces greater banner."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Mounted Skirmisher"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 489,
+    "record_key": "Emissary ~ Mounted Dervish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

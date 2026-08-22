@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Mantis Zealot",
+    "name": "Mantis Zealot",
+    "class": "Warpriest Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Mantis Zealot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,Achaekek"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Mantis Zealot],[!PREFACT:1,ABILITIES,Warpriest_Archetype_Proficiencies=True,Warpriest_Archetype_SacredWeapon=True,Warpriest_Archetype_SacredArmor=True,Warpriest_Archetype_AspectOfWar=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mantis Zealot ~ Mantis Sworn|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mantis Zealot ~ Weapon and Armor Proficiency|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mantis Zealot ~ Sneak Attack|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mantis Zealot ~ Sacred Reflexes|PRECLASS:1,Warpriest=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mantis Zealot ~ Aspect of the Mantis|PRECLASS:1,Warpriest=20"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_SacredWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_SacredArmor|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_AspectOfWar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_SacredWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_SacredArmor|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1118,
+    "record_key": "Warpriest Archetype ~ Mantis Zealot"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

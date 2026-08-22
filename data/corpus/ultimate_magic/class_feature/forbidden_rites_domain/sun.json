@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Sun Domain",
+    "name": "Sun",
+    "class": "Forbidden Rites Domain",
+    "description": "You see truth in the pure and burning light of the sun, and can call upon its blessing or wrath to work great deeds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Sun Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.SunDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You see truth in the pure and burning light of the sun, and can call upon its blessing or wrath to work great deeds."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Sun's Blessing|PREDOMAIN:1,Sun|PREVARGTEQ:DomainSunAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Nimbus of Light|PREDOMAIN:1,Sun|PREVARGTEQ:DomainSunAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSunLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSunDC|10+(DomainSunLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSunTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSunAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Endure Elements|Cleric=2|Heat Metal|Cleric=3|Searing Light|Cleric=4|Fire Shield|Cleric=5|Flame Strike|Cleric=6|Fire Seeds|Cleric=7|Sunbeam|Cleric=8|Sunburst|Cleric=9|Prismatic Sphere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1054,
+    "record_key": "Forbidden Rites Domain ~ Sun Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

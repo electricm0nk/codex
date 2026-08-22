@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Warpriest",
+    "description": "A warpriest is proficient with all simple and martial weapons, as well as the favored weapon of his deity, and with all armor (heavy, light, and medium) and shields (except tower shields). If the warpriest worships a deity with unarmed strike as its favored weapon, the warpriest gains Improved Unarmed Strike as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A warpriest is proficient with all simple and martial weapons, as well as the favored weapon of his deity, and with all armor (heavy, light, and medium) and shields (except tower shields). If the warpriest worships a deity with unarmed strike as its favored weapon, the warpriest gains Improved Unarmed Strike as a bonus feat."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|DEITYWEAPONS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Deity Weapons|Weapon Prof ~ Martial|Weapon Prof ~ Simple|PREVAREQ:Warpriest_CF_WeaponProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Light|PREVAREQ:Warpriest_CF_LightArmorProficiency,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Medium|PREVAREQ:Warpriest_CF_MediumArmorProficiency,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Heavy|PREVAREQ:Warpriest_CF_HeavyArmorProficiency,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|PREVAREQ:Warpriest_CF_ShieldProficiencies,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Unarmed Strike|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2138,
+    "record_key": "Warpriest ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

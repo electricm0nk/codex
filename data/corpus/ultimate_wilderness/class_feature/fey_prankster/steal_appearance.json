@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Prankster ~ Steal Appearance",
+    "name": "Steal Appearance",
+    "class": "Rogue",
+    "description": "The fey prankster can exchange the appearance of two adjacent items of the same size. He can also exchange the appearance of two creatures if at least one is willing and both are adjacent. Affecting an unwilling creature or an item it wears or carries requires a successful dirty trick combat maneuver against that creature. If he succeeds, the objects or creatures are each disguised as the other as if with veil cast at his rogue level. The Will save DC to resist or disbelieve the illusion is %1.|10+RogueLVL/2+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Prankster ~ Steal Appearance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.FeyPranksterClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "The fey prankster can exchange the appearance of two adjacent items of the same size. He can also exchange the appearance of two creatures if at least one is willing and both are adjacent. Affecting an unwilling creature or an item it wears or carries requires a successful dirty trick combat maneuver against that creature. If he succeeds, the objects or creatures are each disguised as the other as if with veil cast at his rogue level. The Will save DC to resist or disbelieve the illusion is %1.|10+RogueLVL/2+INT"
+      },
+      {
+        "key": "DESC",
+        "value": "The fey prankster can also exchange the locations of the two targets by succeeding at a DC 20 Sleight of Hand check. If he succeeds, observers can't tell which is the original based on movement without succeeding at a Perception check against his Sleight of Hand result.|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 978,
+    "record_key": "Fey Prankster ~ Steal Appearance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

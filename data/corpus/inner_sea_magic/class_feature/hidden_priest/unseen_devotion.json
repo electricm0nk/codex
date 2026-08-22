@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hidden Priest ~ Unseen Devotion",
+    "name": "Unseen Devotion",
+    "class": "Cleric",
+    "description": "A hidden priest can apply the Silent Spell and Still Spell feats to a spell he is about to cast %1 times per day. This does not alter the level of the spell or the casting time. This ability replaces one of the cleric's two 8th-level domain powers (his choice).|(1+floor((classlevel(\"Cleric\")-8)/4))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hidden Priest ~ Unseen Devotion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A hidden priest can apply the Silent Spell and Still Spell feats to a spell he is about to cast %1 times per day. This does not alter the level of the spell or the casting time. This ability replaces one of the cleric's two 8th-level domain powers (his choice).|(1+floor((classlevel(\"Cleric\")-8)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 192,
+    "record_key": "Hidden Priest ~ Unseen Devotion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Ice Golem ~ Icy Destruction",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:golem_ice"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Icy Destruction"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|IcyDestructionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IcyDestructionDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IcyDestructionDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Icy Destruction)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IcyDestructionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When reduced to 0 hit points, an ice golem shatters in an explosion of jagged shards of ice. All creatures within a 10-foot burst take 3d6 points of slashing damage and 2d6 points of cold damage; a DC %1 Reflex save halves the damage.|IcyDestructionDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Ice Golem ~ Icy Destruction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.161",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 726,
-    "record_key": "Ice Golem ~ Icy Destruction"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 726,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ice Golem ~ Icy Destruction",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

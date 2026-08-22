@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Avalancher ~ Fall-By Attack",
+    "name": "Fall-By Attack",
+    "class": "Slayer",
+    "description": "If the avalancher makes a single jump of at least 20 feet in any direction and lands at an elevation at least 10 feet lower than his starting elevation, he can make ranged or melee attacks during his fall as if he were making a full-round attack. He can make any number of attacks in any combination of squares along this single jump, up to his maximum number of attacks, but he can attack a given creature once at most. If the avalancher attempts a jump but fails the Acrobatics check, he makes no attacks and suffers the consequences of his failed jump normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avalancher ~ Fall-By Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.AvalancherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If the avalancher makes a single jump of at least 20 feet in any direction and lands at an elevation at least 10 feet lower than his starting elevation, he can make ranged or melee attacks during his fall as if he were making a full-round attack. He can make any number of attacks in any combination of squares along this single jump, up to his maximum number of attacks, but he can attack a given creature once at most. If the avalancher attempts a jump but fails the Acrobatics check, he makes no attacks and suffers the consequences of his failed jump normally."
+      },
+      {
+        "key": "DESC",
+        "value": "He can add his extra damage from sneak attack against each creature he hits while using this ability, even if the targets have acted in combat or retain their Dexterity bonuses to AC.|PRECLASS:1,Slayer=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1152,
+    "record_key": "Avalancher ~ Fall-By Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

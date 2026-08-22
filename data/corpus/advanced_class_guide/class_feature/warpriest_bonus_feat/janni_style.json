@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Janni Style",
+    "name": "Janni Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your whirling fighting technique makes you difficult to hit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Janni Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Acrobatics=3,Perform (dance)=3"
+      },
+      {
+        "key": "DESC",
+        "value": "Your whirling fighting technique makes you difficult to hit."
+      },
+      {
+        "key": "DESC",
+        "value": " While using this style, you take only a -1 penalty to AC for charging. Further, opponents that flank you gain only a +1 bonus on attack rolls against you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Janni Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4474,
+    "record_key": "Warpriest Bonus Feat ~ Janni Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

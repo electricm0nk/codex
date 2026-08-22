@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Lore ~ Illuminating Answers",
+    "name": "Illuminating Answers",
+    "class": "Psychic",
+    "description": "You can glean deeper truths from advice you magically obtain, even if the information itself is specious. When you use a spell or spell-like ability that allows you to get answers to questions (such as augury, blood biographyAPG, or contact other plane) and get at least one answer, you regain 1 point in your phrenic pool. You regain this point even if the answer is false or vague. The maximum number of points you can regain in this way per day is equal to your Wisdom modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Lore ~ Illuminating Answers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can glean deeper truths from advice you magically obtain, even if the information itself is specious. When you use a spell or spell-like ability that allows you to get answers to questions (such as augury, blood biographyAPG, or contact other plane) and get at least one answer, you regain 1 point in your phrenic pool. You regain this point even if the answer is false or vague. The maximum number of points you can regain in this way per day is equal to your Wisdom modifier."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1221,
+    "record_key": "Psychic Discipline Lore ~ Illuminating Answers"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

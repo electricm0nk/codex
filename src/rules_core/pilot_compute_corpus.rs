@@ -963,6 +963,13 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
             ("Svirfneblin", SizeCategory::Small),
             ("Tengu", SizeCategory::Medium),
             ("Tiefling", SizeCategory::Medium),
+            // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15).
+            ("Fetchling", SizeCategory::Medium),
+            ("Grippli", SizeCategory::Small),
+            ("Ifrit", SizeCategory::Medium),
+            ("Oread", SizeCategory::Medium),
+            ("Sylph", SizeCategory::Medium),
+            ("Undine", SizeCategory::Medium),
         ];
 
         // `10 (base) + 4 (Chain Shirt) + 2 (DEX within MAXDEX 4) + 1 (Dodge)`
@@ -1033,9 +1040,16 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
             ("Svirfneblin", SizeCategory::Small),
             ("Tengu", SizeCategory::Medium),
             ("Tiefling", SizeCategory::Medium),
+            // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15).
+            ("Fetchling", SizeCategory::Medium),
+            ("Grippli", SizeCategory::Small),
+            ("Ifrit", SizeCategory::Medium),
+            ("Oread", SizeCategory::Medium),
+            ("Sylph", SizeCategory::Medium),
+            ("Undine", SizeCategory::Medium),
         ];
 
-        // Strength is +3 (score 16) and Dexterity +2 (score 14) for all 18
+        // Strength is +3 (score 16) and Dexterity +2 (score 14) for all 24
         // races here: unlike the shared deterministic fixture,
         // `fixed_posture_fixture` carries no `choice:human_ability_bonus`, so
         // `apply_human_ability_bonus` has nothing to apply and Human is not a

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wind Mystery ~ Lightning Breath",
+    "name": "Lightning Breath",
+    "class": "Wind Mystery",
+    "description": "As a standard action, you can breathe a 30-foot line of electricity. This line deals %1d4 points of electricity damage. A Reflex save (DC %2) halves this damage. You can use this ability %3 time(s) per day.|OracleLightningBreathDice|OracleRevelationDC|OracleLightningBreathTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Mystery ~ Lightning Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WindRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLightningBreathTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLightningBreathDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can breathe a 30-foot line of electricity. This line deals %1d4 points of electricity damage. A Reflex save (DC %2) halves this damage. You can use this ability %3 time(s) per day.|OracleLightningBreathDice|OracleRevelationDC|OracleLightningBreathTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLightningBreathDice|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLightningBreathTimes|1+(classlevel(\"Oracle\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 701,
+    "record_key": "Wind Mystery ~ Lightning Breath"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

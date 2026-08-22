@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wave Warden Feat ~ Greater Two-Weapon Fighting",
+    "name": "Greater Two-Weapon Fighting",
+    "class": "Wave Warden Feat",
+    "description": "You are incredibly skilled at fighting with two weapons at the same time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wave Warden Feat ~ Greater Two-Weapon Fighting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WaveWardenBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Greater Two-Weapon Fighting"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=10"
+      },
+      {
+        "key": "DESC",
+        "value": "You are incredibly skilled at fighting with two weapons at the same time."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Two-Weapon Fighting|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 908,
+    "record_key": "Wave Warden Feat ~ Greater Two-Weapon Fighting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

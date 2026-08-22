@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Archmage Arcana",
+    "name": "Archmage Arcana",
+    "class": "Medium",
+    "description": "(Lesser) Instead of your normal spells per day for your medium level, you use the spells per day from Table: Mesmerist. For each level of spell you can now cast (including level 0), each time you channel an archmage spirit, select a single spell of that level from the sorcerer/wizard spell list to add to your medium spell list and spells known until you lose contact with the archmage. When you cast these spells, they count as arcane (though not for the purpose of fulfilling prerequisites), and thus you must provide verbal and somatic components instead of thought and emotion components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Archmage Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Lesser) Instead of your normal spells per day for your medium level, you use the spells per day from Table: Mesmerist. For each level of spell you can now cast (including level 0), each time you channel an archmage spirit, select a single spell of that level from the sorcerer/wizard spell list to add to your medium spell list and spells known until you lose contact with the archmage. When you cast these spells, they count as arcane (though not for the purpose of fulfilling prerequisites), and thus you must provide verbal and somatic components instead of thought and emotion components."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium To Mesmerist Spells 1|Medium To Mesmerist Spells 2|Medium To Mesmerist Spells 3|Medium To Mesmerist Spells 4|Medium To Mesmerist Spells 5|Medium To Mesmerist Spells 6"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 0|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 2|1|PREVARGTEQ:MediumLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 3|1|PREVARGTEQ:MediumLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 4|1|PREVARGTEQ:MediumLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 5|1|PREVARGTEQ:MediumLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 6|1|PREVARGTEQ:MediumLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 839,
+    "record_key": "Medium ~ Archmage Arcana"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

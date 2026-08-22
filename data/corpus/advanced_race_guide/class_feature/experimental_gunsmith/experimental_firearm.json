@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Experimental Gunsmith ~ Experimental Firearm",
+    "name": "Experimental Firearm",
+    "class": "Gunslinger",
+    "description": "At 1st level, an Experimental Gunsmith begins play with an experimental firearm. This acts as the gunslinger's gunsmith ability, but the firearm the Experimental Gunsmith begins with has one innovation (see below). Further, the Experimental Gunsmith is treated as having the Gunsmithing feat, but only in regard to his beginning firearm (or the construction of a replacement firearm of the same design, if the original is lost). This ability otherwise works like the standard gunslinger's gunsmith and Gunsmithing abilities and replaces those abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimental Gunsmith ~ Experimental Firearm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an Experimental Gunsmith begins play with an experimental firearm. This acts as the gunslinger's gunsmith ability, but the firearm the Experimental Gunsmith begins with has one innovation (see below). Further, the Experimental Gunsmith is treated as having the Gunsmithing feat, but only in regard to his beginning firearm (or the construction of a replacement firearm of the same design, if the original is lost). This ability otherwise works like the standard gunslinger's gunsmith and Gunsmithing abilities and replaces those abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 157,
+    "record_key": "Experimental Gunsmith ~ Experimental Firearm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Mystery ~ Surprising Charge",
+    "name": "Surprising Charge",
+    "class": "Battle Mystery",
+    "description": "%1 time(s) per day, you can move up to your speed as an immediate action.|OracleSurprisingChargeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Mystery ~ Surprising Charge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BattleRevelation.Extraordinary.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleSurprisingChargeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 time(s) per day, you can move up to your speed as an immediate action.|OracleSurprisingChargeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSurprisingChargeTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSurprisingChargeTimes|1|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleSurprisingChargeTimes|1|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 547,
+    "record_key": "Battle Mystery ~ Surprising Charge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

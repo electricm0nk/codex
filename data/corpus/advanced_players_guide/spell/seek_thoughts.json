@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Seek Thoughts",
-    "school": "Divination",
-    "level": 3,
     "description": "Similar to detect thoughts, seek thoughts allows you to sift through the surface thoughts of those around you. You may scan for either the answer to a simple question (such as \"Where is the hidden lair of the wererats?\") or for information on a general topic (such as the beliefs of an evil cult). You detect the number of creatures who are thinking about this question or topic within range, as well as their location if they are visible to you. Seek thoughts does not let you read actual surface thoughts, only if a given creature is thinking about the topic you are concentrating on. A successful Will save prevents you from sensing a creature's thoughts for the duration of the spell.  You can maintain concentration on seek thoughts while you engage in normal conversation, allowing you to ask leading questions about topics of interest. A creature conversing with you while you concentrate can notice that you are distracted with a successful DC 25 Sense Motive check.",
-    "full_text": true
+    "full_text": true,
+    "key": "Seek Thoughts",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Bard,Inquisitor,Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Detects thinking creatures' thoughts|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Similar to detect thoughts, seek thoughts allows you to sift through the surface thoughts of those around you. You may scan for either the answer to a simple question (such as \"Where is the hidden lair of the wererats?\") or for information on a general topic (such as the beliefs of an evil cult). You detect the number of creatures who are thinking about this question or topic within range, as well as their location if they are visible to you. Seek thoughts does not let you read actual surface thoughts, only if a given creature is thinking about the topic you are concentrating on. A successful Will save prevents you from sensing a creature's thoughts for the duration of the spell.  You can maintain concentration on seek thoughts while you engage in normal conversation, allowing you to ask leading questions about topics of interest. A creature conversing with you while you concentrate can notice that you are distracted with a successful DC 25 Sense Motive check.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Thought Subdomain=3"
+      },
+      {
+        "key": "DURATION",
+        "value": "concentration, up to (CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a handful of copper coins)"
+      },
+      {
+        "key": "RANGE",
+        "value": "40 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/seekThoughts.html#_seek-thoughts"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "40-ft.-radius emanation centered on you"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 213,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2057,
-    "record_key": "Seek Thoughts"
+    "record_key": "Seek Thoughts",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

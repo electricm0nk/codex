@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fate Subdomain ~ Tugging Strands",
+    "name": "Tugging Strands",
+    "class": "Fate Subdomain",
+    "description": "At 8th level, you can force a creature within line of sight to reroll any one roll that it has just made before the result of the roll is revealed. The result of the reroll must be taken, even if it is worse than the original roll. You can use this ability once per day at 8th level, and one additional time per day for every 6 levels beyond 8th.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fate Subdomain ~ Tugging Strands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can force a creature within line of sight to reroll any one roll that it has just made before the result of the roll is revealed. The result of the reroll must be taken, even if it is worse than the original roll. You can use this ability once per day at 8th level, and one additional time per day for every 6 levels beyond 8th."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1766,
+    "record_key": "Fate Subdomain ~ Tugging Strands"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

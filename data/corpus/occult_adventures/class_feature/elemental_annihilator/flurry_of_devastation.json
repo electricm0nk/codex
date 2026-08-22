@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Annihilator ~ Flurry of Devastation",
+    "name": "Flurry of Devastation",
+    "class": "Kineticist",
+    "description": "At 6th level, an elemental annihilator can make a full attack of devastating infusions against targets within 120 feet as a full-attack action. Each individual attack deals damage as a devastating infusion. This is a 3rd-level form infusion that costs 1 point of burn and can be used with the same blast types as devastating infusion. Abilities such as Rapid Shot and haste that grant additional attacks apply normally to this full attack. If she makes only melee attacks with her flurry of devastation, she can use the Two-Weapon Fighting feats (unlike with the kinetic blade wild talent), but ranged devastating infusions do not work with Two-Weapon Fighting. For the elemental annihilator's off-hand attacks with Two-Weapon Fighting, she adds half her Constitution modifier to the damage (increasing to her full Constitution modifier if she has Double Slice). Though she can normally mix melee and ranged attacks with her flurry of devastation, she can't do so when she uses Two-Weapon Fighting. She can never use metakinesis or substance infusions with flurry of devastation. This ability replaces the 6th-, 12th-, and 16thlevel utility wild talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Annihilator ~ Flurry of Devastation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Annihilator Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, an elemental annihilator can make a full attack of devastating infusions against targets within 120 feet as a full-attack action. Each individual attack deals damage as a devastating infusion. This is a 3rd-level form infusion that costs 1 point of burn and can be used with the same blast types as devastating infusion. Abilities such as Rapid Shot and haste that grant additional attacks apply normally to this full attack. If she makes only melee attacks with her flurry of devastation, she can use the Two-Weapon Fighting feats (unlike with the kinetic blade wild talent), but ranged devastating infusions do not work with Two-Weapon Fighting. For the elemental annihilator's off-hand attacks with Two-Weapon Fighting, she adds half her Constitution modifier to the damage (increasing to her full Constitution modifier if she has Double Slice). Though she can normally mix melee and ranged attacks with her flurry of devastation, she can't do so when she uses Two-Weapon Fighting. She can never use metakinesis or substance infusions with flurry of devastation. This ability replaces the 6th-, 12th-, and 16thlevel utility wild talents."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1334,
+    "record_key": "Elemental Annihilator ~ Flurry of Devastation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

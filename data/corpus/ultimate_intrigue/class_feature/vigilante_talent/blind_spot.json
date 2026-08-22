@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Blind Spot",
+    "name": "Blind Spot",
+    "class": "Vigilante Talent",
+    "description": "The vigilante is so skilled at stealth, he can use the Stealth skill to hide from creatures with unusual senses that normally automatically detect creatures. This includes senses such as blindsense, blindsight, lifesense, scent, or tremorsense. For each such ability that the creature possesses, if the vigilante is not bypassing the sense in another way-such as the negate aroma spell for scent or flying for tremorsense-the creature gains a stacking +20 circumstance bonus on all Perception checks to notice the vigilante, rather than automatically noticing the vigilante.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Blind Spot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Blind Spot"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,3"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante is so skilled at stealth, he can use the Stealth skill to hide from creatures with unusual senses that normally automatically detect creatures. This includes senses such as blindsense, blindsight, lifesense, scent, or tremorsense. For each such ability that the creature possesses, if the vigilante is not bypassing the sense in another way-such as the negate aroma spell for scent or flying for tremorsense-the creature gains a stacking +20 circumstance bonus on all Perception checks to notice the vigilante, rather than automatically noticing the vigilante."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 74,
+    "record_key": "Vigilante Talent ~ Blind Spot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

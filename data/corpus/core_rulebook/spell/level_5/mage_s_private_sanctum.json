@@ -1,25 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell ensures privacy. Anyone looking into the area from outside sees only a dark, foggy mass. Darkvision cannot penetrate it. No sounds, no matter how loud, can escape the area, so nobody can eavesdrop from outside. Those inside can see out normally. Divination [scrying] spells cannot perceive anything within the area, and those within are immune to detect thoughts. The ward prevents speech between those inside and those outside [because it blocks sound], but it does not prevent other communication, such as a sending or message spell, or telepathic communication, such as that between a wizard and her familiar. The spell does not prevent creatures or objects from moving into and out of the area. Mage's private sanctum can be made permanent with a permanency spell.",
     "key": "Mage's Private Sanctum",
-    "school": "Abjuration",
     "level": 5,
-    "description": "This spell ensures privacy. Anyone looking into the area from outside sees only a dark, foggy mass. Darkvision cannot penetrate it. No sounds, no matter how loud, can escape the area, so nobody can eavesdrop from outside. Those inside can see out normally. Divination [scrying] spells cannot perceive anything within the area, and those within are immune to detect thoughts. The ward prevents speech between those inside and those outside [because it blocks sound], but it does not prevent other communication, such as a sending or message spell, or telepathic communication, such as that between a wizard and her familiar. The spell does not prevent creatures or objects from moving into and out of the area. Mage's private sanctum can be made permanent with a permanency spell."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell ensures privacy. Anyone looking into the area from outside sees only a dark, foggy mass. Darkvision cannot penetrate it. No sounds, no matter how loud, can escape the area, so nobody can eavesdrop from outside. Those inside can see out normally. Divination [scrying] spells cannot perceive anything within the area, and those within are immune to detect thoughts. The ward prevents speech between those inside and those outside [because it blocks sound], but it does not prevent other communication, such as a sending or message spell, or telepathic communication, such as that between a wizard and her familiar. The spell does not prevent creatures or objects from moving into and out of the area. Mage's private sanctum can be made permanent with a permanency spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell ensures privacy. Anyone looking into the area from outside sees only a dark, foggy mass. Darkvision cannot penetrate it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "24 hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/mageSPrivateSanctum.html#_mage-s-private-sanctum"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.307"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) 30-ft. cubes [S]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 370,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1124,
-    "record_key": "Mage's Private Sanctum.MOD"
+    "record_key": "Mage's Private Sanctum",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

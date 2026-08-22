@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Champion ~ Feral Blessing",
+    "name": "Feral Blessing",
+    "class": "Swashbuckler",
+    "description": "A feral champion must take the Animal blessing and does not gain a second blessing. This alters blessings.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Champion ~ Feral Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Features.FeralChampionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A feral champion must take the Animal blessing and does not gain a second blessing. This alters blessings."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blessings ~ Animal Blessing"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Blessing|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1219,
+    "record_key": "Feral Champion ~ Feral Blessing"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

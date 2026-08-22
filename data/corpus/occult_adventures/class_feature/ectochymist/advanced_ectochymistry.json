@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ectochymist ~ Advanced Ectochymistry",
+    "name": "Advanced Ectochymistry",
+    "class": "Alchemist",
+    "description": "At 2nd level, a weapon coated in an ectochymist's ectoplasmic blanche also deals full damage to haunts. This ability replaces poison use.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectochymist ~ Advanced Ectochymistry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ectochymist Class Feature.Alchemist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a weapon coated in an ectochymist's ectoplasmic blanche also deals full damage to haunts. This ability replaces poison use."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1655,
+    "record_key": "Ectochymist ~ Advanced Ectochymistry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

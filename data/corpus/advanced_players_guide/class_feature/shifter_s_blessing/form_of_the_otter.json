@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter's Blessing ~ Form of the Otter",
+    "name": "Form of the Otter",
+    "class": "Shifter's Blessing",
+    "description": "The ranger's hands and feet grow webs, and his body grows an oily fur that is water resistant. While in this form, the ranger gains a swim speed of 30 feet and a +8 bonus on Swim checks.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter's Blessing ~ Form of the Otter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.ShifterBlessing"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger's hands and feet grow webs, and his body grows an oily fur that is water resistant. While in this form, the ranger gains a swim speed of 30 feet and a +8 bonus on Swim checks.|!PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger's hands and feet grow webs, and his body grows an oily fur that is water resistant. While in this form, the ranger gains a swim speed of 60 feet and a +5 bonus on Swim checks. Alternatively, the ranger can polymorph into the form of an otter or similar river mammal as if the caster of beast shape IV.|PREABILITY:1,CATEGORY=Special Ability,Shapeshifter ~ Master Shifter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2831,
+    "record_key": "Shifter's Blessing ~ Form of the Otter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

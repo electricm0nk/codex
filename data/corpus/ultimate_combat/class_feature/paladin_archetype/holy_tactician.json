@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Holy Tactician",
+    "name": "Holy Tactician",
+    "class": "Paladin Archetype",
+    "description": "The holy tactician inspires her allies on the field of battle. Her place is at their side against overwhelming odds, and her guidance brings out their true potential.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Holy Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinSmiteEvil.PaladinDivineHealth.PaladinDivineBond.PaladinHolyChampion.PaladinAuraOfJustice.PaladinAuraOfResolve.PaladinAuraOfCourage"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ HOLY TACTICIAN],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinDivineHealth,TYPE.PaladinDivineBond,TYPE.PaladinHolyChampion,TYPE.PaladinAuraOfJustice,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfCourage]"
+      },
+      {
+        "key": "DESC",
+        "value": "The holy tactician inspires her allies on the field of battle. Her place is at their side against overwhelming odds, and her guidance brings out their true potential."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Tactician ~ Weal's Champion|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Tactician ~ Tactical Acumen|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Tactician ~ Battlefield Presence|PRECLASS:1,Paladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Tactician ~ Guide the Battle|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Tactician ~ Weal's Wrath|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Holy Tactician ~ Masterful Presence|PRECLASS:1,Paladin=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1443,
+    "record_key": "Paladin Archetype ~ Holy Tactician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

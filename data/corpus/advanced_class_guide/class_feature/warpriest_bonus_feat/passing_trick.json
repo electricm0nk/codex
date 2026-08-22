@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Passing Trick",
+    "name": "Passing Trick",
+    "class": "Warpriest Bonus Feat",
+    "description": "Slipping past a foe gives you the chance to feint.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Passing Trick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Combat Expertise,Dodge,Improved Feint,Mobility"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]"
+      },
+      {
+        "key": "PRESIZELTEQ",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "Slipping past a foe gives you the chance to feint."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you make a successful Acrobatics check to move through an opponent's space, you can spend a swift action to make a Bluff check against that opponent to feint in combat. &nl; [Special]If you have the Underfoot feat and the opponent is larger than you, you gain a +2 bonus on the Bluff check this feat allows."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Passing Trick"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4508,
+    "record_key": "Warpriest Bonus Feat ~ Passing Trick"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

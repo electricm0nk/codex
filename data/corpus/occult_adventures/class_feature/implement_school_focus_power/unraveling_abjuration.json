@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Implement School Focus Power ~ Unraveling",
+    "name": "Unraveling [Abjuration]",
+    "class": "Implement School Focus Power",
+    "description": "As a standard action, you can expend 1 point of mental focus to unravel a magical effect. This functions as a targeted dispel magic spell, but you must be adjacent to the effect to unravel it. If the effect is created by psychic magic, you receive a +5 bonus on your caster level check to unravel it. If the effect targets an object in your possession, you automatically succeed at the check. You must be at least 5th level to select this focus power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Implement School Focus Power ~ Unraveling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Implement School Focus Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,OccultistSchool_Abjuration=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "OccultistLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of mental focus to unravel a magical effect. This functions as a targeted dispel magic spell, but you must be adjacent to the effect to unravel it. If the effect is created by psychic magic, you receive a +5 bonus on your caster level check to unravel it. If the effect targets an object in your possession, you automatically succeed at the check. You must be at least 5th level to select this focus power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1027,
+    "record_key": "Implement School Focus Power ~ Unraveling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

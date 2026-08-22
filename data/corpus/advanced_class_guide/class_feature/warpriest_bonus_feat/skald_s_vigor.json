@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Skald's Vigor",
+    "name": "Skald's Vigor",
+    "class": "Warpriest Bonus Feat",
+    "description": "While maintaining a raging song, you gain fast healing equal to the Strength bonus your song provides, starting in the round after you begin the song. If you stop maintaining your song, the fast healing ends, even if the effects of your song persist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Skald's Vigor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE=SkaldRagingSong"
+      },
+      {
+        "key": "DESC",
+        "value": "While maintaining a raging song, you gain fast healing equal to the Strength bonus your song provides, starting in the round after you begin the song. If you stop maintaining your song, the fast healing ends, even if the effects of your song persist."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Skald's Vigor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4185,
+    "record_key": "Warpriest Bonus Feat ~ Skald's Vigor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

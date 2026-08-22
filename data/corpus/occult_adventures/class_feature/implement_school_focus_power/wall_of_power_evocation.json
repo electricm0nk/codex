@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Implement School Focus Power ~ Wall of Power",
+    "name": "Wall of Power [Evocation]",
+    "class": "Implement School Focus Power",
+    "description": "By expending 1 point of mental focus as a standard action, you can create a wall of pure energy with a length of up to %1 feet. This wall is 10 feet high and 1 foot thick. It doesn't block passage, line of sight, or line of effect, but does deal damage to anyone passing through it. The wall deals 2d6+%2 points of energy damage. You must select acid, cold, electricity, or fire when you create the wall to determine the type of damage it deals. The wall must be straight, and can't pass through a creature's space when created. The wall lasts for %2 rounds. You must be at least 9th level to select this focus power.|5*OccultistLVL|OccultistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Implement School Focus Power ~ Wall of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Implement School Focus Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,OccultistSchool_Evocation=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "OccultistLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "By expending 1 point of mental focus as a standard action, you can create a wall of pure energy with a length of up to %1 feet. This wall is 10 feet high and 1 foot thick. It doesn't block passage, line of sight, or line of effect, but does deal damage to anyone passing through it. The wall deals 2d6+%2 points of energy damage. You must select acid, cold, electricity, or fire when you create the wall to determine the type of damage it deals. The wall must be straight, and can't pass through a creature's space when created. The wall lasts for %2 rounds. You must be at least 9th level to select this focus power.|5*OccultistLVL|OccultistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1085,
+    "record_key": "Implement School Focus Power ~ Wall of Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

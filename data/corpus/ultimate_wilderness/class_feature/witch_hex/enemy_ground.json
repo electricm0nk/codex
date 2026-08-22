@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Enemy Ground",
+    "name": "Enemy Ground",
+    "class": "Witch Hex",
+    "description": "The witch curses a target with clumsiness when in dangerous terrain. The target takes a -%1 penalty on Acrobatics checks to move over slippery or uneven surfaces and to avoid attacks of opportunity while moving through threatened squares. This effect lasts for 1 minute. On a successful Will save, the penalty is reduced by half and the duration is only 1 round.|WitchEnemyGround",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Enemy Ground"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchMinorHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchEnemyGround|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The witch curses a target with clumsiness when in dangerous terrain. The target takes a -%1 penalty on Acrobatics checks to move over slippery or uneven surfaces and to avoid attacks of opportunity while moving through threatened squares. This effect lasts for 1 minute. On a successful Will save, the penalty is reduced by half and the duration is only 1 round.|WitchEnemyGround"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchEnemyGround|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchEnemyGround|4|PREVARGTEQ:WitchHexAbilityLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1275,
+    "record_key": "Witch Hex ~ Enemy Ground"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

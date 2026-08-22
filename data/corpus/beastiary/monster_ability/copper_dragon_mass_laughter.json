@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Copper Dragon ~ Mass Laughter",
+    "delivery": "SpellLike",
+    "description": "An ancient copper dragon can tell a fantastic joke once per day as a standard action. All creatures within 10 feet per age category must make a Will save (DC %1) or laugh for %2 rounds, as if affected by hideous laughter.This is equal to a 6th-level spell.",
+    "description_variables": [
+      "MassLaughterDC",
+      "DragonAgeCategory"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:copper_dragon_mass_laughter",
+    "name": "Mass Laughter",
+    "owners": [
+      "beastiary:monster:dragon_copper"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Mass Laughter"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|MassLaughterDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MassLaughterDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MassLaughterDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Mass Laughter)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MassLaughterDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An ancient copper dragon can tell a fantastic joke once per day as a standard action. All creatures within 10 feet per age category must make a Will save (DC %1) or laugh for %2 rounds, as if affected by hideous laughter.This is equal to a 6th-level spell.|MassLaughterDC|DragonAgeCategory"
+      },
+      {
+        "key": "KEY",
+        "value": "Copper Dragon ~ Mass Laughter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      }
+    ],
+    "source_page": "p.106",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 479,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Copper Dragon ~ Mass Laughter",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

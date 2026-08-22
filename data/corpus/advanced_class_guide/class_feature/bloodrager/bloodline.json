@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager ~ Standard Bloodline",
+    "name": "Bloodline",
+    "class": "Bloodrager",
+    "description": "Each bloodrager has a source of magic somewhere in his heritage that empowers his bloodrages, bonus feats, and bonus spells. Sometimes this source reflects a distant blood relationship to a powerful being, or is due to an extreme event involving such a creature somewhere in his family's past. Regardless of the source, this influence manifests in a number of ways. A bloodrager must pick one bloodline upon taking his first level of bloodrager. Once made, this choice cannot be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Standard Bloodline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.SpecialQuality.Special Quality.Bloodline"
+      },
+      {
+        "key": "DESC",
+        "value": "Each bloodrager has a source of magic somewhere in his heritage that empowers his bloodrages, bonus feats, and bonus spells. Sometimes this source reflects a distant blood relationship to a powerful being, or is due to an extreme event involving such a creature somewhere in his family's past. Regardless of the source, this influence manifests in a number of ways. A bloodrager must pick one bloodline upon taking his first level of bloodrager. Once made, this choice cannot be changed."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bloodrager ~ Bloodline Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodline|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Bloodrager Bloodline"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 332,
+    "record_key": "Bloodrager ~ Standard Bloodline"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

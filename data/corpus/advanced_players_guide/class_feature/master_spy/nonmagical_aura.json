@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Master Spy ~ Nonmagical Aura",
+    "name": "Nonmagical Aura",
+    "class": "Master Spy",
+    "description": "At 3rd level, a master spy can use magic aura twice per day, but only for the purpose of making an object appear nonmagical.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Master Spy ~ Nonmagical Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a master spy can use magic aura twice per day, but only for the purpose of making an object appear nonmagical."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1407,
+    "record_key": "Master Spy ~ Nonmagical Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

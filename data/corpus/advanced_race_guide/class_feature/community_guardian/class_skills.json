@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Community Guardian ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Oracle",
+    "description": "A community guardian adds Knowledge (local), Linguistics, Perception, and Survival to her list of class skills. These replace the additional class skills from her mystery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Community Guardian ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A community guardian adds Knowledge (local), Linguistics, Perception, and Survival to her list of class skills. These replace the additional class skills from her mystery."
+      },
+      {
+        "key": "CSKILL",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Craft|Diplomacy|Heal|Knowledge (History)|Knowledge (Local)|Knowledge (Planes)|Knowledge (Religion)|Linguistics|TYPE=Profession|Perception|Sense Motive|Spellcraft|Survival"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 301,
+    "record_key": "Community Guardian ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

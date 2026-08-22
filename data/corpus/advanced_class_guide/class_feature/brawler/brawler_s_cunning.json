@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brawler ~ Brawler's Cunning",
+    "name": "Brawler's Cunning",
+    "class": "Brawler",
+    "description": "If the brawler's Intelligence score is less than 13, it counts as 13 for the purpose of meeting the prerequisites of combat feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler ~ Brawler's Cunning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlersCunning|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatFeatIntRequirement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If the brawler's Intelligence score is less than 13, it counts as 13 for the purpose of meeting the prerequisites of combat feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlersCunning|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatFeatIntRequirement|max(13,INTSCORE)|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 901,
+    "record_key": "Brawler ~ Brawler's Cunning"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

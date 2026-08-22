@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maestro Bloodline ~ Bonus Spells",
+    "name": "Maestro Bloodline ~ Bonus Spells",
+    "class": "Maestro Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=1|Ventriloquism|PREVAREQ:Sorcerer_CF_BloodlineSpell1,0|PREVARGTEQ:BloodlineCasterLVL,3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=2|Hideous Laughter|PREVAREQ:Sorcerer_CF_BloodlineSpell2,0|PREVARGTEQ:BloodlineCasterLVL,5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=3|Suggestion|PREVAREQ:Sorcerer_CF_BloodlineSpell3,0|PREVARGTEQ:BloodlineCasterLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=4|Shout|PREVAREQ:Sorcerer_CF_BloodlineSpell4,0|PREVARGTEQ:BloodlineCasterLVL,9"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=5|Dominate Person|PREVAREQ:Sorcerer_CF_BloodlineSpell5,0|PREVARGTEQ:BloodlineCasterLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=6|Suggestion (Mass)|PREVAREQ:Sorcerer_CF_BloodlineSpell6,0|PREVARGTEQ:BloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Power Word Blind|PREVAREQ:Sorcerer_CF_BloodlineSpell7,0|PREVARGTEQ:BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=8|Shout (Greater)|PREVAREQ:Sorcerer_CF_BloodlineSpell8,0|PREVARGTEQ:BloodlineCasterLVL,17"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=9|Wail of the Banshee|PREVAREQ:Sorcerer_CF_BloodlineSpell9,0|PREVARGTEQ:BloodlineCasterLVL,19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 624,
+    "record_key": "Maestro Bloodline ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

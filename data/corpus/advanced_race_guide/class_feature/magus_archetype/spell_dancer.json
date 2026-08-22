@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Spell Dancer",
+    "name": "Spell Dancer",
+    "class": "Magus Archetype",
+    "description": "The strong emphasis on wizards within elven culture influences how even non-wizard elves see themselves. Many elven magi do not consider themselves masters of a blend of martial and magical talents, but rather a sub-category of wizards who study the effect of physical movement and techniques upon spellcasting ability. They believe their ability to cast spells while fighting is an outgrowth of the concept of the \"spell dance,\" which itself is just another kind of wizardry.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Spell Dancer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusArcanePool.MagusBonusFeat5.MagusMediumArmor.MagusHeavyArmor"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Spell Dancer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusBonusFeat5,TYPE.MagusMediumArmor,TYPE.MagusHeavyArmor]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The strong emphasis on wizards within elven culture influences how even non-wizard elves see themselves. Many elven magi do not consider themselves masters of a blend of martial and magical talents, but rather a sub-category of wizards who study the effect of physical movement and techniques upon spellcasting ability. They believe their ability to cast spells while fighting is an outgrowth of the concept of the \"spell dance,\" which itself is just another kind of wizardry."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spell Dancer ~ Class Skills|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spell Dancer ~ Spell Dance|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spell Dancer ~ Arcane Movement|PRECLASS:1,Magus=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spell Dancer ~ Dance of Avoidance|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spell Dancer ~ Greater Dance of Avoidance|PRECLASS:1,Magus=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spell Dancer ~ Magus Arcana|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 106,
+    "record_key": "Magus Archetype ~ Spell Dancer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

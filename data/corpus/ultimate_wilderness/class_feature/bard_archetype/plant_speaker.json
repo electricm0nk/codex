@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Plant Speaker",
+    "name": "Plant Speaker",
+    "class": "Bard Archetype",
+    "description": "Plant speakers build upon their racial plantspeech ability and their storytelling tendencies to create an art form full of deep metaphors and allegory rather than specific details and facts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Plant Speaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Plant Speaker],[!PREFACT:1,ABILITIES,Bard_Archetype_InspireGreatness=True,Bard_Archetype_BardicKnowledge=True,Bard_Archetype_WellVersed=True,Bard_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Vine Leshy"
+      },
+      {
+        "key": "DESC",
+        "value": "Plant speakers build upon their racial plantspeech ability and their storytelling tendencies to create an art form full of deep metaphors and allegory rather than specific details and facts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Plant Speaker ~ Leshy Speaker|PRECLASS:1,Bard=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Plant Speaker ~ Plant Speech|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Plant Speaker ~ Mystical Allegory|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireGreatness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireGreatness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 247,
+    "record_key": "Bard Archetype ~ Plant Speaker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

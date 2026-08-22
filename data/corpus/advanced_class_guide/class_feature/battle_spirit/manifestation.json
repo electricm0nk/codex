@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Spirit ~ Manifestation",
+    "name": "Manifestation",
+    "class": "Battle Spirit",
+    "description": "The shaman becomes a spirit of battle. As a full-round action, she can make a full attack and move up to her speed (either before or after the attacks). Whenever she scores a critical hit, the attack ignores damage reduction. She gains a +4 insight bonus to AC for the purposes of confirming critical hits against her. If she is reduced to below 0 hit points, she does not die until her negative hit point total exceeds double her Constitution score.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Spirit ~ Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman becomes a spirit of battle. As a full-round action, she can make a full attack and move up to her speed (either before or after the attacks). Whenever she scores a critical hit, the attack ignores damage reduction. She gains a +4 insight bonus to AC for the purposes of confirming critical hits against her. If she is reduced to below 0 hit points, she does not die until her negative hit point total exceeds double her Constitution score."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1522,
+    "record_key": "Battle Spirit ~ Manifestation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

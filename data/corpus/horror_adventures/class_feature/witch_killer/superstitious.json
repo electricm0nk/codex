@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Killer ~ Superstitious",
+    "name": "Superstitious",
+    "class": "Slayer",
+    "description": "Instead of being able to select ranger combat style feats as slayer talents, a witch killer can select any of the following barbarian rage powers as slayer talents, treating his slayer level as his barbarian level: clear mind, disruptive, eater of magic, spell sunder, spellbreaker, sunder enchantment, superstition, or witch hunter. If the witch killer selects a rage power that can normally be used only once per rage (eater of magic, spell sunder, or sunder enchantment), he can use it %1 times per day, though no more than once per round in any event. The other rage powers affect the slayer constantly, though the superstition and witch hunter rage powers apply only against arcane spells and spell-like abilities and the creatures that use them.|SlayerLVL/5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Killer ~ Superstitious"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersPrereqLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of being able to select ranger combat style feats as slayer talents, a witch killer can select any of the following barbarian rage powers as slayer talents, treating his slayer level as his barbarian level: clear mind, disruptive, eater of magic, spell sunder, spellbreaker, sunder enchantment, superstition, or witch hunter. If the witch killer selects a rage power that can normally be used only once per rage (eater of magic, spell sunder, or sunder enchantment), he can use it %1 times per day, though no more than once per round in any event. The other rage powers affect the slayer constantly, though the superstition and witch hunter rage powers apply only against arcane spells and spell-like abilities and the creatures that use them.|SlayerLVL/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersPrereqLVL|SlayerLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 238,
+    "record_key": "Witch Killer ~ Superstitious"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

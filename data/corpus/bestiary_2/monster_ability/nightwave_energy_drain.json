@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Nightwave ~ Energy Drain",
     "delivery": "Supernatural",
@@ -13,19 +11,63 @@
     "owners": [
       "bestiary_2:monster:nightshade_nightwave"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Energy Drain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite/swallow whole, 2 levels, DC %1)|NightwaveEnergyDrainDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwaveEnergyDrainDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwaveEnergyDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Energy Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NightwaveEnergyDrainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that has been swallowed whole by a nightwave gains 2 negative levels each round."
+      },
+      {
+        "key": "KEY",
+        "value": "Nightwave ~ Energy Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.202",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 897,
-    "record_key": "Nightwave ~ Energy Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 897,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Nightwave ~ Energy Drain",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

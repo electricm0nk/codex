@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dark Tapestry Mystery ~ Touch of the Void",
+    "name": "Touch of the Void",
+    "class": "Dark Tapestry Mystery",
+    "description": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of cold damage. You can use this ability %2/day.|TouchOfTheVoidBonusDamage|TouchOfTheVoidTimes|!PRECLASS:1,Oracle=7",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tapestry Mystery ~ Touch of the Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.DarkTapestryRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfTheVoidBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfTheVoidDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfTheVoidDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfTheVoidTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of cold damage. You can use this ability %2/day.|TouchOfTheVoidBonusDamage|TouchOfTheVoidTimes|!PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of cold damage. At 7th level, the touched creature must also make a Fortitude saving throw (DC %2) or be fatigued for %3 rounds. This has no effect on a creature that is already fatigued. You can use this ability %4/day.|TouchOfTheVoidBonusDamage|TouchOfTheVoidDC|TouchOfTheVoidDuration|TouchOfTheVoidTimes|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfTheVoidBonusDamage|floor(classlevel(\"Oracle\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfTheVoidDC|10+(classlevel(\"Oracle\")/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfTheVoidDuration|floor(classlevel(\"Oracle\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfTheVoidTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 474,
+    "record_key": "Dark Tapestry Mystery ~ Touch of the Void"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood Mystery ~ Wood Bond",
+    "name": "Wood Bond",
+    "class": "Wood Mystery",
+    "description": "Your mystical bond with wood is such that your weapons become an extension of your body. You gain a +%1 competence bonus on attack rolls when wielding a weapon made of or mostly consisting of wood (such as a bow, club, quarterstaff, or spear).|WoodBondBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Wood Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WoodRevelation.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodBondBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mystical bond with wood is such that your weapons become an extension of your body. You gain a +%1 competence bonus on attack rolls when wielding a weapon made of or mostly consisting of wood (such as a bow, club, quarterstaff, or spear).|WoodBondBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodBondBonus|1+classlevel(\"Oracle\")/5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Wooden|TOHIT|WoodBondBonus|TYPE=Competence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 517,
+    "record_key": "Wood Mystery ~ Wood Bond"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

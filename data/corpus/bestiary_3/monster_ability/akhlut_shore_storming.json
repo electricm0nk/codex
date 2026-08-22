@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "corpus_key": "Akhlut ~ Shore Storming",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_3:monster:akhlut"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An akhlut automatically transforms into an orca whenever it is fully immersed in water, losing its legs and fur. Likewise, when an akhlut emerges from the water, it automatically transforms into its wolf-orca hybrid form. If an akhlut moves from water to land (or vice versa) on the round before initiating combat, it gains a +8 bonus on its initiative check. This initial attack resolves as a charge. An akhlut has the same statistics in both forms."
+      },
+      {
+        "key": "KEY",
+        "value": "Akhlut ~ Shore Storming"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.11",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 312,
-    "record_key": "Akhlut ~ Shore Storming"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 312,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Akhlut ~ Shore Storming",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

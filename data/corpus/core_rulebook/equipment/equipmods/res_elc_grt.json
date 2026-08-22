@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 66000.0,
+    "description": "absorbs 30 points of electricity damage per attack",
+    "key": "RES_ELC_GRT",
+    "name": "RES_ELC_GRT",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Energy Resistance / Electricity / Greater ~ Armor"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Shield"
+      },
+      {
+        "key": "COST",
+        "value": "66000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.462"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,ArmorEnhancement,ShieldEnhancement],[PRETYPE:1,Armor,Shield]"
+      },
+      {
+        "key": "SPROP",
+        "value": "absorbs 30 points of electricity damage per attack"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 771,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "RES_ELC_GRT",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

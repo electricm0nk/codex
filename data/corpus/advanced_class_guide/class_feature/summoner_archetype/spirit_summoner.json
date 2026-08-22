@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner Archetype ~ Spirit Summoner",
+    "name": "Spirit Summoner",
+    "class": "Summoner Archetype",
+    "description": "A spirit summoner is an arcane spellcaster whose eidolon is a manifestation of a shamanic spirit. The bond connecting the summoner and this spirit might be friendly, as a member of a tribe giving flesh to his protector spirit, or hostile, as an outlander or rival compelling service from an unwilling spirit. The summoner can draw upon the divine power of this spirit, but is not constrained by the spirit's morals or ethics.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Spirit Summoner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Spirit Summoner],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerAspect,TYPE.SummonerMakersCall,TYPE.SummonerMergeForms,TYPE.SummonerTransposition,TYPE.SummonerEidolon,TYPE.SummonerSummonMonster]"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit summoner is an arcane spellcaster whose eidolon is a manifestation of a shamanic spirit. The bond connecting the summoner and this spirit might be friendly, as a member of a tribe giving flesh to his protector spirit, or hostile, as an outlander or rival compelling service from an unwilling spirit. The summoner can draw upon the divine power of this spirit, but is not constrained by the spirit's morals or ethics."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Spirit Summoner ~ Spirit|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Spirit Summoner ~ Eidolon|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Spirit Summoner ~ Hex|PRECLASS:1,Summoner=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3810,
+    "record_key": "Summoner Archetype ~ Spirit Summoner"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

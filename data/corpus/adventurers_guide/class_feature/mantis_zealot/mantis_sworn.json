@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mantis Zealot ~ Mantis Sworn",
+    "name": "Mantis Sworn",
+    "class": "Warpriest",
+    "description": "A mantis zealot must choose Achaekek as his deity, and he must be lawful evil in alignment. If he ever changes his deity, he loses this archetype and becomes a normal warpriest.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mantis Zealot ~ Mantis Sworn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Features.MantisZealotClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "DESC",
+        "value": "A mantis zealot must choose Achaekek as his deity, and he must be lawful evil in alignment. If he ever changes his deity, he loses this archetype and becomes a normal warpriest."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1120,
+    "record_key": "Mantis Zealot ~ Mantis Sworn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

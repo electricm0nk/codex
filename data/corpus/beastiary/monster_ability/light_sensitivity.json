@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Light Sensitivity",
+    "delivery": "Extraordinary",
+    "description": "You are dazzled in areas of bright sunlight or within the radius of a daylight spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:light_sensitivity",
+    "name": "Light Sensitivity",
+    "owners": [
+      "beastiary:monster:mite"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You are dazzled in areas of bright sunlight or within the radius of a daylight spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Weakness"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Weakness"
+    ]
+  },
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1446,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Light Sensitivity",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

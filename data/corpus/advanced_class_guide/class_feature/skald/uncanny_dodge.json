@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Skald",
+    "description": "At 4th level, a skald gains the ability to react to danger before his senses would normally allow him to do so. He cannot be caught flat-footed, nor does he lose his Dex bonus to AC if the attacker is invisible. He still loses his Dexterity bonus to AC if he is immobilized. A skald with this ability can still lose his Dexterity bonus to AC if an opponent successfully uses the feint action against him. If a skald already has uncanny dodge from a different class, he automatically gains improved uncanny dodge (see below) instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldUncannyDodge.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a skald gains the ability to react to danger before his senses would normally allow him to do so. He cannot be caught flat-footed, nor does he lose his Dex bonus to AC if the attacker is invisible. He still loses his Dexterity bonus to AC if he is immobilized. A skald with this ability can still lose his Dexterity bonus to AC if an opponent successfully uses the feint action against him. If a skald already has uncanny dodge from a different class, he automatically gains improved uncanny dodge (see below) instead."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skald ~ Improved Uncanny Dodge|PREVARGTEQ:UncannyDodgeLVL,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1730,
+    "record_key": "Skald ~ Uncanny Dodge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

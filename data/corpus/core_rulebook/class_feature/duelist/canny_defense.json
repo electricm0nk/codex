@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Duelist ~ Canny Defense",
+    "name": "Canny Defense",
+    "class": "Duelist",
+    "description": "When wearing light or no armor and not using a shield, a duelist adds 1 point of Intelligence bonus (if any) per duelist class level as a dodge bonus to her Armor Class while wielding a melee weapon. If a duelist is caught flat-footed or otherwise denied her Dexterity bonus, she also loses this bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ Canny Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CannyDefenseLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When wearing light or no armor and not using a shield, a duelist adds 1 point of Intelligence bonus (if any) per duelist class level as a dodge bonus to her Armor Class while wielding a melee weapon. If a duelist is caught flat-footed or otherwise denied her Dexterity bonus, she also loses this bonus."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|max(0,min(INT,CannyDefenseLVL))|TYPE=Dodge|PREMULT:2,[!PREEQUIP:1,ARMORTYPE=Medium,ARMORTYPE=Heavy,TYPE=Shield],[PREEQUIP:1,TYPE=Melee]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CannyDefenseLVL|DuelistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.382"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2987,
+    "record_key": "Duelist ~ Canny Defense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

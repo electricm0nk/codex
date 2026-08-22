@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Smite Chaos ~ HK",
+    "name": "Smite Chaos",
+    "class": "Smite Chaos",
+    "description": "You can call out to the powers of law to aid you in your struggle against chaos %1/day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against it, and automatically bypass any DR the creature might possess. This ability is twice as effective against outsiders with the chaotic subtype, chaotic-aligned aberrations, and fey. In addition, you gain a +%4 deflection bonus to your AC against attacks made by the target. If you target a creature that is not chaotic, the smite is wasted with no effect. The smite effect remains until the target is dead or the next time you rest and regain your uses of this ability.|HKSmiteTimes|max(CHA,0)|HellknightLvl|max(CHA,0)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Smite Chaos ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HKSmiteTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call out to the powers of law to aid you in your struggle against chaos %1/day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against it, and automatically bypass any DR the creature might possess. This ability is twice as effective against outsiders with the chaotic subtype, chaotic-aligned aberrations, and fey. In addition, you gain a +%4 deflection bonus to your AC against attacks made by the target. If you target a creature that is not chaotic, the smite is wasted with no effect. The smite effect remains until the target is dead or the next time you rest and regain your uses of this ability.|HKSmiteTimes|max(CHA,0)|HellknightLvl|max(CHA,0)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HKSmiteTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 56,
+    "record_key": "Smite Chaos ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

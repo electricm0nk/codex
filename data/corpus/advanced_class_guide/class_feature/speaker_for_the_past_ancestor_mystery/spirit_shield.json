@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Speaker for the Past Ancestor Mystery ~ Spirit Shield",
+    "name": "Spirit Shield",
+    "class": "Speaker for the Past Ancestor Mystery",
+    "description": "You can call upon the spirits of your ancestors to form a shield around you that blocks incoming attacks and grants you a +%1 armor bonus. You can use this shield for %2 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|SpiritShieldBonus|SpiritShieldDuration|!PRECLASS:1,Shaman=13",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speaker for the Past Ancestor Mystery ~ Spirit Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "speaker for the past revelation.SpecialQuality.Supernatural.AncestorRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritShieldDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpiritShieldBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the spirits of your ancestors to form a shield around you that blocks incoming attacks and grants you a +%1 armor bonus. You can use this shield for %2 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|SpiritShieldBonus|SpiritShieldDuration|!PRECLASS:1,Shaman=13"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the spirits of your ancestors to form a shield around you that blocks incoming attacks and grants you a +%1 armor bonus. This shield causes arrows, rays, and other ranged attacks requiring an attack roll against you to have a 50%% miss chance. You can use this shield for %2 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|SpiritShieldBonus|SpiritShieldDuration|PRECLASS:1,Shaman=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritShieldDuration|classlevel(\"Shaman\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritShieldBonus|4+2*max(0,floor((classlevel(\"Shaman\")-3)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|SpiritShieldBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3621,
+    "record_key": "Speaker for the Past Ancestor Mystery ~ Spirit Shield"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

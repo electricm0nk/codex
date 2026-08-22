@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guerrilla ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Rogue",
+    "description": "A guerrilla gains uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guerrilla ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary.Uncanny Dodge"
+      },
+      {
+        "key": "DESC",
+        "value": "A guerrilla gains uncanny dodge."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Uncanny Dodge ~ Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 258,
+    "record_key": "Guerrilla ~ Uncanny Dodge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

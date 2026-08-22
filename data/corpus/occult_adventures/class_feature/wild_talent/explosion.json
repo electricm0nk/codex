@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Explosion",
+    "name": "Explosion",
+    "class": "Wild Talent",
+    "description": "Element fire; Type form infusion; Level 7; Burn 4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Explosion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Fire"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Extended Range"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite extended range"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,14"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type form infusion; Level 7; Burn 4"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts blue flame, fire Saving Throw Reflex half You focus your energy on a point in space and create a controlled explosion. You can center the explosion anywhere within 120 feet of you, and you can choose the radius of the spread to be 5, 10, 15, or 20 feet. All creatures and objects within the explosion take your blast's damage. The saving throw DC is Dexterity-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 691,
+    "record_key": "Wild Talent ~ Explosion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

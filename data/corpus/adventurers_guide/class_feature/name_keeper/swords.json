@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Name-Keeper ~ Swords Focus",
+    "name": "Swords",
+    "class": "Name-Keeper",
+    "description": "The name-keeper gains proficiency in all martial weapons and one exotic weapon of her choice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Name-Keeper ~ Swords Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PathfindersPastFocus.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "DESC",
+        "value": "The name-keeper gains proficiency in all martial weapons and one exotic weapon of her choice."
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever she makes a full attack, she gains one additional attack at her highest base attack bonus; this ability stacks with the extra attack from haste, but it doesn't stack with other abilities that grant extra attacks.|PRECLASS:1,Shaman=12"
+      },
+      {
+        "key": "DESC",
+        "value": "She gains two combat feats for which she qualifies.|PRECLASS:1,Shaman=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Martial"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1046,
+    "record_key": "Name-Keeper ~ Swords Focus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

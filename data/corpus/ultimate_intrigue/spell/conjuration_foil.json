@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "All creatures in the area gain a +4 bonus on saving throws against teleportation effects. If any creature would enter or depart the area via a summoning or teleportation effect, that creature takes 1d6 points of damage per spell level of the triggering effect (or half the HD of the originating creature if the effect has no spell level) and arrives in a random similar location within the triggering effect's range, rather than the intended destination. A successful Will save halves the damage and negates the altered destination.|PRERULE:1,DisplayFullSpell",
+    "key": "Conjuration Foil",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 immediate action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Magus,Summoner=3|Bard,Medium,Occultist,Psychic,Sorcerer,Spiritualist,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures in the area gain a +4 bonus on saving throws against teleportation effects. If any creature would enter or depart the area via a summoning or teleportation effect, that creature takes 1d6 points of damage per spell level of the triggering effect (or half the HD of the originating creature if the effect has no spell level) and arrives in a random similar location within the triggering effect's range, rather than the intended destination. A successful Will save halves the damage and negates the altered destination.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Interfere with nearby teleportation effects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will half; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Conjuration Foil"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "20-foot radius spread"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Conjuration Foil",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

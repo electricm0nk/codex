@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elementalist Shifter Aspect ~ Earth",
+    "name": "Aspect of Earth",
+    "class": "Elementalist Shifter Aspect",
+    "description": "You take on the power of an earth elemental, gaining the ability to burrow through the earth and deliver powerful blows. [Minor Form] You gain a +%1 enhancement bonus to your Constitution score.|EarthAspectConBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elementalist Shifter Aspect ~ Earth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ElementalistShifterAspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterEarthAspectLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EarthAspectConBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EarthAspectBurrowSpeed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You take on the power of an earth elemental, gaining the ability to burrow through the earth and deliver powerful blows. [Minor Form] You gain a +%1 enhancement bonus to your Constitution score.|EarthAspectConBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " [Major Form] Your shape changes to that of a Medium earth elemental (Bestiary p122). While you are in this form, your base speed is reduced to 20 feet, but you gain a burrow speed of %1 feet, and you gain a +1 bonus on attack and damage rolls if both you and your target are touching the ground. If the target is airborne or waterborne, you take a -4 penalty on attack and damage rolls against it. These modifiers also apply to bull rush and overrun combat maneuvers, whether you are initiating or resisting these kinds of attacks.|EarthAspectBurrowSpeed|PREVARGTEQ:ShifterWildShape,1"
+      },
+      {
+        "key": "DESC",
+        "value": " You gain earth glide as per the universal monster rule.|PREVARGTEQ:ShifterWildShape,1|PREVARGTEQ:ShifterEarthAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": " You gain Improved Natural Attack with your slam.|PREVARGTEQ:ShifterWildShape,1|PREVARGTEQ:ShifterEarthAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterEarthAspectLVL|ShifterAspectLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EarthAspectConBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EarthAspectConBonus|2|PREVARGTEQ:ShifterEarthAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EarthAspectConBonus|2|PREVARGTEQ:ShifterEarthAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EarthAspectBurrowSpeed|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EarthAspectBurrowSpeed|10|PREVARGTEQ:ShifterEarthAspectLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1050,
+    "record_key": "Elementalist Shifter Aspect ~ Earth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

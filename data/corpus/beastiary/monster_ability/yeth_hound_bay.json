@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Yeth Hound ~ Bay",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:yeth_hound"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Bay"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|BayDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BayDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BayDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Bay)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BayDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a yeth hound howls or barks, all creatures except other evil outsiders within a 300-foot spread must succeed on a DC %1 Will save or become panicked for 2d4 rounds. This is a sonic mindaffecting fear effect. Whether or not the save is successful, an affected creature is immune to the same hound's bay for 24 hours.|BayDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Yeth Hound ~ Bay"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.286",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1283,
-    "record_key": "Yeth Hound ~ Bay"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1283,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Yeth Hound ~ Bay",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Chernobue ~ Poison",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:qlippoth_chernobue"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChernobuePoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChernobuePoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Rotting Curse)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChernobuePoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite - injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d2 Con drain; cure 1 save.  The thick, orange poison injected by a chernobue is semi-alive.  As soon as the poisoned victim is cured of the poison (by making a save, being targeted with an effect like neutralize poison, or enduring the full duration of the poison), the orange fluid bursts from the victim's body, causing 1d6 Charisma damage and rendering the victim unconscious for 2d6 rounds unless he makes a final DC %1 save.|ChernobuePoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Chernobue ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.220",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 999,
-    "record_key": "Chernobue ~ Poison"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 999,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Chernobue ~ Poison",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

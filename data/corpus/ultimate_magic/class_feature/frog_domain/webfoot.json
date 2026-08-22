@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Frog Domain ~ Webfoot",
+    "name": "Webfoot",
+    "class": "Frog Domain",
+    "description": "You gain the amphibious special quality and a swim speed equal to your land speed.|PREVARLT:DomainFrogLVL,12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Frog Domain ~ Webfoot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DomainPower.Frog Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the amphibious special quality and a swim speed equal to your land speed.|PREVARLT:DomainFrogLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the amphibious special quality and climb and swim speeds equal to your land speed.|PREVARGTEQ:DomainFrogLVL,12"
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Swim,*1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Amphibious"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Webfoot Climb Speed|PREVARGTEQ:DomainFrogLVL,12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 287,
+    "record_key": "Frog Domain ~ Webfoot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

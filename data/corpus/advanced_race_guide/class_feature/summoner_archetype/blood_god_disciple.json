@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner Archetype ~ Blood God Disciple",
+    "name": "Blood God Disciple",
+    "class": "Summoner Archetype",
+    "description": "A half-orc summoner who devotes himself to one of the bloody orc gods may believe his eidolon is an avatar of that god rather than a mere supernatural creature. A blood god disciple generally fights by the avatar's side and offers it blood sacrifices in exchange for martial prowess. A blood god disciple has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner Archetype ~ Blood God Disciple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype.SummonerSummonMonster"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Blood God Disciple],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerSummonMonster]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfOrc=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A half-orc summoner who devotes himself to one of the bloody orc gods may believe his eidolon is an avatar of that god rather than a mere supernatural creature. A blood god disciple generally fights by the avatar's side and offers it blood sacrifices in exchange for martial prowess. A blood god disciple has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blood God Disciple ~ Blood Feast|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blood God Disciple ~ Bloody Gift|PRECLASS:1,Summoner=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blood God Disciple ~ Avatar Gambit|PRECLASS:1,Summoner=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blood God Disciple ~ Rage Power|PRECLASS:1,Summoner=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Summoner"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 245,
+    "record_key": "Summoner Archetype ~ Blood God Disciple"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

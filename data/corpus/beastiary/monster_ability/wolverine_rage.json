@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Wolverine ~ Rage",
     "delivery": "Extraordinary",
@@ -13,19 +11,55 @@
     "owners": [
       "beastiary:monster:wolverine_dire"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A wolverine that takes damage in combat flies into a rage on its next turn, clawing and biting madly until either it or its opponent is dead. It gains +4 to Strength, +4 to Constitution, and -2 to AC. The creature cannot end its rage voluntarily."
+      },
+      {
+        "key": "KEY",
+        "value": "Wolverine ~ Rage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|-2|TYPE=Rage"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,CON|4|TYPE=Rage"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "A raging wolverine gains +4 to Strength, +4 to Constitution, and -2 to AC."
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.279",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1250,
-    "record_key": "Wolverine ~ Rage"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1250,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Wolverine ~ Rage",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus",

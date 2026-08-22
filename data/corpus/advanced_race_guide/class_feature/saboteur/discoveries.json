@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Saboteur ~ Discoveries",
+    "name": "Discoveries",
+    "class": "Alchemist",
+    "description": "The following discoveries complement the saboteur archetype: acid bomb, concussive bomb, delayed bomb, explosive bomb, fast bombs, inferno bomb, madness bomb, precise bombs, smoke bomb, stink bomb (Advanced Player's Guide); explosive missile, immolation bomb, siege bomb (Ultimate Combat); blinding bomb, cognatogen, confusion bomb, tanglefoot bomb (Ultimate Magic).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saboteur ~ Discoveries"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following discoveries complement the saboteur archetype: acid bomb, concussive bomb, delayed bomb, explosive bomb, fast bombs, inferno bomb, madness bomb, precise bombs, smoke bomb, stink bomb (Advanced Player's Guide); explosive missile, immolation bomb, siege bomb (Ultimate Combat); blinding bomb, cognatogen, confusion bomb, tanglefoot bomb (Ultimate Magic)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 183,
+    "record_key": "Saboteur ~ Discoveries"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

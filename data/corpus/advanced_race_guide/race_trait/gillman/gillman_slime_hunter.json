@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Gillman ~ Slime Hunter",
+    "name": "Slime Hunter",
+    "race_key": "Gillman",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gillman Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gillman_ReplaceEnchantmentResistance"
+    ],
+    "description": "Gillmen with this trait are from lineages that have fought against aboleths since the aberrations rescued their human ancestors. They receive a +2 racial bonus on saving throws against aboleth spells, spell-like abilities, and supernatural abilities. This racial trait replaces enchantment resistance.",
+    "source_page": "p.188",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gillman ~ Slime Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gillman Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gillman ~ Slime Hunter],[!PREFACT:1,ABILITIES,Gillman_ReplaceEnchantmentResistance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gillmen with this trait are from lineages that have fought against aboleths since the aberrations rescued their human ancestors. They receive a +2 racial bonus on saving throws against aboleth spells, spell-like abilities, and supernatural abilities."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces enchantment resistance.|!PREABILITY:1,CATEGORY=Special Ability,Gillman ~ Slimehunter"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against aboleth spells, spell-like abilities, and supernatural abilities."
+      },
+      {
+        "key": "FACT",
+        "value": "Gillman_ReplaceEnchantmentResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_AbolethSpells",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 875,
+    "record_key": "Gillman ~ Slime Hunter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

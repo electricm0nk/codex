@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Aura of Greater Courage",
-    "school": "Abjuration",
-    "level": 2,
     "description": "When you cast this spell you strengthen your paladin's aura of courage. Until the end of its duration, all allies within that aura are immune to fear (magical or otherwise). If you do not have the aura of courage class feature, aura of greater courage has no effect.",
-    "full_text": true
+    "full_text": true,
+    "key": "Aura of Greater Courage",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Increases strength of a paladin's aura of courage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you cast this spell you strengthen your paladin's aura of courage. Until the end of its duration, all allies within that aura are immune to fear (magical or otherwise). If you do not have the aura of courage class feature, aura of greater courage has no effect.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "10/minutes per level"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/auraOfGreaterCourage.html#_aura-of-greater-courage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-radius emanation centered on you"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 31,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1856,
-    "record_key": "Aura of Greater Courage"
+    "record_key": "Aura of Greater Courage",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

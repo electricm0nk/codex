@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Bhole ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:bhole"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every minute, a bhole can expel a prodigious amount of thick slime from its gullet. This breath weapon has a range of 900 feet, and creates a 40-foot-diameter spread of slime in its targeted area. Any creature within this area must succeed at a DC 29 Fortitude save or be stunned for 1d4 rounds. The slime transforms the area it coats into difficult terrain. Furthermore, any creature that is in the area (or that attempts to enter the area) must succeed at a DC 29 Reflex save or be entangled by the slime. Bhole slime persists for 2d6 hours and bhole lairs are typically pre-caked with the stuff. A bhole can move through bhole slime without penalty. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Bhole ~ Breath Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 307,
-    "record_key": "Bhole ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 307,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Bhole ~ Breath Weapon",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

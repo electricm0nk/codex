@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood School ~ Flexible Enhancement",
+    "name": "Flexible Enhancement",
+    "class": "Wood School",
+    "description": "You are able to bend like bamboo when stressed and snap back into place. You gain a +%1 enhancement bonus to your Dexterity, Constitution, or Wisdom ability score. You can change this bonus to a new ability score when you prepare spells.|FlexibleEnhancementBonus|PREVARLT:WoodSchoolProgressionLVL,20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood School ~ Flexible Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlexibleEnhancementBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to bend like bamboo when stressed and snap back into place. You gain a +%1 enhancement bonus to your Dexterity, Constitution, or Wisdom ability score. You can change this bonus to a new ability score when you prepare spells.|FlexibleEnhancementBonus|PREVARLT:WoodSchoolProgressionLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to bend like bamboo when stressed and snap back into place. You gain a +%1 enhancement bonus to two of your Dexterity, Constitution, or Wisdom ability scores. You can change this bonus to a new ability score when you prepare spells.|FlexibleEnhancementBonus|PREVARGTEQ:WoodSchoolProgressionLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flexible Enhancement Bonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flexible Enhancement Bonus|1|PREVARGTEQ:WoodSchoolProgressionLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlexibleEnhancementBonus|1+floor(WoodSchoolLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 798,
+    "record_key": "Wood School ~ Flexible Enhancement"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

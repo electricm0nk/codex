@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Steelblood ~ Armor Training",
+    "name": "Armor Training",
+    "class": "Bloodrager",
+    "description": "A steelblood learns to be more maneuverable while wearing armor. Whenever he is wearing armor, he reduces the armor check penalty by 1 (to a maximum of 0) and increases the maximum Dexterity bonus allowed by his armor by 1. Every 4 levels thereafter (9th, 13th, and 17th), these bonuses increase by 1, to a maximum 4-point reduction of the armor check penalty and a +4 increase of the maximum Dexterity bonus. This ability stacks with the fighter class feature of the same name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Steelblood ~ Armor Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Steelblood Class Feature.Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerImprovedUncannyDodge"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SteelbloodArmorTrainingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A steelblood learns to be more maneuverable while wearing armor. Whenever he is wearing armor, he reduces the armor check penalty by 1 (to a maximum of 0) and increases the maximum Dexterity bonus allowed by his armor by 1. Every 4 levels thereafter (9th, 13th, and 17th), these bonuses increase by 1, to a maximum 4-point reduction of the armor check penalty and a +4 increase of the maximum Dexterity bonus. This ability stacks with the fighter class feature of the same name."
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|SteelbloodArmorTrainingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|SteelbloodArmorTrainingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SteelbloodArmorTrainingBonus|1+(BloodragerLVL>=9)+(BloodragerLVL>=13)+(BloodragerLVL>=17)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2831,
+    "record_key": "Steelblood ~ Armor Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

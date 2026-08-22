@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lantern Bearer ~ Lantern Arcana",
+    "name": "Lantern Arcana",
+    "class": "Lantern Bearer",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lantern Bearer ~ Lantern Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Lantern Bearer Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LanternArcanaCount|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Lantern Arcana|TIMES=ATWILL|CASTERLEVEL=TL|Dancing Lights|Light|Spark,10+INT|PREVARGTEQ:PreStatScore_INT,10"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Lantern Arcana|TIMES=LanternArcanaCount|CASTERLEVEL=TL|Faerie Fire|Pass without Trace,11+INT|Protection from Evil,11+INT|PREVARGTEQ:PreStatScore_INT,11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Lantern Arcana|TIMES=LanternArcanaCount-1|CASTERLEVEL=TL|Darkvision (self only)|Delay Poison (self only)|See Invisibility|PREVARGTEQ:LanternBearerLVL,3,PreStatScore_INT,12"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Lantern Arcana|TIMES=LanternArcanaCount-2|CASTERLEVEL=TL|Continual Flame (Lantern Bearer)|Dispel Magic|Magic Circle against Evil (self only)|PREVARGTEQ:LanternBearerLVL,5,PreStatScore_INT,13"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Lantern Arcana|TIMES=LanternArcanaCount-3|CASTERLEVEL=TL|Heightened Daylight (4th-level)|Dimensional Anchor|Freedom of Movement (self only)|PREVARGTEQ:LanternBearerLVL,7,PreStatScore_INT,14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 304,
+    "record_key": "Lantern Bearer ~ Lantern Arcana"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

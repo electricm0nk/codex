@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Evocation School ~ Intense Spells",
+    "name": "Intense Spells",
+    "class": "Evocation School",
+    "description": "Whenever you cast an evocation spell that deals hit point damage, add +%1 to the damage. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. This bonus damage is not increased by Empower Spell or similar effects. This damage is of the same type as the spell.|EvocationIntenseSpellsBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evocation School ~ Intense Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialAttack.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EvocationIntenseSpellsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast an evocation spell that deals hit point damage, add +%1 to the damage. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. This bonus damage is not increased by Empower Spell or similar effects. This damage is of the same type as the spell.|EvocationIntenseSpellsBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast an evocation spell you can roll twice to penetrate a creature's spell resistance and take the better result.|PREVARGTEQ:EvocationProgressionSchoolLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvocationIntenseSpellsBonus|max(1,EvocationSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2662,
+    "record_key": "Evocation School ~ Intense Spells"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

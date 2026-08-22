@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Psychopomp Traits",
     "delivery": null,
@@ -15,19 +13,55 @@
       "inner_sea_bestiary:monster:psychopomp_shoki",
       "inner_sea_bestiary:monster:psychopomp_viduus"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Death Effects|Immunity to Disease|Immunity to Poison|Psychopomp ~ Spirit Sense|Psychopomp ~ Spirit Touch|Resistance to Cold|Resistance to Electricity"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Abyssal|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychopomps are neutral outsiders native to the plain known as the Boneyard. Psychopomps have a particular suite of traits."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "source_page": "p.38",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 261,
-    "record_key": "Psychopomp Traits"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 261,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Psychopomp Traits",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

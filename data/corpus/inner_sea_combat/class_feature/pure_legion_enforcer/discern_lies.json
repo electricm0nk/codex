@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pure Legion Enforcer ~ Discern Lies",
+    "name": "Discern Lies",
+    "class": "Pure Legion Enforcer",
+    "description": "At 5th level, a Pure Legion enforcer can discern lies, as per the spell, for a number of rounds per day equal to his enforcer level. These rounds don't need to be consecutive. Activating this ability is an immediate action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pure Legion Enforcer ~ Discern Lies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pure Legion Enforcer Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a Pure Legion enforcer can discern lies, as per the spell, for a number of rounds per day equal to his enforcer level. These rounds don't need to be consecutive. Activating this ability is an immediate action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 541,
+    "record_key": "Pure Legion Enforcer ~ Discern Lies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

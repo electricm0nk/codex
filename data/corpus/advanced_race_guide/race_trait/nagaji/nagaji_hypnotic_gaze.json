@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Nagaji ~ Hypnotic Gaze",
+    "name": "Hypnotic Gaze",
+    "race_key": "Nagaji",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Nagaji Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "SpellLike"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Nagaji_ReplaceSerpentsSense"
+    ],
+    "description": "The nagaji's gaze is so intense it stops others in their tracks. Once per day, it can attempt to hypnotize a single target, as per the spell hypnotism (caster level equal to the nagaji's Hit Dice). The DC of this effect is equal to 11 + the nagaji's Charisma modifier. The effects of the hypnotic gaze only last a single round. This racial trait replaces serpent's sense. &nl;(CL , DC )",
+    "source_page": "p.196",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nagaji ~ Hypnotic Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Nagaji Racial Trait.SpecialAttack.Special Attack.SpellLike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Nagaji ~ Hypnotic Gaze],[!PREFACT:1,ABILITIES,Nagaji_ReplaceSerpentsSense=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The nagaji's gaze is so intense it stops others in their tracks. Once per day, it can attempt to hypnotize a single target, as per the spell hypnotism (caster level equal to the nagaji's Hit Dice). The DC of this effect is equal to 11 + the nagaji's Charisma modifier. The effects of the hypnotic gaze only last a single round."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces serpent's sense.|!PREABILITY:1,CATEGORY=Special Ability,Nagaji ~ Hypnotic Gaze"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;(CL %1, DC %2)|Nagaji_RacialCasterlevel|11+Nagaji_RacialCastingMod"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(CL %1, DC %2)|Nagaji_RacialCasterlevel|11+Nagaji_RacialCastingMod"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|1"
+      },
+      {
+        "key": "FACT",
+        "value": "Nagaji_ReplaceSerpentsSense|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 985,
+    "record_key": "Nagaji ~ Hypnotic Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

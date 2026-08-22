@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spellscar Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Spellscar Mystery",
+    "description": "You have become a master of primal magic. Whenever you cast a spell, you can choose to trigger a primal magic event in addition to casting the spell itself--you can use this ability once per minute. If your spellcasting causes a primal magic event to occur, your spell effect is not replaced by the primal magic event--it takes place normally, along with the event itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellscar Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You have become a master of primal magic. Whenever you cast a spell, you can choose to trigger a primal magic event in addition to casting the spell itself--you can use this ability once per minute. If your spellcasting causes a primal magic event to occur, your spell effect is not replaced by the primal magic event--it takes place normally, along with the event itself."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 107,
+    "record_key": "Spellscar Mystery ~ Final Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

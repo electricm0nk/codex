@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Illusion School",
+    "name": "Illusion School",
+    "class": null,
+    "description": "You have chosen to specialize in illusion spells.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionProgressionSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in illusion spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illusion School ~ Extended Illusion|PREVAREQ:Wizard_CF_ExtendedIllusion,0|PREVARGTEQ:IllusionProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illusion School ~ Blinding Ray|PREVAREQ:Wizard_CF_BlindingRay,0|PREVARGTEQ:IllusionProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Illusion School ~ Invisibility Field|PREVAREQ:Wizard_CF_InvisibilityField,0|PREVARGTEQ:IllusionProgressionSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_ArcaneOppositionSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=3|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=4|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=5|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=6|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=7|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=8|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Illusionist;LEVEL=9|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionProgressionSchoolLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2602,
+    "record_key": "Illusion School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sha'ir ~ Jin Spy",
+    "name": "Jin Spy",
+    "class": "Occultist",
+    "description": "At 8th level, when a sha'ir gains her outside contact ability, instead of learning the true names of outsiders, she can ask one or more of her jin to perform tasks. She chooses from the same tasks listed under outside contact (as appropriate to her occultist level). This doesn't require negotiation or gifts, but the jin is not available to the sha'ir during the time it spends performing these tasks. This ability alters outside contact.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sha'ir ~ Jin Spy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sha'ir Class Feature.Occultist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, when a sha'ir gains her outside contact ability, instead of learning the true names of outsiders, she can ask one or more of her jin to perform tasks. She chooses from the same tasks listed under outside contact (as appropriate to her occultist level). This doesn't require negotiation or gifts, but the jin is not available to the sha'ir during the time it spends performing these tasks. This ability alters outside contact."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1543,
+    "record_key": "Sha'ir ~ Jin Spy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "24",
@@ -18,6 +16,120 @@
     ],
     "race_subtype": "Chaotic|Evil|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Titan (Hekatonkheires)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Celestial|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|32"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|38"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|30|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "24"
+      },
+      {
+        "key": "DR",
+        "value": "20/epic and lawful"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "KEY",
+        "value": "Titan (Hekatonkheires)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Escape Artist|Intimidate"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):24"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,60,Air Walk,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*1,4d8"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Evil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Titan"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      },
+      {
+        "key": "SR",
+        "value": "35"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "VISION",
+        "value": "All-Around Vision|Darkvision (120')|True Seeing"
+      }
+    ],
     "size": "C",
     "source_page": "p.267",
     "speeds": [
@@ -31,16 +143,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 278,
-    "record_key": "Titan (Hekatonkheires)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 278,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Titan (Hekatonkheires)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

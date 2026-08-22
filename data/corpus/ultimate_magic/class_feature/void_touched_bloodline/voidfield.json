@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Void-Touched Bloodline ~ Voidfield",
+    "name": "Voidfield",
+    "class": "Void-Touched Bloodline",
+    "description": "You can create an area influenced by the black void. This ability acts as an ice storm, except the area is also subject to deeper darkness for %1 rounds.|Sorcerer_VoidTouchedVoidfield_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Void-Touched Bloodline ~ Voidfield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Void-Touched Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Void-Touched"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Starsoul_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Starsoul_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VoidTouchedVoidfield_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VoidTouchedVoidfield_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create an area influenced by the black void. This ability acts as an ice storm, except the area is also subject to deeper darkness for %1 rounds.|Sorcerer_VoidTouchedVoidfield_Duration"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability once per day.|PREVAREQ:Sorcerer_VoidTouchedVoidfield_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability twice per day.|PREVAREQ:Sorcerer_VoidTouchedVoidfield_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use this ability %1 times per day.|Sorcerer_VoidTouchedVoidfield_Times|PREVARGTEQ:Sorcerer_VoidTouchedVoidfield_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "The bloodline power replaces aurora borealis."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VoidTouchedVoidfield_Duration|floor((Sorcerer_Starsoul_BloodlinePower9LVL+3)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VoidTouchedVoidfield_Times|floor(Sorcerer_Starsoul_BloodlinePower9LVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Abiltiy Benefit|%1/day (%2 rounds)|Sorcerer_VoidTouchedVoidfield_Times|Sorcerer_VoidTouchedVoidfield_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_VoidTouchedVoidfield_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StarsoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1801,
+    "record_key": "Void-Touched Bloodline ~ Voidfield"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

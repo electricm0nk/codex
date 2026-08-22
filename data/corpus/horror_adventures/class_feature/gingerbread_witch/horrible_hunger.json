@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gingerbread Witch ~ Horrible Hunger",
+    "name": "Horrible Hunger",
+    "class": "Witch",
+    "description": "A gingerbread witch can affect a target as if she had cast feast of ashes (APG) on it, but with her hex DC instead of the spell's DC. This hunger is so intense that any creature can offer the target food as a standard action and the target is compelled to eat it, as if the creature offering it had cast beguiling gift (APG) (with a DC and caster level equal to that of the witch's hexes). She can use this ability %1 times per day.|WitchLVL/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gingerbread Witch ~ Horrible Hunger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A gingerbread witch can affect a target as if she had cast feast of ashes (APG) on it, but with her hex DC instead of the spell's DC. This hunger is so intense that any creature can offer the target food as a standard action and the target is compelled to eat it, as if the creature offering it had cast beguiling gift (APG) (with a DC and caster level equal to that of the witch's hexes). She can use this ability %1 times per day.|WitchLVL/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 275,
+    "record_key": "Gingerbread Witch ~ Horrible Hunger"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

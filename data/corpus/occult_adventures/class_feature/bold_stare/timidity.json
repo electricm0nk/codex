@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bold Stare ~ Timidity",
+    "name": "Timidity",
+    "class": "Bold Stare",
+    "description": "The hypnotic stare penalty also applies to damage rolls.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bold Stare ~ Timidity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BoldStare.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The hypnotic stare penalty also applies to damage rolls."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 964,
+    "record_key": "Bold Stare ~ Timidity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

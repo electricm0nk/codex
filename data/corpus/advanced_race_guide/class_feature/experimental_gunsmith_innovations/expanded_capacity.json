@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Experimental Gunsmith Innovations ~ Expanded Capacity",
+    "name": "Expanded Capacity",
+    "class": "Experimental Gunsmith Innovations",
+    "description": "The Experimental Gunsmith increases her firearm's capacity by one (generally by adding another barrel, depending on the weapon's design). She also increases its weight by 50%%. Because of the complexity of increasing its capacity, her weapon is more prone to misfire, and its misfire value increases by 1 (this is in addition to any misfire increase if the weapon is made with the Gunsmithing feat).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimental Gunsmith Innovations ~ Expanded Capacity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ExperimentalGunsmithInnovation"
+      },
+      {
+        "key": "DESC",
+        "value": "The Experimental Gunsmith increases her firearm's capacity by one (generally by adding another barrel, depending on the weapon's design). She also increases its weight by 50%%. Because of the complexity of increasing its capacity, her weapon is more prone to misfire, and its misfire value increases by 1 (this is in addition to any misfire increase if the weapon is made with the Gunsmithing feat)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 162,
+    "record_key": "Experimental Gunsmith Innovations ~ Expanded Capacity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

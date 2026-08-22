@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Daredevil",
+    "name": "Daredevil",
+    "class": "Bard Archetype",
+    "description": "As quick at wordplay as at swordplay, daredevils are dashing heroes, inspiring their allies to match their clever repartee and acrobatic feats. Daredevils often lean toward comedy, dance, oratory, and singing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Daredevil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardBardicKnowledge.BardInspireCourage.BardVersatilePerformance.BardWellVersed.BardLoreMaster"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Daredevil],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicKnowledge,TYPE.BardInspireCourage,TYPE.BardWellVersed,TYPE.BardLoreMaster]"
+      },
+      {
+        "key": "DESC",
+        "value": "As quick at wordplay as at swordplay, daredevils are dashing heroes, inspiring their allies to match their clever repartee and acrobatic feats. Daredevils often lean toward comedy, dance, oratory, and singing."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Daredevil ~ Agile|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Daredevil ~ Bardic Performance|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Daredevil ~ Derring-do|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Daredevil ~ Canny Foe|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Daredevil ~ Dauntless|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Daredevil ~ Scoundrel's Fortune|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 384,
+    "record_key": "Bard Archetype ~ Daredevil"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

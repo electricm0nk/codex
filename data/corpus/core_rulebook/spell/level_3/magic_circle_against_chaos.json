@@ -1,25 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions like magic circle against evil, except that it is similar to protection from chaos instead of protection from evil, and it can imprison a nonlawful called creature.",
     "key": "Magic Circle against Chaos",
-    "school": "Abjuration",
     "level": 3,
-    "description": "This spell functions like magic circle against evil, except that it is similar to protection from chaos instead of protection from evil, and it can imprison a nonlawful called creature."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Paladin,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures within the area gain the effects of a protection from chaos spell, and chaotic summoned creatures cannot enter the area either.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like magic circle against evil, except that it is similar to protection from chaos instead of protection from evil, and it can imprison a nonlawful called creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Lawful"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Law=3"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/magicCircleAgainstChaos.html#_magic-circle-against-chaos"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No; see text"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-radius emanation from touched creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 373,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1127,
-    "record_key": "Magic Circle against Chaos.MOD"
+    "record_key": "Magic Circle against Chaos",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

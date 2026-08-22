@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Twilight Talon ~ Invisibility",
+    "name": "Invisibility",
+    "class": "Twilight Talon",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Twilight Talon ~ Invisibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TwilightTalonTattoo4"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Enhanced Tattoo|CASTERLEVEL=TL|Invisibility,EnhancedTattooDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 551,
+    "record_key": "Twilight Talon ~ Invisibility"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

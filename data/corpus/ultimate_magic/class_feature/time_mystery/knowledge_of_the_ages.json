@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Time Mystery ~ Knowledge of the Ages",
+    "name": "Knowledge of the Ages",
+    "class": "Time Mystery",
+    "description": "You can search through time to recall some bit of forgotten lore or information. You can retry any Knowledge skill check you have made within the past minute, gaining a +%1 insight bonus on the check. You can use this ability %2 times per day.|KnowledgeOfTheAgesBonus|KnowledgeOfTheAgesTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Time Mystery ~ Knowledge of the Ages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.TimeRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KnowledgeOfTheAgesBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KnowledgeOfTheAgesTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can search through time to recall some bit of forgotten lore or information. You can retry any Knowledge skill check you have made within the past minute, gaining a +%1 insight bonus on the check. You can use this ability %2 times per day.|KnowledgeOfTheAgesBonus|KnowledgeOfTheAgesTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnowledgeOfTheAgesBonus|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KnowledgeOfTheAgesTimes|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 500,
+    "record_key": "Time Mystery ~ Knowledge of the Ages"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

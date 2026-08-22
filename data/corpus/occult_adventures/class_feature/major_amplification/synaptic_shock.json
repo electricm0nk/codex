@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Major Amplification ~ Synaptic Shock",
+    "name": "Synaptic Shock",
+    "class": "Major Amplification",
+    "description": "The psychic manipulates an enemy's mind with brute force, causing mental harm beyond that done by her linked spell. She can spend 1 point from her phrenic pool when casting a mind-affecting linked spell to select one of the spell's targets. If the target is affected by the linked spell, that target is confused for 1 round after the duration of the spell expires (or immediately, if the spell has an instantaneous duration). If the target succeeds at its save against the linked spell, it is instead confused for 1 round immediately. For each additional point the psychic spends from her phrenic pool, she can confuse one additional target of the linked spell. This amplification can be applied only to a mind-affecting spell that can affect a number of targets or that has an area. It has no effect on creatures that are immune to mind-affecting effects, unless the linked spell is able to affect such creatures (such as a spell that has both will of the dead and synaptic shock applied to it via dual amplification).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Major Amplification ~ Synaptic Shock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Major Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PsychicLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic manipulates an enemy's mind with brute force, causing mental harm beyond that done by her linked spell. She can spend 1 point from her phrenic pool when casting a mind-affecting linked spell to select one of the spell's targets. If the target is affected by the linked spell, that target is confused for 1 round after the duration of the spell expires (or immediately, if the spell has an instantaneous duration). If the target succeeds at its save against the linked spell, it is instead confused for 1 round immediately. For each additional point the psychic spends from her phrenic pool, she can confuse one additional target of the linked spell. This amplification can be applied only to a mind-affecting spell that can affect a number of targets or that has an area. It has no effect on creatures that are immune to mind-affecting effects, unless the linked spell is able to affect such creatures (such as a spell that has both will of the dead and synaptic shock applied to it via dual amplification)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1183,
+    "record_key": "Major Amplification ~ Synaptic Shock"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

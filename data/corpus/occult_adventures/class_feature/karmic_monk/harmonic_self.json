@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Karmic Monk ~ Harmonic Self",
+    "name": "Harmonic Self",
+    "class": "Monk",
+    "description": "At 20th level, a karmic monk is truly in tune with the harmonic balance of the universe. He gains the abilities of perfect self, except that instead of DR 10/chaotic, he gains DR 10 that is overcome only by attacks that do not count as chaotic, evil, good, or lawful. This ability alters perfect self.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Karmic Monk ~ Harmonic Self"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Karmic Monk Class Feature.Monk Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a karmic monk is truly in tune with the harmonic balance of the universe. He gains the abilities of perfect self, except that instead of DR 10/chaotic, he gains DR 10 that is overcome only by attacks that do not count as chaotic, evil, good, or lawful. This ability alters perfect self."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1802,
+    "record_key": "Karmic Monk ~ Harmonic Self"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

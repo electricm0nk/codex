@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wildblooded ~ Anarchic",
+    "name": "Anarchic",
+    "class": "Wildblooded",
+    "description": "Your magical power taps into pure anarchy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildblooded ~ Anarchic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildblooded Bloodline"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Protean"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Protean_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your magical power taps into pure anarchy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Anarchic Bloodline ~ Bloodline Arcana|Anarchic Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Anarchic Bloodline ~ Wild Feedback|PREVARGTEQ:Sorcerer_Protean_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Protean_Description|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower3|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1632,
+    "record_key": "Wildblooded ~ Anarchic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

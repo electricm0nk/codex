@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tatterdemalion ~ Moth-Eaten",
+    "name": "Moth-Eaten",
+    "class": "Witch",
+    "description": "A tatterdemalion can make a touch attack that damages leather, rope, or cloth like rusting grasp damages metal, %1 times per day.|WitchLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tatterdemalion ~ Moth-Eaten"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A tatterdemalion can make a touch attack that damages leather, rope, or cloth like rusting grasp damages metal, %1 times per day.|WitchLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 285,
+    "record_key": "Tatterdemalion ~ Moth-Eaten"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

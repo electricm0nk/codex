@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Sift",
-    "school": "Divination",
-    "level": 0,
     "description": "You examine an area at range as if you were searching for fine details with the Perception skill. Make a Perception check with a -5 penalty, modified as normal for conditions. No penalty is applied for distance. Apply the result against the DC for any hidden features, such as secret doors, traps, or hidden treasure. You must be able to see the area you are attempting to search, and you only find details that can be perceived with sight or touch. Sift detects only objects and features, not actual creatures.",
-    "full_text": true
+    "full_text": true,
+    "key": "Sift",
+    "level": 0,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Inquisitor=0"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "See area as though examining it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You examine an area at range as if you were searching for fine details with the Perception skill. Make a Perception check with a -5 penalty, modified as normal for conditions. No penalty is applied for distance. Apply the result against the DC for any hidden features, such as secret doors, traps, or hidden treasure. You must be able to see the area you are attempting to search, and you only find details that can be perceived with sight or touch. Sift detects only objects and features, not actual creatures.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/sift.html#_sift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one 10-ft. cube"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 219,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2063,
-    "record_key": "Sift"
+    "record_key": "Sift",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Detonate",
-    "school": "Evocation",
-    "level": 4,
     "description": "You flood yourself with a potent surge of elemental energy.  One round after completing the casting of the spell, the energy explodes from your body.  When this spell creates the explosion of energy, choose one of the following four energy types: acid, cold, electricity, or fire. The explosion inflicts 1d8 points of damage of that energy type per caster level (maximum 10d8) to all creatures and unattended objects within 15 feet, and half that amount to targets past 15 feet but within 30 feet. You automatically take half damage from the explosion, without a saving throw, but any other energy resistance or energy immunity effects you may have in place can prevent or lessen this overflow damage caused by the explosion.",
-    "full_text": true
+    "full_text": true,
+    "key": "Detonate",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Inflicts (min(CASTERLEVEL,10))d8 energy damage to all creatures within 15 feet, and half that amount to targets past 15 feet but within 30 feet.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You flood yourself with a potent surge of elemental energy.  One round after completing the casting of the spell, the energy explodes from your body.  When this spell creates the explosion of energy, choose one of the following four energy types: acid, cold, electricity, or fire. The explosion inflicts 1d8 points of damage of that energy type per caster level (maximum 10d8) to all creatures and unattended objects within 15 feet, and half that amount to targets past 15 feet but within 30 feet. You automatically take half damage from the explosion, without a saving throw, but any other energy resistance or energy immunity effects you may have in place can prevent or lessen this overflow damage caused by the explosion.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round, then instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(two vials; one containing acid and one containing an alkaline solution worth a total of 50 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool|EarthSchool|FireSchool|WaterSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/detonate.html#_detonate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "30-ft.-radius spread centered on you"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 87,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1919,
-    "record_key": "Detonate"
+    "record_key": "Detonate",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

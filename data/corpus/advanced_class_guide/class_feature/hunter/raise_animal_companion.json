@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter ~ Raise Animal Companion",
+    "name": "Raise Animal Companion",
+    "class": "Hunter",
+    "description": "At 10th level, a hunter gains raise animal companion as a spell-like ability; this is not restricted to raising only her own animal companion. Using this spell-like ability gives the hunter a permanent negative level. This negative level cannot be overcome in any way (including by restoration), but automatically ends after 24 hours. At 16th level, this functions as resurrection instead of raise dead, but otherwise operates as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter ~ Raise Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.HunterRaiseAnimalCompanion.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a hunter gains raise animal companion as a spell-like ability; this is not restricted to raising only her own animal companion. Using this spell-like ability gives the hunter a permanent negative level. This negative level cannot be overcome in any way (including by restoration), but automatically ends after 24 hours. At 16th level, this functions as resurrection instead of raise dead, but otherwise operates as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1185,
+    "record_key": "Hunter ~ Raise Animal Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

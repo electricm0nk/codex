@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Walker ~ Continued Animation",
+    "name": "Continued Animation",
+    "class": "Mesmerist",
+    "description": "When a spirit walker is using hypnotic stare on a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Walker ~ Continued Animation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SWContinuedAnimationUses|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a spirit walker is using hypnotic stare on a"
+      },
+      {
+        "key": "DESC",
+        "value": "humanoid |PREVARLT:MesmeristLVL,14"
+      },
+      {
+        "key": "DESC",
+        "value": "target and the target dies, as an immediate action the spirit walker can force the target's soul to remain in the body. The spirit walker can then control the target as if using dominate"
+      },
+      {
+        "key": "DESC",
+        "value": "person |PREVARLT:MesmeristLVL,14"
+      },
+      {
+        "key": "DESC",
+        "value": "monster |PREVARGTEQ:MesmeristLVL,14"
+      },
+      {
+        "key": "DESC",
+        "value": "for %1 rounds. The creature gains %2 temporary hit points and continues acting as though it were alive and conscious until it loses those temporary hit points or the duration expires. During this time, the creature counts as undead, but it can't be healed by negative energy. The spirit walker can used this ability %3 times per day. The target receives a Will saving throw (DC %4) to avoid this effect and die normally. This ability ends immediately if at any point the target's body is completely destroyed (such as by disintegrate) or restored to life.|MesmeristLVL/2|MesmeristLVL*2|SWContinuedAnimationUses"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SWContinuedAnimationUses|MesmeristLVL/3|10+MesmeristLVL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Continued Animation per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SWContinuedAnimationUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Spirit Walker ~ Continued Animation"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1482,
+    "record_key": "Spirit Walker ~ Continued Animation"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

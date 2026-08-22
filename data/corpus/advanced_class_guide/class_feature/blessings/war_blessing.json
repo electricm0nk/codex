@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blessings ~ War Blessing",
+    "name": "War Blessing",
+    "class": "Blessings",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blessings ~ War Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blessings"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDEITY:1,N],[PREDEITYDOMAIN:1,War],[PREDEITY:1,Gorum,Iomedae,Rovagug,Urgathoa]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|War Blessing ~ War Mind|PREVARGTEQ:WarpriestBlessingLVL,WarpriestMinorBlessingGrantedLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|War Blessing ~ Battle Lust|PREVARGTEQ:WarpriestBlessingLVL,WarpriestMajorBlessingGrantedLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2219,
+    "record_key": "Blessings ~ War Blessing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

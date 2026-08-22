@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Judgment ~ Piercing",
+    "name": "Judgment / Piercing",
+    "class": "Sacred Judgment",
+    "description": "This judgment gives the inquisitor great focus and makes her spells more potent. This benefit grants a +%1 sacred bonus on concentration checks and caster level checks made to overcome a target's spell resistance.|1+InqJudgePiercingLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Judgment ~ Piercing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentSacred.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgePiercingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This judgment gives the inquisitor great focus and makes her spells more potent. This benefit grants a +%1 sacred bonus on concentration checks and caster level checks made to overcome a target's spell resistance.|1+InqJudgePiercingLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgePiercingLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 329,
+    "record_key": "Sacred Judgment ~ Piercing"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

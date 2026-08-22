@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:star_monarch_dreamwarden",
@@ -35,6 +33,116 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Immunity to Cold|Rake|Star Monarch ~ Dreamwarden|Star Monarch ~ Glowsap|Star Monarch ~ Navigational Awareness|Star Monarch ~ Spell-Like Abilities|Star Monarch ~ Starflight|Star Monarch ~ Toxic Flesh|Telepathy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuverability (Average)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON,CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|7|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Trip|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|-100"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "DR",
+        "value": "5/Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "HITDIE",
+        "value": "10"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:12"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,80"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Slashing.Finesseable,*2,1d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail,Weapon.Natural.Weapon Group Natural.Melee.Nonlethal.Finesseable,*1,2d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "SR",
+        "value": "20"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "size": "H",
     "source_page": "p.50",
     "speeds": [
@@ -48,16 +156,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 81,
-    "record_key": "Star Monarch"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 81,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Star Monarch",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

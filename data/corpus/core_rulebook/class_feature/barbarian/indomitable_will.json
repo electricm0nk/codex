@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian ~ Indomitable Will",
+    "name": "Indomitable Will",
+    "class": "Barbarian",
+    "description": "While in rage, you gain a +4 bonus on Will saves to resist enchantment spells. This bonus stacks with all other modifiers, including the morale bonus on Will saves you also recieve during your rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian ~ Indomitable Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.SpecialQuality.Extraordinary.Rage.Indomitable Will"
+      },
+      {
+        "key": "DESC",
+        "value": "While in rage, you gain a +4 bonus on Will saves to resist enchantment spells. This bonus stacks with all other modifiers, including the morale bonus on Will saves you also recieve during your rage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|When raging gain +4 bonus to Will saves vs. Enchantment spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 428,
+    "record_key": "Barbarian ~ Indomitable Will"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

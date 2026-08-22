@@ -1,0 +1,62 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 20.0,
+    "description": null,
+    "key": "Bolts (Bolas/10)",
+    "name": "Bolas Bolts (10)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bolts (Bolas/10)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Standard.BolaBolt"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Wood"
+      },
+      {
+        "key": "MODS",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_arms_armor.lst",
+    "record_key": "Bolts (Bolas/10)",
+    "sha256": "1b087b1736f67a8911bc7a4a88066980df2c0dec017f2c6a6aa48a5244952c4a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Urban Barbarian",
+    "name": "Urban Barbarian",
+    "class": "Barbarian Archetype",
+    "description": "Every barbarian knows that city life can soften the spirit and the body, but some barbarians take on the trappings and ways of their adoptive homes and bend their savage powers to its challenges. While these urban barbarians' rough edges are smoothed into civility, they can use their primal nature and upbringing to move with the ebb and flow of civilization's natural rhythms.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Urban Barbarian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype.BarbarianFastMovement.BarbarianMediumArmorProficiency.BarbarianClassSkills"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Urban Barbarian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianClassSkills,TYPE.BarbarianFastMovement,TYPE.BarbarianMediumArmorProficiency]"
+      },
+      {
+        "key": "DESC",
+        "value": "Every barbarian knows that city life can soften the spirit and the body, but some barbarians take on the trappings and ways of their adoptive homes and bend their savage powers to its challenges. While these urban barbarians' rough edges are smoothed into civility, they can use their primal nature and upbringing to move with the ebb and flow of civilization's natural rhythms."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Urban Barbarian ~ Weapon and Armor Proficiency|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Urban Barbarian ~ Skills|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Urban Barbarian ~ Crowd Control|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Urban Barbarian ~ Controlled Rage|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Barbarian"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 308,
+    "record_key": "Barbarian Archetype ~ Urban Barbarian"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Psychonaut",
+    "name": "Psychonaut",
+    "class": "Alchemist Archetype",
+    "description": "A psychonaut uses his knowledge to explore altered states of consciousness and even other planes of existence.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Psychonaut"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype.AlchemistPoisonResistance4.AlchemistPoisonResistance6.AlchemistPoisonImmunity.AlchemistBombDamageLvl15.AlchemistBombDamageLvl17.AlchemistBombReduction"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Psychonaut],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonResistance4,TYPE.AlchemistPoisonResistance6,TYPE.AlchemistPoisonImmunity,TYPE.AlchemistBombDamageLvl15,TYPE.AlchemistBombDamageLvl17,TYPE.AlchemistBombReduction]"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychonaut uses his knowledge to explore altered states of consciousness and even other planes of existence."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Psychonaut ~ Precognition|PRECLASS:1,Alchemist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Psychonaut ~ Psychic Senses|PRECLASS:1,Alchemist=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Psychonaut ~ Remote Consciousness|PRECLASS:1,Alchemist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Psychonaut ~ Greater Precognition|PRECLASS:1,Alchemist=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Psychonaut ~ Master Precognition|PRECLASS:1,Alchemist=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombDiceSize|-2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 844,
+    "record_key": "Alchemist Archetype ~ Psychonaut"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

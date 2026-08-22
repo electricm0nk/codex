@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Monk Bonus Feat",
+    "name": "Monk Bonus Feat",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Monk Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Internal.ClassFeatures"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|1+max((MonkBonusFeatLVL+2)/4,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeatLVL|MonkLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1094,
+    "record_key": "Monk ~ Monk Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

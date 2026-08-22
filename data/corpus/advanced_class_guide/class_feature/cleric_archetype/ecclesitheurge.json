@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Ecclesitheurge",
+    "name": "Ecclesitheurge",
+    "class": "Cleric Archetype",
+    "description": "Eschewing physical armor for protection via the strength of his faith, an ecclesitheurge focuses on the miracles his deity bestows and the breadth of that deity's dominion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Ecclesitheurge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericWeaponProficiencies.ClericArmorProficiencies.ClericChannelEnergy3"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Ecclesitheurge],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericWeaponProficiencies,TYPE.ClericArmorProficiencies,TYPE.ClericChannelEnergy3,TYPE.ClericDomains]"
+      },
+      {
+        "key": "DESC",
+        "value": "Eschewing physical armor for protection via the strength of his faith, an ecclesitheurge focuses on the miracles his deity bestows and the breadth of that deity's dominion."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Ecclesitheurge ~ Weapon and Armor Proficiency|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Ecclesitheurge ~ Ecclesitheurge's Vow|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Ecclesitheurge ~ Domain Mastery|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|AUTOMATIC|Ecclesitheurge ~ Bonded Holy Symbol|PRECLASS:1,Cleric=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3008,
+    "record_key": "Cleric Archetype ~ Ecclesitheurge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

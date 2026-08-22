@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Explosive Bomb",
+    "name": "Explosive Bomb*",
+    "class": "Discovery",
+    "description": "The alchemist's bombs now have a splash radius of 10 feet rather than 5 feet. Creatures that take a direct hit from an explosive bomb catch fire, taking 1d%1 points of fire damage each round until the fire is extinguished. Extinguishing the flames is a full-round action that requires a Reflex save. Rolling on the ground provides the target with a +2 to the save. Dousing the target with at least 2 gallons of water automatically extinguishes the flames.|AlchemistBombDiceSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Explosive Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist's bombs now have a splash radius of 10 feet rather than 5 feet. Creatures that take a direct hit from an explosive bomb catch fire, taking 1d%1 points of fire damage each round until the fire is extinguished. Extinguishing the flames is a full-round action that requires a Reflex save. Rolling on the ground provides the target with a +2 to the save. Dousing the target with at least 2 gallons of water automatically extinguishes the flames.|AlchemistBombDiceSize"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 132,
+    "record_key": "Discovery ~ Explosive Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

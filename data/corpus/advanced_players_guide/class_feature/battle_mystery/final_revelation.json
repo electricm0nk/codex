@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Mystery ~ Final Revelation",
+    "name": "Final Revelation",
+    "class": "Battle Mystery",
+    "description": "You have become an avatar of battle. You can take a full-attack action and move, before or after your attack, up to your speed as a full-round action. Whenever you score a critical hit, you can ignore any DR the target might possess. You gain a +4 insight bonus to your AC for the purpose of confirming critical hits against you. When you are below 0 hit points, you do not die until your negative total is in excess of twice your Constitution score.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Mystery ~ Final Revelation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You have become an avatar of battle. You can take a full-attack action and move, before or after your attack, up to your speed as a full-round action. Whenever you score a critical hit, you can ignore any DR the target might possess. You gain a +4 insight bonus to your AC for the purpose of confirming critical hits against you. When you are below 0 hit points, you do not die until your negative total is in excess of twice your Constitution score."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 550,
+    "record_key": "Battle Mystery ~ Final Revelation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

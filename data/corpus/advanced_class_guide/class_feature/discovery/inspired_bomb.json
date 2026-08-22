@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Inspired Bomb",
+    "name": "Inspired Bomb",
+    "class": "Discovery",
+    "description": "An alchemist with this discovery and a pool of inspiration (by way of a class feature, a feat, or the inspiring cognatogen discovery) can expend two uses of inspiration to increase the bomb's damage by 1d6. The type of damage the bomb deals does not change. Unlike other a discoveries that affect bombs, this one can be applied to a bomb with another bomb discovery, though it cannot be applied to the same bomb more than once.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Inspired Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.SpecialQuality.Supernatural.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "An alchemist with this discovery and a pool of inspiration (by way of a class feature, a feat, or the inspiring cognatogen discovery) can expend two uses of inspiration to increase the bomb's damage by 1d6. The type of damage the bomb deals does not change. Unlike other a discoveries that affect bombs, this one can be applied to a bomb with another bomb discovery, though it cannot be applied to the same bomb more than once."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2309,
+    "record_key": "Discovery ~ Inspired Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

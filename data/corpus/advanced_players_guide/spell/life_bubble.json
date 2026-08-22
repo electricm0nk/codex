@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Life Bubble",
-    "school": "Abjuration",
-    "level": 3,
     "description": "You surround the touched creatures with a constant and moveable 1-inch shell of tolerable living conditions. This shell enables the subjects to breathe freely, even underwater or in a vacuum, as well as making them immune to harmful gases and vapors, including inhaled diseases and poisons and spells like cloudkill and stinking cloud. In addition, the shell protects subjects from extremes of temperature (per endure elements) as well as extremes of pressure.  Life bubble does not provide protection from negative or positive energy (such as found on the Negative and Positive Energy planes), the ability to see in conditions of poor visibility (such as in smoke or fog), nor the ability to move or act normally in conditions that impede movement (such as underwater).  When you cast this spell it has a total duration of 2 hours per caster level. You can divide this duration up in any manner you wish, not necessarily equally, between up to 1 creature per caster level.",
-    "full_text": true
+    "full_text": true,
+    "key": "Life Bubble",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=3|Druid=4|Cleric,Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Protects creatures from sustained environmental effects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You surround the touched creatures with a constant and moveable 1-inch shell of tolerable living conditions. This shell enables the subjects to breathe freely, even underwater or in a vacuum, as well as making them immune to harmful gases and vapors, including inhaled diseases and poisons and spells like cloudkill and stinking cloud. In addition, the shell protects subjects from extremes of temperature (per endure elements) as well as extremes of pressure.  Life bubble does not provide protection from negative or positive energy (such as found on the Negative and Positive Energy planes), the ability to see in conditions of poor visibility (such as in smoke or fog), nor the ability to move or act normally in conditions that impede movement (such as underwater).  When you cast this spell it has a total duration of 2 hours per caster level. You can divide this duration up in any manner you wish, not necessarily equally, between up to 1 creature per caster level.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*2) hours; see text"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a bit of eggshell)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/lifeBubble.html#_life-bubble-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "up to (CASTERLEVEL) creatures touched"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 161,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2000,
-    "record_key": "Life Bubble"
+    "record_key": "Life Bubble",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

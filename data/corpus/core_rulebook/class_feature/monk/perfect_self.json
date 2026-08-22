@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Perfect Self",
+    "name": "Perfect Self",
+    "class": "Monk",
+    "description": "You are treated as an Outsider for the purpose of spells and magical effects. Additionally gain Damage Reduction 10/Chaotic. Unlike other outsiders, you can still be brought back from the dead as if you were a member of your previous creature type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Perfect Self"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Perfect Self"
+      },
+      {
+        "key": "DESC",
+        "value": "You are treated as an Outsider for the purpose of spells and magical effects. Additionally gain Damage Reduction 10/Chaotic. Unlike other outsiders, you can still be brought back from the dead as if you were a member of your previous creature type."
+      },
+      {
+        "key": "DR",
+        "value": "10/Chaotic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1113,
+    "record_key": "Monk ~ Perfect Self"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

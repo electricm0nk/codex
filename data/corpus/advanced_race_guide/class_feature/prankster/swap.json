@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Prankster ~ Swap",
+    "name": "Swap",
+    "class": "Bard",
+    "description": "A prankster can steal an object from a creature and replace it with another object of the same size or smaller that the prankster has in his hand. This functions as the steal combat maneuver (Advanced Player's Guide 322), but the prankster does not provoke an attack of opportunity, and may use his Sleight of Hand check in place of his combat maneuver check. If the prankster's check exceeds the target's CMD by 10 or more, the target is unaware the swap has been made until it tries to use the swapped object or the end of its next turn (whichever happens first).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Prankster ~ Swap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A prankster can steal an object from a creature and replace it with another object of the same size or smaller that the prankster has in his hand. This functions as the steal combat maneuver (Advanced Player's Guide 322), but the prankster does not provoke an attack of opportunity, and may use his Sleight of Hand check in place of his combat maneuver check. If the prankster's check exceeds the target's CMD by 10 or more, the target is unaware the swap has been made until it tries to use the swapped object or the end of its next turn (whichever happens first)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 174,
+    "record_key": "Prankster ~ Swap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

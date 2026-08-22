@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guerrilla ~ Skilled Liar",
+    "name": "Skilled Liar",
+    "class": "Rogue",
+    "description": "Whenever a guerrilla uses Bluff to attempt to deceive someone, she gains a bonus on the opposed roll equal to 1/2 her rogue level (minimum +1). A guerrilla can still use Disable Device to disarm magic traps. BONUS:SITUATION|Bluff=Lie,Bluff=Fool Someone|min(1,RogueLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guerrilla ~ Skilled Liar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a guerrilla uses Bluff to attempt to deceive someone, she gains a bonus on the opposed roll equal to 1/2 her rogue level (minimum +1). A guerrilla can still use Disable Device to disarm magic traps. BONUS:SITUATION|Bluff=Lie,Bluff=Fool Someone|min(1,RogueLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 254,
+    "record_key": "Guerrilla ~ Skilled Liar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

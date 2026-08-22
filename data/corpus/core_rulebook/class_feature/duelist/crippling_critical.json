@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Duelist ~ Crippling Critical",
+    "name": "Crippling Critical",
+    "class": "Duelist",
+    "description": "When you confirm a critical hit using a light or one-handed piercing weapon, you can apply one of the following penalties in addition to the damage dealt, reduce all of the target's speeds by 10 feet (minimum 5 feet), 1d4 points of Strength or Dexterity damage, -4 penalty on all saving throws, -4 penalty to Armor Class, or 2d6 points of bleed damage. These penalties last for 1 minute, except for ability damage, which must be healed normally, and bleed damage, which continues until the target receives magic healing or a DC 15 Heal skill check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ Crippling Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When you confirm a critical hit using a light or one-handed piercing weapon, you can apply one of the following penalties in addition to the damage dealt, reduce all of the target's speeds by 10 feet (minimum 5 feet), 1d4 points of Strength or Dexterity damage, -4 penalty on all saving throws, -4 penalty to Armor Class, or 2d6 points of bleed damage. These penalties last for 1 minute, except for ability damage, which must be healed normally, and bleed damage, which continues until the target receives magic healing or a DC 15 Heal skill check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.384"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3002,
+    "record_key": "Duelist ~ Crippling Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

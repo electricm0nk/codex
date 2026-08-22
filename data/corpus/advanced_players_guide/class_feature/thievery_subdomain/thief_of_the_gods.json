@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Thievery Subdomain ~ Thief of the Gods",
+    "name": "Thief of the Gods",
+    "class": "Thievery Subdomain",
+    "description": "At 8th level, when you make a Disable Device of Sleight of Hand check, you can roll twice and take the higher result. Using this ability is a free action. You can use this ability once per day at 8th level, plus one additional time per day for every 2 levels beyond 8th.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thievery Subdomain ~ Thief of the Gods"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, when you make a Disable Device of Sleight of Hand check, you can roll twice and take the higher result. Using this ability is a free action. You can use this ability once per day at 8th level, plus one additional time per day for every 2 levels beyond 8th."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1803,
+    "record_key": "Thievery Subdomain ~ Thief of the Gods"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elder Mythos Cultist ~ Domains",
+    "name": "Domains",
+    "class": "Cleric",
+    "description": "An Elder Mythos cultist receives only a single domain, chosen from the following list: Chaos, Madness, or Void. He can choose any subdomain of those domains offered by an Outer God or Great Old One he worships. This ability alters domains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder Mythos Cultist ~ Domains"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "An Elder Mythos cultist receives only a single domain, chosen from the following list: Chaos, Madness, or Void. He can choose any subdomain of those domains offered by an Outer God or Great Old One he worships. This ability alters domains."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AllowDomainChaos,AllowDomainMadness,AllowDomainVoid|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount,ClericInquisitionAllowed|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 72,
+    "record_key": "Elder Mythos Cultist ~ Domains"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

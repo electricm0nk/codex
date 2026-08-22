@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Enforcer",
+    "name": "Enforcer",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are skilled at causing fear in those you brutalize.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Enforcer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at causing fear in those you brutalize."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you deal nonlethal damage with a melee weapon, you can make an Intimidate check to demoralize your target as a free action. If you are successful, the target is shaken for a number of rounds equal to the damage dealt. If your attack was a critical hit, your target is frightened for 1 round with a successful Intimidate check, as well as being shaken for a number of rounds equal to the damage dealt."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Enforcer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4331,
+    "record_key": "Warpriest Bonus Feat ~ Enforcer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

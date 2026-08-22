@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vexing Daredevil ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Mesmerist",
+    "description": "A vexing daredevil gains Improved Feint",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vexing Daredevil ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A vexing daredevil gains Improved Feint"
+      },
+      {
+        "key": "DESC",
+        "value": " as a bonus feat. |PREVARLT:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "and Greater Feint as bonus feats. |PREVARGTEQ:MesmeristLVL,6|PREVARLT:MesmeristLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": ", Greater Feint, and Greater Mesmerizing Feint as bonus feats. |PREVARGTEQ:MesmeristLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "She doesn't need to meet the prerequisities for"
+      },
+      {
+        "key": "DESC",
+        "value": "this feat.|PREVARLT:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "these feats.|PREVARGTEQ:MesmeristLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": " She gains a bonus stare feat; she must meet the prerequisities of that feat.|PREVARGTEQ:MesmeristLVL,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Feint|PREVARGTEQ:MesmeristLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Mesmerizing Feint|PREVARGTEQ:MesmeristLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vexing Daredevil Bonus Stare Feat|1|PREVARGTEQ:MesmeristLVL,14"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1504,
+    "record_key": "Vexing Daredevil ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

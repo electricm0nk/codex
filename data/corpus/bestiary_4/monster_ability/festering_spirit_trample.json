@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Festering Spirit ~ Trample",
     "delivery": "Extraordinary",
@@ -15,19 +13,55 @@
     "owners": [
       "bestiary_4:monster:festering_spirit"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Trample"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1 Con plus slime, DC %1)|TrampleDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Trample)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a festering spirit can attempt to overrun any creature that is at least one size category smaller than itself. This works just like the overrun combat maneuver, but the trampling creature does not need to make a check, it merely has to move over opponents in its path. Targets of a trample take 1 point of Con damage. Targets of a trample can make an attack of opportunity, but at a -4 penalty. If targets forgo an attack of opportunity, they can attempt to avoid the trampling creature and receive a Reflex (DC %1) save to take half damage. You can only deal trampling damage to each target once per round, no matter how many times its movement takes it over a target creature.|TrampleDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Festering Spirit ~ Trample"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 648,
-    "record_key": "Festering Spirit ~ Trample"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 648,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Festering Spirit ~ Trample",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

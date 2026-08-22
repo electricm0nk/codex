@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Sword ~ By My Honor",
+    "name": "By My Honor",
+    "class": "Order of the Sword",
+    "description": "At 2nd level, the cavalier must select one alignment. As long as he maintains the selected alignment, he receives a +2 morale bonus to one saving throw of his choice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Sword ~ By My Honor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, the cavalier must select one alignment. As long as he maintains the selected alignment, he receives a +2 morale bonus to one saving throw of his choice."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alignment Selection|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Saving Throw Selection|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 283,
+    "record_key": "Order of the Sword ~ By My Honor"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

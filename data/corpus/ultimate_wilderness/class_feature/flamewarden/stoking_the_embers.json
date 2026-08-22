@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flamewarden ~ Stoking the Embers",
+    "name": "Stoking the Embers",
+    "class": "Ranger",
+    "description": "A flamewarden can fan the last spark of a recently slain creature's life force back into a full flame. Once per day as a standard action, a flamewarden can touch the corpse of a creature that has died within 1 round to grant it the effects of breath of life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flamewarden ~ Stoking the Embers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.FlamewardenClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A flamewarden can fan the last spark of a recently slain creature's life force back into a full flame. Once per day as a standard action, a flamewarden can touch the corpse of a creature that has died within 1 round to grant it the effects of breath of life."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 909,
+    "record_key": "Flamewarden ~ Stoking the Embers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

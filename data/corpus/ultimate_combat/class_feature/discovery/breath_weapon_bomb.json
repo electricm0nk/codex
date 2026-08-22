@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Breath Weapon Bomb",
+    "name": "Breath Weapon Bomb*",
+    "class": "Discovery",
+    "description": "Instead of drawing the components of, creating, and throwing a bomb, you can draw the components, drink them, mix them within your body, and then expel them as a breath weapon as a standard action. This breath weapon is a 15-foot cone. Each creature within the cone takes damage as if it had suffered a direct hit from your bomb, but succeeding at a Reflex save (DC = %1) halves the damage. Unlike throwing normal bombs, drawing, drinking, and expelling breath weapon bombs does not provoke attacks of opportunity.|AlchemistBombDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Breath Weapon Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.AlchemistDiscovery.Supernatural.AlchemistBombModifier"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of drawing the components of, creating, and throwing a bomb, you can draw the components, drink them, mix them within your body, and then expel them as a breath weapon as a standard action. This breath weapon is a 15-foot cone. Each creature within the cone takes damage as if it had suffered a direct hit from your bomb, but succeeding at a Reflex save (DC = %1) halves the damage. Unlike throwing normal bombs, drawing, drinking, and expelling breath weapon bombs does not provoke attacks of opportunity.|AlchemistBombDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 25,
+    "record_key": "Discovery ~ Breath Weapon Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

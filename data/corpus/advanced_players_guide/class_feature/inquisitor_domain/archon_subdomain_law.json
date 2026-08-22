@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Archon Subdomain (Law)",
+    "name": "Archon Subdomain (Law)",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Archon Subdomain (Law)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Archon Subdomain (Law)],[PREABILITY:1,CATEGORY=Special Ability,Core Domain ~ Archon Subdomain (Law)],[!PREMULT:1,[PREVARGT:LawDomain,0],[PREABILITY:1,CATEGORY=Special Ability,Inquisitor Domain ~ Archon Subdomain (Good)]]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:BypassInquisititorDomain,1],[PREVARGTEQ:InquisitorDomainArchonSubdomainLaw,1]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LawDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLawAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Law Domain ~ Touch of Law|PREVARGTEQ:DomainLawAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon Subdomain (Law) ~ Aura of Menace|PREVARGTEQ:DomainLawAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LawDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawDC|10+(DomainLawLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLawAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 407,
+    "record_key": "Inquisitor Domain ~ Archon Subdomain (Law)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

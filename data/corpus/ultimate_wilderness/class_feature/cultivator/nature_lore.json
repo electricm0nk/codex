@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cultivator ~ Nature Lore",
+    "name": "Nature Lore",
+    "class": "Bard",
+    "description": "The cultivator gains the lore master bard ability, except he can use it only on Knowledge (nature) checks and Survival checks to track creatures in natural environments. This alters lore master.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cultivator ~ Nature Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.CultivatorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The cultivator gains the lore master bard ability, except he can use it only on Knowledge (nature) checks and Survival checks to track creatures in natural environments. This alters lore master."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 256,
+    "record_key": "Cultivator ~ Nature Lore"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

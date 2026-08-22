@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Demonic Form (Gore)",
+    "name": "Demonic Form (Gore)",
+    "class": null,
+    "description": "You may undergo a temporary transformation into a unique demon. Your type changes to outsider with the chaotic, demon, evil, and native subtypes. You gain damage reduction 10/good and cold iron, resistance to acid 10, cold 10, and fire 10, and telepathy to a range of 100 ft. You grow horns and gain a single natural gore attack. Your natural weapons, as well as any weapon you wield, are treated as chaotic and evil for the purpose of resolving damage reduction. You can remain in this form for %1 minutes/day; this duration does not need to be consecutive. Returing to your normal form is a free action.|TL-1",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DemoniacForm"
+      },
+      {
+        "key": "DESC",
+        "value": "You may undergo a temporary transformation into a unique demon. Your type changes to outsider with the chaotic, demon, evil, and native subtypes. You gain damage reduction 10/good and cold iron, resistance to acid 10, cold 10, and fire 10, and telepathy to a range of 100 ft. You grow horns and gain a single natural gore attack. Your natural weapons, as well as any weapon you wield, are treated as chaotic and evil for the purpose of resolving damage reduction. You can remain in this form for %1 minutes/day; this duration does not need to be consecutive. Returing to your normal form is a free action.|TL-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 23,
+    "record_key": "Demonic Form (Gore)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

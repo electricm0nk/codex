@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist Blast ~ Composite Blasts",
+    "name": "Composite Blasts",
+    "class": "Kineticist Blast",
+    "description": "Composite blasts combine elements to form a new blast. When a kineticist gains a new element through expanded element, she gains access to all composite blasts for which she qualifies. Most composite blasts are either physical or energy blasts, like simple blasts. Physical composite blasts deal an amount of damage equal to 2d6+2 + the kineticist's Constitution modifier, increasing by 2d6+2 for every 2 kineticist levels beyond 1st; energy composite blasts deal an amount of damage equal to 2d6 + 1/2 the kineticist's Constitution modifier, increasing by 2d6 for every 2 kineticist levels beyond 1st.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Blast ~ Composite Blasts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.KB_Composite.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Composite blasts combine elements to form a new blast. When a kineticist gains a new element through expanded element, she gains access to all composite blasts for which she qualifies. Most composite blasts are either physical or energy blasts, like simple blasts. Physical composite blasts deal an amount of damage equal to 2d6+2 + the kineticist's Constitution modifier, increasing by 2d6+2 for every 2 kineticist levels beyond 1st; energy composite blasts deal an amount of damage equal to 2d6 + 1/2 the kineticist's Constitution modifier, increasing by 2d6 for every 2 kineticist levels beyond 1st."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 605,
+    "record_key": "Kineticist Blast ~ Composite Blasts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

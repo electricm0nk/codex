@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant Void Elemental School ~ Void Magic",
+    "name": "Void Magic",
+    "class": "Savant Void Elemental School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Void Elemental School ~ Void Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Arcanist=1|Keen Senses"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Arcanist=3|Twilight Knife|PREVARGTEQ:ArcanistSavantSchoolLVL,5"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Arcanist=4|Wandering Star Motes|PREVARGTEQ:ArcanistSavantSchoolLVL,7"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Arcanist=6|True Seeing|PREVARGTEQ:ArcanistSavantSchoolLVL,11"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Arcanist=8|Moment of Prescience|PREVARGTEQ:ArcanistSavantSchoolLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2622,
+    "record_key": "Savant Void Elemental School ~ Void Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

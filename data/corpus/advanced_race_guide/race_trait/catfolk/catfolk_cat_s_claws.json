@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Catfolk ~ Cat's Claws",
+    "name": "Cat's Claws",
+    "race_key": "Catfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Catfolk Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Catfolk_ReplaceNaturalHunter"
+    ],
+    "description": "Some catfolk have stronger and more developed claws than other members of their race, and can use them to make attacks. Catfolk with this racial trait have a pair of claws they can use as natural weapons. These claws are primary attacks that deal 1d4 points of damage. This racial trait replaces natural hunter.",
+    "source_page": "p.91",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Cat's Claws"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Cat's Claws],[!PREFACT:1,ABILITIES,Catfolk_ReplaceNaturalHunter=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some catfolk have stronger and more developed claws than other members of their race, and can use them to make attacks. Catfolk with this racial trait have a pair of claws they can use as natural weapons. These claws are primary attacks that deal 1d4 points of damage."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces natural hunter.|!PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Cat's Claws"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "FACT",
+        "value": "Catfolk_ReplaceNaturalHunter|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 359,
+    "record_key": "Catfolk ~ Cat's Claws"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

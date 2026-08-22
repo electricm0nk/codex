@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Thrill of the Chase",
+    "name": "Thrill of the Chase",
+    "class": "Rogue Talent",
+    "description": "The rogue revels in the thrill and adrenaline rush of a challenging chase. When engaged in a chase (GameMastery Guide 232) or pursuit (Ultimate Intrigue 142), the rogue gains one d20 reroll which she can use at any time after the original roll is made but before the results of the roll are revealed; she must take the second result, even if it is lower. She can use this reroll once per chase or once per day during a pursuit. Additionally, she gains Run as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Thrill of the Chase"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent"
+      },
+      {
+        "key": "DESC",
+        "value": "The rogue revels in the thrill and adrenaline rush of a challenging chase. When engaged in a chase (GameMastery Guide 232) or pursuit (Ultimate Intrigue 142), the rogue gains one d20 reroll which she can use at any time after the original roll is made but before the results of the roll are revealed; she must take the second result, even if it is lower. She can use this reroll once per chase or once per day during a pursuit. Additionally, she gains Run as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Run"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 268,
+    "record_key": "Rogue Talent ~ Thrill of the Chase"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

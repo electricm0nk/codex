@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner ~ Summon Monster",
+    "name": "Summon Monster",
+    "class": "Summoner",
+    "description": "You can cast Summon Monster %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|SummonMonsterLVL|SummonMonsterTimes|SummonMonsterDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Summon Monster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.SpellLike.Summon Monster.Summon Monster SLA"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast Summon Monster %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|SummonMonsterLVL|SummonMonsterTimes|SummonMonsterDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterDuration|classlevel(\"Summoner\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterLVL|min(9,(classlevel(\"Summoner\")+1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterTimes|CHA+3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SummonMonsterTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 795,
+    "record_key": "Summoner ~ Summon Monster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

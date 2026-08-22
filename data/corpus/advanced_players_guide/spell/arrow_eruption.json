@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Arrow Eruption",
-    "school": "Conjuration",
-    "level": 2,
     "description": "You create exact duplicates of the arrow or crossbow bolt you used to kill a creature in the previous round and launch one at enemy creatures within a 30-foot radius of the corpse. You can target one creature per caster level (maximum 15) within range of the burst and must make a single attack roll and apply it to each arrow. These duplicate arrows possess all the intrinsic magical properties of the arrow that killed the original creature as well as those passed on to it by your bow. They also enjoy the full benefit of any bonuses or modifiers you applied to the attack from other magical items, feats, and class or racial features. However, this spell cannot reproduce any spells or other limited-use magical effects that you used to enhance that particular attack. This includes such effects as the true strike spell, as well as any area spell you might have placed on the arrow by means of the arcane archer's imbue arrow class feature.",
-    "full_text": true
+    "full_text": true,
+    "key": "Arrow Eruption",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger,Sorcerer,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates duplicates of killing arrow.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create exact duplicates of the arrow or crossbow bolt you used to kill a creature in the previous round and launch one at enemy creatures within a 30-foot radius of the corpse. You can target one creature per caster level (maximum 15) within range of the burst and must make a single attack roll and apply it to each arrow. These duplicate arrows possess all the intrinsic magical properties of the arrow that killed the original creature as well as those passed on to it by your bow. They also enjoy the full benefit of any bonuses or modifiers you applied to the attack from other magical items, feats, and class or racial features. However, this spell cannot reproduce any spells or other limited-use magical effects that you used to enhance that particular attack. This includes such effects as the true strike spell, as well as any area spell you might have placed on the arrow by means of the arcane archer's imbue arrow class feature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(arrow or crossbow bolt)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Long"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/arrowEruption.html#_arrow-eruption-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "30-ft.-radius burst"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 26,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1851,
-    "record_key": "Arrow Eruption"
+    "record_key": "Arrow Eruption",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

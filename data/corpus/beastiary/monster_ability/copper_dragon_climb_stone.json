@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Copper Dragon ~ Climb Stone",
+    "delivery": "Extraordinary",
+    "description": "A copper dragon can climb on stone surfaces as though using the spider climb spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:copper_dragon_climb_stone",
+    "name": "Climb Stone",
+    "owners": [
+      "beastiary:monster:dragon_copper"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A copper dragon can climb on stone surfaces as though using the spider climb spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Copper Dragon ~ Climb Stone"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyMovement"
+      }
+    ],
+    "source_page": "p.106",
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 477,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Copper Dragon ~ Climb Stone",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

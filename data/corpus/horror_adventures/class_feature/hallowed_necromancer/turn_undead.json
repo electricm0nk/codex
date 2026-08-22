@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hallowed Necromancer ~ Turn Undead",
+    "name": "Turn Undead",
+    "class": "Wizard",
+    "description": "A hallowed necromancer must select Turn Undead as a bonus feat with her power over undead arcane school ability. This alters power over undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallowed Necromancer ~ Turn Undead"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "DESC",
+        "value": "A hallowed necromancer must select Turn Undead as a bonus feat with her power over undead arcane school ability. This alters power over undead."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 310,
+    "record_key": "Hallowed Necromancer ~ Turn Undead"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

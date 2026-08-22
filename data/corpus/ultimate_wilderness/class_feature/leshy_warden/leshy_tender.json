@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Leshy Warden ~ Leshy Tender",
+    "name": "Leshy Tender",
+    "class": "Druid",
+    "description": "At 4th level, a leshy warden chooses either to grant her leaf leshy a +2 increase to Strength and Dexterity or to transform it into a gourd leshy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshy Warden ~ Leshy Tender"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.LeshyWardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a leshy warden chooses either to grant her leaf leshy a +2 increase to Strength and Dexterity or to transform it into a gourd leshy."
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the leshy warden can either grant her current leshy a +2 increase to Strength and Dexterity or transform it into a fungus leshy.|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "DESC",
+        "value": "Finally, at 12th level, she can either grant her current leshy a final +2 increase to Strength and Dexterity or transform it into a seaweed leshy.|PRECLASS:1,Druid=12"
+      },
+      {
+        "key": "DESC",
+        "value": "If the leshy is transformed, it gains the normal ability scores of its new form-the ability score increases granted by this ability don't carry over to its new form."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Leshy Tender Choice 1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Leshy Tender Choice 2|1|PRECLASS:1,Druid=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Leshy Tender Choice 3|1|PRECLASS:1,Druid=12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 521,
+    "record_key": "Leshy Warden ~ Leshy Tender"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

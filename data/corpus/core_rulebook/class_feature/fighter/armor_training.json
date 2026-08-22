@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter ~ Armor Training",
+    "name": "Armor Training",
+    "class": "Fighter",
+    "description": "You are more maneuverable while wearing armor. Whenever you are wearing armor, you reduce the armor check penalty by %1 and increase the maximum Dexterity bonus allowed by your armor by +%1|ArmorTrainingTier",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter ~ Armor Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArmorTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArmorTrainingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArmorTrainingTier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are more maneuverable while wearing armor. Whenever you are wearing armor, you reduce the armor check penalty by %1 and increase the maximum Dexterity bonus allowed by your armor by +%1|ArmorTrainingTier"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Armor Training Choice|1|PREVARGTEQ:ArmorTrainingLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTrainingTier,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTrainingTier,2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTrainingTier,3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTrainingTier,4]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|ArmorTrainingTier|PREEQUIP:1,TYPE=Armor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTrainingTier|ArmorTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTraining|min((ArmorTrainingLVL+1)/4,4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "MediumArmor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 890,
+    "record_key": "Fighter ~ Armor Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

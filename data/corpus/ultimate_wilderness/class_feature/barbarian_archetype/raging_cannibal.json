@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Raging Cannibal",
+    "name": "Raging Cannibal",
+    "class": "Barbarian Archetype",
+    "description": "While savagery is not inherently evil, some barbaric cultures thrive on depravity and welcome the act of feeding on their own kind. The raging cannibal is a barbarian who feasts upon her fallen opponents not out of hunger, or even a taste for flesh, but rather because she believes consuming her foes and defiling their lost lives demonstrates her strength. This penchant for feasting on the flesh of her kin makes the raging cannibal an awkward companion to travel with for many groups, with rumors revolving around the raging cannibal's culinary exploits often causing tense situations that other party members might be called upon to resolve via diplomacy before the raging cannibal grows frustrated and decides to take matters into her own hands!",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Raging Cannibal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Raging Cannibal],[!PREFACT:1,ABILITIES,Barbarian_Archetype_RagePower2=True,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_TrapSense=True,Barbarian_Archetype_ImprovedUncannyDodge=True,Barbarian_Archetype_DamageReduction=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While savagery is not inherently evil, some barbaric cultures thrive on depravity and welcome the act of feeding on their own kind. The raging cannibal is a barbarian who feasts upon her fallen opponents not out of hunger, or even a taste for flesh, but rather because she believes consuming her foes and defiling their lost lives demonstrates her strength. This penchant for feasting on the flesh of her kin makes the raging cannibal an awkward companion to travel with for many groups, with rumors revolving around the raging cannibal's culinary exploits often causing tense situations that other party members might be called upon to resolve via diplomacy before the raging cannibal grows frustrated and decides to take matters into her own hands!"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Raging Cannibal ~ Animal Fury|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Raging Cannibal ~ Consume Vigor|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Raging Cannibal ~ Intimidating Gouge|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Raging Cannibal ~ Feed from Fury|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Raging Cannibal ~ Razor-Toothed Fury|PRECLASS:1,Barbarian=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_DamageReduction|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 185,
+    "record_key": "Barbarian Archetype ~ Raging Cannibal"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Crusader ~ Diminished Spellcasting",
+    "name": "Diminished Spellcasting",
+    "class": "Cleric",
+    "description": "A crusader chooses only one domain and gains one fewer spell of each level than normal. If this reduces the number to 0, she may cast spells of that level only if they are domain spells or if her Wisdom allows bonus spells of that level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crusader ~ Diminished Spellcasting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A crusader chooses only one domain and gains one fewer spell of each level than normal. If this reduces the number to 0, she may cast spells of that level only if they are domain spells or if her Wisdom allows bonus spells of that level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Crusader SpellCasting Reduction"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 534,
+    "record_key": "Crusader ~ Diminished Spellcasting"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

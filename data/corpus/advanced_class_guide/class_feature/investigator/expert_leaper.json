@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Expert Leaper",
+    "name": "Expert Leaper",
+    "class": "Investigator",
+    "description": "When making jump checks, the investigator is always considered to have a running start. Also, when the investigator deliberately falls, a DC 15 Acrobatics check allows her to ignore the first 20 feet fallen, instead of the first 10 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Expert Leaper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When making jump checks, the investigator is always considered to have a running start. Also, when the investigator deliberately falls, a DC 15 Acrobatics check allows her to ignore the first 20 feet fallen, instead of the first 10 feet."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1345,
+    "record_key": "Investigator ~ Rogue Talent ~ Expert Leaper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

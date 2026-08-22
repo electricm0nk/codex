@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guard Dedication ~ Deflect Arrows",
+    "name": "Deflect Arrows",
+    "class": "Guard Dedication",
+    "description": "The Ulfen Guard gains Deflect Arrows as a bonus feat. If she is adjacent to her chosen ally, she can use this ability to deflect an arrow targeting her chosen ally. The Ulfen Guard does not need to meet the prerequisites for this bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Deflect Arrows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The Ulfen Guard gains Deflect Arrows as a bonus feat. If she is adjacent to her chosen ally, she can use this ability to deflect an arrow targeting her chosen ally. The Ulfen Guard does not need to meet the prerequisites for this bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Deflect Arrows"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 566,
+    "record_key": "Guard Dedication ~ Deflect Arrows"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

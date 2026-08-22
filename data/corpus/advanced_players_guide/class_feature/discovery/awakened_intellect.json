@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Awakened Intellect",
+    "name": "Awakened Intellect",
+    "class": "Discovery",
+    "description": "The alchemist's constant exposure to strange chemicals has expanded his mind. His Intelligence score permanently increases by 2 points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Awakened Intellect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistGrandDiscovery"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist's constant exposure to strange chemicals has expanded his mind. His Intelligence score permanently increases by 2 points."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 179,
+    "record_key": "Discovery ~ Awakened Intellect"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:27:44Z",
   "data": {
     "corpus_key": "Psicrystal ~ Telepathic Speech",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "ultimate_psionics:monster:psicrystal"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The psicrystal can communicate with any creature that has a language within 30 feet, if the psicrystal is also within 1 mile of its owner."
+      },
+      {
+        "key": "KEY",
+        "value": "Psicrystal ~ Telepathic Speech"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.50",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
-    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
-    "line": 747,
-    "record_key": "Psicrystal ~ Telepathic Speech"
-  },
+  "ingested_at": "2026-08-13T02:27:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 747,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "record_key": "Psicrystal ~ Telepathic Speech",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

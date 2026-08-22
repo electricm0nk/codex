@@ -1,25 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "This spell functions as elemental body I, except that it also allows you to assume the form of a Medium air, earth, fire, or water elemental. The abilities you gain depend upon the elemental. Air elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Earth elemental: As elemental body I except that you gain a +4 size bonus to your Strength and a +5 natural armor bonus. Fire elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Constitution and a +5 natural armor bonus.",
     "key": "Elemental Body II",
-    "school": "Transmutation",
     "level": 5,
-    "description": "This spell functions as elemental body I, except that it also allows you to assume the form of a Medium air, earth, fire, or water elemental. The abilities you gain depend upon the elemental. Air elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Earth elemental: As elemental body I except that you gain a +4 size bonus to your Strength and a +5 natural armor bonus. Fire elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Constitution and a +5 natural armor bonus."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as elemental body I, except that it also allows you to assume the form of a Medium air, earth, fire, or water elemental. The abilities you gain depend upon the elemental. Air elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Earth elemental: As elemental body I except that you gain a +4 size bonus to your Strength and a +5 natural armor bonus. Fire elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Constitution and a +5 natural armor bonus.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as elemental body I, except that it also allows you to assume the form of a Medium air, earth, fire, or water elemental.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/elementalBody.html#_elemental-body-ii"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      },
+      {
+        "key": "VARIANTS",
+        "value": "Air|Earth|Fire|Water"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 198,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 958,
-    "record_key": "Elemental Body II.MOD"
+    "record_key": "Elemental Body II",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

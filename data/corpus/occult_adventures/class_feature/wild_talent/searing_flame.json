@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Searing Flame",
+    "name": "Searing Flame",
+    "class": "Wild Talent",
+    "description": "Element fire; Type utility (Su); Level 2; Burn -",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Searing Flame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Fire"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ burning infusion"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite burning infusion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type utility (Su); Level 2; Burn -"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Over time, your burning infusion sears away your foe's fire resistance. When you roll burn damage from burning infusion against a foe, decrease the foe's fire resistance by an amount equal to the unmodified burn damage; don't apply fire resistance to this roll for the purpose of determining the reduction. This decrease lasts for a number of rounds equal to 1/2 your kineticist level. These decreases stack, to a minimum resistance of 0."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 767,
+    "record_key": "Wild Talent ~ Searing Flame"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

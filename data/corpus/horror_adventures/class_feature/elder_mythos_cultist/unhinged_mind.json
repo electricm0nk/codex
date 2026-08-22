@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elder Mythos Cultist ~ Unhinged Mind",
+    "name": "Unhinged Mind",
+    "class": "Cleric",
+    "description": "Bartering sanity for unspeakable knowledge, an Elder Mythos cultist props up his crumbling sanity with a darkly enigmatic personality. An Elder Mythos cultist uses Charisma instead of Wisdom as his key spellcasting ability score (to determine his spell DCs, bonus spells per day, bonus on concentration checks, and so on), to determine the effects and number of uses of his domain powers, and to modify his Will saving throws. However, because of the fragile state of his mind, the Elder Mythos cultist takes a -2 penalty on Will saves to resist mind-affecting effects. An Elder Mythos cultist automatically fails any save to resist the effects of confusion, insanity, and nightmare, and other similar effects so long as the effect's caster level is higher than his character level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder Mythos Cultist ~ Unhinged Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "Bartering sanity for unspeakable knowledge, an Elder Mythos cultist props up his crumbling sanity with a darkly enigmatic personality. An Elder Mythos cultist uses Charisma instead of Wisdom as his key spellcasting ability score (to determine his spell DCs, bonus spells per day, bonus on concentration checks, and so on), to determine the effects and number of uses of his domain powers, and to modify his Will saving throws. However, because of the fragile state of his mind, the Elder Mythos cultist takes a -2 penalty on Will saves to resist mind-affecting effects. An Elder Mythos cultist automatically fails any save to resist the effects of confusion, insanity, and nightmare, and other similar effects so long as the effect's caster level is higher than his character level."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Cleric|CHASCORE+(((CHASCORE-10)/2)-CHA)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLSTAT;Class=Cleric|-WISSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Cleric|-WISSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|BASESPELLKNOWNSTAT;Class=Cleric|CHASCORE+(((CHASCORE-10)/2)-CHA)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPowerTimes|CHA-WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|CHA-WIS"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|-2 on saves vs. mind-affecting effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 74,
+    "record_key": "Elder Mythos Cultist ~ Unhinged Mind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

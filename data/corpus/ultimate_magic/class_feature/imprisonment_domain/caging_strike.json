@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Imprisonment Domain ~ Caging Strike",
+    "name": "Caging Strike",
+    "class": "Imprisonment Domain",
+    "description": "With a devastating weapon strike, spectral chains wrap around your target for a short period of time. Whenever you confirm a critical hit with a melee or ranged weapon attack (including spells that require attack rolls), you can choose to also entangle that target for 1d4 rounds (Fortitude DC %1 negates). You may use this ability %2 times per day.|CagingStrikeDC|DomainImprisonmentTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imprisonment Domain ~ Caging Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CagingStrikeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With a devastating weapon strike, spectral chains wrap around your target for a short period of time. Whenever you confirm a critical hit with a melee or ranged weapon attack (including spells that require attack rolls), you can choose to also entangle that target for 1d4 rounds (Fortitude DC %1 negates). You may use this ability %2 times per day.|CagingStrikeDC|DomainImprisonmentTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Caging Strike"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CagingStrikeDC|DomainImprisonmentDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CagingStrikeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Caging Strike)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 368,
+    "record_key": "Imprisonment Domain ~ Caging Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

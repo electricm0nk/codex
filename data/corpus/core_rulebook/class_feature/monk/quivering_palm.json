@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Quivering Palm",
+    "name": "Quivering Palm",
+    "class": "Monk",
+    "description": "You can set up vibrations within the body of another creature that can thereafter be fatal if you so desire. You can use this attack once per day, and you must announce your intent before making your attack roll. Creatures immune to critical hits cannot be affected. Otherwise, if you strike successfully and the target takes damage from the blow, the quivering palm attack succeeds. Thereafter, you can try to slay the victim at any later time, as long as the attempt is made within a %1 days. To make such an attempt, you merely will the target to die (a free action), and unless the target makes a Fortitude saving throw (DC %2), it dies. If the saving throw is successful, the target is no longer in danger from that particular quivering palm attack, but it may still be affected by another one at a later time. You can have no more than 1 quivering palm attack at one time. If you use quivering palm while another is still in effect, the previous effect is negated.|QuiveringPalmDuration|QuiveringPalmDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Quivering Palm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialAttack.Supernatural.AttackOption.Quivering Palm"
+      },
+      {
+        "key": "DEFINE",
+        "value": "QuiveringPalmDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "QuiveringPalmDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "QuiveringPalmLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can set up vibrations within the body of another creature that can thereafter be fatal if you so desire. You can use this attack once per day, and you must announce your intent before making your attack roll. Creatures immune to critical hits cannot be affected. Otherwise, if you strike successfully and the target takes damage from the blow, the quivering palm attack succeeds. Thereafter, you can try to slay the victim at any later time, as long as the attempt is made within a %1 days. To make such an attempt, you merely will the target to die (a free action), and unless the target makes a Fortitude saving throw (DC %2), it dies. If the saving throw is successful, the target is no longer in danger from that particular quivering palm attack, but it may still be affected by another one at a later time. You can have no more than 1 quivering palm attack at one time. If you use quivering palm while another is still in effect, the previous effect is negated.|QuiveringPalmDuration|QuiveringPalmDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuiveringPalmDuration|QuiveringPalmLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuiveringPalmDC|10+(QuiveringPalmLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuiveringPalmLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1110,
+    "record_key": "Monk ~ Quivering Palm"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

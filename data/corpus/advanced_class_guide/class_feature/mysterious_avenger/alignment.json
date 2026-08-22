@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mysterious Avenger ~ Alignment",
+    "name": "Alignment",
+    "class": "Swashbuckler",
+    "description": "A mysterious avenger must be of a good alignment, and must be dedicated to the protection of the good and the powerless under her care. If she ceases to be good or betrays the trust of those she was sworn to protect, she loses her secret identity and greater charmed life class features. She can regain them if she atones for her violations by some means that the GM sees fit (possibly by way of the atonement spell if the mysterious avenger is especially religious).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mysterious Avenger ~ Alignment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mysterious Avenger Class Feature.Swashbuckler Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A mysterious avenger must be of a good alignment, and must be dedicated to the protection of the good and the powerless under her care. If she ceases to be good or betrays the trust of those she was sworn to protect, she loses her secret identity and greater charmed life class features. She can regain them if she atones for her violations by some means that the GM sees fit (possibly by way of the atonement spell if the mysterious avenger is especially religious)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3908,
+    "record_key": "Mysterious Avenger ~ Alignment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

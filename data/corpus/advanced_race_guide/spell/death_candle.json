@@ -1,23 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "This spell functions like death knell, except instead of using the slain target's life energy to enhance yourself, you use it to summon a Small fire elemental resembling a burning, howling version of the slain creature. The elemental acts immediately on your turn and otherwise behaves as if you had summoned it with summon monster II. The elemental remains for a number of rounds equal to the Hit Dice of the slain creature.",
     "key": "Death Candle",
-    "school": "Necromancy",
     "level": 1,
-    "description": "This spell functions like death knell, except instead of using the slain target's life energy to enhance yourself, you use it to summon a Small fire elemental resembling a burning, howling version of the slain creature. The elemental acts immediately on your turn and otherwise behaves as if you had summoned it with summon monster II. The elemental remains for a number of rounds equal to the Hit Dice of the slain creature."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=1|Cleric,Inquisitor,Witch=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like death knell, except instead of using the slain target's life energy to enhance yourself, you use it to summon a Small fire elemental resembling a burning, howling version of the slain creature. The elemental acts immediately on your turn and otherwise behaves as if you had summoned it with summon monster II. The elemental remains for a number of rounds equal to the Hit Dice of the slain creature."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Death|Evil|Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds/Instantaneous"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsIfrit=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude Negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/ifrits.html#_death-candle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Necromancy"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 108,
-    "record_key": "Death Candle"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 108,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Death Candle",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

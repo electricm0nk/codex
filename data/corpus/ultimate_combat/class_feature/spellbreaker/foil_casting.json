@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spellbreaker ~ Foil Casting",
+    "name": "Foil Casting",
+    "class": "Inquisitor",
+    "description": "At 3rd level, when an opponent tries to cast an arcane spell within a spellbreaker's threatened area, the DC for that caster to cast defensively increases by 2. This increase stacks with the effects of the Disruptive feat (see page 112 of the Core Rulebook). Furthermore, the spellbreaker knows where to hit foes to foil casting from a distance. Each time she hits an arcane spellcaster or a creature that uses spell-like abilities with a ranged weapon attack, the DC of any Concentration checks the caster makes increases by 2 for 1 round. This ability replaces solo tactics.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellbreaker ~ Foil Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, when an opponent tries to cast an arcane spell within a spellbreaker's threatened area, the DC for that caster to cast defensively increases by 2. This increase stacks with the effects of the Disruptive feat (see page 112 of the Core Rulebook). Furthermore, the spellbreaker knows where to hit foes to foil casting from a distance. Each time she hits an arcane spellcaster or a creature that uses spell-like abilities with a ranged weapon attack, the DC of any Concentration checks the caster makes increases by 2 for 1 round. This ability replaces solo tactics."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 885,
+    "record_key": "Spellbreaker ~ Foil Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

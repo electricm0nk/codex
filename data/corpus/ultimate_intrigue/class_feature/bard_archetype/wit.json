@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Wit",
+    "name": "Wit",
+    "class": "Bard Archetype",
+    "description": "The wit is a master of clever repartee and verbal dueling, moving through noble courts like a fish through water.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Wit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Wit],[!PREFACT:1,ABILITIES,Bard_Archetype_BardicKnowledge=True,Bard_Archetype_CounterSong=True,Bard_Archetype_InspireCompetence=True,Bard_Archetype_DirgeOfDoom=True,Bard_Archetype_FrighteningTune=True,Bard_Archetype_VersatilePerformance=True,Bard_Archetype_LoreMaster=True,Bard_Archetype_JackOfAllTrades=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The wit is a master of clever repartee and verbal dueling, moving through noble courts like a fish through water."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wit ~ Way with Words|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wit ~ Counterargument|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Cutting Remark|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wit ~ Quick Witted|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wit ~ On the Ball|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wit ~ Duel Master|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_JackOfAllTrades|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_FrighteningTune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_JackOfAllTrades|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 224,
+    "record_key": "Bard Archetype ~ Wit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Formless Adept ~ Psychic Possession",
+    "name": "Psychic Possession",
+    "class": "Psychic",
+    "description": "At 15th level, while using his incorporeal body ability, a formless adept can attempt to psychically possess another living creature. To use this ability, the formless adept must be adjacent to the target. This effect works as the greater possession* spell and can be maintained only as long as the formless adept maintains his incorporeal body form. The target can attempt a Will save with a DC equal to 10 + 1/2 the formless adept's class level + the formless adept's Intelligence modifier to resist the effect. A creature that successfully saves is immune to the formless adept's psychic possession for 24 hours. This ability replaces the 15th-level phrenic amplification.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Formless Adept ~ Psychic Possession"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Formless Adept Class Feature.Psychic Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, while using his incorporeal body ability, a formless adept can attempt to psychically possess another living creature. To use this ability, the formless adept must be adjacent to the target. This effect works as the greater possession* spell and can be maintained only as long as the formless adept maintains his incorporeal body form. The target can attempt a Will save with a DC equal to 10 + 1/2 the formless adept's class level + the formless adept's Intelligence modifier to resist the effect. A creature that successfully saves is immune to the formless adept's psychic possession for 24 hours. This ability replaces the 15th-level phrenic amplification."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1571,
+    "record_key": "Formless Adept ~ Psychic Possession"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

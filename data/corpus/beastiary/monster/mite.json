@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:mite_hatred",
@@ -19,6 +17,100 @@
     "natural_attacks": [],
     "race_subtype": "Mite",
     "race_type": "Fey",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Light Sensitivity|Mite ~ Hatred|Mite ~ Vermin Empathy|Scent"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Dagger|Dart"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sleight of Hand,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,INT,CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerminEmpathyLVL|CL"
+      },
+      {
+        "key": "CR",
+        "value": "1/4"
+      },
+      {
+        "key": "DR",
+        "value": "2/Cold Iron"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Fey:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Climb,20"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Mite"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=Day|CASTERLEVEL=1|Doom,11+INT"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=1|Prestidigitation"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "S",
     "source_page": "p.207",
     "speeds": [
@@ -32,16 +124,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 295,
-    "record_key": "Mite"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 295,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Mite",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

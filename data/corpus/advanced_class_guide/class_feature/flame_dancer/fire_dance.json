@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flame Dancer ~ Fire Dance",
+    "name": "Fire Dance",
+    "class": "Bard",
+    "description": "A fire dancer learns to protect himself and others from the pain of fire, and discovers how to control the flame while enduring its heat. Each round of the fire dance, he rolls a Perform (dance or sing) check. Any ally within 30 feet of the bard that has caught on fire or is affected by a fire effect or extreme heat can use the bard's Perform check result in place of its saving throw against that fire. Any ally within 30 feet of the bard who is suffering from heatstroke can ignore the fatigue from heat exposure so long as the bard maintains this performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flame Dancer ~ Fire Dance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Flame Dancer Class Feature.Bard Class Feature.SpecialQuality.Supernatural.BardicPerformance.BardCountersong"
+      },
+      {
+        "key": "DESC",
+        "value": "A fire dancer learns to protect himself and others from the pain of fire, and discovers how to control the flame while enduring its heat. Each round of the fire dance, he rolls a Perform (dance or sing) check. Any ally within 30 feet of the bard that has caught on fire or is affected by a fire effect or extreme heat can use the bard's Perform check result in place of its saving throw against that fire. Any ally within 30 feet of the bard who is suffering from heatstroke can ignore the fatigue from heat exposure so long as the bard maintains this performance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2688,
+    "record_key": "Flame Dancer ~ Fire Dance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Gillman ~ Servitor",
+    "name": "Servitor",
+    "race_key": "Gillman",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gillman Racial Trait",
+      "Gillman Racial Default",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Gillman_ReplaceServitor",
+    "sets_replace_flags": [],
+    "description": "Gillmen serve the dark, unfathomable schemes of the reclusive aboleths, but unless the gillmen go against the orders of their aboleth masters (which are often unknown to them, masked in the form of hidden memories triggered by key events), they are free to act as they wish. In a campaign, these orders are wholly up to the GM, meaning the player of a gillman character cedes some elements of self-control when it best serves the story of the campaign.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gillman ~ Servitor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Gillman_ReplaceServitor=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Gillmen serve the dark, unfathomable schemes of the reclusive aboleths, but unless the gillmen go against the orders of their aboleth masters (which are often unknown to them, masked in the form of hidden memories triggered by key events), they are free to act as they wish. In a campaign, these orders are wholly up to the GM, meaning the player of a gillman character cedes some elements of self-control when it best serves the story of the campaign."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gillman/gillman_abilities_race.lst",
+    "sha256": "01757ac6486f34e8c5cbdf2022354aaa8ef4a12d27e326c1ebe7c7c20260a32c",
+    "line": 20,
+    "record_key": "Gillman ~ Servitor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Detect Chaos ~ HK",
+    "name": "Detect Chaos",
+    "class": "Detect Chaos",
+    "description": "At will, you can use detect chaos, as the spell. You can, as a move action, concentrate on a single individual or item within 60 ft. and determine if it is chaotic, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect chaos in any other object or individual within range.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Detect Chaos ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hellknight|TIMES=ATWILL|CASTERLEVEL=TL|Detect Chaos,11+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "At will, you can use detect chaos, as the spell. You can, as a move action, concentrate on a single individual or item within 60 ft. and determine if it is chaotic, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect chaos in any other object or individual within range."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 55,
+    "record_key": "Detect Chaos ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

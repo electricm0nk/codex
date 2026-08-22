@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Exarch ~ Fearsome Jurist",
+    "name": "Fearsome Jurist",
+    "class": "Inquisitor",
+    "description": "An exarch can imbue one of her weapons with the jurist or menacing weapon special ability as a swift action, and may switch between these properties as a swift action. When using either special ability, her weapon's critical threat range doubles against chaotic creatures. This does not stack with keen edge, Improved Critical, or similar effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exarch ~ Fearsome Jurist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An exarch can imbue one of her weapons with the jurist or menacing weapon special ability as a swift action, and may switch between these properties as a swift action. When using either special ability, her weapon's critical threat range doubles against chaotic creatures. This does not stack with keen edge, Improved Critical, or similar effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 41,
+    "record_key": "Exarch ~ Fearsome Jurist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

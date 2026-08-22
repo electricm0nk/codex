@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Dweomer Cap ~ Aura Luminescence",
     "delivery": "Extraordinary",
@@ -15,6 +13,28 @@
       "ultimate_wilderness:companion:familiar_dweomer_cap",
       "ultimate_wilderness:companion:dweomer_cap"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A dweomer cap naturally emits dim light in a 10-foot radius. When in contact with a creature or object that has a faint or stronger magical aura, a dweomer cap's light shimmers perceptibly, changing its hue and pattern. A dweomer cap can suppress or resume its luminescence as a standard action, though it has reason to do so only when serving as a familiar and ordered by its master to do so."
+      },
+      {
+        "key": "KEY",
+        "value": "Dweomer Cap ~ Aura Luminescence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DweomerCapRacialTrait.Aura"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.195",
     "stat_adjustments": [],
@@ -25,16 +45,18 @@
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 227,
-    "record_key": "Dweomer Cap ~ Aura Luminescence"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 227,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Dweomer Cap ~ Aura Luminescence",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

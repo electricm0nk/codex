@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Sylph ~ Sky Speaker",
+    "name": "Sky Speaker",
+    "race_key": "Sylph",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Sylph Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Sylph_ReplaceSpellLikeAbility"
+    ],
+    "description": "Sylphs with this racial trait feel kinship toward the creatures of the air, and can use speak with animals once per day to speak to birds or other flying animals. Her caster level for these effects is equal to her level. This racial trait replaces the sylph's spell-like ability racial trait.",
+    "source_page": "p.156",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylph ~ Sky Speaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Sylph Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Sky Speaker],[!PREFACT:1,ABILITIES,Sylph_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sylphs with this racial trait feel kinship toward the creatures of the air, and can use speak with animals once per day to speak to birds or other flying animals. Her caster level for these effects is equal to her level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the sylph's spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Sylph ~ Sky Speaker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Speak with Animals (birds or other flying animals only)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "FACT",
+        "value": "Sylph_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 688,
+    "record_key": "Sylph ~ Sky Speaker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

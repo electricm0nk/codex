@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Thundercaller ~ Thunder Call",
+    "name": "Thunder Call",
+    "class": "Bard",
+    "description": "The thundercaller can start a performance to unleash a deafening peal of thunder. This allows the thundercaller to spend a round of performance to create an effect similar to the spell sound burst (%1d8 damage and stunned for 1 round, close range, 10-ft. area spread, DC %2 Fortitude for half damage, not stunned). A creature that succeeds at its saving throw against thunder call is immune to the stunning effect but still takes sonic damage. Beginning this performance is always a standard action.|ThundercallerThunderDamageDice|12+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thundercaller ~ Thunder Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.ThundercallerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThundercallerThunderDamageDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The thundercaller can start a performance to unleash a deafening peal of thunder. This allows the thundercaller to spend a round of performance to create an effect similar to the spell sound burst (%1d8 damage and stunned for 1 round, close range, 10-ft. area spread, DC %2 Fortitude for half damage, not stunned). A creature that succeeds at its saving throw against thunder call is immune to the stunning effect but still takes sonic damage. Beginning this performance is always a standard action.|ThundercallerThunderDamageDice|12+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThundercallerThunderDamageDice|1+(2*((BardLVL-3)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 281,
+    "record_key": "Thundercaller ~ Thunder Call"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

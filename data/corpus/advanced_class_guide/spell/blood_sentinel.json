@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Blood Sentinel",
-    "school": "Transmutation",
-    "level": 3,
     "description": "After casting this spell, you pour a few drops of your blood and saliva into the mouth of the animal sculpture material component, temporarily giving it life. The animal is bonded to you as if it were a familiar, and it has the abilities of a familiar (use your caster level as your effective wizard level to determine its abilities), but it does not grant you the Alertness feat or the special ability of its animal type. If your blood sentinel is slain, you take 2 points of Intelligence drain and the blood sentinel's body becomes a destroyed statue. This spell has no effect if you already have a familiar or another blood sentinel.",
-    "full_text": true
+    "full_text": true,
+    "key": "Blood Sentinel",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Sorcerer,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "After casting this spell, you pour a few drops of your blood and saliva into the mouth of the animal sculpture material component, temporarily giving it life. The animal is bonded to you as if it were a familiar, and it has the abilities of a familiar (use your caster level as your effective wizard level to determine its abilities), but it does not grant you the Alertness feat or the special ability of its animal type. If your blood sentinel is slain, you take 2 points of Intelligence drain and the blood sentinel's body becomes a destroyed statue. This spell has no effect if you already have a familiar or another blood sentinel.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Animate an animal sculpture to be your temporary familiar.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a life-sized animal sculpture of a familiar made of clay, cloth, stone, or wood, plus mandrake root worth 25 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "none"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/bloodSentinel.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one animal sculpture"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 32,
-    "record_key": "Blood Sentinel"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Blood Sentinel",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T09:20:33Z",
   "data": {
     "ability_keys": [
       "advanced_race_guide:companion:companion_advancement_sapling_treant",
@@ -21,6 +19,76 @@
     ],
     "race_subtype": null,
     "race_type": "Plant",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Sapling Treant|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Plant Companion ~ Sapling Treant"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Melee.Finesseable.Bludgeoning,*2,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Plant Companion - Sapling Treant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "NotAllowed,1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.PlantCompanion"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "M",
@@ -41,16 +109,18 @@
       "PlantCompanion"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
-    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58",
-    "line": 17,
-    "record_key": "Companion (Sapling Treant)"
-  },
+  "ingested_at": "2026-08-13T09:20:33Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
+    "record_key": "Companion (Sapling Treant)",
+    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

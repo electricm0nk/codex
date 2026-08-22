@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discern Lies ~ HK",
+    "name": "Discern Lies",
+    "class": "Discern Lies",
+    "description": "You can use discern lies as a spell-like ability %1/day (caster level %2).|3+CHA|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discern Lies ~ HK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hellknight|TIMES=3+CHA|CASTERLEVEL=TL|Discern Lies,14+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use discern lies as a spell-like ability %1/day (caster level %2).|3+CHA|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 57,
+    "record_key": "Discern Lies ~ HK"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

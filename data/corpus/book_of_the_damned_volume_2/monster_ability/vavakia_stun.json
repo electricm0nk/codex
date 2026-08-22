@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "corpus_key": "Vavakia ~ Stun",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "book_of_the_damned_volume_2:monster:demon_vavakia"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Stun"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VavakiaStunDC|10+HD/2+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VavakiaStunDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Stun)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VavakiaStunDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature struck by a vavakia's tail slap must make a DC %1 Fortitude save or be stunned for 1 round. On a critical hit, the stun effect lasts for 1d4 rounds on a failed save, and 1 round on a successful save. The save DC is Constitution-based.|VavakiaStunDC|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature struck by a vavakia's tail slap must make a DC %1 Fortitude save or be stunned for 1 round.|VavakiaStunDC|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Vavakia ~ Stun"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.60",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
-    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
-    "line": 25,
-    "record_key": "Vavakia ~ Stun"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "record_key": "Vavakia ~ Stun",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor ~ Third Judgment",
+    "name": "Third Judgment",
+    "class": "Inquisitor",
+    "description": "Whenever an inquisitor uses her judgment ability, she selects three different judgments, instead of just two. This only consumes one use of her judgment ability. As a swift action, the inquisitor can change one of these judgments to another type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor ~ Third Judgment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever an inquisitor uses her judgment ability, she selects three different judgments, instead of just two. This only consumes one use of her judgment ability. As a swift action, the inquisitor can change one of these judgments to another type."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 311,
+    "record_key": "Inquisitor ~ Third Judgment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

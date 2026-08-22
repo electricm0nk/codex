@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Dragon's Breath",
-    "school": "Evocation",
-    "level": 4,
     "description": "You breathe out a blast of energy. Creatures in the affected area take 1d6 points of energy damage per caster level (maximum of 12d6). A successful Reflex save results in half damage. The spell's effect and energy type depend on the type of dragon scale used: Black dragon: 60-foot line of acid.  Blue or bronze dragon: 60-foot line of electricity.  Green dragon: 30-foot cone of acid.  Gold or red dragon: 30-foot cone of fire.  Silver or white dragon: 30-foot cone of cold.  Brass dragon: 60-foot line of fire.  Copper dragon: 60-foot line of acid.",
-    "full_text": true
+    "full_text": true,
+    "key": "Dragon's Breath",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Sorcerer,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Gives you a dragon's breath weapon.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You breathe out a blast of energy. Creatures in the affected area take 1d6 points of energy damage per caster level (maximum of 12d6). A successful Reflex save results in half damage. The spell's effect and energy type depend on the type of dragon scale used: Black dragon: 60-foot line of acid.  Blue or bronze dragon: 60-foot line of electricity.  Green dragon: 30-foot cone of acid.  Gold or red dragon: 30-foot cone of fire.  Silver or white dragon: 30-foot cone of cold.  Brass dragon: 60-foot line of fire.  Copper dragon: 60-foot line of acid.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a dragon scale)"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 ft. or 60 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool|EarthSchool|FireSchool|WaterSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/dragonSBreath.html#_dragon's-breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "cone-shaped burst or line"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 92,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1925,
-    "record_key": "Dragon's Breath"
+    "record_key": "Dragon's Breath",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

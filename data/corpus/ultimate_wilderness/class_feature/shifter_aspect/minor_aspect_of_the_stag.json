@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Stag ~ Minor",
+    "name": "Minor Aspect of the Stag",
+    "class": "Shifter Aspect",
+    "description": "You gain an enhancement bonus of +%1 feet to your base speed.|StagAspectMoveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Stag ~ Minor"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Stag_2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StagAspectMoveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain an enhancement bonus of +%1 feet to your base speed.|StagAspectMoveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StagAspectMoveBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StagAspectMoveBonus|5|PREVARGTEQ:ShifterStagAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StagAspectMoveBonus|10|PREVARGTEQ:ShifterStagAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 90,
+    "record_key": "Shifter Aspect ~ Stag ~ Minor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

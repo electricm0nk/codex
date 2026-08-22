@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elder Mythos Cultist ~ Forbidden Knowledge",
+    "name": "Forbidden Knowledge",
+    "class": "Cleric",
+    "description": "An Elder Mythos cultist gains a +2 profane bonus on all Knowledge (arcana), Knowledge (dungeoneering), Knowledge (history), Knowledge (planes), and Knowledge (religion) checks, and can attempt these checks untrained. This bonus doubles if the check is related to the Elder Mythos.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder Mythos Cultist ~ Forbidden Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "An Elder Mythos cultist gains a +2 profane bonus on all Knowledge (arcana), Knowledge (dungeoneering), Knowledge (history), Knowledge (planes), and Knowledge (religion) checks, and can attempt these checks untrained. This bonus doubles if the check is related to the Elder Mythos."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (arcana),Knowledge (dungeoneering),Knowledge (history),Knowledge (planes),Knowledge (religion)|2|TYPE=Profane"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|Additional +2 bonus on all Knowledge (arcana), Knowledge (dungeoneering), Knowledge (history), Knowledge (planes), and Knowledge (religion) checks, and can attempt these checks untrained."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 73,
+    "record_key": "Elder Mythos Cultist ~ Forbidden Knowledge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

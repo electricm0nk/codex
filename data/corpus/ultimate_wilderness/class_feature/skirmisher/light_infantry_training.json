@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skirmisher ~ Light Infantry Training",
+    "name": "Light Infantry Training",
+    "class": "Skirmisher",
+    "description": "A skirmisher fighting in a light infantry unit learns to avoid fire from enemy artillery, siege weapons, and spellcasters. He gains a bonus on Reflex saving throws against attacks that deal half damage on a successful save (such as the fireball spell) but not against traps, natural hazards, or environmental effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirmisher ~ Light Infantry Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkirmisherConditioningSpecialty.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A skirmisher fighting in a light infantry unit learns to avoid fire from enemy artillery, siege weapons, and spellcasters. He gains a bonus on Reflex saving throws against attacks that deal half damage on a successful save (such as the fireball spell) but not against traps, natural hazards, or environmental effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 Reflex vs. attacks that deal half damage on a successful save.|SkirmisherConditioningBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 585,
+    "record_key": "Skirmisher ~ Light Infantry Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

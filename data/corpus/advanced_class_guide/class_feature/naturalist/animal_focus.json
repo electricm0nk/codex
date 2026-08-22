@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Naturalist ~ Animal Focus",
+    "name": "Animal Focus",
+    "class": "Summoner",
+    "description": "As a swift action a naturalist can enhance his eidolon with the aspect of an animal. Each time he uses this ability, he can select a hunter's animal aspect and apply it to his eidolon. His hunter level for this ability is %1. He does not gain the ability to add an animal aspect to himself. This effect lasts until the eidolon is dismissed or sent back to its home plane. When an animal aspect is applied to an eidolon, its form is altered by superficial physical changes appropriate to that aspect. For example, using aspect of the bat might give the eidolon larger ears and eyes and perhaps membranes of skin connecting its limbs to its body, while using aspect of the stag might give the eidolon antlers and hoof like nails on its feat. None of these changes interfere with any of the eidolon's natural or magical abilities.|SummonerLVL-2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naturalist ~ Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Naturalist Class Feature.Summoner Class Feature.SpecialQuality.Supernatural.Animal Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action a naturalist can enhance his eidolon with the aspect of an animal. Each time he uses this ability, he can select a hunter's animal aspect and apply it to his eidolon. His hunter level for this ability is %1. He does not gain the ability to add an animal aspect to himself. This effect lasts until the eidolon is dismissed or sent back to its home plane. When an animal aspect is applied to an eidolon, its form is altered by superficial physical changes appropriate to that aspect. For example, using aspect of the bat might give the eidolon larger ears and eyes and perhaps membranes of skin connecting its limbs to its body, while using aspect of the stag might give the eidolon antlers and hoof like nails on its feat. None of these changes interfere with any of the eidolon's natural or magical abilities.|SummonerLVL-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3816,
+    "record_key": "Naturalist ~ Animal Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Beast-Bonded ~ Familiar Form",
+    "name": "Familiar Form",
+    "class": "Witch",
+    "description": "You may take the shape of your familiar (or a giant version of your familiar or a similar kind of animal) as if using beast shape II. For example, a witch with a rat familiar can turn into a Tiny rat, Small dire rat, or a larger rodent; one with a cat familiar can turn into a Tiny cat or a Large feline such as a tiger or lion; one with a monkey familiar can turn into a Tiny monkey or a Large gorilla, and so on. You can remain in animal form for %1 minutes per day.|FamiliarFormDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beast-Bonded ~ Familiar Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarFormDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may take the shape of your familiar (or a giant version of your familiar or a similar kind of animal) as if using beast shape II. For example, a witch with a rat familiar can turn into a Tiny rat, Small dire rat, or a larger rodent; one with a cat familiar can turn into a Tiny cat or a Large feline such as a tiger or lion; one with a monkey familiar can turn into a Tiny monkey or a Large gorilla, and so on. You can remain in animal form for %1 minutes per day.|FamiliarFormDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarFormDuration|classlevel(\"Witch\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1998,
+    "record_key": "Beast-Bonded ~ Familiar Form"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

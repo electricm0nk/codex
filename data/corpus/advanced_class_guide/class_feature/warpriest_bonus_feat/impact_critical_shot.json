@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Impact Critical Shot",
+    "name": "Impact Critical Shot",
+    "class": "Warpriest Bonus Feat",
+    "description": "With a series of ranged attacks, you bring your foes to their knees or force them to move.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Impact Critical Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Critical"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Point-Blank Shot"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "With a series of ranged attacks, you bring your foes to their knees or force them to move."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you score a critical hit with a ranged attack, in addition to the normal damage your attack deals, if your confirmation roll exceeds your opponent's CMD, you can push your opponent back as if from the bull rush combat maneuver or knock that target prone as if from a trip combat maneuver. If you choose to bull rush, you cannot move with the target. Your maneuver does not provoke an attack of opportunity. &nl; [Normal] You must perform a bull rush combat maneuver to bull rush an opponent, and you must perform a trip combat maneuver to trip an opponent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Impact Critical Shot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4463,
+    "record_key": "Warpriest Bonus Feat ~ Impact Critical Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

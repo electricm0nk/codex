@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deep Walker ~ One With The Stone",
+    "name": "One with the Stone",
+    "class": "Deep Walker",
+    "description": "At 17th level, a deep walker can use the Stealth skill while he is underground, even when being observed. This ability replaces hide in plain sight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Walker ~ One With The Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.RangerHideInPlainSight"
+      },
+      {
+        "key": "DESC",
+        "value": "At 17th level, a deep walker can use the Stealth skill while he is underground, even when being observed. This ability replaces hide in plain sight."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1531,
+    "record_key": "Deep Walker ~ One With The Stone"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

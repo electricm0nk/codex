@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dirge Bard ~ Haunting Refrain",
+    "name": "Haunting Refrain",
+    "class": "Bard",
+    "description": "You are able to stir primal terrors in the hearts of listeners. You can use a Perform (keyboard) or Perform (percussion) check in place of an Intimidate check to demoralize an opponent, with a +%1 bonus. In addition, saving throws against any fear effect you create are made with a -%2 penalty.|HauntingRefrainBonus|HauntingRefrainPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dirge Bard ~ Haunting Refrain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HauntingRefrainBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HauntingRefrainPenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to stir primal terrors in the hearts of listeners. You can use a Perform (keyboard) or Perform (percussion) check in place of an Intimidate check to demoralize an opponent, with a +%1 bonus. In addition, saving throws against any fear effect you create are made with a -%2 penalty.|HauntingRefrainBonus|HauntingRefrainPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntingRefrainBonus|classlevel(\"Bard\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntingRefrainPenalty|(classlevel(\"Bard\")+5)/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 971,
+    "record_key": "Dirge Bard ~ Haunting Refrain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

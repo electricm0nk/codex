@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Assassin ~ Angel of Death",
+    "name": "Angel of Death",
+    "class": "Assassin",
+    "description": "At 10th level, the assassin becomes a master of death. Once per day, when the assassin makes a successful death attack, he can cause the target's body to crumble to dust. This prevents raise dead and resurrection (although true resurrection works as normal). The assassin must declare the use of this ability before the attack is made. If the attack misses or the target successfully saves against the death attack, this ability is wasted with no effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Assassin ~ Angel of Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AssassinClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, the assassin becomes a master of death. Once per day, when the assassin makes a successful death attack, he can cause the target's body to crumble to dust. This prevents raise dead and resurrection (although true resurrection works as normal). The assassin must declare the use of this ability before the attack is made. If the attack misses or the target successfully saves against the death attack, this ability is wasted with no effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.380"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2953,
+    "record_key": "Assassin ~ Angel of Death"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

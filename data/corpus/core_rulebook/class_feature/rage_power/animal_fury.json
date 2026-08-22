@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Animal Fury",
+    "name": "Animal Fury",
+    "class": "Rage Power",
+    "description": "While raging, you gain a bite attack, If uses as a part of a full-attack action, the bite is made at your full base attack bonus-5. If the bite hits, it deals 1d%1+%2 points of damage. You can make a bite attack as part of the action to maintain or break free from a grapple. This attack is resolved before the grapple check is made. If the bite attack hits, any grapple checks you make against the target this round are at a +2 bonus.|if(SIZE==4,4,3)|floor(STR/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Animal Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, you gain a bite attack, If uses as a part of a full-attack action, the bite is made at your full base attack bonus-5. If the bite hits, it deals 1d%1+%2 points of damage. You can make a bite attack as part of the action to maintain or break free from a grapple. This attack is resolved before the grapple check is made. If the bite attack hits, any grapple checks you make against the target this round are at a +2 bonus.|if(SIZE==4,4,3)|floor(STR/2)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|TOHIT|-5|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 470,
+    "record_key": "Rage Power ~ Animal Fury"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

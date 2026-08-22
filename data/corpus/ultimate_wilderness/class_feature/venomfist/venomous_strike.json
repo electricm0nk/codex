@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Venomfist ~ Venomous Strike",
+    "name": "Venomous Strike",
+    "class": "Brawler",
+    "description": "A venomfist's unarmed strikes deal damage as a creature one size category smaller (1d4 at first level for Medium venomfists). If she hits with her first unarmed strike in a round, the target must succeed at a Fortitude saving throw (DC %1) or take an additional %2 points damage. The venomfist is immune to this toxin.|10+BrawlerLVL/2+CON|CON",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Venomfist ~ Venomous Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.VenomfistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A venomfist's unarmed strikes deal damage as a creature one size category smaller (1d4 at first level for Medium venomfists). If she hits with her first unarmed strike in a round, the target must succeed at a Fortitude saving throw (DC %1) or take an additional %2 points damage. The venomfist is immune to this toxin.|10+BrawlerLVL/2+CON|CON"
+      },
+      {
+        "key": "DESC",
+        "value": "A target that fails this save must succeed at a second saving throw 1 round later or take the same amount of damage again. This effect repeats as long as the target continues to fail its saving throws, to a maximum of %1 rounds. Unlike other poisons, multiple doses of a venomfist's poison never stack; the more recent poison effect replaces the older one.|1+BrawlerLVL/4|PRECLASS:1,Brawler=4"
+      },
+      {
+        "key": "DESC",
+        "value": "After the venomfist gets 8 hours of rest, she can choose a secondary effect for her venom to impose. She can choose fatigued, shaken, or sickened.|PRECLASS:1,Brawler=5|!PRECLASS:1,Brawler=10"
+      },
+      {
+        "key": "DESC",
+        "value": "After the venomfist gets 8 hours of rest, she can choose a secondary effect for her venom to impose. She can choose blinded, exhausted, fatigued, shaken, sickened, or staggered.|PRECLASS:1,Brawler=10"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that fails its saving throw against her venom also gains the chosen condition until it succeeds at a save against the venom or until the venom's duration ends. Once a creature succeeds at its save against the poison, it becomes immune to the secondary condition for 24 hours, but the attack still deals the extra damage.|PRECLASS:1,Brawler=5"
+      },
+      {
+        "key": "DESC",
+        "value": "When the venomfist chooses the condition her venom imposes, she can also cause her venom to deal ability score damage each round instead of hit point damage. She chooses Strength, Dexterity, or Constitution, and her venom deals 1d3 points of ability score damage each round.|PRECLASS:1,Brawler=10"
+      },
+      {
+        "key": "DESC",
+        "value": "At 16th level, the venomfist's venom is particularly potent. If it fails the initial save, the target must succeed at two consecutive saves before being cured of the venom, though if the first save is successful, the secondary effect ends and the creature is immune to the secondary effects of the venomfist's poison for 24 hours. In addition, the venomfist adds dazed and stunned to the list of secondary effects she can choose for her venom.|PRECLASS:1,Brawler=16"
+      },
+      {
+        "key": "DESC",
+        "value": "This is a poison effect. The venomfist can't suppress it, but she affects only those she damages with her unarmed strikes (not those she merely touches). This alters unarmed strike."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerUDAMAttackSize|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 407,
+    "record_key": "Venomfist ~ Venomous Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

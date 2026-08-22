@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Time Mystery ~ Time Hop",
+    "name": "Time Hop",
+    "class": "Time Mystery",
+    "description": "As a move action, you can teleport up to %1 feet per day. This teleportation must be used in 5-foot increments. This movement does not provoke attacks of opportunity. You must have line of sight to your destination to use this ability. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought.|TimeHopDistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Time Mystery ~ Time Hop"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.TimeRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TimeHopDistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can teleport up to %1 feet per day. This teleportation must be used in 5-foot increments. This movement does not provoke attacks of opportunity. You must have line of sight to your destination to use this ability. You can bring other willing creatures with you, but you must expend an equal amount of distance for each creature brought.|TimeHopDistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TimeHopDistance|10*classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 506,
+    "record_key": "Time Mystery ~ Time Hop"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

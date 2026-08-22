@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Empyreal Knight ~ Voices Of The Spheres",
+    "name": "Voices of the Spheres",
+    "class": "Empyreal Knight",
+    "description": "At 2nd level, an empyreal knight learns to speak and read Celestial, if she could not already. This ability replaces divine grace.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empyreal Knight ~ Voices Of The Spheres"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an empyreal knight learns to speak and read Celestial, if she could not already. This ability replaces divine grace."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1462,
+    "record_key": "Empyreal Knight ~ Voices Of The Spheres"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

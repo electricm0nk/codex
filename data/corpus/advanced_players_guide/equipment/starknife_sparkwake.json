@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Starknife (Sparkwake)",
     "category": "ArmsArmor",
-    "name": "Starknife, Sparkwake",
     "cost_gp": 19024.0,
-    "weight": 3.0,
-    "description": "A +1 shock starknife that leaves trails of sparks in flight; once per day it can transform into an 8d6 lightning bolt (Reflex DC 14 half) before returning to its physical form."
+    "description": "A +1 shock starknife that leaves trails of sparks in flight; once per day it can transform into an 8d6 lightning bolt (Reflex DC 14 half) before returning to its physical form.",
+    "key": "Starknife (Sparkwake)",
+    "name": "Starknife, Sparkwake",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Starknife, Sparkwake"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Starknife"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Martial.Specific.Piercing.BladeLight.Tengu"
+      },
+      {
+        "key": "COST",
+        "value": "19024"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day may transform into an 8d6 lightning bolt (Reflex DC 14 half )."
+      }
+    ],
+    "weight": 3.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Starknife (Sparkwake)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

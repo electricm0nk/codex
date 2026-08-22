@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Star Watcher",
+    "name": "Star Watcher",
+    "class": "Investigator Archetype",
+    "description": "Star watchers study the movements and positions of the sun, the moon, and the stars, searching for secrets written in the sky. They use a combination of scientific study and esoteric arts to measure, record, and predict astronomical cycles and their effects on nature, such as the moon's influence on tides and rivers. Some star watchers also use these observations to predict fate and significant events, such as natural disasters.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Star Watcher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Star Watcher],[!PREFACT:1,ABILITIES,Investigator_Archetype_Proficiencies=True,Investigator_Archetype_Alchemy=True,Investigator_Archetype_Trapfinding=True,Investigator_Archetype_TrapSense=True,Investigator_Archetype_SwiftAlchemy=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Star watchers study the movements and positions of the sun, the moon, and the stars, searching for secrets written in the sky. They use a combination of scientific study and esoteric arts to measure, record, and predict astronomical cycles and their effects on nature, such as the moon's influence on tides and rivers. Some star watchers also use these observations to predict fate and significant events, such as natural disasters."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Star Watcher ~ Weapon Proficiency|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Star Watcher ~ Astrology|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Star Watcher ~ Starfinding|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 733,
+    "record_key": "Investigator Archetype ~ Star Watcher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

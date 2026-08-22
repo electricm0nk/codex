@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vampire Hunter ~ Silversmith",
+    "name": "Silversmith",
+    "class": "Inquisitor",
+    "description": "A vampire hunter learns the secrets of crafting silver into dangerous weapons. She adds a +%1 bonus on any Craft or Spellcraft check made to create a silver item that bypasses DR/silver, such as alchemical silver, silversheen, or silver weapon blanch.|InquisitorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampire Hunter ~ Silversmith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.InquisitorDetectAlignment"
+      },
+      {
+        "key": "DESC",
+        "value": "A vampire hunter learns the secrets of crafting silver into dangerous weapons. She adds a +%1 bonus on any Craft or Spellcraft check made to create a silver item that bypasses DR/silver, such as alchemical silver, silversheen, or silver weapon blanch.|InquisitorLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Craft (Alchemy)=Silver,Craft (Weapons)=Silver,Spellcraft=Create silver item|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 271,
+    "record_key": "Vampire Hunter ~ Silversmith"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

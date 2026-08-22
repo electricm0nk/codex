@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Empiricist ~ Unfailing Logic",
+    "name": "Unfailing Logic",
+    "class": "Investigator",
+    "description": "An empiricist's grasp of facts and data teaches him to anchor himself in reality, granting resistance to even the most potent illusions. At 4th level, an empiricist gains a +2 insight bonus on all Will saving throws against illusion spells or spell-like abilities that allow a save to disbelieve their effects. In addition he can spend one point from his inspiration pool as an immediate action to use his Intelligence bonus instead of her Wisdom bonus on all such saves for one round. At 8th level, the empiricist's insight bonus increases to +4. At 16th level, he gains immunity to all illusion spells and spell-like abilities that allow a save to disbelieve the effects. This ability replaces swift alchemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empiricist ~ Unfailing Logic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Empiricist Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary.InvestigatorSwiftAlchemy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnfailingLogicBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An empiricist's grasp of facts and data teaches him to anchor himself in reality, granting resistance to even the most potent illusions. At 4th level, an empiricist gains a +2 insight bonus on all Will saving throws against illusion spells or spell-like abilities that allow a save to disbelieve their effects. In addition he can spend one point from his inspiration pool as an immediate action to use his Intelligence bonus instead of her Wisdom bonus on all such saves for one round. At 8th level, the empiricist's insight bonus increases to +4. At 16th level, he gains immunity to all illusion spells and spell-like abilities that allow a save to disbelieve the effects. This ability replaces swift alchemy."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnfailingLogicBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnfailingLogicBonus|2|PRECLASS:1,Investigator=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnfailingLogicBonus|2|PRECLASS:1,Investigator=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 insight bonus on all Will saving throws against illusion spells or spell-like abilities that allow a save to disbelieve their effects. Can spend one point from his inspiration pool as an immediate action to use his Intelligence bonus instead of her Wisdom bonus on all such saves for one round.|UnfailingLogicBonus|PREVARLT:UnfailingLogicBonus,6"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|immunity to all illusion spells and spell-like abilities that allow a save to disbelieve the effects.|PREVARGTEQ:UnfailingLogicBonus,6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3314,
+    "record_key": "Empiricist ~ Unfailing Logic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

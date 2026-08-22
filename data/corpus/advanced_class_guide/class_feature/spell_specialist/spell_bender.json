@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spell Specialist ~ Spell Bender",
+    "name": "Spell Bender",
+    "class": "Arcanist",
+    "description": "The spell specialist can bend the line of a spell that has a line area of effect up to 90 degrees at any single point along the line's length.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Specialist ~ Spell Bender"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Specialist Class Feature.Arcanist Class Feature.SpecialQuality.Supernatural.ArcanistExploit13"
+      },
+      {
+        "key": "DESC",
+        "value": "The spell specialist can bend the line of a spell that has a line area of effect up to 90 degrees at any single point along the line's length."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2641,
+    "record_key": "Spell Specialist ~ Spell Bender"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

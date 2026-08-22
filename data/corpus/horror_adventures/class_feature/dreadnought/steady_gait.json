@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dreadnought ~ Steady Gait",
+    "name": "Steady Gait",
+    "class": "Barbarian",
+    "description": "A dreadnought advances steadily, shrugging off attempts to slow her advance. The dreadnought gains a +%1 bonus on saving throws and to her CMD against effects that would slow or immobilize her.|DreadnoughtSteadyGait",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreadnought ~ Steady Gait"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.DreadnoughtClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DreadnoughtSteadyGait|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreadnought advances steadily, shrugging off attempts to slow her advance. The dreadnought gains a +%1 bonus on saving throws and to her CMD against effects that would slow or immobilize her.|DreadnoughtSteadyGait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DreadnoughtSteadyGait|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DreadnoughtSteadyGait|1|PREABILITY:1,CATEGORY=Special Ability,Barbarian ~ Greater Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DreadnoughtSteadyGait|1|PREABILITY:1,CATEGORY=Special Ability,Barbarian ~ Mighty Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 34,
+    "record_key": "Dreadnought ~ Steady Gait"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

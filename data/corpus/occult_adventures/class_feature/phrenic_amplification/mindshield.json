@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Mindshield",
+    "name": "Mindshield",
+    "class": "Phrenic Amplification",
+    "description": "The psychic can spend 1 point from her phrenic pool to give one target of the linked spell a +2 morale bonus on Will saves for 1 round per psychic level (maximum 10 rounds). The psychic can instead spend 2 points to increase the bonus to +4. If the linked spell affects more than one creature, the psychic can spend the same number of points for each additional creature she wants to affect with this amplification. She must choose to spend either 1 point for each creature or 2 points for each creature; she can't grant different bonuses to different targets.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Mindshield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The psychic can spend 1 point from her phrenic pool to give one target of the linked spell a +2 morale bonus on Will saves for 1 round per psychic level (maximum 10 rounds). The psychic can instead spend 2 points to increase the bonus to +4. If the linked spell affects more than one creature, the psychic can spend the same number of points for each additional creature she wants to affect with this amplification. She must choose to spend either 1 point for each creature or 2 points for each creature; she can't grant different bonuses to different targets."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1170,
+    "record_key": "Phrenic Amplification ~ Mindshield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

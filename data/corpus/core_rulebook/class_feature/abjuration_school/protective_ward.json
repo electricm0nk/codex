@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Abjuration School ~ Protective Ward",
+    "name": "Protective Ward",
+    "class": "Abjuration School",
+    "description": "As a standard action, you can create a 10-foot-radius field of protective magic centered on you that lasts %1 rounds. All allies in this area (including you) receive a +%2 deflection bonus to their AC. You can use this ability %3 times a day.|AbjurationProtectiveWardDuration|AbjurationProtectiveWardBonus|AbjurationProtectiveWardTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Abjuration School ~ Protective Ward"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1.Aura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationProtectiveWardTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationProtectiveWardDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationProtectiveWardBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a 10-foot-radius field of protective magic centered on you that lasts %1 rounds. All allies in this area (including you) receive a +%2 deflection bonus to their AC. You can use this ability %3 times a day.|AbjurationProtectiveWardDuration|AbjurationProtectiveWardBonus|AbjurationProtectiveWardTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationProtectiveWardTimes|ArcaneSchoolPowerTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationProtectiveWardDuration|INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationProtectiveWardBonus|(AbjurationSchoolLVL/5)+1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|AbjurationProtectiveWardBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AbjurationProtectiveWardTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2639,
+    "record_key": "Abjuration School ~ Protective Ward"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

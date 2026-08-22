@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Bloodline ~ Photosynthesis",
+    "name": "Photosynthesis",
+    "class": "Verdant Bloodline",
+    "description": "You feed upon nature's raw essence. Your need to eat and sleep is reduced as if wearing a ring of sustenance, and you gain a +%1 racial bonus on saving throws made against poison and sleep effects.|Sorcerer_VerdantPhotosynthesis_SaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Bloodline ~ Photosynthesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Verdant Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Verdant_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Verdant_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_VerdantPhotosynthesis_SaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You feed upon nature's raw essence. Your need to eat and sleep is reduced as if wearing a ring of sustenance, and you gain a +%1 racial bonus on saving throws made against poison and sleep effects.|Sorcerer_VerdantPhotosynthesis_SaveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_VerdantPhotosynthesis_SaveBonus|min(floor((Sorcerer_Verdant_BloodlinePower3LVL+3)/6),2)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. poison and sleep|Sorcerer_VerdantPhotosynthesis_SaveBonus|!PREABILITY:2,CATEGORY=Special Ability,Immunity to Poison,Immunity to Sleep"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|VerdantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3263,
+    "record_key": "Verdant Bloodline ~ Photosynthesis"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

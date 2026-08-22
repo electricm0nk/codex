@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Net Adept",
+    "name": "Net Adept",
+    "class": "Warpriest Bonus Feat",
+    "description": "You have trained to use the net as a melee weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Net Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:1],[PREVARGTEQ:WarpriestBonusFeatBAB,1]"
+      },
+      {
+        "key": "PREWEAPONPROF",
+        "value": "1,Net"
+      },
+      {
+        "key": "DESC",
+        "value": "You have trained to use the net as a melee weapon."
+      },
+      {
+        "key": "DESC",
+        "value": " You can treat a net as a one-handed melee reach weapon with a 10-foot reach. Further, you take no penalty on melee attack rolls for using an unfolded net, and you can use one full-round action or two move actions to fold a net. &nl; [Normal] A net is a ranged weapon that imposes a -4 penalty on ranged attack rolls if it is unfolded. Folding a net takes a proficient user 2 rounds."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Net Adept"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4496,
+    "record_key": "Warpriest Bonus Feat ~ Net Adept"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

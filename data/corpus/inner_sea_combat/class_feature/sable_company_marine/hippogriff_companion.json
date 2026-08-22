@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sable Company Marine ~ Hippogriff Companion",
+    "name": "Hippogriff Companion",
+    "class": "Ranger",
+    "description": "At 2nd level, a Sable Company marine adds Monstrous Mount (see page 14) to the list of bonus feats made available to him by his chosen combat style, regardless of the style chosen. He can only use this feat to select a hippogriff mount (see page 14). If he does so, he treats his ranger level- 1 as his effective druid level. A marine who takes this option does not gain the hunter's bond class feature at 4th level. At 6th level, a Sable Company marine adds Monstrous Mount Mastery (see page 14) to the list of available bonus feats granted by his chosen combat style. If he takes this feat as his 6th-level combat style bonus feat, note that he must wait until 8th level before he meets the effective druid level prerequisite to utilize his mount's mastery abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sable Company Marine ~ Hippogriff Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a Sable Company marine adds Monstrous Mount (see page 14) to the list of bonus feats made available to him by his chosen combat style, regardless of the style chosen. He can only use this feat to select a hippogriff mount (see page 14). If he does so, he treats his ranger level- 1 as his effective druid level. A marine who takes this option does not gain the hunter's bond class feature at 4th level. At 6th level, a Sable Company marine adds Monstrous Mount Mastery (see page 14) to the list of available bonus feats granted by his chosen combat style. If he takes this feat as his 6th-level combat style bonus feat, note that he must wait until 8th level before he meets the effective druid level prerequisite to utilize his mount's mastery abilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Hippogriff Companion Tracker|PREABILITY:1,CATEGORY=Special Ability,Ranger Combat Style Feat ~ Monstrous Mount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Monstrous_Mount|1|PREVARGTEQ:RangerLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ranger_Combat_Style_Feat_Monstrous_Mount_Mastery|1|PREVARGTEQ:RangerLVL,7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 182,
+    "record_key": "Sable Company Marine ~ Hippogriff Companion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

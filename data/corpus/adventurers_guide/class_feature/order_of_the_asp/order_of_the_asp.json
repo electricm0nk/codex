@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Asp",
+    "name": "Order of the Asp",
+    "class": null,
+    "description": "The cavalier gains a +%1 bonus on Knowledge (local) checks as long as the check involves her patrons or organization. She also reduces her armor check penalty when using Sleight of Hand by an amount equal to half her cavalier level (to a minimum of 0).|max(1,CavalierLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderChallengeBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier gains a +%1 bonus on Knowledge (local) checks as long as the check involves her patrons or organization. She also reduces her armor check penalty when using Sleight of Hand by an amount equal to half her cavalier level (to a minimum of 0).|max(1,CavalierLVL/2)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Asp ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Asp ~ Indiscriminate|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Asp ~ Command the Meek|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Asp ~ Better You Than Me|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderChallengeBonus|CavalierLVL/4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (local)|Sleight of Hand"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+%1 morale bonus on attack and damage rolls made against the target of the challenge so long as it is entangled, exhausted, fatigued, flanked, nauseated, prone, shaken, staggered, or denied its Dexterity bonus to AC.|1+OrderChallengeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1138,
+    "record_key": "Order of the Asp"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

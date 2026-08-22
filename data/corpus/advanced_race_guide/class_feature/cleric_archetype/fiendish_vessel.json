@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Fiendish Vessel",
+    "name": "Fiendish Vessel",
+    "class": "Cleric Archetype",
+    "description": "Many clerics pray to or make evil bargains with fiendish powers, devoting body and soul to the insane plans and wicked aims of their despicable patrons. But these mortal clerics are often just shallow beings searching for quick power or the caress of true and final oblivion-few truly grasp the full scope of the entities they worship. Fiendish vessels, through their fiendish heritage, share an innate connection with their patron, and that connection grants them understanding and power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Fiendish Vessel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericChannelEnergy1.ClericChannelEnergy2.ClericChannelEnergy3.ClericChannelEnergy4.ClericChannelEnergy5.ClericChannelEnergy6.ClericChannelEnergy7.ClericChannelEnergy8.ClericChannelEnergy9.ClericChannelEnergy10"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "Deity"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREDOMAIN",
+        "value": "1,Daemon Subdomain,Demon Subdomain (Evil),Demon Subdomain (Chaos),Devil Subdomain (Evil),Devil Subdomian (Law)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Fiendish Vessel],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericChannelEnergy1,TYPE.ClericChannelEnergy2,TYPE.ClericChannelEnergy3,TYPE.ClericChannelEnergy4,TYPE.ClericChannelEnergy5,TYPE.ClericChannelEnergy6,TYPE.ClericChannelEnergy7,TYPE.ClericChannelEnergy8,TYPE.ClericChannelEnergy9,TYPE.ClericChannelEnergy10]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsTiefling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Many clerics pray to or make evil bargains with fiendish powers, devoting body and soul to the insane plans and wicked aims of their despicable patrons. But these mortal clerics are often just shallow beings searching for quick power or the caress of true and final oblivion-few truly grasp the full scope of the entities they worship. Fiendish vessels, through their fiendish heritage, share an innate connection with their patron, and that connection grants them understanding and power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Alignment|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Domains|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Channel Evil|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Fiendish Familiar|PRECLASS:1,Cleric=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Fiendish Augury|PRECLASS:1,Cleric=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Fiendish Divination|PRECLASS:1,Cleric=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Extra Divination|PRECLASS:1,Cleric=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiendish Vessel ~ Fiendish Summoning|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cleric"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 786,
+    "record_key": "Cleric Archetype ~ Fiendish Vessel"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

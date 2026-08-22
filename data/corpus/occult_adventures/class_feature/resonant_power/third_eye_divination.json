@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Resonant Power ~ Third Eye",
+    "name": "Third Eye [Divination]",
+    "class": "Resonant Power",
+    "description": "The implement allows its bearer to notice that which can't easily be seen. The implement grants a +1 insight bonus on Perception checks (+%1) per 2 points of mental focus stored in it, to a maximum bonus equal to +%2.|OccultistThirdEye|OccultistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Resonant Power ~ Third Eye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Resonant Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistThirdEye|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The implement allows its bearer to notice that which can't easily be seen. The implement grants a +1 insight bonus on Perception checks (+%1) per 2 points of mental focus stored in it, to a maximum bonus equal to +%2.|OccultistThirdEye|OccultistLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|OccultistThirdEye|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistThirdEye|min(OccultistDivinationFocus/2,OccultistLVL)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1043,
+    "record_key": "Resonant Power ~ Third Eye"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

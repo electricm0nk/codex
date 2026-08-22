@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Redeemer",
+    "name": "Redeemer",
+    "class": "Paladin Archetype",
+    "description": "As most half-orcs are outcasts, a half-orc paladin recognizes that often those who are monstrous are not necessarily evil and that sometimes even those who are evil became that way because of circumstances and misfortune. Some half-orc paladins take up these misunderstood creatures as their cause, standing up for the monstrous creatures and, when possible, leading them to the light. These paladins are called redeemers. A redeemer has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Redeemer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinSmiteEvil.PaladinDetectEvil.PaladinAuraOfResolve.PaladinAuraOfJustice"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Redeemer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinDetectEvil,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfJustice]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfOrc=true"
+      },
+      {
+        "key": "DESC",
+        "value": "As most half-orcs are outcasts, a half-orc paladin recognizes that often those who are monstrous are not necessarily evil and that sometimes even those who are evil became that way because of circumstances and misfortune. Some half-orc paladins take up these misunderstood creatures as their cause, standing up for the monstrous creatures and, when possible, leading them to the light. These paladins are called redeemers. A redeemer has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Redeemer ~ Merciful Smite|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Redeemer ~ Monstrous Rapport|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Redeemer ~ Pact of Peace|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Redeemer ~ Aura of Mercy|PRECLASS:1,Paladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Redeemer ~ Associates|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 247,
+    "record_key": "Paladin Archetype ~ Redeemer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

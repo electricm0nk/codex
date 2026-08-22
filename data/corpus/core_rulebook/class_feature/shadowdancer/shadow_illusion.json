@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shadowdancer ~ Shadow Illusion",
+    "name": "Shadow Illusion",
+    "class": "Shadowdancer",
+    "description": "When a shadowdancer reaches 3rd level, she can create visual illusions. This ability functions as silent image, using the shadowdancer's level as the caster level. A shadowdancer can use this ability once per day for every two shadowdancer levels she has attained. The DC for this ability is Charisma-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowdancer ~ Shadow Illusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShadowdancerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowIllusionLVL|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Class|TIMES=1|CASTERLEVEL=ShadowIllusionLVL|Silent Image,11+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "When a shadowdancer reaches 3rd level, she can create visual illusions. This ability functions as silent image, using the shadowdancer's level as the caster level. A shadowdancer can use this ability once per day for every two shadowdancer levels she has attained. The DC for this ability is Charisma-based."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowIllusionLVL|ShadowdancerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.392"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3069,
+    "record_key": "Shadowdancer ~ Shadow Illusion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

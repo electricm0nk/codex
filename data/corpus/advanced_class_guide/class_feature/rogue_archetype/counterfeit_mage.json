@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ Counterfeit Mage",
+    "name": "Counterfeit Mage",
+    "class": "Rogue Archetype",
+    "description": "Charlatans and stage magicians use slight of hand to fake magic. A counterfeit mage goes a step further, parroting the motions and activation phrases used by arcane casters to activate wands or other magical accoutrements. While counterfeit mages rarely fool a real wizard, their command of the arcane is enough to convince most lay people.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Counterfeit Mage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype.RogueTrapfinding.RogueTalent4"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRECLASS:1,Rogue=1],[PREFACT:1,ABILITIES,ActAsClass_Rogue=true]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Counterfeit Mage],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTalent4]"
+      },
+      {
+        "key": "DESC",
+        "value": "Charlatans and stage magicians use slight of hand to fake magic. A counterfeit mage goes a step further, parroting the motions and activation phrases used by arcane casters to activate wands or other magical accoutrements. While counterfeit mages rarely fool a real wizard, their command of the arcane is enough to convince most lay people."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Counterfeit Mage ~ Magical Expertise|PREVARGTEQ:Rogue_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Counterfeit Mage ~ Signature Wand|PREVARGTEQ:Rogue_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Counterfeit Mage ~ Wand Adept|PREVARGTEQ:Rogue_CFP_Level,6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Rogue"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3558,
+    "record_key": "Rogue Archetype ~ Counterfeit Mage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

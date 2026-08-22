@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fractured Mind ~ Emotional Power",
+    "name": "Emotional Power",
+    "class": "Spiritualist",
+    "description": "[not implemented]The fractured mind gains a number of spell-like abilities, which are tied to her phantom's emotional focus. She gains one spell-like ability at 5th level, a second at 7th level, a third at 9th level, and a fourth at 16th level. A fractured mind can use each of these abilities once per day, plus one additional time per day for every 4 spiritualist levels she possesses beyond the level at which she gained the spell-like ability. The saving throw DCs for these spell-like abilities are equal to 10 + 1/2 the fractured mind's spiritualist class level + the fractured mind's Charisma modifier, rather than being based on the spell's level. The spell-like abilities granted by each emotional focus are listed below.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fractured Mind ~ Emotional Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fractured Mind Class Feature.Spiritualist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented]The fractured mind gains a number of spell-like abilities, which are tied to her phantom's emotional focus. She gains one spell-like ability at 5th level, a second at 7th level, a third at 9th level, and a fourth at 16th level. A fractured mind can use each of these abilities once per day, plus one additional time per day for every 4 spiritualist levels she possesses beyond the level at which she gained the spell-like ability. The saving throw DCs for these spell-like abilities are equal to 10 + 1/2 the fractured mind's spiritualist class level + the fractured mind's Charisma modifier, rather than being based on the spell's level. The spell-like abilities granted by each emotional focus are listed below."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Anger: Enlarge person (5th), rage (7th), longstrider (9th), shout (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Dedication: Command (5th), spiritual weapon (7th), bless (9th), death ward (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Despair: BungleUM (5th), stricken heartACG (7th), doom (9th), crushing despair (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Fear: Bane (5th), mad hallucinationUM (7th), doom (9th), phantasmal killer (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Hatred: Doom (5th), inflict moderate wounds (7th), bane (9th), bestow curse (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Jealousy: Sanctuary (5th), resist energy (7th), entropic shield (9th), spell immunity (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Zeal: Bless (5th), spiritual weapon (7th), divine favor (9th), freedom of movement (16th)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;This ability replaces detect undead, calm spirit, see invisibility, and call spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1624,
+    "record_key": "Fractured Mind ~ Emotional Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

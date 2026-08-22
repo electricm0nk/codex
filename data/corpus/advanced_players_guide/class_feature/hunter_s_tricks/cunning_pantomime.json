@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter's Tricks ~ Cunning Pantomime",
+    "name": "Cunning Pantomime",
+    "class": "Hunter's Tricks",
+    "description": "As a standard action, the ranger can communicate with a single creature as if using the tongues spell for 10 minutes. Because the communication is slow and lacks subtlety, the ranger suffers a -4 penalty on all Bluff and Diplomacy checks relating to the creature he is communicating with when using this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter's Tricks ~ Cunning Pantomime"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the ranger can communicate with a single creature as if using the tongues spell for 10 minutes. Because the communication is slow and lacks subtlety, the ranger suffers a -4 penalty on all Bluff and Diplomacy checks relating to the creature he is communicating with when using this trick."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Hunter's Trick"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2847,
+    "record_key": "Hunter's Tricks ~ Cunning Pantomime"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Vomit Swarm",
-    "school": "Conjuration",
-    "level": 2,
     "description": "You vomit forth a swarm of spiders (Bestiary, page 258) that attacks all other creatures within its area. The swarm begins adjacent to you, but if no living creatures are within its area, it moves in one direction of your choosing at its normal speed.  You can move the swarm or change the swarm's direction by spending a standard action to concentrate on the swarm, otherwise it continues moving in its current direction. If your caster level is at least 7th, you can vomit forth a swarm of wasps instead (Bestiary 275). Finally, if your caster level is at least 13th, you can vomit forth a swarm of army ants (Bestiary 16).",
-    "full_text": true
+    "full_text": true,
+    "key": "Vomit Swarm",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Witch=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "Produces a spider swarm that fights for you.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You vomit forth a swarm of spiders (Bestiary, page 258) that attacks all other creatures within its area. The swarm begins adjacent to you, but if no living creatures are within its area, it moves in one direction of your choosing at its normal speed.  You can move the swarm or change the swarm's direction by spending a standard action to concentrate on the swarm, otherwise it continues moving in its current direction. If your caster level is at least 7th, you can vomit forth a swarm of wasps instead (Bestiary 275). Finally, if your caster level is at least 13th, you can vomit forth a swarm of army ants (Bestiary 16).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/vomitSwarm.html#_vomit-swarm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Summoning"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one swarm of spiders"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 263,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2110,
-    "record_key": "Vomit Swarm"
+    "record_key": "Vomit Swarm",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

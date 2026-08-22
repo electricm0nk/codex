@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "9",
@@ -22,6 +20,112 @@
     ],
     "race_subtype": null,
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Diehard|Endurance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability|Hold Breath|Light Sensitivity"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|28"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|11|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,STR/2)"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:8"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,3d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Cockroach"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      }
+    ],
     "size": "G",
     "source_page": "p.58",
     "speeds": [
@@ -39,16 +143,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 184,
-    "record_key": "Cockroach (Sawback)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 184,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Cockroach (Sawback)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

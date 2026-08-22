@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maverick ~ Stacked Deck",
+    "name": "Stacked Deck",
+    "class": "Gunslinger",
+    "description": "The maverick can spend 1 grit point when she attempts a Bluff, Profession (gambler), or Sleight of Hand check to roll 1d6 and add the result to the check. She can do this after she rolls the check but before the result is revealed. If the result of the d6 roll is a natural 6, she rolls another 1d6 and adds it to the check. She can continue to do this as long as she rolls natural 6s, up to %1 times.|max(1,WIS)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maverick ~ Stacked Deck"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeedsLVL1.DeedHasCost.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The maverick can spend 1 grit point when she attempts a Bluff, Profession (gambler), or Sleight of Hand check to roll 1d6 and add the result to the check. She can do this after she rolls the check but before the result is revealed. If the result of the d6 roll is a natural 6, she rolls another 1d6 and adds it to the check. She can continue to do this as long as she rolls natural 6s, up to %1 times.|max(1,WIS)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 380,
+    "record_key": "Maverick ~ Stacked Deck"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

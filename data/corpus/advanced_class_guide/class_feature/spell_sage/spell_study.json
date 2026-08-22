@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spell Sage ~ Spell Study",
+    "name": "Spell Study",
+    "class": "Wizard",
+    "description": "At 2nd level, the sage's understanding of the spells of bards, clerics, and druids is so great that he can use his own magic in an inefficient, roundabout way to duplicate those classes' spells. Once per day, a spell sage can spontaneously cast any spell on the bard, cleric, or druid spell list as if it were a wizard spell he knew and had prepared. Casting the spell requires the spell sage to spend 1 full round per spell level of the desired spell (if the spell is on multiple spell lists indicated above, using the lowest level from among those lists) and requires expending two prepared spells of that spell level or higher; if the spell's casting time is normally 1 full round or longer, this is added to the spell sage's casting time. For example, if a spell sage wants to use spell study to cast cure light wounds (cleric spell level 1st), he must spend 2 full rounds casting and expend two prepared wizard spells of 1st level or higher. At 6th level and every 5 levels thereafter, a spell sage can use this ability an additional time per day (to a maximum of four times per day at 16th level). This ability replaces arcane school.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spell Sage ~ Spell Study"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Sage Class Feature.Wizard Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, the sage's understanding of the spells of bards, clerics, and druids is so great that he can use his own magic in an inefficient, roundabout way to duplicate those classes' spells. Once per day, a spell sage can spontaneously cast any spell on the bard, cleric, or druid spell list as if it were a wizard spell he knew and had prepared. Casting the spell requires the spell sage to spend 1 full round per spell level of the desired spell (if the spell is on multiple spell lists indicated above, using the lowest level from among those lists) and requires expending two prepared spells of that spell level or higher; if the spell's casting time is normally 1 full round or longer, this is added to the spell sage's casting time. For example, if a spell sage wants to use spell study to cast cure light wounds (cleric spell level 1st), he must spend 2 full rounds casting and expend two prepared wizard spells of 1st level or higher. At 6th level and every 5 levels thereafter, a spell sage can use this ability an additional time per day (to a maximum of four times per day at 16th level). This ability replaces arcane school."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4056,
+    "record_key": "Spell Sage ~ Spell Study"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brazen Disciple ~ Confounding Koan",
+    "name": "Confounding Koan",
+    "class": "Monk",
+    "description": "A brazen disciple can spend 2 ki points as a standard action to confuse a target within 30 feet with a riddle or paradox. This ability functions as per confusion, except that it is language-dependent. The DC is %1, and the caster level is equal to his class level.|10+MonkLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brazen Disciple ~ Confounding Koan"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.BrazenDiscipleClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "DESC",
+        "value": "A brazen disciple can spend 2 ki points as a standard action to confuse a target within 30 feet with a riddle or paradox. This ability functions as per confusion, except that it is language-dependent. The DC is %1, and the caster level is equal to his class level.|10+MonkLVL/2+WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 931,
+    "record_key": "Brazen Disciple ~ Confounding Koan"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Vision of Madness",
+    "name": "Vision of Madness",
+    "class": "Domain Power",
+    "description": "You can give a creature a vision of madness as a melee touch attack. Choose one of the following; attack rolls, saving throws, or skill checks. The target receives a +%1 bonus to the chosen rolls and a -%1 penalty to the other two types of rolls. This effect fades after 3 rounds. You can use this ability %2 times per day.|max(DomainMadnessLVL/2,1)|VisionofMadnessTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Vision of Madness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower.Madness Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VisionofMadnessTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can give a creature a vision of madness as a melee touch attack. Choose one of the following; attack rolls, saving throws, or skill checks. The target receives a +%1 bonus to the chosen rolls and a -%1 penalty to the other two types of rolls. This effect fades after 3 rounds. You can use this ability %2 times per day.|max(DomainMadnessLVL/2,1)|VisionofMadnessTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VisionofMadnessTimes|DomainMadnessTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|VisionofMadnessTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|VisionofMadnessTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 725,
+    "record_key": "Domain Power ~ Vision of Madness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

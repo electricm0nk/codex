@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Life Savant Subschool ~ Healing Grace",
+    "name": "Healing Grace",
+    "class": "Life Savant Subschool",
+    "description": "Whenever you cast a spell that has targets, affects creatures in an area, or requires an attack roll, you may heal creatures affected by the spell a total of %1 points of damage per level of the spell. This healing may be spread out between the targets of the spell in any way you choose. If you assign any of the healing to an undead creature, it instead takes 1 point of damage for each point assigned.  This healing occurs when the spell is cast and has no effect on creatures that enter its area after the spell is in place.|HealingGracePoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Savant Subschool ~ Healing Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HealingGracePoints|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell that has targets, affects creatures in an area, or requires an attack roll, you may heal creatures affected by the spell a total of %1 points of damage per level of the spell. This healing may be spread out between the targets of the spell in any way you choose. If you assign any of the healing to an undead creature, it instead takes 1 point of damage for each point assigned.  This healing occurs when the spell is cast and has no effect on creatures that enter its area after the spell is in place.|HealingGracePoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HealingGracePoints|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HealingGracePoints|1|PREVARGTEQ:ArcanistSavantSchoolLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HealingGracePoints|1|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2598,
+    "record_key": "Life Savant Subschool ~ Healing Grace"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -978,18 +978,35 @@ mod tests {
     /// `race_resolver::every_alternate_the_app_offers_is_one_the_engine_can_place`
     /// so the two halves cannot separate again.
     #[test]
-    fn every_alternate_from_every_race_corpus_book_reaches_the_menu_across_all_eighteen_in_scope_races() {
+    fn every_alternate_from_every_race_corpus_book_reaches_the_menu_across_every_in_scope_race() {
         let menu = menu();
-        assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
+        assert_eq!(
+            menu.races.len(),
+            38,
+            "38 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+             Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1 + \
+             SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16: Catfolk, Kitsune, \
+             Ratfolk, Strix, Suli, Wayang) + SD31-E6-F4-004's Advanced Race Guide follow-on \
+             batch of 4 (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya) + SD31-E6-F4-007's \
+             Advanced Race Guide follow-on batch of 2 (2026-08-17: Changeling, Samsaran -- \
+             closing `arg_races.lst`'s full 37-row playable-race roster) + SD-31 wave-24's \
+             Rougarou (Bestiary 6, 2026-08-20, chassis + 8 standard-tier traits, no ARG \
+             alternate-trait content)"
+        );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 282,
+            total, 357,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
              race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
              + Horror Adventures' 41 (§47, round 3) \
              + Core Essentials' 16 heritages (§49, round 4; the book's other 48 records \
-             are the replacement rows those heritages grant and are never menu rows)"
+             are the replacement rows those heritages grant and are never menu rows) \
+             + SD-31 Epic 1-F2's Bestiary 2 batch of 48 (ARG's 42 + Inner Sea Races' 6, \
+             2026-08-15) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's \
+             real alternate-trait rows, minus Strix's Wing-Clipped-granted Flight and Suli's \
+             Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield) + SD31-E6-F4-006's 8 \
+             (2026-08-17, ARG's own follow-on 4-race chassis batch's real alternate-trait rows)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -1016,29 +1033,61 @@ mod tests {
         // one race at a time instead of only in the total.
         let expected: &[(&str, usize)] = &[
             ("Aasimar", 17),    // ARG 9 + ISR 2 + CE 6 (heritages)
+            ("Catfolk", 6),     // ARG 6 (SD-31-E6-F4-003, 2026-08-16)
             ("Drow", 7),        // ARG 6 + ISR 1
             ("Duergar", 8),     // ARG 5 + MC 2 + ISR 1
             ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
             ("Elf", 27),        // ARG 13 + ISR 7 + HA 7 (ISR 8 until 2026-08-12: `Elf ~
             // Sovyrian-Born` carries `NAMEISPI:YES` and is dropped, `decisions.md` 53)
+            ("Fetchling", 6),   // ARG 5 + ISR 1 (SD-31 Epic 1-F2, 2026-08-15)
+            // Gillman's real ARG total is 3, but `Throwback` grants both
+            // `Throwback ~ Gillman ~ Type` and `Throwback ~ Gillman ~ Speed`
+            // (`TraitRole::FlagGranted`), so all 3 alternates ARE selectable
+            // menu rows -- unlike Strix/Suli, Throwback's own grants are not
+            // themselves alternates, so nothing is subtracted here.
+            ("Gillman", 3),     // ARG 3 (SD31-E6-F4-006, 2026-08-17)
             ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
             ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
+            ("Grippli", 5),     // ARG 4 + ISR 1 (SD-31 Epic 1-F2)
             ("HalfElf", 20),    // ARG 9 + ISR 7 + HA 4
             ("HalfOrc", 28),    // ARG 14 + APG 1 + ISR 7 + HA 6
             ("Halfling", 27),   // ARG 13 + ISR 7 + HA 7
             ("Hobgoblin", 10),  // ARG 9 + ISR 1
             ("Human", 33),      // ARG 15 + ISR 12 + HA 6
+            ("Ifrit", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
+            ("Kitsune", 2),     // ARG 2 (SD-31-E6-F4-003, 2026-08-16)
             ("Kobold", 5),      // ARG 4 + ISR 1
             ("Merfolk", 4),     // ARG 3 + ISR 1
+            ("Nagaji", 1),      // ARG 1 (SD31-E6-F4-006, 2026-08-17)
+            ("Oread", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Orc", 5),         // ARG 4 + ISR 1
+            ("Ratfolk", 4),     // ARG 4 (SD-31-E6-F4-003, 2026-08-16)
+            // Strix's real ARG total is 6, but `Wing-Clipped` grants
+            // `Wing-Clipped ~ Strix ~ Flight` (`TraitRole::FlagGranted`), so
+            // only 5 are menu rows -- the same shape `Dwarf ~ Saltbeard`
+            // already sets for `Saltbeard ~ Dwarf ~ Greed`.
+            ("Strix", 5),       // ARG 5 selectable + 1 FlagGranted (SD-31-E6-F4-003)
+            // Suli's real ARG total is 5, but `Energy Strike` grants all 4 of
+            // `Earthfoot`/`Firehand`/`Icewalk`/`Shockshield`
+            // (`TraitRole::FlagGranted`), so only 1 is a menu row.
+            ("Suli", 1),        // ARG 1 selectable + 4 FlagGranted (SD-31-E6-F4-003)
             ("Svirfneblin", 3), // ARG 2 + ISR 1
+            ("Sylph", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Tengu", 5),       // ARG 4 + ISR 1
             ("Tiefling", 20),   // ARG 7 + ISR 3 + CE 10 (heritages)
+            ("Undine", 10),     // ARG 9 + ISR 1 (SD-31 Epic 1-F2)
+            // Vanara's real ARG total is 2, and `Tree Stranger` grants
+            // `Tree Stranger ~ Vanara ~ Speed` (`TraitRole::FlagGranted`),
+            // but that grant is not itself an alternate so nothing is
+            // subtracted -- both 2 alternates ARE selectable menu rows.
+            ("Vanara", 2),      // ARG 2 (SD31-E6-F4-006, 2026-08-17)
+            ("Vishkanya", 2),   // ARG 2 (SD31-E6-F4-006, 2026-08-17)
+            ("Wayang", 1),      // ARG 1 (SD-31-E6-F4-003, 2026-08-16)
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 282);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 357);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1265,9 +1314,12 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 282,
+            checked, 357,
             "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
-             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49)"
+             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
+             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
+             19 SD-31-E6-F4-003 (2026-08-16, ARG's own 6-race chassis batch) + 8 \
+             SD31-E6-F4-006 (2026-08-17, ARG's own follow-on 4-race chassis batch)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
@@ -1792,9 +1844,53 @@ mod tests {
         // *menu rows*, so the book's other 48 records are correctly absent
         // here while being fully present in `reach_gate`'s claim, which reads
         // what each selection grants as well as what it offers.
-        assert_eq!((standard, alternates), (173, 282));
+        // SD-31 Epic 1-F2 (2026-08-15) added Bestiary 2's 6-race batch: 57
+        // more `TraitRole::Default` standard rows (173 -> 230) and 48 more
+        // alternates via ARG/ISR (282 -> 330), the same "no race/ chassis
+        // moves it" shape APG/HA/CE already established does not apply here
+        // -- this batch DOES add a `race/` chassis (6 new ones), which is
+        // exactly why `standard` moves this time and did not for those books.
+        // The Skinwalker follow-on batch (2026-08-15) adds 1 more race/
+        // chassis and 9 more standard rows (230 -> 239); `alternates` is
+        // unchanged (330) -- this batch does not ingest Skinwalker's
+        // heritage-shaped alternates.
+        // SD-31-E6-F4-002 (2026-08-16) adds Advanced Race Guide's own
+        // 6-race batch (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang): 6
+        // more race/ chassis and 58 more standard rows (239 -> 297).
+        // `alternates` is unchanged (330) at that point -- that batch did not
+        // ingest any alternate-trait content for these 6 races yet.
+        // SD-31-E6-F4-003 (2026-08-16) closes that gap: `ingest_race_traits.rs`
+        // now carries the same 6 races, and their real ARG alternate-trait
+        // rows land -- 19 more menu rows (330 -> 349; `standard` unmoved,
+        // this cycle wrote no chassis/standard-tier content).
+        // SD31-E6-F4-004 (2026-08-17) adds 4 more of ARG's own races
+        // (Gillman, Nagaji, Vanara, Vishkanya): 4 more race/ chassis and 38
+        // more standard rows (297 -> 335). `alternates` is unchanged (349)
+        // -- this batch does not ingest alternate-trait content for these
+        // 4 races (see `ingest_races.rs`'s `IN_SCOPE_RACES` doc comment for
+        // why Changeling and Samsaran are not part of this batch either).
+        // SD31-E6-F4-006 (2026-08-17) closes that gap the same way
+        // SD-31-E6-F4-003 closed it for the prior 6-race batch:
+        // `ingest_race_traits.rs` now carries the same 4 races, and their
+        // real ARG alternate-trait rows land -- 8 more menu rows
+        // (349 -> 357; `standard` unmoved, this cycle wrote no
+        // chassis/standard-tier content).
+        // SD31-E6-F4-007 (2026-08-17) adds the last 2 of ARG's own races
+        // (Changeling, Samsaran), closing `arg_races.lst`'s full 37-row
+        // playable-race roster: 2 more `race`/ chassis and 18 more standard
+        // rows (335 -> 353). `alternates` is unchanged (357) -- neither
+        // race has any ARG alternate-trait content to ingest (re-derived:
+        // `grep -c '^Changeling ~\|^Samsaran ~'
+        // advanced_race_guide/arg_abilities_race.lst` -> 0).
+        // SD-31 wave-24 (2026-08-20) adds Rougarou (Bestiary 6): 1 more
+        // `race`/ chassis and 8 more standard rows (353 -> 361).
+        // `alternates` is unchanged (357) -- Rougarou has no
+        // heritage/alternate-trait content in the pinned oracle at all
+        // (confirmed: no `*_subrace.lst` file, no `Rougarou_Replace*` flag
+        // ever set to `True` anywhere in the corpus).
+        assert_eq!((standard, alternates), (361, 357));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 455);
+        assert_eq!(checked, 718);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.
@@ -1817,7 +1913,19 @@ mod tests {
         // absent. Rendering restores them for every player, character or not.
         assert_eq!(
             changed,
-            vec!["Oversized Goblin", "Halfling ~ Adaptable Luck"],
+            vec![
+                "Oversized Goblin",
+                "Halfling ~ Adaptable Luck",
+                // SD31-E6-F4-006 (2026-08-17): `Nagaji ~ Hypnotic Gaze`'s
+                // `DESC:` carries two args (`Nagaji_RacialCasterlevel` and
+                // `11+Nagaji_RacialCastingMod`) the ingest could not resolve
+                // to a same-row literal, the identical shape `Adaptable
+                // Luck`/`Nereid Fascination` already establish -- dropped at
+                // ingest time, restored by rendering.
+                "Nagaji ~ Hypnotic Gaze",
+                "Suli ~ Energy Strike",
+                "Undine ~ Nereid Fascination"
+            ],
             "the records whose rendered prose differs from the ingest-time collapse"
         );
 
@@ -1833,6 +1941,30 @@ mod tests {
         let luck = &by_key_all(corpus, "Halfling", "Halfling ~ Adaptable Luck");
         assert!(luck.contains("they gain the full +2 bonus"), "{luck}");
         assert!(luck.contains("they only gain a +1 bonus"), "{luck}");
+        // SD-31 Epic 1-F2's third: the same `&nl;` entity shape as
+        // `Oversized Goblin`, not a new defect class -- `Undine ~ Nereid
+        // Fascination`'s corpus DESC also carries a literal `&nl;`, which
+        // this record's stored `data.description` (written by
+        // `ingest_races.rs`, which has no entity table) holds verbatim and
+        // this renderer decodes to a real newline.
+        let nereid = by_key_all(corpus, "Undine", "Undine ~ Nereid Fascination");
+        assert!(!nereid.contains("&nl;"), "rendered prose still carries a PCGen entity: {nereid}");
+        assert!(nereid.contains("This is a supernatural ability."), "{nereid}");
+        // SD-31-E6-F4-003's addition: `Suli ~ Energy Strike`'s corpus DESC
+        // carries the identical `&nl;` entity shape (a genuine second-segment
+        // `DESC:` continuation, PCGen's own encoding), and its stored
+        // `data.description` (written by `ingest_race_traits.rs`, which
+        // renders the row's leading substitution but has no entity table)
+        // holds it verbatim.
+        let energy_strike = by_key_all(corpus, "Suli", "Suli ~ Energy Strike");
+        assert!(
+            !energy_strike.contains("&nl;"),
+            "rendered prose still carries a PCGen entity: {energy_strike}"
+        );
+        assert!(
+            energy_strike.contains("Once per day as a swift action, a suli can shroud her arms"),
+            "{energy_strike}"
+        );
         // Reported rather than pinned: widening what the engine can resolve
         // must not fail here, and neither must a record quietly guessing.
         println!("trait rows still reporting an unresolved DESC argument: {dropping}");

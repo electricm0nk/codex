@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ki Mystic ~ Mystic Visions",
+    "name": "Mystic Visions",
+    "class": "Monk",
+    "description": "At 11th level, a ki mystic may receive mystic visions when he rests. These visions can come as a dream, an epiphany, or even as the voice of an old friend whispering in the monk's mind. The effect is similar to a divination spell with a caster level equal to the monk's level. The divination has no casting time; it is just part of the normal dreams or visions that occur every night. Using this ability costs 2 ki points that are removed from the next day's total. This ability replaces diamond body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ki Mystic ~ Mystic Visions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkDiamondBody"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a ki mystic may receive mystic visions when he rests. These visions can come as a dream, an epiphany, or even as the voice of an old friend whispering in the monk's mind. The effect is similar to a divination spell with a caster level equal to the monk's level. The divination has no casting time; it is just part of the normal dreams or visions that occur every night. Using this ability costs 2 ki points that are removed from the next day's total. This ability replaces diamond body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2322,
+    "record_key": "Ki Mystic ~ Mystic Visions"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

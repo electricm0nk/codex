@@ -63,6 +63,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceCacheData, RaceTraitCacheData, RawBonusChain,
     RawToken,
@@ -96,8 +97,38 @@ struct RaceSpec {
     book: &'static str,
 }
 
-/// The 18 races whose true source book is already ingested
-/// (`decisions.md §25.3`). Core Rulebook's 7 and Bestiary 1's 11.
+/// The 25 races whose true source book is registered in this project
+/// (`decisions.md §25.3`'s original 18 -- Core Rulebook's 7 and Bestiary 1's
+/// 11 -- plus SD-31 Epic 1's Bestiary 2 batch of 6 standard, non-heritage
+/// races, plus this follow-on batch's Skinwalker).
+///
+/// **SD-31 Epic 1-F2 (2026-08-15) widened this from 18 to 24; a same-day
+/// follow-on batch widened it again to 25 (Skinwalker, chassis + standard
+/// tier only -- see the `skinwalker` entry's own comment below for why its
+/// heritage rows are excluded).** The original
+/// doc comment here read "The 18 races whose true source book is already
+/// ingested" and this module's own header doc called the other 19 ARG
+/// reprints (Bestiary 2/3/4, Inner Sea World Guide) permanently out of scope
+/// because "their source books are unregistered, and creating their first
+/// content would be inventing provenance for a tome nobody has audited"
+/// (`decisions.md §25.3`). That premise is now FALSE for Bestiary 2:
+/// `data/corpus/bestiary_2/` is a real, registered corpus book directory
+/// (SD-29's monster-lane ingest), so reading its 7 races' chassis+standard
+/// traits out of PCGen's shared `core_essentials/races/` storage and filing
+/// them under `bestiary_2` -- exactly the pattern this table already uses
+/// for Core Rulebook and Bestiary 1 -- invents no provenance at all; the
+/// book is audited and already shipping this project's content.
+///
+/// Dhampir is the 7th "B2 race" (`advanced_race_guide.pcc`'s `# B2 races`
+/// section) and is deliberately NOT added here: `core_essentials/races/
+/// dhampir/` carries a `dhampir_abilities_subrace.lst` (a heritage/subrace
+/// selector, the same shape `race_resolver.rs`'s `subrace_grants` exists
+/// for), which this binary's simple "one chassis + flat standard-trait list"
+/// loop does not model -- adding it here would either silently drop the
+/// heritage rows or misfile them as ordinary standard traits. Left for a
+/// follow-on Epic 1 batch that extends this tool the way `ingest_race_
+/// traits.rs`'s `core_essentials` `BookSource` already does for Aasimar/
+/// Tiefling heritage.
 const IN_SCOPE_RACES: &[RaceSpec] = &[
     // `# Core Races` section of advanced_race_guide.pcc -> Core Rulebook.
     RaceSpec { dir: "dwarf", book: "core_rulebook" },
@@ -119,7 +150,217 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     RaceSpec { dir: "svirfneblin", book: "beastiary" },
     RaceSpec { dir: "tengu", book: "beastiary" },
     RaceSpec { dir: "tiefling", book: "beastiary" },
+    // `# B2 races` section of advanced_race_guide.pcc -> Bestiary 2.
+    // SD-31 Epic 1-F2 batch (2026-08-15); Dhampir excluded, see doc comment
+    // above.
+    RaceSpec { dir: "fetchling", book: "bestiary_2" },
+    RaceSpec { dir: "grippli", book: "bestiary_2" },
+    RaceSpec { dir: "ifrit", book: "bestiary_2" },
+    RaceSpec { dir: "oread", book: "bestiary_2" },
+    RaceSpec { dir: "sylph", book: "bestiary_2" },
+    RaceSpec { dir: "undine", book: "bestiary_2" },
+    // `# B5 races` -- Bestiary 5, SD-31 Epic 1 follow-on batch (2026-08-15).
+    // `data/corpus/bestiary_5/` is a real, registered corpus book directory
+    // (SD-29's monster-lane ingest). Skinwalker's chassis+standard-trait
+    // rows (`skinwalker_races.lst`, `skinwalker_abilities_race.lst`,
+    // `skinwalker_abilities_globalvar.lst`) are the identical flat shape
+    // this loop already handles for every other race -- verified by suffix:
+    // `find_single` matches exactly one file per suffix in the race's
+    // directory, and none of Skinwalker's three heritage-only files
+    // (`skinwalker_abilities_race_subrace.lst`,
+    // `skinwalker_abilitycategories_subrace.lst`,
+    // `skinwalker_templates_subrace.lst`) end in the suffixes this loop
+    // looks for. **Skinwalker's heritage rows themselves are NOT ingested by
+    // this batch.** Unlike Dhampir/Aasimar/Tiefling, Skinwalker's heritage
+    // shape does not have a `<race>_abilities_globalvar_subrace.lst` file at
+    // all for `ingest_race_traits.rs`'s `subrace_grants()` to read -- each
+    // heritage alternate sets its `Skinwalker_Replace*` FACT flags directly
+    // on its OWN constituent trait rows (via a `PREMULT` gate on the
+    // selector), a structurally different shape `subrace_grants()` cannot
+    // parse without new code. That is a genuinely new mechanism, deferred
+    // (not stubbed) to a follow-on batch; see `ingest_race_traits.rs`'s own
+    // `BOOK_SOURCES` doc comment for the worked example.
+    RaceSpec { dir: "skinwalker", book: "bestiary_5" },
+    // Advanced Race Guide's 6 "Featured"/"Uncommon" races, SD-31 Epic 1
+    // follow-on batch (2026-08-16). Each is confirmed a genuine chassis
+    // in `core_essentials/races/<dir>/` with the identical flat shape
+    // (`<dir>_races.lst` + `<dir>_abilities_race.lst` +
+    // `<dir>_abilities_globalvar.lst`, no `_subrace.lst` file anywhere) as
+    // the Bestiary 2/5 batches above -- no new mechanism needed. Attributed
+    // to `advanced_race_guide`, not `core_essentials` (Decision 9) and not
+    // Bestiary 3/4/an uningested tome: `advanced_race_guide/arg_races.lst`
+    // itself carries a `<Race>.MOD ... TYPE:Featured|Uncommon
+    // SOURCEPAGE:p.<n>` row for each of the 6 (`Catfolk.MOD p.91`,
+    // `Ratfolk.MOD p.151`, `Kitsune.MOD p.192`, `Strix.MOD p.200`,
+    // `Suli.MOD p.202`, `Wayang.MOD p.274`) -- the book's own real page
+    // citation for a race it presents as playable, exactly the signal
+    // Decision 9's `core_essentials` re-attribution used. PI-blacklist
+    // scan (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across
+    // every file in all 6 directories: zero hits, re-derived fresh this
+    // cycle (`SD31-E6-F4-002`).
+    //
+    // `advanced_race_guide` is *also* `ingest_race_traits.rs`'s book for
+    // its 24-race alternate-trait content, so the two binaries now share
+    // one book's `race_trait/` directory for the first time. Each owns
+    // disjoint race-slug subdirectories (this batch's 6 races are not in
+    // `ingest_race_traits.rs`'s `IN_SCOPE_RACES`, and vice versa), and
+    // `main()`'s clearing step below is scoped per-race-slug rather than
+    // whole-directory for exactly this book, so neither binary's run can
+    // delete the other's files. See `main()`'s clearing comment.
+    RaceSpec { dir: "catfolk", book: "advanced_race_guide" },
+    RaceSpec { dir: "kitsune", book: "advanced_race_guide" },
+    RaceSpec { dir: "ratfolk", book: "advanced_race_guide" },
+    RaceSpec { dir: "strix", book: "advanced_race_guide" },
+    RaceSpec { dir: "suli", book: "advanced_race_guide" },
+    RaceSpec { dir: "wayang", book: "advanced_race_guide" },
+    // SD31-E6-F4-004 (2026-08-17). Four more of ARG's own "Uncommon" races
+    // that were not yet in scope -- `arg_races.lst`'s full `.MOD` roster
+    // (37 rows: 7 Core + 16 Featured + 14 Uncommon) names exactly 37
+    // playable races, and after the SD31-E6-F4-002/003 batch above 7 were
+    // still missing: Dhampir (excluded, heritage-shaped, see the
+    // `skinwalker`-adjacent doc comment above) plus these 6 candidates.
+    // Confirmed each of the 6 is the identical flat shape (`<dir>_races.
+    // lst` + `<dir>_abilities_race.lst` + `<dir>_abilities_globalvar.lst`,
+    // no `_subrace.lst` file anywhere) as the batch immediately above, and
+    // attributed to `advanced_race_guide` for the same reason and by the
+    // same signal that batch already used: `arg_races.lst` itself carries
+    // a `<Race>.MOD ... TYPE:Uncommon SOURCEPAGE:p.<n>` row for every one
+    // of them (re-derived fresh this cycle, not transcribed --
+    // `grep -P '^\S+\.MOD\s' arg_races.lst`). PI-blacklist scan
+    // (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across
+    // every file in all 6 directories: zero hits.
+    //
+    // Only 4 of the 6 are added here. **Changeling and Samsaran are
+    // deliberately excluded**, each hitting this binary's existing refuse-
+    // rather-than-guess gates for a genuinely new shape, not a config
+    // widening:
+    // - Changeling: 3 rows (`Green Hag Green Widow`/`Annis Hag Hulking
+    //   Changeling`/`Sea Hag Sea Lungs`) carry `TYPE:RacialTraits.Hag
+    //   Racial Trait...`, not `<Race> Racial Trait`/`<Race> Racial
+    //   Default` -- a THIRD heritage axis (which hag mother the changeling
+    //   descends from), structurally the same class of gap Dhampir's/
+    //   Skinwalker's subrace files are, just expressed as an ungated
+    //   in-line trio rather than a `_subrace.lst` file. `is_standard_
+    //   racial_trait` matches them (they lead with `RacialTraits`) but
+    //   `parse_trait` correctly refuses (no `Changeling Racial Trait`
+    //   token), so the run fails loudly rather than misfiling them as
+    //   ordinary standard traits.
+    // - Samsaran: `Shards of the Past`'s own `!PREFACT:1,ABILITIES,
+    //   Samsaran_ReplaceShardsOfThePast=True` names a flag the globalvar
+    //   file (`samsaran_abilities_globalvar.lst:17`) does gate, but via
+    //   `BONUS:ABILITYPOOL|Samsaran Shards of the Past Skills|1|PREVAREQ:
+    //   Samsaran_ReplaceShardsOfThePast,0` -- a genuinely different token
+    //   shape from the `ABILITY:Samsaran Racial Trait|AUTOMATIC|...
+    //   |PREVAREQ:...` line every one of this race's other 7 defaults
+    //   uses, which `globalvar_gates()` does not read. Guessing that the
+    //   two shapes mean the same thing under time pressure is exactly the
+    //   "picked the wrong variant" hazard this program's own standing rule
+    //   forbids (see `OPEN-ISSUES.md` row 157's `parse_desc` precedent) --
+    //   reported, not silently reinterpreted.
+    // Both are real, named follow-on work (`OPEN-ISSUES.md`), not stubs:
+    // neither race's directory is touched by this batch at all, so no
+    // half-written record for either ships.
+    RaceSpec { dir: "gillman", book: "advanced_race_guide" },
+    RaceSpec { dir: "nagaji", book: "advanced_race_guide" },
+    RaceSpec { dir: "vanara", book: "advanced_race_guide" },
+    RaceSpec { dir: "vishkanya", book: "advanced_race_guide" },
+    // SD31-E6-F4-007 (2026-08-17). The LAST 2 of `arg_races.lst`'s 37-row
+    // playable-race roster (`grep -P '^\S+\.MOD\s' arg_races.lst` --
+    // `Changeling.MOD TYPE:Uncommon SOURCEPAGE:p.184`, `Samsaran.MOD
+    // TYPE:Uncommon SOURCEPAGE:p.198`), closing the roster entirely.
+    // **Not the config-only widening the 6-race and 4-race batches above
+    // were** -- each was excluded by name from THOSE batches for a real,
+    // traced parser gap, both now fixed narrowly rather than worked
+    // around:
+    // - Changeling: `changeling_abilities_race.lst`'s 9 standard traits
+    //   (`Changeling Racial Trait`/`Changeling Racial Default` marked,
+    //   `!PREFACT`-gated, globalvar-confirmed) ingest through the
+    //   unmodified default-trait path. Its OTHER 3 rows (`Green Widow
+    //   (Green Hag)`, `Hulking Changeling (Annis Hag)`, `Sea Lungs (Sea
+    //   Hag)`) are `TYPE:RacialTraits.Hag Racial Trait...` -- leads with
+    //   `RacialTraits` (so `is_standard_racial_trait` would match) but
+    //   carries no `Changeling Racial Trait`/`Changeling Racial Default`
+    //   token at all, because they are the 3 CHOICES a
+    //   `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=Changeling Race
+    //   Trait` picker offers depending on the changeling's hag-mother
+    //   type -- a genuinely different, additive-choice mechanism from the
+    //   swap-one-default-for-one-alternate shape this file's
+    //   `is_racial_default`/`ALTERNATE_TRAIT_*` machinery models. Explicitly
+    //   named and skipped below (`HERITAGE_CHOICE_TRAIT_MARKERS`), loudly
+    //   logged, not silently dropped -- the summary "Hag Racial Trait" row
+    //   itself (`KEY:Changeling ~ Hag Racial Trait`, which IS
+    //   `Changeling Racial Default` marked) still ingests and states in
+    //   its own `DESC:` that a choice exists, so nothing about the choice
+    //   is lost from the shipped description even though the 3 individual
+    //   options are not yet selectable. Modelling the CHOOSE mechanism
+    //   itself is real, named follow-on work (`OPEN-ISSUES.md`), not a
+    //   stub -- no half-written record for any of the 3 ships.
+    // - Samsaran: 8 of 9 standard traits are the identical shape to every
+    //   other race in this table. The 9th, `Shards of the Past`, carries
+    //   its own `!PREFACT:1,ABILITIES,Samsaran_ReplaceShardsOfThePast=True`
+    //   (so `parse_trait` reads its flag from the ROW, same as every other
+    //   trait) but `samsaran_abilities_globalvar.lst`'s second statement of
+    //   that SAME gate is a `BONUS:ABILITYPOOL|Samsaran Shards of the Past
+    //   Skills|1|PREVAREQ:Samsaran_ReplaceShardsOfThePast,0` line, not an
+    //   `ABILITY:...AUTOMATIC...` grant -- the only token shape
+    //   `globalvar_gates()` read before this batch. That made the
+    //   cross-check treat a real second statement as if it were absent and
+    //   fail the whole run (`None if !row_flags.is_empty() =>` branch).
+    //   `globalvar_gates()` is widened below to read `BONUS:ABILITYPOOL`
+    //   grants exactly the way it already reads `ABILITY:` grants -- same
+    //   `<Race> Racial Trait|` prefix requirement, same `PREVAREQ:<Flag>,0`
+    //   extraction, no new leniency -- rather than special-casing Samsaran.
+    // PI-blacklist scan (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/
+    // `NAMEISPI:` grep across every file in both directories: zero hits.
+    RaceSpec { dir: "changeling", book: "advanced_race_guide" },
+    RaceSpec { dir: "samsaran", book: "advanced_race_guide" },
+    // Rougarou, SD-31 wave-24 integration cycle (2026-08-20). Confirmed by
+    // direct read of the pinned oracle, not assumed from an earlier
+    // OPEN-ISSUES parenthetical (which wrongly grouped it with Dhampir's
+    // real heritage/subrace shape): `core_essentials/races/rougarou/` has
+    // NO `*_subrace.lst` file of any kind. Its own
+    // `rougarou_abilities_globalvar.lst` DEFINEs all 8
+    // `Rougarou_Replace*` flags to `0`, and `grep -rn Rougarou_Replace`
+    // across the WHOLE pinned oracle returns hits only inside that same
+    // file -- nothing anywhere ever sets one to `True`. The `CHOOSE:
+    // ABILITYSELECTION "Adopted Race ~ Rougarou"` row some earlier notes
+    // read as a subrace picker is APG's generic "Adopted" social trait
+    // (`TYPE:AdoptiveRace`), whose only `TYPE:Rougarou Race Trait` target
+    // is the literal placeholder `No Race Trait Available.MOD` -- it
+    // offers nothing and gates nothing. Rougarou is therefore the
+    // identical flat, single-tier shape as every Bestiary 2/5/ARG race
+    // above (`rougarou_races.lst` + `rougarou_abilities_race.lst` +
+    // `rougarou_abilities_globalvar.lst`, 8 unconditional default traits),
+    // filed under `bestiary_6` (`data/corpus/bestiary_6/` is a real,
+    // registered corpus book directory, same precondition Decision 9 /
+    // the Bestiary-2 batch above used). PI-blacklist scan
+    // (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across the
+    // whole directory: zero hits.
+    RaceSpec { dir: "rougarou", book: "bestiary_6" },
 ];
+
+/// `TYPE:` markers that lead with `RacialTraits` (so
+/// [`is_standard_racial_trait`] matches) but name a CHOOSE-driven
+/// sub-selection rather than a race's own default/alternate trait --
+/// Changeling's 3 hag-mother choices (see the `IN_SCOPE_RACES` doc comment
+/// above). Matched by substring against the raw `TYPE:` chain rather than
+/// the split `type_tokens()` list because the marker is itself a
+/// multi-word `TYPE:` component (`Hag Racial Trait`), not a single dotted
+/// segment boundary.
+const HERITAGE_CHOICE_TRAIT_MARKERS: &[&str] = &["Hag Racial Trait"];
+
+/// True when a row's `TYPE:` chain names one of [`HERITAGE_CHOICE_TRAIT_MARKERS`]
+/// as something OTHER than the race's own default-trait segment (i.e. the
+/// marker appears, but the chain does not also carry
+/// `"{race_key} Racial Trait"` -- the summary/grantor row for the same
+/// choice, like `Changeling ~ Hag Racial Trait`, DOES carry that token and
+/// is not matched here).
+fn is_heritage_choice_subtrait(row: &LstRow, race_key: &str) -> bool {
+    let raw_type = row.first("TYPE").unwrap_or_default();
+    let own_default_token = format!("{race_key} Racial Trait");
+    HERITAGE_CHOICE_TRAIT_MARKERS.iter().any(|marker| raw_type.contains(marker))
+        && !raw_type.contains(&own_default_token)
+}
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
 /// same bounded substring scan `src/bin/gen_book_cache.rs` and
@@ -371,8 +612,20 @@ fn collapse_whitespace(text: &str) -> String {
 }
 
 /// Replaces every `%N` in one `DESC:` segment with argument N's resolved
-/// literal, returning the rendered text and the names of any arguments
-/// that would not resolve.
+/// literal, and every `%%` with a literal `%`, returning the rendered text
+/// and the names of any arguments that would not resolve.
+///
+/// **`%%` handling added by SD-31 Epic 1-F2 (2026-08-15).** This binary's
+/// copy of the substitution rule was missing the escape branch
+/// `ingest_race_traits.rs`'s sibling function has always had (its own doc
+/// comment names the exact two upstream rows, `reduced by 20%%` and `(50%%
+/// or fewer hit points)`, that motivated it) -- ARG never happened to route
+/// a `%%`-bearing row through THIS binary's 18-race chassis path, so the gap
+/// shipped silently until this batch's `Fetchling ~ Shadow Blending`
+/// (`core_essentials/races/fetchling/fetchling_abilities_race.lst`, "50%%
+/// miss chance ... 20%% miss chance") became the first one that does, and
+/// `equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax`
+/// caught the literal `%%` reaching the served description text.
 ///
 /// An unresolvable argument is **dropped, never guessed**: the
 /// placeholder goes, the `+`/`-` sign that introduced it goes with it,
@@ -387,6 +640,13 @@ fn substitute_placeholders(prose: &str, args: &[&str], vars: &BTreeMap<String, O
     let mut i = 0;
 
     while i < chars.len() {
+        // The escape is checked first: `%%` is never an argument reference,
+        // and `%%1` would otherwise be misread as one.
+        if chars[i] == '%' && chars.get(i + 1) == Some(&'%') {
+            out.push('%');
+            i += 2;
+            continue;
+        }
         if chars[i] == '%'
             && let Some(digit) = chars.get(i + 1).and_then(|c| c.to_digit(10))
             && digit >= 1
@@ -476,11 +736,21 @@ fn render_description(row: &LstRow) -> Result<RenderedDescription, String> {
 }
 
 /// The PCGen substitution syntax that must never reach a player: an
-/// unsubstituted `%<digit>` placeholder, or a raw `|` argument tail.
-/// Used as a production guard on every description this binary writes.
+/// unsubstituted `%<digit>` placeholder, an unescaped `%%` literal-percent
+/// escape, or a raw `|` argument tail. Used as a production guard on every
+/// description this binary writes.
+///
+/// **`%%` check added by SD-31 Epic 1-F2 (2026-08-15).** This guard was
+/// missing the escape case `ingest_race_traits.rs`'s sibling guard has
+/// always checked (defense in depth alongside this same cycle's fix to
+/// `substitute_placeholders`, which is what stops the escape reaching a
+/// stored description in the first place).
 fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
     if text.contains('|') {
         return Some("raw '|' argument tail");
+    }
+    if text.contains("%%") {
+        return Some("unescaped '%%' literal-percent escape");
     }
     let chars: Vec<char> = text.chars().collect();
     for (i, c) in chars.iter().enumerate() {
@@ -646,6 +916,50 @@ fn globalvar_gates(text: &str, race_key: &str) -> BTreeMap<String, Vec<String>> 
     out
 }
 
+/// Every `PREVAREQ:<Flag>,0` clause anywhere in a race's
+/// `_abilities_globalvar.lst`, on ANY token — not only the `ABILITY:`
+/// grants [`globalvar_gates`] reads.
+///
+/// # Why this exists alongside `globalvar_gates`
+///
+/// `globalvar_gates` ties a flag to the specific trait KEY the `ABILITY:`
+/// grant names, which is the strongest possible statement (it re-derives
+/// *which* trait the flag gates, not merely *that* the flag is gated
+/// somewhere). Every race this project has ingested through SD-31 states
+/// its second gate that way. Samsaran's `Shards of the Past` is the first
+/// counter-example: `samsaran_abilities_globalvar.lst` gates
+/// `Samsaran_ReplaceShardsOfThePast` on a `BONUS:ABILITYPOOL|Samsaran
+/// Shards of the Past Skills|1|PREVAREQ:Samsaran_ReplaceShardsOfThePast,0`
+/// line — a real ability-pool grant, not an `ABILITY:` one, so it carries
+/// no `<Race> Racial Trait|AUTOMATIC|<TraitKey>|` prefix for
+/// `globalvar_gates` to key on.
+///
+/// This function reads the weaker, but still real, second statement:
+/// *this flag is gated somewhere in the globalvar file*, without claiming
+/// to know which trait it names. The caller only uses it as a fallback
+/// when [`globalvar_gates`] found no entry for the trait's key AND the
+/// trait's own row already names the flag directly (`replace_flags`) — so
+/// the flag identity still comes from the row, this function only confirms
+/// the globalvar file agrees, exactly the cross-check
+/// [`globalvar_gates`]'s own doc comment describes, generalised to a token
+/// shape that grant is not the only one PCGen uses for it.
+fn globalvar_prevareq_flags(text: &str) -> std::collections::BTreeSet<String> {
+    let mut flags = std::collections::BTreeSet::new();
+    for row in parse_rows(text) {
+        for (_, value) in row.tokens() {
+            for clause in value.split('|') {
+                let Some(rest) = clause.trim().strip_prefix("PREVAREQ:") else { continue };
+                let Some((flag, target)) = rest.rsplit_once(',') else { continue };
+                if target.trim() != "0" {
+                    continue;
+                }
+                flags.insert(flag.trim().to_string());
+            }
+        }
+    }
+    flags
+}
+
 /// Extracts the replace-flag names from a `!PREFACT:1,ABILITIES,<Flag>=True`
 /// token (`decisions.md §26`'s swap protocol: the trait applies *unless*
 /// the named flag is set).
@@ -759,6 +1073,58 @@ fn sha256_hex(bytes: &[u8]) -> String {
     hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
 }
 
+/// Clears exactly the `.json` files under `trait_dir` that THIS binary
+/// could itself have written on a prior run, leaving every other file
+/// alone -- the fix for the mutual-destruction hazard this file's own
+/// `trait_dir` clear comment names (`SD-31-E6-F4-003`,
+/// `advanced_race_guide`'s shared Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang
+/// directories, now also carrying `ingest_race_traits.rs`'s alternate-trait
+/// records in the same directory).
+///
+/// Only called for `advanced_race_guide` race specs (the one book this
+/// binary does not whole-directory-clear above) -- Aasimar/Tiefling-style
+/// non-default subrace rows this binary itself also writes live under
+/// `core_rulebook`/`beastiary`/`bestiary_2`/`bestiary_5`, which the whole-
+/// directory clear already handles, so they never reach this function. For
+/// every race spec that DOES reach here (Catfolk/Kitsune/Ratfolk/Strix/
+/// Suli/Wayang today), this binary's own `<race>_abilities_race.lst` read
+/// carries no non-default row at all -- verified by inspecting every file
+/// currently shipped for those 6 races, zero counter-examples -- so every
+/// record this binary could write here has `is_racial_default: true`, and
+/// every record `ingest_race_traits.rs` writes here has it `false`. A file
+/// is therefore this binary's own iff its stored `data.is_racial_default`
+/// is `true`. A `.json` file that does not parse, or is missing that
+/// field, belongs to neither binary's known shape -- refused rather than
+/// guessed at, per this repo's no-stub discipline: a silent guess here is
+/// exactly how a sibling binary's real content gets deleted.
+fn clear_own_standard_trait_files(trait_dir: &Path) {
+    let entries = fs::read_dir(trait_dir)
+        .unwrap_or_else(|e| panic!("failed to list {trait_dir:?} for a scoped clear: {e}"));
+    for entry in entries {
+        let entry = entry.unwrap_or_else(|e| panic!("failed to read a directory entry under {trait_dir:?}: {e}"));
+        let path = entry.path();
+        if path.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue;
+        }
+        let text = fs::read_to_string(&path).unwrap_or_else(|e| panic!("failed to read {path:?} for a scoped clear: {e}"));
+        let parsed: serde_json::Value = serde_json::from_str(&text)
+            .unwrap_or_else(|e| panic!("{path:?} is not valid JSON, cannot decide clear ownership safely: {e}"));
+        let is_racial_default = parsed
+            .get("data")
+            .and_then(|d| d.get("is_racial_default"))
+            .and_then(|v| v.as_bool())
+            .unwrap_or_else(|| {
+                panic!(
+                    "{path:?} has no boolean data.is_racial_default -- cannot tell whether this \
+                     binary or `ingest_race_traits.rs` wrote it, so a scoped clear refuses to guess"
+                )
+            });
+        if is_racial_default {
+            fs::remove_file(&path).unwrap_or_else(|e| panic!("failed to remove {path:?} during a scoped clear: {e}"));
+        }
+    }
+}
+
 /// Lowercase ASCII slug, identical in behaviour to
 /// `src/bin/gen_book_cache.rs::slugify` so race records file the
 /// same way every other corpus record already does.
@@ -782,6 +1148,20 @@ fn write_record<T: serde::Serialize>(path: &Path, record: &CorpusRecordV1<T>) {
     fs::create_dir_all(path.parent().expect("record path must have a parent dir")).expect("failed to create output dir");
     let json = serde_json::to_string_pretty(record).expect("record must serialize");
     fs::write(path, json).unwrap_or_else(|e| panic!("failed to write {path:?}: {e}"));
+}
+
+/// [`pi_screening::declared_product_identity`] over one parsed record's
+/// preserved `raw_tokens` -- the same shape `ingest_race_traits.rs`'s own
+/// `declared_product_identity_of` uses, and for the same reason: `raw_tokens`
+/// is what actually ships, so screening it (rather than re-parsing the row)
+/// means a token dropped on the way into a record can never be silently
+/// under-screened.
+///
+/// OPEN-ISSUES row 39: this binary's two writers previously hardcoded
+/// `pi_field: None` and never called the declared-PI reader at all, despite
+/// `data/corpus/bestiary_5/LICENSE.json` claiming they did.
+fn declared_product_identity_of(raw_tokens: &[RawToken]) -> pi_screening::DeclaredProductIdentity {
+    pi_screening::declared_product_identity(raw_tokens.iter().map(|t| (t.key.as_str(), t.value.as_str())))
 }
 
 /// Returns the blacklisted terms present in a record's free text, if any.
@@ -849,8 +1229,24 @@ fn main() {
     let mut wiring_lines = wiring_index.lines();
 
     // Clear only the two content-kind directories this tool owns, so a
-    // race removed from scope cannot linger as a stale record.
-    for book in ["core_rulebook", "beastiary"] {
+    // race removed from scope cannot linger as a stale record. This list
+    // must name every distinct `book` value `IN_SCOPE_RACES` uses that this
+    // binary EXCLUSIVELY owns -- missed once for `bestiary_5` when
+    // Skinwalker was added (caught by the pinned schema test below going 24
+    // instead of 25, not by inspection).
+    //
+    // `advanced_race_guide` is deliberately NOT in this list. Unlike the 4
+    // books below, this binary does not exclusively own
+    // `advanced_race_guide/race_trait/` -- `ingest_race_traits.rs` also
+    // writes there (its 24-race alternate-trait content, disjoint race
+    // slugs from this batch's 6). A whole-directory `remove_dir_all` here
+    // would delete that sibling binary's already-committed files every time
+    // this one runs. Each race this binary owns under a shared book is
+    // cleared individually, by slug, in the main loop below instead (see
+    // the `trait_dir` clear right before it is written into) -- surgical
+    // enough to catch a stale trait removed from THIS batch's races without
+    // touching a race slug this binary has never written.
+    for book in ["core_rulebook", "beastiary", "bestiary_2", "bestiary_5", "bestiary_6"] {
         for kind in ["race", "race_trait"] {
             let dir = out_root.join(book).join(kind);
             if dir.exists() {
@@ -871,8 +1267,18 @@ fn main() {
     // measurement rather than a claim in a doc comment.
     let mut gates_agreeing = 0usize;
     let mut gates_from_globalvar: Vec<String> = Vec::new();
+    let mut gates_from_non_ability_token: Vec<String> = Vec::new();
     let mut gate_supersets: Vec<String> = Vec::new();
     let mut ungated_traits: Vec<String> = Vec::new();
+    // Rows refused outright because the corpus declares their NAME to be
+    // Product Identity (OPEN-ISSUES row 39). Reported, never silent: a row
+    // that vanishes without a line in the receipt is indistinguishable
+    // from an ingest bug. Matches `ingest_race_traits.rs`'s own field.
+    let mut pi_dropped: Vec<String> = Vec::new();
+    let mut pi_declared_descriptions = 0usize;
+    // Rows explicitly deferred by `is_heritage_choice_subtrait` -- reported,
+    // never silent (matches `pi_dropped`'s own reporting discipline).
+    let mut heritage_choice_subtraits_deferred: Vec<String> = Vec::new();
 
     for spec in IN_SCOPE_RACES {
         let dir = races_root.join(spec.dir);
@@ -919,6 +1325,24 @@ fn main() {
             errors.push(format!("PI-blacklist hit on race {race_key}: {hits:?}"));
         }
 
+        // The corpus's own per-record declaration (`NAMEISPI:YES`), read
+        // for the first time by this binary as of OPEN-ISSUES row 39. A
+        // NAME cannot be redacted -- it is the record's identity on every
+        // screen and half of its key, and every trait below is filed under
+        // it -- so a chassis declaring it is DROPPED outright, cascading to
+        // every trait this race would otherwise own (same ruling
+        // `ingest_race_traits.rs` applies and `SD-29-corpus-wide-catch-up-
+        // lanes/decisions.md §50.3` states: "Dropping a monster cascades:
+        // an ability whose only owner is gone reaches nothing either.").
+        // None of the 20 in-scope races declare it today (re-derived:
+        // `grep -c NAMEISPI:YES */*.lst` across every `IN_SCOPE_RACES` dir),
+        // so this is a forward guard, not a behavior change for this run.
+        let chassis_declared = declared_product_identity_of(&chassis.raw_tokens);
+        if chassis_declared.name {
+            pi_dropped.push(format!("{chassis_rel}:{} race {race_key} (NAMEISPI:YES)", chassis_row.line_no));
+            continue;
+        }
+
         let chassis_file_rel_to_races_root =
             chassis_rel.strip_prefix(&format!("{RACES_RELATIVE}/")).unwrap_or(&chassis_rel);
         let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
@@ -949,6 +1373,7 @@ fn main() {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         let race_slug = slugify(&race_key);
         write_record(&out_root.join(spec.book).join("race").join(format!("{race_slug}.json")), &record);
@@ -956,10 +1381,27 @@ fn main() {
 
         // --- standard racial traits ---
         let gates = globalvar_gates(&String::from_utf8_lossy(&globalvar_bytes), &race_key);
+        let gate_flags_anywhere = globalvar_prevareq_flags(&String::from_utf8_lossy(&globalvar_bytes));
         if gates.is_empty() {
             errors.push(format!("{globalvar_rel}: declares no PREVAREQ gate for any {race_key} trait"));
         }
         let trait_dir = out_root.join(spec.book).join("race_trait").join(&race_slug);
+        // For a book this binary does NOT whole-directory-clear above
+        // (currently only `advanced_race_guide`, shared with
+        // `ingest_race_traits.rs`), clear just this one race's own
+        // subdirectory -- catches a stale trait from a prior run of THIS
+        // batch without touching a sibling race slug the other binary owns.
+        // **SD-31-E6-F4-003:** as of that cycle the directory itself can
+        // also be shared for the SAME race slug (`ingest_race_traits.rs`
+        // now ingests these 6 races' real ARG alternate-trait content into
+        // this same `race_trait/<race>/` directory), so a whole-directory
+        // `remove_dir_all` would delete that sibling binary's files every
+        // time this one runs. `clear_own_standard_trait_files` clears only
+        // the records this binary could itself have written; see its own
+        // doc comment for why that is safe and exact, not a guess.
+        if !matches!(spec.book, "core_rulebook" | "beastiary" | "bestiary_2" | "bestiary_5") && trait_dir.exists() {
+            clear_own_standard_trait_files(&trait_dir);
+        }
         let mut seen_slugs: BTreeMap<String, String> = BTreeMap::new();
         let mut trait_count = 0usize;
 
@@ -971,7 +1413,12 @@ fn main() {
                 errors.push(format!("{abilities_rel}:{}: .MOD row matched the standard-trait selector", row.line_no));
                 continue;
             }
-            let data = match parse_trait(&row, &race_key, &gates) {
+            if is_heritage_choice_subtrait(&row, &race_key) {
+                heritage_choice_subtraits_deferred
+                    .push(format!("{} ({abilities_rel}:{})", row.first("KEY").unwrap_or(row.name()), row.line_no));
+                continue;
+            }
+            let mut data = match parse_trait(&row, &race_key, &gates) {
                 Ok(d) => d,
                 Err(e) => {
                     errors.push(format!("{abilities_rel}: {e}"));
@@ -1011,6 +1458,22 @@ fn main() {
                             gate_supersets.push(format!("{} -> globalvar also gates on {extra:?}", data.key));
                         }
                     }
+                }
+                // `globalvar_gates` found no `ABILITY:`-grant entry keyed to
+                // this trait, but the row itself names flags. Before
+                // failing the run, check the weaker, token-shape-agnostic
+                // reading (`globalvar_prevareq_flags`): if the globalvar
+                // file gates every one of the row's own flags SOMEWHERE
+                // (any token, e.g. Samsaran's `BONUS:ABILITYPOOL` grant),
+                // the two sources still agree — they just used a different
+                // token to say so, which is a real second statement, not a
+                // missing one.
+                None if !row_flags.is_empty() && row_flags.iter().all(|f| gate_flags_anywhere.contains(f)) => {
+                    gates_from_non_ability_token.push(format!(
+                        "{} -> {row_flags:?} (globalvar gates the flag via a non-ABILITY token, {globalvar_rel})",
+                        data.key
+                    ));
+                    gates_agreeing += 1;
                 }
                 None if !row_flags.is_empty() => {
                     errors.push(format!(
@@ -1081,6 +1544,33 @@ fn main() {
                 errors.push(format!("PI-blacklist hit on trait {}: {hits:?}", data.key));
             }
 
+            // The corpus's own per-record declaration
+            // (`NAMEISPI:YES`/`DESCISPI:YES`), read for the first time by
+            // this binary as of OPEN-ISSUES row 39 -- previously computed
+            // nowhere, despite `data/corpus/bestiary_5/LICENSE.json`
+            // claiming the declared-PI reader ran. A NAME cannot be
+            // redacted, so a declaring row is DROPPED (matching
+            // `ingest_race_traits.rs`); a declared DESCRIPTION *can* be
+            // redacted and the trait still works, so it is redacted the
+            // same way that binary redacts one, replacing the hardcoded
+            // `License::Ogl`/`None`/`None` this writer previously shipped
+            // unconditionally. The two screens are a union: an undeclared
+            // row is still covered by `pi_hits` above.
+            let declared = declared_product_identity_of(&data.raw_tokens);
+            if declared.name {
+                pi_dropped.push(format!("{abilities_rel}:{} trait {} (NAMEISPI:YES)", row.line_no, data.key));
+                continue;
+            }
+            let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+                "description",
+                data.description.as_deref(),
+                declared.description,
+            );
+            if declared.description {
+                pi_declared_descriptions += 1;
+            }
+            data.description = stored_desc;
+
             let slug = slugify(&data.key);
             if let Some(prev) = seen_slugs.insert(slug.clone(), data.key.clone()) {
                 errors.push(format!("slug collision {slug:?}: {prev:?} and {:?}", data.key));
@@ -1110,11 +1600,12 @@ fn main() {
                     record_key: data.key.clone(),
                 },
                 data,
-                license: Some(License::Ogl),
-                pi_field: None,
-                pi_marker: None,
+                license: Some(license),
+                pi_field,
+                pi_marker,
                 wiring_class,
                 wiring_class_signals,
+                description_source: None,
             };
             write_record(&trait_dir.join(format!("{slug}.json")), &record);
             trait_count += 1;
@@ -1154,10 +1645,30 @@ fn main() {
     for t in &unresolved_desc_args {
         println!("  {t}");
     }
+    println!("dropped, NAMEISPI:YES (declared-PI reader, OPEN-ISSUES row 39): {}", pi_dropped.len());
+    for t in &pi_dropped {
+        println!("  {t}");
+    }
+    println!("descriptions redacted by DESCISPI:YES: {pi_declared_descriptions}");
+    println!(
+        "deferred, heritage-choice sub-trait ({:?}, not the race's own default/alternate axis): {}",
+        HERITAGE_CHOICE_TRAIT_MARKERS,
+        heritage_choice_subtraits_deferred.len()
+    );
+    for t in &heritage_choice_subtraits_deferred {
+        println!("  {t}");
+    }
     println!("\n--- replace-flag gates: the two sources reconciled ---");
     println!("rows where the trait's own !PREFACT and the globalvar PREVAREQ agree: {gates_agreeing}");
     println!("rows gated ONLY by the globalvar file (no !PREFACT on the row): {}", gates_from_globalvar.len());
     for t in &gates_from_globalvar {
+        println!("  {t}");
+    }
+    println!(
+        "rows agreeing via a non-ABILITY globalvar token (`globalvar_prevareq_flags` fallback): {}",
+        gates_from_non_ability_token.len()
+    );
+    for t in &gates_from_non_ability_token {
         println!("  {t}");
     }
     println!("rows where the globalvar file gates on strictly more flags: {}", gate_supersets.len());
@@ -1554,59 +2065,86 @@ mod tests {
         let mut races = 0usize;
         let mut traits = 0usize;
 
-        for book in ["core_rulebook", "beastiary"] {
-            let race_dir = root.join(book).join("race");
-            let mut race_files: Vec<PathBuf> =
-                fs::read_dir(&race_dir).expect("race dir must exist").filter_map(Result::ok).map(|e| e.path()).collect();
-            race_files.sort();
-            for path in race_files {
-                let text = fs::read_to_string(&path).unwrap();
-                let record: CorpusRecordV1<RaceCacheData> =
-                    serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} is not a valid race record: {e}"));
-                validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
-                assert!(!record.data.key.is_empty());
-                assert!(
-                    !serde_json::to_string(&record.data).unwrap().contains("\"source_page\""),
-                    "{path:?}: the chassis payload must carry no page field at all"
-                );
-                races += 1;
-            }
+        // Driven by `IN_SCOPE_RACES` itself (one entry per race, not one
+        // per book) rather than a hardcoded book list. This matters as of
+        // SD-31-E6-F4-002: `advanced_race_guide` is now a book this binary
+        // SHARES with `ingest_race_traits.rs` (disjoint race slugs), so a
+        // whole-directory `fs::read_dir` over `advanced_race_guide/
+        // race_trait/` would also walk into that sibling binary's ~24
+        // race subdirectories and assert this test's OWN pinned count
+        // against a mix of two binaries' output. Reading exactly the file
+        // (`race/<dir>.json`) and subdirectory (`race_trait/<dir>/`) each
+        // spec names keeps this test scoped to what THIS binary wrote,
+        // for every book including a shared one.
+        for spec in IN_SCOPE_RACES {
+            let path = root.join(spec.book).join("race").join(format!("{}.json", spec.dir));
+            let text = fs::read_to_string(&path).unwrap_or_else(|e| panic!("{path:?}: {e}"));
+            let record: CorpusRecordV1<RaceCacheData> =
+                serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} is not a valid race record: {e}"));
+            validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
+            assert!(!record.data.key.is_empty());
+            assert!(
+                !serde_json::to_string(&record.data).unwrap().contains("\"source_page\""),
+                "{path:?}: the chassis payload must carry no page field at all"
+            );
+            races += 1;
 
-            let trait_root = root.join(book).join("race_trait");
-            let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
-                .expect("race_trait dir must exist")
+            let race_dir = root.join(spec.book).join("race_trait").join(spec.dir);
+            let mut files: Vec<PathBuf> = fs::read_dir(&race_dir)
+                .unwrap_or_else(|e| panic!("{race_dir:?} must exist: {e}"))
                 .filter_map(Result::ok)
                 .map(|e| e.path())
                 .collect();
-            race_dirs.sort();
-            for race_dir in race_dirs {
-                let mut files: Vec<PathBuf> =
-                    fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
-                files.sort();
-                for path in files {
-                    let text = fs::read_to_string(&path).unwrap();
-                    let record: CorpusRecordV1<RaceTraitCacheData> = serde_json::from_str(&text)
-                        .unwrap_or_else(|e| panic!("{path:?} is not a valid race-trait record: {e}"));
-                    validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
-                    assert!(
-                        record.data.sets_replace_flags.is_empty(),
-                        "{path:?}: a standard trait sets no replace flags"
-                    );
-                    assert_ne!(
-                        record.data.source_page.as_deref(),
-                        Some(PLACEHOLDER_SOURCE_PAGE),
-                        "{path:?}: the p.xx placeholder must never be stored as a citation"
-                    );
-                    assert!(record.data.key.starts_with(&record.data.race_key));
-                    traits += 1;
+            files.sort();
+            for path in files {
+                let text = fs::read_to_string(&path).unwrap();
+                let record: CorpusRecordV1<RaceTraitCacheData> = serde_json::from_str(&text)
+                    .unwrap_or_else(|e| panic!("{path:?} is not a valid race-trait record: {e}"));
+                // SD-31-E6-F4-003 (2026-08-16): `advanced_race_guide/
+                // race_trait/<race>/` is now shared with
+                // `ingest_race_traits.rs` for THIS binary's own 6-race ARG
+                // batch too (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), the
+                // same way it already was for the whole-book directory (see
+                // this test's own comment above). Scoped to that one book,
+                // not to `is_racial_default` in general: Bestiary 1's own
+                // `Duergar ~ Spell-Like Abilities`/`Duergar ~ Spell
+                // Resistance` are standard, `ingest_races.rs`-written rows
+                // that legitimately carry `is_racial_default: false` (their
+                // corpus row has no `<Race> Racial Default` TYPE marker —
+                // the pre-existing gap `raceCreationCoverage.test.ts`'s
+                // "173, not 175" comment names), and a blanket filter on the
+                // flag alone would wrongly skip them here too.
+                if spec.book == "advanced_race_guide" && !record.data.is_racial_default {
+                    continue;
                 }
+                validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
+                assert!(record.data.sets_replace_flags.is_empty(), "{path:?}: a standard trait sets no replace flags");
+                assert_ne!(
+                    record.data.source_page.as_deref(),
+                    Some(PLACEHOLDER_SOURCE_PAGE),
+                    "{path:?}: the p.xx placeholder must never be stored as a citation"
+                );
+                assert!(record.data.key.starts_with(&record.data.race_key));
+                traits += 1;
             }
         }
 
         // Pinned counts, derived from the real corpus (`decisions.md
-        // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11).
-        assert_eq!(races, 18, "18 in-scope race chassis records");
-        assert_eq!(traits, 175, "175 standard racial trait records");
+        // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11, SD-31 Epic
+        // 1-F2's Bestiary 2 batch of 6, the Skinwalker follow-on
+        // (Bestiary 5, chassis + 9 standard-tier traits only), SD-31-E6-
+        // F4-002's Advanced Race Guide batch of 6 (Catfolk 9, Kitsune 10,
+        // Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58), SD31-E6-F4-004's
+        // 4-race ARG follow-on (Gillman 9, Nagaji 9, Vanara 8, Vishkanya
+        // 12 = 38), SD31-E6-F4-007's 2-race ARG follow-on that closes
+        // `arg_races.lst`'s full 37-row playable-race roster (Changeling 9,
+        // Samsaran 9 = 18), plus SD-31 wave-24's Rougarou (Bestiary 6, 8
+        // standard-tier traits: Ability Scores/Type/Size/Speed/Vision/
+        // Change Shape/Natural Weapon/Languages) -- 38 races / 363
+        // standard racial trait records, re-measured 2026-08-20 by running
+        // this binary against the real corpus, not invented.
+        assert_eq!(races, 38, "38 in-scope race chassis records");
+        assert_eq!(traits, 363, "363 standard racial trait records");
     }
 
     // -----------------------------------------------------------------
@@ -1777,6 +2315,38 @@ mod tests {
         assert_eq!(rendered.text.as_deref(), Some("A bonus applies."));
     }
 
+    /// SD-31 Epic 1-F2 (2026-08-15). This binary's copy of the substitution
+    /// rule was missing the `%%` literal-percent escape branch its sibling
+    /// `ingest_race_traits.rs::substitute_placeholders` has always had; the
+    /// real Fetchling row this test is field-for-field from
+    /// (`core_essentials/races/fetchling/fetchling_abilities_race.lst`,
+    /// `Fetchling ~ Shadow Blending`) is what caught it, via
+    /// `equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax`
+    /// in the desktop crate.
+    #[test]
+    fn literal_percent_escape_renders_as_a_single_percent_sign() {
+        let row = one_row(&padded_line(&[
+            "Shadow Blending",
+            "KEY:Fetchling ~ Shadow Blending",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality",
+            "DESC:Attacks against a fetchling in dim light have a 50%% miss chance instead of the \
+             normal 20%% miss chance. This ability does not grant total concealment; it just \
+             increases the miss chance.",
+            "SOURCEPAGE:p.xx",
+        ]));
+        let rendered = render_description(&row).expect("row must render");
+        let text = rendered.text.expect("prose survives");
+        assert!(!text.contains("%%"), "the escape must not survive: {text:?}");
+        assert_eq!(
+            text,
+            "Attacks against a fetchling in dim light have a 50% miss chance instead of the \
+             normal 20% miss chance. This ability does not grant total concealment; it just \
+             increases the miss chance."
+        );
+        assert_eq!(leaked_pcgen_syntax(&text), None);
+    }
+
     /// A description with nothing to substitute must come through
     /// byte-identical — the cleanup may not reflow untouched prose.
     #[test]
@@ -1877,5 +2447,166 @@ mod tests {
         assert_eq!(b, "duergar_spell_like_ability_invisibility");
         assert_ne!(a, b, "same display name, distinct keys -> distinct files");
         assert_eq!(slugify("Half-Elf"), "half_elf");
+    }
+
+    // --- OPEN-ISSUES row 39: the declared-PI reader must actually run ---
+
+    #[test]
+    fn declared_product_identity_of_reads_nameispi_off_a_parsed_chassis() {
+        let line = padded_line(&["Dwarf", "NAMEISPI:YES", "FACT:BaseSize|M", "MOVE:Walk,20"]);
+        let chassis = parse_chassis(&one_row(&line));
+        let declared = declared_product_identity_of(&chassis.raw_tokens);
+        assert!(declared.name, "a chassis row's own NAMEISPI:YES must be read, not silently discarded");
+    }
+
+    #[test]
+    fn declared_product_identity_of_reads_descispi_off_a_parsed_trait() {
+        let line = padded_line(&[
+            "Greed",
+            "KEY:Dwarf ~ Greed",
+            "DESCISPI:YES",
+            "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality",
+            "DESC:Dwarves receive a bonus tied to a named Golarion place the term list does not know.",
+        ]);
+        let data = parse_trait(&one_row(&line), "Dwarf", &no_gates()).unwrap();
+        let declared = declared_product_identity_of(&data.raw_tokens);
+        assert!(!declared.name);
+        assert!(declared.description, "a trait row's own DESCISPI:YES must be read, not silently discarded");
+    }
+
+    /// The exact defect OPEN-ISSUES row 39 confirmed: previously this
+    /// writer hardcoded `License::Ogl`/`pi_field: None` unconditionally, so
+    /// a declared description would have shipped un-redacted even though
+    /// the corpus states it is Product Identity. This proves the real
+    /// screening call (`pi_screening::classify_optional_field_declared`,
+    /// wired into `main`'s trait loop) redacts it instead.
+    #[test]
+    fn a_declared_description_is_redacted_by_the_real_screening_call() {
+        let line = padded_line(&[
+            "Greed",
+            "KEY:Dwarf ~ Greed",
+            "DESCISPI:YES",
+            "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality",
+            "DESC:Dwarves receive a bonus tied to a named Golarion place the term list does not know.",
+        ]);
+        let mut data = parse_trait(&one_row(&line), "Dwarf", &no_gates()).unwrap();
+        let declared = declared_product_identity_of(&data.raw_tokens);
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field_declared("description", data.description.as_deref(), declared.description);
+        data.description = stored_desc;
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
+        assert!(pi_marker.is_some());
+        assert_eq!(data.description.as_deref(), Some("[redacted PI]"));
+    }
+
+    /// Mirrors `ingest_race_traits.rs`'s own precedent (and `SD-29-corpus-
+    /// wide-catch-up-lanes/decisions.md §50.3`): a key/name cannot be
+    /// redacted, so a NAMEISPI:YES row must be recognised so the caller can
+    /// drop it, never partially published under its real name.
+    #[test]
+    fn a_declared_name_cannot_be_screened_into_something_publishable() {
+        let line = padded_line(&["Sovyrian-Born", "KEY:Elf ~ Sovyrian-Born", "NAMEISPI:YES", "DESC:Test."]);
+        let data = parse_trait(&one_row(&line), "Elf", &no_gates()).unwrap();
+        let declared = declared_product_identity_of(&data.raw_tokens);
+        assert!(declared.name, "the caller's drop branch depends on this being true");
+    }
+
+    // ----- SD31-E6-F4-007: Changeling's heritage-choice sub-traits -----
+
+    /// The real `Changeling ~ Green Hag Green Widow` row (one of the 3
+    /// hag-mother choices, `changeling_abilities_race.lst:35`) — leads with
+    /// `RacialTraits` but carries no `Changeling Racial Trait` token, so it
+    /// must be recognised as a heritage-choice sub-trait, not a default one.
+    fn changeling_hag_choice_line() -> String {
+        padded_line(&[
+            "Green Widow (Green Hag)",
+            "KEY:Changeling ~ Green Hag Green Widow",
+            "OUTPUTNAME:Green Widow",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
+            "DESC:The changeling gains a +2 racial bonus on Bluff checks against creatures that are sexually attracted to her.",
+            "BONUS:SITUATION|Bluff=against sexually attracted creatures|2|TYPE=Racial",
+            "SOURCEPAGE:p.xx",
+        ])
+    }
+
+    /// The real `Changeling ~ Hag Racial Trait` grantor row
+    /// (`changeling_abilities_race.lst:31`) — this ALSO leads with
+    /// `RacialTraits` and its `DESC:` even mentions "the following racial
+    /// traits", but it carries `Changeling Racial Trait`/`Changeling Racial
+    /// Default`, so it must NOT be treated as a heritage-choice sub-trait.
+    fn changeling_hag_grantor_line() -> String {
+        padded_line(&[
+            "Hag Racial Trait",
+            "KEY:Changeling ~ Hag Racial Trait",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality",
+            "!PREFACT:1,ABILITIES,Changeling_ReplaceHagRacialTrait=True",
+            "DESC:Each changeling inherits one of the following racial traits, depending on her mother's hag type.",
+            "BONUS:ABILITYPOOL|Changeling Hag Racial Trait|1",
+            "SOURCEPAGE:p.xx",
+        ])
+    }
+
+    #[test]
+    fn a_hag_mother_choice_row_is_a_heritage_choice_subtrait() {
+        let row = one_row(&changeling_hag_choice_line());
+        assert!(is_heritage_choice_subtrait(&row, "Changeling"));
+    }
+
+    #[test]
+    fn the_hag_racial_trait_grantor_row_is_not_a_heritage_choice_subtrait() {
+        let row = one_row(&changeling_hag_grantor_line());
+        assert!(!is_heritage_choice_subtrait(&row, "Changeling"));
+    }
+
+    #[test]
+    fn an_ordinary_default_trait_is_not_a_heritage_choice_subtrait() {
+        let row = one_row(&dwarf_greed_line());
+        assert!(!is_heritage_choice_subtrait(&row, "Dwarf"));
+    }
+
+    // ----- SD31-E6-F4-007: Samsaran's non-`ABILITY:` second gate source -----
+
+    /// Samsaran's real `samsaran_abilities_globalvar.lst` line for `Shards
+    /// of the Past`: a `BONUS:ABILITYPOOL` grant, not the `ABILITY:...
+    /// AUTOMATIC...` shape `globalvar_gates` reads.
+    fn samsaran_shards_globalvar_line() -> String {
+        padded_line(&[
+            "CATEGORY=Internal|Racial Traits ~ Samsaran.MOD",
+            "DEFINE:Samsaran_ReplaceShardsOfThePast|0",
+            "BONUS:ABILITYPOOL|Samsaran Shards of the Past Skills|1|PREVAREQ:Samsaran_ReplaceShardsOfThePast,0",
+        ])
+    }
+
+    #[test]
+    fn a_bonus_abilitypool_prevareq_is_read_as_a_gated_flag() {
+        let flags = globalvar_prevareq_flags(&samsaran_shards_globalvar_line());
+        assert!(flags.contains("Samsaran_ReplaceShardsOfThePast"));
+    }
+
+    #[test]
+    fn globalvar_gates_alone_still_misses_the_bonus_abilitypool_shape() {
+        // Documents exactly the gap `globalvar_prevareq_flags` exists to
+        // cover as a fallback: the ABILITY-grant-keyed reader legitimately
+        // finds nothing for this trait key, which is why the caller falls
+        // back rather than this function growing a second responsibility.
+        let gates = globalvar_gates(&samsaran_shards_globalvar_line(), "Samsaran");
+        assert!(!gates.contains_key("Samsaran ~ Shards of the Past"));
+    }
+
+    #[test]
+    fn a_prevareq_1_clause_is_not_read_as_a_suppressor_flag() {
+        // Mirrors `globalvar_gates`'s own `PREVAREQ:<Flag>,1` guard --
+        // a positive requirement is the opposite statement and must not be
+        // read as a gate.
+        let line = padded_line(&[
+            "CATEGORY=Internal|Racial Traits ~ Duergar.MOD",
+            "ABILITY:Duergar Racial Trait|AUTOMATIC|Duergar ~ Spell-Like Ability ~ Enlarge Person\
+             |PREVAREQ:Duergar_ReplaceSLAEnlargePerson,1",
+        ]);
+        let flags = globalvar_prevareq_flags(&line);
+        assert!(!flags.contains("Duergar_ReplaceSLAEnlargePerson"));
     }
 }

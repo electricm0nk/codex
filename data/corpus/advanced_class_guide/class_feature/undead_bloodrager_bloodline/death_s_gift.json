@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undead Bloodrager Bloodline ~ Death's Gift",
+    "name": "Death's Gift",
+    "class": "Undead Bloodrager Bloodline",
+    "description": "You gain resistance %1 to cold, as well as DR %1/- against nonlethal damage.|Bloodrager_Undead_DeathsGift_Bonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodrager Bloodline ~ Death's Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Undead Bloodrager Bloodline ~ Power LVL 08.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Undead_BloodlineProgressionLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Undead_BloodlinePower8LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Undead_DeathsGift_Bonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resistance %1 to cold, as well as DR %1/- against nonlethal damage.|Bloodrager_Undead_DeathsGift_Bonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Undead_DeathsGift_Bonus|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 879,
+    "record_key": "Undead Bloodrager Bloodline ~ Death's Gift"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

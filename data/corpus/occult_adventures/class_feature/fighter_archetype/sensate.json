@@ -1,0 +1,183 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Sensate",
+    "name": "Sensate",
+    "class": "Fighter Archetype",
+    "description": "A sensate perceives battle through senses beyond mortal ken, anticipating his opponents' movements before they even begin to act. As long as he keeps his focus about him, he fights with a skill rivaling that of the finest masters-at-arms.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Sensate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Sensate],[!PREFACT:1,ABILITIES,Fighter_Archetype_ClassSkills=True,Fighter_Archetype_Proficiencies=True,Fighter_Archetype_Bravery=True,Fighter_Archetype_ArmorTraining1=True,Fighter_Archetype_ArmorTraining2=True,Fighter_Archetype_ArmorTraining3=True,Fighter_Archetype_WeaponTraining2=True,Fighter_Archetype_WeaponTraining3=True,Fighter_Archetype_WeaponTraining4=True,Fighter_Archetype_ArmorMastery=True,Fighter_Archetype_WeaponMastery=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A sensate perceives battle through senses beyond mortal ken, anticipating his opponents' movements before they even begin to act. As long as he keeps his focus about him, he fights with a skill rivaling that of the finest masters-at-arms."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Skills|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Weapon and Armor Proficiency|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Guarded Senses|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Uncanny Dodge|PRECLASS:1,Fighter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Centered Senses|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Improved Uncanny Dodge|PRECLASS:1,Fighter=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Evasion|PRECLASS:1,Fighter=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Steady|PRECLASS:1,Fighter=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Perfect Senses|PRECLASS:1,Fighter=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Sensate ~ Precision|PRECLASS:1,Fighter=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ClassSkills|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Proficiencies|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining1|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining2|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining3|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining2|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining3|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining4|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponMastery|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ClassSkills|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Proficiencies|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining1|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining2|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining3|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining2|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining4|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponMastery|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1733,
+    "record_key": "Fighter Archetype ~ Sensate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,167 @@
+[
+  {
+    "key": "Dragon Disciple ~ Ability Boost",
+    "class": "Dragon Disciple",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 356
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Blindsense",
+    "class": "Dragon Disciple",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 358
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Blood of Dragons",
+    "class": "Dragon Disciple",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 355
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Bloodline Feat",
+    "class": "Dragon Disciple",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 356
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Breath Weapon",
+    "class": "Dragon Disciple",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 357
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Dragon Bite",
+    "class": "Dragon Disciple",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 356
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Dragon Form",
+    "class": "Dragon Disciple",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 359
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Natural Armor Increase",
+    "class": "Dragon Disciple",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 355
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Spells per Day",
+    "class": "Dragon Disciple",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 354
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Weapon and Armor Proficiency",
+    "class": "Dragon Disciple",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 353
+    }
+  },
+  {
+    "key": "Dragon Disciple ~ Wings",
+    "class": "Dragon Disciple",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 360
+    }
+  }
+]

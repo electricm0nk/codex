@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier ~ Mount",
+    "name": "Mount",
+    "class": "Cavalier",
+    "description": "A cavalier gains the service of a loyal and trusty steed to carry him into battle. This mount functions as a druid's animal companion, using the cavalier's level as his effective druid level. The creature must be one that he is capable of riding and is suitable as a mount. A Medium cavalier can select a camel or a horse. A Small cavalier can select a pony or wolf, but can also select a boar or a dog if he is at least 4th level. The GM might approve other animals as suitable mounts. A cavalier does not take an armor check penalty on Ride checks while riding his mount. The mount is always considered combat trained and begins play with Light Armor Proficiency as a bonus feat. A cavalier's mount does not gain the share spells special ability. A cavalier's bond with his mount is strong, with the pair learning to anticipate each other's moods and moves. Should a cavalier's mount die, the cavalier may find another mount to serve him after 1 week of mourning. This new mount does not gain the link, evasion, devotion, or improved evasion special abilities until the next time the cavalier gains a level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier ~ Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary.Animal Companion.Mount"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CavalierMountLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionDisable_CavalierMount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionMasterLVL_Cavalier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A cavalier gains the service of a loyal and trusty steed to carry him into battle. This mount functions as a druid's animal companion, using the cavalier's level as his effective druid level. The creature must be one that he is capable of riding and is suitable as a mount. A Medium cavalier can select a camel or a horse. A Small cavalier can select a pony or wolf, but can also select a boar or a dog if he is at least 4th level. The GM might approve other animals as suitable mounts. A cavalier does not take an armor check penalty on Ride checks while riding his mount. The mount is always considered combat trained and begins play with Light Armor Proficiency as a bonus feat. A cavalier's mount does not gain the share spells special ability. A cavalier's bond with his mount is strong, with the pair learning to anticipate each other's moods and moves. Should a cavalier's mount die, the cavalier may find another mount to serve him after 1 week of mourning. This new mount does not gain the link, evasion, devotion, or improved evasion special abilities until the next time the cavalier gains a level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Mount Choice|AUTOMATIC|Standard Choices ~ Cavalier Mount|!PREABILITY:1,CATEGORY=Internal,TYPE.CavalierMountAlternate|PREABILITY:1,CATEGORY=Special Ability,Cavalier ~ Mount"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Companion ~ Cavalier Mount|PREVAREQ:CompanionDisable_CavalierMount,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CavalierMountLVL|CompanionMasterLVL_Cavalier|PREVAREQ:CompanionDisable_CavalierMount,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionMasterLVL_Cavalier|CavalierLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 194,
+    "record_key": "Cavalier ~ Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

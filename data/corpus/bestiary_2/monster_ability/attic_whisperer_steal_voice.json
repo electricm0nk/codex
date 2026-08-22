@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Attic Whisperer ~ Steal Voice",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:attic_whisperer"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Steal Voice"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(touch)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AtticWhispererStealVoiceDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AtticWhispererStealVoiceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Steal Voice)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AtticWhispererStealVoiceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature hit by an attic whisperer's touch must make a DC %1 Will save or lose its ability to speak for 1 hour.  During that time, the creature cannot talk, cast spells with verbal components, use auditory bardic performances, or use any other ability that requires speech.  Once an attic whisperer has stolen a creature's voice, it can perfectly mimic that voice at any time, even after its victim's voice has returned, and while using that voice can speak any languages the victim knew.  Those familiar with an individual's voice can make a Sense Motive check opposed by the attic whisperer's Bluff check to realize a mimicked voice is inauthentic.|AtticWhispererStealVoiceDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Attic Whisperer ~ Steal Voice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.34",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 134,
-    "record_key": "Attic Whisperer ~ Steal Voice"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 134,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Attic Whisperer ~ Steal Voice",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

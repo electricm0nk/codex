@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order Of The Shroud ~ Edicts",
+    "name": "Edicts",
+    "class": "Cavalier",
+    "description": "The cavalier must protect the common folk from the scourge of the undead. He must seek out and destroy the restless dead and give aid to those haunted by them. He must protect those who cannot defend themselves, and root out sources that birth the corruption of life and death.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order Of The Shroud ~ Edicts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Order Of The Shroud Class Feature.Cavalier Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The cavalier must protect the common folk from the scourge of the undead. He must seek out and destroy the restless dead and give aid to those haunted by them. He must protect those who cannot defend themselves, and root out sources that birth the corruption of life and death."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1715,
+    "record_key": "Order Of The Shroud ~ Edicts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

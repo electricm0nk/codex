@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Roughrider ~ Ride Them Down",
+    "name": "Ride Them Down",
+    "class": "Fighter",
+    "description": "At 15th level, can spur his mount on while readying an attack. If a roughrider's mount takes a single move, the roughrider can make a full attack, taking his attacks at any point during his mount's movement. If he has the Trample feat, he may substitute an overrun combat maneuver for each of his attacks. This movement provokes attacks of opportunity against the roughrider but not his mount. This ability replaces armor training 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Roughrider ~ Ride Them Down"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining4"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, can spur his mount on while readying an attack. If a roughrider's mount takes a single move, the roughrider can make a full attack, taking his attacks at any point during his mount's movement. If he has the Trample feat, he may substitute an overrun combat maneuver for each of his attacks. This movement provokes attacks of opportunity against the roughrider but not his mount. This ability replaces armor training 4."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2193,
+    "record_key": "Fighter Roughrider ~ Ride Them Down"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

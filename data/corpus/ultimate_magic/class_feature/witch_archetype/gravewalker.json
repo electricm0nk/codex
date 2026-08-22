@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Archetype ~ Gravewalker",
+    "name": "Gravewalker",
+    "class": "Witch Archetype",
+    "description": "Having much in common with necromancers, the gravewalker is obsessed with the occult manipulations of the dead, particularly mindless undead such as zombies. Unlike the creations of standard necromancers, a gravewalker's creations remain forever tied to her will, and she can produce vile apparitions of tremendous power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Gravewalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchPatronSpell4.WitchPatronSpell6.WitchPatronSpell12.WitchPatronSpell14.WitchPatronSpell16.WitchFamiliar.WitchHex1.WitchHex4.WitchHex8"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Gravewalker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatron,TYPE.WitchPatronSpell4,TYPE.WitchPatronSpell6,TYPE.WitchPatronSpell12,TYPE.WitchPatronSpell14,TYPE.WitchPatronSpell16,TYPE.WitchHexes,TYPE.WitchHex1,TYPE.WitchHex4,TYPE.WitchHex8,TYPE.WitchFamiliar]"
+      },
+      {
+        "key": "DESC",
+        "value": "Having much in common with necromancers, the gravewalker is obsessed with the occult manipulations of the dead, particularly mindless undead such as zombies. Unlike the creations of standard necromancers, a gravewalker's creations remain forever tied to her will, and she can produce vile apparitions of tremendous power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravewalker ~ Spell Poppet|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravewalker ~ Aura of Desecration|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravewalker Bonus Spells|PRECLASS:1,Witch=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravewalker ~ Deliver Touch Spells|PRECLASS:1,Witch=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravewalker ~ Bonethrall|PRECLASS:1,Witch=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gravewalker ~ Possess Undead|PRECLASS:1,Witch=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Witch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1987,
+    "record_key": "Witch Archetype ~ Gravewalker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

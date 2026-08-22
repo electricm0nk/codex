@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit ~ Waves",
+    "name": "Waves (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: hydraulic push (1st), slipstream (2nd), water breathing (3rd), wall of ice (4th), geyser (5th), fluid form (6th), vortex (7th), seamantle (8th), tsunami (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Waves"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWavesSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWavesSpiritAnimal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: hydraulic push (1st), slipstream (2nd), water breathing (3rd), wall of ice (4th), geyser (5th), fluid form (6th), vortex (7th), seamantle (8th), tsunami (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Waves Spirit ~ Wave Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Waves Spirit ~ Fluid Mastery|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Waves Spirit ~ Elemental Form|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Waves Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWavesSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWavesSpiritAnimal|FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1453,
+    "record_key": "Shaman Spirit ~ Waves"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

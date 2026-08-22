@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deed ~ Daring",
+    "name": "Daring",
+    "class": "Investigator",
+    "description": "At 1st level, a sleuth can spend 1 luck point when he makes an Acrobatics, Climb, Escape Artist, Fly, Ride, or Swim check to roll d6 and add the result to the check. He can choose to add this die after he rolls. If the d6 roll is a natural 6, he rolls another d6 and adds it to the check. He can continue to do this as long as he rolls natural 6s, up to a number of times equal to his Intelligence modifier (minimum 1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deed ~ Daring"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sleuth Class Feature.Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a sleuth can spend 1 luck point when he makes an Acrobatics, Climb, Escape Artist, Fly, Ride, or Swim check to roll d6 and add the result to the check. He can choose to add this die after he rolls. If the d6 roll is a natural 6, he rolls another d6 and adds it to the check. He can continue to do this as long as he rolls natural 6s, up to a number of times equal to his Intelligence modifier (minimum 1)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3332,
+    "record_key": "Deed ~ Daring"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

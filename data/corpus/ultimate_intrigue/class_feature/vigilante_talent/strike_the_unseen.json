@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Strike the Unseen",
+    "name": "Strike the Unseen",
+    "class": "Vigilante Talent",
+    "description": "The vigilante gains Blind-Fight as a bonus feat. He can also deal hidden strike damage against targets with total concealment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Strike the Unseen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Strike the Unseen"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains Blind-Fight as a bonus feat. He can also deal hidden strike damage against targets with total concealment."
+      },
+      {
+        "key": "DESC",
+        "value": " He gains Improved Blind-Fight as a bonus feat and can deal all types of precision damage against targets with concealment or total concealment.|PREVARGTEQ:VigilanteTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": " He also gains Greater Blind- Fight as a bonus feat.|PREVARGTEQ:VigilanteTalentLVL,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Blind-Fight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Blind-Fight|PREVARGTEQ:VigilanteTalentLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Blind-Fight|PREVARGTEQ:VigilanteTalentLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 108,
+    "record_key": "Vigilante Talent ~ Strike the Unseen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

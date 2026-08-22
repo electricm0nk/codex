@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magic Domain ~ Hand of the Acolyte",
+    "name": "Hand of the Acolyte",
+    "class": "Magic Domain",
+    "description": "You can cause your melee weapon to fly from your grasp and strike a foe before instantly returning. As a standard action, you can make a single attack with a melee weapon at a range of 30 feet. This attack is treated as a ranged attack with a thrown weapon, except that you add your Wisdom modifier instead of your Dexterity modifier (damage still relies on Strength). This ability cannot be used to perform a combat maneuver. You can use this ability %1 times per day.|HandoftheAcolyteTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magic Domain ~ Hand of the Acolyte"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HandoftheAcolyteTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause your melee weapon to fly from your grasp and strike a foe before instantly returning. As a standard action, you can make a single attack with a melee weapon at a range of 30 feet. This attack is treated as a ranged attack with a thrown weapon, except that you add your Wisdom modifier instead of your Dexterity modifier (damage still relies on Strength). This ability cannot be used to perform a combat maneuver. You can use this ability %1 times per day.|HandoftheAcolyteTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HandoftheAcolyteTimes|DomainMagicTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|HandoftheAcolyteTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|HandoftheAcolyteTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3241,
+    "record_key": "Magic Domain ~ Hand of the Acolyte"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

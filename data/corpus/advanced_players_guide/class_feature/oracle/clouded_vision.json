@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle ~ Clouded Vision",
+    "name": "Clouded Vision",
+    "class": "Oracle",
+    "description": "Your eyes are obscured, making it difficult for you to see. You cannot see anything beyond %1 feet, but you can see as if you had darkvision.|OracleCloudedVisionRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Clouded Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleCurse.Sense"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleCloudedVisionRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your eyes are obscured, making it difficult for you to see. You cannot see anything beyond %1 feet, but you can see as if you had darkvision.|OracleCloudedVisionRange"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain blindsense out to a range of 30 feet.|PREVARGTEQ:OracleCurseLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain blindsight out to a range of 15 feet.|PREVARGTEQ:OracleCurseLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleCloudedVisionRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleCloudedVisionRange|30|PREVARGTEQ:OracleCurseLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|OracleCloudedVisionRange|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|30|TYPE=Base|PREVARGTEQ:OracleCurseLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsightRange|15|TYPE=Base|PREVARGTEQ:OracleCurseLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 489,
+    "record_key": "Oracle ~ Clouded Vision"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Advanced Mutagen ~ Restoring Change",
+    "name": "Restoring Change",
+    "class": "Advanced Mutagen",
+    "description": "When the chymist assumes her mutagenic form or returns to her normal form from her mutagenic form, she heals a number of hit points equal to 1d8 + %1.|MasterChymist_RestoringChange_Healing",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Advanced Mutagen ~ Restoring Change"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterChymistAdvancedMutagen.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_RestoringChange_Healing|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When the chymist assumes her mutagenic form or returns to her normal form from her mutagenic form, she heals a number of hit points equal to 1d8 + %1.|MasterChymist_RestoringChange_Healing"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_RestoringChange_Healing|MasterChymistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Master Chymist Advanced Mutagen"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1383,
+    "record_key": "Advanced Mutagen ~ Restoring Change"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

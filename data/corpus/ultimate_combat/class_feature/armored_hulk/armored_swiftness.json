@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Armored Hulk ~ Armored Swiftness",
+    "name": "Armored Swiftness",
+    "class": "Barbarian",
+    "description": "At 2nd level, an armored hulk moves faster in medium and heavy armor. When wearing medium or heavy armor, an armored hulk can move 5 feet faster than normal, to a maximum of her speed. This ability replaces uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armored Hulk ~ Armored Swiftness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwiftnessArmorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an armored hulk moves faster in medium and heavy armor. When wearing medium or heavy armor, an armored hulk can move 5 feet faster than normal, to a maximum of her speed. This ability replaces uncanny dodge."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|SwiftnessArmorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwiftnessArmorBonus|5|PREEQUIP:1,TYPE=Armor.Medium,TYPE=Armor.Heavy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 316,
+    "record_key": "Armored Hulk ~ Armored Swiftness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

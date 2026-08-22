@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator Archetype ~ Infiltrator",
+    "name": "Infiltrator",
+    "class": "Investigator Archetype",
+    "description": "An infiltrator specializes in investigating or disrupting groups from within. He uses his specialized set of skills and alchemical abilities to morph into the shape of the people or creatures whose company he's infiltrating, or even specific individuals.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Infiltrator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype.InvestigatorTrapfinding.InvestigatorPoisonLore.InvestigatorPoisonResistance"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InvestigatorTrapfinding,TYPE.InvestigatorPoisonLore,TYPE.InvestigatorPoisonResistance]"
+      },
+      {
+        "key": "DESC",
+        "value": "An infiltrator specializes in investigating or disrupting groups from within. He uses his specialized set of skills and alchemical abilities to morph into the shape of the people or creatures whose company he's infiltrating, or even specific individuals."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Infiltrator ~ Master of Disguise|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Infiltrator ~ Voice Mimicry|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Class Feature|AUTOMATIC|Infiltrator ~ Mimic Mastery|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Investigator"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3306,
+    "record_key": "Investigator Archetype ~ Infiltrator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

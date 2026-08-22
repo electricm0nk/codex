@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stygian Slayer ~ Invisibility",
+    "name": "Invisibility",
+    "class": "Slayer",
+    "description": "A stygian slayer can cast invisibility %1 times per day, using his slayer level as his caster level. The slayer uses his Intelligence modifier for concentration checks when using this ability.|floor(SlayerLVL/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stygian Slayer ~ Invisibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Stygian Slayer Class Feature.Slayer Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=floor(SlayerLVL/4)|CASTERLEVEL=SlayerLVL|Invisibility"
+      },
+      {
+        "key": "DESC",
+        "value": "A stygian slayer can cast invisibility %1 times per day, using his slayer level as his caster level. The slayer uses his Intelligence modifier for concentration checks when using this ability.|floor(SlayerLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3767,
+    "record_key": "Stygian Slayer ~ Invisibility"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Ability Boost",
+    "name": "Ability Boost",
+    "class": "Dragon Disciple",
+    "description": "As a dragon disciple gains levels in this prestige class, his ability scores increase as noted on Table 11-4. These increases stack and are gained as if through level advancement.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Ability Boost"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.ClassFeatures.Dragon Disciple Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As a dragon disciple gains levels in this prestige class, his ability scores increase as noted on Table 11-4. These increases stack and are gained as if through level advancement."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|PREVARGTEQ:DragonDiscipleLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|PREVARGTEQ:DragonDiscipleLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2|PREVARGTEQ:DragonDiscipleLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2|PREVARGTEQ:DragonDiscipleLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.381"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2966,
+    "record_key": "Dragon Disciple ~ Ability Boost"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

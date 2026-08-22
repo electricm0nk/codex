@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin ~ Aura of Righteousness",
+    "name": "Aura of Righteousness",
+    "class": "Paladin",
+    "description": "You gain DR 5/Evil and immunity to compulsion spells and spell-like abilities. Each ally within 10 feet or you gains a +4 morale bonus on saving throws against fear compulsion . This ability functions only while you are conscious, not if you are unconscious or dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin ~ Aura of Righteousness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural.Aura.Aura of Righteousness"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain DR 5/Evil and immunity to compulsion spells and spell-like abilities. Each ally within 10 feet or you gains a +4 morale bonus on saving throws against fear compulsion . This ability functions only while you are conscious, not if you are unconscious or dead."
+      },
+      {
+        "key": "DR",
+        "value": "5/Evil"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1381,
+    "record_key": "Paladin ~ Aura of Righteousness"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

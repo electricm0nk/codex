@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scalykind Domain ~ Venomous Stare",
+    "name": "Venomous Stare",
+    "class": "Scalykind Domain",
+    "description": "As a standard action, you can activate a gaze attack with a 30-foot range. This is an active gaze attack that can target a single creature within range. The target must make a Will save (DC %1). Those that fail take 1d6+ points of nonlethal damage and are fascinated until the beginning of your next turn. You can use this ability %2 times per day. This is a mind-affecting effect.|DomainScalykindDC|DomainScalykindTimes|PREVARLT:DomainScalykindLVL,2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scalykind Domain ~ Venomous Stare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can activate a gaze attack with a 30-foot range. This is an active gaze attack that can target a single creature within range. The target must make a Will save (DC %1). Those that fail take 1d6+ points of nonlethal damage and are fascinated until the beginning of your next turn. You can use this ability %2 times per day. This is a mind-affecting effect.|DomainScalykindDC|DomainScalykindTimes|PREVARLT:DomainScalykindLVL,2"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can activate a gaze attack with a 30-foot range. This is an active gaze attack that can target a single creature within range. The target must make a Will save (DC %1). Those that fail take 1d6+%2 points of nonlethal damage and are fascinated until the beginning of your next turn. You can use this ability %3 times per day. This is a mind-affecting effect.|DomainScalykindDC|DomainScalykindLVL/2|DomainScalykindTimes|PREVARGTEQ:DomainScalykindLVL,2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|DomainScalykindTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainScalykindTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 18,
+    "record_key": "Scalykind Domain ~ Venomous Stare"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

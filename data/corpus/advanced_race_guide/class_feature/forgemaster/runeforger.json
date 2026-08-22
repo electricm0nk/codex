@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forgemaster ~ Runeforger",
+    "name": "Runeforger",
+    "class": "Cleric",
+    "description": "A forgemaster may inscribe mystical runes upon a suit of armor, shield, or weapon as full-round action, using this ability %1 times per day. These runes last %2 rounds, but inscribing the same rune twice on an item increases this duration to %2 minutes, three times to %20 minutes, and four times to %2 hours. Erase affects runes as magical writing. Only one type of rune marked with an asterisk (*) may be placed on an item at any given time. This ability replaces channel energy.|3+INT|ClericLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgemaster ~ Runeforger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A forgemaster may inscribe mystical runes upon a suit of armor, shield, or weapon as full-round action, using this ability %1 times per day. These runes last %2 rounds, but inscribing the same rune twice on an item increases this duration to %2 minutes, three times to %20 minutes, and four times to %2 hours. Erase affects runes as magical writing. Only one type of rune marked with an asterisk (*) may be placed on an item at any given time. This ability replaces channel energy.|3+INT|ClericLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Runeforger Option|1+ClericLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 64,
+    "record_key": "Forgemaster ~ Runeforger"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

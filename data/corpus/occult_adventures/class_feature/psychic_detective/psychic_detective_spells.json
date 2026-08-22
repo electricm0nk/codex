@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Detective ~ Psychic Detective Spells",
+    "name": "Psychic Detective Spells",
+    "class": "Investigator",
+    "description": "A psychic detective has the following spells on her spell list, in addition to psychic spells of 6th level or lower. 1st-Detect chaos, detect evil, detect good, detect law, find traps. 3rd-Calm spirit*, daylight. 4th-Modify memory. 6th-Banishment, moment of prescience, scrying (greater). This ability replaces alchemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Detective ~ Psychic Detective Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Detective Class Feature.Investigator Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychic detective has the following spells on her spell list, in addition to psychic spells of 6th level or lower. 1st-Detect chaos, detect evil, detect good, detect law, find traps. 3rd-Calm spirit*, daylight. 4th-Modify memory. 6th-Banishment, moment of prescience, scrying (greater). This ability replaces alchemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1760,
+    "record_key": "Psychic Detective ~ Psychic Detective Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

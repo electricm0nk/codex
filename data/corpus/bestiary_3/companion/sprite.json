@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "ability_keys": [
       "bestiary_3:companion:sprite_luminous",
@@ -18,6 +16,108 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Fey",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Sprite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "CR",
+        "value": "1/3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "2/cold iron"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|D"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Fey:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,15,Fly,60"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "D"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "D",
@@ -62,16 +162,18 @@
       "Fey"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
-    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb",
-    "line": 21,
-    "record_key": "Sprite"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
+    "record_key": "Sprite",
+    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

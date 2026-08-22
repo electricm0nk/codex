@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant Metal School ~ Shrapnel Burst",
+    "name": "Shrapnel Burst",
+    "class": "Savant Metal School",
+    "description": "As a swift action, you can cause jagged pieces of metal to explode outward from your body. These shards deal %1d6 points of piercing damage to all creatures within a 10-foot-radius burst. A Reflex save (DC %3) halves this damage. In addition, the twisted scraps of metal make the area difficult terrain until your next turn (at which time they disappear). You can use this ability %2/day.|ShrapnelBurstDice|ShrapnelBurstTimes|ShrapnelBurstDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Metal School ~ Shrapnel Burst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShrapnelBurstDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShrapnelBurstTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShrapnelBurstDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can cause jagged pieces of metal to explode outward from your body. These shards deal %1d6 points of piercing damage to all creatures within a 10-foot-radius burst. A Reflex save (DC %3) halves this damage. In addition, the twisted scraps of metal make the area difficult terrain until your next turn (at which time they disappear). You can use this ability %2/day.|ShrapnelBurstDice|ShrapnelBurstTimes|ShrapnelBurstDC"
+      },
+      {
+        "key": "DESC",
+        "value": "The shrapnel bypasses damage reduction as if it were a magic weapon.|PRECLASS:1,Arcanist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Shrapnel Burst"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShrapnelBurstDice|max(1,floor(classlevel(\"Arcanist\")/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShrapnelBurstTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShrapnelBurstDC|10+classlevel(\"Arcanist\")/2+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShrapnelBurstTimes|1|PRECLASS:1,Arcanist=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShrapnelBurstTimes|1|PRECLASS:1,Arcanist=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShrapnelBurstDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Shrapnel Burst)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2629,
+    "record_key": "Savant Metal School ~ Shrapnel Burst"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Quick Drag",
+    "name": "Quick Drag",
+    "class": "Warpriest Bonus Feat",
+    "description": "You drag your enemy and deliver a punishing blow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Quick Drag"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Drag,Power Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "DESC",
+        "value": "You drag your enemy and deliver a punishing blow."
+      },
+      {
+        "key": "DESC",
+        "value": " On your turn, you can perform a single drag combat maneuver (Advanced Players Guide 320) in place of one of your melee attacks. You must choose the melee attack with the highest base attack bonus to make the drag. &nl; [Normal] A drag combat maneuver is a standard action."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Quick Drag"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.114"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4519,
+    "record_key": "Warpriest Bonus Feat ~ Quick Drag"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

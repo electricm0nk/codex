@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "PISTOLERO ~ Up Close and Deadly",
+    "name": "Up Close and Deadly",
+    "class": "PISTOLERO",
+    "description": "At 1st level, when the pistolero hits a target with a one-handed firearm that is not making a scatter shot, she can spend 1 grit point to deal 1d6 points of extra damage on a hit. If she misses with the attack, she grazes the target, dealing half the extra damage anyway. This is precision damage and is not multiplied if the attack is a critical hit. This precision damage increases to 2d6 at 5th level, to 3d6 at 10th level, to 4d6 at 15th level, and to 5d6 at 20th level. This precision damage stacks with sneak attack and other forms of precision damage. The cost of using this deed cannot be reduced with the Signature Deed feat, the true grit class feature, or any similar effect. This deed replaces the deadeye deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "PISTOLERO ~ Up Close and Deadly"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Class_Gunslinger_Deed_LVL01"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality.DeedHasCost"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, when the pistolero hits a target with a one-handed firearm that is not making a scatter shot, she can spend 1 grit point to deal 1d6 points of extra damage on a hit. If she misses with the attack, she grazes the target, dealing half the extra damage anyway. This is precision damage and is not multiplied if the attack is a critical hit. This precision damage increases to 2d6 at 5th level, to 3d6 at 10th level, to 4d6 at 15th level, and to 5d6 at 20th level. This precision damage stacks with sneak attack and other forms of precision damage. The cost of using this deed cannot be reduced with the Signature Deed feat, the true grit class feature, or any similar effect. This deed replaces the deadeye deed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Deeds"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 847,
+    "record_key": "PISTOLERO ~ Up Close and Deadly"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

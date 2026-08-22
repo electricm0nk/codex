@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterpiece ~ Requiem of the Fallen Priest-King",
+    "name": "Requiem of the Fallen Priest-King",
+    "class": "Masterpiece",
+    "description": "Your performance reveals ways to cheat time itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ Requiem of the Fallen Priest-King"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Requiem of the Fallen Priest-King"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DESC",
+        "value": "Your performance reveals ways to cheat time itself."
+      },
+      {
+        "key": "DESC",
+        "value": " This piece tells the story of a mighty priest-king who seemed to defy time by snatching near-victory from an overwhelming number of enemies. When you complete the performance, you gain the ability to accelerate time once, which must be used in the next 10 minutes. When you perform this masterpiece, you gain the ability to spend a swift action to perform a nonmagical action that normally requires a move action or a standard action. For example, you could make a full attack, then spend a swift action to take a normal move, load a light crossbow, or draw a weapon in the same round. You must use this extra action within 10 minutes of performing the masterpiece; otherwise the benefit is lost. This ability does not stack with other effects that increase your speed (such as haste) or alter time (such as time stop). Your allies may benefit from this masterpiece, but they must listen to it intently (to the exclusion of all other activities) for the duration of the performance, and you must expend 1 round of bardic performance for each ally other than yourself whom you want to gain the ability to accelerate time (for example, affecting yourself and five others requires expending 11 rounds of bardic performance). This is a language-dependent effect.  Use: 5 bardic performance rounds, +1 round per additional person affected.  Action: 1 minute."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 180,
+    "record_key": "Masterpiece ~ Requiem of the Fallen Priest-King"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

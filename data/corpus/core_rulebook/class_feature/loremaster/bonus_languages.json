@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Loremaster ~ Bonus Languages",
+    "name": "Bonus Languages",
+    "class": "Loremaster",
+    "description": "A loremaster can learn any new language at 4th and 8th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Loremaster ~ Bonus Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.LoremasterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BonusLanguageCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A loremaster can learn any new language at 4th and 8th level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Add Spoken Language|BonusLanguageCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusLanguageCount|LoremasterLVL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.386"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3021,
+    "record_key": "Loremaster ~ Bonus Languages"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

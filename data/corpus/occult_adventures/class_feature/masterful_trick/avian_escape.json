@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterful Trick ~ Avian Escape",
+    "name": "Avian Escape",
+    "class": "Masterful Trick",
+    "description": "The subject changes shape to elude an attacking enemy. The mesmerist can trigger this trick when the subject takes damage from an enemy's attack. The subject transforms into a bird (as beast shape III). Though the subject can appear as any Tiny bird, it uses the statistics for a raven. This is polymorph effect. (Masterful Trick)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterful Trick ~ Avian Escape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mesmerist ~ Masterful Tricks"
+      },
+      {
+        "key": "DESC",
+        "value": "The subject changes shape to elude an attacking enemy. The mesmerist can trigger this trick when the subject takes damage from an enemy's attack. The subject transforms into a bird (as beast shape III). Though the subject can appear as any Tiny bird, it uses the statistics for a raven. This is polymorph effect. (Masterful Trick)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 967,
+    "record_key": "Masterful Trick ~ Avian Escape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

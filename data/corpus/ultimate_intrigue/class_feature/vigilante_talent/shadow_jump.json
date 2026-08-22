@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Shadow Jump",
+    "name": "Shadow Jump",
+    "class": "Vigilante Talent",
+    "description": "The cabalist gains the shadowdancer's shadow jump ability with an effective shadowdancer level equal to his vigilante level - 6. If he has levels in shadowdancer, those levels stack with his vigilante levels to determine the total distance per day he can shadow jump (to a maximum of 320 feet per day). (The cabalist gains the ability to travel between shadows as if by means of a dimension door spell. The limitation is that the magical transport must begin and end in an area with at least some dim light. The cabalist can jump up to a total of %1 feet each day in this way; this may be a single jump or multiple jumps. This amount can be split among many jumps, but each one, no matter how small, counts as a 10-foot increment.)|min(320,ShadowJump)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Shadow Jump"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Shadow Jump"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsCabalist,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowJump|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The cabalist gains the shadowdancer's shadow jump ability with an effective shadowdancer level equal to his vigilante level - 6. If he has levels in shadowdancer, those levels stack with his vigilante levels to determine the total distance per day he can shadow jump (to a maximum of 320 feet per day). (The cabalist gains the ability to travel between shadows as if by means of a dimension door spell. The limitation is that the magical transport must begin and end in an area with at least some dim light. The cabalist can jump up to a total of %1 feet each day in this way; this may be a single jump or multiple jumps. This amount can be split among many jumps, but each one, no matter how small, counts as a 10-foot increment.)|min(320,ShadowJump)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowJump|20|PREVARGTEQ:(VigilanteLVL-6),4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowJump|20|PREVARGTEQ:(VigilanteLVL-6),6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowJump|40|PREVARGTEQ:(VigilanteLVL-6),8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowJump|80|PREVARGTEQ:(VigilanteLVL-6),10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft)|min(320,ShadowJump)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1007,
+    "record_key": "Vigilante Talent ~ Shadow Jump"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

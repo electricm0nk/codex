@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Treesinger",
+    "name": "Treesinger",
+    "class": "Druid Archetype",
+    "description": "Elves live far longer than other common races, and a single elf may see whole empires rise and fall. Given the impermanence of the cultures around them, it's small wonder that some elves turn to the timeless growth of nature for solace, finding allies among the great trees themselves, and even leading the forest's plants into combat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Treesinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidNatureBond.DruidWildEmpathy.DruidWildShape"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Treesinger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureBond,TYPE.DruidWildEmpathy,TYPE.DruidWildShape]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Elves live far longer than other common races, and a single elf may see whole empires rise and fall. Given the impermanence of the cultures around them, it's small wonder that some elves turn to the timeless growth of nature for solace, finding allies among the great trees themselves, and even leading the forest's plants into combat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Treesinger ~ Plant Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Treesinger ~ Green Empathy|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Treesinger ~ Wild Shape|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 108,
+    "record_key": "Druid Archetype ~ Treesinger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

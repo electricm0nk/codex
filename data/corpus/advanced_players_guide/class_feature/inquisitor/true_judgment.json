@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor ~ True Judgment",
+    "name": "True Judgment",
+    "class": "Inquisitor",
+    "description": "An inquisitor can call true judgment down upon a foe during combat. Whenever an inquisitor uses her judgment ability, the inquisitor can invoke true judgment on a foe as a swift action. Once declared, the inquisitor can make a single melee (or ranged attack, if the foe is within 30 feet) against the target. If the attack hits, it deals damage normally and the target must make a Fortitude save (DC %1) or die. Once the attack is made, all of the bonuses from the inquisitor's judgments reset to those granted on the first round (although the slayer judgment remains at the maximum bonus). Regardless of whether or not the save is made, the target creature is immune to the inquisitor's true judgment ability for 24 hours.|10+InquisitorLVL/2+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor ~ True Judgment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An inquisitor can call true judgment down upon a foe during combat. Whenever an inquisitor uses her judgment ability, the inquisitor can invoke true judgment on a foe as a swift action. Once declared, the inquisitor can make a single melee (or ranged attack, if the foe is within 30 feet) against the target. If the attack hits, it deals damage normally and the target must make a Fortitude save (DC %1) or die. Once the attack is made, all of the bonuses from the inquisitor's judgments reset to those granted on the first round (although the slayer judgment remains at the maximum bonus). Regardless of whether or not the save is made, the target creature is immune to the inquisitor's true judgment ability for 24 hours.|10+InquisitorLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 313,
+    "record_key": "Inquisitor ~ True Judgment"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

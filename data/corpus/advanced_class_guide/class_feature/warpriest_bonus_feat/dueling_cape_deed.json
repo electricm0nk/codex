@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Dueling Cape Deed",
+    "name": "Dueling Cape Deed",
+    "class": "Warpriest Bonus Feat",
+    "description": "As a move action, you can wrap a cape that you're wearing around your arm (removing it if necessary), and treat it as a buckler. If you are using the cape in this way, and an opponent misses you with a melee attack, as an immediate action you can spend 1 panache point to release your cape from your arm and entangle your foe in it. The foe can free it by using a full-round action to escape or by destroying the cape; a typical cape has hardness 1 and 3 hit points. You can use this feat with items similar in shape and weight to a cape, such as a cloak or a curtain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Dueling Cape Deed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Panache"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Dodge"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Sleight of Hand=1"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can wrap a cape that you're wearing around your arm (removing it if necessary), and treat it as a buckler. If you are using the cape in this way, and an opponent misses you with a melee attack, as an immediate action you can spend 1 panache point to release your cape from your arm and entangle your foe in it. The foe can free it by using a full-round action to escape or by destroying the cape; a typical cape has hardness 1 and 3 hit points. You can use this feat with items similar in shape and weight to a cape, such as a cloak or a curtain."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Dueling Cape Deed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4153,
+    "record_key": "Warpriest Bonus Feat ~ Dueling Cape Deed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

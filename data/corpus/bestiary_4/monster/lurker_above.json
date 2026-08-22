@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "7",
@@ -18,6 +16,152 @@
     ],
     "race_subtype": null,
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Lurker Above"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In rocky areas|12|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|2"
+      },
+      {
+        "key": "CR",
+        "value": "7"
+      },
+      {
+        "key": "DR",
+        "value": "10/Piercing or Slashing"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Lurker Above"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Perception|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:10"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Climb,5,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*1,3d6,SPROP=plus grab"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Lurking Ray"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
     "size": "H",
     "source_page": "p.187",
     "speeds": [
@@ -35,16 +179,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 157,
-    "record_key": "Lurker Above"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 157,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Lurker Above",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager ~ Spells",
+    "name": "Spells",
+    "class": "Bloodrager",
+    "description": "Beginning at 4th level, a bloodrager gains the ability to cast a small number of arcane spells drawn from the bloodrager spell list. To learn or cast a spell, a bloodrager must have a Charisma score equal to at least 10 + the spell level. He can cast spells he knows without preparing them ahead of time. The saving throw DC against a bloodrager's spell is 10 + the spell level + the bloodrager's Charisma modifier.&nl;Like other spellcasters, a bloodrager can cast only a certain number of spells of each level per day. In addition, he receives bonus spells per day if he has a high Charisma score. The bloodrager does not need to prepare these spells in advance; he can cast any spell he knows at any time, assuming he hasn't yet used up his allotment of spells per day for the spell's level.&nl;The bloodrager's selection of spells is limited. Unlike spells per day, the number of spells a bloodrager knows is not affected by his Charisma score, but it is affected by any bonus spells he gains from his bloodline. At 8th level and every 3 levels thereafter, a bloodrager can choose to learn a new spell in place of one he already knows. This swap follows all the same rules as for a sorcerer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Beginning at 4th level, a bloodrager gains the ability to cast a small number of arcane spells drawn from the bloodrager spell list. To learn or cast a spell, a bloodrager must have a Charisma score equal to at least 10 + the spell level. He can cast spells he knows without preparing them ahead of time. The saving throw DC against a bloodrager's spell is 10 + the spell level + the bloodrager's Charisma modifier.&nl;Like other spellcasters, a bloodrager can cast only a certain number of spells of each level per day. In addition, he receives bonus spells per day if he has a high Charisma score. The bloodrager does not need to prepare these spells in advance; he can cast any spell he knows at any time, assuming he hasn't yet used up his allotment of spells per day for the spell's level.&nl;The bloodrager's selection of spells is limited. Unlike spells per day, the number of spells a bloodrager knows is not affected by his Charisma score, but it is affected by any bonus spells he gains from his bloodline. At 8th level and every 3 levels thereafter, a bloodrager can choose to learn a new spell in place of one he already knows. This swap follows all the same rules as for a sorcerer."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 339,
+    "record_key": "Bloodrager ~ Spells"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

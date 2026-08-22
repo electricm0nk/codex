@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Firebrand",
-    "school": "Transmutation",
-    "level": 7,
     "description": "You mark several allies with a flaming rune. This rune does not cause damage, and sheds light as if it were a torch. While the firebrand burns, any creature it marks is immune to damage from any fire spell you cast. All of the target's weapons (both natural and manufactured) inflict +1d6 points of fire damage on a hit (this bonus fire damage stacks with any amount of fire damage a creature's weapons might already inflict). At any point during the spell's duration, a creature bearing a firebrand can launch a beam of fire at any target within 30 feet as a swift action. This ray requires a ranged touch attack to hit and deals 6d6 points of fire damage. Once a creature uses its firebrand to fire a ray in this manner, the effects of the spell end for that creature.",
-    "full_text": true
+    "full_text": true,
+    "key": "Firebrand",
+    "level": 7,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Allies gain flaming weapons, immunity to your fire spells, and a one-use ray of fire attack.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You mark several allies with a flaming rune. This rune does not cause damage, and sheds light as if it were a torch. While the firebrand burns, any creature it marks is immune to damage from any fire spell you cast. All of the target's weapons (both natural and manufactured) inflict +1d6 points of fire damage on a hit (this bonus fire damage stacks with any amount of fire damage a creature's weapons might already inflict). At any point during the spell's duration, a creature bearing a firebrand can launch a beam of fire at any target within 30 feet as a swift action. This ray requires a ranged touch attack to hit and deals 6d6 points of fire damage. Once a creature uses its firebrand to fire a ray in this manner, the effects of the spell end for that creature.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless), but see below"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/firebrand.html#_firebrand"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL/4) creatures, no two of which can be more than 30 ft. apart"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 118,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1951,
-    "record_key": "Firebrand"
+    "record_key": "Firebrand",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

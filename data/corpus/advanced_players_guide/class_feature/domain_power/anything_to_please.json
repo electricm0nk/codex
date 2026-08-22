@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Anything to Please",
+    "name": "Anything to Please",
+    "class": "Domain Power",
+    "description": "At 8th level, you can compel a creature within 30 feet to attempt to please you as a standard action. The creature receives a Will save to negate this affect. If the save fails, the creature attacks your enemies for 1 round, gives you its most valuable item, or drops prone at your feet and grovels for 1d4 rounds (GM's choice). You can use this ability %1 times per day. This is a mind-affecting effect.|CharmLVL/4-1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Anything to Please"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can compel a creature within 30 feet to attempt to please you as a standard action. The creature receives a Will save to negate this affect. If the save fails, the creature attacks your enemies for 1 round, gives you its most valuable item, or drops prone at your feet and grovels for 1d4 rounds (GM's choice). You can use this ability %1 times per day. This is a mind-affecting effect.|CharmLVL/4-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CharmLVL/4-1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1853,
+    "record_key": "Domain Power ~ Anything to Please"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Blue Rose ~ Shield of Blades",
+    "name": "Shield of Blades",
+    "class": "Order of the Blue Rose",
+    "description": "At 15th level, the cavalier gains an expert sense of impending violence around him. When taking the total defense action, the cavalier can extend his protection to those around him, granting a +2 circumstance bonus to AC to all adjacent allies. In addition, while taking the total defense action, as an immediate action, the cavalier can attempt to deflect an attack by making an attack roll opposed by the attacker's original attack roll. If successful, the attack is deflected and deals no damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Blue Rose ~ Shield of Blades"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, the cavalier gains an expert sense of impending violence around him. When taking the total defense action, the cavalier can extend his protection to those around him, granting a +2 circumstance bonus to AC to all adjacent allies. In addition, while taking the total defense action, as an immediate action, the cavalier can attempt to deflect an attack by making an attack roll opposed by the attacker's original attack roll. If successful, the attack is deflected and deals no damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 442,
+    "record_key": "Order of the Blue Rose ~ Shield of Blades"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

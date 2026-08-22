@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Any nonevil creature within the area of a blasphemy spell suffers the following ill effects. \nHD | Effect \nEqual to caster level | Dazed \nUp to caster level -1 | Weakened, dazed \nUp to caster level -5 | Paralyzed, weakened, dazed \nUp to caster level -10 | Killed, paralyzed, weakened, dazed \nThe effects are cumulative and concurrent. A successful Will save reduces or eliminates these effects. Creatures affected by multiple effects make only one save and apply the result to all the effects. Dazed: The creature can take no actions for 1 round, though it defends itself normally. Save negates. Weakened: The creature's Strength score decreases by 2d6 points for 2d4 rounds. Save for half. Paralyzed: The creature is paralyzed and helpless for 1d10 minutes. Save reduces the paralyzed effect to 1 round. Killed: Living creatures die. Undead creatures are destroyed. Save negates. If the save is successful, the creature instead takes 3d6 points of damage + 1 point per caster level [maximum +25]. Furthermore, if you are on your home plane when you cast this spell, nonevil extraplanar creatures within the area are instantly banished back to their home planes. Creatures so banished cannot return for at least 24 hours. This effect takes place regardless of whether the creatures hear the blasphemy or not. The banishment effect allows a Will save [at a -4 penalty] to negate. Creatures whose Hit Dice exceed your caster level are unaffected by blasphemy.",
     "key": "Blasphemy",
-    "school": "Evocation",
     "level": 7,
-    "description": "Any nonevil creature within the area of a blasphemy spell suffers the following ill effects. \nHD | Effect \nEqual to caster level | Dazed \nUp to caster level -1 | Weakened, dazed \nUp to caster level -5 | Paralyzed, weakened, dazed \nUp to caster level -10 | Killed, paralyzed, weakened, dazed \nThe effects are cumulative and concurrent. A successful Will save reduces or eliminates these effects. Creatures affected by multiple effects make only one save and apply the result to all the effects. Dazed: The creature can take no actions for 1 round, though it defends itself normally. Save negates. Weakened: The creature's Strength score decreases by 2d6 points for 2d4 rounds. Save for half. Paralyzed: The creature is paralyzed and helpless for 1d10 minutes. Save reduces the paralyzed effect to 1 round. Killed: Living creatures die. Undead creatures are destroyed. Save negates. If the save is successful, the creature instead takes 3d6 points of damage + 1 point per caster level [maximum +25]. Furthermore, if you are on your home plane when you cast this spell, nonevil extraplanar creatures within the area are instantly banished back to their home planes. Creatures so banished cannot return for at least 24 hours. This effect takes place regardless of whether the creatures hear the blasphemy or not. The banishment effect allows a Will save [at a -4 penalty] to negate. Creatures whose Hit Dice exceed your caster level are unaffected by blasphemy."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Any nonevil creature within the area of a blasphemy spell suffers ill effects.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Any nonevil creature within the area of a blasphemy spell suffers the following ill effects. &nl;HD &pipe; Effect &nl;Equal to caster level &pipe; Dazed &nl;Up to caster level -1 &pipe; Weakened, dazed &nl;Up to caster level -5 &pipe; Paralyzed, weakened, dazed &nl;Up to caster level -10 &pipe; Killed, paralyzed, weakened, dazed &nl;The effects are cumulative and concurrent. A successful Will save reduces or eliminates these effects. Creatures affected by multiple effects make only one save and apply the result to all the effects. Dazed: The creature can take no actions for 1 round, though it defends itself normally. Save negates. Weakened: The creature's Strength score decreases by 2d6 points for 2d4 rounds. Save for half. Paralyzed: The creature is paralyzed and helpless for 1d10 minutes. Save reduces the paralyzed effect to 1 round. Killed: Living creatures die. Undead creatures are destroyed. Save negates. If the save is successful, the creature instead takes 3d6 points of damage + 1 point per caster level [maximum +25]. Furthermore, if you are on your home plane when you cast this spell, nonevil extraplanar creatures within the area are instantly banished back to their home planes. Creatures so banished cannot return for at least 24 hours. This effect takes place regardless of whether the creatures hear the blasphemy or not. The banishment effect allows a Will save [at a -4 penalty] to negate. Creatures whose Hit Dice exceed your caster level are unaffected by blasphemy.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Evil|Sonic"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Evil=7"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "40 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/blasphemy.html#_blasphemy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Nonevil creatures in a 40-ft.-radius spread centered on you"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 57,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 820,
-    "record_key": "Blasphemy.MOD"
+    "record_key": "Blasphemy",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

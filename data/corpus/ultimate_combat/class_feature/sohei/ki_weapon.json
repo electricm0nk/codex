@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sohei ~ Ki Weapon",
+    "name": "Ki Weapon",
+    "class": "Monk",
+    "description": "At 4th level, as a swift action, a sohei may spend 1 point from his ki pool to grant any weapon he wields (including his unarmed strike) a +1 enhancement bonus on attack and damage rolls, increasing by +1 per four levels after 4th to a maximum bonus of +5 at 20th level, until the end of his next turn. This ability replaces slow fall and abundant step.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sohei ~ Ki Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, as a swift action, a sohei may spend 1 point from his ki pool to grant any weapon he wields (including his unarmed strike) a +1 enhancement bonus on attack and damage rolls, increasing by +1 per four levels after 4th to a maximum bonus of +5 at 20th level, until the end of his next turn. This ability replaces slow fall and abundant step."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1356,
+    "record_key": "Sohei ~ Ki Weapon"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

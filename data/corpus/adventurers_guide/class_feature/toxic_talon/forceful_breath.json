@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Toxic Talon ~ Forceful Breath",
+    "name": "Forceful Breath",
+    "class": "Rogue",
+    "description": "A toxic talon is proficient with blowguns instead of hand crossbows. He can use a blowgun without penalty while prone. This alters the rogue's weapon proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxic Talon ~ Forceful Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.ToxicTalonClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "A toxic talon is proficient with blowguns instead of hand crossbows. He can use a blowgun without penalty while prone. This alters the rogue's weapon proficiencies."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Blowgun|Rapier|Sap|Shortbow|Sword (Short)|TYPE=Auto"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1026,
+    "record_key": "Toxic Talon ~ Forceful Breath"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

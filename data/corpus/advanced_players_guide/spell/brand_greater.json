@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Brand (Greater)",
-    "school": "Transmutation",
-    "level": 4,
     "description": "This spell functions like brand, except that it inflicts 1d6 points of damage when applied and cannot be removed, even temporarily. In addition, a greater brand blazes as bright as a torch when brought within 30 feet of a visible symbol of your faith. While the symbol is blazing, the recipient is sickened.  Like the effects of bestow curse, a greater brand cannot be dispelled, but it can be removed by any means that removes a mark of justice.",
-    "full_text": true
+    "full_text": true,
+    "key": "Brand (Greater)",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "As brand, but brand glows when near your holy symbol.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like brand, except that it inflicts 1d6 points of damage when applied and cannot be removed, even temporarily. In addition, a greater brand blazes as bright as a torch when brought within 30 feet of a visible symbol of your faith. While the symbol is blazing, the recipient is sickened.  Like the effects of bestow curse, a greater brand cannot be dispelled, but it can be removed by any means that removes a mark of justice.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "permanent"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Brand, Greater"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/brand.html#_brand,-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 48,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1876,
-    "record_key": "Brand (Greater)"
+    "record_key": "Brand (Greater)",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

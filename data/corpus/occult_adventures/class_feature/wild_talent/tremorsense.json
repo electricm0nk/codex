@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Tremorsense",
+    "name": "Tremorsense",
+    "class": "Wild Talent",
+    "description": "Element earth; Type utility (Su); Level 3; Burn 0 You can take a move action to gain tremorsense 30 feet for 1 round on any earth or stone surface that you touch. You can accept 1 point of burn to increase the duration to 1 round per kineticist level you possess. While benefiting from this tremorsense, your earth blasts and composite blasts that include earth components don't suffer a miss chance from concealment or total concealment against creatures you detect with your tremorsense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Tremorsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Earth,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element earth; Type utility (Su); Level 3; Burn 0 You can take a move action to gain tremorsense 30 feet for 1 round on any earth or stone surface that you touch. You can accept 1 point of burn to increase the duration to 1 round per kineticist level you possess. While benefiting from this tremorsense, your earth blasts and composite blasts that include earth components don't suffer a miss chance from concealment or total concealment against creatures you detect with your tremorsense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 792,
+    "record_key": "Wild Talent ~ Tremorsense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

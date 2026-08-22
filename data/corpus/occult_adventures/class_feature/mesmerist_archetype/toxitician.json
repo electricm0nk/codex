@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Toxitician",
+    "name": "Toxitician",
+    "class": "Mesmerist Archetype",
+    "description": "Toxiticians forgo the mesmerist's stare, instead combining their psychic power with their alchemical knowledge to craft injections that torment their foes and bolster themselves and their allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Toxitician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Mesmerist Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Toxitician],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_HypnoticStare=True,Mesmerist_Archetype_PainfulStare=True,Mesmerist_Archetype_BoldStare=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_GlibLie=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Toxiticians forgo the mesmerist's stare, instead combining their psychic power with their alchemical knowledge to craft injections that torment their foes and bolster themselves and their allies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Toxitician ~ Deft Fingers|Toxitician ~ Injections|Toxitician ~ Painful Injection|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Toxitician ~ Injection Improvement|Toxitician ~ Treatment Vials|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Class Feature|AUTOMATIC|Toxitician ~ Improved Injections|PRECLASS:1,Mesmerist=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Mesmerist"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_HypnoticStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_PainfulStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_BoldStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_GlibLie|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_HypnoticStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_PainfulStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_BoldStare|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_GlibLie|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1461,
+    "record_key": "Mesmerist Archetype ~ Toxitician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

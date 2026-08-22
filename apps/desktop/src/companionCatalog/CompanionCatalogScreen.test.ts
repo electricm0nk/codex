@@ -1,15 +1,19 @@
 import {
   BOOK_LABELS,
   SIZE_LABELS,
+  DAMAGE_BONUS_CAPTION,
+  SKILL_BONUS_CAPTION,
   STAT_ADJUSTMENT_CAPTION,
   formatAbilityHeading,
   formatBook,
   formatCreatureType,
+  formatDamageBonus,
   formatName,
   formatNaturalAttack,
   formatReach,
   formatServedBooks,
   formatSize,
+  formatSkillBonus,
   formatSpeedClause,
   formatStatAdjustment,
 } from './CompanionCatalogScreen';
@@ -86,6 +90,8 @@ function entry(overrides: Partial<CompanionCatalogEntryDto>): CompanionCatalogEn
     monsterClass: 'Companion:2',
     typeSegments: [],
     naturalAttacks: [],
+    naturalAttackDamageBonuses: [],
+    skillAbilityDiffBonuses: [],
     statAdjustments: [],
     naturalArmor: null,
     sourcePage: null,
@@ -196,6 +202,7 @@ function testAnAbilityHeadingReadsTheWayTheBookPrintsIt() {
       description: null,
       descriptionVariants: [],
       statAdjustments: [],
+      saveDcFormulas: [],
       sourcePage: null,
     }),
     'Record Audio — SpecialQuality · Supernatural',
@@ -211,6 +218,7 @@ function testAnAbilityHeadingReadsTheWayTheBookPrintsIt() {
       description: null,
       descriptionVariants: [],
       statAdjustments: [],
+      saveDcFormulas: [],
       sourcePage: null,
     }),
     'Companion Advancement (Griffon) — CompanionAdvancement',
@@ -229,6 +237,7 @@ function testAnUnmodelledFacetFallsBackToItsVerbatimSegments() {
       description: 'text',
       descriptionVariants: [],
       statAdjustments: [],
+      saveDcFormulas: [],
       sourcePage: null,
     }),
     'Potion Installation — ClockworkFamiliarInstalledItem',
@@ -244,6 +253,7 @@ function testAnUnmodelledFacetFallsBackToItsVerbatimSegments() {
       description: null,
       descriptionVariants: [],
       statAdjustments: [],
+      saveDcFormulas: [],
       sourcePage: null,
     }),
     'Nameless',
@@ -265,6 +275,58 @@ function testTheBlurbNamesTheBooksTheResponseActuallyContains() {
   assertEqual(formatServedBooks([]), 'no book', 'an empty response says so');
 }
 
+/**
+ * The damage-bonus block. The corpus states a RULE here, not a number, and the
+ * two shapes the screen must keep apart are "the engine read the formula" and
+ * "the engine refused to interpret it" — collapsing them would tell the player
+ * a formula was understood when it was not.
+ */
+function testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo() {
+  assertEqual(
+    formatDamageBonus({
+      attack: 'Bite',
+      bonus: '+1/2 Str modifier (minimum +0)',
+      unparsedFormula: null,
+    }),
+    'Bite +1/2 Str modifier (minimum +0)',
+    'a parsed token prints the rule the corpus states'
+  );
+  assertEqual(
+    formatDamageBonus({ attack: 'Tail', bonus: 'STR/2', unparsedFormula: 'STR/2' }),
+    'Tail STR/2 (formula not interpreted)',
+    'a refused formula prints verbatim AND says it was not interpreted'
+  );
+  assert(
+    DAMAGE_BONUS_CAPTION.includes('BONUS:WEAPONPROF'),
+    'the caption names the corpus token so the reader knows it is a corpus fact'
+  );
+}
+
+/**
+ * The skill-bonus block's twin of the damage-bonus test above: the same
+ * parsed-vs-refused distinction, and the skills list joined into the label.
+ */
+function testASkillBonusPrintsTheRuleAndAnUnparsedOneSaysSo() {
+  assertEqual(
+    formatSkillBonus({
+      skills: ['Climb', 'Swim'],
+      bonus: 'Dex modifier − Str modifier',
+      unparsedFormula: null,
+    }),
+    'Climb, Swim: Dex modifier − Str modifier',
+    'a parsed token prints the rule the corpus states, with every named skill'
+  );
+  assertEqual(
+    formatSkillBonus({ skills: ['Climb'], bonus: 'CON-INT-WIS', unparsedFormula: 'CON-INT-WIS' }),
+    'Climb: CON-INT-WIS (formula not interpreted)',
+    'a refused formula prints verbatim AND says it was not interpreted'
+  );
+  assert(
+    SKILL_BONUS_CAPTION.includes('BONUS:SKILL'),
+    'the caption names the corpus token so the reader knows it is a corpus fact'
+  );
+}
+
 function main() {
   testEveryServedBookHasARealName();
   testEverySizeCodeTheRosterCarriesHasALabel();
@@ -275,6 +337,8 @@ function main() {
   testTheCompanionWrapperStaysInTheName();
   testAStatAdjustmentKeepsItsSignAndItsCaption();
   testAnAttackWithNoCorpusDicePrintsItsNameAlone();
+  testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo();
+  testASkillBonusPrintsTheRuleAndAnUnparsedOneSaysSo();
   testAnAbilityHeadingReadsTheWayTheBookPrintsIt();
   testAnUnmodelledFacetFallsBackToItsVerbatimSegments();
   testTheBlurbNamesTheBooksTheResponseActuallyContains();

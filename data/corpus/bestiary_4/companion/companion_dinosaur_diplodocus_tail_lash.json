@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion (Dinosaur (Diplodocus)) ~ Tail Lash",
     "delivery": "Extraordinary",
@@ -14,6 +12,32 @@
     "owners": [
       "bestiary_4:companion:companion_dinosaur_diplodocus"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|DAMAGE|STR/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|TOHIT|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The diplodocus prefers to attack with its tail. The dinosaur can snap its incredibly long tail with surprising speed like an enormous whip-this is a primary attack that deals bludgeoning and slashing damage. A diplodocus can make two separate attacks with its tail lash as a full-attack action."
+      },
+      {
+        "key": "KEY",
+        "value": "Companion (Dinosaur (Diplodocus)) ~ Tail Lash"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -22,16 +46,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
-    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
-    "line": 21,
-    "record_key": "Companion (Dinosaur (Diplodocus)) ~ Tail Lash"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Companion (Dinosaur (Diplodocus)) ~ Tail Lash",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

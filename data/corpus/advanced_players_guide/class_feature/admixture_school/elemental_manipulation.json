@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Admixture School ~ Elemental Manipulation",
+    "name": "Elemental Manipulation",
+    "class": "Admixture School",
+    "description": "At 8th level, you can emit a 30-foot aura that transforms magical energy. Choose an energy type from acid, cold, electricity, and fire, and a second type to transform it into. Any magical source of energy of this type with a caster level no greater than %1 is altered to the chosen energy type. This includes supernatural effects from creatures with Hit Dice no greater than your caster level. For example, you could transform a white dragon's frigid breath weapon (a supernatural ability), but not a fire elemental's fiery touch (an extraordinary ability). If an effect lies only partially within your aura, only the portions within the aura are transformed. You can use this ability for a %1 rounds per day. The rounds do not need to be consecutive.|AdmixtureElementalManipulationTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Admixture School ~ Elemental Manipulation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AdmixtureElementalManipulationTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can emit a 30-foot aura that transforms magical energy. Choose an energy type from acid, cold, electricity, and fire, and a second type to transform it into. Any magical source of energy of this type with a caster level no greater than %1 is altered to the chosen energy type. This includes supernatural effects from creatures with Hit Dice no greater than your caster level. For example, you could transform a white dragon's frigid breath weapon (a supernatural ability), but not a fire elemental's fiery touch (an extraordinary ability). If an effect lies only partially within your aura, only the portions within the aura are transformed. You can use this ability for a %1 rounds per day. The rounds do not need to be consecutive.|AdmixtureElementalManipulationTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AdmixtureElementalManipulationTimes|EvocationSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AdmixtureElementalManipulationTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3334,
+    "record_key": "Admixture School ~ Elemental Manipulation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Gunmaster Initiative",
+    "name": "Gunmaster Initiative",
+    "class": "Vigilante Talent",
+    "description": "The gunmaster gains a +2 bonus on initiative checks. Furthermore, if he has the Quick Draw feat, his hands are free and unrestrained, and the firearm is not hidden, he can draw a single firearm as part of the initiative check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Gunmaster Initiative"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Gunmaster Initiative"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsGunmaster,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "The gunmaster gains a +2 bonus on initiative checks. Furthermore, if he has the Quick Draw feat, his hands are free and unrestrained, and the firearm is not hidden, he can draw a single firearm as part of the initiative check."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1017,
+    "record_key": "Vigilante Talent ~ Gunmaster Initiative"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

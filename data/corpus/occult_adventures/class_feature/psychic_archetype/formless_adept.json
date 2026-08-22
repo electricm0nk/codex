@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Archetype ~ Formless Adept",
+    "name": "Formless Adept",
+    "class": "Psychic Archetype",
+    "description": "Formless adepts master their psychic powers to unshackle themselves from the conf ines of the flesh and empower their spellcasting. They learn to assume increasingly insubstantial forms until they become like living ghosts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Archetype ~ Formless Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Psychic Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Archetype ~ Formless Adept],[!PREFACT:1,ABILITIES,Psychic_Archetype_PhrenicPool=true,Psychic_Archetype_PsychicDiscipline=true,Psychic_Archetype_DisciplinePowers=true,Psychic_Archetype_PhrenicAmplification1=true,Psychic_Archetype_DisciplineSpells=true,Psychic_Archetype_PhrenicAmplification15=true,Psychic_Archetype_RemadeSelf=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Formless adepts master their psychic powers to unshackle themselves from the conf ines of the flesh and empower their spellcasting. They learn to assume increasingly insubstantial forms until they become like living ghosts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Phrenic Charisma|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Formless Body|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Blurred Body|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Gaseous Body|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Incorporeal Body|PRECLASS:1,Psychic=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Formless Spell|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Bonus Spells|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Psychic Possession|PRECLASS:1,Psychic=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Class Feature|AUTOMATIC|Formless Adept ~ Formless Master|PRECLASS:1,Psychic=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_PhrenicPool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_PsychicDiscipline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_DisciplinePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_PhrenicAmplification1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_DisciplineSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_PhrenicAmplification15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_Archetype_RemadeSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_PsychicDiscipline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_DisciplinePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_PhrenicAmplification1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_DisciplineSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_PhrenicAmplification15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Psychic_CF_RemadeSelf|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1553,
+    "record_key": "Psychic Archetype ~ Formless Adept"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

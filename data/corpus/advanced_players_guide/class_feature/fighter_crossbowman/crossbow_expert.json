@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Crossbowman ~ Crossbow Expert",
+    "name": "Crossbow Expert",
+    "class": "Fighter",
+    "description": "At 5th level, a crossbowman gains a +1 bonus on attack and damage rolls with crossbows. This bonus increases by +1 per four levels after 5th. This ability replaces weapon training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Crossbowman ~ Crossbow Expert"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining1"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a crossbowman gains a +1 bonus on attack and damage rolls with crossbows. This bonus increases by +1 per four levels after 5th. This ability replaces weapon training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Crossbow|TOHIT,DAMAGE|max(0,((FighterLVL-1)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2140,
+    "record_key": "Fighter Crossbowman ~ Crossbow Expert"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blood Subdomain ~ Wounding Blade",
+    "name": "Wounding Blade",
+    "class": "Blood Subdomain",
+    "description": "At 8th level, you can give a weapon that you touch the wounding special weapon quality for %1 rounds. You can use this ability %2 per day.|DomainWarLVL/2|DomainWarLVL/4-1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Subdomain ~ Wounding Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can give a weapon that you touch the wounding special weapon quality for %1 rounds. You can use this ability %2 per day.|DomainWarLVL/2|DomainWarLVL/4-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1748,
+    "record_key": "Blood Subdomain ~ Wounding Blade"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

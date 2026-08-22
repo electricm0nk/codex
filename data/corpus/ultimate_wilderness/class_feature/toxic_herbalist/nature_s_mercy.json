@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Toxic Herbalist ~ Nature's Mercy",
+    "name": "Nature's Mercy",
+    "class": "Ranger",
+    "description": "A toxic herbalist's knowledge of the natural world offers respite from wounds and illness. Once per day, he can spend 1 hour in a wilderness area gathering herbs and other natural materials and combine them into a medicinal poultice-this hour can be integrated with the hour required for the ranger to prepare spells. Placing the poultice on a wound or ingesting it is a standard action; the creature receiving the poultice heals a number of hit points equal to 1d6 + the ranger's Wisdom modifier. At 8th level and every 5 levels thereafter, the ranger creates one additional poultice when using this ability, to a maximum of four at 18th level. Poultices remain potent for 1 hour. Additionally, at 8th level, the poultice neutralizes one poison affecting the recipient, as per neutralize poison. At 13th level, it also attempts to cure one disease affecting the recipient, as per remove disease. The caster level of both of these effects is equal to the toxic herbalist's level. These additional effects are supernatural effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Toxic Herbalist ~ Nature's Mercy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.ToxicHerbalistClassFeatures.SpecialQuality.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A toxic herbalist's knowledge of the natural world offers respite from wounds and illness. Once per day, he can spend 1 hour in a wilderness area gathering herbs and other natural materials and combine them into a medicinal poultice-this hour can be integrated with the hour required for the ranger to prepare spells. Placing the poultice on a wound or ingesting it is a standard action; the creature receiving the poultice heals a number of hit points equal to 1d6 + the ranger's Wisdom modifier. At 8th level and every 5 levels thereafter, the ranger creates one additional poultice when using this ability, to a maximum of four at 18th level. Poultices remain potent for 1 hour. Additionally, at 8th level, the poultice neutralizes one poison affecting the recipient, as per neutralize poison. At 13th level, it also attempts to cure one disease affecting the recipient, as per remove disease. The caster level of both of these effects is equal to the toxic herbalist's level. These additional effects are supernatural effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 937,
+    "record_key": "Toxic Herbalist ~ Nature's Mercy"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Sniper's Eye",
+    "name": "Sniper's Eye",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can apply her sneak attack damage on ranged attacks targeting foes within 30 feet that benefit from concealment. Foes with total concealment are still immune.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Sniper's Eye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.Extraordinary.SpecialAttack.AttackOption"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can apply her sneak attack damage on ranged attacks targeting foes within 30 feet that benefit from concealment. Foes with total concealment are still immune."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2917,
+    "record_key": "Rogue Talent ~ Sniper's Eye"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

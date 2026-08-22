@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Aranea ~ Change Shape",
     "delivery": "Supernatural",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_2:monster:aranea"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(humanoid; alter self)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An aranea can take the form of a Small or Medium humanoid or spider-humanoid hybrid.  In humanoid form, an aranea cannot use its bite, web, or poison.  In spider-humanoid hybrid form, an aranea looks like a humanoid with spidery fangs and spinnerets, with the latter typically located at the small of its back.  The aranea retains its bite attack, webs, and poison in this form, and can wield weapons and wear armor.  When in humanoid or hybrid form, an aranea's speed is 30 feet and it has no climb speed."
+      },
+      {
+        "key": "KEY",
+        "value": "Aranea ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.30",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 111,
-    "record_key": "Aranea ~ Change Shape"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 111,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Aranea ~ Change Shape",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

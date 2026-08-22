@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knife Master ~ Blade Sense",
+    "name": "Blade Sense",
+    "class": "Rogue",
+    "description": "At 3rd level, a knife master is so skilled in combat involving light blades that she gains a +1 dodge bonus to AC against attacks made against her with light blades. This bonus increases by +1 for every three levels, to a maximum of +6 at 18th level. This ability replaces trap sense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knife Master ~ Blade Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a knife master is so skilled in combat involving light blades that she gains a +1 dodge bonus to AC against attacks made against her with light blades. This bonus increases by +1 for every three levels, to a maximum of +6 at 18th level. This ability replaces trap sense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1706,
+    "record_key": "Knife Master ~ Blade Sense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Nymph ~ Unearthly Grace",
     "delivery": "Supernatural",
@@ -13,19 +11,51 @@
     "owners": [
       "beastiary:monster:nymph"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|CHA|TYPE=Deflection.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|CHA|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nymph adds her Charisma modifier as a racial bonus on all her saving throws, and as a deflection bonus to her Armor Class."
+      },
+      {
+        "key": "KEY",
+        "value": "Nymph ~ Unearthly Grace"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.217",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1001,
-    "record_key": "Nymph ~ Unearthly Grace"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1001,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Nymph ~ Unearthly Grace",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

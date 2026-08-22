@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hamatulatsu Master ~ Ki Pool",
+    "name": "Ki Pool",
+    "class": "Monk",
+    "description": "By spending 1 point from her ki pool as a swift action, a hamatulatsu master can make one additional attack at her highest attack bonus when making a flurry of blows attack. Alternatively, she can spend 1 ki point as a swift action to gain one additional use of her stunning fist ability that round, though this does not grant her an additional attack. Finally, as an immediate action, a hamatulatsu master can spend 1 ki point to make a single melee attack with a +2 bonus against a creature that has damaged her with a natural melee attack, unarmed strike, or weapon without the reach property. This ability otherwise functions as normal for a monk of her level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hamatulatsu Master ~ Ki Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 point from her ki pool as a swift action, a hamatulatsu master can make one additional attack at her highest attack bonus when making a flurry of blows attack. Alternatively, she can spend 1 ki point as a swift action to gain one additional use of her stunning fist ability that round, though this does not grant her an additional attack. Finally, as an immediate action, a hamatulatsu master can spend 1 ki point to make a single melee attack with a +2 bonus against a creature that has damaged her with a natural melee attack, unarmed strike, or weapon without the reach property. This ability otherwise functions as normal for a monk of her level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 83,
+    "record_key": "Hamatulatsu Master ~ Ki Pool"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

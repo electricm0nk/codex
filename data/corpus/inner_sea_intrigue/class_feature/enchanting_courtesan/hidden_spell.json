@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Enchanting Courtesan ~ Hidden Spell",
+    "name": "Hidden Spell",
+    "class": "Enchanting Courtesan",
+    "description": "An enchanting courtesan can undermine a foe's mental defenses with surprise. The enchanting courtesan gains a +%1 circumstance bonus to the save DC of his spells against foes who are unaware of his presence or consider him an ally. In these circumstances, the enchanting courtesan also gains a +%1 circumstance bonus on caster level checks to overcome targets' spell resistance and to penetrate abjurations such as nondetection.|EnchantingCourtesanHiddenSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchanting Courtesan ~ Hidden Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantingCourtesanHiddenSpell|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan can undermine a foe's mental defenses with surprise. The enchanting courtesan gains a +%1 circumstance bonus to the save DC of his spells against foes who are unaware of his presence or consider him an ally. In these circumstances, the enchanting courtesan also gains a +%1 circumstance bonus on caster level checks to overcome targets' spell resistance and to penetrate abjurations such as nondetection.|EnchantingCourtesanHiddenSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan can also undermine the mental defenses of a target that he is flanking or that is denied its Dexterity bonus to AC, but in these cases, the bonuses are each reduced by 1.|PREVARGTEQ:EnchantingCourtesanLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantingCourtesanHiddenSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantingCourtesanHiddenSpell|1|PREVARGTEQ:EnchantingCourtesanLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantingCourtesanHiddenSpell|1|PREVARGTEQ:EnchantingCourtesanLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 61,
+    "record_key": "Enchanting Courtesan ~ Hidden Spell"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

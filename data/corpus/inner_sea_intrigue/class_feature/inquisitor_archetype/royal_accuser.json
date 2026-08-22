@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Royal Accuser",
+    "name": "Royal Accuser",
+    "class": "Inquisitor Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Royal Accuser"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Royal Accuser],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_ClassSkills=True,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_DetectAlignment=True,Inquisitor_Archetype_SoloTactics=True,Inquisitor_Archetype_TeamworkFeat=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Royal Accuser ~ Class Skills|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Royal Accuser ~ Meticulous Inspection|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Royal Accuser ~ Detect Monsters and Secrets|PRECLASS:1,Inquisitor=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Royal Accuser ~ Favored Enemy|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Royal Accuser ~ Informed Hunch|PRECLASS:1,Inquisitor=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Royal Accuser ~ Greater Detect Magic|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Royal Accuser ~ Final Sway|PRECLASS:1,Inquisitor=18"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SoloTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TeamworkFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SoloTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TeamworkFeat|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 104,
+    "record_key": "Inquisitor Archetype ~ Royal Accuser"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Greater Host Devil ~ Shared Senses",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_greater_host"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All gaavs (and magaavs) within 100 feet of one another share the same senses. Thus, if one individual perceives something (for example, with a successful Perception check), all others within range are immediately aware of it. Senses are instantly relayed from one gaav or magaav to the next, allowing for the senses of a single devil to potentially spread through and inform an entire massive swarm instantly. It is still possible for a magaav to be surprised or flat-footed even if other gaavs or magaavs nearby are not. All magaavs may telepathically communicate with all other gaavs and magaavs within 100 feet at once, allowing the greater host devils to command entire swarms. Although magaavs rarely contradict one another, if faced with competing orders, gaavs follow the commands of the closest magaav."
+      },
+      {
+        "key": "KEY",
+        "value": "Greater Host Devil ~ Shared Senses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.59",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 39,
-    "record_key": "Greater Host Devil ~ Shared Senses"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Greater Host Devil ~ Shared Senses",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

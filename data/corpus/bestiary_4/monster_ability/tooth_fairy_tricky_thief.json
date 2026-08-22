@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Tooth Fairy ~ Tricky Thief",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:tooth_fairy"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A tooth fairy can use a dirty trick combat maneuver with its pliers to pinch an opponent's fingers, or a steal combat maneuver to steal an opponent's tooth. A finger pinch deals 1 point of Dexterity damage. Stealing a tooth deals 1 point of Charisma damage and 1 point of bleed damage. If the stolen tooth is reattached within 10 minutes and the character receives any amount of magical healing, the tooth reattaches, the bleed damage ends, and the Charisma damage is cured."
+      },
+      {
+        "key": "KEY",
+        "value": "Tooth Fairy ~ Tricky Thief"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1374,
-    "record_key": "Tooth Fairy ~ Tricky Thief"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1374,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Tooth Fairy ~ Tricky Thief",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

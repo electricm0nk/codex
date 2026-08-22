@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "creature bonded to this item can expend one use of mythic power to teleport the item to her waiting hand, as if using teleport object. The item must be on the same plane as the bonded creature for this ability to function.",
+    "key": "LEGEND_RETURNING",
+    "name": "LEGEND_RETURNING",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Legendary Item ~ Returning"
+      },
+      {
+        "key": "TYPE",
+        "value": "Legendary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Legendary"
+      },
+      {
+        "key": "SPROP",
+        "value": "creature bonded to this item can expend one use of mythic power to teleport the item to her waiting hand, as if using teleport object. The item must be on the same plane as the bonded creature for this ability to function."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 178,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "LEGEND_RETURNING",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

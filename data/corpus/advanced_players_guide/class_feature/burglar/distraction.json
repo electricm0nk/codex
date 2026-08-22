@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Burglar ~ Distraction",
+    "name": "Distraction",
+    "class": "Rogue",
+    "description": "At 8th level, whenever a burglar is detected while using Stealth, she can immediately attempt a Bluff skill check opposed by the Sense Motive skill of the creature that spotted her. If this check succeeds, the target assumes that the noise was something innocent and disregards the detection. This only functions if the creature cannot see the rogue. This ability can only be used once during a given Stealth attempt. If the same creature detects the rogue's presence again, the ability has no effect. This ability replaces improved uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Burglar ~ Distraction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RogueClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, whenever a burglar is detected while using Stealth, she can immediately attempt a Bluff skill check opposed by the Sense Motive skill of the creature that spotted her. If this check succeeds, the target assumes that the noise was something innocent and disregards the detection. This only functions if the creature cannot see the rogue. This ability can only be used once during a given Stealth attempt. If the same creature detects the rogue's presence again, the ability has no effect. This ability replaces improved uncanny dodge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2961,
+    "record_key": "Burglar ~ Distraction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Favored Terrain ~ Forest",
+    "name": "Favored Terrain (Forest)",
+    "class": "Favored Terrain",
+    "description": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks when using these skills in forest terrain (coniferous and deciduous). Likewise, you get a +%1 bonus on initiative checks when in this terrain. If you desire, you leave no trail in this terrain and cannot be tracked.|FavoredTerrainForest",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Terrain ~ Forest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredTerrainForest|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks when using these skills in forest terrain (coniferous and deciduous). Likewise, you get a +%1 bonus on initiative checks when in this terrain. If you desire, you leave no trail in this terrain and cannot be tracked.|FavoredTerrainForest"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrainBaseBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredTerrainForest"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked in forest terrain|FavoredTerrainForest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1588,
+    "record_key": "Favored Terrain ~ Forest"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

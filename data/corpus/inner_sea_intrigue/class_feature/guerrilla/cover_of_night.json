@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guerrilla ~ Cover of Night",
+    "name": "Cover of Night",
+    "class": "Rogue",
+    "description": "A guerrilla learns to use darkness to her advantage. She gains a +5 bonus on Disguise, Sleight of Hand, and Stealth checks while she is in areas of dim light or darkness, and can create mundane disguises in dim light or darkness with a full-round action (instead of the normal 1d3 x 10 minutes). Additionally, while in dim light or darkness, if a guerrilla would have concealment, she instead has total concealment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guerrilla ~ Cover of Night"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guerrilla learns to use darkness to her advantage. She gains a +5 bonus on Disguise, Sleight of Hand, and Stealth checks while she is in areas of dim light or darkness, and can create mundane disguises in dim light or darkness with a full-round action (instead of the normal 1d3 x 10 minutes). Additionally, while in dim light or darkness, if a guerrilla would have concealment, she instead has total concealment."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Disguise=In dim light or darkness,Sleight of Hand=In dim light or darkness,Stealth=In dim light or darkness|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 255,
+    "record_key": "Guerrilla ~ Cover of Night"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

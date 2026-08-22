@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pack Lord ~ Improved Empathic Link",
+    "name": "Improved Empathic Link",
+    "class": "Druid",
+    "description": "You gain an empathic link with all of your animal companions. This functions like an empathic link with a familiar. In addition, as a swift action you can shift your perception to one of your companions, allowing you to experience what it sees, hears, and so on. You can maintain this connection as long as you like (as long as the companion is within 1 mile) and end it as a free action. You can only use this ability on one companion at a time, and cannot see, hear, or smell with your own body while maintaining this connection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pack Lord ~ Improved Empathic Link"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain an empathic link with all of your animal companions. This functions like an empathic link with a familiar. In addition, as a swift action you can shift your perception to one of your companions, allowing you to experience what it sees, hears, and so on. You can maintain this connection as long as you like (as long as the companion is within 1 mile) and end it as a free action. You can only use this ability on one companion at a time, and cannot see, hear, or smell with your own body while maintaining this connection."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWildShapeTimes|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1134,
+    "record_key": "Pack Lord ~ Improved Empathic Link"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

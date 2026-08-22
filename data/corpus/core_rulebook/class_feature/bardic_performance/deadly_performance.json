@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Deadly Performance",
+    "name": "Deadly Performance",
+    "class": "Bardic Performance",
+    "description": "You can use your performance to cause one enemy to die from joy or sorrow. To be affected, the target must be able to see and hear you perform for 1 full round and be within 30 feet. The target receives a Will save (DC %1) to negate the effect. If a creature's saving throw succeeds, the target is staggered for 1d4 rounds, and you cannot use Deadly Performance on that creature again for 24 hours. If a creature's saving throw fails, it dies. Deadly Performance is a mind-affecting death effect that relies on audible and visual components.|DeadlyPerformanceDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Deadly Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeadlyPerformanceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to cause one enemy to die from joy or sorrow. To be affected, the target must be able to see and hear you perform for 1 full round and be within 30 feet. The target receives a Will save (DC %1) to negate the effect. If a creature's saving throw succeeds, the target is staggered for 1d4 rounds, and you cannot use Deadly Performance on that creature again for 24 hours. If a creature's saving throw fails, it dies. Deadly Performance is a mind-affecting death effect that relies on audible and visual components.|DeadlyPerformanceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeadlyPerformanceDC|10+(BardicPerformanceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 533,
+    "record_key": "Bardic Performance ~ Deadly Performance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

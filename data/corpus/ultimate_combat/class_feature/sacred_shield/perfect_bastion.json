@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Shield ~ Perfect Bastion",
+    "name": "Perfect Bastion",
+    "class": "Paladin",
+    "description": "At 20th level, a sacred shield and her allies within 20 feet gain regeneration 10 against the target of her bastion of good ability (essentially regeneration that is overcome by any damage not caused by the target). This ability replaces the sacred shield's holy champion ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Shield ~ Perfect Bastion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a sacred shield and her allies within 20 feet gain regeneration 10 against the target of her bastion of good ability (essentially regeneration that is overcome by any damage not caused by the target). This ability replaces the sacred shield's holy champion ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1505,
+    "record_key": "Sacred Shield ~ Perfect Bastion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

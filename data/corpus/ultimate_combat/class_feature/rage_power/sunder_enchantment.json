@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Sunder Enchantment",
+    "name": "Sunder Enchantment",
+    "class": "Rage Power",
+    "description": "While raging, whenever the barbarian succeeds at a sunder combat maneuver on a magical item, that item's magical abilities are suppressed for 1 round, plus 1 round for every 5 points by which her combat maneuver check exceeded the target's CMD. A barbarian must have the spell sunder rage power and be at least 8th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Sunder Enchantment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Spell Sunder"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, whenever the barbarian succeeds at a sunder combat maneuver on a magical item, that item's magical abilities are suppressed for 1 round, plus 1 round for every 5 points by which her combat maneuver check exceeded the target's CMD. A barbarian must have the spell sunder rage power and be at least 8th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 296,
+    "record_key": "Rage Power ~ Sunder Enchantment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

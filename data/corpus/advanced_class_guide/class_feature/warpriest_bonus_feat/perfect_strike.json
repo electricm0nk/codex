@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Perfect Strike",
+    "name": "Perfect Strike",
+    "class": "Warpriest Bonus Feat",
+    "description": "When wielding a monk weapon, your attacks can be extremely precise.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Perfect Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:8],[PREVARGTEQ:WarpriestBonusFeatBAB,8]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=13"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a monk weapon, your attacks can be extremely precise."
+      },
+      {
+        "key": "DESC",
+        "value": " You must declare that you are using this feat before you make your attack roll (thus a failed attack roll ruins the attempt). You must use one of the following weapons to make the attack: kama, nunchaku, quarterstaff, sai, and siangham. You can roll your attack roll twice and take the higher result. If one of these rolls is a critical threat, the other roll is used as your confirmation roll (your choice if they are both critical threats). You may attempt a perfect attack once per day for every four levels you have attained (but see Special), and no more than once per round."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Perfect Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4360,
+    "record_key": "Warpriest Bonus Feat ~ Perfect Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

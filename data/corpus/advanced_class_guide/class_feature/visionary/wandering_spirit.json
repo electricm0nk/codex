@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Visionary ~ Wandering Spirit",
+    "name": "Wandering Spirit",
+    "class": "Shaman",
+    "description": "The visionary forms a temporary bond with another spirit (other than the one she selected using her spirit class feature). This is identical to the 4th-level shaman class feature. This adds the wandering spirit magic spells to the list of spells she can cast using spirit magic, along with vision spirit magic and her original spirit. At 20th level, she gains the abilities listed in the greater version of her wandering spirit. This ability replaces the greater version of wandering spirit gained at 12th level and true version of wandering spirit gained at 20th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Visionary ~ Wandering Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Visionary Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The visionary forms a temporary bond with another spirit (other than the one she selected using her spirit class feature). This is identical to the 4th-level shaman class feature. This adds the wandering spirit magic spells to the list of spells she can cast using spirit magic, along with vision spirit magic and her original spirit. At 20th level, she gains the abilities listed in the greater version of her wandering spirit. This ability replaces the greater version of wandering spirit gained at 12th level and true version of wandering spirit gained at 20th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3663,
+    "record_key": "Visionary ~ Wandering Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

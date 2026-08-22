@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Arcane Strike",
+    "name": "Arcane Strike",
+    "class": "Warpriest Bonus Feat",
+    "description": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, you gain a +%1 damage bonus and your weapons are treated as magic for the purpose of overcoming damage reduction.|ArcaneStrikeDamageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Arcane Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRECLASS:1,SPELLCASTER.Arcane=1],[PREVARGTEQ:Caster_Level_Highest__Arcane,1]],[PREABILITY:1,CATEGORY=Special Ability,TYPE.SpellLike]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcaneStrikeDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcaneStrikeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, you gain a +%1 damage bonus and your weapons are treated as magic for the purpose of overcoming damage reduction.|ArcaneStrikeDamageBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, your weapons deal +1 damage and are treated as magic for the purpose of overcoming damage reduction. For every five caster levels you possess, this bonus increases by +1, to a maximum of +5 at 20th level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Arcane Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4202,
+    "record_key": "Warpriest Bonus Feat ~ Arcane Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

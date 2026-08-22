@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 4000.0,
+    "description": "This golden ring, set with seven brightly colored gems, functions as a ring of protection +1. In addition, seven times per day, the wearer can use Beast Shape IV to transform into a songbird for 10 minutes (use statistics for a raven).",
+    "key": "Ring Of Seven Lovely Colors",
+    "name": "Ring Of Seven Lovely Colors",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Deflection"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "SLOT_Ring.Ring.Magic"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.259"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Ring Of Seven Lovely Colors|TIMES=1|CASTERLEVEL=7|Beast Shape IV (Ring Of Seven Lovely Colors)"
+      },
+      {
+        "key": "DESC",
+        "value": "This golden ring, set with seven brightly colored gems, functions as a ring of protection +1. In addition, seven times per day, the wearer can use Beast Shape IV to transform into a songbird for 10 minutes (use statistics for a raven)."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 165,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Ring Of Seven Lovely Colors",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

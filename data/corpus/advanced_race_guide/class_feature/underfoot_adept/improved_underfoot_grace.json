@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Underfoot Adept ~ Improved Underfoot Grace",
+    "name": "Improved Underfoot Grace",
+    "class": "Monk",
+    "description": "An underfoot adept's ability to avoid attacks of opportunity against those he passes improves. When using the Acrobatics skill to avoid attacks of opportunity, while moving through a threatened area or through an enemy's space, he takes no penalty when doing so at full speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Underfoot Adept ~ Improved Underfoot Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An underfoot adept's ability to avoid attacks of opportunity against those he passes improves. When using the Acrobatics skill to avoid attacks of opportunity, while moving through a threatened area or through an enemy's space, he takes no penalty when doing so at full speed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 339,
+    "record_key": "Underfoot Adept ~ Improved Underfoot Grace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

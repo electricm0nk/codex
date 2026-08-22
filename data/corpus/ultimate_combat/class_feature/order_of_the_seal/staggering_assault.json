@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Seal ~ Staggering Assault",
+    "name": "Staggering Assault",
+    "class": "Order of the Seal",
+    "description": "At 15th level, the cavalier can drive opponents back without giving ground. As a full-round action, the cavalier can make a single attack at his highest attack bonus. If the attack hits, the attack does damage as normal, and the cavalier may attempt a bull rush against the target. The cavalier gains a bonus on the bull rush combat maneuver check equal to half the amount of damage dealt on the initial attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Seal ~ Staggering Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, the cavalier can drive opponents back without giving ground. As a full-round action, the cavalier can make a single attack at his highest attack bonus. If the attack hits, the attack does damage as normal, and the cavalier may attempt a bull rush against the target. The cavalier gains a bonus on the bull rush combat maneuver check equal to half the amount of damage dealt on the initial attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 453,
+    "record_key": "Order of the Seal ~ Staggering Assault"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

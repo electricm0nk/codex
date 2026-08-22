@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Trap ~ Fire Trap",
+    "name": "Fire Trap",
+    "class": "Ranger Trap",
+    "description": "The trap explodes in flames, dealing 1d6+%1 points of fire damage to the triggering creature (Reflex negates). If it is an extraordinary trap, the ranger must use an explosive material such as alchemist's fire when setting the trap.|FireTrapBonusDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Fire Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.RangerTrap.Extraordinary.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FireTrapBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap explodes in flames, dealing 1d6+%1 points of fire damage to the triggering creature (Reflex negates). If it is an extraordinary trap, the ranger must use an explosive material such as alchemist's fire when setting the trap.|FireTrapBonusDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DEFINE:FireTrapBonusDamage|RangerTrapLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1617,
+    "record_key": "Ranger Trap ~ Fire Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

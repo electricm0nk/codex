@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:cetaceal_shockwave",
@@ -28,6 +26,140 @@
     ],
     "race_subtype": "Agathion|Aquatic|Extraplanar|Good",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Amphibious|Can't Be Tripped|Cetaceal ~ Protective Aura|Cetaceal ~ Push|Cetaceal ~ Shockwave|Cetaceal ~ Stun|Immunity to Cold|Regeneration ~ Evil"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Draconic|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|5"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "DR",
+        "value": "10/evil and silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Handle Animal|Knowledge (Arcana)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):17"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Swim,80"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail Slap,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Agathion|Aquatic|Extraplanar|Good"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=15|Awaken|Summon Monster VIII (water elementals)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=15|Cone of Cold,15+CHA|Cure Critical Wounds|Heal|Restoration (Greater)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=7|CASTERLEVEL=15|Break Enchantment|Cure Serious Wounds|Neutralize Poison|Remove Disease"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=15|Detect Thoughts,12+CHA|Hold Monster,14+CHA|Light|Lightning Bolt,13+CHA|Message|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "26"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.17",
     "speeds": [
@@ -41,16 +173,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 37,
-    "record_key": "Agathion (Cetaceal)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Agathion (Cetaceal)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

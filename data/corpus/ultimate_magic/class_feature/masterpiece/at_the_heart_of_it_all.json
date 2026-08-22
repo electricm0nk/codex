@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masterpiece ~ At the Heart of It All",
+    "name": "At the Heart of It All",
+    "class": "Masterpiece",
+    "description": "Your song pierces to the heart of a creature's identity, weakening it against you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masterpiece ~ At the Heart of It All"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Masterpiece"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AtTheHeartOfItAllDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your song pierces to the heart of a creature's identity, weakening it against you."
+      },
+      {
+        "key": "DESC",
+        "value": " This haunting melody teases at the veils of understanding and drills into the bedrock of truth. Upon completing this performance, the target attempts a Will save (DC %1). Failure means you understand the target's primal nature; you gain a +4 bonus on Charisma-based checks to influence the target, and the DCs of your abilities and spells that would influence the creature or its actions (including charm and compulsion effects) increase by +2. These bonuses last for 1 day. You must have an idea of who the creature is when you begin to play the song, either through researching the creature or by observing it directly from no farther than 100 feet.  Use: 5 rounds of bardic performance.  Action: 5 full rounds.|AtTheHeartOfItAllDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AtTheHeartOfItAllDC|10+(MasterpieceLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 170,
+    "record_key": "Masterpiece ~ At the Heart of It All"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Hooded Champion",
+    "name": "Hooded Champion",
+    "class": "Ranger Archetype",
+    "description": "The hooded champion lives on the periphery of civilized lands, and is often at odds with the forces of law and order. He is frequently a hero of oppressed peoples, lurking in the woods near their homes and trying to right the injustices inflicted upon them by the wealthy and powerful.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Hooded Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.FavoredEnemy1.RangerWildEmpathy.RangerEndurance.RangerEvasion.RangerImprovedEvasion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Hooded Champion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FavoredEnemy1,TYPE.RangerWildEmpathy,TYPE.RangerEndurance,TYPE.RangerEvasion,TYPE.RangerImprovedEvasion]"
+      },
+      {
+        "key": "DESC",
+        "value": "The hooded champion lives on the periphery of civilized lands, and is often at odds with the forces of law and order. He is frequently a hero of oppressed peoples, lurking in the woods near their homes and trying to right the injustices inflicted upon them by the wealthy and powerful."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Hooded Champion ~ Panache|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Hooded Champion ~ Deeds|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Hooded Champion ~ Dead Aim|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Hooded Champion ~ Hooded Champion's Initiative|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Hooded Champion ~ Combat Style|PRECLASS:1,Ranger=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3534,
+    "record_key": "Ranger Archetype ~ Hooded Champion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Shared Seance",
+    "name": "Shared Seance",
+    "class": "Medium",
+    "description": "A medium can share his channeled spirit's aid with his allies. All allies who participate in the medium's seance gain the channeled spirit's seance boon for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Shared Seance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium can share his channeled spirit's aid with his allies. All allies who participate in the medium's seance gain the channeled spirit's seance boon for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 815,
+    "record_key": "Medium ~ Shared Seance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

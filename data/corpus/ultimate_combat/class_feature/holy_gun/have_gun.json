@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Gun ~ Have Gun",
+    "name": "Have Gun",
+    "class": "Paladin",
+    "description": "At 1st level, the holy gun gains the Amateur Gunslinger feat and Gunsmithing as a bonus feat. She also gains a battered gun identical to the one gained by the gunslinger. This ability replaces detect evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Gun ~ Have Gun"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, the holy gun gains the Amateur Gunslinger feat and Gunsmithing as a bonus feat. She also gains a battered gun identical to the one gained by the gunslinger. This ability replaces detect evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Gunsmithing"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Amateur Gunslinger|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1473,
+    "record_key": "Holy Gun ~ Have Gun"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

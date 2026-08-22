@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard ~ Bardic Performance",
+    "name": "Bardic Performance",
+    "class": "Bard",
+    "description": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard ~ Bardic Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicPerformanceDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardicPerformanceLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Distraction|PREVAREQ:Bard_CF_BardDistraction,0|PREVARGTEQ:BardicPerformanceLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Fascinate|PREVAREQ:Bard_CF_Fascinate,0|PREVARGTEQ:BardicPerformanceLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Courage|PREVAREQ:Bard_CF_InspireCourage,0|PREVARGTEQ:BardicPerformanceLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Competence|PREVAREQ:Bard_CF_InspireCompetence,0|PREVARGTEQ:BardicPerformanceLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Suggestion|PREVAREQ:Bard_CF_Suggestion,0|PREVARGTEQ:BardicPerformanceLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Dirge of Doom|PREVAREQ:Bard_CF_DirgeOfDoom,0|PREVARGTEQ:BardicPerformanceLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Greatness|PREVAREQ:Bard_CF_InspireGreatness,0|PREVARGTEQ:BardicPerformanceLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Soothing Performance|PREVAREQ:Bard_CF_SoothingPerformance,0|PREVARGTEQ:BardicPerformanceLVL,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Frightening Tune|PREVAREQ:Bard_CF_FrighteningTune,0|PREVARGTEQ:BardicPerformanceLVL,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Inspire Heroics|PREVAREQ:Bard_CF_InspireHeroics,0|PREVARGTEQ:BardicPerformanceLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Mass Suggestion|PREVAREQ:Bard_CF_MassSuggestion,0|PREVARGTEQ:BardicPerformanceLVL,18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bardic Performance ~ Deadly Performance|PREVAREQ:Bard_CF_DeadlyPerformance,0|PREVARGTEQ:BardicPerformanceLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceDuration|2+CHA+(2*BardicPerformanceLVL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardicPerformanceLVL|BardLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BardicPerformanceDuration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per days"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 505,
+    "record_key": "Bard ~ Bardic Performance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

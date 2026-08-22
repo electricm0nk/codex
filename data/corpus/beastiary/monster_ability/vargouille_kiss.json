@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vargouille ~ Kiss",
+    "delivery": "Supernatural",
+    "description": "A vargouille can kiss a helpless target by making a successful melee touch attack (this provokes attacks of opportunity). A kissed opponent must succeed on a DC 16 Fortitude save or begin a terrible transformation that changes the creature into a vargouille within 24 hours (and often much sooner; roll 1d6 separately for each phase of the transformation). First, over a period of 1d6 hours, all the victim's hair falls out. Within another 1d6 hours thereafter, the ears grow into leathery wings, tentacles sprout on the chin and scalp, and the teeth become long, pointed fangs. During the next 1d6 hours, the victim takes Intelligence drain and Charisma drain equal to 1 point per hour (to a minimum of 3). The transformation is complete 1d6 hours thereafter, when the victim's head breaks free of the body (which promptly dies) and becomes a vargouille. This transformation's progress is paused by sunlight or any light spell of 3rd level or higher, but stopping the transformation requires remove disease or a similar effect. The transformation is a disease effect.",
+    "description_variables": [
+      "KissDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:vargouille_kiss",
+    "name": "Kiss",
+    "owners": [
+      "beastiary:monster:vargouille"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Kiss"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|KissDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KissDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KissDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Kiss)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KissDC|4|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KissDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vargouille can kiss a helpless target by making a successful melee touch attack (this provokes attacks of opportunity). A kissed opponent must succeed on a DC 16 Fortitude save or begin a terrible transformation that changes the creature into a vargouille within 24 hours (and often much sooner; roll 1d6 separately for each phase of the transformation). First, over a period of 1d6 hours, all the victim's hair falls out. Within another 1d6 hours thereafter, the ears grow into leathery wings, tentacles sprout on the chin and scalp, and the teeth become long, pointed fangs. During the next 1d6 hours, the victim takes Intelligence drain and Charisma drain equal to 1 point per hour (to a minimum of 3). The transformation is complete 1d6 hours thereafter, when the victim's head breaks free of the body (which promptly dies) and becomes a vargouille. This transformation's progress is paused by sunlight or any light spell of 3rd level or higher, but stopping the transformation requires remove disease or a similar effect. The transformation is a disease effect.|KissDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vargouille ~ Kiss"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.272",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1224,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Vargouille ~ Kiss",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

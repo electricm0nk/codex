@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guard Dedication ~ Formal Training",
+    "name": "Formal Training",
+    "class": "Guard Dedication",
+    "description": "[Not implemented] When selecting this dedication, the Ulfen Guard gains a bonus feat. She must select this feat from the list of fighter bonus feats. Additionally, the Ulfen Guard adds her level to any levels of fighter she has for the purpose of meeting the prerequisites for feats (if she has no fighter levels, treat her Ulfen guard levels as fighter levels). The Ulfen Guard must be at least 3rd level to select this dedication.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guard Dedication ~ Formal Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Guard Dedication Choice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ulfen Guard=3"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not implemented] When selecting this dedication, the Ulfen Guard gains a bonus feat. She must select this feat from the list of fighter bonus feats. Additionally, the Ulfen Guard adds her level to any levels of fighter she has for the purpose of meeting the prerequisites for feats (if she has no fighter levels, treat her Ulfen guard levels as fighter levels). The Ulfen Guard must be at least 3rd level to select this dedication."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 567,
+    "record_key": "Guard Dedication ~ Formal Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

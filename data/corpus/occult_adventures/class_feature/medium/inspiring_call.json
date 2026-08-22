@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Inspiring Call",
+    "name": "Inspiring Call",
+    "class": "Medium",
+    "description": "(Intermediate) As a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Inspiring Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) As a"
+      },
+      {
+        "key": "DESC",
+        "value": "standard|!PREABILITY:1,CATEGORY=Special Ability,Medium ~ Decisive Strike,Medium ~ Legendary Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "move|PREABILITY:1,CATEGORY=Special Ability,Medium ~ Decisive Strike,[Medium ~ Legendary Marshal]"
+      },
+      {
+        "key": "DESC",
+        "value": "swift|PREABILITY:1,CATEGORY=Special Ability,Medium ~ Legendary Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "action, you can grant all allies who can see and hear you a %1 competence bonus on either saving throws or attack and damage rolls. You choose which bonus to grant each time you use inspiring call. This ability lasts for 1 round.|SpiritBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 868,
+    "record_key": "Medium ~ Inspiring Call"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

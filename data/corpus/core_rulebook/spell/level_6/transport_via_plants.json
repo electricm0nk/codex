@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You can enter any normal plant [equal to your size or larger] and pass any distance to a plant of the same kind in a single round, regardless of the distance separating the two. The plants must be alive. The destination plant need not be familiar to you. If you are uncertain of the location of a particular kind of destination plant, you need merely designate direction and distance and the transport via plants spell moves you as close as possible to the desired location. If a particular destination plant is desired but the plant is not living, the spell fails and you are ejected from the entry plant. You can bring along objects as long as their weight doesn't exceed your maximum load. You may also bring one additional willing Medium or smaller creature [carrying gear or objects up to its maximum load] or its equivalent per three caster levels. Use the following equivalents to determine the maximum number of larger creatures you can bring along: a Large creature counts as two Medium creatures, a Huge creature counts as four Medium creatures, and so forth. All creatures to be transported by the spell must be in physical contact with one another, and at least one of those creatures must be in contact with you. You can't use this spell to travel through plant creatures. The destruction of an occupied plant slays you and any creatures you have brought along, and ejects the bodies and all carried objects from it.",
     "key": "Transport via Plants",
-    "school": "Conjuration",
     "level": 6,
-    "description": "You can enter any normal plant [equal to your size or larger] and pass any distance to a plant of the same kind in a single round, regardless of the distance separating the two. The plants must be alive. The destination plant need not be familiar to you. If you are uncertain of the location of a particular kind of destination plant, you need merely designate direction and distance and the transport via plants spell moves you as close as possible to the desired location. If a particular destination plant is desired but the plant is not living, the spell fails and you are ejected from the entry plant. You can bring along objects as long as their weight doesn't exceed your maximum load. You may also bring one additional willing Medium or smaller creature [carrying gear or objects up to its maximum load] or its equivalent per three caster levels. Use the following equivalents to determine the maximum number of larger creatures you can bring along: a Large creature counts as two Medium creatures, a Huge creature counts as four Medium creatures, and so forth. All creatures to be transported by the spell must be in physical contact with one another, and at least one of those creatures must be in contact with you. You can't use this spell to travel through plant creatures. The destruction of an occupied plant slays you and any creatures you have brought along, and ejects the bodies and all carried objects from it."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You can enter any normal plant (equal to your size or larger) and pass any distance to a plant of the same kind in a single round, regardless of the distance separating the two.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You can enter any normal plant [equal to your size or larger] and pass any distance to a plant of the same kind in a single round, regardless of the distance separating the two. The plants must be alive. The destination plant need not be familiar to you. If you are uncertain of the location of a particular kind of destination plant, you need merely designate direction and distance and the transport via plants spell moves you as close as possible to the desired location. If a particular destination plant is desired but the plant is not living, the spell fails and you are ejected from the entry plant. You can bring along objects as long as their weight doesn't exceed your maximum load. You may also bring one additional willing Medium or smaller creature [carrying gear or objects up to its maximum load] or its equivalent per three caster levels. Use the following equivalents to determine the maximum number of larger creatures you can bring along: a Large creature counts as two Medium creatures, a Huge creature counts as four Medium creatures, and so forth. All creatures to be transported by the spell must be in physical contact with one another, and at least one of those creatures must be in contact with you. You can't use this spell to travel through plant creatures. The destruction of an occupied plant slays you and any creatures you have brought along, and ejects the bodies and all carried objects from it.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "RANGE",
+        "value": "Unlimited"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/transportViaPlants.html#_transport-via-plants"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.361"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Teleportation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You and touched objects or other touched willing creatures"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 636,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1385,
-    "record_key": "Transport via Plants.MOD"
+    "record_key": "Transport via Plants",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

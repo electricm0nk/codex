@@ -1,27 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Bestow Auras",
-    "school": "Abjuration",
-    "level": 3,
     "description": "You transfer one or more of your paladin or antipaladin auras (such as aura of courage and aura of resolve) to another creature. You retain the personal effect of that aura, but the target becomes the center of the aura effect instead of you. For example, if you transfer your aura of courage, you remain immune to fear, but the target becomes the center of the aura that grants a +4 morale bonus on saves against fear effects. If an aura functions only when you are conscious, the transferred aura functions only when the target is conscious. If an aura functions only when you expend uses of another ability (such as with aura of justice or aura of vengeance), the transferred aura functions only if the target has that other ability and expends uses of it to activate the aura. You cannot transfer an aura that affects only you (such as aura of good).",
-    "full_text": true
+    "full_text": true,
+    "key": "Bestow Auras",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Paladin=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Transfer your paladin or antipaladin auras to another creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You transfer one or more of your paladin or antipaladin auras (such as aura of courage and aura of resolve) to another creature. You retain the personal effect of that aura, but the target becomes the center of the aura effect instead of you. For example, if you transfer your aura of courage, you remain immune to fear, but the target becomes the center of the aura that grants a +4 morale bonus on saves against fear effects. If an aura functions only when you are conscious, the transferred aura functions only when the target is conscious. If an aura functions only when you expend uses of another ability (such as with aura of justice or aura of vengeance), the transferred aura functions only if the target has that other ability and expends uses of it to activate the aura. You cannot transfer an aura that affects only you (such as aura of good).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/bestowAuras.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 26,
-    "record_key": "Bestow Auras"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Bestow Auras",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

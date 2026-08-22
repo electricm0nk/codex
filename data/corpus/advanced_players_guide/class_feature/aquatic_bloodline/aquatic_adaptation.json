@@ -1,0 +1,132 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aquatic Bloodline ~ Aquatic Adaptation",
+    "name": "Aquatic Adaptation",
+    "class": "Aquatic Bloodline",
+    "description": "You gain a swim speed of %1 feet.|Sorcerer_AquaticAquaticAdaptation_SwimSpeed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aquatic Bloodline ~ Aquatic Adaptation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aquatic Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Aquatic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aquatic_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aquatic_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticAquaticAdaptation_SwimSpeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticAquaticAdaptation_BlindsenseRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticAquaticAdaptation_NaturalArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AquaticAquaticAdaptation_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a swim speed of %1 feet.|Sorcerer_AquaticAquaticAdaptation_SwimSpeed"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the amphibious special quality and develop a fat layer that grants a +%1 natural armor bonus and resist cold %2.|Sorcerer_AquaticAquaticAdaptation_NaturalArmorBonus|Sorcerer_AquaticAquaticAdaptation_ResistanceBonus|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "When immersed in water, you gain blindsense %1 feet.|Sorcerer_AquaticAquaticAdaptation_BlindsenseRange"
+      },
+      {
+        "key": "MOVE",
+        "value": "Swim,30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Amphibious|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Underwater Blindsense|!PREABILITY:1,CATEGORY=Special Ability,Aquatic Bloodline ~ Deep One"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|Sorcerer_AquaticAquaticAdaptation_NaturalArmorBonus|TYPE=NaturalArmor.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|30|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower3LVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticAquaticAdaptation_SwimSpeed|(floor(Sorcerer_Aquatic_BloodlinePower3LVL/15)+1)*30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticAquaticAdaptation_BlindsenseRange|(floor(Sorcerer_Aquatic_BloodlinePower3LVL/15)+1)*30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseUnderwaterRange|Sorcerer_AquaticAquaticAdaptation_BlindsenseRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticAquaticAdaptation_NaturalArmorBonus|1|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AquaticAquaticAdaptation_ResistanceBonus|5|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|Sorcerer_AquaticAquaticAdaptation_ResistanceBonus|TYPE=Resistance|PREVARGTEQ:Sorcerer_Aquatic_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AquaticBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3099,
+    "record_key": "Aquatic Bloodline ~ Aquatic Adaptation"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

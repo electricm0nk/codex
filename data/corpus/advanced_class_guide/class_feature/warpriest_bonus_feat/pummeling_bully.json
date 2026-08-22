@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Pummeling Bully",
+    "name": "Pummeling Bully",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your combo has the chance to trip or move your target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Pummeling Bully"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Improved Reposition,Improved Trip,Improved Unarmed Strike,Pummeling Style"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9],[PREVARGTEQ:MonkFeatQualify,5],[PRECLASS:1,Monk=5,Brawler=5]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your combo has the chance to trip or move your target."
+      },
+      {
+        "key": "DESC",
+        "value": " When you use Pummeling Style make an entire full attack or flurry of blows against a single target, if you hit with any of your attacks, you can attempt a reposition or trip combat maneuver check as a free action."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Pummeling Bully"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4173,
+    "record_key": "Warpriest Bonus Feat ~ Pummeling Bully"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic ~ Spells",
+    "name": "Spells",
+    "class": "Psychic",
+    "description": "A psychic casts psychic spells drawn from the psychic class's spell list (see page 69). She can cast any spell she knows without preparing it ahead of time. To learn or cast a spell, a psychic must have an Intelligence score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a psychic's spell is equal to 10 + the spell's level + the psychic's Intelligence modifier. A psychic can cast only a certain number of spells of each spell level per day. Her base daily spell allotment is given on Table 1-7: Psychic. In addition, she receives bonus spells per day if she has a high Intelligence score (see Table 1-3 on page 17 of the Pathfinder RPG Core Rulebook). The psychic's selection of spells is limited. A psychic begins play knowing four 0-level spells and two 1st-level spells of the psychic's choice. At each new psychic level, she learns one or more new spells, as indicated on Table 1-8: Psychic Spells Known. Unlike a psychic's spells per day, the number of spells a psychic knows isn't affected by her Intelligence score; the numbers on Table 1-8 are fixed. At 4th level and every even-numbered level thereafter (6th, 8th, and so on), a psychic can choose to learn a single new spell in place of one she already knows. In effect, the psychic loses the old spell in exchange for the new one. The new spell's level must be the same as that of the spell being exchanged, and it must be at least 1 level lower than the highest-level spell from the psychic's class list that the psychic can cast. A psychic can swap only a single spell at any given level, and must choose whether or not to swap the spell at the same time that she gains new spells known for the level. A psychic need not prepare her spells in advance. She can cast any psychic spell she knows at any time, assuming she has not yet used up her allotment of spells per day for the spell's level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychic casts psychic spells drawn from the psychic class's spell list (see page 69). She can cast any spell she knows without preparing it ahead of time. To learn or cast a spell, a psychic must have an Intelligence score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a psychic's spell is equal to 10 + the spell's level + the psychic's Intelligence modifier. A psychic can cast only a certain number of spells of each spell level per day. Her base daily spell allotment is given on Table 1-7: Psychic. In addition, she receives bonus spells per day if she has a high Intelligence score (see Table 1-3 on page 17 of the Pathfinder RPG Core Rulebook). The psychic's selection of spells is limited. A psychic begins play knowing four 0-level spells and two 1st-level spells of the psychic's choice. At each new psychic level, she learns one or more new spells, as indicated on Table 1-8: Psychic Spells Known. Unlike a psychic's spells per day, the number of spells a psychic knows isn't affected by her Intelligence score; the numbers on Table 1-8 are fixed. At 4th level and every even-numbered level thereafter (6th, 8th, and so on), a psychic can choose to learn a single new spell in place of one she already knows. In effect, the psychic loses the old spell in exchange for the new one. The new spell's level must be the same as that of the spell being exchanged, and it must be at least 1 level lower than the highest-level spell from the psychic's class list that the psychic can cast. A psychic can swap only a single spell at any given level, and must choose whether or not to swap the spell at the same time that she gains new spells known for the level. A psychic need not prepare her spells in advance. She can cast any psychic spell she knows at any time, assuming she has not yet used up her allotment of spells per day for the spell's level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1153,
+    "record_key": "Psychic ~ Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

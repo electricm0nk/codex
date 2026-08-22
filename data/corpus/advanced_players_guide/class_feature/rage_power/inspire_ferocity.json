@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Inspire Ferocity",
+    "name": "Inspire Ferocity",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian can use a move action to impart her reckless abandon modifier to all willing allies within 30 feet for a number of rounds equal to her Charisma modifier (minimum 1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Inspire Ferocity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Reckless Abandon"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian can use a move action to impart her reckless abandon modifier to all willing allies within 30 feet for a number of rounds equal to her Charisma modifier (minimum 1)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1519,
+    "record_key": "Rage Power ~ Inspire Ferocity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

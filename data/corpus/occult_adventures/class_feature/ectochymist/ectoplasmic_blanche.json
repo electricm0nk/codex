@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ectochymist ~ Ectoplasmic Blanche",
+    "name": "Ectoplasmic Blanche",
+    "class": "Alchemist",
+    "description": "An ectochymist can alchemically treat a melee weapon so that it deals full damage to incorporeal creatures. The process requires a full-round action and lasts until the next time that weapon is used to make an attack. An ectochymist can use this ability a number of times per day equal to his alchemist level + his Intelligence modifier. This ability replaces bombs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectochymist ~ Ectoplasmic Blanche"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ectochymist Class Feature.Alchemist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An ectochymist can alchemically treat a melee weapon so that it deals full damage to incorporeal creatures. The process requires a full-round action and lasts until the next time that weapon is used to make an attack. An ectochymist can use this ability a number of times per day equal to his alchemist level + his Intelligence modifier. This ability replaces bombs."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1653,
+    "record_key": "Ectochymist ~ Ectoplasmic Blanche"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

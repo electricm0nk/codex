@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Starsoul Bloodline ~ Aurora Borealis",
+    "name": "Aurora Borealis",
+    "class": "Starsoul Bloodline",
+    "description": "You can create a sheet of cascading colors. This power acts as a wall of fire, but it inflicts cold damage and does not radiate heat. However, one side of the aurora designated by you fascinates creatures within 10 feet, up to a maximum of %1 HD of creatures. A Will save negates this fascinate effect. The save DC is %2. You may use this ability for %3 rounds per day. These rounds do not need to be consecutive.|Sorcerer_StarsoulAuroraBorealis_HD|Sorcerer_StarsoulAuroraBorealis_DC|Sorcerer_StarsoulAuroraBorealis_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Starsoul Bloodline ~ Aurora Borealis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Starsoul Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Starsoul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Starsoul_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Starsoul_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StarsoulAuroraBorealis_HD|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StarsoulAuroraBorealis_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StarsoulAuroraBorealis_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a sheet of cascading colors. This power acts as a wall of fire, but it inflicts cold damage and does not radiate heat. However, one side of the aurora designated by you fascinates creatures within 10 feet, up to a maximum of %1 HD of creatures. A Will save negates this fascinate effect. The save DC is %2. You may use this ability for %3 rounds per day. These rounds do not need to be consecutive.|Sorcerer_StarsoulAuroraBorealis_HD|Sorcerer_StarsoulAuroraBorealis_DC|Sorcerer_StarsoulAuroraBorealis_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StarsoulAuroraBorealis_HD|Sorcerer_Starsoul_BloodlinePower9LVL*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StarsoulAuroraBorealis_DC|10+(Sorcerer_Starsoul_BloodlinePower9LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StarsoulAuroraBorealis_Duration|Sorcerer_Starsoul_BloodlinePower9LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 HD, DC %2, %3 rounds)|Sorcerer_StarsoulAuroraBorealis_HD|Sorcerer_StarsoulAuroraBorealis_DC|Sorcerer_StarsoulAuroraBorealis_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_StarsoulAuroraBorealis_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StarsoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3228,
+    "record_key": "Starsoul Bloodline ~ Aurora Borealis"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

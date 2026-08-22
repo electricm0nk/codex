@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against the Wyrm ~ Dragon-Slaying Strike",
+    "name": "Dragon-Slaying Strike",
+    "class": "Paladin",
+    "description": "You become a conduit of holy power.  Your DR increases to 10/evil. Whenever you use smite evil and successfully strikes a dragon, the dragon is also subject to a single-target holy word (caster level %1). After the banishment effect and the damage from the attack are resolved, the smite immediately ends. In addition, whenever you use lay on hands to heal a creature, you heal the maximum possible amount.|DragonSlayingStrikeCL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against the Wyrm ~ Dragon-Slaying Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonSlayingStrikeCL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a conduit of holy power.  Your DR increases to 10/evil. Whenever you use smite evil and successfully strikes a dragon, the dragon is also subject to a single-target holy word (caster level %1). After the banishment effect and the damage from the attack are resolved, the smite immediately ends. In addition, whenever you use lay on hands to heal a creature, you heal the maximum possible amount.|DragonSlayingStrikeCL"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Evil|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonSlayingStrikeCL|classlevel(\"Paladin\")+10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1568,
+    "record_key": "Oath against the Wyrm ~ Dragon-Slaying Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

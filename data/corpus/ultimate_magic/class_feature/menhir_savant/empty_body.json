@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Menhir Savant ~ Empty Body",
+    "name": "Empty Body",
+    "class": "Druid",
+    "description": "You can become ethereal as a standard action, as if using ethereal jaunt. You can remain ethereal for %1 rounds per day. These rounds do not need to be consecutive.|EmptyBodyRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Menhir Savant ~ Empty Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EmptyBodyRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can become ethereal as a standard action, as if using ethereal jaunt. You can remain ethereal for %1 rounds per day. These rounds do not need to be consecutive.|EmptyBodyRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EmptyBodyRounds|classlevel(\"Druid\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1119,
+    "record_key": "Menhir Savant ~ Empty Body"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

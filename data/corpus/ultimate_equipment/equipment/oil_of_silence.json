@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 250.0,
+    "description": "When applied to a one-handed or two-handed firearm, this strange grayish oil renders that firearm silent for 1 hour. Five vials of oil of silence can be used in conjunction to silence a Large firearm siege engine, and 10 can be used to silence a Huge firearm siege engine. The oil does not work on firearm siege engines that are larger than Huge.",
+    "key": "Oil (Of Silence)",
+    "name": "Oil (Of Silence)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Oil [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wondrous.Magic.LeastMinor"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.313"
+      },
+      {
+        "key": "SPROP",
+        "value": "When applied to a one-handed or two-handed firearm, this strange grayish oil renders that firearm silent for 1 hour. Five vials of oil of silence can be used in conjunction to silence a Large firearm siege engine, and 10 can be used to silence a Huge firearm siege engine. The oil does not work on firearm siege engines that are larger than Huge."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T01:34:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1219,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Oil (Of Silence)",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

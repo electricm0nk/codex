@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Beastmorph ~ Beastform Mutagen",
+    "name": "Beastform Mutagen",
+    "class": "Alchemist",
+    "description": "At 3rd level, a beastmorph's mutagen causes him to take on animalistic features-whether those of an animal, a magical beast, an animal-like humanoid (such as a lizardfolk), or a monstrous humanoid. For example, when the beastmorph uses his mutagen, he may gain a furry muzzle and pointed ears like a werewolf, scaly skin like a lizardfolk or sahuagin, or compound eyes and mandibles like a giant insect. The beastmorph also gains his choice of one of the abilities listed in the alter self spell, which persists as long as the mutagen. He may select a different ability each time he creates a mutagen. This ability replaces swift alchemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beastmorph ~ Beastform Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a beastmorph's mutagen causes him to take on animalistic features-whether those of an animal, a magical beast, an animal-like humanoid (such as a lizardfolk), or a monstrous humanoid. For example, when the beastmorph uses his mutagen, he may gain a furry muzzle and pointed ears like a werewolf, scaly skin like a lizardfolk or sahuagin, or compound eyes and mandibles like a giant insect. The beastmorph also gains his choice of one of the abilities listed in the alter self spell, which persists as long as the mutagen. He may select a different ability each time he creates a mutagen. This ability replaces swift alchemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 253,
+    "record_key": "Beastmorph ~ Beastform Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

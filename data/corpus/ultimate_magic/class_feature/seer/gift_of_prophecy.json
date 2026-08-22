@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Seer ~ Gift of Prophecy",
+    "name": "Gift of Prophecy",
+    "class": "Oracle",
+    "description": "Once per day, you can enter a trance to gain a glimpse of the future. This trance lasts for 1 minute, which must be uninterrupted and during which you can take no other actions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Seer ~ Gift of Prophecy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can enter a trance to gain a glimpse of the future. This trance lasts for 1 minute, which must be uninterrupted and during which you can take no other actions."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the benefits of an augury spell with 90%% effectiveness.|!PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the benefits of a divination spell with 90%% effectiveness.|PREMULT:2,[PRECLASS:1,Oracle=5],[!PRECLASS:1,Oracle=9]"
+      },
+      {
+        "key": "DESC",
+        "value": "The knowledge you gain is equivalent to a commune spell.|PRECLASS:1,Oracle=9"
+      },
+      {
+        "key": "DESC",
+        "value": "None of these spell effects require material components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1511,
+    "record_key": "Seer ~ Gift of Prophecy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

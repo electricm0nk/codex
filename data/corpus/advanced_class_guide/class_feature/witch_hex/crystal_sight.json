@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Hex ~ Crystal Sight",
+    "name": "Crystal Sight",
+    "class": "Witch Hex",
+    "description": "DC %1 |WitchHexDC_CrystalSight",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Hex ~ Crystal Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Extraordinary.WitchHex.MinorHex"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Witch Archetype ~ Mountain Witch"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_CrystalSight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountainWitchCrystalSightRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountainWitchCrystalSightRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_CrystalSight"
+      },
+      {
+        "key": "DESC",
+        "value": "The mountain witch sees through stone, earth, or sand as easily as if it were transparent crystal. Her gaze can penetrate %1 feet (or 1/12th this thickness of metal). The mountain witch can use this ability %2 rounds per day, but these rounds do not need to be consecutive.|MountainWitchCrystalSightRange|MountainWitchCrystalSightRounds"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Crystal Sight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_CrystalSight|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_CrystalSight|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Crystal Sight)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MountainWitchCrystalSightRange|WitchLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MountainWitchCrystalSightRounds|WitchLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4029,
+    "record_key": "Witch Hex ~ Crystal Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

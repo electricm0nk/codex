@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Discern Lies",
+    "name": "Discern Lies",
+    "class": "Vigilante Talent",
+    "description": "The zealot can use discern lies as a spell-like ability for %1 rounds per day equal to his vigilante level. The rounds need not be consecutive. Activating this ability is an immediate action.|VigilanteLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Discern Lies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Discern Lies"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsZealot,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "The zealot can use discern lies as a spell-like ability for %1 rounds per day equal to his vigilante level. The rounds need not be consecutive. Activating this ability is an immediate action.|VigilanteLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1079,
+    "record_key": "Vigilante Talent ~ Discern Lies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

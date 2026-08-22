@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sly Saboteur ~ Catastrophic Failure",
+    "name": "Catastrophic Failure",
+    "class": "Rogue",
+    "description": "When a sly saboteur uses Disable Device to rig a device to fail, she can increase the DC of the check by 5. If she does so and succeeds at the check, when the device fails, users take damage equal to the sly saboteur's sneak attack, or they take half that amount with a successful Reflex save (DC %1). The type of damage depends on the nature of the device but is typically bludgeoning, fire, piercing, or slashing.|10+RogueLVL/2+DEX",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sly Saboteur ~ Catastrophic Failure"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.SlySaboteurClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a sly saboteur uses Disable Device to rig a device to fail, she can increase the DC of the check by 5. If she does so and succeeds at the check, when the device fails, users take damage equal to the sly saboteur's sneak attack, or they take half that amount with a successful Reflex save (DC %1). The type of damage depends on the nature of the device but is typically bludgeoning, fire, piercing, or slashing.|10+RogueLVL/2+DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 991,
+    "record_key": "Sly Saboteur ~ Catastrophic Failure"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

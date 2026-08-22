@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Make the spirit of one creature manifest.",
+    "key": "Call Spirit",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=3|Cleric,Shaman,Spiritualist=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Make the spirit of one creature manifest."
+      },
+      {
+        "key": "DURATION",
+        "value": "Concentration"
+      },
+      {
+        "key": "RANGE",
+        "value": "10 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Call Spirit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Calling"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Call the spirit of a single deceased humanoid creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine.Psychic"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "record_key": "Call Spirit",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Throat Jab",
+    "name": "Throat Jab*",
+    "class": "Vigilante Talent",
+    "description": "The vigilante's hidden strike jabs his opponent in the throat, preventing that opponent from speaking until the vigilante's next turn. (If the vigilante uses this ability on the surprise round, it lasts until the end of his first full turn after the surprise round.) This prevents the target from calling out for help, using spells with verbal components, or doing anything else that requires speaking. The target cannot be affected by that vigilante's throat jab again for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Throat Jab"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Throat Jab"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's hidden strike jabs his opponent in the throat, preventing that opponent from speaking until the vigilante's next turn. (If the vigilante uses this ability on the surprise round, it lasts until the end of his first full turn after the surprise round.) This prevents the target from calling out for help, using spells with verbal components, or doing anything else that requires speaking. The target cannot be affected by that vigilante's throat jab again for 24 hours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 112,
+    "record_key": "Vigilante Talent ~ Throat Jab"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

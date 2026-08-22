@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Concussive Bomb",
+    "name": "Concussive Bomb*",
+    "class": "Discovery",
+    "description": "When the alchemist creates a bomb, he can choose to have it inflict sonic damage. Concussive bombs deal %1d%2 points of sonic damage instead of the normal damage for a bomb. Creatures that take a direct hit from a concussive bomb are deafened for 1 minute unless they succeed at a Fortitude save.|AlchemistBombAdditionalDice+1|ConcusiveBombDieSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Concussive Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConcusiveBombDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When the alchemist creates a bomb, he can choose to have it inflict sonic damage. Concussive bombs deal %1d%2 points of sonic damage instead of the normal damage for a bomb. Creatures that take a direct hit from a concussive bomb are deafened for 1 minute unless they succeed at a Fortitude save.|AlchemistBombAdditionalDice+1|ConcusiveBombDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConcusiveBombDieSize|3|PREVAREQ:Alchemist_CF_BombReduction,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConcusiveBombDieSize|4|PREVAREQ:Alchemist_CF_BombReduction,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 125,
+    "record_key": "Discovery ~ Concussive Bomb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

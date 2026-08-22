@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Trickery Domain",
+    "name": "Trickery",
+    "class": null,
+    "description": "You are a master of illusions and deceptions. Bluff, Disguise, and Stealth are class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trickery Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTrickeryAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a master of illusions and deceptions. Bluff, Disguise, and Stealth are class skills."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Copycat|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Trickery)|PREVARGTEQ:DomainTrickeryAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Master's Illusion|PREVARGTEQ:DomainTrickeryAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryDC|10+(DomainTrickeryLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTrickeryAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff|Disguise|Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Trickery=1|Disguise Self|Trickery=2|Invisibility|Trickery=3|Nondetection|Trickery=4|Confusion|Trickery=5|False Vision|Trickery=6|Mislead|Trickery=7|Screen|Trickery=8|Invisibility (Mass)|Trickery=9|Time Stop"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 680,
+    "record_key": "Trickery Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

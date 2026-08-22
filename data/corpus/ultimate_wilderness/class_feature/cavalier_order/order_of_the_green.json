@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Order ~ Order of the Green",
+    "name": "Order of the Green",
+    "class": "Cavalier Order",
+    "description": "Cavaliers of the order of the Green are dedicated to protecting wild places and creatures, embracing the Green Faith in all its glory and natural wonder.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Order ~ Order of the Green"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Cavaliers of the order of the Green are dedicated to protecting wild places and creatures, embracing the Green Faith in all its glory and natural wonder."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Green ~ Edicts|PREVARGTEQ:OrderAbilityLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Green ~ Challenge|PREVARGTEQ:OrderAbilityLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Green ~ Skills|PREVARGTEQ:OrderAbilityLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Green ~ Order Abilities|PREVARGTEQ:OrderAbilityLvl,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Green ~ Favored Terrain|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Green ~ Cut the Corruption|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Green ~ End of the Cycle|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 454,
+    "record_key": "Cavalier Order ~ Order of the Green"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

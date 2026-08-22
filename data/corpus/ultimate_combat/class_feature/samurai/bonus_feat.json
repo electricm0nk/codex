@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Samurai ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Samurai",
+    "description": "At 6th level, and every six levels thereafter, a samurai gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The samurai must meet the requirements of these bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SamuraiClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SamuraiBonusFeat|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, and every six levels thereafter, a samurai gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The samurai must meet the requirements of these bonus feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Samurai Feat|SamuraiBonusFeat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiBonusFeat|SamuraiLVL/6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 191,
+    "record_key": "Samurai ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

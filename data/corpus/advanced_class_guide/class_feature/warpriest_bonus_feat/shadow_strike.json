@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Shadow Strike",
+    "name": "Shadow Strike",
+    "class": "Warpriest Bonus Feat",
+    "description": "You accurately strike even those you cannot clearly see.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Shadow Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:1],[PREVARGTEQ:WarpriestBonusFeatBAB,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "You accurately strike even those you cannot clearly see."
+      },
+      {
+        "key": "DESC",
+        "value": " You can deal precision damage, such as sneak attack damage, against targets with concealment (but not total concealment)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Shadow Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.169"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4371,
+    "record_key": "Warpriest Bonus Feat ~ Shadow Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

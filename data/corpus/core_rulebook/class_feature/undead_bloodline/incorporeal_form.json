@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undead Bloodline ~ Incorporeal Form",
+    "name": "Incorporeal Form",
+    "class": "Undead Bloodline",
+    "description": "You can become incorporeal for %1 rounds. While in this form, you gain the incorporeal subtype. You only take half damage from corporeal sources as long as they are magic (you take no damage from non-magic weapons and objects). Likewise, your spells deal only half damage to corporeal creatures. Spells and other effects that do not deal damage function normally. You can use this ability once per day.|Sorcerer_UndeadIncorporealForm_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undead Bloodline ~ Incorporeal Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Undead Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Undead"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Undead_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Undead_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UndeadIncorporealForm_Duration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_UndeadIncorporealForm_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can become incorporeal for %1 rounds. While in this form, you gain the incorporeal subtype. You only take half damage from corporeal sources as long as they are magic (you take no damage from non-magic weapons and objects). Likewise, your spells deal only half damage to corporeal creatures. Spells and other effects that do not deal damage function normally. You can use this ability once per day.|Sorcerer_UndeadIncorporealForm_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UndeadIncorporealForm_Duration|Sorcerer_Undead_BloodlinePower15LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_UndeadIncorporealForm_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|Sorcerer_UndeadIncorporealForm_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_UndeadIncorporealForm_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|UndeadBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2556,
+    "record_key": "Undead Bloodline ~ Incorporeal Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

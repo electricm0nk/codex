@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Underfoot",
+    "name": "Underfoot",
+    "class": "Warpriest Bonus Feat",
+    "description": "You slip under and around your larger foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Underfoot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Dodge,Mobility"
+      },
+      {
+        "key": "PRESIZELTEQ",
+        "value": "S"
+      },
+      {
+        "key": "DESC",
+        "value": "You slip under and around your larger foes."
+      },
+      {
+        "key": "DESC",
+        "value": " You receive a +4 dodge bonus on Acrobatics checks to move past opponents without provoking attacks of opportunity, so long as they are larger than you. In addition, you gain a +2 dodge bonus to Armor Class against attacks of opportunity caused when you move out of or within a larger opponent's threatened area (this stacks with the +4 bonus provided by Mobility, for a total bonus of +6)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Underfoot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4389,
+    "record_key": "Warpriest Bonus Feat ~ Underfoot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Merciful Healer ~ Channel Energy",
+    "name": "Channel Energy",
+    "class": "Cleric",
+    "description": "As the cleric ability, save that a merciful healer must channel positive energy, and when she does, she cannot choose to target undead. This ability is otherwise identical to the cleric ability of the same name.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Merciful Healer ~ Channel Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As the cleric ability, save that a merciful healer must channel positive energy, and when she does, she cannot choose to target undead. This ability is otherwise identical to the cleric ability of the same name."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cleric ~ Channel Energy|Healing ~ Channel Positive Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Channel Energy|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 590,
+    "record_key": "Merciful Healer ~ Channel Energy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

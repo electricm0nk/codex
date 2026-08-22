@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Necrophidius ~ Dance of Death",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:necrophidius"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dance of Death"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrophidiusDanceOfDeathDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrophidiusDanceOfDeathDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dance of Death)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrophidiusDanceOfDeathDC|4|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecrophidiusDanceOfDeathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A necrophidius can entrance opponents by swaying back and forth as a full-round action.  All creatures within 30 feet who can see the necrophidius when it uses its dance of death must succeed on a DC %1 Will save or be dazed for 2d4 rounds.  This is a mind-affecting effect.|NecrophidiusDanceOfDeathDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Necrophidius ~ Dance of Death"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.196",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 861,
-    "record_key": "Necrophidius ~ Dance of Death"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 861,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Necrophidius ~ Dance of Death",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

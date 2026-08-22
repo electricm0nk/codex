@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Brute",
+    "name": "Brute",
+    "class": "Vigilante Archetype",
+    "description": "Either through the results of magical experimentation or bizarre natural sparks, some vigilantes can transform into brutish versions of themselves, becoming larger, more terrifying in appearance, and far more formidable in combat-though at a price.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Brute"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Brute],[!PREFACT:1,ABILITIES,Vigilante_Archetype_DualIdentity=True,Vigilante_Archetype_Savingthrows=True,Vigilante_Archetype_ArmorProficiencies=True,Vigilante_Archetype_WeaponProficiencies=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_VigilanteTalent=True,Vigilante_Archetype_VengeanceStrike=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Either through the results of magical experimentation or bizarre natural sparks, some vigilantes can transform into brutish versions of themselves, becoming larger, more terrifying in appearance, and far more formidable in combat-though at a price."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brute ~ Chaotic Vigilante|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brute ~ Brutish Fortitude|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brute ~ Weapon and Armor Proficiency|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brute ~ Brute Form|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brute ~ Tear Them Apart|PRECLASS:1,Vigilante=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_DualIdentity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_Savingthrows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VengeanceStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_FortSaves|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ReflexSaves|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_WillSaves|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VengeanceStrike|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 969,
+    "record_key": "Vigilante Archetype ~ Brute"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

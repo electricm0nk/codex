@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Natural Armor Increase",
+    "name": "Natural Armor Increase",
+    "class": "Dragon Disciple",
+    "description": "As his skin thickens, a dragon disciple takes on more and more of his progenitor's physical aspect. At 1st, 4th, and 7th level, a dragon disciple gains an increase to the character's existing natural armor (if any), as indicated on Table 11-4. These armor bonuses stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Natural Armor Increase"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Dragon Disciple Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonDiscipleArmorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As his skin thickens, a dragon disciple takes on more and more of his progenitor's physical aspect. At 1st, 4th, and 7th level, a dragon disciple gains an increase to the character's existing natural armor (if any), as indicated on Table 11-4. These armor bonuses stack."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|DragonDiscipleArmorBonus|TYPE=NaturalArmor.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonDiscipleArmorBonus|1|PREVARGTEQ:DragonDiscipleLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonDiscipleArmorBonus|1|PREVARGTEQ:DragonDiscipleLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonDiscipleArmorBonus|1|PREVARGTEQ:DragonDiscipleLVL,7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.381"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2965,
+    "record_key": "Dragon Disciple ~ Natural Armor Increase"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

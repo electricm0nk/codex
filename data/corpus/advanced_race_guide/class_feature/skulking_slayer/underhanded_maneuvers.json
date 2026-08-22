@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skulking Slayer ~ Underhanded Maneuvers",
+    "name": "Underhanded Maneuvers",
+    "class": "Skulking Slayer",
+    "description": "When she could normally make a sneak attack, a slayer may instead make a dirty trick or steal combat maneuver with a bonus on her roll. This bonus is equal to %1 for a dirty trick combat maneuver, or %2 for a steal combat maneuver.|SneakAttack|SneakAttack+SneakAttack/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skulking Slayer ~ Underhanded Maneuvers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When she could normally make a sneak attack, a slayer may instead make a dirty trick or steal combat maneuver with a bonus on her roll. This bonus is equal to %1 for a dirty trick combat maneuver, or %2 for a steal combat maneuver.|SneakAttack|SneakAttack+SneakAttack/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 279,
+    "record_key": "Skulking Slayer ~ Underhanded Maneuvers"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

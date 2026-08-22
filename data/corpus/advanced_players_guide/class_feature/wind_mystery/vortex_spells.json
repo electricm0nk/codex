@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wind Mystery ~ Wortex Spells",
+    "name": "Vortex Spells",
+    "class": "Wind Mystery",
+    "description": "Whenever you score a critical hit against an opponent with an attack spell, the target is staggered for 1 round.|!PRECLASS:1,Oracle=11",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wind Mystery ~ Wortex Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WindRevelation.Extraordinary.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you score a critical hit against an opponent with an attack spell, the target is staggered for 1 round.|!PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you score a critical hit against an opponent with an attack spell, the target is staggered for 1d4 rounds.|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 705,
+    "record_key": "Wind Mystery ~ Wortex Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

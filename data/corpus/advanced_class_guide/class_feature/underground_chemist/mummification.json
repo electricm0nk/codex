@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Underground Chemist ~ Discovery ~ Mummification",
+    "name": "Mummification",
+    "class": "Underground Chemist",
+    "description": "You have mastered preserving flesh and applied this knowledge to your own body, turning yourself into an undeadlike creature. After learning this discovery, you must perform a 30-day regimen of a special diet, rigorous exercise, and drinking a mildly poisonous alchemical tea. At the end of this regimen, you fall unconscious for 24 hours, then awaken as a \"living mummy.\" Your type does not change, but you become immune to cold, nonlethal damage, paralysis, and sleep.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Underground Chemist ~ Discovery ~ Mummification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.RogueTalent.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Rogue Archetype ~ Underground Chemist"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Underground Chemist ~ Discovery ~ Preserve Organs"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You have mastered preserving flesh and applied this knowledge to your own body, turning yourself into an undeadlike creature. After learning this discovery, you must perform a 30-day regimen of a special diet, rigorous exercise, and drinking a mildly poisonous alchemical tea. At the end of this regimen, you fall unconscious for 24 hours, then awaken as a \"living mummy.\" Your type does not change, but you become immune to cold, nonlethal damage, paralysis, and sleep."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|Immunity to Nonlethal Damage|Immunity to Paralysis|Immunity to Sleep"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3575,
+    "record_key": "Underground Chemist ~ Discovery ~ Mummification"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

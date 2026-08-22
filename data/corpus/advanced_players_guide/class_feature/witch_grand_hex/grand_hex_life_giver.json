@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Grand Hex ~ Life Giver",
+    "name": "Grand Hex - Life Giver",
+    "class": "Witch Grand Hex",
+    "description": "DC %1 |WitchHexDC_LifeGiver",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Grand Hex ~ Life Giver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.GrandHex"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:WitchGrandHexQualify,1],[PREVARGTEQ:WitchHexAbilityLVL,18]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC_LifeGiver|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DC %1 |WitchHexDC_LifeGiver"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day the witch can, as a full round action, touch a dead creature and bring it back to life. This functions as resurrection, but it does not require a material component."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witch Hex ~ Life Giver"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_LifeGiver|WitchHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC_LifeGiver|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus(Witch Hex ~ Life Giver)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 912,
+    "record_key": "Witch Grand Hex ~ Life Giver"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

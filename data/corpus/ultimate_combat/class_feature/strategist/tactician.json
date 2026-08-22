@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Strategist ~ Tactician",
+    "name": "Tactician",
+    "class": "Cavalier",
+    "description": "As the cavalier class feature, except that a strategist can use this ability once per day at 1st level, plus one additional time per day at 5th level and for every four levels thereafter (to a maximum of five times per day at 17th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategist ~ Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As the cavalier class feature, except that a strategist can use this ability once per day at 1st level, plus one additional time per day at 5th level and for every four levels thereafter (to a maximum of five times per day at 17th level)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 520,
+    "record_key": "Strategist ~ Tactician"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

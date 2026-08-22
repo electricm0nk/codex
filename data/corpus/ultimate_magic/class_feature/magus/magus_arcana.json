@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus ~ Magus Arcana",
+    "name": "Magus Arcana",
+    "class": "Magus",
+    "description": "As he gains levels, a magus learns arcane secrets tailored to his specific way of blending martial puissance and magical skill. Starting at 3rd level, a magus gains one magus arcana. He gains an additional magus arcana for every three levels of magus attained after 3rd level. Unless specifically noted in a magus arcana's description, a magus cannot select a particular magus arcana more than once. Magus arcana that affect spells can only be used to modify spells from the magus spell list unless otherwise noted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus ~ Magus Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Internal.ClassFeatures.Magus Arcana"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusArcanaLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Magus_Arcana|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanaQualifyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As he gains levels, a magus learns arcane secrets tailored to his specific way of blending martial puissance and magical skill. Starting at 3rd level, a magus gains one magus arcana. He gains an additional magus arcana for every three levels of magus attained after 3rd level. Unless specifically noted in a magus arcana's description, a magus cannot select a particular magus arcana more than once. Magus arcana that affect spells can only be used to modify spells from the magus spell list unless otherwise noted."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|MagusArcanaLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArcanaLVL|MagusLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanaQualifyLVL|MagusLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 45,
+    "record_key": "Magus ~ Magus Arcana"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

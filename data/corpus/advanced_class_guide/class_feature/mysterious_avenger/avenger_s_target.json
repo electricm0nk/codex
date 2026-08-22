@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mysterious Avenger ~ Avenger's Target",
+    "name": "Avenger's Target",
+    "class": "Swashbuckler",
+    "description": "A mysterious avenger gains a +%1 bonus on attack and damage rolls with light or one-handed piercing melee weapons and whips. Furthermore, a mysterious avenger can study an opponent she can see as a move action. The mysterious avenger then gains a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against that opponent, a +%1 bonus on weapon attack and damage rolls against it, and a +%1 bonus to DCs of any deeds used against that opponent. A mysterious avenger can maintain these bonuses against %1 opponents at a time; these bonuses remain in effect until either the opponent is dead or the mysterious avenger studies a new target. A mysterious avenger can discard this connection to a studied target as a free action, allowing her to study another target in its place. At 10th level, a mysterious avenger can study an opponent as a move or swift action.|AvengerTargetBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mysterious Avenger ~ Avenger's Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mysterious Avenger Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AvengerTargetBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A mysterious avenger gains a +%1 bonus on attack and damage rolls with light or one-handed piercing melee weapons and whips. Furthermore, a mysterious avenger can study an opponent she can see as a move action. The mysterious avenger then gains a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against that opponent, a +%1 bonus on weapon attack and damage rolls against it, and a +%1 bonus to DCs of any deeds used against that opponent. A mysterious avenger can maintain these bonuses against %1 opponents at a time; these bonuses remain in effect until either the opponent is dead or the mysterious avenger studies a new target. A mysterious avenger can discard this connection to a studied target as a free action, allowing her to study another target in its place. At 10th level, a mysterious avenger can study an opponent as a move or swift action.|AvengerTargetBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AvengerTargetBonus|min(4,floor(SwashbucklerLVL/5))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Weapon Group Melee Light Piercing|TOHIT,DAMAGE|AvengerTargetBonus|TYPE=WeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Weapon Group Melee OneHanded Piercing|TOHIT,DAMAGE|AvengerTargetBonus|TYPE=WeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Whip|TOHIT,DAMAGE|AvengerTargetBonus|TYPE=WeaponTraining"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3914,
+    "record_key": "Mysterious Avenger ~ Avenger's Target"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

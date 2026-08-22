@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Unarmed Fighter",
+    "name": "Unarmed Fighter",
+    "class": "Fighter Archetype",
+    "description": "Not all fighters need weapons to make their mark on the world. The unarmed fighter picks up a weapon only rarely, and when he does, he prefers the weapons of the monk. There are even those who mistake them for monks, but these fighters enter the fight without ki, and instead have a tough perseverance that few can rival.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Unarmed Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterArmorProficiencies.FighterBonusFeat1.FighterBravery.FighterWeaponTraining_ALL.FighterArmorTraining_ALL.FighterArmorMastery.FighterWeaponMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Unarmed Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterWeaponProficiencies,TYPE.FighterArmorProficiencies,TYPE.FighterBonusFeat1,TYPE.FighterBravery,TYPE.FighterWeaponTraining_ALL,TYPE.FighterArmorTraining_ALL,TYPE.FighterArmorMastery,TYPE.FighterWeaponMastery]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all fighters need weapons to make their mark on the world. The unarmed fighter picks up a weapon only rarely, and when he does, he prefers the weapons of the monk. There are even those who mistake them for monks, but these fighters enter the fight without ki, and instead have a tough perseverance that few can rival."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Armor Proficiency (Light)|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Weapon and Armor Proficiency|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Unarmed Strike|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Harsh Training|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Tough Guy|PRECLASS:1,Fighter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Weapon Training|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Clever Wrestler|PRECLASS:1,Fighter=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Trick Throw|PRECLASS:1,Fighter=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Takedown|PRECLASS:1,Fighter=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Eye Gouge|PRECLASS:1,Fighter=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Sucker Punch|PRECLASS:1,Fighter=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Sheer Toughness|PRECLASS:1,Fighter=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Unarmed Fighter ~ Weapon Mastery|PRECLASS:1,Fighter=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|cl(\"Fighter\")/2|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Unarmed Fighter Bonus Style Feat|1|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Fighter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 683,
+    "record_key": "Fighter Archetype ~ Unarmed Fighter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

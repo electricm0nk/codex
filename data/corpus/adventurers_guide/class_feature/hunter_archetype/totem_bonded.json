@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Totem-Bonded",
+    "name": "Totem-Bonded",
+    "class": "Hunter Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Totem-Bonded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Totem-Bonded],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalCompanion=True,Hunter_Archetype_AnimalFocus=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Totem-Bonded ~ Primeval Companion|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Totem-Bonded ~ Shared Strength|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalFocus|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 869,
+    "record_key": "Hunter Archetype ~ Totem-Bonded"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

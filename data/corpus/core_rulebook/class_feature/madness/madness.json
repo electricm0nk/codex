@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Madness Domain",
+    "name": "Madness",
+    "class": null,
+    "description": "You embrace the madness that lurks deep in your heart, and can unleash it to drive your foes insane or to sacrifice certain abilities to hone others.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Madness Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You embrace the madness that lurks deep in your heart, and can unleash it to drive your foes insane or to sacrifice certain abilities to hone others."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Vision of Madness|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Madness)|PREVARGTEQ:DomainMadnessAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Aura of Madness|PREVARGTEQ:DomainMadnessAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessDC|10+(DomainMadnessLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMadnessAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Madness=1|Confusion (Lesser)|Madness=2|Touch of Idiocy|Madness=3|Rage|Madness=4|Confusion|Madness=5|Nightmare|Madness=6|Phantasmal Killer|Madness=7|Insanity|Madness=8|Scintillating Pattern|Madness=9|Weird"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 670,
+    "record_key": "Madness Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Legendary Champion",
+    "name": "Legendary Champion",
+    "class": "Medium",
+    "description": "(Supreme) You gain two combat feats of your choice, and you can choose different feats each time you channel a champion spirit. You can treat your base attack bonus from your medium levels as equal to your medium level for the purposes of qualifying for combat feats and determining their effects, and you can count your medium levels as levels of one other class whose base attack bonus equals its class level (such as fighter, barbarian, or slayer) for the purpose of qualifying for the two new combat feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Legendary Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "(Supreme) You gain two combat feats of your choice, and you can choose different feats each time you channel a champion spirit. You can treat your base attack bonus from your medium levels as equal to your medium level for the purposes of qualifying for combat feats and determining their effects, and you can count your medium levels as levels of one other class whose base attack bonus equals its class level (such as fighter, barbarian, or slayer) for the purpose of qualifying for the two new combat feats."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Champion Feat Choice|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 849,
+    "record_key": "Medium ~ Legendary Champion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

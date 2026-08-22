@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skulking Slayer ~ Pass for Human",
+    "name": "Pass for Human",
+    "class": "Rogue",
+    "description": "When trying to conceal her half-orc heritage, a skulking slayer gains a bonus on Disguise checks equal to half her level. When using disguise to appear as a specific individual, skulking stalkers ignore the normal -2 penalty to appear as another race.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skulking Slayer ~ Pass for Human"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When trying to conceal her half-orc heritage, a skulking slayer gains a bonus on Disguise checks equal to half her level. When using disguise to appear as a specific individual, skulking stalkers ignore the normal -2 penalty to appear as another race."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 278,
+    "record_key": "Skulking Slayer ~ Pass for Human"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

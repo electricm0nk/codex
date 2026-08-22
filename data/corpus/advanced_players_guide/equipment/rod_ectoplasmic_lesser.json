@@ -1,27 +1,65 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Rod (Ectoplasmic/Lesser)",
     "category": "MagicItems",
-    "name": "Metamagic Rod of [NAME]",
     "cost_gp": 3000.0,
-    "weight": 5.0,
-    "description": "A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat."
+    "description": "A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat.",
+    "key": "Rod (Ectoplasmic/Lesser)",
+    "name": "Metamagic Rod of [NAME]",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Metamagic Rod of [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod"
+      },
+      {
+        "key": "COST",
+        "value": "3000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Rod"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 3|CHARGES[3]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      }
+    ],
+    "weight": 5.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Rod (Ectoplasmic/Lesser)",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Buccaneer ~ Captain's Curse 2",
+    "name": "Captain's Curse",
+    "class": "Gunslinger",
+    "description": "A buccaneer can spend 2 grit points to use black mark as a spell-like ability. The caster level for this spell-like ability is equal to %1, and the save DC is equal to %2.|GunslingerLVL|10+GunslingerLVL+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Buccaneer ~ Captain's Curse 2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=GunslingerLVL|Black Mark,10+GunslingerLVL+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "A buccaneer can spend 2 grit points to use black mark as a spell-like ability. The caster level for this spell-like ability is equal to %1, and the save DC is equal to %2.|GunslingerLVL|10+GunslingerLVL+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 355,
+    "record_key": "Buccaneer ~ Captain's Curse 2"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

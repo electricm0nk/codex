@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist ~ Infusion",
+    "name": "Infusion",
+    "class": "Kineticist",
+    "description": "At 1st level, a kineticist gains an infusion wild talent from the list of options available based on her elemental focus. She gains additional infusions at 3rd, 5th, 9th, 11th, 13th, 17th, and 19th levels. By using infusions along with her kinetic blasts, a kineticist can alter her kinetic blasts to suit her needs. Infusions come in two types, each of which changes a kinetic blast differently: a substance infusion causes an additional effect, while a form infusion causes the kinetic blast to manifest in a different way. Each infusion can alter only certain kinds of kinetic blasts, which are listed in its Associated Blasts entry. Each time the kineticist uses one of her kinetic blast wild talents, she can apply up to one associated form infusion and up to one associated substance infusion. Some infusions change the action required to activate a kinetic blast or entirely transform the kinetic blast's normal effects. The burn cost listed in each infusion's Burn entry is added to the burn cost of the kinetic blast the infusion modifies. The DC for a save against an infusion is based on the associated kinetic blast's effective spell level, not the level of the infusion. The DCs for form infusions are calculated using the kineticist's Dexterity modifier instead of her Constitution modifier. When a kineticist modifies a kinetic blast with a form infusion and a substance infusion that both require saving throws, each target first attempts a saving throw against the form infusion. If a target succeeds and a successful save negates the infusion's effects, the entire kinetic blast is negated; otherwise, the target then attempts a saving throw against the substance infusion. If a kineticist's form and substance infusions both alter the kinetic blast's damage, apply the substance infusion's alteration first. At 5th, 11th, and 17th levels, a kineticist can replace one of her infusions with another infusion of the same effective spell level or lower. She can't replace an infusion that she used to qualify for another of her wild talents. The descriptions of infusions begin on page 17.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist ~ Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_KineticistInfusion|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a kineticist gains an infusion wild talent from the list of options available based on her elemental focus. She gains additional infusions at 3rd, 5th, 9th, 11th, 13th, 17th, and 19th levels. By using infusions along with her kinetic blasts, a kineticist can alter her kinetic blasts to suit her needs. Infusions come in two types, each of which changes a kinetic blast differently: a substance infusion causes an additional effect, while a form infusion causes the kinetic blast to manifest in a different way. Each infusion can alter only certain kinds of kinetic blasts, which are listed in its Associated Blasts entry. Each time the kineticist uses one of her kinetic blast wild talents, she can apply up to one associated form infusion and up to one associated substance infusion. Some infusions change the action required to activate a kinetic blast or entirely transform the kinetic blast's normal effects. The burn cost listed in each infusion's Burn entry is added to the burn cost of the kinetic blast the infusion modifies. The DC for a save against an infusion is based on the associated kinetic blast's effective spell level, not the level of the infusion. The DCs for form infusions are calculated using the kineticist's Dexterity modifier instead of her Constitution modifier. When a kineticist modifies a kinetic blast with a form infusion and a substance infusion that both require saving throws, each target first attempts a saving throw against the form infusion. If a target succeeds and a successful save negates the infusion's effects, the entire kinetic blast is negated; otherwise, the target then attempts a saving throw against the substance infusion. If a kineticist's form and substance infusions both alter the kinetic blast's damage, apply the substance infusion's alteration first. At 5th, 11th, and 17th levels, a kineticist can replace one of her infusions with another infusion of the same effective spell level or lower. She can't replace an infusion that she used to qualify for another of her wild talents. The descriptions of infusions begin on page 17."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|1+(KineticistLVL>=3)+(KineticistLVL>=5)+(KineticistLVL>=9)+(KineticistLVL>=11)+(KineticistLVL>=13)+(KineticistLVL>=17)+(KineticistLVL>=19)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 545,
+    "record_key": "Kineticist ~ Infusion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

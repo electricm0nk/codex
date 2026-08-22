@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Wounded Paw Gambit",
+    "name": "Wounded Paw Gambit",
+    "class": "Warpriest Bonus Feat",
+    "description": "Whenever you use Broken Wing Gambit and an opponent attacks you as a result, each ally who has this feat and is within 30 feet of that opponent can attempt a ranged attack against it as an immediate action. The ally's ranged weapon must be in hand, loaded, and ready to be fired or thrown in order to make this attack possible.&nl; An ally who has this feat and Broken Wing Gambit can instead use Broken Wing Gambit to attempt an attack of opportunity against the foe, but cannot attempt both that attack of opportunity and this ranged attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Wounded Paw Gambit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Broken Wing Gambit"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Bluff=5"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you use Broken Wing Gambit and an opponent attacks you as a result, each ally who has this feat and is within 30 feet of that opponent can attempt a ranged attack against it as an immediate action. The ally's ranged weapon must be in hand, loaded, and ready to be fired or thrown in order to make this attack possible.&nl; An ally who has this feat and Broken Wing Gambit can instead use Broken Wing Gambit to attempt an attack of opportunity against the foe, but cannot attempt both that attack of opportunity and this ranged attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Wounded Paw Gambit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4195,
+    "record_key": "Warpriest Bonus Feat ~ Wounded Paw Gambit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

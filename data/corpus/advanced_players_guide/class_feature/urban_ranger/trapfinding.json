@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Urban Ranger ~ Trapfinding",
+    "name": "Trapfinding",
+    "class": "Ranger",
+    "description": "At 3rd level, an urban ranger can find and disable traps, as the rogue class feature of the same name. This ability replaces endurance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Urban Ranger ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.RangerEndurance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an urban ranger can find and disable traps, as the rogue class feature of the same name. This ability replaces endurance."
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Trapfinding|TrapfindingBonus|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|TrapfindingBonus|TYPE=Trapfinding"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingLVL|CL=Ranger"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapfindingBonus|max(TrapfindingLVL/2,1)|TYPE=Trapfinding"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2877,
+    "record_key": "Urban Ranger ~ Trapfinding"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

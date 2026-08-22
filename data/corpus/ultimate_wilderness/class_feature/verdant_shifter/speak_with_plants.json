@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verdant Shifter ~ Speak with Plants",
+    "name": "Speak with Plants",
+    "class": "Shifter",
+    "description": "A verdant shifter gains the ability to cast speak with plants as a spell-like ability %1 times per day.|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Shifter ~ Speak with Plants"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Features.VerdantShifterClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3+CHA|CASTERLEVEL=ShifterLVL|Speak with Plants"
+      },
+      {
+        "key": "DESC",
+        "value": "A verdant shifter gains the ability to cast speak with plants as a spell-like ability %1 times per day.|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1101,
+    "record_key": "Verdant Shifter ~ Speak with Plants"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

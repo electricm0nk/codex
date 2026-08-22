@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Throw Athame",
+    "name": "Throw Athame",
+    "class": "Magus Arcana",
+    "description": "As a standard action, you can throw your athame up to 60 feet as a ranged attack (no range penalty). If the athame misses, it returns automatically to your hand just before your next turn. If the athame hits, it deals damage and its duration ends; you can choose to spend up to 2 points from your arcane pool to increase the thrown athame's damage by +1d6 for each point spent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Throw Athame"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialAttack.Supernatural.MagusArcana"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Magus Archetype ~ Spellblade"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can throw your athame up to 60 feet as a ranged attack (no range penalty). If the athame misses, it returns automatically to your hand just before your next turn. If the athame hits, it deals damage and its duration ends; you can choose to spend up to 2 points from your arcane pool to increase the thrown athame's damage by +1d6 for each point spent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1325,
+    "record_key": "Magus Arcana ~ Throw Athame"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Hex Glyph (Greater)",
-    "school": "Abjuration",
-    "level": 5,
     "description": "This spell functions as hex glyph, except you can store a hex or a major hex (but not a grand hex). You trace the glyph with incense, which must first be sprinkled with powdered diamond (as noted in the material line). Read magic allows its caster to identify a greater hex glyph with a DC 16 Spellcraft check.",
-    "full_text": true
+    "full_text": true,
+    "key": "Hex Glyph (Greater)",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman,Witch=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Inscription casts your hex or major hex on those who pass it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as hex glyph, except you can store a hex or a major hex (but not a grand hex). You trace the glyph with incense, which must first be sprinkled with powdered diamond (as noted in the material line). Read magic allows its caster to identify a greater hex glyph with a DC 16 Spellcraft check.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent until discharged [D]"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(powdered diamond worth 400 gp)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/hexGlyph.html#hex-glyph-greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "no (object) and yes (see text)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Object touched or up to (CASTERLEVEL*5) sq. ft."
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 68,
-    "record_key": "Hex Glyph (Greater)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Hex Glyph (Greater)",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

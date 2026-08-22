@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Bodak ~ Death Gaze",
     "delivery": "Supernatural",
@@ -15,21 +13,61 @@
     "owners": [
       "bestiary_2:monster:bodak"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death Gaze"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BodakDeathGazeDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BodakDeathGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BodakDeathGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "1d4 negative levels, 30 feet; Fortitude DC %1 negates.  A  humanoid slain by a bodak's death gaze rises as a bodak 24 hours later.  This is a death effect.|BodakDeathGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Bodak ~ Death Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Gaze"
+      }
+    ],
     "source_page": "p.48",
     "traits": [
       "Gaze"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 201,
-    "record_key": "Bodak ~ Death Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 201,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Bodak ~ Death Gaze",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

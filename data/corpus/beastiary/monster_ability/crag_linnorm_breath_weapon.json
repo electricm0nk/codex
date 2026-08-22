@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Crag Linnorm ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -18,19 +16,75 @@
     "owners": [
       "beastiary:monster:linnorm_crag"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1' Line of Magma %2d%3, DC %4)|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDamageDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponLine|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds as a standard action, a crag linnorm can expel a %1-foot line of magma, dealing %2d%3 points of fire damage to all creatures struck (Reflex DC %4 halves). This line of magma remains red-hot for 1 round after the linnorm creates it. Creatures that took damage on the first round take 6d6 fire damage the second round (Reflex DC %4 negates), as does any creature that walks across the line of magma. If the magma was expelled while the linnorm was airborne, it instead rains downward during the second round as a sheet of fire no more than 60 feet high that does 6d6 damage (Reflex DC %4 negates) to any creature that passes through it. On the third round, the line of magma cools to a thin layer of brittle stone that quickly degrades to powder and sand over the course of several hours; magma that's turned to a sheet of fire is consumed entirely during the second round, leaving behind only a stain of smoke in the air that swiftly disperses.|BreathWeaponLine|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Crag Linnorm ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.190",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 841,
-    "record_key": "Crag Linnorm ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 841,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Crag Linnorm ~ Breath Weapon",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

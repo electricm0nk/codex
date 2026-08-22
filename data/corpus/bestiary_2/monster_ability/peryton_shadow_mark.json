@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Peryton ~ Shadow Mark",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:peryton"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Shadow Mark"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PerytonShadowMarkDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PerytonShadowMarkDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Shadow Mark)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PerytonShadowMarkDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a peryton can make a ranged touch attack by flying over a humanoid target - the maximum range of this attack is 300 feet.  If the peryton hits, its shadow transforms to match the shadow of the creature struck.  Once a peryton has established this link, it gains a +2 morale bonus on attack rolls and damage rolls made against that target, and every time the peryton hits that target with an attack, the creature must make a DC %1 Will save or become frightened for 1 round.  This is a mind-affecting fear effect.|PerytonShadowMarkDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Peryton ~ Shadow Mark"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.207",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 936,
-    "record_key": "Peryton ~ Shadow Mark"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 936,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Peryton ~ Shadow Mark",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

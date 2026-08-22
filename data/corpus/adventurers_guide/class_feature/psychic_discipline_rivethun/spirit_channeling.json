@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Rivethun ~ Spirit Channeling",
+    "name": "Spirit Channeling",
+    "class": "Psychic",
+    "description": "As your self-awareness expands, you become increasingly attuned to the spirit world around you. As part of your meditation to initiate metamorphosis, you can invite a wandering spirit to share your body as if you were a shaman (Advanced Class Guide 37). You gain the associated 1st-level spirit ability as long as you maintain your altered form, but your metamorphosis form also exhibits some aspect of the spirit you host, such as vivid red hair for a flame spirit or gauntness for a bone spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Rivethun ~ Spirit Channeling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "DESC",
+        "value": "As your self-awareness expands, you become increasingly attuned to the spirit world around you. As part of your meditation to initiate metamorphosis, you can invite a wandering spirit to share your body as if you were a shaman (Advanced Class Guide 37). You gain the associated 1st-level spirit ability as long as you maintain your altered form, but your metamorphosis form also exhibits some aspect of the spirit you host, such as vivid red hair for a flame spirit or gauntness for a bone spirit."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1181,
+    "record_key": "Psychic Discipline Rivethun ~ Spirit Channeling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

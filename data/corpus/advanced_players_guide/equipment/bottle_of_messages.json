@@ -1,27 +1,53 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Bottle of Messages",
     "category": "MagicItems",
-    "name": "Bottle of Messages",
     "cost_gp": 300.0,
-    "weight": 1.0,
-    "description": "A green glass bottle with a tiny winding key on its stem that, when turned, causes a shadowy cork to slowly become substantial over a round."
+    "description": "A green glass bottle with a tiny winding key on its stem that, when turned, causes a shadowy cork to slowly become substantial over a round.",
+    "key": "Bottle of Messages",
+    "name": "Bottle of Messages",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "300"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 146,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Bottle of Messages",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

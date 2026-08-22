@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Gnasher ~ Improvised Weapon Mastery",
+    "name": "Improvised Weapon Mastery",
+    "class": "Barbarian",
+    "description": "The feral gnasher gains Improvised Weapon Mastery as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Gnasher ~ Improvised Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The feral gnasher gains Improvised Weapon Mastery as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improvised Weapon Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 537,
+    "record_key": "Feral Gnasher ~ Improvised Weapon Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

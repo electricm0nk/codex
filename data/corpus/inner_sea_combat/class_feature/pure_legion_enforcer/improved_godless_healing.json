@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pure Legion Enforcer ~ Improved Godless Healing",
+    "name": "Improved Godless Healing",
+    "class": "Pure Legion Enforcer",
+    "description": "At 3rd level, a Pure Legion enforcer can benefit from the Godless Healing feat one additional time per day, and heals an additional 1d8 points of damage for every 3 levels he possesses, to a maximum of an additional 3d8 points of damage healed at 9th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pure Legion Enforcer ~ Improved Godless Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a Pure Legion enforcer can benefit from the Godless Healing feat one additional time per day, and heals an additional 1d8 points of damage for every 3 levels he possesses, to a maximum of an additional 3d8 points of damage healed at 9th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 538,
+    "record_key": "Pure Legion Enforcer ~ Improved Godless Healing"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

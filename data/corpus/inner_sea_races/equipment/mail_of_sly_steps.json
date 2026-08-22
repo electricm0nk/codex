@@ -1,0 +1,82 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 100.0,
+    "description": null,
+    "key": "Mail of Sly Steps",
+    "name": "Mail of Sly Steps",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Chain Shirt"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Magic.Light.ArmorProfLight.Suit.Specific"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|21650.Special Ability ~ +2 ~ Armor.Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      }
+    ],
+    "weight_lbs": 25.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_arms_armor.lst",
+    "record_key": "Mail of Sly Steps",
+    "sha256": "8bab5c93e80b95941384620665b3bcc691bebf1b540dd94323573020b736d0a7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

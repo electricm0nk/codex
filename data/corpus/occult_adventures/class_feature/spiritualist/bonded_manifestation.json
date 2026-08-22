@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spiritualist ~ Bonded Manifestation",
+    "name": "Bonded Manifestation",
+    "class": "Spiritualist",
+    "description": "At 3rd level, as a swift action, a spiritualist can pull on the consciousness of her phantom and the substance of the Ethereal Plane to partially manifest aspects of both in her own body. When she does, she uses this bonded manifestation to enhance her own abilities while the phantom is still bound to her consciousness. For the spiritualist to use this ability, the phantom must be confined in the spiritualist's consciousness; it can't be manifested in any other way. During a bonded manifestation, the phantom can't be damaged, dismissed, or banished. A spiritualist can use bonded manifestation a number of rounds per day equal to 3 + her spiritualist level. The rounds need not be consecutive. She can dismiss the effects of a bonded manifestation as a free action, but even if she dismisses a bonded manifestation on the same round that she used it, it counts as 1 round of use. When a spiritualist uses this ability, she must choose either ectoplasmic or incorporeal form. When she makes this choice, she gains all of the abilities based on the form she chooses and her spiritualist level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist ~ Bonded Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, as a swift action, a spiritualist can pull on the consciousness of her phantom and the substance of the Ethereal Plane to partially manifest aspects of both in her own body. When she does, she uses this bonded manifestation to enhance her own abilities while the phantom is still bound to her consciousness. For the spiritualist to use this ability, the phantom must be confined in the spiritualist's consciousness; it can't be manifested in any other way. During a bonded manifestation, the phantom can't be damaged, dismissed, or banished. A spiritualist can use bonded manifestation a number of rounds per day equal to 3 + her spiritualist level. The rounds need not be consecutive. She can dismiss the effects of a bonded manifestation as a free action, but even if she dismisses a bonded manifestation on the same round that she used it, it counts as 1 round of use. When a spiritualist uses this ability, she must choose either ectoplasmic or incorporeal form. When she makes this choice, she gains all of the abilities based on the form she chooses and her spiritualist level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1279,
+    "record_key": "Spiritualist ~ Bonded Manifestation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

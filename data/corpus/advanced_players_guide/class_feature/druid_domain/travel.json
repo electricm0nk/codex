@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Domain ~ Travel",
+    "name": "Travel",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Travel"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidTravelAllowed,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Longstrider|Druid=2|Locate Object|Druid=3|Fly|Druid=4|Dimension Door|Druid=5|Teleport|Druid=6|Find the Path|Druid=7|Teleport (Greater)|Druid=8|Phase Door|Druid=9|Astral Projection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1168,
+    "record_key": "Druid Domain ~ Travel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

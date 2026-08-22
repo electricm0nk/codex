@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Panther Parry",
+    "name": "Panther Parry",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your vicious strikes impair your foe's ability to attack you when you move.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Panther Parry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Combat Reflexes,Improved Unarmed Strike,Panther Claw,Panther Style"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=15"
+      },
+      {
+        "key": "DESC",
+        "value": "Your vicious strikes impair your foe's ability to attack you when you move."
+      },
+      {
+        "key": "DESC",
+        "value": " While using Panther Style, your retaliatory unarmed strikes are resolved before the triggering attacks. If your retaliatory unarmed strike deals damage to an opponent, that opponent takes a -2 penalty on attack and damage rolls with the triggering attack of opportunity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Panther Parry"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4506,
+    "record_key": "Warpriest Bonus Feat ~ Panther Parry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

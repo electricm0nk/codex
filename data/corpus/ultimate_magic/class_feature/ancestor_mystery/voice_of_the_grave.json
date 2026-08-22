@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ancestor Mystery ~ Voice of the Grave",
+    "name": "Voice of the Grave",
+    "class": "Ancestor Mystery",
+    "description": "You can speak with the dead, as per the spell, for %1 rounds per day. These rounds do not need to be consecutive.  The dead creature you question takea a -%2 penalty on its Will save to resist this effect.|VoiceOfTheGraveRounds|VoiceOfTheGravePenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestor Mystery ~ Voice of the Grave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.AncestorRevelation.Supernatural.RevelationTargetOneOnly"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoiceOfTheGraveRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoiceOfTheGravePenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with the dead, as per the spell, for %1 rounds per day. These rounds do not need to be consecutive.  The dead creature you question takea a -%2 penalty on its Will save to resist this effect.|VoiceOfTheGraveRounds|VoiceOfTheGravePenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoiceOfTheGraveRounds|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoiceOfTheGravePenalty|floor(classlevel(\"Oracle\")/5)*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 461,
+    "record_key": "Ancestor Mystery ~ Voice of the Grave"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

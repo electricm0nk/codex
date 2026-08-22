@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3400.0,
+    "description": "This unkempt black smock is loose-fitting and stained from travel. In the River Kingdoms, the wearer is assumed to be a follower of Gyronna because of the garment's association with her faith. The wearer gains a +2 competence bonus on Diplomacy and Intimidate checks. If Gyronna is the wearer's patron, once per day the wearer can use Detect Thoughts.",
+    "key": "Hag's Shabble",
+    "name": "Hag's Shabble",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Diplomacy,Intimidate",
+          "2",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "3400"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hag's Shabble|TIMES=1|CASTERLEVEL=3|Detect Thoughts|PREDEITY:1,Gyronna"
+      },
+      {
+        "key": "DESC",
+        "value": "This unkempt black smock is loose-fitting and stained from travel. In the River Kingdoms, the wearer is assumed to be a follower of Gyronna because of the garment's association with her faith. The wearer gains a +2 competence bonus on Diplomacy and Intimidate checks. If Gyronna is the wearer's patron, once per day the wearer can use Detect Thoughts."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 201,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Hag's Shabble",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

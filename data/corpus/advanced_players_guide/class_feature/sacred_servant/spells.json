@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Servant ~ Spells",
+    "name": "Spells",
+    "class": "Paladin",
+    "description": "At 4th level, when a sacred servant gains the ability to cast spells, she also chooses one domain associated with her deity. Her effective cleric level for this domain is equal to her paladin level -3. In addition, she also gains one domain spell slot for each level of paladin spells she can cast. Every day she must prepare the domain spell from her chosen domain in that spell slot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Servant ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.PaladinClassFeatures.SpecialQuality.CF_Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPowerTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, when a sacred servant gains the ability to cast spells, she also chooses one domain associated with her deity. Her effective cleric level for this domain is equal to her paladin level -3. In addition, she also gains one domain spell slot for each level of paladin spells she can cast. Every day she must prepare the domain spell from her chosen domain in that spell slot."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinDomainCount|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|PaladinLVL-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAbilityTriggerLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPowerTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2495,
+    "record_key": "Sacred Servant ~ Spells"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

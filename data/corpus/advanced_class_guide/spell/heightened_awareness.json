@@ -1,27 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Heightened Awareness",
-    "school": "Divination",
-    "level": 1,
     "description": "You enter a heightened state of awareness that allows you to notice more about your surroundings and recall information effortlessly. You gain a +2 competence bonus on Perception checks and on all Knowledge checks that you are trained in. If this spell is active when you have to make an initiative check, you can instantly dismiss this spell and gain a +4 bonus on that check.",
-    "full_text": true
+    "full_text": true,
+    "key": "Heightened Awareness",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Bard,Druid,Inquisitor,Ranger,Shaman,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You enter a heightened state of awareness that allows you to notice more about your surroundings and recall information effortlessly. You gain a +2 competence bonus on Perception checks and on all Knowledge checks that you are trained in. If this spell is active when you have to make an initiative check, you can instantly dismiss this spell and gain a +4 bonus on that check.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your recall and ability to process information improve.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a coffee bean)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/heightenedAwareness.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "you"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Perception,TYPE.Knowledge|2|TYPE=Competence"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 65,
-    "record_key": "Heightened Awareness"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Heightened Awareness",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus",
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

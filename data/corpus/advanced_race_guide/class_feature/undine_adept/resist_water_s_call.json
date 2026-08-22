@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undine Adept ~ Resist Water's Call",
+    "name": "Resist Water's Call",
+    "class": "Druid",
+    "description": "An undine adept gains a +4 bonus on saving throws against the spell-like and supernatural abilities of outsiders with the aquatic or water subtype, fey with the aquatic or water subtype, and spells and effects with the water descriptor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine Adept ~ Resist Water's Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An undine adept gains a +4 bonus on saving throws against the spell-like and supernatural abilities of outsiders with the aquatic or water subtype, fey with the aquatic or water subtype, and spells and effects with the water descriptor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 803,
+    "record_key": "Undine Adept ~ Resist Water's Call"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

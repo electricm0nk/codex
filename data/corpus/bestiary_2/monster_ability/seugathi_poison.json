@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Seugathi ~ Poison",
     "delivery": "Extraordinary",
@@ -15,19 +13,55 @@
     "owners": [
       "bestiary_2:monster:seugathi"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeugathiPoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeugathiPoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeugathiPoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Wis and deafness; cure 2 consecutive saves.  Deafness persists as long as the ability damage caused by the poison lasts.|SeugathiPoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Seugathi ~ Poison"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1130,
-    "record_key": "Seugathi ~ Poison"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1130,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Seugathi ~ Poison",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Sun's Blessing",
+    "name": "Sun's Blessing",
+    "class": "Domain Power",
+    "description": "Whenever you channel positive energy to harm undead creatures, add a +%1 bonus to the damage dealt. Undead do not add their channel resistance to their saves when you channel positive energy.|DomainSunLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Sun's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.Supernatural.DomainPower.Sun Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you channel positive energy to harm undead creatures, add a +%1 bonus to the damage dealt. Undead do not add their channel resistance to their saves when you channel positive energy.|DomainSunLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 741,
+    "record_key": "Domain Power ~ Sun's Blessing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

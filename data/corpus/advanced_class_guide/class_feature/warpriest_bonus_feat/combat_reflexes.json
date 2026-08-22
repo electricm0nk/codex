@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Combat Reflexes",
+    "name": "Combat Reflexes",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can make additional attacks of opportunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Combat Reflexes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatReflexesAttacks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make additional attacks of opportunity."
+      },
+      {
+        "key": "DESC",
+        "value": " You may make %1 additional attacks of opportunity per round. With this feat, you may also make attacks of opportunity while flat-footed.|CombatReflexesAttacks"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Combat Reflexes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4213,
+    "record_key": "Warpriest Bonus Feat ~ Combat Reflexes"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

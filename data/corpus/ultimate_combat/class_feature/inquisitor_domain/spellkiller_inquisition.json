@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Domain ~ Spellkiller Inquisition",
+    "name": "Spellkiller Inquisition",
+    "class": "Inquisitor Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Domain ~ Spellkiller Inquisition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain.Inquisition"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSpellKillerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSpellKillerDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSpellKillerTimes|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spellkiller Inquisition ~ Deities|Spellkiller Inquisition ~ Granted Powers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSpellKillerLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSpellKillerDC|10+(DomainSpellKillerLVL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSpellKillerTimes|DomainPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 862,
+    "record_key": "Inquisitor Domain ~ Spellkiller Inquisition"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

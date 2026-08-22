@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You create an instinctual connection between the targets. Each can sense the others' overall emotional states, which allows them to communicate basic emotional concepts (such as alerting each other of danger due to increased stress). Once the spell has been cast on the subjects, the distance between them and the caster doesn't affect the spell as long as they are on the same plane of existence. If a subject leaves the plane, or if it dies, the spell ceases to function for it.|PRERULE:1,DisplayFullSpell",
+    "key": "Pack Empathy",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Ranger=2|Bloodrager,Druid,Inquisitor,Sorcerer,Spiritualist,Summoner,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Create an empathic bond with allies.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create an instinctual connection between the targets. Each can sense the others' overall emotional states, which allows them to communicate basic emotional concepts (such as alerting each other of danger due to increased stress). Once the spell has been cast on the subjects, the distance between them and the caster doesn't affect the spell as long as they are on the same plane of existence. If a subject leaves the plane, or if it dies, the spell ceases to function for it.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Curse"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Pack Empathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You plus (CASTERLEVEL/3) willing living creatures, no two of which can be more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 82,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Pack Empathy",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Allows the wearer to transfer some or all of the shield's enhancement bonus to any number of adjacent allies.  All selected allies receive the same bonus. If a shielded target is ever more than 5 feet from the wearer, the effect ends for that target but not for any other targets.",
+    "key": "GGUARD",
+    "name": "GGUARD",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Guarding / Greater ~ Shield"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allows the wearer to transfer some or all of the shield's enhancement bonus to any number of adjacent allies.  All selected allies receive the same bonus. If a shielded target is ever more than 5 feet from the wearer, the effect ends for that target but not for any other targets."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "GGUARD",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Killer ~ Lingering Thrust",
+    "name": "Lingering Thrust",
+    "class": "Slayer",
+    "description": "When a witch killer's attack against an arcane spellcaster in the midst of casting forces the spellcaster to attempt a concentration check, the witch killer adds half his slayer level to the check's DC. When he makes a sneak attack against an arcane spellcaster, up to 1 point of sneak attack damage per slayer level counts as ongoing damage for the purpose of forcing the spellcaster to attempt concentration checks (the witch killer does not add half his slayer level to this DC).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Killer ~ Lingering Thrust"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "DESC",
+        "value": "When a witch killer's attack against an arcane spellcaster in the midst of casting forces the spellcaster to attempt a concentration check, the witch killer adds half his slayer level to the check's DC. When he makes a sneak attack against an arcane spellcaster, up to 1 point of sneak attack damage per slayer level counts as ongoing damage for the purpose of forcing the spellcaster to attempt concentration checks (the witch killer does not add half his slayer level to this DC)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 239,
+    "record_key": "Witch Killer ~ Lingering Thrust"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

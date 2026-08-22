@@ -1,0 +1,287 @@
+[
+  {
+    "key": "Battle Host ~ Battle Reading",
+    "class": "Occultist",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Battle Host ~ Battle Skill",
+    "class": "Occultist",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Battle Host ~ Bonus Feats",
+    "class": "Occultist",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Battle Host ~ Class Skills",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Battle Host ~ Heroic Splendor",
+    "class": "Occultist",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Battle Host ~ Panoply Bond",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Battle Host ~ Spirit Warrior",
+    "class": "Occultist",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Battle Host ~ Weapon and Armor Proficiency",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1518
+    }
+  },
+  {
+    "key": "Necroccultist ~ Deadspeaker",
+    "class": "Occultist",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1519
+    }
+  },
+  {
+    "key": "Necroccultist ~ Ghostly Horde",
+    "class": "Occultist",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1519
+    }
+  },
+  {
+    "key": "Necroccultist ~ Life Drain",
+    "class": "Occultist",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1519
+    }
+  },
+  {
+    "key": "Necroccultist ~ Necromantic Bond",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1519
+    }
+  },
+  {
+    "key": "Sha'ir ~ Augment Jin",
+    "class": "Occultist",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1520
+    }
+  },
+  {
+    "key": "Sha'ir ~ Jin",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1520
+    }
+  },
+  {
+    "key": "Sha'ir ~ Jin Spy",
+    "class": "Occultist",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1520
+    }
+  },
+  {
+    "key": "Sha'ir ~ Manifest Jin",
+    "class": "Occultist",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1520
+    }
+  },
+  {
+    "key": "Tome Eater ~ Bonded Tome",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1521
+    }
+  },
+  {
+    "key": "Tome Eater ~ Devour Books and Scrolls",
+    "class": "Occultist",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1521
+    }
+  },
+  {
+    "key": "Tome Eater ~ Word Sense",
+    "class": "Occultist",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1521
+    }
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ World Serpent Totem Unity",
+    "name": "World Serpent Totem Unity",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian doubles her fast movement bonus to land speed and cannot be knocked prone. She also doubles her world serpent totem insight bonus to AC against attack rolls made by an outsider or aberration to confirm a critical hit against her. A barbarian must have the world serpent totem and world serpent totem spirit rage powers and be at least 10th level before selecting this rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ World Serpent Totem Unity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Rage Power ~ World Serpent Spirit,Rage Power ~ World Serpent Totem"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian doubles her fast movement bonus to land speed and cannot be knocked prone. She also doubles her world serpent totem insight bonus to AC against attack rolls made by an outsider or aberration to confirm a critical hit against her. A barbarian must have the world serpent totem and world serpent totem spirit rage powers and be at least 10th level before selecting this rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 299,
+    "record_key": "Rage Power ~ World Serpent Totem Unity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cultivator ~ Verdant Voice",
+    "name": "Verdant Voice",
+    "class": "Bard",
+    "description": "By combining traditional Green Faith chants and fey songs into his bardic performance, a cultivator gains the ability to affect a creature of the plant type with mind-affecting bardic performances. However, doing so requires the cultivator to expend 1 additional round of bardic performance each round he maintains a performance augmented by verdant voice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cultivator ~ Verdant Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.CultivatorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "By combining traditional Green Faith chants and fey songs into his bardic performance, a cultivator gains the ability to affect a creature of the plant type with mind-affecting bardic performances. However, doing so requires the cultivator to expend 1 additional round of bardic performance each round he maintains a performance augmented by verdant voice."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 253,
+    "record_key": "Cultivator ~ Verdant Voice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

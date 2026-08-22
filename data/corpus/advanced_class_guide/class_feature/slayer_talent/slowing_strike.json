@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Talent ~ Slowing Strike",
+    "name": "Slowing Strike*",
+    "class": "Slayer Talent",
+    "description": "Your sneak attacks hinder the movement of your target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Talent ~ Slowing Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerSlowingStrikeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerSlowingStrikeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your sneak attacks hinder the movement of your target."
+      },
+      {
+        "key": "DESC",
+        "value": " An opponent damaged by the slayer's sneak attack has its speed halved for 1d4 rounds. A successful DC %1 Fortitude saving throw negates this effect. Against creatures with multiple types of movement, the slayer must choose which movement type to affect. If the slayer affects a creature's flight movement, its maneuverability is reduced by one step; if it's airborne at the time, it falls unless it succeeds at a DC 10 Fly check. If the slayer targets a creature already affected by this ability, its speed and maneuverability are not further reduced; the slayer may either extend the duration of that effect by 1d4 rounds or choose another movement type to affect (keeping track of the duration of each affected movement separately).|SlayerSlowingStrikeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerSlowingStrikeLVL|SlayerTalentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerSlowingStrikeDC|10+(SlayerSlowingStrikeLVL/2)+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1846,
+    "record_key": "Slayer Talent ~ Slowing Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

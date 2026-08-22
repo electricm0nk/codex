@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Standard Bearer",
+    "name": "Standard Bearer",
+    "class": "Cavalier Archetype",
+    "description": "Not all cavaliers are content to ride at the head of a charge, leading from the front and facing down their enemies directly. Some prefer to stand away from the fray, their banners a beacon shining brightly over the battlefield, rallying their troops to victory. The standard bearer employs the banner of his order, his lord, or his own house to raise the spirits of his allies and warns enemies of impending doom.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Standard Bearer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype.CavalierMount.CavalierCavaliersBanner.CavalierMightyCharge.CavalierSupremeCharge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Standard Bearer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CavalierMount,TYPE.CavalierCavaliersBanner,TYPE.CavalierMightyCharge,TYPE.CavalierSupremeCharge]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all cavaliers are content to ride at the head of a charge, leading from the front and facing down their enemies directly. Some prefer to stand away from the fray, their banners a beacon shining brightly over the battlefield, rallying their troops to victory. The standard bearer employs the banner of his order, his lord, or his own house to raise the spirits of his allies and warns enemies of impending doom."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Standard Bearer ~ Banner|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Standard Bearer ~ Mount|PRECLASS:1,Cavalier=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Standard Bearer ~ Banner of Solace|PRECLASS:1,Cavalier=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Standard Bearer ~ Awesome Pennon|PRECLASS:1,Cavalier=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Cavalier"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 474,
+    "record_key": "Cavalier Archetype ~ Standard Bearer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

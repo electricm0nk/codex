@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hallowed Necromancer ~ Positive Touch",
+    "name": "Positive Touch",
+    "class": "Wizard",
+    "description": "As a standard action, a hallowed necromancer can sacrifice a prepared spell of the necromancy school to spontaneously cast a cure spell of the same level or lower, counting the spell as a necromancy spell rather than a conjuration spell. This cure spell harms only undead; it doesn't heal the living. If the spell requires an attack roll, it as has a critical threat range of 19-20. %1 times per day, when she spontaneously casts a cure spell, she can either turn the effect into a ray and increase the range to close or remove the Will save but deal half the normal amount of damage.|3+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallowed Necromancer ~ Positive Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a hallowed necromancer can sacrifice a prepared spell of the necromancy school to spontaneously cast a cure spell of the same level or lower, counting the spell as a necromancy spell rather than a conjuration spell. This cure spell harms only undead; it doesn't heal the living. If the spell requires an attack roll, it as has a critical threat range of 19-20. %1 times per day, when she spontaneously casts a cure spell, she can either turn the effect into a ray and increase the range to close or remove the Will save but deal half the normal amount of damage.|3+INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 311,
+    "record_key": "Hallowed Necromancer ~ Positive Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

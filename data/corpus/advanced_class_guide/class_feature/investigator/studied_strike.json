@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Studied Strike",
+    "name": "Studied Strike",
+    "class": "Investigator",
+    "description": "You can choose to make a studied strike against the target of your studied combat as a free action, upon successfully hitting your studied target with a melee attack, to deal additional damage.  The damage of studied strike is %1d%2 precision damage and is not multiplied on a critical hit; creatures that are immune to sneak attacks are also immune to studied strike.  If you used a weapon that deals nonlethal damage (like a sap, whip, or an unarmed strike), you may choose to have the additional damage from studied strike be nonlethal damage instead of lethal damage. If you chose to make an attack with a lethal weapon instead deal nonlethal damage (with the usual -4 penalty), the studied strike damage may also deal nonlethal damage.  You must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. An investigator cannot use studied strike against a creature with concealment.|InvestigatorStudiedStrikeDice|InvestigatorStudiedStrikeDieSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Studied Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorStudiedStrikeDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorStudiedStrikeDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to make a studied strike against the target of your studied combat as a free action, upon successfully hitting your studied target with a melee attack, to deal additional damage.  The damage of studied strike is %1d%2 precision damage and is not multiplied on a critical hit; creatures that are immune to sneak attacks are also immune to studied strike.  If you used a weapon that deals nonlethal damage (like a sap, whip, or an unarmed strike), you may choose to have the additional damage from studied strike be nonlethal damage instead of lethal damage. If you chose to make an attack with a lethal weapon instead deal nonlethal damage (with the usual -4 penalty), the studied strike damage may also deal nonlethal damage.  You must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. An investigator cannot use studied strike against a creature with concealment.|InvestigatorStudiedStrikeDice|InvestigatorStudiedStrikeDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorStudiedStrikeDice|min(9,(InvestigatorLVL-2)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorStudiedStrikeDieSize|6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1249,
+    "record_key": "Investigator ~ Studied Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

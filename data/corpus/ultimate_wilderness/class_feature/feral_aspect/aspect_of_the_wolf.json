@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feral Aspect ~ Wolf",
+    "name": "Aspect of the Wolf",
+    "class": "Feral Aspect",
+    "description": "The aspect of the wolf provides the senses and the attacks of the mighty wolf, whose instincts are honed to track and take down its prey. [Minor Form] You gain the scent ability with a range of %1 feet, or, if you have the scent ability, the range increases by %1 feet. The range doubles if the opponent is upwind and is halved if the opponent is downwind.|FeralWolfAspectScent",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Aspect ~ Wolf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Feral Aspect.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralWolfAspectScent|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The aspect of the wolf provides the senses and the attacks of the mighty wolf, whose instincts are honed to track and take down its prey. [Minor Form] You gain the scent ability with a range of %1 feet, or, if you have the scent ability, the range increases by %1 feet. The range doubles if the opponent is upwind and is halved if the opponent is downwind.|FeralWolfAspectScent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralWolfAspectScent|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralWolfAspectScent|10|PREVARGTEQ:FeralAspectLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralWolfAspectScent|10|PREVARGTEQ:FeralAspectLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 366,
+    "record_key": "Feral Aspect ~ Wolf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

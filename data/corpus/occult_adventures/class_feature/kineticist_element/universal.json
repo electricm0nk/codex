@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kineticist Element ~ Universal",
+    "name": "Universal",
+    "class": "Kineticist Element",
+    "description": "The following wild talents are available to all kineticists. Wild Talents: 1st-draining infusion, extended range, kinetic blade, kinetic fist, skilled kineticist; 2nd-skilled kineticist (greater); 3rd-elemental grip, extreme range, flurry of blasts, kinetic whip, mobile blast, snake; 4th- expanded defense; 5th-grappling infusion, kinetic form, spark of life, wall; 6th-ride the blast; 8th-reverse shift.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Element ~ Universal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following wild talents are available to all kineticists. Wild Talents: 1st-draining infusion, extended range, kinetic blade, kinetic fist, skilled kineticist; 2nd-skilled kineticist (greater); 3rd-elemental grip, extreme range, flurry of blasts, kinetic whip, mobile blast, snake; 4th- expanded defense; 5th-grappling infusion, kinetic form, spark of life, wall; 6th-ride the blast; 8th-reverse shift."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 593,
+    "record_key": "Kineticist Element ~ Universal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

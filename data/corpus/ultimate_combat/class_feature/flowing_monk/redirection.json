@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flowing Monk ~ Redirection",
+    "name": "Redirection",
+    "class": "Monk",
+    "description": "At 1st level, as an immediate action, a flowing monk can attempt a reposition or trip combat maneuver against a creature that the flowing monk threatens and that attacks him. If the combat maneuver is successful, the attacker is sickened for 1 round (Reflex DC = 10 + 1/2 the monk's level + monk's Wisdom modifier to halve the duration), plus 1 additional round at 4th level and for every four levels afterward (to a maximum of 6 rounds at 20th level). The monk gains a +2 bonus on the reposition or trip combat maneuver check and the save DC for redirection increases by 2 if the attacker is using Power Attack or is charging when attacking him. The benefit increases to a +4 bonus and an increase of the saving throw by 4 if both apply. At 4th level, a flowing monk can use redirection against an opponent that the flowing monk threatens and that attacks an ally with a melee attack. At 8th level, a flowing monk can make both a reposition and a trip maneuver as part of a single immediate action with this ability. At 12th level, a flowing monk can use redirection against any opponent that attacks him in melee, even if the flowing monk is not threatening the opponent who attacks him. A flowing monk can use this ability once per day per monk level, but no more than once per round. This ability replaces stunning fist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flowing Monk ~ Redirection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, as an immediate action, a flowing monk can attempt a reposition or trip combat maneuver against a creature that the flowing monk threatens and that attacks him. If the combat maneuver is successful, the attacker is sickened for 1 round (Reflex DC = 10 + 1/2 the monk's level + monk's Wisdom modifier to halve the duration), plus 1 additional round at 4th level and for every four levels afterward (to a maximum of 6 rounds at 20th level). The monk gains a +2 bonus on the reposition or trip combat maneuver check and the save DC for redirection increases by 2 if the attacker is using Power Attack or is charging when attacking him. The benefit increases to a +4 bonus and an increase of the saving throw by 4 if both apply. At 4th level, a flowing monk can use redirection against an opponent that the flowing monk threatens and that attacks an ally with a melee attack. At 8th level, a flowing monk can make both a reposition and a trip maneuver as part of a single immediate action with this ability. At 12th level, a flowing monk can use redirection against any opponent that attacks him in melee, even if the flowing monk is not threatening the opponent who attacks him. A flowing monk can use this ability once per day per monk level, but no more than once per round. This ability replaces stunning fist."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 937,
+    "record_key": "Flowing Monk ~ Redirection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

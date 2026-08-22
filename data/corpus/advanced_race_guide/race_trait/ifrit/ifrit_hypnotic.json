@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Ifrit ~ Hypnotic",
+    "name": "Hypnotic",
+    "race_key": "Ifrit",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ifrit Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Ifrit_ReplaceFireAffinity"
+    ],
+    "description": "Ifrits with this racial trait evoke the entrancing nature of flame, adding +1 to the DC for all saving throws against spells or effects they cast that inflict the fascinated condition. Once per day, when a creature rolls a saving throw against such an effect from the ifrit, the ifrit can spend an immediate action to force that creature to reroll the saving throw and use the second result, even if it is worse. The ifrit must announce he is using this ability before the results of the first roll are revealed. This racial trait replaces fire affinity.",
+    "source_page": "p.127",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ifrit ~ Hypnotic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ifrit Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Hypnotic],[!PREFACT:1,ABILITIES,Ifrit_ReplaceFireAffinity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ifrits with this racial trait evoke the entrancing nature of flame, adding +1 to the DC for all saving throws against spells or effects they cast that inflict the fascinated condition. Once per day, when a creature rolls a saving throw against such an effect from the ifrit, the ifrit can spend an immediate action to force that creature to reroll the saving throw and use the second result, even if it is worse. The ifrit must announce he is using this ability before the results of the first roll are revealed."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces fire affinity.|!PREABILITY:1,CATEGORY=Special Ability,Ifrit ~ Hypnotic"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      },
+      {
+        "key": "FACT",
+        "value": "Ifrit_ReplaceFireAffinity|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 549,
+    "record_key": "Ifrit ~ Hypnotic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Your target is filled with lust and desire for a single creature or object as designated by you at the time of casting. That creature or object must be within the spell's range and perceivable by the target of the spell. The target is filled with the compulsion to rush to the subject of its lust and passionately kiss or caress that subject on its next turn, taking no other actions. If the target would not normally have lustful feelings toward the designated creature or object, it receives a +4 bonus on its saving throw.",
+    "key": "Unnatural Lust",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=1|Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Target is compelled to kiss or caress another.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your target is filled with lust and desire for a single creature or object as designated by you at the time of casting. That creature or object must be within the spell's range and perceivable by the target of the spell. The target is filled with the compulsion to rush to the subject of its lust and passionately kiss or caress that subject on its next turn, taking no other actions. If the target would not normally have lustful feelings toward the designated creature or object, it receives a +4 bonus on its saving throw.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Emotion|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateMagic/spells/unnaturalLust.html#_unnatural-lust"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 232,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "record_key": "Unnatural Lust",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

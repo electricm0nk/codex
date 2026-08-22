@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Raven Master ~ Argent Magic",
+    "name": "Argent Magic",
+    "class": "Ranger",
+    "description": "A raven master casts spells as do most rangers, but her spell list is somewhat expanded from the normal options most rangers can choose from, for her association with the bards and other talented performers among the Silver Ravens allows her to add a limited number of bard spells to her spell list. These spells function as divine spells, and are cast and prepared in the same manner as her other ranger spells. This ability alters the ranger's spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raven Master ~ Argent Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.RavenMasterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "DESC",
+        "value": "A raven master casts spells as do most rangers, but her spell list is somewhat expanded from the normal options most rangers can choose from, for her association with the bards and other talented performers among the Silver Ravens allows her to add a limited number of bard spells to her spell list. These spells function as divine spells, and are cast and prepared in the same manner as her other ranger spells. This ability alters the ranger's spellcasting."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Argent Magic Level 1|RangerLVL>=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Argent Magic Level 2|RangerLVL>=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Argent Magic Level 3|RangerLVL>=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Argent Magic Level 4|RangerLVL>=15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 998,
+    "record_key": "Raven Master ~ Argent Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

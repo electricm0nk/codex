@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wizard Archetype ~ Undead Master",
+    "name": "Undead Master",
+    "class": "Wizard Archetype",
+    "description": "Undead masters have great power over undeath.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Undead Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "DESC",
+        "value": "Undead masters have great power over undeath."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Undead Master],[!PREFACT:1,ABILITIES,Wizard_Archetype_ArcaneSchool=True,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_ScribeScroll=True,Wizard_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead Master ~ Necromantic Focus|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead Master ~ Necropolitan|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead Master ~ Corpse Bond|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead Master ~ Command Undead|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead Master ~ Reanimator|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead Master ~ Lich-Loved|PRECLASS:1,Wizard=20"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_NecromancyOppositionSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeats|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 299,
+    "record_key": "Wizard Archetype ~ Undead Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

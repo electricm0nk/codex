@@ -1,0 +1,163 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Archetype ~ Enlightenend Bloodrager ~ AG",
+    "name": "Enlightened Bloodrager",
+    "class": "Bloodrager Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Archetype ~ Enlightenend Bloodrager ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BloodragerArchetype.BloodragerBloodline.BloodragerBonusSpells.BloodragerDamageReduction"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Enlightened Bloodrager],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_BloodCasting=True,Bloodrager_Archetype_Bloodrage=True,Bloodrager_Archetype_BloodlinePower1=True,Bloodrager_Archetype_BloodlinePower4=True,Bloodrager_Archetype_BloodlinePower8=True,Bloodrager_Archetype_BloodlinePower12=True,Bloodrager_Archetype_BloodlinePower16=True,Bloodrager_Archetype_BloodlinePower20=True,Bloodrager_Archetype_DamageReduction=True,Bloodrager_Archetype_BloodlineFeats=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Enlightened Bloodrager ~ Enlightened Spellcasting ~ AG|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Enlightened Bloodrager ~ Enlightened Bloodrage ~ AG|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Enlightened Bloodrager ~ Bloodline Feat ~ AG|PRECLASS:1,Bloodrager=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Enlightened Bloodrager ~ Bloodline Powers ~ AG|PRECLASS:1,Bloodrager=8"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_Bloodrage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlinePower20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlinePower4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlinePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlinePower12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlinePower16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlineFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlineFeat9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlineFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlineFeat15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlineFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlinePower20|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 698,
+    "record_key": "Bloodrager Archetype ~ Enlightenend Bloodrager ~ AG"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

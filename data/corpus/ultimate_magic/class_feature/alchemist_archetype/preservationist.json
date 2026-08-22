@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Preservationist",
+    "name": "Preservationist",
+    "class": "Alchemist Archetype",
+    "description": "Some alchemists are obsessed with collecting and preserving exotic creatures. These preservationists may use bottled animals and monsters as teaching tools, but some learn how to reanimate them for short periods to battle on the alchemist's behalf.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Preservationist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype.AlchemistPoisonUse.AlchemistPoisonResistance4.AlchemistPoisonResistance6.AlchemistPoisonImmunity.AlchemistPersistentMutagen.AlchemistDiscoveryLvl18"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Preservationist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonUse,TYPE.AlchemistPoisonResistance4,TYPE.AlchemistPoisonResistance6,TYPE.AlchemistPoisonImmunity,TYPE.AlchemistPersistentMutagen,TYPE.AlchemistDiscoveryLvl18]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some alchemists are obsessed with collecting and preserving exotic creatures. These preservationists may use bottled animals and monsters as teaching tools, but some learn how to reanimate them for short periods to battle on the alchemist's behalf."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Preservationist ~ Bottled Ally I|PRECLASS:1,Alchemist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Preservationist ~ Bottled Ally II|PRECLASS:1,Alchemist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Preservationist ~ Bottled Ally III|PRECLASS:1,Alchemist=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Preservationist ~ Bottled Ally IV|PRECLASS:1,Alchemist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Preservationist ~ Bottled Ally V|PRECLASS:1,Alchemist=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Preservationist ~ Bottled Ally VI|PRECLASS:1,Alchemist=18"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 843,
+    "record_key": "Alchemist Archetype ~ Preservationist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

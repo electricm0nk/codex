@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Lawgiver ~ Immunity to Rust",
     "delivery": "Extraordinary",
@@ -13,21 +11,45 @@
     "owners": [
       "inner_sea_gods:monster:lawgiver"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Rust"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Though made of metal, the Lawgiver is immune to rust and rusting effects."
+      },
+      {
+        "key": "KEY",
+        "value": "Lawgiver ~ Immunity to Rust"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Immunity"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 88,
-    "record_key": "Lawgiver ~ Immunity to Rust"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 88,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Lawgiver ~ Immunity to Rust",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

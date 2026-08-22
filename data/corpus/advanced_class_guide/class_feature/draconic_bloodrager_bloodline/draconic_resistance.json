@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodrager Bloodline ~ Draconic Resistance",
+    "name": "Draconic Resistance",
+    "class": "Draconic Bloodrager Bloodline",
+    "description": "You gain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodrager Bloodline ~ Draconic Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Draconic Bloodrager Bloodline ~ Power LVL 04.Bloodrager Bloodline Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Draconic_BloodlineProgressionLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower4LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_DraconicResistance_ResistBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_DraconicResistance_NaturalArmor|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain"
+      },
+      {
+        "key": "DESC",
+        "value": " acid|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1|PREVARLT:Bloodrager_Draconic_BloodlineLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": " cold|PREVARGTEQ:BloodragerDraconicBloodline_Cold,1|PREVARLT:Bloodrager_Draconic_BloodlineLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": " electricity|PREVARGTEQ:BloodragerDraconicBloodline_Electricity,1|PREVARLT:Bloodrager_Draconic_BloodlineLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": " fire|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1|PREVARLT:Bloodrager_Draconic_BloodlineLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": " resistance %1 and |Bloodrager_Draconic_DraconicResistance_ResistBonus|PREVARLT:Bloodrager_Draconic_BloodlineLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": " +%1 natural armor bonus while raging.|Bloodrager_Draconic_DraconicResistance_NaturalArmor"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Acid|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Cold|PREVARGTEQ:BloodragerDraconicBloodline_Cold,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|PREVARGTEQ:BloodragerDraconicBloodline_Electricity,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_DraconicResistance_ResistBonus|5+if(Bloodrager_Draconic_BloodlineLVL>=8,5,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Draconic_DraconicResistance_NaturalArmor|1+if(Bloodrager_Draconic_BloodlineLVL>=8,1,0)+if(Bloodrager_Draconic_BloodlineLVL>=16,2,0)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 715,
+    "record_key": "Draconic Bloodrager Bloodline ~ Draconic Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Dullahan ~ Summon Mount",
     "delivery": "Supernatural",
@@ -14,19 +12,43 @@
       "bestiary_2:monster:dullahan",
       "bestiary_2:monster:dullahan_coach_of_the_silent"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a dullahan can summon a war-trained heavy horse with the fiendish creature simple template.  This horse remains until it is slain or the dullahan dismisses it.  He can only have one such horse in his service at a time."
+      },
+      {
+        "key": "KEY",
+        "value": "Dullahan ~ Summon Mount"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.111",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 517,
-    "record_key": "Dullahan ~ Summon Mount"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 517,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Dullahan ~ Summon Mount",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

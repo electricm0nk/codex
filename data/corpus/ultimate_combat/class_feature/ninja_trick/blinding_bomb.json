@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Blinding Bomb",
+    "name": "Blinding Bomb",
+    "class": "Ninja Trick",
+    "description": "Whenever the ninja throws a smoke bomb, all living creatures in the cloud must make a Fortitude save or be blinded by the black smoke for 1d4 rounds. The DC of this saving throw is equal to 10 + 1/2 the ninja's level + the ninja's Charisma modifier. This trick cannot be combined with a choking bomb, but the ninja can combine a blinding bomb with a poison bomb. The ninja must have the choking bomb ninja trick before selecting this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Blinding Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.AdvancedNinjaTrick"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special ABility,Ninja Trick ~ Choking Bomb"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NinjaTrickLVL,10],[PREVARGTEQ:RogueTalentLVL,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the ninja throws a smoke bomb, all living creatures in the cloud must make a Fortitude save or be blinded by the black smoke for 1d4 rounds. The DC of this saving throw is equal to 10 + 1/2 the ninja's level + the ninja's Charisma modifier. This trick cannot be combined with a choking bomb, but the ninja can combine a blinding bomb with a poison bomb. The ninja must have the choking bomb ninja trick before selecting this trick."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 162,
+    "record_key": "Ninja Trick ~ Blinding Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

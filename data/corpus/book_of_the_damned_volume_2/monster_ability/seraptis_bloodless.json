@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "corpus_key": "Seraptis ~ Bloodless",
     "delivery": "Extraordinary",
@@ -13,21 +11,53 @@
     "owners": [
       "book_of_the_damned_volume_2:monster:demon_seraptis"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Bleed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A seraptis's body is not completely bloodless, but what blood its body does contain is typically blood taken from its previous victims--the blood that flows through the demon's atrophied veins does nothing to give it life. Its wounds do not bleed, and it is immune to bleed effects and to attacks that utilize blood drain to function. Sneak attacks, critical hits, and similar hits function normally on a seraptis, although if such effects would normally cause bleed damage, those additional effects do not work.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "A seraptis's body is not completely bloodless, but what blood its body does contain is typically blood taken from its previous victims.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Seraptis ~ Bloodless"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Defensive"
+      }
+    ],
     "source_page": "p.58",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
-    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
-    "line": 15,
-    "record_key": "Seraptis ~ Bloodless"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "record_key": "Seraptis ~ Bloodless",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

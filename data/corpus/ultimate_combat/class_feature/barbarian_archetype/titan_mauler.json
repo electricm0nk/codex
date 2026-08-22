@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Titan Mauler",
+    "name": "Titan Mauler",
+    "class": "Barbarian Archetype",
+    "description": "In lands overrun by giants, dragons, and other hulking beasts, entire fellowships of barbarians hone tactics and traditions with one purpose-to bring low these massive foes. While her enemies' size makes the creatures strong, the titan mauler is even stronger, taking up weapons from her fallen foes that no lesser warrior can lift, and using them when she beseeches the spirits to grant her increased size and greater ferocity against her titanic foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Titan Mauler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype.BarbarianFastMovement.BarbarianUncannyDodge.BarbarianTrapSense.BarbarianImprovedUncannyDodge.BarbarianIndomitableWill"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Titan Mauler],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement,TYPE.BarbarianUncannyDodge,TYPE.BarbarianTrapSense,TYPE.BarbarianImprovedUncannyDodge,TYPE.BarbarianIndomitableWill]"
+      },
+      {
+        "key": "DESC",
+        "value": "In lands overrun by giants, dragons, and other hulking beasts, entire fellowships of barbarians hone tactics and traditions with one purpose-to bring low these massive foes. While her enemies' size makes the creatures strong, the titan mauler is even stronger, taking up weapons from her fallen foes that no lesser warrior can lift, and using them when she beseeches the spirits to grant her increased size and greater ferocity against her titanic foes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Titan Mauler ~ Big Game Hunter|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Titan Mauler ~ Jotungrip|PRECLASS:1,Barbarian=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Titan Mauler ~ Massive Weapons|PRECLASS:1,Barbarian=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Titan Mauler ~ Evade Reach|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Titan Mauler ~ Titanic Rage|PRECLASS:1,Barbarian=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Barbarian Class Feature|AUTOMATIC|Titan Mauler ~ Rage Powers|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Barbarian"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 306,
+    "record_key": "Barbarian Archetype ~ Titan Mauler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

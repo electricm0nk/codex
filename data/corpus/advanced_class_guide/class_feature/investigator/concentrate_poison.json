@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Discovery ~ Concentrate Poison",
+    "name": "Concentrate Poison",
+    "class": "Investigator",
+    "description": "you can combine two doses of the same poison to increase their effects. This requires two doses of the poison and 1 minute of concentration. When completed, you have one dose of poison. The poison's frequency is extended by 50%% and the save DC increases by +2. This poison must be used within 1 hour of its creation or it is ruined.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Discovery ~ Concentrate Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorAlchemistDiscovery.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "you can combine two doses of the same poison to increase their effects. This requires two doses of the poison and 1 minute of concentration. When completed, you have one dose of poison. The poison's frequency is extended by 50%% and the save DC increases by +2. This poison must be used within 1 hour of its creation or it is ruined."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1318,
+    "record_key": "Investigator ~ Discovery ~ Concentrate Poison"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

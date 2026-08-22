@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Rune Giant ~ Spark Shower",
     "delivery": "Supernatural",
@@ -15,19 +13,51 @@
     "owners": [
       "bestiary_2:monster:giant_rune"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|RuneGiantSparkShowerDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RuneGiantSparkShowerDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a rune giant can cause a shower of sparks to erupt out of one of the runes on its body. These sparks function as a breath weapon (30-ft. cone; 10d6 fire and 10d6 electricity damage; Reflex DC %1 half; usable once every 1d4 rounds).|RuneGiantSparkShowerDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Rune Giant ~ Spark Shower"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.130",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 572,
-    "record_key": "Rune Giant ~ Spark Shower"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 572,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Rune Giant ~ Spark Shower",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

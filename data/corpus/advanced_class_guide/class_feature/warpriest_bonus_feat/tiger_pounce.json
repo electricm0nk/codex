@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Tiger Pounce",
+    "name": "Tiger Pounce",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your unarmed strikes are as precise as they are powerful, but they leave you open and you can pursue foes with blinding speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Tiger Pounce"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Improved Unarmed Strike,Power Attack,Tiger Style,Tiger Claws"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:WarpriestBonusFeatBAB,9]],[PREVARGTEQ:MonkFeatQualify,8]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your unarmed strikes are as precise as they are powerful, but they leave you open and you can pursue foes with blinding speed."
+      },
+      {
+        "key": "DESC",
+        "value": " While using the Tiger Style feat, you can apply the penalty from Power Attack to your AC instead of attack rolls. Additionally, once per round as a swift action, you can move up to half your speed closer to a target you hit with an unarmed strike or made a successful combat maneuver against on this turn or your last turn."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Tiger Pounce"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4566,
+    "record_key": "Warpriest Bonus Feat ~ Tiger Pounce"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Unarmed Fighter ~ Harsh Training",
+    "name": "Harsh Training",
+    "class": "Fighter",
+    "description": "You gain a +%1 bonus on saving throws against effects that cause the exhausted, fatigued, or staggered conditions or temporary penalties to ability scores.|UnarmedFighterHarshTrainingBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unarmed Fighter ~ Harsh Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnarmedFighterHarshTrainingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on saving throws against effects that cause the exhausted, fatigued, or staggered conditions or temporary penalties to ability scores.|UnarmedFighterHarshTrainingBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnarmedFighterHarshTrainingBonus|(classlevel(\"Fighter\")+2)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 761,
+    "record_key": "Unarmed Fighter ~ Harsh Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

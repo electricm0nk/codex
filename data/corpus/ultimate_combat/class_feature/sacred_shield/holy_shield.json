@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Shield ~ Holy Shield",
+    "name": "Holy Shield",
+    "class": "Paladin",
+    "description": "At 4th level, a sacred shield can channel her faith into her shield, protecting any nearby allies. All allies adjacent to the paladin gain a shield bonus equal to the sacred shield's own shield bonus, including any increase from the shield's enhancement bonus. This bonus does not stack with any existing shield bonuses. The paladin herself radiates light as a light spell while the shielding is active. At 11th level, this protection expands to cover any allies within 10 feet and the radiance increases to the effects of a daylight spell. At 20th level, any allies within 20 feet are protected. Using this ability consumes two uses of the sacred shield's lay on hands ability, and the effects last for 3 rounds plus a number of rounds equal to her Charisma bonus (if any). This ability replaces channel positive energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Shield ~ Holy Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a sacred shield can channel her faith into her shield, protecting any nearby allies. All allies adjacent to the paladin gain a shield bonus equal to the sacred shield's own shield bonus, including any increase from the shield's enhancement bonus. This bonus does not stack with any existing shield bonuses. The paladin herself radiates light as a light spell while the shielding is active. At 11th level, this protection expands to cover any allies within 10 feet and the radiance increases to the effects of a daylight spell. At 20th level, any allies within 20 feet are protected. Using this ability consumes two uses of the sacred shield's lay on hands ability, and the effects last for 3 rounds plus a number of rounds equal to her Charisma bonus (if any). This ability replaces channel positive energy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1502,
+    "record_key": "Sacred Shield ~ Holy Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

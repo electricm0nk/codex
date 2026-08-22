@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Banishment Savant Subschool ~ Aura of Banishment",
+    "name": "Aura of Banishment",
+    "class": "Banishment Savant Subschool",
+    "description": "You can emit a 30-foot aura of banishment for a %1 rounds per day. Any summoned or called creature in the area must make a Will save DC %2 each round. Once the creature fails a Will saving throw, it is staggered as long as it remains inside the aura. If it fails a second Will saving throw, it is immediately sent back to its home plane and the spell that summoned it immediately ends. If that spell summoned more than one creature, only the creature that failed its saving throws is affected. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL|10+INT+(ArcanistSavantSchoolLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banishment Savant Subschool ~ Aura of Banishment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can emit a 30-foot aura of banishment for a %1 rounds per day. Any summoned or called creature in the area must make a Will save DC %2 each round. Once the creature fails a Will saving throw, it is staggered as long as it remains inside the aura. If it fails a second Will saving throw, it is immediately sent back to its home plane and the spell that summoned it immediately ends. If that spell summoned more than one creature, only the creature that failed its saving throws is affected. These rounds do not need to be consecutive.|ArcanistSavantSchoolLVL|10+INT+(ArcanistSavantSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2585,
+    "record_key": "Banishment Savant Subschool ~ Aura of Banishment"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

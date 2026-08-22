@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin ~ Lay on Hands",
+    "name": "Lay on Hands",
+    "class": "Paladin",
+    "description": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability %1 times per day. With one use of this ability, you can heal %2d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing %2d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.|LayOnHandsTimes|LayOnHandsDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin ~ Lay on Hands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.Supernatural.LayOnHands.Lay on Hands"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability %1 times per day. With one use of this ability, you can heal %2d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing %2d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.|LayOnHandsTimes|LayOnHandsDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsDice|LayOnHandsLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsTimes|(LayOnHandsLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsLVL|PaladinLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|LayOnHandsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Lay on Hands"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1359,
+    "record_key": "Paladin ~ Lay on Hands"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Blast Rune",
+    "name": "Blast Rune",
+    "class": "Domain Power",
+    "description": "As a standard action, you can create a Blast Rune in any adjacent square. Any creature entering this square takes 1d6 points of damage. This rune deals either acid, cold, electricity, or fire damage, decided when you create the rune. The rune is invisible and lasts %1 rounds or until discharged. You cannot create a Blast Rune in a square occupied by another creature. This rune counts as a 1st-level spell for the purposes of dispelling. It can be discovered wit at DC26 Perception skill check and disarmed with a DC 26 Disable Device skill check. You can use this ability %2 times per day.|DomainRuneLVL|BlastRuneTimes|PREVARLT:DomainRuneLVL,2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Blast Rune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower.Rune Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlastRuneTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a Blast Rune in any adjacent square. Any creature entering this square takes 1d6 points of damage. This rune deals either acid, cold, electricity, or fire damage, decided when you create the rune. The rune is invisible and lasts %1 rounds or until discharged. You cannot create a Blast Rune in a square occupied by another creature. This rune counts as a 1st-level spell for the purposes of dispelling. It can be discovered wit at DC26 Perception skill check and disarmed with a DC 26 Disable Device skill check. You can use this ability %2 times per day.|DomainRuneLVL|BlastRuneTimes|PREVARLT:DomainRuneLVL,2"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a Blast Rune in any adjacent square. Any creature entering this square takes 1d6+%1 points of damage. This rune deals either acid, cold, electricity, or fire damage, decided when you create the rune. The rune is invisible and lasts %2 rounds or until discharged. You cannot create a Blast Rune in a square occupied by another creature. This rune counts as a 1st-level spell for the purposes of dispelling. It can be discovered with at DC 26 Perception skill check and disarmed with a DC 26 Disable Device skill check. You can use this ability %3 times per day.|DomainRuneLVL/2|DomainRuneLVL|BlastRuneTimes|PREVARGTEQ:DomainRuneLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlastRuneTimes|DomainRuneTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|BlastRuneTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BlastRuneTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 737,
+    "record_key": "Domain Power ~ Blast Rune"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

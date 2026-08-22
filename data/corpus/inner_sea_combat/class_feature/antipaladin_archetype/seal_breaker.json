@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Antipaladin Archetype ~ Seal-Breaker",
+    "name": "Seal-Breaker",
+    "class": "Antipaladin Archetype",
+    "description": "Seal-breakers are dedicated to the Whispering Tyrant and have tasked themselves with finding and destroying the seals that bind him within Gallowspire. Their ties to the Whispering Tyrant give them power over undead creatures and other dark forces.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antipaladin Archetype ~ Seal-Breaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AntipaladinArchetype.AntipaladinAuraOfCowardice.AntipaladinFiendishBoon.AntipaladinAuraOfDespair.AntipaladinAuraOfVengeance"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Antipaladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Antipaladin Archetype ~ Seal-Breaker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AntipaladinAuraOfCowardice,TYPE.AntipaladinFiendishBoon,TYPE.AntipaladinAuraOfDespair,TYPE.AntipaladinAuraOfVengeance]"
+      },
+      {
+        "key": "DESC",
+        "value": "Seal-breakers are dedicated to the Whispering Tyrant and have tasked themselves with finding and destroying the seals that bind him within Gallowspire. Their ties to the Whispering Tyrant give them power over undead creatures and other dark forces."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Seal-Breaker ~ Aura of the Grave|PRECLASS:1,Antipaladin=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Seal-Breaker ~ Corpse Rider|PRECLASS:1,Antipaladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Seal-Breaker ~ Aura of Death|PRECLASS:1,Antipaladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Seal-Breaker ~ Aura of Rebirth|PRECLASS:1,Antipaladin=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Seal-Breaker ~ Code of Conduct|PRECLASS:1,Antipaladin=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 32,
+    "record_key": "Antipaladin Archetype ~ Seal-Breaker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

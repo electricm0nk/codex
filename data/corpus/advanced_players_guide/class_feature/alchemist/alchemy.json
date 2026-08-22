@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist ~ Alchemy",
+    "name": "Alchemy",
+    "class": "Alchemist",
+    "description": "When using Craft (Alchemy) to create an alchemical item, you gains a +%1 competence bonus on the Craft (alchemy) check. In addition, you can use Craft (Alchemy) to identify potions as if using Detect Magic. He must hold the potion for 1 round to make such a check.|AlchemistAlchemyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist ~ Alchemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistAlchemyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistAlchemyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When using Craft (Alchemy) to create an alchemical item, you gains a +%1 competence bonus on the Craft (alchemy) check. In addition, you can use Craft (Alchemy) to identify potions as if using Detect Magic. He must hold the potion for 1 round to make such a check.|AlchemistAlchemyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Craft (Alchemy)=Create item|AlchemistAlchemyBonus|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistAlchemyBonus|AlchemistAlchemyLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistAlchemyLVL|AlchemistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 72,
+    "record_key": "Alchemist ~ Alchemy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Sure-Footed",
+    "name": "Sure-Footed",
+    "class": "Vigilante Talent",
+    "description": "The vigilante can move at full speed while using the Stealth and Acrobatics skills without penalty.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Sure-Footed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Sure-Footed"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can move at full speed while using the Stealth and Acrobatics skills without penalty."
+      },
+      {
+        "key": "DESC",
+        "value": " He can move at full speed across difficult terrain.|PREVARGTEQ:VigilanteTalentLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 110,
+    "record_key": "Vigilante Talent ~ Sure-Footed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

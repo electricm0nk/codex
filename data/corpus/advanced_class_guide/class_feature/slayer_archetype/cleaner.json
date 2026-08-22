@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Archetype ~ Cleaner",
+    "name": "Cleaner",
+    "class": "Slayer Archetype",
+    "description": "A cleaner is responsible for destroying or removing incriminating evidence from a crime scene, disposing of corpses and eliminating witnesses to make a crime look like an accident or a mere disappearance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Cleaner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Cleaner],[!PREFACT:1,ABILITIES,Slayer_Archetype_Track=true,Slayer_Archetype_Stalker=true,Slayer_Archetype_Talent4=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "A cleaner is responsible for destroying or removing incriminating evidence from a crime scene, disposing of corpses and eliminating witnesses to make a crime look like an accident or a mere disappearance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Cleaner ~ Deceitful|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Cleaner ~ Without a Trace|PRECLASS:1,Slayer=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Cleaner ~ Mislead|PRECLASS:1,Slayer=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Slayer"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent4|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3725,
+    "record_key": "Slayer Archetype ~ Cleaner"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Cyclone",
+    "name": "Cyclone",
+    "class": "Wild Talent",
+    "description": "Element air; Type form infusion; Level 4; Burn 3 Associated Blasts air, blizzard, sandstorm, thunderstorm Saving Throw Reflex half You create a circular rush of wind. All creatures and objects within a 20-foot-radius burst centered on you take half your blast's normal amount of damage. The saving throw DC is Dexterity-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Cyclone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Air"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type form infusion; Level 4; Burn 3 Associated Blasts air, blizzard, sandstorm, thunderstorm Saving Throw Reflex half You create a circular rush of wind. All creatures and objects within a 20-foot-radius burst centered on you take half your blast's normal amount of damage. The saving throw DC is Dexterity-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 685,
+    "record_key": "Wild Talent ~ Cyclone"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle ~ Spellscar Mystery",
+    "name": "Spellscar Mysteries",
+    "class": "Oracle",
+    "description": "Oracles of the spellscar mystery have been touched in some way by primal magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Spellscar Mystery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.OracleMystery.OracleClassFeatures"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpellscarMysteriesQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Oracles of the spellscar mystery have been touched in some way by primal magic."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spellscar Mystery ~ Final Revelation|PREMULT:2,[PRECLASS:1,Oracle=20],[!PREFACT:1,ABILITIES,Oracle_CF_FinalRevelation=true]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Spellscar Mysteries Class Skills|!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySkills"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Spellscar Mystery Revelation|OracleMysteryLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpellscarMysteriesQualify|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|Ray of Enfeeblement|PREMULT:2,[PRECLASS:1,Oracle=2],[PREVAREQ:Oracle_CF_MysterySpell2,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Obscure Object|PREMULT:2,[PRECLASS:1,Oracle=4],[PREVAREQ:Oracle_CF_MysterySpell4,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Dispel Magic|PREMULT:2,[PRECLASS:1,Oracle=6],[PREVAREQ:Oracle_CF_MysterySpell6,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Globe of Invulnerability (Lesser)|PREMULT:2,[PRECLASS:1,Oracle=8],[PREVAREQ:Oracle_CF_MysterySpell8,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|Break Enchantment|PREMULT:2,[PRECLASS:1,Oracle=10],[PREVAREQ:Oracle_CF_MysterySpell10,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=6|Antimagic Field|PREMULT:2,[PRECLASS:1,Oracle=12],[PREVAREQ:Oracle_CF_MysterySpell12,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=7|Spell Turning|PREMULT:2,[PRECLASS:1,Oracle=14],[PREVAREQ:Oracle_CF_MysterySpell14,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Spellscar|PREMULT:2,[PRECLASS:1,Oracle=16],[PREVAREQ:Oracle_CF_MysterySpell16,0]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Mage's Disjunction|PREMULT:2,[PRECLASS:1,Oracle=18],[PREVAREQ:Oracle_CF_MysterySpell18,0]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 88,
+    "record_key": "Oracle ~ Spellscar Mystery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

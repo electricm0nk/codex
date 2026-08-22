@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Revolution Subdomain ~ Powerful Persuader",
+    "name": "Powerful Persuader",
+    "class": "Revolution Subdomain",
+    "description": "At 8th level, when you make a Diplomacy or Intimidate check, you can roll twice and take the higher result. Using this ability is a free action. You can use this ability once per day at 8th level, plus one additional time per day for every 2 levels beyond 8th.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Revolution Subdomain ~ Powerful Persuader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, when you make a Diplomacy or Intimidate check, you can roll twice and take the higher result. Using this ability is a free action. You can use this ability once per day at 8th level, plus one additional time per day for every 2 levels beyond 8th."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1797,
+    "record_key": "Revolution Subdomain ~ Powerful Persuader"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

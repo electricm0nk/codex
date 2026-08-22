@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 4500.0,
+    "description": "1/day take form of viscous liquid",
+    "key": "Amorphous",
+    "name": "Amorphous",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Escape Artist",
+          "5",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_Grapple",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Amorphous ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Material ~ Cloth,EQMOD=Material ~ Leather,EQMOD=Material ~ Rope,HideArmor"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day take form of viscous liquid"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Amorphous",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

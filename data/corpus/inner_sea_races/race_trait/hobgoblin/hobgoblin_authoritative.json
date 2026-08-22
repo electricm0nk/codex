@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:47:16Z",
+  "ingested_at": "2026-08-15T19:20:15Z",
   "data": {
     "key": "Hobgoblin ~ Authoritative",
     "name": "Authoritative",
@@ -43,11 +43,11 @@
       },
       {
         "key": "DESC",
-        "value": "Hobgoblins raised in the unusually open and stable nation of Kaoling or among the slave-drivers of Isger's Chitterwood often develop a knack for controlling others. They gain a +2 racial bonus on Diplomacy and Intimidate checks. Both skills are always class skills for them."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This racial trait replaces sneaky.|!PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Authoritative"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",

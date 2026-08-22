@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Celestial Bloodline ~ Ascension",
+    "name": "Ascension",
+    "class": "Celestial Bloodline",
+    "description": "You become infused with the power of the heavens. You gain immunity to acid, cold, and petrification. You also gain resist electricity 10, resist fire 10, and a +4 racial bonus on saves against poison. You also gain unlimited use of the wings of heaven ability. Finally, you gain the ability to speak with any creature that has a language (as per the tongues spell).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Celestial Bloodline ~ Ascension"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Celestial Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Celestial"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Celestial_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Celestial_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CelestialAscension_ResistanceBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CelestialAscension_SaveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You become infused with the power of the heavens. You gain immunity to acid, cold, and petrification. You also gain resist electricity 10, resist fire 10, and a +4 racial bonus on saves against poison. You also gain unlimited use of the wings of heaven ability. Finally, you gain the ability to speak with any creature that has a language (as per the tongues spell)."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Celestial Bloodline ~ Wings of Heaven"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|Immunity to Cold|Immunity to Petrification|Tongues"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CelestialAscension_ResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CelestialAscension_SaveBonus|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus,ElectricityResistanceBonus|Sorcerer_CelestialAscension_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. poison|Sorcerer_CelestialAscension_SaveBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CelestialBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2412,
+    "record_key": "Celestial Bloodline ~ Ascension"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 30.0,
+    "description": "Using such a book while reading a creature's fortune reduces the time needed to read that fortune by 2 minutes. When used as part of a Sense Motive check for the prognostication occult skill unlock, this book grants a +2 circumstance bonus",
+    "key": "Prognostication Manual",
+    "name": "Prognostication Manual",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "30"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "SPROP",
+        "value": "Using such a book while reading a creature's fortune reduces the time needed to read that fortune by 2 minutes. When used as part of a Sense Motive check for the prognostication occult skill unlock, this book grants a +2 circumstance bonus"
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Prognostication Manual",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

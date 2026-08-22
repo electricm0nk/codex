@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Courtly Knight ~ Imperious Attitude",
+    "name": "Imperious Attitude",
+    "class": "Cavalier",
+    "description": "A courtly knight develops a commanding demeanor, and the strength of her conviction is often enough to get others to do as she asks, merely because she expects it to be done. In a social setting, the courtly knight can attempt Diplomacy checks to make a request of a creature whose attitude toward her is unfriendly, provided that creature does not intend to harm or oppose the courtly knight or her allies in the immediate future. Further, whenever she attempts a Diplomacy check to make a request, a courtly knight can first attempt an Intimidate check (DC = 20 + the creature's Charisma modifier). If she succeeds, she gains a +5 bonus on the subsequent Diplomacy check. Neither aspect of imperious attitude applies if the requested creature considers itself to be of an equal or higher social rank than the courtly knight, which includes creatures that don't understand or value the concept of social ranks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Courtly Knight ~ Imperious Attitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.CourtlyKnightClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A courtly knight develops a commanding demeanor, and the strength of her conviction is often enough to get others to do as she asks, merely because she expects it to be done. In a social setting, the courtly knight can attempt Diplomacy checks to make a request of a creature whose attitude toward her is unfriendly, provided that creature does not intend to harm or oppose the courtly knight or her allies in the immediate future. Further, whenever she attempts a Diplomacy check to make a request, a courtly knight can first attempt an Intimidate check (DC = 20 + the creature's Charisma modifier). If she succeeds, she gains a +5 bonus on the subsequent Diplomacy check. Neither aspect of imperious attitude applies if the requested creature considers itself to be of an equal or higher social rank than the courtly knight, which includes creatures that don't understand or value the concept of social ranks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 287,
+    "record_key": "Courtly Knight ~ Imperious Attitude"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

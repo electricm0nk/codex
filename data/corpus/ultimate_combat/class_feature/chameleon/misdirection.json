@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Chameleon ~ Misdirection",
+    "name": "Misdirection",
+    "class": "Rogue",
+    "description": "At 1st level, a chameleon begins her career knowing that the secret to disappearing lies in deceiving the senses of her observers. Every day she gains a pool of stealth points equal to her ranks in Bluff. These points refresh at the start of each day. Before making a Stealth check, she can choose to put stealth points into the roll, gaining a bonus on Stealth checks equal to the number of stealth points she puts into the roll. If she gains a bonus on Bluff checks because of a feat (such as Skill Focus [Bluff ]), she adds a number of points to her stealth pool equal to the bonus the feat grants. This ability replaces trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chameleon ~ Misdirection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a chameleon begins her career knowing that the secret to disappearing lies in deceiving the senses of her observers. Every day she gains a pool of stealth points equal to her ranks in Bluff. These points refresh at the start of each day. Before making a Stealth check, she can choose to put stealth points into the roll, gaining a bonus on Stealth checks equal to the number of stealth points she puts into the roll. If she gains a bonus on Bluff checks because of a feat (such as Skill Focus [Bluff ]), she adds a number of points to her stealth pool equal to the bonus the feat grants. This ability replaces trapfinding."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1686,
+    "record_key": "Chameleon ~ Misdirection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

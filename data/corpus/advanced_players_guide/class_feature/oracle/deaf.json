@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle ~ Deaf",
+    "name": "Deaf",
+    "class": "Oracle",
+    "description": "You cannot hear and suffer all of the usual penalties for being deafened [%1 penalty on initiative checks, automatically fail Perception checks based on sound, -4 penalty on opposed Perception checks]. You cast all of your spells as if they were modified by the Silent Spell feat. This does not increase their level or casting time.|OracleDeafInitPenalty|PREVARLT:OracleCurseLVL,5",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle ~ Deaf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleCurse.Sense"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleDeafInitPenalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You cannot hear and suffer all of the usual penalties for being deafened [%1 penalty on initiative checks, automatically fail Perception checks based on sound, -4 penalty on opposed Perception checks]. You cast all of your spells as if they were modified by the Silent Spell feat. This does not increase their level or casting time.|OracleDeafInitPenalty|PREVARLT:OracleCurseLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|OracleDeafInitPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Opposed|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleDeafInitPenalty|-4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 490,
+    "record_key": "Oracle ~ Deaf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

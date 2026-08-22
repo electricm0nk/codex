@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "DamnationC ~ Low",
+    "name": "Damnation ~ Chaotic",
+    "class": "DamnationC",
+    "description": "You have chosen to follow a chaotic path. You may ignore the chaotic aspect of your alignment, similarly and in addition to that ignored by your path choice. You also gain a planar cohort.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DamnationC ~ Low"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.LowFinal"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to follow a chaotic path. You may ignore the chaotic aspect of your alignment, similarly and in addition to that ignored by your path choice. You also gain a planar cohort."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 145,
+    "record_key": "DamnationC ~ Low"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

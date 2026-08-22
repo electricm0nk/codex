@@ -1,0 +1,179 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Green Knight",
+    "name": "Green Knight",
+    "class": "Cavalier Archetype",
+    "description": "Some knights serve nature itself and can be found protecting unspoiled natural places or serving fey beings.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Green Knight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Green Knight],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Tactician=True,Cavalier_Archetype_Mount=True,Cavalier_Archetype_Order=True,Cavalier_Archetype_CavaliersCharge=True,Cavalier_Archetype_ExpertTrainer=True,Cavalier_Archetype_Banner=True,Cavalier_Archetype_GreaterTactician=True,Cavalier_Archetype_MightyCharge=True,Cavalier_Archetype_GreaterBanner=True,Cavalier_Archetype_MasterTactician=True,Cavalier_Archetype_SupremeCharge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some knights serve nature itself and can be found protecting unspoiled natural places or serving fey beings."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Beast Tongue|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Implacable Knight|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Nature's Servant|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Ferocious|PRECLASS:1,Cavalier=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Woodland Stride|PRECLASS:1,Cavalier=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Stalwart|PRECLASS:1,Cavalier=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Oaken Vitality|PRECLASS:1,Cavalier=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Take Their Heads|PRECLASS:1,Cavalier=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Green Knight ~ Indestructible|PRECLASS:1,Cavalier=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Order|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_SupremeCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_SupremeCharge|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 418,
+    "record_key": "Cavalier Archetype ~ Green Knight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

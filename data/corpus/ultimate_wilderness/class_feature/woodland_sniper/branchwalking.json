@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Woodland Sniper ~ Branchwalking",
+    "name": "Branchwalking",
+    "class": "Slayer",
+    "description": "The woodland sniper gains a climb speed equal to his base speed. In addition, at 13th level, he can move from one tree to another via connecting branches by adding 5 to the DC of an Acrobatics or Climb check to move within the canopy. The woodland sniper cannot end his movement on a branch that cannot support his weight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Woodland Sniper ~ Branchwalking"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.WoodlandSniperClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The woodland sniper gains a climb speed equal to his base speed. In addition, at 13th level, he can move from one tree to another via connecting branches by adding 5 to the DC of an Acrobatics or Climb check to move within the canopy. The woodland sniper cannot end his movement on a branch that cannot support his weight."
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Climb,*1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1171,
+    "record_key": "Woodland Sniper ~ Branchwalking"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

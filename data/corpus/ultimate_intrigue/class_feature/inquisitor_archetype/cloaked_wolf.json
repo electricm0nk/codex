@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Cloaked Wolf",
+    "name": "Cloaked Wolf",
+    "class": "Inquisitor Archetype",
+    "description": "Some inquisitors are adept at appearing harmless until they throw off their unassuming facades and take their enemies by surprise.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Cloaked Wolf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Cloaked Wolf],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_ClassSkills=True,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_CunningInitiative=True,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_SoloTactics=True,Inquisitor_Archetype_TeamworkFeat=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some inquisitors are adept at appearing harmless until they throw off their unassuming facades and take their enemies by surprise."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Cloaked Wolf ~ Class Skills|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cloaked Wolf ~ Lure Prey|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cloaked Wolf ~ Always Wary|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cloaked Wolf ~ Unleashed Fury|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_CunningInitiative|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SoloTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TeamworkFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_CunningInitiative|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SoloTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TeamworkFeat|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 439,
+    "record_key": "Inquisitor Archetype ~ Cloaked Wolf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

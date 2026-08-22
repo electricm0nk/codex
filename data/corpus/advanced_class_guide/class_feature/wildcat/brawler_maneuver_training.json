@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wildcat ~ Brawler Maneuver Training",
+    "name": "Brawler Maneuver Training",
+    "class": "Monk",
+    "description": "A wildcat gains additional training with the dirty trick combat maneuver (APG p.320) and other combat maneuvers as he gains levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildcat ~ Brawler Maneuver Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildcat Class Feature.Monk Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wildcat gains additional training with the dirty trick combat maneuver (APG p.320) and other combat maneuvers as he gains levels."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wildcat ~ Dirty Trick Training"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wildcat Maneuver Training 2|1|PREVARGTEQ:MonkLVL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wildcat Maneuver Training 3|1|PREVARGTEQ:MonkLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wildcat Maneuver Training 4|1|PREVARGTEQ:MonkLVL,16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3447,
+    "record_key": "Wildcat ~ Brawler Maneuver Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

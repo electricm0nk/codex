@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elemental Ascetic ~ Elemental Wisdom",
+    "name": "Elemental Wisdom",
+    "class": "Kineticist",
+    "description": "An elemental ascetic can use his Wisdom modifier instead of his Constitution modifier to determine the DCs of Constitution-based wild talents, the duration of wild talents with a Constitution-based duration, and his bonus on concentration checks for wild talents. This ability alters the key ability scores of wild talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Ascetic ~ Elemental Wisdom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental Ascetic Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An elemental ascetic can use his Wisdom modifier instead of his Constitution modifier to determine the DCs of Constitution-based wild talents, the duration of wild talents with a Constitution-based duration, and his bonus on concentration checks for wild talents. This ability alters the key ability scores of wild talents."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentDCStat|-CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildTalentDCStat|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1374,
+    "record_key": "Elemental Ascetic ~ Elemental Wisdom"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

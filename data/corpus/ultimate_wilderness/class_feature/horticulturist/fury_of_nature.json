@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Horticulturist ~ Fury of Nature",
+    "name": "Fury of Nature",
+    "class": "Alchemist",
+    "description": "A horticulturist's connection with nature allows him to bring down nature's fury on his opponents. He can cast one of the following spells, chosen at the time of casting, once per day as a spell-like ability: call lightning storm, eagle aerie, or liveoak.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Horticulturist ~ Fury of Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.HorticulturistClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Fury of Nature|CASTERLEVEL=AlchemistLVL|Call Lightning Storm,15+INT|Eagle Aerie|Liveoak"
+      },
+      {
+        "key": "DESC",
+        "value": "A horticulturist's connection with nature allows him to bring down nature's fury on his opponents. He can cast one of the following spells, chosen at the time of casting, once per day as a spell-like ability: call lightning storm, eagle aerie, or liveoak."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 134,
+    "record_key": "Horticulturist ~ Fury of Nature"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

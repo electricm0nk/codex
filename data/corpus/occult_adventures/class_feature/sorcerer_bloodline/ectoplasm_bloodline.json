@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Ectoplasm",
+    "name": "Ectoplasm Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "Your family has a connection with the ethereal substance known as ectoplasm, whether from communing with the spirits or battling the spiritual undead. The power of the Ethereal Plane thrums in your mind and pulls at your flesh.|PREVAREQ:Sorcerer_Ectoplasm_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Ectoplasm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ectoplasm_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your family has a connection with the ethereal substance known as ectoplasm, whether from communing with the spirits or battling the spiritual undead. The power of the Ethereal Plane thrums in your mind and pulls at your flesh.|PREVAREQ:Sorcerer_Ectoplasm_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Stealth|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlineClassSkill1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ectoplasm Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ectoplasm Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ectoplasm Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Ectoplasm Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Ectoplasm Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Ectoplasm Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Ectoplasm Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Ectoplasm Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Ectoplasm_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Ectoplasm_BloodlinePower1LVL|Sorcerer_Ectoplasm_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Ectoplasm_BloodlinePower3LVL|Sorcerer_Ectoplasm_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Ectoplasm_BloodlinePower9LVL|Sorcerer_Ectoplasm_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Ectoplasm_BloodlinePower15LVL|Sorcerer_Ectoplasm_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Ectoplasm_BloodlinePower20LVL|Sorcerer_Ectoplasm_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Ectoplasm"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1853,
+    "record_key": "Sorcerer Bloodline ~ Ectoplasm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

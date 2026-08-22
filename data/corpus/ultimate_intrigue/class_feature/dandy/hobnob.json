@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dandy ~ Hobnob",
+    "name": "Hobnob",
+    "class": "Ranger",
+    "description": "A dandy must choose his allies as his hunter's bond, not an animal companion. In addition to the usual hunter's bond ability, the dandy can spend 10 minutes at a particular event or party hobnobbing and introducing his allies to the right people in order to provide them with half the skill bonuses of his favored nation (though not the bonuses on attack and damage rolls) for the duration of the event. This ability alters hunter's bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dandy ~ Hobnob"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A dandy must choose his allies as his hunter's bond, not an animal companion. In addition to the usual hunter's bond ability, the dandy can spend 10 minutes at a particular event or party hobnobbing and introducing his allies to the right people in order to provide them with half the skill bonuses of his favored nation (though not the bonuses on attack and damage rolls) for the duration of the event. This ability alters hunter's bond."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 652,
+    "record_key": "Dandy ~ Hobnob"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

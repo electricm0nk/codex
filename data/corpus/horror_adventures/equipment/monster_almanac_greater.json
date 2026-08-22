@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 20000.0,
+    "description": null,
+    "key": "Monster Almanac (Greater)",
+    "name": "Monster Almanac (Greater)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Book"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Monster Almanac (Greater)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

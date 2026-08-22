@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Enchanting Courtesan ~ Covert Spells",
+    "name": "Covert Spells",
+    "class": "Enchanting Courtesan",
+    "description": "An enchanting courtesan can cast divination and enchantment spells covertly. Upon doing so, the enchanting courtesan must attempt a Bluff check, as well as a Sleight of Hand check if the spell has somatic, material, or focus components. Observers do not notice that a spell has been cast unless they succeed at both a Sense Motive check opposing the courtesan's Bluff check and a Perception check opposing the courtesan's Sleight of Hand check (if any). If the enchanting courtesan has another ability that allows spells to be hidden in a similar fashion, he gains a +2 bonus on these checks. Casting the spell does not provoke attacks of opportunity from foes unaware of the spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enchanting Courtesan ~ Covert Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An enchanting courtesan can cast divination and enchantment spells covertly. Upon doing so, the enchanting courtesan must attempt a Bluff check, as well as a Sleight of Hand check if the spell has somatic, material, or focus components. Observers do not notice that a spell has been cast unless they succeed at both a Sense Motive check opposing the courtesan's Bluff check and a Perception check opposing the courtesan's Sleight of Hand check (if any). If the enchanting courtesan has another ability that allows spells to be hidden in a similar fashion, he gains a +2 bonus on these checks. Casting the spell does not provoke attacks of opportunity from foes unaware of the spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 56,
+    "record_key": "Enchanting Courtesan ~ Covert Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

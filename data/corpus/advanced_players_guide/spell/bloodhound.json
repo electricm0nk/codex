@@ -1,26 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Bloodhound",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You gain the scent special quality, including the ability to track by scent. You receive a +8 competence bonus on Perception checks involving smell and a +4 competence bonus on Survival checks to track using scent. You take a -4 penalty on saving throws against odor-related effects such as the stench ability and stinking cloud. A creature under the effects of bloodhound can detect poison by scent with a DC 20 Perception check.",
-    "full_text": true
+    "full_text": true,
+    "key": "Bloodhound",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor,Ranger=2|Alchemist=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Gives caster the scent special ability.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the scent special quality, including the ability to track by scent. You receive a +8 competence bonus on Perception checks involving smell and a +4 competence bonus on Survival checks to track using scent. You take a -4 penalty on saving throws against odor-related effects such as the stench ability and stinking cloud. A creature under the effects of bloodhound can detect poison by scent with a DC 20 Perception check.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a drop of blood and a pinch of cinnamon)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/bloodhound.html#_bloodhound"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 42,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1869,
-    "record_key": "Bloodhound"
+    "record_key": "Bloodhound",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

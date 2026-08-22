@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Flame Jet",
+    "name": "Flame Jet",
+    "class": "Wild Talent",
+    "description": "Element fire; Type utility (Sp); Level 3; Burn 0 You shoot a burst of flame behind you as a standard action, propelling you up to 60 feet in a straight line, including into the air; any movement upward costs double. If you end your turn mid-air, you fall on your next turn unless you use flame jet again.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Flame Jet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Fire"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type utility (Sp); Level 3; Burn 0 You shoot a burst of flame behind you as a standard action, propelling you up to 60 feet in a straight line, including into the air; any movement upward costs double. If you end your turn mid-air, you fall on your next turn unless you use flame jet again."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 751,
+    "record_key": "Wild Talent ~ Flame Jet"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

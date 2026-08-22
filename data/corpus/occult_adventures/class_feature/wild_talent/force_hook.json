@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Force Hook",
+    "name": "Force Hook",
+    "class": "Wild Talent",
+    "description": "Element aether; Type form infusion; Level 3; Burn 2 Associated Blasts force Saving Throw none Your force blast hooks onto its target and drags you adjacent to it. This effect functions as force hook chargeUM, except with the range and damage of your force blast.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Force Hook"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Aether"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type form infusion; Level 3; Burn 2 Associated Blasts force Saving Throw none Your force blast hooks onto its target and drags you adjacent to it. This effect functions as force hook chargeUM, except with the range and damage of your force blast."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 700,
+    "record_key": "Wild Talent ~ Force Hook"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

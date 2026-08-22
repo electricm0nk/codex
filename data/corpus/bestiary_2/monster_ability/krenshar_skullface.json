@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Krenshar ~ Skullface",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:krenshar"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Skullface"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KrensharSkullfaceDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KrensharSkullfaceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Skullface)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KrensharSkullfaceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a krenshar can pull the skin back from its face, revealing the musculature and bony structures of its skull.  This counts as using Intimidate to demoralize an opponent, and is an extraordinary ability.  The krenshar can emit a loud screech while peeling back its skin, causing potent fear in a single creature within 100 feet that can see the krenshar.  The target creature must make a DC %1 Will save or become frightened (if the target has 6 or fewer Hit Dice) or shaken (if the target has more than 6 Hit Dice) for 1d4 rounds.  A creature that successfully saves cannot be affected again by the same krenshar's skullface ability for 24 hours.  This is a sonic, mind-affecting fear effect.|KrensharSkullfaceDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Krenshar ~ Skullface"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.174",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 758,
-    "record_key": "Krenshar ~ Skullface"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 758,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Krenshar ~ Skullface",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

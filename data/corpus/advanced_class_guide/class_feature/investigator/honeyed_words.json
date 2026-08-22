@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Honeyed Words",
+    "name": "Honeyed Words",
+    "class": "Investigator",
+    "description": "%1 times per day, the investigator can roll two dice while making a Bluff check, and take the better result. She must choose to use this talent before making the Bluff check.|InvestigatorHoneyedWordsBonus|max(InvestigatorLVL/5,1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Honeyed Words"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorHoneyedWordsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, the investigator can roll two dice while making a Bluff check, and take the better result. She must choose to use this talent before making the Bluff check.|InvestigatorHoneyedWordsBonus|max(InvestigatorLVL/5,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorHoneyedWordsBonus|max(InvestigatorLVL/5,1)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|InvestigatorHoneyedWordsBonus|max(InvestigatorLVL/5,1)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1356,
+    "record_key": "Investigator ~ Rogue Talent ~ Honeyed Words"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

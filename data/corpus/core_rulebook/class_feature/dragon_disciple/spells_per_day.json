@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Spells per Day",
+    "name": "Spells per Day",
+    "class": "Dragon Disciple",
+    "description": "At the indicated levels, a dragon disciple gains new spells per day as if he had also gained a level in an arcane spellcasting class he belonged to before adding the prestige class. He does not, however, gain other benefits a character of that class would have gained, except for additional spells per day, spells known (if he is a spontaneous spellcaster), and an increased effective level of spellcasting. If a character had more than one arcane spellcasting class before becoming a dragon disciple, he must decide to which class he adds the new level for purposes of determining spells per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Spells per Day"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Dragon Disciple Class Feature.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "At the indicated levels, a dragon disciple gains new spells per day as if he had also gained a level in an arcane spellcasting class he belonged to before adding the prestige class. He does not, however, gain other benefits a character of that class would have gained, except for additional spells per day, spells known (if he is a spontaneous spellcaster), and an increased effective level of spellcasting. If a character had more than one arcane spellcasting class before becoming a dragon disciple, he must decide to which class he adds the new level for purposes of determining spells per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p. 381"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2963,
+    "record_key": "Dragon Disciple ~ Spells per Day"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

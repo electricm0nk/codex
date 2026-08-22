@@ -1,0 +1,212 @@
+[
+  {
+    "key": "Lantern Lighter ~ Cavern Stride",
+    "class": "Ranger",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Darkvision",
+    "class": "Ranger",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Daylight",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Enhanced Vision",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Favored Terrain",
+    "class": "Ranger",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Paralyzing Light",
+    "class": "Ranger",
+    "level": 18,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Poison Immunity",
+    "class": "Ranger",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Poison Resistance",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Lantern Lighter ~ Stunning Light",
+    "class": "Ranger",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Ranger ~ Camouflage",
+    "class": "Ranger",
+    "level": 17,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 980
+    }
+  },
+  {
+    "key": "Raven Master ~ Argent Magic",
+    "class": "Ranger",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 981
+    }
+  },
+  {
+    "key": "Raven Master ~ Avian Empathy",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 981
+    }
+  },
+  {
+    "key": "Raven Master ~ Class Skills",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 981
+    }
+  },
+  {
+    "key": "Raven Master ~ Raven Companion",
+    "class": "Ranger",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 981
+    }
+  }
+]

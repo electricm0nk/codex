@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:giant_spider_poison"
@@ -20,6 +18,116 @@
     ],
     "race_subtype": null,
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Giant Spider ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Giant Spider Type|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In webs|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|32"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonSaveDC|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "11"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:14"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Poison,*1,4d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Spider"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.258"
+      }
+    ],
     "size": "C",
     "source_page": "p.258",
     "speeds": [
@@ -33,16 +141,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 378,
-    "record_key": "Spider (Goliath)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 378,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Spider (Goliath)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

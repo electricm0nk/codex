@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Unbreakable ~ Unflinching",
+    "name": "Unflinching",
+    "class": "Fighter",
+    "description": "At 2nd level, an unbreakable gains a +1 bonus on Will saves against mind-affecting effects. This bonus increases by +1 for every four levels after 2nd level (to a maximum of +5 at 18th level). This ability replaces bravery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unbreakable ~ Unflinching"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, an unbreakable gains a +1 bonus on Will saves against mind-affecting effects. This bonus increases by +1 for every four levels after 2nd level (to a maximum of +5 at 18th level). This ability replaces bravery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 793,
+    "record_key": "Unbreakable ~ Unflinching"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Elemental Knight",
+    "name": "Elemental Knight",
+    "class": "Magus Archetype",
+    "description": "Elemental knights are born with elemental energies surging through their blood and discover the secret of reconciling and focusing this primal power into the arcane.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Elemental Knight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpellRecall"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Elemental Knight],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusSpellRecall]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsSuli=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Elemental knights are born with elemental energies surging through their blood and discover the secret of reconciling and focusing this primal power into the arcane."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Knight ~ Elemental Arcana|PRECLASS:1,Magus=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Knight ~ Elemental Matrix|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Knight ~ Magus Arcana|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 958,
+    "record_key": "Magus Archetype ~ Elemental Knight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

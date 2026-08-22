@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit ~ Stone",
+    "name": "Stone (Spirit)",
+    "class": "Shaman Spirit",
+    "description": "Spirit Magic Spells: magic stone (1st), stone call (2nd), meld into stone (3rd), wall of stone (4th), stoneskin (5th), stone tell (6th), statue (7th), repel metal and stone (8th), clashing rocks (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit ~ Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpirit.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanStoneSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanStoneSpiritAnimal|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: magic stone (1st), stone call (2nd), meld into stone (3rd), wall of stone (4th), stoneskin (5th), stone tell (6th), statue (7th), repel metal and stone (8th), clashing rocks (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stone Spirit ~ Touch of Acid"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stone Spirit ~ Body of Earth|PREVARGTEQ:ShamanSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stone Spirit ~ Elemental Form|PREVARGTEQ:ShamanSpiritTrue,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stone Spirit ~ Manifestation|PREVARGTEQ:Shaman Manifestation,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanStoneSpirit|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanStoneSpiritAnimal|FamiliarIsSpiritAnimal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1452,
+    "record_key": "Shaman Spirit ~ Stone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

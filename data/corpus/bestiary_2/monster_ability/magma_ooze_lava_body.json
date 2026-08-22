@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Magma Ooze ~ Lava Body",
     "delivery": "Extraordinary",
@@ -15,19 +13,55 @@
     "owners": [
       "bestiary_2:monster:magma_ooze"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Lava Body"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagmaOozeLavaBodyDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagmaOozeLavaBodyDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Lava Body)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagmaOozeLavaBodyDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The magma ooze is formed of molten rock.  Whenever a creature strikes a magma ooze with a weapon, that weapon takes 4d6 points of fire damage unless the attacker makes a DC %1 Fortitude save.  Damage caused to weapons in this manner is not halved, but hardness does help prevent some of the damage dealt.|MagmaOozeLavaBodyDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Magma Ooze ~ Lava Body"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 801,
-    "record_key": "Magma Ooze ~ Lava Body"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 801,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Magma Ooze ~ Lava Body",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

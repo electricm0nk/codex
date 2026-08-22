@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blood Kineticist ~ Bleeding Infusion",
+    "name": "Bleeding Infusion",
+    "class": "Kineticist",
+    "description": "At 5th level, a blood kineticist can infuse her blasts with a vicious power that causes internal or external bleeding. On a failed Fortitude save, the target takes 1 point of bleed damage for every die of the blast's damage. A target that fails its saving throw against the wrack form infusion does not receive a saving throw to avoid the bleed damage from bleeding infusion on the same blast. This is a 2nd-level substance infusion that costs 2 points of burn and can be used with water and blood blasts. This ability replaces the 5th-level infusion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Kineticist ~ Bleeding Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blood Kineticist Class Feature.Kineticist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a blood kineticist can infuse her blasts with a vicious power that causes internal or external bleeding. On a failed Fortitude save, the target takes 1 point of bleed damage for every die of the blast's damage. A target that fails its saving throw against the wrack form infusion does not receive a saving throw to avoid the bleed damage from bleeding infusion on the same blast. This is a 2nd-level substance infusion that costs 2 points of burn and can be used with water and blood blasts. This ability replaces the 5th-level infusion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1319,
+    "record_key": "Blood Kineticist ~ Bleeding Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

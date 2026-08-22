@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Advanced Mutagen ~ Burly",
+    "name": "Burly",
+    "class": "Advanced Mutagen",
+    "description": "In her mutagenic form, the master chymist's heavy physical frame gives her an alchemical bonus on Strength checks, Constitution checks, and Strength-based skill checks as well as a bonus to CMB and CMD. The bonus is equal to half the master chymist's class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Advanced Mutagen ~ Burly"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterChymistAdvancedMutagen.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterChymist_Burly_Bonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In her mutagenic form, the master chymist's heavy physical frame gives her an alchemical bonus on Strength checks, Constitution checks, and Strength-based skill checks as well as a bonus to CMB and CMD. The bonus is equal to half the master chymist's class level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterChymist_Burly_Bonus|MasterChymistLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Master Chymist Advanced Mutagen"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 alchemical bonus on Strength checks, Constitution checks, Strength-based skill checks, and to CMB and CMD.|MasterChymist_Burly_Bonus|PREVARGTEQ:MutagenActive,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1370,
+    "record_key": "Advanced Mutagen ~ Burly"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

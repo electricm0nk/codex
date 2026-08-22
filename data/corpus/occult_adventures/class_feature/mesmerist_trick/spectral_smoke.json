@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mesmerist Trick ~ Spectral Smoke",
+    "name": "Spectral Smoke",
+    "class": "Mesmerist Trick",
+    "description": "A cloud of smoke pops up around the subject, foiling attacks. The mesmerist can trigger this trick when the subject is attacked by an attack or by a spell that requires an attack roll. A smoke cloud appears in the subject's square and in a %1-foot radius around it. This cloud lasts for %2 round(s). The cloud functions as fog cloud, but is an illusion (figment) effect that can't be dispersed by wind and can be used underwater. A creature that interacts with the cloud can attempt a saving throw to disbelieve the effect.|min(10+5*floor(MesmeristLVL/5),30)|MesmeristLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Trick ~ Spectral Smoke"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MesmeristTrick.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A cloud of smoke pops up around the subject, foiling attacks. The mesmerist can trigger this trick when the subject is attacked by an attack or by a spell that requires an attack roll. A smoke cloud appears in the subject's square and in a %1-foot radius around it. This cloud lasts for %2 round(s). The cloud functions as fog cloud, but is an illusion (figment) effect that can't be dispersed by wind and can be used underwater. A creature that interacts with the cloud can attempt a saving throw to disbelieve the effect.|min(10+5*floor(MesmeristLVL/5),30)|MesmeristLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 953,
+    "record_key": "Mesmerist Trick ~ Spectral Smoke"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

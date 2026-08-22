@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Metal Mystery ~ Armor Mastery",
+    "name": "Armor Mastery",
+    "class": "Metal Mystery",
+    "description": "You become more maneuverable while wearing armor. You can move at your normal speed in medium armor that is made of metal. This does not grant proficiency in armor. Whenever you are wearing metal armor, you reduce the armor check penalty by %1 (to a minimum of 0) and increase the maximum Dexterity bonus allowed by your armor by %1.|ArmorMasteryBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metal Mystery ~ Armor Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.MetalRevelation.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArmorMasteryBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You become more maneuverable while wearing armor. You can move at your normal speed in medium armor that is made of metal. This does not grant proficiency in armor. Whenever you are wearing metal armor, you reduce the armor check penalty by %1 (to a minimum of 0) and increase the maximum Dexterity bonus allowed by your armor by %1.|ArmorMasteryBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|ACCHECK|ArmorMasteryBonus|PREEQUIP:1,TYPE=Armor.Metal"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|MAXDEX|ArmorMasteryBonus|PREEQUIP:1,TYPE=Armor.Metal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorMasteryBonus|min(3,classlevel(\"Oracle\")/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "MediumArmor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 481,
+    "record_key": "Metal Mystery ~ Armor Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

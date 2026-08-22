@@ -1,25 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You forge a telepathic bond among yourself and a number of willing creatures, each of which must have an Intelligence score of 3 or higher. Each creature included in the link is linked to all the others. The creatures can communicate telepathically through the bond regardless of language. No bond. Once the bond is formed, it works over any distance [although not from one plane to another]. If desired, you may leave yourself out of the telepathic bond forged. This decision must be made at the time of casting. Telepathic bond can be made permanent with a permanency spell, though it only bonds two creatures per casting of permanency.",
     "key": "Telepathic Bond",
-    "school": "Divination",
     "level": 5,
-    "description": "You forge a telepathic bond among yourself and a number of willing creatures, each of which must have an Intelligence score of 3 or higher. Each creature included in the link is linked to all the others. The creatures can communicate telepathically through the bond regardless of language. No bond. Once the bond is formed, it works over any distance [although not from one plane to another]. If desired, you may leave yourself out of the telepathic bond forged. This decision must be made at the time of casting. Telepathic bond can be made permanent with a permanency spell, though it only bonds two creatures per casting of permanency."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You forge a telepathic bond among yourself and a number of willing creatures, each of which must have an Intelligence score of 3 or higher. Each creature included in the link is linked to all the others. The creatures can communicate telepathically through the bond regardless of language. No bond. Once the bond is formed, it works over any distance [although not from one plane to another]. If desired, you may leave yourself out of the telepathic bond forged. This decision must be made at the time of casting. Telepathic bond can be made permanent with a permanency spell, though it only bonds two creatures per casting of permanency.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You forge a telepathic bond among yourself and a number of willing creatures, each of which must have an Intelligence score of 3 or higher.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Community=5"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/telepathicBond.html#_telepathic-bond"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.358"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You plus (CASTERLEVEL/3) willing creatures, no two of which can be more than 30 ft. apart"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 621,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1370,
-    "record_key": "Telepathic Bond.MOD"
+    "record_key": "Telepathic Bond",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

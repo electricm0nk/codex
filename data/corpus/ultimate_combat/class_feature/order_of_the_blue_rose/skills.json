@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Blue Rose ~ Skills",
+    "name": "Skills",
+    "class": "Order of the Blue Rose",
+    "description": "An order of the blue rose cavalier adds Knowledge (history) (Int) and Knowledge (nobility) (Int) to his list of class skills. Whenever an order of the blue rose cavalier uses Diplomacy to try to mediate a dispute between two parties that do not include him, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Blue Rose ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrderAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the blue rose cavalier adds Knowledge (history) (Int) and Knowledge (nobility) (Int) to his list of class skills. Whenever an order of the blue rose cavalier uses Diplomacy to try to mediate a dispute between two parties that do not include him, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1)."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (history)|Knowledge (nobility)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+%1 competence to Diplomacy to try to mediate a dispute between two parties that do not include him|CavalierLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 438,
+    "record_key": "Order of the Blue Rose ~ Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

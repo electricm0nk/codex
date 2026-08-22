@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archer ~ Trick Shot",
+    "name": "Trick Shot",
+    "class": "Fighter",
+    "description": "At 3rd level, an archer can choose one of the following combat maneuvers or actions: disarm, feint, or sunder. He can perform this action with a bow against any target within 30 feet, with a -4 penalty to his CMB. Every four levels beyond 3rd, he may choose an additional trick shot to learn. These maneuvers use up arrows as normal. At 11th level, he may also choose from the following combat maneuvers: bull rush, grapple, trip. A target grappled by an arrow can break free by destroying the archer's arrow (hardness 5, hit points 1, break DC 13) or with an Escape Artist or CMB check (against the archer's CMD -4). This ability replaces armor training 1, 2, 3, and 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archer ~ Trick Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining1.FighterArmorTraining2.FighterArmorTraining3.FighterArmorTraining4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatManeuverTaken|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an archer can choose one of the following combat maneuvers or actions: disarm, feint, or sunder. He can perform this action with a bow against any target within 30 feet, with a -4 penalty to his CMB. Every four levels beyond 3rd, he may choose an additional trick shot to learn. These maneuvers use up arrows as normal. At 11th level, he may also choose from the following combat maneuvers: bull rush, grapple, trip. A target grappled by an arrow can break free by destroying the archer's arrow (hardness 5, hit points 1, break DC 13) or with an Escape Artist or CMB check (against the archer's CMD -4). This ability replaces armor training 1, 2, 3, and 4."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Archer Trick Shot Selection|(FighterLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2119,
+    "record_key": "Fighter Archer ~ Trick Shot"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

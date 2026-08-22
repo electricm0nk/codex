@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Defensive Prognostication",
+    "name": "Defensive Prognostication",
+    "class": "Phrenic Amplification",
+    "description": "When casting a divination spell, the psychic sees a glimmer of her future. By spending 1 point from her phrenic pool as she casts a divination spell, she gains a +2 insight bonus to AC for a number of rounds equal to the linked spell's level. She can instead spend 2 points to increase the bonus to +4. This amplification can be linked only to divination spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Defensive Prognostication"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting a divination spell, the psychic sees a glimmer of her future. By spending 1 point from her phrenic pool as she casts a divination spell, she gains a +2 insight bonus to AC for a number of rounds equal to the linked spell's level. She can instead spend 2 points to increase the bonus to +4. This amplification can be linked only to divination spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1167,
+    "record_key": "Phrenic Amplification ~ Defensive Prognostication"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

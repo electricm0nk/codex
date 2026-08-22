@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Invigorate",
-    "school": "Illusion",
-    "level": 1,
     "description": "This spell banishes feelings of weariness. For the duration, the subject takes no penalties from the fatigued or exhausted conditions. The effect of invigorate is merely an illusion, however, not a substitute for actual rest or respite. When the spell ends, the subject takes 1d6 points of nonlethal damage, along with the return of the original condition(s). A creature can be under the effects of only one invigorate spell at a time; if it is cast a second time on that creature, the first effect immediately ends.",
-    "full_text": true
+    "full_text": true,
+    "key": "Invigorate",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V"
+      },
+      {
+        "key": "DESC",
+        "value": "Temporarily relieves fatigue or exhaustion.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell banishes feelings of weariness. For the duration, the subject takes no penalties from the fatigued or exhausted conditions. The effect of invigorate is merely an illusion, however, not a substitute for actual rest or respite. When the spell ends, the subject takes 1d6 points of nonlethal damage, along with the return of the original condition(s). A creature can be under the effects of only one invigorate spell at a time; if it is cast a second time on that creature, the first effect immediately ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Figment"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes (D)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/invigorate.html#_invigorate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 154,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1991,
-    "record_key": "Invigorate"
+    "record_key": "Invigorate",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Whisperer ~ Inspiration",
+    "name": "Inspiration",
+    "class": "Druid",
+    "description": "At 2nd level, a wild whisperer gains an inspiration pool as the investigator class ability (see page 31). A wild whisperer uses her druid level as her investigator level when determining the effects of this ability. She has an inspiration pool equal to %1. Instead of free uses of inspiration on Knowledge, Linguistics, or Spellcraft skill checks, the wild whisperer can use inspiration on Handle Animal, Heal, Knowledge (geography), Knowledge (nature), Ride, Sense Motive, and Survival skill checks without expending a use of inspiration, provided she's trained in the relevant skill. She can also use inspiration on any wild empathy check without expending a use of inspiration. A wild whisperer's inspiration pool refreshes each day when she prepares spells.|WildWhispererInspirationPoolBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Whisperer ~ Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wild Whisperer Class Feature.Druid Class Feature.SpecialQuality.Extraordinary.DruidWoodlandStride.DruidTracklessStep.DruidResistNaturesLure"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildWhispererInspirationPoolBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a wild whisperer gains an inspiration pool as the investigator class ability (see page 31). A wild whisperer uses her druid level as her investigator level when determining the effects of this ability. She has an inspiration pool equal to %1. Instead of free uses of inspiration on Knowledge, Linguistics, or Spellcraft skill checks, the wild whisperer can use inspiration on Handle Animal, Heal, Knowledge (geography), Knowledge (nature), Ride, Sense Motive, and Survival skill checks without expending a use of inspiration, provided she's trained in the relevant skill. She can also use inspiration on any wild empathy check without expending a use of inspiration. A wild whisperer's inspiration pool refreshes each day when she prepares spells.|WildWhispererInspirationPoolBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildWhispererInspirationPoolBonus|max(1,DruidLVL/2+INT)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3036,
+    "record_key": "Wild Whisperer ~ Inspiration"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

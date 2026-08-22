@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Korred ~ Animated Hair",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:korred"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Animated Hair"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KorredAnimatedHairDC|10+TL/2+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KorredAnimatedHairDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Animated Hair)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KorredAnimatedHairDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A korred's hair is constantly writhing and twitching.  As a free action, a korred can cause its long hair to reach out and interfere with adjacent creatures - tugging at clothes and weapons, tangling feet and arms, tickling, and generally making a nuisance of itself.  The korred can select which adjacent targets are affected by its animated hair.  These targets must make a successful DC %1 Reflex save each round to avoid becoming entangled for 1 round.|KorredAnimatedHairDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Korred ~ Animated Hair"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.173",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 752,
-    "record_key": "Korred ~ Animated Hair"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 752,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Korred ~ Animated Hair",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

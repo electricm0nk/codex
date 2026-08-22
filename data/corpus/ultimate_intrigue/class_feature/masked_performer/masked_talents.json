@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Masked Performer ~ Masked Talents",
+    "name": "Masked Talents",
+    "class": "Bard",
+    "description": "The masked performer gains a rogue talent from the following list: expert leaper, fast stealth, ledge walker, rogue crawl, rope master, stand up, and wall scramble.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Masked Performer ~ Masked Talents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.MaskedPerformerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The masked performer gains a rogue talent from the following list: expert leaper, fast stealth, ledge walker, rogue crawl, rope master, stand up, and wall scramble."
+      },
+      {
+        "key": "DESC",
+        "value": " The masked performer can choose a second rogue talent from any of the above talents or an advanced talent from the following list: defensive roll, fast tumble, hide in plain sight, and skill mastery.|PRECLASS:1,Bard=17"
+      },
+      {
+        "key": "DESC",
+        "value": " This ability does not qualify her for the Extra Rogue Talent feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Masked Performer Talent|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Advanced Masked Performer Talent|1|PRECLASS:1,Bard=17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 236,
+    "record_key": "Masked Performer ~ Masked Talents"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

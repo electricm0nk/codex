@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Archetype ~ Stygian Slayer",
+    "name": "Stygian Slayer",
+    "class": "Slayer Archetype",
+    "description": "A stygian slayer crawls out of the darkest shadows to strike fear into the hearts of civilized folk. He's a merciless killer who can control a sliver of magic, allowing him to arrive unseen, commit murder, and depart without detection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Stygian Slayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Stygian Slayer],[!PREFACT:1,ABILITIES,Slayer_Archetype_Proficiencies=true,Slayer_Archetype_Talent4=true,Slayer_Archetype_Talent10=true,Slayer_Archetype_Stalker=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "A stygian slayer crawls out of the darkest shadows to strike fear into the hearts of civilized folk. He's a merciless killer who can control a sliver of magic, allowing him to arrive unseen, commit murder, and depart without detection."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Stygian Slayer ~ Weapon and Armor Proficiency|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Stygian Slayer ~ Invisibility|PRECLASS:1,Slayer=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Stygian Slayer ~ Spell Use|PRECLASS:1,Slayer=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Class Feature|AUTOMATIC|Stygian Slayer ~ Shadowy Mist Form|PRECLASS:1,Slayer=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Slayer"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Talent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3730,
+    "record_key": "Slayer Archetype ~ Stygian Slayer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

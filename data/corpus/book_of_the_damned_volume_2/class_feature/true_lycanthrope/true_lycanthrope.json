@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "True Lycanthrope ~ Jezelda",
+    "name": "True Lycanthrope",
+    "class": "True Lycanthrope",
+    "description": "You can use your lycanthropic change shape ability as a swift action. You become a true lycanthrope if you were an afflicted lycanthrope. If you are already a true lycanthrope, you gain another +2 bonus to Strength and Consitution.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "True Lycanthrope ~ Jezelda"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your lycanthropic change shape ability as a swift action. You become a true lycanthrope if you were an afflicted lycanthrope. If you are already a true lycanthrope, you gain another +2 bonus to Strength and Consitution."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|True Lycanthrope ~ Jezelda|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 141,
+    "record_key": "True Lycanthrope ~ Jezelda"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

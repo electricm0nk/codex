@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Two-Handed Fighter ~ Backswing",
+    "name": "Backswing",
+    "class": "Fighter",
+    "description": "At 7th level, when a two-handed fighter makes a full attack with a two-handed weapon, he adds double his Strength bonus on damage rolls for all attacks after the first. This ability replaces armor training 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Two-Handed Fighter ~ Backswing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining2"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, when a two-handed fighter makes a full attack with a two-handed weapon, he adds double his Strength bonus on damage rolls for all attacks after the first. This ability replaces armor training 2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2217,
+    "record_key": "Fighter Two-Handed Fighter ~ Backswing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

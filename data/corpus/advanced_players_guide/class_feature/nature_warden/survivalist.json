@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Warden ~ Survivalist",
+    "name": "Survivalist",
+    "class": "Nature Warden",
+    "description": "At 5th level, a nature warden suffers no penalty for using an improvised weapon or improvised tool. At 10th level, a warden can spend 1 minute examining and adjusting an improvised weapon or tool; thereafter she treats it as a masterwork weapon or tool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Survivalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a nature warden suffers no penalty for using an improvised weapon or improvised tool. At 10th level, a warden can spend 1 minute examining and adjusting an improvised weapon or tool; thereafter she treats it as a masterwork weapon or tool."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SurvivalistLVL|NatureWardenLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1429,
+    "record_key": "Nature Warden ~ Survivalist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

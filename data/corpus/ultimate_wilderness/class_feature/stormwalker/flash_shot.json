@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stormwalker ~ Flash Shot",
+    "name": "Flash Shot",
+    "class": "Ranger",
+    "description": "When a stormwalker uses flash step, he can make a ranged attack both before and after his movement. Both of these attacks are made at his highest base attack bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormwalker ~ Flash Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.StormwalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a stormwalker uses flash step, he can make a ranged attack both before and after his movement. Both of these attacks are made at his highest base attack bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 919,
+    "record_key": "Stormwalker ~ Flash Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

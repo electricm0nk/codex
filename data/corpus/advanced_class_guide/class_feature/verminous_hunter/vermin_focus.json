@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verminous Hunter ~ Vermin Focus",
+    "name": "Vermin Focus",
+    "class": "Hunter",
+    "description": "You can take on the aspect of a vermin as a swift action, gaining a bonus or special ability based on the type of vermin emulated. The ability is usable %1 minutes per day. The vermin companion gets a constant benefit.|HunterVerminFocusMinutes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter ~ Vermin Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Feature.ArchetypeAbility.Supernatural.HunterAnimalFocus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterVerminFocusMinutes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterVerminFocusLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterVerminFocusACPool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerminousHunterACDead|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can take on the aspect of a vermin as a swift action, gaining a bonus or special ability based on the type of vermin emulated. The ability is usable %1 minutes per day. The vermin companion gets a constant benefit.|HunterVerminFocusMinutes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Verminous Hunter Vermin Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Verminous Hunter Vermin Companion Status|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Verminous Hunter Vermin Focus|VerminousHunterACDead"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusMinutes|HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusLVL|HunterLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusACPool|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3250,
+    "record_key": "Verminous Hunter ~ Vermin Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 30000.0,
+    "description": "Once per day, when the owner reaches 0 or fewer hit points, the item automatically provides a breath of life spell.",
+    "key": "DTRMN",
+    "name": "DTRMN",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Determination ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Shield"
+      },
+      {
+        "key": "COST",
+        "value": "30000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,ArmorEnhancement,ShieldEnhancement],[PRETYPE:1,Armor,Shield]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day, when the owner reaches 0 or fewer hit points, the item automatically provides a breath of life spell."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equipmods.lst",
+    "record_key": "DTRMN",
+    "sha256": "f7f13bdfc3132b935fe2ec9a7fa4be460eebea86eefd4026468fae8d06adb338"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

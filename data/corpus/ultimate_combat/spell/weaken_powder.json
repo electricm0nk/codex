@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Ammunition in the target firearm generates less of an explosive charge when fired. With such ammunition, the firearm's range increment is halved and the firer takes a -2 penalty on damage rolls. If aware of this spell's effect prior to firing the altered ammunition (a DC 16 Spellcraft check to identify the spell being cast or similar effect), the firearm's user can spend a standard action to clear the altered ammunition from the firearm. Doing so destroys that ammunition.",
+    "key": "Weaken Powder",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Witch,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Ammunition in the target firearm generates less of an explosive charge when fired. With such ammunition, the firearm's range increment is halved and the firer takes a -2 penalty on damage rolls. If aware of this spell's effect prior to firing the altered ammunition (a DC 16 Spellcraft check to identify the spell being cast or similar effect), the firearm's user can spend a standard action to clear the altered ammunition from the firearm. Doing so destroys that ammunition.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Targeted firearm's ammunition halves the firearm's range and imposes a -2 penalty on damage rolls.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(an empty paper cartridge)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/weakenPowder.html#_weaken-powder"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "1 loaded firearm"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 150,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Weaken Powder",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

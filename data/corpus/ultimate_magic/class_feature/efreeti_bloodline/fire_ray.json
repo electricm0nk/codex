@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Efreeti Bloodline ~ Fire Ray",
+    "name": "Fire Ray",
+    "class": "Efreeti Bloodline",
+    "description": "You can unleash an elemental ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d6",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Efreeti Bloodline ~ Fire Ray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Efreeti Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Efreeti"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Efreeti_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Efreeti_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Efreeti_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_EfreetiFireRay_DamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash an elemental ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d6"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_EfreetiFireRay_DamageBonus|PREVARGTEQ:Sorcerer_EfreetiFireRay_DamageBonus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "points of fire damage. You can use this ability %1 times per day.|Sorcerer_Efreeti_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_EfreetiFireRay_DamageBonus|Sorcerer_Efreeti_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6 fire)|Sorcerer_EfreetiFireRay_DamageBonus|Sorcerer_Efreeti_BloodlinePower1Times|PREVARLTEQ:Sorcerer_EfreetiFireRay_DamageBonus,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%2/day (1d6+%1 fire)|Sorcerer_EfreetiFireRay_DamageBonus|Sorcerer_Efreeti_BloodlinePower1Times|PREVARGTEQ:Sorcerer_EfreetiFireRay_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Efreeti_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|EfreetiBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 611,
+    "record_key": "Efreeti Bloodline ~ Fire Ray"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

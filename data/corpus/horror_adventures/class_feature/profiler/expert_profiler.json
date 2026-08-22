@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Profiler ~ Expert Profiler",
+    "name": "Expert Profiler",
+    "class": "Investigator",
+    "description": "A profiler gains a +%1 bonus on Sense Motive checks.|max(1,InvestigatorLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Profiler ~ Expert Profiler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "A profiler gains a +%1 bonus on Sense Motive checks.|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "DESC",
+        "value": "He can use inspiration on any Sense Motive check without expending a use of inspiration, provided he is trained in the skill.|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "DESC",
+        "value": "He can attempt to predict a creature's movements using his knowledge of the creature's psychology. He can use this ability only on a creature familiar to him (for example, a serial killer whose crimes the profiler has studied will suffice, even if the profiler hasn't yet identified the serial killer's true identity). To do so, he starts from a place where he knows that the creature has been and why (most often the scene of a crime) and attempts a Sense Motive check against a DC equal to 40 or to 20 + the creature's Bluff modifier, whichever is higher, which the GM rolls in secret. On a failure, the profiler's guess about the creatures movements is inaccurate. On a success, the profiler is able to track the creature's general movements as if using Survival to track (though the usual modifiers on Survival checks to track don't apply, and this ability allows her to track a creature using pass without trace or otherwise leaving no trail). After at most 1 hour (or sooner if there are many possible options for the creature to take, at the GM's discretion), if the profiler has not yet found further evidence of the creature's passing (such as footprints, fingerprints, or any other indication that the creature came this way), he loses track of the creature's movements; if he does, he can try to guess where the creature went next by attempting another check.|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|max(1,InvestigatorLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 168,
+    "record_key": "Profiler ~ Expert Profiler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

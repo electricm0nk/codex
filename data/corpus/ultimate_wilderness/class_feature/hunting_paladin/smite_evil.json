@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunting Paladin ~ Smite Evil",
+    "name": "Smite Evil",
+    "class": "Paladin",
+    "description": "A hunting paladin gains this ability at 4th level, and it functions at her paladin level - 3. She can expend a daily use of smite evil to gain an additional daily use of hunt evil. She can use smite evil and hunt evil against the same target. This alters smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunting Paladin ~ Smite Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.HuntingPaladinClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A hunting paladin gains this ability at 4th level, and it functions at her paladin level - 3. She can expend a daily use of smite evil to gain an additional daily use of hunt evil. She can use smite evil and hunt evil against the same target. This alters smite evil."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Paladin ~ Smite Evil"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteEvilLVL|-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 880,
+    "record_key": "Hunting Paladin ~ Smite Evil"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

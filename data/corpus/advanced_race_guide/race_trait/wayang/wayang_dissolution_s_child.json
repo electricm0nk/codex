@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Wayang ~ Dissolution's Child",
+    "name": "Dissolution's Child",
+    "race_key": "Wayang",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Wayang Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Wayang_ReplaceShadowMagic"
+    ],
+    "description": "Once per day, you may change your appearance to look as if you were little more than a 4-foot-tall area of shadow. Your physical form still exists and you are not incorporeal--only your appearance changes. This works like invisibility, except it only lasts rounds (1 round per level, maximum 5 rounds). This is a supernatural ability. This racial trait replaces shadow magic.",
+    "source_page": "p.210",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayang ~ Dissolution's Child"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wayang Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Wayang ~ Dissolution's Child],[!PREFACT:1,ABILITIES,Wayang_ReplaceShadowMagic=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you may change your appearance to look as if you were little more than a 4-foot-tall area of shadow. Your physical form still exists and you are not incorporeal--only your appearance changes. This works like invisibility, except it only lasts %1 rounds (1 round per level, maximum 5 rounds). This is a supernatural ability.|min(TL,5)"
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces shadow magic.|!PREABILITY:1,CATEGORY=Special Ability,Wayang ~ Dissolution's Child"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|1"
+      },
+      {
+        "key": "FACT",
+        "value": "Wayang_ReplaceShadowMagic|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1296,
+    "record_key": "Wayang ~ Dissolution's Child"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ]
+}

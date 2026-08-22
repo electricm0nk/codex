@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric ~ Spontaneous Casting",
+    "name": "Spontaneous Casting",
+    "class": "Cleric",
+    "description": "You can channel stored spell energy into healing spells that you did not prepare ahead of time. You can \"lose\" any prepared spell that is not an orison or domain spell in order to cast any cure spell of the same spell level or lower (a cure spell is any spell with \"Cure\" in its name).|PREABILITY:1,CATEGORY=Special Ability,Cleric ~ Channel Positive Energy",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric ~ Spontaneous Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel stored spell energy into healing spells that you did not prepare ahead of time. You can \"lose\" any prepared spell that is not an orison or domain spell in order to cast any cure spell of the same spell level or lower (a cure spell is any spell with \"Cure\" in its name).|PREABILITY:1,CATEGORY=Special Ability,Cleric ~ Channel Positive Energy"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel stored spell energy into inflict spells that you did not prepare ahead of time. You can \"lose\" any prepared spell that is not an orison or domain spell in order to cast any inflict spell of the same spell level or lower (an inflict spell is any spell with \"Inflict\" in its name).|PREABILITY:1,CATEGORY=Special Ability,Cleric ~ Channel Negative Energy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 566,
+    "record_key": "Cleric ~ Spontaneous Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

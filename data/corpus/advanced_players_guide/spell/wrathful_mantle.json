@@ -1,26 +1,92 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Wrathful Mantle",
-    "school": "Evocation",
-    "level": 3,
     "description": "A shimmering mantle of light shrouds the subject, casting light like a torch. The subject of the spell gains a +1 resistance bonus on all saving throws per four caster levels (maximum +5 at 20th level). The subject can end the wrathful mantle at any time as a swift action to deal 2d8 points of force damage to all creatures within 5 feet.",
-    "full_text": true
+    "full_text": true,
+    "key": "Wrathful Mantle",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Paladin=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "A shimmering mantle of light shrouds the subject, casting light like a torch. The subject of the spell gains a +1 resistance bonus on all saving throws per four caster levels (maximum +5 at 20th level). The subject can end the wrathful mantle at any time as a swift action to deal 2d8 points of force damage to all creatures within 5 feet.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject shines and gets (CASTERLEVEL/4) on all saves.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Force|Light"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch or 5 ft.; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/wrathfulMantle.html#_wrathful-mantle"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.257"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched or all creatures within 5 ft.; see text"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|ALL|1|TYPE=Resistance"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 274,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2121,
-    "record_key": "Wrathful Mantle"
+    "record_key": "Wrathful Mantle",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Plains Druid ~ Canny Charger",
+    "name": "Canny Charger",
+    "class": "Druid",
+    "description": "At 9th level, a plains druid can charge through allies' squares without difficulty (whether mounted or afoot) and can turn up to 90 degrees once during a charge, provided the last 10 feet toward the target are in a straight line. She also gains a +4 dodge bonus to AC against enemy charge attacks and a +4 bonus to damage with a readied action against a charging foe. This ability replaces venom immunity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plains Druid ~ Canny Charger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary.DruidVenomImmunity"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a plains druid can charge through allies' squares without difficulty (whether mounted or afoot) and can turn up to 90 degrees once during a charge, provided the last 10 feet toward the target are in a straight line. She also gains a +4 dodge bonus to AC against enemy charge attacks and a +4 bonus to damage with a readied action against a charging foe. This ability replaces venom immunity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1990,
+    "record_key": "Plains Druid ~ Canny Charger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

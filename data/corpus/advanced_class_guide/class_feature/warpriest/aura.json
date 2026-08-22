@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest ~ Aura",
+    "name": "Aura",
+    "class": "Warpriest",
+    "description": "A warpriest of a chaotic, evil, good, or lawful deity has a particularly powerful aura (as a cleric) corresponding to the deity's alignment (see detect evil).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A warpriest of a chaotic, evil, good, or lawful deity has a particularly powerful aura (as a cleric) corresponding to the deity's alignment (see detect evil)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Chaos|PREDEITYALIGN:CG,CN,CE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Evil|PREDEITYALIGN:LE,NE,CE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Good|PREDEITYALIGN:LG,NG,CG"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cleric Class Feature|VIRTUAL|Aura of Law|PREDEITYALIGN:LG,LN,LE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlignmentAuraLVL|WarpriestLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2145,
+    "record_key": "Warpriest ~ Aura"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

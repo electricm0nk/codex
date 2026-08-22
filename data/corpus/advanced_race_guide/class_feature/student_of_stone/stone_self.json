@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Student of Stone ~ Stone Self",
+    "name": "Stone Self",
+    "class": "Monk",
+    "description": "At 20th level, a student of stone becomes an earth outsider. He gains the earth subtype, as well as DR 5/chaotic, burrow speed 20 feet, and tremorsense 20 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Stone ~ Stone Self"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a student of stone becomes an earth outsider. He gains the earth subtype, as well as DR 5/chaotic, burrow speed 20 feet, and tremorsense 20 feet."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Earth"
+      },
+      {
+        "key": "MOVE",
+        "value": "Burrow,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Chaotic|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 688,
+    "record_key": "Student of Stone ~ Stone Self"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

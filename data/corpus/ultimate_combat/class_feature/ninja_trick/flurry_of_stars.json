@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja Trick ~ Flurry of Stars",
+    "name": "Flurry of Stars",
+    "class": "Ninja Trick",
+    "description": "A ninja with this ability can expend 1 ki point from her ki pool as a swift action before she makes a full-attack attack with shuriken. During that attack, she can throw two additional shuriken at her highest attack bonus, but all of her shuriken attacks are made at a -2 penalty, including the two extra attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Trick ~ Flurry of Stars"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.Extraordinary.NinjaTrick.NinjaTrickOnly.AttackOption"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "A ninja with this ability can expend 1 ki point from her ki pool as a swift action before she makes a full-attack attack with shuriken. During that attack, she can throw two additional shuriken at her highest attack bonus, but all of her shuriken attacks are made at a -2 penalty, including the two extra attacks."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Shuriken|WEAPON|ATTACKS|2"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon,Shuriken|WEAPON|TOHIT|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 133,
+    "record_key": "Ninja Trick ~ Flurry of Stars"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

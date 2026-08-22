@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter ~ Final Aspect",
+    "name": "Final Aspect",
+    "class": "Shifter",
+    "description": "A shifter gains access to a fifth aspect, and when she uses shifter's aspect, she can assume the minor forms of all her aspects and the shifter can use her major and minor forms at will.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Final Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A shifter gains access to a fifth aspect, and when she uses shifter's aspect, she can assume the minor forms of all her aspects and the shifter can use her major and minor forms at will."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 26,
+    "record_key": "Shifter ~ Final Aspect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

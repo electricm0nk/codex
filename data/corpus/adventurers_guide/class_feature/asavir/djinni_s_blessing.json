@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Asavir ~ Djinni's Blessing",
+    "name": "Djinni's Blessing",
+    "class": "Asavir",
+    "description": "An asavir's mount receives the blessing of the djinn, making it swift and tireless. The mount's speed increases by %1 feet, it doesn't take movement penalties from wearing barding, and it can carry a second rider without penalties.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Djinni's Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsavirDjinnisBlessingBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "DESC",
+        "value": "An asavir's mount receives the blessing of the djinn, making it swift and tireless. The mount's speed increases by %1 feet, it doesn't take movement penalties from wearing barding, and it can carry a second rider without penalties."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirDjinnisBlessingBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirDjinnisBlessingBonus|10|PREVARGTEQ:AsavirLVL,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 48,
+    "record_key": "Asavir ~ Djinni's Blessing"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

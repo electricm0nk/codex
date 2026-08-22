@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Manipulator School ~ Shape Emotions",
+    "name": "Shape Emotions",
+    "class": "Manipulator School",
+    "description": "At 8th level, you can emit a 30-foot aura to either ward off or welcome emotional influence for a %1 rounds per day. If you choose to ward, you and your allies within this aura receive a +4 morale bonus on saves against mind-affecting spells and effects, and any fear effects targeting you or your allies are reduced by one step (shaken has no effect, frightened becomes shaken, and panicked becomes frightened). If you chose to enhance emotional influence, enemies within the aura receive a -2 penalty on saves against mind-affecting spells and effects. These rounds do not need to be consecutive.|ManipulatorShapeEmotionsRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Manipulator School ~ Shape Emotions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManipulatorShapeEmotionsRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can emit a 30-foot aura to either ward off or welcome emotional influence for a %1 rounds per day. If you choose to ward, you and your allies within this aura receive a +4 morale bonus on saves against mind-affecting spells and effects, and any fear effects targeting you or your allies are reduced by one step (shaken has no effect, frightened becomes shaken, and panicked becomes frightened). If you chose to enhance emotional influence, enemies within the aura receive a -2 penalty on saves against mind-affecting spells and effects. These rounds do not need to be consecutive.|ManipulatorShapeEmotionsRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManipulatorShapeEmotionsRounds|EnchantmentSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ManipulatorShapeEmotionsRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3370,
+    "record_key": "Manipulator School ~ Shape Emotions"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

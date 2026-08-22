@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ghoul Bloodline ~ Earth Crawler",
+    "name": "Earth Crawler",
+    "class": "Ghoul Bloodline",
+    "description": "You gain a burrow speed of 30 feet. Additionally, as long as you are surrounded by at least 5 feet of dirt or natural stone on all sides, you gain fast healing 10. You can heal %1 hit points per day with this ability.|Sorcerer_GhoulEarthCrawler_Healing",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Bloodline ~ Earth Crawler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Ghoul"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Ghoul_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Ghoul_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_GhoulEarthCrawler_Healing|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a burrow speed of 30 feet. Additionally, as long as you are surrounded by at least 5 feet of dirt or natural stone on all sides, you gain fast healing 10. You can heal %1 hit points per day with this ability.|Sorcerer_GhoulEarthCrawler_Healing"
+      },
+      {
+        "key": "MOVE",
+        "value": "Burrow,30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_GhoulEarthCrawler_Healing|Sorcerer_Ghoul_BloodlinePower15LVL*10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|GhoulBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 144,
+    "record_key": "Ghoul Bloodline ~ Earth Crawler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

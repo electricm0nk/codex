@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Enhanced Cures",
+    "name": "Enhanced Cures",
+    "class": "Shaman Spirit Hex",
+    "description": "When the shaman casts a cure spell, the maximum number of hit points healed is based on her shaman level, not the limit imposed by the spell. For example an 11th-level shaman with this hex can cast cure light wounds to heal 1d8+11 hit points instead of the normal 1d8+5 maximum.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Enhanced Cures"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanLifeHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Enhanced Cures"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanLifeSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When the shaman casts a cure spell, the maximum number of hit points healed is based on her shaman level, not the limit imposed by the spell. For example an 11th-level shaman with this hex can cast cure light wounds to heal 1d8+11 hit points instead of the normal 1d8+5 maximum."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1590,
+    "record_key": "Shaman Spirit Hex ~ Enhanced Cures"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

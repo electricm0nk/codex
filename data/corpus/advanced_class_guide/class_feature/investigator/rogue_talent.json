@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent",
+    "name": "Rogue Talent",
+    "class": "Investigator",
+    "description": "You can select one of the following rogue talents in place of an investigator talent: assault leader, black market connections, camouflage, canny observer, charmer, coax information, combat swipe, convincing liar, cunning trigger, deft palm, expert leaper, fast fingers, fast getaway, fast picks, fast stealth, firearm training, guileful polyglot, grit, hard to fool, hold breath, honeyed words, iron guts, lasting poison, ledge walker, major magic, minor magic, nimble climber, peerless maneuver, quick disable, quick disguise, quick trapsmith, resilience, rogue crawl, rope master, stand up, strong stroke, terrain master, trap spotter, or wall scrambler. Any talent effects based on rogue level use your class level. If the rogue talent has a prerequisite (such as the major magic rogue talent requiring the minor magic talent), you must fulfill the prerequisite before selecting that rogue talent.  This talent can be selected multiple times; each time, it grants you a new rogue talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.InvestigatorTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "You can select one of the following rogue talents in place of an investigator talent: assault leader, black market connections, camouflage, canny observer, charmer, coax information, combat swipe, convincing liar, cunning trigger, deft palm, expert leaper, fast fingers, fast getaway, fast picks, fast stealth, firearm training, guileful polyglot, grit, hard to fool, hold breath, honeyed words, iron guts, lasting poison, ledge walker, major magic, minor magic, nimble climber, peerless maneuver, quick disable, quick disguise, quick trapsmith, resilience, rogue crawl, rope master, stand up, strong stroke, terrain master, trap spotter, or wall scrambler. Any talent effects based on rogue level use your class level. If the rogue talent has a prerequisite (such as the major magic rogue talent requiring the minor magic talent), you must fulfill the prerequisite before selecting that rogue talent.  This talent can be selected multiple times; each time, it grants you a new rogue talent."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Investigator Rogue Talent|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1301,
+    "record_key": "Investigator ~ Rogue Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

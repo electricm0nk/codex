@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Disciple ~ Dragon Bite",
+    "name": "Dragon Bite",
+    "class": "Dragon Disciple",
+    "description": "At 2nd level, whenever the dragon disciple uses his bloodline to grow claws, he also gains a bite attack. This is a primary natural attack that deals 1d6 points of damage (1d4 if the dragon disciple is small) plus 1-1/2 times the dragon disciple's Strength modifier. Upon reaching 6th level, this bite also deals 1d6 points of energy damage. The type of damage dealt is determined by the dragon disciple's bloodline.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Dragon Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Dragon Disciple Class Feature.SpecialAttack.Special Attack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, whenever the dragon disciple uses his bloodline to grow claws, he also gains a bite attack. This is a primary natural attack that deals 1d6 points of damage (1d4 if the dragon disciple is small) plus 1-1/2 times the dragon disciple's Strength modifier. Upon reaching 6th level, this bite also deals 1d6 points of energy damage. The type of damage dealt is determined by the dragon disciple's bloodline."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|STR/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.382"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2968,
+    "record_key": "Dragon Disciple ~ Dragon Bite"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

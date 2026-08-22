@@ -1,27 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Repair Undead",
-    "school": "Necromancy",
-    "level": 1,
     "description": "When you touch an undead creature, you channel negative energy that heals 1d8 points of damage + 1 point per caster level (maximum +5). This spell has no effect on living creatures, except those that are healed by negative energy are also healed by the spell.",
-    "full_text": true
+    "full_text": true,
+    "key": "Repair Undead",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Heals one undead of 1d8 hp + 1/level [max +5].|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you touch an undead creature, you channel negative energy that heals 1d8 points of damage + 1 point per caster level (maximum +5). This spell has no effect on living creatures, except those that are healed by negative energy are also healed by the spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will half (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/repairUndead.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.191"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one undead creature touched [see text]"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 99,
-    "record_key": "Repair Undead"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Repair Undead",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

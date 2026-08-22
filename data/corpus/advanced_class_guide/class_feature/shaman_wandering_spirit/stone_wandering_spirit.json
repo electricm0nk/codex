@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Wandering Spirit ~ Stone",
+    "name": "Stone (Wandering Spirit)",
+    "class": "Shaman Wandering Spirit",
+    "description": "Spirit Magic Spells: magic stone (1st), stone call (2nd), meld into stone (3rd), wall of stone (4th), stoneskin (5th), stone tell (6th), statue (7th), repel metal or stone (8th), clashing rocks (9th)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Wandering Spirit ~ Stone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanWanderingSpirit.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: magic stone (1st), stone call (2nd), meld into stone (3rd), wall of stone (4th), stoneskin (5th), stone tell (6th), statue (7th), repel metal or stone (8th), clashing rocks (9th)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stone Spirit ~ Touch of Acid|PREVARGTEQ:ShamanWanderingSpiritBase,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stone Spirit ~ Body of Earth|PREVARGTEQ:ShamanWanderingSpiritGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Stone Spirit ~ Elemental Form|PREVARGTEQ:ShamanWanderingSpiritTrue,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shaman Stone Wandering Hex|ShamanWanderingHexUses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1465,
+    "record_key": "Shaman Wandering Spirit ~ Stone"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

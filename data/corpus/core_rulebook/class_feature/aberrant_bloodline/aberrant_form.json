@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aberrant Bloodline ~ Aberrant Form",
+    "name": "Aberrant Form",
+    "class": "Aberrant Bloodline",
+    "description": "Your body becomes truly unnatural. You are immune to critical hits and sneak attacks. In addition, you gain blindsight with a range of 60 feet and damage reduction 5/--.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant Bloodline ~ Aberrant Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Aberrant Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Extraordinary.Defensive"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Aberrant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Aberrant_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Aberrant_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body becomes truly unnatural. You are immune to critical hits and sneak attacks. In addition, you gain blindsight with a range of 60 feet and damage reduction 5/--."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Critical Hits|Immunity to Sneak Attacks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsightRange|60|TYPE=Base"
+      },
+      {
+        "key": "DR",
+        "value": "5/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You are immune to critical hits and sneak attacks."
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AberrantBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2347,
+    "record_key": "Aberrant Bloodline ~ Aberrant Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

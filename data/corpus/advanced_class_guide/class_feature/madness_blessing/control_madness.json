@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Madness Blessing ~ Control Madness",
+    "name": "Control Madness",
+    "class": "Madness Blessing",
+    "description": "As a swift action you can choose one behavior for all confused creatures within 30 feet to exhibit (as if all creatures rolled the same result). This effect lasts for 1 round. You can use this ability even while you are confused.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Madness Blessing ~ Control Madness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action you can choose one behavior for all confused creatures within 30 feet to exhibit (as if all creatures rolled the same result). This effect lasts for 1 round. You can use this ability even while you are confused."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2264,
+    "record_key": "Madness Blessing ~ Control Madness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

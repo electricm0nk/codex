@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hexcrafter ~ Hex Arcana",
+    "name": "Hex Arcana",
+    "class": "Hexcrafter",
+    "description": "You gain access to the Accursed Strike magus arcana, or may select any witch hex in place of a magus arcana. You cannot select any hex or arcana more than once.|!PRECLASS:1,Magus=12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hexcrafter ~ Hex Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Magus Arcana"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusArcanaLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Magus_Arcana|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusArcanaLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanaQualifyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain access to the Accursed Strike magus arcana, or may select any witch hex in place of a magus arcana. You cannot select any hex or arcana more than once.|!PRECLASS:1,Magus=12"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain access to the Accursed Strike magus arcana, or may select any witch hex or major hex in place of a magus arcana. You cannot select any hex or arcana more than once.|PREMULT:2,[PRECLASS:1,Magus=12],[!PRECLASS:1,Magus=18]"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain access to the Accursed Strike magus arcana, or may select any witch hex, major hex, or grand hex in place of a magus arcana. You cannot select any hex or arcana more than once.|PRECLASS:1,Magus=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|MagusArcanaLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArcanaLVL|MagusLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanaQualifyLVL|MagusLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchMajorHexQualify|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchGrandHexQualify|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchMajorHexQualify|(MagusLVL>=10)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchGrandHexQualify|(MagusLVL>=18)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1312,
+    "record_key": "Hexcrafter ~ Hex Arcana"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

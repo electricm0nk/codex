@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Herbalist",
+    "name": "Herbalist",
+    "class": "Alchemist Archetype",
+    "description": "Vine leshys who study the physical and spiritual composition of their own bodies have discovered a strange herbal alchemy all their own.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Herbalist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Herbalist],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Alchemy=True,Alchemist_Archetype_ThrowAnything=True,Alchemist_Archetype_Bomb=True,Alchemist_Archetype_PoisonResistance=True,Alchemist_Archetype_PoisonUse=True,Alchemist_Archetype_PoisonImmunity=True]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Vine Leshy"
+      },
+      {
+        "key": "DESC",
+        "value": "Vine leshys who study the physical and spiritual composition of their own bodies have discovered a strange herbal alchemy all their own."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Herbalist ~ Herbalism|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Herbalist ~ Natural Magic|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Herbalist ~ Seedpods|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 120,
+    "record_key": "Alchemist Archetype ~ Herbalist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

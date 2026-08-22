@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Boar Shaman",
+    "name": "Boar Shaman",
+    "class": "Druid Archetype",
+    "description": "A boar shaman chooses the stolid and ferocious boar as her totem. Content to be left alone, she becomes one of the most dangerous creatures of the wild when provoked.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Boar Shaman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype.DruidThousandFaces.DruidVenomImmunity.DruidNatureBond"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Boar Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces,TYPE.DruidNatureBond]"
+      },
+      {
+        "key": "DESC",
+        "value": "A boar shaman chooses the stolid and ferocious boar as her totem. Content to be left alone, she becomes one of the most dangerous creatures of the wild when provoked."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Boar Shaman ~ Nature Bond|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Boar Shaman ~ Wild Empathy|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Boar Shaman ~ Totem Transformation|PRECLASS:1,Druid=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Boar Shaman ~ Totemic Summons|PRECLASS:1,Druid=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Boar Shaman ~ Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Boar Shaman ~ Bonus Feat|PRECLASS:1,Druid=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Druid ~ Wild Shape|Shaman Druid Wild Shape|Shaman Druid Wild Shape Progression|Shaman Druid Wild Shape Times|Shaman Wild Shape|PRECLASS:1,Druid=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanDruidWildShape|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanDruidWildShape|classlevel(\"Druid\")"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Druid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 617,
+    "record_key": "Druid Archetype ~ Boar Shaman"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

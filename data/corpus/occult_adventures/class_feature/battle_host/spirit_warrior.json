@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Host ~ Spirit Warrior",
+    "name": "Spirit Warrior",
+    "class": "Occultist",
+    "description": "At 5th level, a battle host can call forth the spirit of a dead warrior who once owned his bonded item. Calling the spirit is a standard action, and unlike the use of most spell-like abilities, it doesn't provoke an attack of opportunity. This ability functions as spiritual ally (Pathfinder RPG Advanced Player's Guide 246), using the battle host's occultist level as his caster level and his Intelligence modifier instead of his Wisdom modifier to determine the spell's effects. The battle host can summon a spirit warrior once per day at 5th level, plus one additional time per day for every 4 occultist levels he possesses beyond 5th. This ability replaces aura sight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Host ~ Spirit Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Battle Host Class Feature.Occultist Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, a battle host can call forth the spirit of a dead warrior who once owned his bonded item. Calling the spirit is a standard action, and unlike the use of most spell-like abilities, it doesn't provoke an attack of opportunity. This ability functions as spiritual ally (Pathfinder RPG Advanced Player's Guide 246), using the battle host's occultist level as his caster level and his Intelligence modifier instead of his Wisdom modifier to determine the spell's effects. The battle host can summon a spirit warrior once per day at 5th level, plus one additional time per day for every 4 occultist levels he possesses beyond 5th. This ability replaces aura sight."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1530,
+    "record_key": "Battle Host ~ Spirit Warrior"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

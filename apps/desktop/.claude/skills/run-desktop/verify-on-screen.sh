@@ -95,7 +95,20 @@ fi
 # the screen's own "N matching <noun>." line, used to prove the filter
 # actually applied (see the filtered-count gate below).
 case "$FAMILY" in
-  equipment)  HUB_X=578;  HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Equipment Catalog"; MATCH_WORD="matching" ;;
+  equipment)  HUB_X=578;  HUB_Y=930; SEARCH_Y=327; SCREEN_MARKER="Equipment Catalog"; MATCH_WORD="matching" ;;
+  # SEARCH_Y CALIBRATED LIVE 2026-08-15 (SD-31 `SD31-E6-F5-001`), 285 -> 327.
+  # 285 was the race_trait/monster-era guess and never driven for equipment
+  # specifically. Verified against a live screenshot of the running app: the
+  # equipment screen carries THREE chip rows above the search box, not the
+  # one-or-two other families have -- two book-chip rows (13 book codes
+  # wrap to 2 lines on a 1920px window) PLUS a category-chip row
+  # (All/Arms & Armor/General/Magic Items/Equipment Mods) unique to this
+  # family. At y=285 the click landed on the category-chip row instead
+  # (visibly re-selecting "Magic Items"), never on the search input below
+  # it, so the query never applied and every prior equipment on-screen
+  # check would have reported the unfiltered full-catalog row count as a
+  # false "filter did not apply" failure. Real search box measured at
+  # y=326-327 on a fresh screenshot.
   # SEARCH_Y CALIBRATED LIVE 2026-08-13 (SD-32 `ground-spell-units`), 285 -> 311.
   # 285 was set by analogy with `race_trait` and never driven — the deferral
   # recorded at `docs/retro/events/item8-harness.jsonl` ("equipment and spell

@@ -1,25 +1,111 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You bring forth a great feast, including a magnificent table, chairs, service, and food and drink. The feast takes 1 hour to consume, and the beneficial effects do not set in until this hour is over. Every creature partaking of the feast is cured of all sickness and nausea, receives the benefits of both neutralize poison and remove disease, and gains 1d8 temporary hit points + 1 point per two caster levels [maximum +10] after imbibing the nectar-like beverage that is part of the feast. The ambrosial food grants each creature that partakes a +1 morale bonus on attack rolls and Will saves and a +4 morale bonus on saving throws against poison and fear effects for 12 hours. If the feast is interrupted for any reason, the spell is ruined and all effects of the spell are negated.",
     "key": "Heroes' Feast",
-    "school": "Conjuration",
     "level": 6,
-    "description": "You bring forth a great feast, including a magnificent table, chairs, service, and food and drink. The feast takes 1 hour to consume, and the beneficial effects do not set in until this hour is over. Every creature partaking of the feast is cured of all sickness and nausea, receives the benefits of both neutralize poison and remove disease, and gains 1d8 temporary hit points + 1 point per two caster levels [maximum +10] after imbibing the nectar-like beverage that is part of the feast. The ambrosial food grants each creature that partakes a +1 morale bonus on attack rolls and Will saves and a +4 morale bonus on saving throws against poison and fear effects for 12 hours. If the feast is interrupted for any reason, the spell is ruined and all effects of the spell are negated."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Cleric=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You bring forth a great feast, including a magnificent table, chairs, service, and food and drink. The feast takes 1 hour to consume, and the beneficial effects do not set in until this hour is over. Every creature partaking of the feast is cured of all sickness and nausea, receives the benefits of both neutralize poison and remove disease, and gains 1d8 temporary hit points + 1 point per two caster levels [maximum +10] after imbibing the nectar-like beverage that is part of the feast. The ambrosial food grants each creature that partakes a +1 morale bonus on attack rolls and Will saves and a +4 morale bonus on saving throws against poison and fear effects for 12 hours. If the feast is interrupted for any reason, the spell is ruined and all effects of the spell are negated.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You bring forth a great feast, including a magnificent table, chairs, service, and food and drink.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Creation"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Community=6"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 hour plus 12 hours; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/heroesFeast.html#_heroes-feast"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Feast for (CASTERLEVEL) creatures"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|TOHIT|1|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|HP|CURRENTMAX|%CHOICE|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|Will|1|TYPE=Morale"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants 1d8 + 1/2 the casters level (max 10) of bonus hit points"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=2|MAX=18|TITLE=Choose number of bonus hp."
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 294,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1051,
-    "record_key": "Heroes' Feast.MOD"
+    "record_key": "Heroes' Feast",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

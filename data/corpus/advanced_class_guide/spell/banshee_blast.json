@@ -1,27 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Banshee Blast",
-    "school": "Necromancy",
-    "level": 6,
     "description": "You create a cone of spectral energy resembling screaming elven ghosts that deals 1d4 points of damage per caster level (maximum 15d4); a successful Reflex save halves this damage. Any creature that fails its Reflex save must succeed at a Will save or become panicked for 1 round/level.",
-    "full_text": true
+    "full_text": true,
+    "key": "Banshee Blast",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Cone deals 1d4 per level and panics creatures.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a cone of spectral energy resembling screaming elven ghosts that deals 1d4 points of damage per caster level (maximum 15d4); a successful Reflex save halves this damage. Any creature that fails its Reflex save must succeed at a Will save or become panicked for 1 round/level.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Death|Fear|Mind-Affecting|Sonic"
+      },
+      {
+        "key": "DURATION",
+        "value": "instantaneous and (CASTERLEVEL) rounds [see text]"
+      },
+      {
+        "key": "RANGE",
+        "value": "30 Ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex half and Will negates (see text)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/bansheeBlast.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Area cone-shaped burst"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 23,
-    "record_key": "Banshee Blast"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Banshee Blast",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

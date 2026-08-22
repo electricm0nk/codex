@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brazen Disciple ~ Genie Apotheosis",
+    "name": "Genie Apotheosis",
+    "class": "Monk",
+    "description": "A brazen disciple is treated as a native outsider with the fire subtype rather than as a humanoid (or whatever the monk's creature type was) for the purpose of spells and magical effects. He has immunity to fire and vulnerability to cold. Once per day, the brazen disciple can grant a limited wish (as per the spell limited wish) to a non-outsider as a spell-like ability (CL 20th).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brazen Disciple ~ Genie Apotheosis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.BrazenDiscipleClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "DESC",
+        "value": "A brazen disciple is treated as a native outsider with the fire subtype rather than as a humanoid (or whatever the monk's creature type was) for the purpose of spells and magical effects. He has immunity to fire and vulnerability to cold. Once per day, the brazen disciple can grant a limited wish (as per the spell limited wish) to a non-outsider as a spell-like ability (CL 20th)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire|Vulnerability to Cold"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 932,
+    "record_key": "Brazen Disciple ~ Genie Apotheosis"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

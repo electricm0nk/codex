@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Battle Mystery ~ War Sight",
+    "name": "War Sight",
+    "class": "Battle Mystery",
+    "description": "You roll twice for initiative and take either result.|!PRECLASS:1,Oracle=15",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Mystery ~ War Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.BattleRevelation.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You roll twice for initiative and take either result.|!PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You can always act in the surprise round, but if you fail to notice the ambush, you act last, regardless of your initiative result. (you act in the normal order in following rounds).|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "DESC",
+        "value": "You roll three times for initiative and take any oneof the results.|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 548,
+    "record_key": "Battle Mystery ~ War Sight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

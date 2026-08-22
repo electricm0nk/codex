@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forest Preserver ~ Sacred Botany",
+    "name": "Sacred Botany",
+    "class": "Paladin",
+    "description": "A forest preserver adds the following spells to her spell list: 1st-detect animals or plants, entangle, goodberry, shillelagh; 2nd-barkskin, eagle eye, tree shape, warp wood, wood shape; 3rd-diminish plants, plant growth, snare, speak with plants, spike growth; 4th-antiplant shell, awaken (trees only), blight, command plants, commune with nature, thorn body, tree stride, wall of thorns. In addition, she treats her caster level as 1 higher when casting these spells in her favored terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forest Preserver ~ Sacred Botany"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.ForestPreserverClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A forest preserver adds the following spells to her spell list: 1st-detect animals or plants, entangle, goodberry, shillelagh; 2nd-barkskin, eagle eye, tree shape, warp wood, wood shape; 3rd-diminish plants, plant growth, snare, speak with plants, spike growth; 4th-antiplant shell, awaken (trees only), blight, command plants, commune with nature, thorn body, tree stride, wall of thorns. In addition, she treats her caster level as 1 higher when casting these spells in her favored terrain."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=1|Detect Animals or Plants,Entangle,Goodberry,Shillelagh"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=2|Barkskin,Eagle Eye,Tree Shape,Warp Wood,Wood Shape"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=3|Diminish Plants,Plant Growth,Snare,Speak with Plants,Spike Growth"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=4|Antiplant Shell,Awaken (trees only),Blight,Command Plants,Commune with Nature,Thorn Body,Tree Stride,Wall of Thorns"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 871,
+    "record_key": "Forest Preserver ~ Sacred Botany"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

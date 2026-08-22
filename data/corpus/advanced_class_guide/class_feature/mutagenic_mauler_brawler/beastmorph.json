@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mutagenic Mauler Brawler ~ Beastmorph",
+    "name": "Beastmorph",
+    "class": "Brawler",
+    "description": "A mutagenic mauler gains additional abilities when using her mutagen. She gains low-light vision and a +%1 enhancement bonus to her base speed.|BeastmorphSpeed|PREVAREQ:BeastmorphProgression,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutagenic Mauler Brawler ~ Beastmorph"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Feature.Mutagenic Mauler Class Feature.Supernatural.BrawlerACBonus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BeastmorphProgression|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BeastmorphLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BeastmorphSpeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BeastmorphClimbSpeed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A mutagenic mauler gains additional abilities when using her mutagen. She gains low-light vision and a +%1 enhancement bonus to her base speed.|BeastmorphSpeed|PREVAREQ:BeastmorphProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A mutagenic mauler gains additional abilities when using her mutagen. She gains low-light vision, darkvision to a range of 30 feet, a +%1 enhancement bonus to her base speed and a climb speed of %2.|BeastmorphSpeed|BeastmorphClimbSpeed|PREVAREQ:BeastmorphProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "A mutagenic mauler gains additional abilities when using her mutagen. She gains low-light vision, darkvision to a range of 30 feet, the scent ability within 30 feet, a +%1 enhancement bonus to her base speed and a climb speed of %2.|BeastmorphSpeed|BeastmorphClimbSpeed|PREVARGTEQ:BeastmorphProgression,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastmorphLVL|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastmorphProgression|(BeastmorphLVL>3)+(BeastmophLVL>8)+(BeastmorphLVL>12)+(BeastmorphLVL>17)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastmorphSpeed|5*BeastmorphProgression+5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastmorphSpeed|-5|PREVARGTEQ:BeastmorphProgression,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BeastmorphClimbSpeed|BeastmorphProgression/2*15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2867,
+    "record_key": "Mutagenic Mauler Brawler ~ Beastmorph"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

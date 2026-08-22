@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Hunter ~ Extraplanar Expulsion",
+    "name": "Extraplanar Expulsion",
+    "class": "Investigator",
+    "description": "A cult hunter can grant himself the ability to use dispel chaos, dispel evil, dispel good, or dispel law as a spell-like ability (using his investigator level as his caster level and his Intelligence to determine the DCs) by sacrificing an unused 5th- or 6th-level extract for the day. He is able to use this ability as many times as he likes, but only so long as he continues to have unused 5th- or 6th-level extract slots to expend.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Hunter ~ Extraplanar Expulsion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult hunter can grant himself the ability to use dispel chaos, dispel evil, dispel good, or dispel law as a spell-like ability (using his investigator level as his caster level and his Intelligence to determine the DCs) by sacrificing an unused 5th- or 6th-level extract for the day. He is able to use this ability as many times as he likes, but only so long as he continues to have unused 5th- or 6th-level extract slots to expend."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 165,
+    "record_key": "Cult Hunter ~ Extraplanar Expulsion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

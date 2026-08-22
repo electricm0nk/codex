@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Owl ~ Major",
+    "name": "Major Aspect of the Owl",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Owl ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Owl_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OwlAspectDarkvision|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of a"
+      },
+      {
+        "key": "DESC",
+        "value": "Medium|PREVARLT:ShifterOwlAspectLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "Large|PREVARGTEQ:ShifterOwlAspectLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "owl (see page 181). While in this form, you gain two talon attacks (1d6 damage), darkvision with a range of %1 feet, a +2 racial bonus on Stealth checks, and a fly speed of 60 feet (average).|OwlAspectDarkvision"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Flyby Attack (Bestiary p315) as a bonus feat.|PREVARGTEQ:ShifterOwlAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the benefits of the Snatch feat (Bestiary p316), but you can use it only to grab a creature at least one size category smaller than yourself, and you can squeeze a creature grappled with this ability no matter what size it is.|PREVARGTEQ:ShifterOwlAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OwlAspectDarkvision|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OwlAspectDarkvision|60|PREVARGTEQ:ShifterOwlAspectLVL,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 83,
+    "record_key": "Shifter Aspect ~ Owl ~ Major"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

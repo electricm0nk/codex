@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Cutting Remark",
+    "name": "Cutting Remark",
+    "class": "Bard",
+    "description": "A wit can wound with his words. The wit can spend 1 round of bardic performance as a standard action to deal 1d4+%1 points of nonlethal damage to a creature within 30 feet. Damage reduction applies to this damage.|BardLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Cutting Remark"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "A wit can wound with his words. The wit can spend 1 round of bardic performance as a standard action to deal 1d4+%1 points of nonlethal damage to a creature within 30 feet. Damage reduction applies to this damage.|BardLVL"
+      },
+      {
+        "key": "DESC",
+        "value": " A target who takes damage from cutting remark is also sickened for as long as it remains within 30 feet of the wit and for 1 round thereafter. Additionally, the nonlethal damage counts as magic for purposes such as overcoming damage reduction.|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "DESC",
+        "value": " A target who takes damage from cutting remark must also succeed at a Will save (DC %1) or be dazed for 1 round. A creature that makes a successful save is immune to the dazing effect of the wit's cutting remark for 24 hours.|10+BardLVL/2+CHA|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "DESC",
+        "value": " Cutting remark is a mind-affecting, language-dependent effect, and relies on audible components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 262,
+    "record_key": "Bardic Performance ~ Cutting Remark"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

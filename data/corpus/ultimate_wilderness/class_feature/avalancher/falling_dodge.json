@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Avalancher ~ Falling Dodge",
+    "name": "Falling Dodge",
+    "class": "Slayer",
+    "description": "An avalancher gains his bonus to AC from the falling strike ability when a jump or fall carries him through threatened squares. This bonus applies only when he's jumping, not when he's using Acrobatics to try to avoid attacks of opportunity from moving through threatened squares.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avalancher ~ Falling Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.AvalancherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An avalancher gains his bonus to AC from the falling strike ability when a jump or fall carries him through threatened squares. This bonus applies only when he's jumping, not when he's using Acrobatics to try to avoid attacks of opportunity from moving through threatened squares."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1151,
+    "record_key": "Avalancher ~ Falling Dodge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

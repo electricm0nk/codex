@@ -34,16 +34,49 @@ Files are located by recursive glob under ``$PCGEN_CORPUS_ROOT`` (default
 import argparse
 import glob
 import os
+import re
 import sys
 
-# The 18 races the product models (`ingest_race_traits::IN_SCOPE_RACES`,
-# SD-27 `decisions.md §25.3`). A trait of any other race cannot ground: the
-# resolver returns None without a chassis, whatever the ingest writes.
-IN_SCOPE_RACES = [
-    "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling", "Human",
-    "Aasimar", "Drow", "Duergar", "Goblin", "Hobgoblin", "Kobold", "Merfolk",
-    "Orc", "Svirfneblin", "Tengu", "Tiefling",
-]
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def read_in_scope_races(repo_root=REPO_ROOT):
+    """The race roster this screen checks rows against, read off
+    `ingest_race_traits.rs`'s own `IN_SCOPE_RACES` declaration.
+
+    SD-31 wave-21 correction: this list was hand-transcribed and re-synced
+    ONCE by hand (SD-27 §25.3's original 18, widened 18 -> 24 by SD-31
+    Epic 1-F2, then re-synced 24 -> 30 at SD-31-E6-F4-003 on 2026-08-16) --
+    and was already stale again the moment SD31-E6-F4-006's four-race
+    follow-on batch (30 -> 34) landed without ever touching this file.
+    Reading the declaration instead of re-copying it closes the recurring
+    drift rather than fixing one more snapshot of it (see
+    `race_trait_ceiling.py`'s identical fix, same wave, same root cause).
+
+    Same "unreadable declaration -> empty set, never a stale guess"
+    contract as that sibling fix and `v06_work_inventory::
+    app_race_corpus_books`: an empty roster makes every row report
+    out-of-scope, the safe direction for a pre-ingest screening tool.
+    """
+    path = os.path.join(repo_root, "src", "bin", "ingest_race_traits.rs")
+    try:
+        with open(path, encoding="utf-8") as handle:
+            src = handle.read()
+    except OSError:
+        return []
+    marker = "const IN_SCOPE_RACES:"
+    start = src.find(marker)
+    if start == -1:
+        return []
+    end = src.find("];", start)
+    if end == -1:
+        return []
+    return re.findall(r'"([^"]+)"', src[start:end])
+
+
+# A trait of any race not in this list cannot ground: the resolver returns
+# None without a chassis, whatever the ingest writes.
+IN_SCOPE_RACES = read_in_scope_races()
 RACIAL_TRAIT_SUFFIX = " Racial Trait"
 RACIAL_DEFAULT_SUFFIX = " Racial Default"
 

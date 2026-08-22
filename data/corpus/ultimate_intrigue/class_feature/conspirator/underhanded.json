@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Conspirator ~ Underhanded",
+    "name": "Underhanded",
+    "class": "Investigator",
+    "description": "Conspirators find their skill sets firmly aligned with the goals of the criminal underworld. A conspirator can use inspiration on any Bluff, Disable Device, Disguise, Intimidate, and Sleight of Hand check without expending a use of inspiration, provided he is trained in the skill, instead of on any Knowledge, Linguistics, and Spellcraft check. He can later choose to trade an investigator talent for the ability to use inspiration on any Knowledge, Linguistics, and Spellcraft check without expending a use of inspirtation, provided he is trained in the skill. A conspirator adds +%1 on Bluff checks to appear innocent and on Disguise checks. This ability alters inspiration.|ConspiratorUnderhandedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conspirator ~ Underhanded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.ConspiratorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ConspiratorUnderhandedBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Conspirators find their skill sets firmly aligned with the goals of the criminal underworld. A conspirator can use inspiration on any Bluff, Disable Device, Disguise, Intimidate, and Sleight of Hand check without expending a use of inspiration, provided he is trained in the skill, instead of on any Knowledge, Linguistics, and Spellcraft check. He can later choose to trade an investigator talent for the ability to use inspiration on any Knowledge, Linguistics, and Spellcraft check without expending a use of inspirtation, provided he is trained in the skill. A conspirator adds +%1 on Bluff checks to appear innocent and on Disguise checks. This ability alters inspiration.|ConspiratorUnderhandedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Appear Innocent|ConspiratorUnderhandedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|ConspiratorUnderhandedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConspiratorUnderhandedBonus|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 510,
+    "record_key": "Conspirator ~ Underhanded"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

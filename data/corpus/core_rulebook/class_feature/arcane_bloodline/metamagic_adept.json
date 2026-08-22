@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Bloodline ~ Metamagic Adept",
+    "name": "Metamagic Adept",
+    "class": "Arcane Bloodline",
+    "description": "You can apply any one metamagic feat you know to a spell you are about to cast without increasing the casting time. You must still expend a higher-level spell slot to cast this spell. You can use this ability %1 times per day.|Sorcerer_ArcaneMetamagicAdept_Times",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Bloodline ~ Metamagic Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Arcane Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Arcane"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Arcane_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Arcane_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_ArcaneMetamagicAdept_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can apply any one metamagic feat you know to a spell you are about to cast without increasing the casting time. You must still expend a higher-level spell slot to cast this spell. You can use this ability %1 times per day.|Sorcerer_ArcaneMetamagicAdept_Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_ArcaneMetamagicAdept_Times|floor((Sorcerer_Arcane_BloodlinePower3LVL+1)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|Sorcerer_ArcaneMetamagicAdept_Times|!PREABILITY:1,CATEGORY=Special Ability,Arcane Bloodline ~ Arcane Apotheosis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_ArcaneMetamagicAdept_Times|!PREABILITY:1,CATEGORY=Special Ability,Arcane Bloodline ~ Arcane Apotheosis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day|!PREABILITY:1,CATEGORY=Special Ability,Arcane Bloodline ~ Arcane Apotheosis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|ArcaneBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2380,
+    "record_key": "Arcane Bloodline ~ Metamagic Adept"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

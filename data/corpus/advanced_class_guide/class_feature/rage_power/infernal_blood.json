@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Infernal Blood",
+    "name": "Infernal Blood",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains fire resistance 5, as well as a +2 bonus on saving throws against poison.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Infernal Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RagePower.SpecialQuality.Supernatural.BloodRageMiddle"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Rage Power ~ Infernal Blood (Lesser)"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,6"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE.BloodRageMiddle],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Infernal Blood]"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains fire resistance 5, as well as a +2 bonus on saving throws against poison."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2673,
+    "record_key": "Rage Power ~ Infernal Blood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

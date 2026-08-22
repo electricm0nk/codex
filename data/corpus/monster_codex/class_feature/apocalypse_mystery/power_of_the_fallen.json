@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Apocalypse Mystery ~ Power of the Fallen",
+    "name": "Power of the Fallen",
+    "class": "Apocalypse Mystery",
+    "description": "You can touch a dying creature and channel its life energy into another living creature. This ability acts as death knell, except you can choose any ally (including yourself) within 30 feet to gain the benefit of this effect, and you can apply the +2 enhancement bonus to either Strength, Dexterity, or Constitution. You can use this ability %1 times per day.|CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Apocalypse Mystery ~ Power of the Fallen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.SpellLike.RevelationTargetOneOnly.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a dying creature and channel its life energy into another living creature. This ability acts as death knell, except you can choose any ally (including yourself) within 30 feet to gain the benefit of this effect, and you can apply the +2 enhancement bonus to either Strength, Dexterity, or Constitution. You can use this ability %1 times per day.|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 103,
+    "record_key": "Apocalypse Mystery ~ Power of the Fallen"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

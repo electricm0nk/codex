@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Clustered Shots",
+    "name": "Clustered Shots",
+    "class": "Warpriest Bonus Feat",
+    "description": "You take a moment to carefully aim your shots, causing them all to strike nearly the same spot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Clustered Shots"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Point-Blank Shot,Precise Shot"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "You take a moment to carefully aim your shots, causing them all to strike nearly the same spot."
+      },
+      {
+        "key": "DESC",
+        "value": " When you use a full-attack action to make multiple ranged weapon attacks against the same opponent, total the damage from all hits before applying that opponent's damage reduction. &nl; [Special]If the massive damage optional rule is being used (Core Rulebook 189), that rule applies if the total damage you deal with this feat is equal to or exceeds half the opponent's full normal hit points (minimum 50 points of damage)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Clustered Shots"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4412,
+    "record_key": "Warpriest Bonus Feat ~ Clustered Shots"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

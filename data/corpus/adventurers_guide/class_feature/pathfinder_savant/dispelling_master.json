@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Dispelling Master",
+    "name": "Dispelling Master",
+    "class": "Pathfinder Savant",
+    "description": "You can spontaneously convert any prepared spell into dispel magic or greater dispel magic as a cleric converts prepared spells into cure spells.|PRESPELLCAST:MEMORIZE=Y",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Dispelling Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spontaneously convert any prepared spell into dispel magic or greater dispel magic as a cleric converts prepared spells into cure spells.|PRESPELLCAST:MEMORIZE=Y"
+      },
+      {
+        "key": "DESC",
+        "value": "You add dispel magic and greater dispel magic to your spells known.|PRESPELLCAST:MEMORIZE=N"
+      },
+      {
+        "key": "DESC",
+        "value": "Every time you successfully use either of these spells to make a targeted dispel or counterspell, you heal hit points equal to the caster level of the effect dispelled or counterspelled."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 408,
+    "record_key": "Pathfinder Savant ~ Dispelling Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

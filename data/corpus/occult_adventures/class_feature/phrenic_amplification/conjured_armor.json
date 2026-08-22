@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phrenic Amplification ~ Conjured Armor",
+    "name": "Conjured Armor",
+    "class": "Phrenic Amplification",
+    "description": "By spending 1 point from her phrenic pool, the psychic grants any creature she conjures or summons with the linked spell a +2 deflection bonus to AC. This bonus lasts for 1 round per caster level or until the creature disappears, whichever comes first. This amplification can be linked only to conjuration (calling) or conjuration (summoning) spells. The bonus increases to +3 at 8th level and to +4 at 15th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Amplification ~ Conjured Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 point from her phrenic pool, the psychic grants any creature she conjures or summons with the linked spell a +2 deflection bonus to AC. This bonus lasts for 1 round per caster level or until the creature disappears, whichever comes first. This amplification can be linked only to conjuration (calling) or conjuration (summoning) spells. The bonus increases to +3 at 8th level and to +4 at 15th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1166,
+    "record_key": "Phrenic Amplification ~ Conjured Armor"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You briefly alter the flow of time to split a melee attack into two attacks. Before the end of your next turn, when you make your next melee attack roll, compare the result to the AC of two opponents within your reach. If the selected opponents are flanking you, you gain a +2 bonus on your attack roll (and confirmation attack roll, see below). If you hit both enemies, you can deal half damage to each. Hitting only one opponent allows you to deal that opponent normal damage for your attack. On a critical threat, you can make only one attack roll to confirm the critical hit against both opponents. If you confirm against both, you deal half your critical hit damage to each. Your hit is a normal hit rather than a critical if you confirm against only one opponent. If you fail to use the effect before the end of your next turn, the spell ends.",
+    "key": "Mirror Strike",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Magus,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "You briefly alter the flow of time to split a melee attack into two attacks. Before the end of your next turn, when you make your next melee attack roll, compare the result to the AC of two opponents within your reach. If the selected opponents are flanking you, you gain a +2 bonus on your attack roll (and confirmation attack roll, see below). If you hit both enemies, you can deal half damage to each. Hitting only one opponent allows you to deal that opponent normal damage for your attack. On a critical threat, you can make only one attack roll to confirm the critical hit against both opponents. If you confirm against both, you deal half your critical hit damage to each. Your hit is a normal hit rather than a critical if you confirm against only one opponent. If you fail to use the effect before the end of your next turn, the spell ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You may strike multiple opponents with a single attack.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "see text"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a shard of mirror)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/mirrorStrike.html#_mirror-strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 87,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Mirror Strike",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

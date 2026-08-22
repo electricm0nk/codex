@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Geist Channeler ~ Spiritual Manifestation",
+    "name": "Spiritual Manifestation",
+    "class": "Spiritualist",
+    "description": "Because of the nature of her phantom, a geist channeler can use the bonded manifestation ability to manifest his phantom only in incorporeal form. This ability alters bonded manifestation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geist Channeler ~ Spiritual Manifestation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Geist Channeler Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Because of the nature of her phantom, a geist channeler can use the bonded manifestation ability to manifest his phantom only in incorporeal form. This ability alters bonded manifestation."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1633,
+    "record_key": "Geist Channeler ~ Spiritual Manifestation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,137 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter ~ Weapon Training",
+    "name": "Weapon Training",
+    "class": "Fighter",
+    "description": "Attacks with a weapon from listed groups, gain a bonus on attack and damage rolls. (Included in weapon blocks)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter ~ Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingBase|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FighterWeaponTrainingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Attacks with a weapon from listed groups, gain a bonus on attack and damage rolls. (Included in weapon blocks)"
+      },
+      {
+        "key": "DESC",
+        "value": "Axes +%1|WeaponTrainingAxes|PREVARGT:WeaponTrainingAxes,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heavy Blades +%1|WeaponTrainingBladesHeavy|PREVARGT:WeaponTrainingBladesHeavy,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Light Blades +%1|WeaponTrainingBladesLight|PREVARGT:WeaponTrainingBladesLight,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bows +%1|WeaponTrainingBows|PREVARGT:WeaponTrainingBows,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Close Weapons +%1|WeaponTrainingClose|PREVARGT:WeaponTrainingClose,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Crossbows +%1|WeaponTrainingCrossbows|PREVARGT:WeaponTrainingCrossbows,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Double Weapons +%1|WeaponTrainingDouble|PREVARGT:WeaponTrainingDouble,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Flails +%1|WeaponTrainingFlails|PREVARGT:WeaponTrainingFlails,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Hammers +%1|WeaponTrainingHammers|PREVARGT:WeaponTrainingHammers,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Monk Weapons +%1|WeaponTrainingMonk|PREVARGT:WeaponTrainingMonk,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Natural Weapons +%1|WeaponTrainingNatural|PREVARGT:WeaponTrainingNatural,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Pole Arms +%1|WeaponTrainingPoleArms|PREVARGT:WeaponTrainingPoleArms,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spears +%1|WeaponTrainingSpears|PREVARGT:WeaponTrainingSpears,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Thrown Weapons +%1|WeaponTrainingThrown|PREVARGT:WeaponTrainingThrown,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training I|1|PREVARGTEQ:FighterWeaponTrainingLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training II|1|PREVARGTEQ:FighterWeaponTrainingLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training III|1|PREVARGTEQ:FighterWeaponTrainingLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training IV|1|PREVARGTEQ:FighterWeaponTrainingLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBase|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 931,
+    "record_key": "Fighter ~ Weapon Training"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

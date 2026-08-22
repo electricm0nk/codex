@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Transmutation Savant School ~ Change Shape",
+    "name": "Change Shape",
+    "class": "Transmutation Savant School",
+    "description": "You can change your shape for %1 rounds per day. These rounds do not need to be consecutive.|TransmutationChangeShapeRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Transmutation Savant School ~ Change Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationChangeShapeRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change your shape for %1 rounds per day. These rounds do not need to be consecutive.|TransmutationChangeShapeRounds"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability otherwise functions like Beast Shape II or Elemental Body I.|PREVARLT:ArcanistSavantSchoolLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability otherwise functions like Beast Shape III or elemental body II.|PREVARGTEQ:ArcanistSavantSchoolLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationChangeShapeRounds|ArcanistSavantSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TransmutationChangeShapeRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2581,
+    "record_key": "Transmutation Savant School ~ Change Shape"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guardian of Immortality ~ Desert Survivor",
+    "name": "Desert Survivor",
+    "class": "Investigator",
+    "description": "A guardian of immortality is trained by the druids of Duwwor to survive the hazards of the desert. He gains Endurance as a bonus feat and does not treat sand as difficult terrain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guardian of Immortality ~ Desert Survivor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.GuardianOfImmortalityClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guardian of immortality is trained by the druids of Duwwor to survive the hazards of the desert. He gains Endurance as a bonus feat and does not treat sand as difficult terrain."
+      },
+      {
+        "key": "DESC",
+        "value": "He gains resist fire 10.|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "DESC",
+        "value": "He can see twice as far in sandstorms, clouds, and fog, and whenever he gains an advantage in a desert tile during a pursuit (Ultimate Intrigue 142), he gains an additional advantage.|PRECLASS:1,Investigator=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Endurance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 137,
+    "record_key": "Guardian of Immortality ~ Desert Survivor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

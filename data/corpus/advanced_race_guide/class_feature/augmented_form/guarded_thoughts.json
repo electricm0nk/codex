@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Augmented Form ~ Guarded Thoughts",
+    "name": "Guarded Thoughts",
+    "class": "Augmented Form",
+    "description": "The druid gains a +2 racial bonus on saves against charm effects and immunity to any form of mind reading (such as detect thoughts).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Augmented Form ~ Guarded Thoughts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary.AugmentedFormSelection"
+      },
+      {
+        "key": "DESC",
+        "value": "The druid gains a +2 racial bonus on saves against charm effects and immunity to any form of mind reading (such as detect thoughts)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 vs Charm"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 926,
+    "record_key": "Augmented Form ~ Guarded Thoughts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

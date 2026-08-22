@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blossoming Light ~ Luminous Font",
+    "name": "Luminous Font",
+    "class": "Cleric",
+    "description": "A blossoming light forsakes her deity's deeper mysteries to focus on benevolence, healing, and bringing light to darkness. A blossoming light still selects domains and retains access to domain powers, but does not gain domain spell slots [NOT CURRENTLY IMPLEMENTED]. Blossoming lights are beacons of goodness, guiding others to follow their own best natures. A blossoming light adds half her level on Diplomacy checks against good creatures or to convince an evil creature to take an action against its evil nature. A blossoming light's channel energy is usable %1 times per day.|ClericChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blossoming Light ~ Luminous Font"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Feature.BlossomingLightClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "DESC",
+        "value": "A blossoming light forsakes her deity's deeper mysteries to focus on benevolence, healing, and bringing light to darkness. A blossoming light still selects domains and retains access to domain powers, but does not gain domain spell slots [NOT CURRENTLY IMPLEMENTED]. Blossoming lights are beacons of goodness, guiding others to follow their own best natures. A blossoming light adds half her level on Diplomacy checks against good creatures or to convince an evil creature to take an action against its evil nature. A blossoming light's channel energy is usable %1 times per day.|ClericChannelEnergyTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "When a blossoming light channels energy to harm undead, her channeled energy also harms chaotic evil outsiders, worshipers of chaotic evil deities, and evil creatures with light sensitivity or light blindness as if they were undead.|PRECLASS:1,Cleric=3"
+      },
+      {
+        "key": "DESC",
+        "value": "When a blossoming light channels energy, she can expend an additional use to fill the affected area with bright light (as per daylight) for %1 rounds.|ClericLVL|PRECLASS:1,Cleric=7"
+      },
+      {
+        "key": "DESC",
+        "value": "A blossoming light can use atonement once per day as a spell-like ability, but only to offer redemption to others (as per the spell). Using the spell in this way does not require a focus or material component.|PRECLASS:1,Cleric=7"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability alters channel energy and the cleric's domains. [NOTE; CURRENTLY UNABLE TO REMOVE SPELLS FROM DOMAINS!]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelEnergyTimes|2+ClecricLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 777,
+    "record_key": "Blossoming Light ~ Luminous Font"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

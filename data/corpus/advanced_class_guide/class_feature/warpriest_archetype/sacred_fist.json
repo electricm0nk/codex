@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Sacred Fist",
+    "name": "Sacred Fist",
+    "class": "Warpriest Archetype",
+    "description": "Unlike many warpriests, sacred fists leave behind armor and shield and instead rely on their fists and whatever protection their deity bestows on them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Sacred Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype.WarpriestClassSkills.WarpriestProficiency.WarpriestSacredWeapon.WarpriestFocusWeapon.WarpriestBonusFeat3.WarpriestBonusFeat6.WarpriestBonusFeat9.WarpriestBonusFeat12.WarpriestBonusFeat18.WarpriestSacredArmor"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Sacred Fist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestClassSkills,TYPE.WarpriestProficiency,TYPE.WarpriestSacredWeapon,TYPE.WarpriestFocusWeapon,TYPE.WarpriestBonusFeat3,TYPE.WarpriestBonusFeat6,TYPE.WarpriestBonusFeat9,TYPE.WarpriestBonusFeat12,TYPE.WarpriestBonusFeat18,TYPE.WarpriestSacredArmor]"
+      },
+      {
+        "key": "DESC",
+        "value": "Unlike many warpriests, sacred fists leave behind armor and shield and instead rely on their fists and whatever protection their deity bestows on them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Class Skills|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Weapon and Armor Proficiency|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ AC Bonus|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Flurry of Blows|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Unarmed Strike|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Blessed Fortitude|PRECLASS:1,Warpriest=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Bonus Style Feat|PRECLASS:1,Warpriest=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Ki Pool|PRECLASS:1,Warpriest=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Sacred Fist ~ Miraculous Fortitude|PRECLASS:1,Warpriest=9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Warpriest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3935,
+    "record_key": "Warpriest Archetype ~ Sacred Fist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

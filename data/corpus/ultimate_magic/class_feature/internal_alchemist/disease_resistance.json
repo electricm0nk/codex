@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Internal Alchemist ~ Disease Resistance",
+    "name": "Disease Resistance",
+    "class": "Alchemist",
+    "description": "You gain a +%1 bonus on all saving throws against disease.|AlchemistPoisonResistanceBonus|!PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Internal Alchemist ~ Disease Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on all saving throws against disease.|AlchemistPoisonResistanceBonus|!PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist"
+      },
+      {
+        "key": "DESC",
+        "value": "You are immune to disease.|PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Disease|PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. disease|AlchemistPoisonResistanceBonus|!PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 866,
+    "record_key": "Internal Alchemist ~ Disease Resistance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

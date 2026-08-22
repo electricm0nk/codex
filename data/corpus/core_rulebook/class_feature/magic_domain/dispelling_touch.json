@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magic Domain ~ Dispelling Touch",
+    "name": "Dispelling Touch",
+    "class": "Magic Domain",
+    "description": "You can use a targeted Dispel Magic effect as a melee touch attack. You can use this ability %1 times per day.|DispellingTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magic Domain ~ Dispelling Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DispellingTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use a targeted Dispel Magic effect as a melee touch attack. You can use this ability %1 times per day.|DispellingTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DispellingTouchTimes|(DomainMagicLVL-4)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|DispellingTouchTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DispellingTouchTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3242,
+    "record_key": "Magic Domain ~ Dispelling Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

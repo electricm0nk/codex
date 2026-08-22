@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Wraith ~ Create Spawn",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "beastiary:monster:wraith"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A humanoid slain by a wraith becomes a wraith in 1d4 rounds. These spawn are less powerful than typical wraiths, and suffer a -2 penalty on all d20 rolls and checks, receive -2 hp per HD, and only drain 1d2 points of Constitution on a touch. Spawn are under the command of the wraith that created them until its death, at which point they lose their spawn penalties and become free-willed wraiths. They do not possess any of the abilities they had in life."
+      },
+      {
+        "key": "KEY",
+        "value": "Wraith ~ Create Spawn"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.281",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1254,
-    "record_key": "Wraith ~ Create Spawn"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1254,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Wraith ~ Create Spawn",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",

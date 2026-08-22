@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Greater Brand Modification ~ Branding Ray",
+    "name": "Branding Ray",
+    "class": "Greater Brand Modification",
+    "description": "The slayer's brand judgment can be used as a ranged touch attack with a range of %1 feet. A kinslayer can take this modification more than once. Whenever she does, she increases the range of her brand by 20 feet.|BrandingRayRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Greater Brand Modification ~ Branding Ray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.GreaterBrand"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Inquisitor Archetype ~ Kinslayer"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrandingRayRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The slayer's brand judgment can be used as a ranged touch attack with a range of %1 feet. A kinslayer can take this modification more than once. Whenever she does, she increases the range of her brand by 20 feet.|BrandingRayRange"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrandingRayRange|20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 483,
+    "record_key": "Greater Brand Modification ~ Branding Ray"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

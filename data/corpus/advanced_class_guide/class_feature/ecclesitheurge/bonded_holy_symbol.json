@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ecclesitheurge ~ Bonded Holy Symbol",
+    "name": "Bonded Holy Symbol",
+    "class": "Cleric",
+    "description": "An ecclesitheurge forms a powerful bond with a holy symbol of his deity, which functions identically to a wizard's bonded object except it can be used to cast cleric and domain spells (instead of wizard spells) and the ecclesitheurge can grant his bonded holy symbol only magic abilities appropriate for a holy symbol or a neck slot item. As with a wizard's bonded item, an ecclesitheurge can add additional magic abilities to his bonded holy symbol as if he had the required item creation feat (typically Craft Wondrous Item), provided he meets the feat's level prerequisites. For example, an ecclesitheurge with a bonded holy symbol who wants to add a wondrous amulet ability, like amulet of natural armor, to his bonded holy symbol must be at least 3rd level to do so. The magic properties of a bonded holy symbol, including any magic abilities the ecclesitheurge added to the object, function for only the ecclesitheurge. If a bonded holy symbol's owner dies or the item is replaced, the object loses all enhancements the ecclesitheurge added using this ability. This ability replaces the increase to channel energy gained at 3rd level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ecclesitheurge ~ Bonded Holy Symbol"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ecclesitheurge Class Feature.Cleric Class Feature.SpecialQuality.Supernatural.ClericChannelEnergy3"
+      },
+      {
+        "key": "DESC",
+        "value": "An ecclesitheurge forms a powerful bond with a holy symbol of his deity, which functions identically to a wizard's bonded object except it can be used to cast cleric and domain spells (instead of wizard spells) and the ecclesitheurge can grant his bonded holy symbol only magic abilities appropriate for a holy symbol or a neck slot item. As with a wizard's bonded item, an ecclesitheurge can add additional magic abilities to his bonded holy symbol as if he had the required item creation feat (typically Craft Wondrous Item), provided he meets the feat's level prerequisites. For example, an ecclesitheurge with a bonded holy symbol who wants to add a wondrous amulet ability, like amulet of natural armor, to his bonded holy symbol must be at least 3rd level to do so. The magic properties of a bonded holy symbol, including any magic abilities the ecclesitheurge added to the object, function for only the ecclesitheurge. If a bonded holy symbol's owner dies or the item is replaced, the object loses all enhancements the ecclesitheurge added using this ability. This ability replaces the increase to channel energy gained at 3rd level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3015,
+    "record_key": "Ecclesitheurge ~ Bonded Holy Symbol"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

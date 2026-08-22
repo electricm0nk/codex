@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Yzobu ~ Stampede",
     "delivery": "Extraordinary",
@@ -13,6 +11,24 @@
     "owners": [
       "monster_codex:companion:companion_yzobu"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A stampede occurs if three or more creatures with stampede make a trample attack while remaining adjacent to each other. While stampeding, the creatures can trample foes of their size or smaller, and the trample's save DC increases by +2."
+      },
+      {
+        "key": "KEY",
+        "value": "Yzobu ~ Stampede"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -21,16 +37,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
-    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff",
-    "line": 11,
-    "record_key": "Yzobu ~ Stampede"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
+    "record_key": "Yzobu ~ Stampede",
+    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

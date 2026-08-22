@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Mighty Ambush",
+    "name": "Mighty Ambush*",
+    "class": "Vigilante Talent",
+    "description": "Once per round, when the vigilante succeeds at a hidden strike, he can instantly drop the damaged enemy unconscious for 1d4 rounds. A successful Fortitude saving throw negates this effect (DC %1). Whether or not a creature's saving throw is successful, it can't be affected by that vigilante's mighty ambush again for 24 hours.|10+VigilanteTalentLVL/2+MAX(STR,DEX)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Mighty Ambush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Mighty Ambush"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsStalker,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, when the vigilante succeeds at a hidden strike, he can instantly drop the damaged enemy unconscious for 1d4 rounds. A successful Fortitude saving throw negates this effect (DC %1). Whether or not a creature's saving throw is successful, it can't be affected by that vigilante's mighty ambush again for 24 hours.|10+VigilanteTalentLVL/2+MAX(STR,DEX)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 92,
+    "record_key": "Vigilante Talent ~ Mighty Ambush"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Visionary ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Shaman",
+    "description": "The visionary gains Diviner's Delving as a bonus feat, even if she does not meet the prerequisites.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Visionary ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Visionary Class Feature.Shaman Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The visionary gains Diviner's Delving as a bonus feat, even if she does not meet the prerequisites."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Diviner's Delving"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3659,
+    "record_key": "Visionary ~ Bonus Feat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

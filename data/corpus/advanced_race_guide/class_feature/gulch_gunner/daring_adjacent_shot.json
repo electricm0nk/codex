@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gulch Gunner ~ Daring Adjacent Shot",
+    "name": "Daring Adjacent Shot",
+    "class": "Gunslinger",
+    "description": "The first time each round the gulch gunner makes a ranged firearm attack against an adjacent foe and provokes an attack of opportunity, she regains 1 grit point. Making an adjacent firearm attack against a helpless or unaware creature or on a creature that has fewer Hit Dice than half the gulch gunner's character level does not restore grit, nor do ranged attacks using some ability that prevents the gulch gunner from provoking an attack of opportunity. This ability replaces the ability to regain grit from a critical hit with a firearm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gulch Gunner ~ Daring Adjacent Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The first time each round the gulch gunner makes a ranged firearm attack against an adjacent foe and provokes an attack of opportunity, she regains 1 grit point. Making an adjacent firearm attack against a helpless or unaware creature or on a creature that has fewer Hit Dice than half the gulch gunner's character level does not restore grit, nor do ranged attacks using some ability that prevents the gulch gunner from provoking an attack of opportunity. This ability replaces the ability to regain grit from a critical hit with a firearm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 702,
+    "record_key": "Gulch Gunner ~ Daring Adjacent Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

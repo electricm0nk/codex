@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blessings ~ Knowledge Blessing",
+    "name": "Knowledge Blessing",
+    "class": "Blessings",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blessings ~ Knowledge Blessing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blessings"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDEITY:1,N],[PREDEITYDOMAIN:1,Knowledge],[PREDEITY:1,Calistria,Irori,Nethys,Norgorber,Pharasma]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Knowledge Blessing ~ Lore Keeper|PREVARGTEQ:WarpriestBlessingLVL,WarpriestMinorBlessingGrantedLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Knowledge Blessing ~ Monster Lore|PREVARGTEQ:WarpriestBlessingLVL,WarpriestMajorBlessingGrantedLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2204,
+    "record_key": "Blessings ~ Knowledge Blessing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

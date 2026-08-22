@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer ~ Quarry Output",
+    "name": "Quarry",
+    "class": "Slayer",
+    "description": "You can, as a standard action, denote one target within your line of sight as your quarry. Whenever you are following the tracks of your quarry, you can take 10 on Survival skill checks while moving at normal speed, without penalty. In addition, you receive a +2 insight bonus on attack rolls made against your quarry and all critical threats are automatically confirmed. You can have no more than one quarry at a time and the target must be selected as a studied target. You can end this effect at any time as a free action, but you cannot select a new quarry for 24 hours. If you see proof that your quarry is killed, you can select a new quarry after 1 hour.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer ~ Quarry Output"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Feature.SpecialQuality.Extraordinary.AttackOption  SOURCEPAGE:p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, as a standard action, denote one target within your line of sight as your quarry. Whenever you are following the tracks of your quarry, you can take 10 on Survival skill checks while moving at normal speed, without penalty. In addition, you receive a +2 insight bonus on attack rolls made against your quarry and all critical threats are automatically confirmed. You can have no more than one quarry at a time and the target must be selected as a studied target. You can end this effect at any time as a free action, but you cannot select a new quarry for 24 hours. If you see proof that your quarry is killed, you can select a new quarry after 1 hour."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1800,
+    "record_key": "Slayer ~ Quarry Output"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

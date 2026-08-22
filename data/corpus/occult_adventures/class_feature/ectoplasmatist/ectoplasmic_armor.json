@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ectoplasmatist ~ Ectoplasmic Armor",
+    "name": "Ectoplasmic Armor",
+    "class": "Spiritualist",
+    "description": "[not implemented as temp bonus]At 4th level when an ectoplasmatist manifests her spiritual lash ability, tendrils of ectoplasmic material envelop her body, granting her a +4 armor bonus to AC. At 12th level, the ectoplasmatist's armor bonus to AC increases to +6 and is treated as ghost touch armor. This ability replaces spiritual interference and greater spiritual interference.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectoplasmatist ~ Ectoplasmic Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ectoplasmatist Class Feature.Spiritualist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemented as temp bonus]At 4th level when an ectoplasmatist manifests her spiritual lash ability, tendrils of ectoplasmic material envelop her body, granting her a +4 armor bonus to AC. At 12th level, the ectoplasmatist's armor bonus to AC increases to +6 and is treated as ghost touch armor. This ability replaces spiritual interference and greater spiritual interference."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1620,
+    "record_key": "Ectoplasmatist ~ Ectoplasmic Armor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

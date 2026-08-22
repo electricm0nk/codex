@@ -135,17 +135,66 @@ pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
     monster_abilities_static()
 }
 
+/// The 46 legacy Bestiary 1 monster NAMES `rules_tables::beastiary1` ships a
+/// [`beastiary1::MonsterStatBlock`](super::beastiary1::MonsterStatBlock) for
+/// -- the real owner of the 55 CROSS-TABLE-OWNER ability rows this chassis's
+/// own `monster_abilities()` transcribes (`decisions.md §58.3`,
+/// `SD31-W23-MONSTER-001`). `MonsterBook::cross_table_owner_names` (this
+/// book's registry row) reads this so the generic cross-book invariant
+/// (`monster_chassis::the_chassis_link_resolves_in_both_directions_for_
+/// every_book`) can tell a genuinely-dangling owner from one whose stat
+/// block simply lives in the OTHER table on purpose.
+///
+/// A hand-kept `&'static str` literal list, not `beastiary1::MonsterId::ALL`
+/// re-derived at this call site: that function returns OWNED
+/// [`beastiary1::MonsterStatBlock`]s (heap `String` fields), which cannot be
+/// a `const` a `MONSTER_BOOKS` registry entry can embed. Guarded against
+/// drift by `cross_table_owner_names_matches_the_real_beastiary1_roster_
+/// exactly`, which re-derives the true 46 from `beastiary1::MonsterId::ALL`
+/// itself and asserts this list is byte-identical to it (order-independent).
+pub(super) const fn cross_table_owner_names() -> &'static [&'static str] {
+    &[
+        "Ghoul", "Gnoll", "Goblin Dog", "Lizardfolk", "Wolf", "Darkmantle", "Horse", "Hyena",
+        "Octopus", "Spider Swarm", "Bat Swarm", "Boar", "Boggard", "Bugbear", "Cave Fisher",
+        "Choker", "Crocodile", "Dark Creeper", "Iron Cobra", "Morlock", "Rat Swarm", "Sahuagin",
+        "Shark", "Shocker Lizard", "Skum", "Squid", "Troglodyte", "Vargouille", "Wolverine",
+        "Worg", "Yellow Musk Creeper", "Ankheg", "Assassin Vine", "Centaur", "Cockatrice",
+        "Derro", "Doppelganger", "Dryad", "Ettercap", "Gelatinous Cube", "Hell Hound", "Lion",
+        "Ogre", "Pegasus", "Rust Monster", "Shadow",
+    ]
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::rules_core::rules_tables::{beastiary1, RuleSetId};
 
     /// What ships is the book's complement, less its overlay rows: 280 of 330
-    /// monster rows and 323 of 523 ability rows.
+    /// monster rows and (**corrected `SD31-E6-F9-005`**, was 323) 399 of 523
+    /// ability rows -- the transcriber used to `raise SystemExit` the instant
+    /// it found ANY owned ability row with a `parse_desc`-unmodelled
+    /// multi-`DESC:` shape (3 such rows, `OPEN-ISSUES.md` row 157), crashing
+    /// the WHOLE book's transcription and silently capping this table at 323
+    /// even though 76 MORE owned, cleanly-parseable ability rows existed. The
+    /// fix drops only the 3 ambiguous rows (named in this book's own module
+    /// doc comment above), the same treatment a Product Identity row already
+    /// gets, and the other 76 now ship for real.
     #[test]
     fn the_chassis_ships_the_books_complement() {
         assert_eq!(monsters().len(), 280);
-        assert_eq!(monster_abilities().len(), 323);
+        // 399 -> 467 (SD31-W21-MONSTER-001): the `CATEGORY:Internal` bundle-row
+        // ownership hop (`transcribe_monster_tables.py::find_internal_bundle_
+        // ability_refs`) resolved 68 previously-orphaned ability rows this
+        // book's monsters name only indirectly, through a bundle row.
+        // 467 -> 522 (SD31-W23-MONSTER-001): the cross-table-owner remedy
+        // `decisions.md §58.3` named and left unbuilt -- 55 ability rows
+        // whose owner's OWN stat block ships from `rules_tables::beastiary1`
+        // (this book's OTHER, 46-monster table) now transcribe here too,
+        // keyed to that real owner's name rather than dropped. This table's
+        // own `monsters()` count above is UNCHANGED (still 280 -- these 55
+        // rows' owners are still not among them, by the same `§58.3` ruling
+        // this test already asserts on the line above).
+        assert_eq!(monster_abilities().len(), 522);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -162,25 +211,37 @@ mod tests {
         }
     }
 
-    /// The shipped total is the classifier's `reachable remainder` less the
-    /// cross-table-owner class, spelled as the arithmetic rather than as a bare
-    /// `607` so a divergence says which term moved.
+    /// The shipped total, pinned directly rather than re-derived through
+    /// `classify_monster_ability_rows.py`'s own arithmetic.
+    ///
+    /// **CORRECTED `SD31-E6-F9-005`.** The prior version of this test derived
+    /// 603 from `807 (classifier "remaining") - 146 orphans - 54 cross-table -
+    /// 4 .MOD overlays`. Re-deriving that formula against `SD31-E6-F9-005`'s
+    /// own fix (which unblocked 76 more real ability rows, `679` total)
+    /// surfaced a genuine, previously-unknown limitation in the classifier
+    /// script itself: `classify_monster_ability_rows.py` computes its
+    /// `row-named`/`prefix` "reachable" counts purely from a monster's own
+    /// `ABILITY:`/prefix token, with NO awareness of `CROSS_TABLE_MONSTER_
+    /// RECORDS` -- so it counts an ability as reachable even when its
+    /// OWNING monster (e.g. `Ankheg`, one of SD-22's 46 `beastiary1`-served
+    /// monsters) is one this chassis deliberately does not ship
+    /// (`decisions.md §58.3`). Corpus-wide re-check: of the classifier's 135
+    /// `row-named`+`prefix` units for this book, exactly 59 are owned only
+    /// through a cross-table monster and the transcriber correctly does NOT
+    /// ship them (135 - 59 = 76, exactly this fix's own measured delta) --
+    /// `OPEN-ISSUES.md` names the classifier gap as its own follow-up. The
+    /// arithmetic-derivation shape this test used is retired in favor of a
+    /// direct pin, which cannot silently inherit the same blind spot again.
     #[test]
-    fn the_shipped_total_is_the_classifiers_reachable_remainder_less_the_cross_table_class() {
-        // `807 remaining units - 146 orphans`; the classifier's `PI` and
-        // `.COPY=` terms are both 0 for this book and are stated here rather
-        // than written as `- 0`, which `clippy`'s `identity_op` rejects.
-        let classifier_reachable = 807 - 146;
-        // The classifier's monster column already excludes the 46 the other
-        // table holds, so only the 54 abilities they own are subtracted here;
-        // the 4 `.MOD` overlays are its own over-count.
-        let cross_table_abilities = 54;
-        let mod_only_overlays = 4;
-        assert_eq!(
-            monsters().len() + monster_abilities().len(),
-            classifier_reachable - cross_table_abilities - mod_only_overlays
-        );
-        assert_eq!(monsters().len() + monster_abilities().len(), 603);
+    fn the_shipped_total_is_the_books_real_measured_count() {
+        // 679 -> 747 (SD31-W21-MONSTER-001, +68 bundle-hop-owned abilities;
+        // see `the_chassis_ships_the_books_complement`'s own comment).
+        // 747 -> 802 (SD31-W23-MONSTER-001, +55 cross-table-owner ability
+        // rows -- see `the_chassis_ships_the_books_complement`'s own comment
+        // and `cross_table_owner_names` above). `monsters().len()` (280) is
+        // UNCHANGED: these 55 rows' real owners still ship from
+        // `beastiary1`, never from here.
+        assert_eq!(monsters().len() + monster_abilities().len(), 802);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the
@@ -205,9 +266,15 @@ mod tests {
         }
     }
 
-    /// Every transcribed ability row is owned by a monster row this table
-    /// holds. The book has 200 ability rows nothing here owns — 146 orphans and
-    /// 54 cross-table-owner rows; the point of this test is that none got in.
+    /// Every transcribed ability row names at least one owner -- a monster row
+    /// this table holds, or (since `SD31-W23-MONSTER-001`) one of the 55
+    /// cross-table-owner rows whose real owner ships from `beastiary1`
+    /// instead. **Corrected `SD31-W23-INTEGRATE-001`**: the book has 197
+    /// genuinely unowned rows this test's job is still to keep out (re-derived
+    /// directly against `scripts/transcribe_monster_tables.py bestiary`'s own
+    /// live stdout -- the prior "146" here was already stale before this
+    /// cycle, unrelated to the +55 cross-table fix); the point of this test
+    /// is that none got in.
     #[test]
     fn no_shipped_ability_is_an_orphan() {
         for ability in monster_abilities() {
@@ -220,19 +287,57 @@ mod tests {
     }
 
     /// The stronger form, which this book needs more than any before it: 46 of
-    /// its monster rows exist in the corpus, are deliberately not shipped here,
-    /// and are named as owners by 54 ability rows. An owner this table does not
-    /// hold is a link the catalog cannot follow.
+    /// its monster rows exist in the corpus, are deliberately not shipped here
+    /// as `MonsterStatBlock`s, and are named as owners by 55 ability rows this
+    /// chassis DOES ship anyway (`SD31-W23-MONSTER-001`, `decisions.md
+    /// §58.3`'s cross-table-owner class). An owner named by neither `monsters`
+    /// NOR `cross_table_owner_names` is a link the catalog truly cannot
+    /// follow -- that is still what this test catches.
     #[test]
     fn every_owner_named_by_a_shipped_ability_is_a_shipped_monster() {
+        let cross_table = cross_table_owner_names();
         for ability in monster_abilities() {
             for owner in ability.owners {
                 assert!(
-                    monsters().iter().any(|m| m.key == *owner),
-                    "{} names owner {owner}, which is not a shipped monster of this table",
+                    monsters().iter().any(|m| m.key == *owner)
+                        || cross_table.contains(owner),
+                    "{} names owner {owner}, which is not a shipped monster of this table \
+                     and not in cross_table_owner_names either",
                     ability.key
                 );
             }
+        }
+    }
+
+    /// Guards `cross_table_owner_names`'s own hand-kept literal list against
+    /// drift from the real `beastiary1` roster it stands in for -- re-derives
+    /// the true 46 names from `beastiary1::MonsterId::ALL` independently (the
+    /// same derivation `no_creature_is_served_by_both_bestiary_1_tables`
+    /// already trusts) and asserts set-equality, so a future `beastiary1`
+    /// subset addition that forgets to update the literal list fails HERE
+    /// rather than silently under-covering the cross-table-owner check above.
+    #[test]
+    fn cross_table_owner_names_matches_the_real_beastiary1_roster_exactly() {
+        let real: std::collections::BTreeSet<String> = beastiary1::MonsterId::ALL
+            .iter()
+            .filter_map(|&id| beastiary1::monster_resolve(id, RuleSetId::Bestiary1))
+            .map(|block| block.name)
+            .collect();
+        let listed: std::collections::BTreeSet<&str> =
+            cross_table_owner_names().iter().copied().collect();
+        assert_eq!(real.len(), 46);
+        assert_eq!(listed.len(), 46, "cross_table_owner_names must not repeat a name");
+        for name in &real {
+            assert!(
+                listed.contains(name.as_str()),
+                "beastiary1 ships {name:?} but cross_table_owner_names does not list it"
+            );
+        }
+        for name in &listed {
+            assert!(
+                real.contains(*name),
+                "cross_table_owner_names lists {name:?}, which beastiary1 does not ship"
+            );
         }
     }
 

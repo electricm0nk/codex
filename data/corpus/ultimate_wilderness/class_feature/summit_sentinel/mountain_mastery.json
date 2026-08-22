@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summit Sentinel ~ Mountain Mastery",
+    "name": "Mountain Mastery",
+    "class": "Ranger",
+    "description": "A summit sentinel must select mountains as her favored terrain, and she does not gain additional favored terrains at higher levels. Every 5 levels beyond 5th, the bonus from this favored terrain increases by 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summit Sentinel ~ Mountain Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.SummitSentinelClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummitSentinelMasteryBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A summit sentinel must select mountains as her favored terrain, and she does not gain additional favored terrains at higher levels. Every 5 levels beyond 5th, the bonus from this favored terrain increases by 2."
+      },
+      {
+        "key": "DESC",
+        "value": "A summit sentinel draws strength from the earth. When she and her target are both in contact with the ground or an earthen floor, the summit sentinel gains a +%1 bonus on attack and damage rolls against the target. This alters favored terrain.|SummitSentinelMasteryBonus|PRECLASS:1,Ranger=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Basic Favored Terrain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|1|SummitSentinelMasteryBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|1|SummitSentinelMasteryBonus|PRECLASS:1,Ranger=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|2|PRECLASS:1,Ranger=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|2|PRECLASS:1,Ranger=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|2|PRECLASS:1,Ranger=20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 923,
+    "record_key": "Summit Sentinel ~ Mountain Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Two-Weapon Warrior ~ Equal Opportunity",
+    "name": "Equal Opportunity",
+    "class": "Fighter",
+    "description": "At 13th level, when a two-weapon warrior makes an attack of opportunity, he may attack once with both his primary and secondary weapons. The penalties for attacking with two weapons apply normally. This ability replaces weapon training 3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Two-Weapon Warrior ~ Equal Opportunity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining3"
+      },
+      {
+        "key": "DESC",
+        "value": "At 13th level, when a two-weapon warrior makes an attack of opportunity, he may attack once with both his primary and secondary weapons. The penalties for attacking with two weapons apply normally. This ability replaces weapon training 3."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.109"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2227,
+    "record_key": "Fighter Two-Weapon Warrior ~ Equal Opportunity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

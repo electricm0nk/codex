@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Controller School ~ Irresistible Demand",
+    "name": "Irresistible Demand",
+    "class": "Controller School",
+    "description": "At 8th level, you can force others to do your bidding. As a standard action, you attempt to dominate a creature as though using the dominate monster spell, except that the creature must have no greater than %1 Hit Dice. The targeted creature receives a Will save DC %2 each round to negate the effect. You can dominate creatures for a %3 rounds per day. These rounds do not need to be consecutive. You must concentrate as a standard action to maintain control over a dominated creature.|ControllerIrresistibleDemandHD|ControllerIrresistibleDemandDC|ControllerIrresistibleDemandRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Controller School ~ Irresistible Demand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControllerIrresistibleDemandHD|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControllerIrresistibleDemandDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ControllerIrresistibleDemandRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can force others to do your bidding. As a standard action, you attempt to dominate a creature as though using the dominate monster spell, except that the creature must have no greater than %1 Hit Dice. The targeted creature receives a Will save DC %2 each round to negate the effect. You can dominate creatures for a %3 rounds per day. These rounds do not need to be consecutive. You must concentrate as a standard action to maintain control over a dominated creature.|ControllerIrresistibleDemandHD|ControllerIrresistibleDemandDC|ControllerIrresistibleDemandRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControllerIrresistibleDemandHD|EnchantmentSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControllerIrresistibleDemandDC|10+INT+(EnchantmentSchoolLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ControllerIrresistibleDemandRounds|EnchantmentSchoolLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|ControllerIrresistibleDemandRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3342,
+    "record_key": "Controller School ~ Irresistible Demand"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

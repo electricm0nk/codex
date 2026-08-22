@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Eagle Domain ~ Aerial Evasion",
+    "name": "Aerial Evasion",
+    "class": "Eagle Domain",
+    "description": "You gain the evasion ability (as a rogue) when you are flying.|PREVARLT:DomainEagleLVL,12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eagle Domain ~ Aerial Evasion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DomainPower.Eagle Domain"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the evasion ability (as a rogue) when you are flying.|PREVARLT:DomainEagleLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the improved evasion ability when you are flying.|PREVARGTEQ:DomainEagleLVL,12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 282,
+    "record_key": "Eagle Domain ~ Aerial Evasion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

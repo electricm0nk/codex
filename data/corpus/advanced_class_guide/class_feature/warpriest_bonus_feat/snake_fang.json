@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Snake Fang",
+    "name": "Snake Fang",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can unleash attacks against an opponent that has dropped its guard.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Snake Fang"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Combat Reflexes,Improved Unarmed Strike,Snake Sidewind,Snake Style"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Acrobatics=6,Sense Motive=9"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash attacks against an opponent that has dropped its guard."
+      },
+      {
+        "key": "DESC",
+        "value": " While using the Snake Style feat, when an opponent's attack misses you, you can make an unarmed strike against that opponent as an attack of opportunity. If this attack of opportunity hits, you can spend an immediate action to make another unarmed strike against the same opponent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Snake Fang"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4550,
+    "record_key": "Warpriest Bonus Feat ~ Snake Fang"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Silence Master Metamagic",
+    "name": "Silence Master",
+    "class": "Pathfinder Savant",
+    "description": "3/day, you may cast a spell of 6th level or lower as if using a silent metamagic rod.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Silence Master Metamagic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "3/day, you may cast a spell of 6th level or lower as if using a silent metamagic rod."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(As silent metamagic rod, 3/day)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 407,
+    "record_key": "Pathfinder Savant ~ Silence Master Metamagic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

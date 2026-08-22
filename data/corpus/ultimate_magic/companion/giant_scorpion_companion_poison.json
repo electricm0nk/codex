@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Giant Scorpion Companion ~ Poison",
     "delivery": "Extraordinary",
@@ -38,6 +36,60 @@
     "owners": [
       "ultimate_magic:companion:companion_scorpion_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(sting)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantScorpionCompanionPoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantScorpionCompanionPoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantScorpionCompanionPoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": " effect 1 Str damage, cure 1 save, DC %1|GiantScorpionCompanionPoisonDC|!PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Scorpion (Giant))"
+      },
+      {
+        "key": "DESC",
+        "value": " effect 1d2 Str damage, cure 1 save, DC %1|GiantScorpionCompanionPoisonDC|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Scorpion (Giant))"
+      },
+      {
+        "key": "DESC",
+        "value": "Frequency 1 round [6]"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Poison"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Scorpion Companion ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.37",
     "stat_adjustments": [],
@@ -46,16 +98,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
-    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
-    "line": 33,
-    "record_key": "Giant Scorpion Companion ~ Poison"
-  },
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Giant Scorpion Companion ~ Poison",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

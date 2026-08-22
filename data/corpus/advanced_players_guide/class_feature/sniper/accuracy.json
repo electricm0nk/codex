@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sniper ~ Accuracy",
+    "name": "Accuracy",
+    "class": "Rogue",
+    "description": "At 1st level, a sniper halves all range increment penalties when making ranged attacks with a bow or crossbow. This ability replaces trapfinding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sniper ~ Accuracy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RogueClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a sniper halves all range increment penalties when making ranged attacks with a bow or crossbow. This ability replaces trapfinding."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|RANGEPENALTY|1|!PREABILITY:1,CATEGORY=FEAT,Farshot"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|RANGEPENALTY|0.5|PREABILITY:1,CATEGORY=FEAT,Farshot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2982,
+    "record_key": "Sniper ~ Accuracy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

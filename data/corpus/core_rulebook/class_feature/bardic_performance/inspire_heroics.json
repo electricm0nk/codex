@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Inspire Heroics",
+    "name": "Inspire Heroics",
+    "class": "Bardic Performance",
+    "description": "You can inspire tremendous heroism in yourself or up to %1 allies within 30 feet. To inspire heroics, all of the targets must be able to see and hear you. Inspired creatures gain a +4 morale bonus on saving throws and a +4 dodge bonus to AC. This effect lasts for as long as the targets are able to witness your performance. Inspire heroics is a mind-affecting ability that relies on audible and visual components.|InspireHeroicsAllies",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Inspire Heroics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireHeroicsAllies|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can inspire tremendous heroism in yourself or up to %1 allies within 30 feet. To inspire heroics, all of the targets must be able to see and hear you. Inspired creatures gain a +4 morale bonus on saving throws and a +4 dodge bonus to AC. This effect lasts for as long as the targets are able to witness your performance. Inspire heroics is a mind-affecting ability that relies on audible and visual components.|InspireHeroicsAllies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireHeroicsAllies|(BardicPerformanceLVL-12)/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Bardic Performance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 531,
+    "record_key": "Bardic Performance ~ Inspire Heroics"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

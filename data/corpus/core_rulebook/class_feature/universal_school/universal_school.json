@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Universal School",
+    "name": "Universal School",
+    "class": null,
+    "description": "You have chosen not to specialize in a single school of spells.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UniversalSchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UniversalProgressionSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen not to specialize in a single school of spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal School ~ Hand of the Apprentice|PREVAREQ:Wizard_CF_HandOfTheApprentice,0|PREVARGTEQ:UniversalProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal School ~ Metamagic Mastery|PREVAREQ:Wizard_CF_MetamagicMastery,0|PREVARGTEQ:UniversalProgressionSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UniversalSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UniversalProgressionSchoolLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2605,
+    "record_key": "Universal School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

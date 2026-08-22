@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante ~ Social Talent",
+    "name": "Social Talent",
+    "class": "Vigilante",
+    "description": "Starting at 1st level, and every 2 levels thereafter, a vigilante gains a social talent. Unless otherwise noted, a talent can be selected only once. Some talents require the vigilante to meet other prerequisites before they can be chosen, such as having another social talent or attaining a minimum vigilante level. Once a talent has been chosen, it cannot be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante ~ Social Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SocialTalentCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteTalentLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 1st level, and every 2 levels thereafter, a vigilante gains a social talent. Unless otherwise noted, a talent can be selected only once. Some talents require the vigilante to meet other prerequisites before they can be chosen, such as having another social talent or attaining a minimum vigilante level. Once a talent has been chosen, it cannot be changed."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|SocialTalentCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SocialTalentCount|(VigilanteLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteTalentLVL|VigilanteLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 31,
+    "record_key": "Vigilante ~ Social Talent"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

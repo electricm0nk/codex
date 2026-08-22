@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Domain ~ Family Subdomain",
+    "name": "Family Subdomain",
+    "class": "Druid Domain",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Family Subdomain"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Subdomain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidFamilySubdomainAllowed,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Bless|Druid=2|Calm Emotions|Druid=3|Create Food and Water|Druid=4|Status|Druid=5|Telepathic Bond|Druid=6|Heroes' Feast|Druid=7|Refuge|Druid=8|Cure Critical Wounds (Mass)|Druid=9|Miracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1198,
+    "record_key": "Druid Domain ~ Family Subdomain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

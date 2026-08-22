@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cad ~ Dirty Maneuvers",
+    "name": "Dirty Maneuvers",
+    "class": "Fighter",
+    "description": "At 2nd level, a cad becomes skilled at deceiving and discomfiting his opponents. The cad gains a +1 bonus on disarm, dirty trick, and steal combat maneuver checks. The cad also gains a +1 bonus to CMD when attacked with the disarm, dirty trick, and steal combat maneuvers. These bonuses increase by 1 for every four levels after 2nd (to a maximum of +5 at 18th level). This ability replaces bravery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cad ~ Dirty Maneuvers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a cad becomes skilled at deceiving and discomfiting his opponents. The cad gains a +1 bonus on disarm, dirty trick, and steal combat maneuver checks. The cad also gains a +1 bonus to CMD when attacked with the disarm, dirty trick, and steal combat maneuvers. These bonuses increase by 1 for every four levels after 2nd (to a maximum of +5 at 18th level). This ability replaces bravery."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Disarm,CMB_DirtyTrick,CMB_Steal,CMD_Disarm,CMD_DirtyTrick,CMD_Steal|1+((FighterLVL-2)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 705,
+    "record_key": "Cad ~ Dirty Maneuvers"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

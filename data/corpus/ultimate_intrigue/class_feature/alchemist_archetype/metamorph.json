@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Metamorph",
+    "name": "Metamorph",
+    "class": "Alchemist Archetype",
+    "description": "Metamorphs eschew traditional alchemy, focusing on internal chemistry and the transfiguration of living forms.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Metamorph"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Metamorph],[!PREFACT:1,ABILITIES,Alchemist_Archetype_ClassSkills=True,Alchemist_Archetype_Alchemy=True,Alchemist_Archetype_Bomb=True,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_ThrowAnything=True,Alchemist_Archetype_SwiftAlchemy=True,Alchemist_Archetype_SwiftPoisoning=True,Alchemist_Archetype_InstantAlchemy=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Metamorphs eschew traditional alchemy, focusing on internal chemistry and the transfiguration of living forms."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Metamorph ~ Class Skills|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Metamorph ~ Shapechanger|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Metamorph ~ Mutagen|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Class Feature|AUTOMATIC|Metamorph ~ Adaptive Physiology|PRECLASS:1,Alchemist=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_SwiftPoisoning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_InstantAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Bomb|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_SwiftPoisoning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_InstantAlchemy|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 150,
+    "record_key": "Alchemist Archetype ~ Metamorph"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

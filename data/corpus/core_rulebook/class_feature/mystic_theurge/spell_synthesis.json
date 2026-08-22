@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mystic Theurge ~ Spell Synthesis",
+    "name": "Spell Synthesis",
+    "class": "Mystic Theurge",
+    "description": "You can cast two spells, one from each of your spellcasting classes, using one action. Both of the spells must have the same casting time. You can make any decisions concerning the spells independently. Any target affected by both of the spells takes a -2 penalty on saves made against each spell. You receive a +2 bonus on caster level checks made to overcome spell resistance with these two spells. You may use this ability once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Theurge ~ Spell Synthesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Mystic TheurgeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast two spells, one from each of your spellcasting classes, using one action. Both of the spells must have the same casting time. You can make any decisions concerning the spells independently. Any target affected by both of the spells takes a -2 penalty on saves made against each spell. You receive a +2 bonus on caster level checks made to overcome spell resistance with these two spells. You may use this ability once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.388"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3043,
+    "record_key": "Mystic Theurge ~ Spell Synthesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

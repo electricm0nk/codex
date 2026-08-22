@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Archetype ~ Chameleon Adept",
+    "name": "Chameleon Adept",
+    "class": "Hunter Archetype",
+    "description": "Some hunters are masters of blending into every situation, even making their companions appear humanoid for brief periods of time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Archetype ~ Chameleon Adept"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.HunterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Hunter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Chameleon Adept],[!PREFACT:1,ABILITIES,Hunter_Archetype_ClassSkills=True,Hunter_Archetype_TeamworkFeats=True,Hunter_Archetype_HunterTactics=True,Hunter_Archetype_WildEmpathy=True,Hunter_Archetype_PreciseCompanion=True,Hunter_Archetype_WoodlandStride=True,Hunter_Archetype_RaiseAnimalCompanion=True,Hunter_CF_RaiseAnimalCompanion=True,Hunter_Archetype_OneWithTheWild=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some hunters are masters of blending into every situation, even making their companions appear humanoid for brief periods of time."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Chameleon Adept ~ Skills|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Chameleon Adept ~ Shifting Companion|PRECLASS:1,Hunter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Chameleon Adept ~ Terrain Chameleon|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Chameleon Adept ~ Savage Diplomacy|PRECLASS:1,Hunter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Chameleon Adept ~ Animal Shape|PRECLASS:1,Hunter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Chameleon Adept ~ Improved Shifting Companion|PRECLASS:1,Hunter=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Chameleon Adept ~ One with the Wild|PRECLASS:1,Hunter=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_OneWithTheWild|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_WoodlandStride|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 641,
+    "record_key": "Hunter Archetype ~ Chameleon Adept"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cloistered Cleric ~ Verbal Instruction",
+    "name": "Verbal Instruction",
+    "class": "Cleric",
+    "description": "You can use the aid another action to assist %1 allies within 30 feet on a skill or ability check. The ally must be able to hear and understand your instructions. If all allies are not engaged in the same task, using this ability is a full-round action rather than a standard action.|VerbalInstructionAllies",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cloistered Cleric ~ Verbal Instruction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerbalInstructionAllies|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use the aid another action to assist %1 allies within 30 feet on a skill or ability check. The ally must be able to hear and understand your instructions. If all allies are not engaged in the same task, using this ability is a full-round action rather than a standard action.|VerbalInstructionAllies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerbalInstructionAllies|classlevel(\"Cleric\")/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1019,
+    "record_key": "Cloistered Cleric ~ Verbal Instruction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

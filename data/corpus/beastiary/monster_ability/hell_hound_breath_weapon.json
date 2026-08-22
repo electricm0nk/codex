@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Hell Hound ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -18,19 +16,75 @@
     "owners": [
       "beastiary:monster:hell_hound_nessian"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, once every %2d4 rounds, %3d6 fire damage, Reflex DC %4 for half)|BreathWeaponCone|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponCone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1-ft. cone, once every %2d4 rounds, %3d6 fire damage, Reflex DC %4 for half.|BreathWeaponCone|BreathWeaponTimes|BreathWeaponDice|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Hell Hound ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.173",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 767,
-    "record_key": "Hell Hound ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 767,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Hell Hound ~ Breath Weapon",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

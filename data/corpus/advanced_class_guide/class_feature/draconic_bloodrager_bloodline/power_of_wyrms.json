@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodrager Bloodline ~ Power of Wyrms",
+    "name": "Power of Wyrms",
+    "class": "Draconic Bloodrager Bloodline",
+    "description": "You gain immunity to paralysis, sleep, and",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodrager Bloodline ~ Power of Wyrms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Draconic Bloodrager Bloodline ~ Power LVL 20.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Draconic_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Draconic_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain immunity to paralysis, sleep, and"
+      },
+      {
+        "key": "DESC",
+        "value": " acid.|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": " cold.|PREVARGTEQ:BloodragerDraconicBloodline_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": " electricity.|PREVARGTEQ:BloodragerDraconicBloodline_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": " fire.|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You also gain blindsense 60 feet. You have these benefits constantly, even while not bloodraging."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Paralysis|Immunity to Sleep"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|PREVARGTEQ:BloodragerDraconicBloodline_Cold,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Electricity|PREVARGTEQ:BloodragerDraconicBloodline_Electricity,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsense (60')"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 719,
+    "record_key": "Draconic Bloodrager Bloodline ~ Power of Wyrms"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

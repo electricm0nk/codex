@@ -1,27 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Wall of Blindness/Deafness",
-    "school": "Necromancy",
-    "level": 4,
     "description": "You create a translucent wall of energy, within which can be seen indistinct images of faces with their eyes or ears sewn shut. When you create the wall, decide whether it blinds or deafens. Any creature that passes through the wall must save or become permanently blinded or deafened [as blindness/deafness]. The wall must be vertical and either rectangular or a ring. It need not touch the ground. The wall must be continuous and unbroken when formed. If its surface is broken by any object or creature when it is cast, the spell fails.",
-    "full_text": true
+    "full_text": true,
+    "key": "Wall of Blindness/Deafness",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Witch,Wizard=4|Cleric=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Translucent wall blinds or deafens creatures that pass through it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a translucent wall of energy, within which can be seen indistinct images of faces with their eyes or ears sewn shut. When you create the wall, decide whether it blinds or deafens. Any creature that passes through the wall must save or become permanently blinded or deafened [as blindness/deafness]. The wall must be vertical and either rectangular or a ring. It need not touch the ground. The wall must be continuous and unbroken when formed. If its surface is broken by any object or creature when it is cast, the spell fails.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "concentration + (CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Necromancy"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/wallOfBlindnessDeafness.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "translucent wall (CASTERLEVEL*20) ft. long or a translucent ring with a radius of up to (CASTERLEVEL/2*5) ft.; either form 20 ft. high"
+      }
+    ],
+    "school": "Necromancy"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 135,
-    "record_key": "Wall of Blindness/Deafness"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Wall of Blindness/Deafness",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

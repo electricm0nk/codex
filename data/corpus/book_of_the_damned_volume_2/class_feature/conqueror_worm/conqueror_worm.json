@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Conqueror Worm ~ Yhidothrus",
+    "name": "Conqueror Worm",
+    "class": "Conqueror Worm",
+    "description": "You can use summon monster IX 1/day, but only to summon 1 advanced fiendish purple worm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Conqueror Worm ~ Yhidothrus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Summon Monster IX,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use summon monster IX 1/day, but only to summon 1 advanced fiendish purple worm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 195,
+    "record_key": "Conqueror Worm ~ Yhidothrus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

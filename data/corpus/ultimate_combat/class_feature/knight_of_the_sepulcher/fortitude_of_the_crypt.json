@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Knight Of The Sepulcher ~ Fortitude Of The Crypt",
+    "name": "Fortitude of the Crypt",
+    "class": "Knight Of The Sepulcher",
+    "description": "At 8th level, a knight of the sepulcher gains immunity to poison. He also gains darkvision 60 feet if he does not already possess it. This ability replaces the aura of despair ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Knight Of The Sepulcher ~ Fortitude Of The Crypt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AntipaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, a knight of the sepulcher gains immunity to poison. He also gains darkvision 60 feet if he does not already possess it. This ability replaces the aura of despair ability."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Poison"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1492,
+    "record_key": "Knight Of The Sepulcher ~ Fortitude Of The Crypt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gunslinger Archetype ~ Bushwhacker",
+    "name": "Bushwhacker",
+    "class": "Gunslinger Archetype",
+    "description": "The bushwhacker specializes in the art of the ambush. For her, gunplay works best when it comes from a concealed position and is directed against a target that falls with the very first volley and is dead before the smoke clears. A bushwhacker has the following class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gunslinger Archetype ~ Bushwhacker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.GunslingerArchetype.GunslingerGrit.GunslingerUtilityShot.GunslingerTargeting.GunslingerBonusFeat4.GunslingerBonusFeat8.GunslingerBonusFeat12.GunslingerBonusFeat16.GunslingerBonusFeat20"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Gunslinger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Bushwhacker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerGrit,TYPE.GunslingerUtilityShot,TYPE.GunslingerTargeting,TYPE.GunslingerBonusFeat4,TYPE.GunslingerBonusFeat8,TYPE.GunslingerBonusFeat12,TYPE.GunslingerBonusFeat16,TYPE.GunslingerBonusFeat20]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsKobold=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The bushwhacker specializes in the art of the ambush. For her, gunplay works best when it comes from a concealed position and is directed against a target that falls with the very first volley and is dead before the smoke clears. A bushwhacker has the following class features."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bushwhacker ~ Trembling Grit|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bushwhacker ~ Shifty Shot|PRECLASS:1,Gunslinger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bushwhacker ~ Long Range Shifty Shot|PRECLASS:1,Gunslinger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bushwhacker ~ Sneak Shot|PRECLASS:1,Gunslinger=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Gunslinger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 619,
+    "record_key": "Gunslinger Archetype ~ Bushwhacker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

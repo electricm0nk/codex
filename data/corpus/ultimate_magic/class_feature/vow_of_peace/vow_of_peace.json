@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vow of Peace",
+    "name": "Vow of Peace",
+    "class": null,
+    "description": "You must strive to attain peace and may only use violence as a last resort. You can never strike the first blow in combat. If attacked, you must use the fight defensively action or the total defense action for the first 2 rounds. You must always give your opponent the option to surrender, and cannot purposely slay another creature that could reasonably be influenced to flee or join a civilized society as a productive member (obviously this excludes many monsters). Many monks who have taken this vow learn how to grapple and pin opponents, tying them with specialized knots that allow them to work themselves free after sufficient effort. Many monks of peace are vegetarians.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.MonkVow"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "DESC",
+        "value": "You must strive to attain peace and may only use violence as a last resort. You can never strike the first blow in combat. If attacked, you must use the fight defensively action or the total defense action for the first 2 rounds. You must always give your opponent the option to surrender, and cannot purposely slay another creature that could reasonably be influenced to flee or join a civilized society as a productive member (obviously this excludes many monsters). Many monks who have taken this vow learn how to grapple and pin opponents, tying them with specialized knots that allow them to work themselves free after sufficient effort. Many monks of peace are vegetarians."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|max(1,floor(classlevel(\"Monk\")/5))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 433,
+    "record_key": "Vow of Peace"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

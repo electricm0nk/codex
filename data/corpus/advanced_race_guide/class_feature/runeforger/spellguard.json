@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Runeforger ~ Spellguard",
+    "name": "Spellguard",
+    "class": "Runeforger",
+    "description": "The inscribed item gains spell resistance %1. This applies only to effects targeting the item itself.|11+ClericLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Runeforger ~ Spellguard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RuneforgerOption.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The inscribed item gains spell resistance %1. This applies only to effects targeting the item itself.|11+ClericLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 82,
+    "record_key": "Runeforger ~ Spellguard"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

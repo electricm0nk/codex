@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1.0,
+    "description": "Used in blowguns and wrist launchers to deliver poison. Any DR, hardness, etc., negates poison delivery.",
+    "key": "Darts (Featherweight/10)",
+    "name": "Darts, Featherweight (10)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Darts (Featherweight/10)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Standard.Dart"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MODS",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPROP",
+        "value": "Used in blowguns and wrist launchers to deliver poison. Any DR, hardness, etc., negates poison delivery."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_arms_armor.lst",
+    "record_key": "Darts (Featherweight/10)",
+    "sha256": "e26d0cc65210cee59a2976677c7385a467248278cd2c1951351f9b0a0941f74b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

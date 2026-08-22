@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Deadly Finale",
-    "school": "Evocation",
-    "level": 6,
     "description": "You must have a bardic performance in effect to cast this spell.  With a flourish, you immediately end your performance, dealing 2d8 points of sonic damage to each target. In addition, each target takes 3d6 points of bleed damage for 1d6 rounds. A save negates the bleed damage but not the sonic damage.",
-    "full_text": true
+    "full_text": true,
+    "key": "Deadly Finale",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Deals 2d8 damage to multiple targets.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You must have a bardic performance in effect to cast this spell.  With a flourish, you immediately end your performance, dealing 2d8 points of sonic damage to each target. In addition, each target takes 3d6 points of bleed damage for 1d6 rounds. A save negates the bleed damage but not the sonic damage.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Sonic"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/deadlyFinale.html#_deadly-finale"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL/3) creatures levels no two of which can be more than 30 ft. apart"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 80,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1912,
-    "record_key": "Deadly Finale"
+    "record_key": "Deadly Finale",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

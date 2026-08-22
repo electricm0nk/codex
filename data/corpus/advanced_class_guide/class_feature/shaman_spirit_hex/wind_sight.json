@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Wind Sight",
+    "name": "Wind Sight",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman ignores the penalties on Perception checks caused by wind and the first 100 feet of distance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Wind Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanWindHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Wind Sight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanWindSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWindSightRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman ignores the penalties on Perception checks caused by wind and the first 100 feet of distance."
+      },
+      {
+        "key": "DESC",
+        "value": "She can, as a standard action, hear or see into any area-as clairaudience or clairvoyance, using that spell's range-provided that there's an unobstructed path for air to travel between the shaman and the target area. This doesn't require line of effect, meaning the path can turn corners and go through spaces as narrow as 1 inch in diameter.|PREVARGTEQ:ShamanSpiritLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can use this ability %1 rounds per day, but these rounds do not need to be consecutive.|ShamanWindSightRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWindSightRounds|ShamanSpiritLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1695,
+    "record_key": "Shaman Spirit Hex ~ Wind Sight"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

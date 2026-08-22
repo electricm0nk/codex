@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Witch Patron ~ Autumn",
+    "name": "Autumn Patron",
+    "class": "Witch Patron",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Patron ~ Autumn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchPatron.SpecialQuality"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=1|Ray of Enfeeblement|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,2],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell2]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=2|Create Pit|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,4],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell4]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=3|Gentle Repose|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,6],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell6]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=4|Vitriolic Mist|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,8],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell8]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=5|Major Creation|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,10],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell10]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=6|Acid Fog|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,12],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell12]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=7|Caustic Eruption|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,14],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell14]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=8|Horrid Wilting|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,16],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell16]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=9|Wail of the Banshee|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,18],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell18]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1283,
+    "record_key": "Witch Patron ~ Autumn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

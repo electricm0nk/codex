@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Mummy ~ Despair",
     "delivery": "Supernatural",
@@ -15,21 +13,69 @@
     "owners": [
       "beastiary:monster:mummy"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Despair"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft., paralyzed for 1d4 rounds, Will DC %1 negates)|MummyDespairDC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Aura|Despair"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MummyDespairDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MummyDespairDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Despair)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MummyDespairDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures within a 30-foot radius that see you must make a DC %1 Will save or be paralyzed by fear for 1d4 rounds. Whether or not the save is successful, that creature cannot be affected again by the same mummy's despair ability for 24 hours. This is a paralysis and a mind-affecting fear affect. The save DC is Charisma-based.|MummyDespairDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Mummy ~ Despair"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "P.210"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Aura"
+      }
+    ],
     "source_page": "P.210",
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 950,
-    "record_key": "Mummy ~ Despair"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 950,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Mummy ~ Despair",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

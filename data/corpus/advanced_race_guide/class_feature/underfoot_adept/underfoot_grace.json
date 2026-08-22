@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Underfoot Adept ~ Underfoot Grace",
+    "name": "Underfoot Grace",
+    "class": "Underfoot Adept",
+    "description": "An underfoot adept uses his size and grace to avoid the attacks of those he passes. When using the Acrobatics skill to avoid attacks of opportunity by moving through a threatened area or an enemy's space, he only takes a -5 penalty when doing so at full speed, instead of the normal -10 penalty.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Underfoot Adept ~ Underfoot Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An underfoot adept uses his size and grace to avoid the attacks of those he passes. When using the Acrobatics skill to avoid attacks of opportunity by moving through a threatened area or an enemy's space, he only takes a -5 penalty when doing so at full speed, instead of the normal -10 penalty."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 337,
+    "record_key": "Underfoot Adept ~ Underfoot Grace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

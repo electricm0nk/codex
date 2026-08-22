@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Life Spirit ~ Healer's Touch",
+    "name": "Healer's Touch",
+    "class": "Life Spirit",
+    "description": "The shaman gains a +4 bonus on Heal checks. As a standard action, the shaman can move up to half her speed and touch up to six dying creatures. Each creature is automatically stabilized without the need of a Heal check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Spirit ~ Healer's Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman gains a +4 bonus on Heal checks. As a standard action, the shaman can move up to half her speed and touch up to six dying creatures. Each creature is automatically stabilized without the need of a Heal check."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Heal|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1601,
+    "record_key": "Life Spirit ~ Healer's Touch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

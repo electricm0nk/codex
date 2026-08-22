@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Negate Aroma",
-    "school": "Transmutation",
-    "level": 1,
     "description": "With a gesture, this spell allows you to dismiss even the foulest or most distinctive scents. When cast, the targeted creatures or objects lose all natural and unnatural odors. A creature under the effect of negate aroma cannot be tracked, located, or pinpointed by the scent special quality. In addition, this spell prevents the target creature from using the stench special ability and similar odor-based abilities (such as those possessed by troglodytes).  Negate aroma does not prevent the target from acquiring outside smells or odors. Dowsing the creature with a pungent substance effectively negates the benefits of the spell until the substance is neutralized or washed away.",
-    "full_text": true
+    "full_text": true,
+    "key": "Negate Aroma",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Druid,Ranger=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject cannot be tracked by scent.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "With a gesture, this spell allows you to dismiss even the foulest or most distinctive scents. When cast, the targeted creatures or objects lose all natural and unnatural odors. A creature under the effect of negate aroma cannot be tracked, located, or pinpointed by the scent special quality. In addition, this spell prevents the target creature from using the stench special ability and similar odor-based abilities (such as those possessed by troglodytes).  Negate aroma does not prevent the target from acquiring outside smells or odors. Dowsing the creature with a pungent substance effectively negates the benefits of the spell until the substance is neutralized or washed away.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a pinch of alum)"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/negateAroma.html#_negate-aroma"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures or objects touched"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 172,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2011,
-    "record_key": "Negate Aroma"
+    "record_key": "Negate Aroma",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

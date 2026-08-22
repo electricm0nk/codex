@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Bloodrager Bloodline ~ Confusing Critical",
+    "name": "Confusing Critical",
+    "class": "Fey Bloodrager Bloodline",
+    "description": "Fey power courses through your weapon. Each time you confirm a critical hit, the target must succeed at a Will saving throw (DC %1) or be confused for one round. This is a mind-affecting compulsion effect.|Bloodrager_Fey_ConfusingCritical_DC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Bloodrager Bloodline ~ Confusing Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Fey Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Fey"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Fey_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Fey_ConfusingCritical_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Fey power courses through your weapon. Each time you confirm a critical hit, the target must succeed at a Will saving throw (DC %1) or be confused for one round. This is a mind-affecting compulsion effect.|Bloodrager_Fey_ConfusingCritical_DC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Fey_ConfusingCritical_DC|10+(Bloodrager_Fey_BloodlineLVL/2)+CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Bloodrager_Fey_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|FeyBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 825,
+    "record_key": "Fey Bloodrager Bloodline ~ Confusing Critical"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

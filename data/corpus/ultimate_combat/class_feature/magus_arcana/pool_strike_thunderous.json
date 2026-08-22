@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Pool Strike (Thunderous)",
+    "name": "Pool Strike, Thunderous",
+    "class": "Magus Arcana",
+    "description": "The magus can expend 1 additional point from his arcane pool when making a pool strike. His pool strike deals sonic damage and deafens a single target for 1 round (DC 10 + 1/2 magus level + Intelligence modifier). The magus must be at least 6th level and must have the pool strike magus arcana before selecting this magus arcana.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Pool Strike (Thunderous)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.MagusArcana.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Pool Strike ~ Magus Arcana"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ArcanaQualifyLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "The magus can expend 1 additional point from his arcane pool when making a pool strike. His pool strike deals sonic damage and deafens a single target for 1 round (DC 10 + 1/2 magus level + Intelligence modifier). The magus must be at least 6th level and must have the pool strike magus arcana before selecting this magus arcana."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 915,
+    "record_key": "Magus Arcana ~ Pool Strike (Thunderous)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

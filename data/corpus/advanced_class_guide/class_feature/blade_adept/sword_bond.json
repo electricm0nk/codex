@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Blade Adept ~ Sword Bond",
+    "name": "Sword Bond",
+    "class": "Arcanist",
+    "description": "At 1st level, a blade adept develops a bond with a blade and infuses it with arcane power. This ability works like a wizard's arcane bond ability save that the blade adept must bond to a one-handed piercing or slashing melee weapon. Additionally, the blade adept gains proficiency with the weapon if it is a simple or martial weapon. This ability replaces the arcanist exploits gained at 1st and 9th levels.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Adept ~ Sword Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Blade Adept Class Feature.Arcanist Class Feature.SpecialQuality.Supernatural.ArcanistExploit1.ArcanistExploit9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarNotAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BladeAdeptLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, a blade adept develops a bond with a blade and infuses it with arcane power. This ability works like a wizard's arcane bond ability save that the blade adept must bond to a one-handed piercing or slashing melee weapon. Additionally, the blade adept gains proficiency with the weapon if it is a simple or martial weapon. This ability replaces the arcanist exploits gained at 1st and 9th levels."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Blade Adept Blade Selection|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarNotAllowed|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BladeAdeptLVL|ArcanistLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Black Blade|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Black Blade|Black Blade"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|AdeptBlackblade"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2385,
+    "record_key": "Blade Adept ~ Sword Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

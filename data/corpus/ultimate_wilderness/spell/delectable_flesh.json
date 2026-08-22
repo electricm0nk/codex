@@ -1,0 +1,85 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Choose a creature within range as the object of hunger. All other creatures within 15 feet of the target that can see or smell the target's delectable flesh must succeed at a Will save or spiral into a depraved state from which they gain a single purpose-to consume as much of the target's delicious flesh as possible. The creature chosen as the target of this spell is not affected by this depravity. A depraved creature gains a bite attack, two claw attacks, and the scent ability if it didn't already have them. It drops any items it was carrying and attacks the target of the spell with these natural weapons, acting as if it were confused and the target had attacked it first. This effect lasts for the spell's duration or until the depraved creature can no longer see or smell the object of its hunger for a full minute. Additionally, a depraved creature can attempt a new saving throw to end this effect at the end of any turn in which the affected creature makes an attack against the object of its hunger. If a creature that eats for nourishment succeeds at a save to end the depraved effect early, it takes a -2 penalty on ability checks, attack rolls, concentration checks, saving throws, and skill checks whenever it is within 15 feet of the target.",
+    "key": "Delectable Flesh",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Witch,Wizard=6|Druid,Shaman=7"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose a creature within range as the object of hunger. All other creatures within 15 feet of the target that can see or smell the target's delectable flesh must succeed at a Will save or spiral into a depraved state from which they gain a single purpose-to consume as much of the target's delicious flesh as possible. The creature chosen as the target of this spell is not affected by this depravity. A depraved creature gains a bite attack, two claw attacks, and the scent ability if it didn't already have them. It drops any items it was carrying and attacks the target of the spell with these natural weapons, acting as if it were confused and the target had attacked it first. This effect lasts for the spell's duration or until the depraved creature can no longer see or smell the object of its hunger for a full minute. Additionally, a depraved creature can attempt a new saving throw to end this effect at the end of any turn in which the affected creature makes an attack against the object of its hunger. If a creature that eats for nourishment succeeds at a save to end the depraved effect early, it takes a -2 penalty on ability checks, attack rolls, concentration checks, saving throws, and skill checks whenever it is within 15 feet of the target."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsGhoran=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "All creatures in a 15-foot-radius burst centered on a single living creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 128,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Delectable Flesh",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

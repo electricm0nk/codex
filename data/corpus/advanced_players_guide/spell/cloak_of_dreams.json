@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Cloak of Dreams",
-    "school": "Enchantment",
-    "level": 5,
     "description": "You are surrounded by a soporific aroma that causes living creatures that begin their turn or end their movement within 5 feet of you to fall asleep for 1 minute. Creatures must save each time they begin their turn or end their movement within the cloak of dreams, even if they have previously saved against the effect. Sleeping creatures are helpless but can be awakened with a standard action or after being wounded.  Creatures with the scent special quality have a -4 penalty on their saves.",
-    "full_text": true
+    "full_text": true,
+    "key": "Cloak of Dreams",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=5|Sorcerer,Witch,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Living creatures within 5 ft. fall asleep.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You are surrounded by a soporific aroma that causes living creatures that begin their turn or end their movement within 5 feet of you to fall asleep for 1 minute. Creatures must save each time they begin their turn or end their movement within the cloak of dreams, even if they have previously saved against the effect. Sleeping creatures are helpless but can be awakened with a standard action or after being wounded.  Creatures with the scent special quality have a -4 penalty on their saves.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Nightmare Subdomain=6"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a rose petal and a drop of perfume)"
+      },
+      {
+        "key": "RANGE",
+        "value": "5 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/cloakOfDreams.html#_cloak-of-dreams"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "5-ft.-radius emanation centered on you"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 66,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1896,
-    "record_key": "Cloak of Dreams"
+    "record_key": "Cloak of Dreams",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

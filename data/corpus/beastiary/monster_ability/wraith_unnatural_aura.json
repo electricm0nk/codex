@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Wraith ~ Unnatural Aura",
     "delivery": "Supernatural",
@@ -13,21 +11,49 @@
     "owners": [
       "beastiary:monster:wraith"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft.)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Animals do not willingly approach within 30 feet of a wraith, unless a master makes a DC 25 Handle Animal, Ride, or wild empathy check."
+      },
+      {
+        "key": "KEY",
+        "value": "Wraith ~ Unnatural Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
     "source_page": "p.281",
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1258,
-    "record_key": "Wraith ~ Unnatural Aura"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1258,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Wraith ~ Unnatural Aura",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Deep Earth Bloodline ~ Earth Glide",
+    "name": "Earth Glide",
+    "class": "Deep Earth Bloodline",
+    "description": "You can glide through any sort of natural earth or stone as easily as a fish swims through water, with a burrow speed of %1 feet. You do not leave a tunnel or trace of your passage. You can use this ability for %2 minutes each day. The duration need not be continuous, but it must be used in 1-minute increments.|Sorcerer_DeepEarthEarthGlide_MoveBurrow|Sorcerer_DeepEarthEarthGlide_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Earth Bloodline ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Deep Earth Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Deep Earth"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_DeepEarth_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarth_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarthEarthGlide_MoveBurrow|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DeepEarthEarthGlide_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can glide through any sort of natural earth or stone as easily as a fish swims through water, with a burrow speed of %1 feet. You do not leave a tunnel or trace of your passage. You can use this ability for %2 minutes each day. The duration need not be continuous, but it must be used in 1-minute increments.|Sorcerer_DeepEarthEarthGlide_MoveBurrow|Sorcerer_DeepEarthEarthGlide_Duration"
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Burrow,/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DeepEarthEarthGlide_MoveBurrow|MOVE[Walk]/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DeepEarthEarthGlide_Duration|Sorcerer_DeepEarth_BloodlinePower15LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 minutes)|Sorcerer_DeepEarthEarthGlide_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DeepEarthEarthGlide_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DeepEarthBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3139,
+    "record_key": "Deep Earth Bloodline ~ Earth Glide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

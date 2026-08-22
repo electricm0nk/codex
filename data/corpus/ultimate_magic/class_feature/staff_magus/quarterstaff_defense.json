@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Staff Magus ~ Quarterstaff Defense",
+    "name": "Quarterstaff Defense",
+    "class": "Magus",
+    "description": "While wielding a quarterstaff, you gain a shield bonus to your Armor Class equal to the enhancement bonus of the quarterstaff, including any enhancement bonus on that staff from your arcane pool class feature.|!PRECLASS:1,Magus=13",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff Magus ~ Quarterstaff Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "While wielding a quarterstaff, you gain a shield bonus to your Armor Class equal to the enhancement bonus of the quarterstaff, including any enhancement bonus on that staff from your arcane pool class feature.|!PRECLASS:1,Magus=13"
+      },
+      {
+        "key": "DESC",
+        "value": "While wielding a quarterstaff, you gain a shield bonus to your Armor Class equal to the enhancement bonus of the quarterstaff, including any enhancement bonus on that staff from your arcane pool class feature, plus 3.|PRECLASS:1,Magus=13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|%CHOICE|TYPE=Shield"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=8|TITLE=\"Shield Bonus\""
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1332,
+    "record_key": "Staff Magus ~ Quarterstaff Defense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

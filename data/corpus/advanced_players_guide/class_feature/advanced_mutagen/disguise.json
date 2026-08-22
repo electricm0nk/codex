@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Advanced Mutagen ~ Disguise",
+    "name": "Disguise",
+    "class": "Advanced Mutagen",
+    "description": "When in her mutagenic form, the chymist can temporarily change her appearance to her normal form and still retain most of the abilities of her mutagenic form. As a standard action, she may make a Will saving throw (DC 20) to assume the appearance of her normal form for one minute. Each additional minute beyond the first requires a new saving throw with a +1 increase to the DC. Failure means the chymist assumes her normal form (as if ending the use of mutagenic form) or reverts fully to her mutagenic form. At any time while using this ability, the chymist can resume her normal form as a standard action or relax her will and revert to her mutagenic form as a free action. Once this ability ends, the chymist cannot use it again until 10 minutes have passed. Obvious physical changes in mutagenic form such as draconic mutagen, feral mutagen, and growth mutagen do not work while the chymist is disguised in her normal form. Time spent disguised counts toward the chymist's time in her mutagenic form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Advanced Mutagen ~ Disguise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterChymistAdvancedMutagen.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When in her mutagenic form, the chymist can temporarily change her appearance to her normal form and still retain most of the abilities of her mutagenic form. As a standard action, she may make a Will saving throw (DC 20) to assume the appearance of her normal form for one minute. Each additional minute beyond the first requires a new saving throw with a +1 increase to the DC. Failure means the chymist assumes her normal form (as if ending the use of mutagenic form) or reverts fully to her mutagenic form. At any time while using this ability, the chymist can resume her normal form as a standard action or relax her will and revert to her mutagenic form as a free action. Once this ability ends, the chymist cannot use it again until 10 minutes have passed. Obvious physical changes in mutagenic form such as draconic mutagen, feral mutagen, and growth mutagen do not work while the chymist is disguised in her normal form. Time spent disguised counts toward the chymist's time in her mutagenic form."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Master Chymist Advanced Mutagen"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1371,
+    "record_key": "Advanced Mutagen ~ Disguise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

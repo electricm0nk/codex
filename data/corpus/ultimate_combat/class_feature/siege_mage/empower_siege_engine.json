@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Siege Mage ~ Empower Siege Engine",
+    "name": "Empower Siege Engine",
+    "class": "Wizard",
+    "description": "As a swift action, a siege mage can sacrifice one of his spells to empower the next attack he makes before the end of his turn with a siege engine he is bonded with. When he does, the siege engine attack gains a bonus on its attack roll or targeting roll equal to the level of the spell he sacrificed, and a bonus to damage equal to 3 + the level of the spell. This ability replaces cantrips, but the siege mage gains the detect magic and read magic cantrips and places them in his spellbook. He can cast either of these as 1st-level spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Siege Mage ~ Empower Siege Engine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a siege mage can sacrifice one of his spells to empower the next attack he makes before the end of his turn with a siege engine he is bonded with. When he does, the siege engine attack gains a bonus on its attack roll or targeting roll equal to the level of the spell he sacrificed, and a bonus to damage equal to 3 + the level of the spell. This ability replaces cantrips, but the siege mage gains the detect magic and read magic cantrips and places them in his spellbook. He can cast either of these as 1st-level spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Wizard=1|Detect Magic,Read Magic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1753,
+    "record_key": "Siege Mage ~ Empower Siege Engine"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

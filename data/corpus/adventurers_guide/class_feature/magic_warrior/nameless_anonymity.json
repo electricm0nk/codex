@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magic Warrior ~ Nameless Anonymity",
+    "name": "Nameless Anonymity",
+    "class": "Magus",
+    "description": "A magic warrior's nameless masked identity protects her from divinations. Once per day, as long as she is in her masked identity, she can cast nondetection using her magus level as her caster level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magic Warrior ~ Nameless Anonymity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      },
+      {
+        "key": "DESC",
+        "value": "A magic warrior's nameless masked identity protects her from divinations. Once per day, as long as she is in her masked identity, she can cast nondetection using her magus level as her caster level."
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=MagusLVL|Nondetection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 888,
+    "record_key": "Magic Warrior ~ Nameless Anonymity"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

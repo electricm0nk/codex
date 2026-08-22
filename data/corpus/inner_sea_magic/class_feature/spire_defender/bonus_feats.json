@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spire Defender ~ Bonus Feats",
+    "name": "Bonus Feats",
+    "class": "Spire Defender",
+    "description": "The spire defender gains Combat Expertise and Dodge as bonus feats, even if he doesn't meet the prerequisites. The spire defender is not proficient with any kind of armor or shield. If he becomes proficient in light armor, he automatically gains the magus's ability to ignore the arcane spell failure chance of light armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spire Defender ~ Bonus Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.Extraordinary.MagusArmorProficiency"
+      },
+      {
+        "key": "DESC",
+        "value": "The spire defender gains Combat Expertise and Dodge as bonus feats, even if he doesn't meet the prerequisites. The spire defender is not proficient with any kind of armor or shield. If he becomes proficient in light armor, he automatically gains the magus's ability to ignore the arcane spell failure chance of light armor."
+      },
+      {
+        "key": "DESC",
+        "value": "If he becomes proficient in medium armor, he ignores medium armor's chance of arcane spell failure.|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "DESC",
+        "value": "If he becomes proficient in heavy armor, he ignores heavy armor's chance of arcane spell failure.|PRECLASS:1,Magus=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Combat Expertise|Dodge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magus ~ Armor Proficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArmorProficiencyLVL|max(MagusLVL,6)|PREABILITY:1,CATEGORY=FEAT,Light Armor Proficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArmorProficiencyLVL|max(MagusLVL,12)|PREABILITY:1,CATEGORY=FEAT,Medium Armor Proficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArmorProficiencyLVL|MagusLVL|PREABILITY:1,CATEGORY=FEAT,Heavy Armor Proficiency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 283,
+    "record_key": "Spire Defender ~ Bonus Feats"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Battle Rage",
+    "name": "Battle Rage",
+    "class": "Domain Power",
+    "description": "You can touch a creature as a standard action to give it a +%1 bonus on melee damage rolls for 1 round. You can do so %2 times per day.|max(DomainWarLVL/2,1)|BattleRageTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Battle Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.War Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BattleRageTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a creature as a standard action to give it a +%1 bonus on melee damage rolls for 1 round. You can do so %2 times per day.|max(DomainWarLVL/2,1)|BattleRageTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BattleRageTimes|DomainWarTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|BattleRageTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BattleRageTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Melee|WEAPON|DAMAGE|max(DomainWarLVL/2,1)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 747,
+    "record_key": "Domain Power ~ Battle Rage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:prose_formula_segment",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

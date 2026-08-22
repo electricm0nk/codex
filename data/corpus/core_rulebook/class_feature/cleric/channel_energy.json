@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric ~ Channel Energy",
+    "name": "Channel Energy",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric ~ Channel Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Internal.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelEnergyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericChannelEnergyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Cleric_Channeling|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelEnergyTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelEnergyLVL|ClericLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Cleric_Channeling|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 572,
+    "record_key": "Cleric ~ Channel Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

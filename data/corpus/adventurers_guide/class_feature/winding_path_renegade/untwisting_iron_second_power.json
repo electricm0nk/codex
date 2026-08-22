@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Winding Path Renegade ~ Untwisting Iron Second Power",
+    "name": "Untwisting Iron Second Power",
+    "class": "Brawler",
+    "description": "The winding path renegade gains a +%1 bonus on Craft checks involving metal, and she gains the benefits of the Master Craftsman and Craft Arms and Armor feats when crafting items made of metal.|BrawlerLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winding Path Renegade ~ Untwisting Iron Second Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawler Class Features.WindingPathRenegadeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "The winding path renegade gains a +%1 bonus on Craft checks involving metal, and she gains the benefits of the Master Craftsman and Craft Arms and Armor feats when crafting items made of metal.|BrawlerLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 726,
+    "record_key": "Winding Path Renegade ~ Untwisting Iron Second Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

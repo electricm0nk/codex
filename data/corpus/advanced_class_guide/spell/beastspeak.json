@@ -1,26 +1,72 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Beastspeak",
-    "school": "Divination",
-    "level": 2,
     "description": "When you're in the form of an animal (such as when you are using wild shape or are affected by a polymorph effect), you can speak normally, including when you cast spells with verbal components, and you sound like your normal self when you speak. You can cast this spell while in animal form, using animal-appropriate somatic components.",
-    "full_text": true
+    "full_text": true,
+    "key": "Beastspeak",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Shaman,Witch=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Speak normally while in animal form.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "When you're in the form of an animal (such as when you are using wild shape or are affected by a polymorph effect), you can speak normally, including when you cast spells with verbal components, and you sound like your normal self when you speak. You can cast this spell while in animal form, using animal-appropriate somatic components.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/beastspeak.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "you"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 25,
-    "record_key": "Beastspeak"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Beastspeak",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

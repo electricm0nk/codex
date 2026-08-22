@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante ~ Vengeance Strike",
+    "name": "Vengeance Strike",
+    "class": "Vigilante",
+    "description": "A vigilante can study a target to strike more viciously. He can spend up to 5 standard actions, which all must be in consecutive rounds. On the following round, he can make a vengeance strike against the studied creature. The target must remain unaware of the vigilante's presence (or not see him as a threat) until the attack. For each round spent studying the target, the vigilante grants himself one of the following benefits on his vengeance strike: gain a +4 circumstance bonus on the attack roll, deal an additional 3d6 points of precision damage if he hits, or treat the attack roll as if it were 2 higher for the purposes of determining whether the attack hit or threatens a critical hit (to maximum effective roll of 20). Each round of study can be spent in a different way or the same way (they stack with each other), but each round of study must be allocated before the attack roll is made.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante ~ Vengeance Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A vigilante can study a target to strike more viciously. He can spend up to 5 standard actions, which all must be in consecutive rounds. On the following round, he can make a vengeance strike against the studied creature. The target must remain unaware of the vigilante's presence (or not see him as a threat) until the attack. For each round spent studying the target, the vigilante grants himself one of the following benefits on his vengeance strike: gain a +4 circumstance bonus on the attack roll, deal an additional 3d6 points of precision damage if he hits, or treat the attack roll as if it were 2 higher for the purposes of determining whether the attack hit or threatens a critical hit (to maximum effective roll of 20). Each round of study can be spent in a different way or the same way (they stack with each other), but each round of study must be allocated before the attack roll is made."
+      },
+      {
+        "key": "DESC",
+        "value": "He automatically confirms any critical hits threatened by his vengeance strike.|PREVAREQ:VigilanteIsAvenger,1,VigilanteIsMountedFury,0"
+      },
+      {
+        "key": "DESC",
+        "value": "If the vigilante would normally be able to add a special effect from a vigilante talent with an asterisk (*) to this attack, he can instead add two special effects to his vengeance strike.|PREVAREQ:VigilanteIsStalker,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 38,
+    "record_key": "Vigilante ~ Vengeance Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

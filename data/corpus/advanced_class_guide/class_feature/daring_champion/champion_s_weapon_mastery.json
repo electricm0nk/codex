@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Daring Champion ~ Champion's Weapon Mastery",
+    "name": "Champion's Weapon Mastery",
+    "class": "Cavalier",
+    "description": "When a daring champion threatens a critical hit with a light or onehanded piercing melee weapon, that critical is automatically confirmed. Furthermore, the critical modifier of those weapons increases by 1 (x2 becomes x3, for example).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daring Champion ~ Champion's Weapon Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Daring Champion Class Feature.Cavalier Class Feature.SpecialQuality.Extraordinary.CavalierSupremeCharge"
+      },
+      {
+        "key": "DESC",
+        "value": "When a daring champion threatens a critical hit with a light or onehanded piercing melee weapon, that critical is automatically confirmed. Furthermore, the critical modifier of those weapons increases by 1 (x2 becomes x3, for example)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2982,
+    "record_key": "Daring Champion ~ Champion's Weapon Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

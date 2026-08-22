@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Fist ~ Miraculous Fortitude",
+    "name": "Miraculous Fortitude",
+    "class": "Warpriest",
+    "description": "The sacred fist's blessed fortitude ability improves. He still takes no damage or negative effect when he succeeds at a Fortitude save, but now when he fails a Fortitude saving throw against a spell or effect that deals damage (including ability damage and drain), he takes only half the amount of damage. A helpless sacred fist does not gain the benefit of miraculous fortitude.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Fist ~ Miraculous Fortitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The sacred fist's blessed fortitude ability improves. He still takes no damage or negative effect when he succeeds at a Fortitude save, but now when he fails a Fortitude saving throw against a spell or effect that deals damage (including ability damage and drain), he takes only half the amount of damage. A helpless sacred fist does not gain the benefit of miraculous fortitude."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4011,
+    "record_key": "Sacred Fist ~ Miraculous Fortitude"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

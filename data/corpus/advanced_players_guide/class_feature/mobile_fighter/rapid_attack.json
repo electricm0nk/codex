@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mobile Fighter ~ Rapid Attack",
+    "name": "Rapid Attack",
+    "class": "Fighter",
+    "description": "At 11th level, a mobile fighter can combine a full attack action with a single move. He must forgo the attack at his highest bonus but may take the remaining attacks at any point during his movement. This movement provokes attacks of opportunity as normal. This ability replaces armor training 3.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mobile Fighter ~ Rapid Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining3"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, a mobile fighter can combine a full attack action with a single move. He must forgo the attack at his highest bonus but may take the remaining attacks at any point during his movement. This movement provokes attacks of opportunity as normal. This ability replaces armor training 3."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2164,
+    "record_key": "Mobile Fighter ~ Rapid Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Waves Mystery ~ Wintry Touch",
+    "name": "Wintry Touch",
+    "class": "Waves Mystery",
+    "description": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of cold damage. You can use the wintry touch ability %2 times per day. At 11th level, any weapon that you wield is treated as a frost weapon.|OracleWintryTouchDamageBonus|OracleWintryTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Mystery ~ Wintry Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WavesRevelation.Supernatural.RevelationTargetOneOnly.PerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleWintryTouchDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleWintryTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of cold damage. You can use the wintry touch ability %2 times per day. At 11th level, any weapon that you wield is treated as a frost weapon.|OracleWintryTouchDamageBonus|OracleWintryTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleWintryTouchDamageBonus|classlevel(\"Oracle\")/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleWintryTouchTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 693,
+    "record_key": "Waves Mystery ~ Wintry Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

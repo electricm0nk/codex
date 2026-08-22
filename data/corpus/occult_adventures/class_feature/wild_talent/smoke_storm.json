@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Smoke Storm",
+    "name": "Smoke Storm",
+    "class": "Wild Talent",
+    "description": "Element fire; Type utility (Sp); Level 3; Burn 0 Saving Throw Fortitude negates; see text; Spell Resistance no You transform a source of open flame within 120 feet into a cloud of choking smoke, filling a 20-foot-radius spread and affecting vision like a smokestick. All creatures that begin their turns inside the area become sickened as long as they remain in the smoke and for 1d4+1 rounds thereafter (Fortitude negates).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Smoke Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Fire"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type utility (Sp); Level 3; Burn 0 Saving Throw Fortitude negates; see text; Spell Resistance no You transform a source of open flame within 120 feet into a cloud of choking smoke, filling a 20-foot-radius spread and affecting vision like a smokestick. All creatures that begin their turns inside the area become sickened as long as they remain in the smoke and for 1d4+1 rounds thereafter (Fortitude negates)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 777,
+    "record_key": "Wild Talent ~ Smoke Storm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

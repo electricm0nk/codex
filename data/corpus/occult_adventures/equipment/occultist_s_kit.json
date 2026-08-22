@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 45.0,
+    "description": "ncludes a backpack, a bedroll, a belt pouch, chalk (10 pieces), flint and steel, ink (1 ounce), an inkpen, an iron pot, a journal UE , occultist's implements (2), torches (10), trail rations (5 days), and a waterskin.",
+    "key": "Occultist's Kit",
+    "name": "Occultist's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "45"
+      },
+      {
+        "key": "WT",
+        "value": "32.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "SPROP",
+        "value": "ncludes a backpack, a bedroll, a belt pouch, chalk (10 pieces), flint and steel, ink (1 ounce), an inkpen, an iron pot, a journal UE , occultist's implements (2), torches (10), trail rations (5 days), and a waterskin."
+      }
+    ],
+    "weight_lbs": 32.5
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Occultist's Kit",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodline ~ Breath Weapon",
+    "name": "Breath Weapon",
+    "class": "Draconic Bloodline",
+    "description": "You gain a breath weapon. This breath weapon deals %1d6 points of|Sorcerer_DraconicBreathWeapon_Dice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline ~ Breath Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Draconic Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Draconic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Draconic_BloodlineProgressionLVL,9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Draconic_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Fire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicBreathWeapon_Line|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicBreathWeapon_Cone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicBreathWeapon_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicBreathWeapon_Dice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicBreathWeapon_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Bludgeoning|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Piercing|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a breath weapon. This breath weapon deals %1d6 points of|Sorcerer_DraconicBreathWeapon_Dice"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "bludgeoning damage.|PREVARGTEQ:Sorcerer_DraconicDamageType_Bludgeoning,1"
+      },
+      {
+        "key": "DESC",
+        "value": "piercing damage.|PREVARGTEQ:Sorcerer_DraconicDamageType_Piercing,1"
+      },
+      {
+        "key": "DESC",
+        "value": "damage. Those caught in the area of the breath receive a Reflex save for half damage. The DC of this save is %1.|Sorcerer_DraconicBreathWeapon_DC"
+      },
+      {
+        "key": "DESC",
+        "value": "The shape of the breath weapon is a"
+      },
+      {
+        "key": "DESC",
+        "value": "line.|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Line,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cone.|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Cone,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:Sorcerer_DraconicBreathWeapon_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVAREQ:Sorcerer_DraconicBreathWeapon_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVAREQ:Sorcerer_DraconicBreathWeapon_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_DraconicBreathWeapon_Times|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Times,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_Draconic_BloodlinePower9LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBreathWeapon_DC|10+(Sorcerer_Draconic_BloodlinePower9LVL/2)+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DraconicBreathWeapon_Times|max(floor((Sorcerer_Draconic_BloodlinePower9LVL-11)/3),1)|PREVARGTEQ:Sorcerer_Draconic_BloodlinePower9LVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, %2d6 acid, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Line,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, %2d6 cold, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Line,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, %2d6 electricity, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Line,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft. line, %2d6 fire, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Line,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, %2d6 acid, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Cone,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, %2d6 cold, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Cone,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, %2d6 electricity, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Cone,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft. cone, %2d6 fire, DC %3, %1/day)|Sorcerer_DraconicBreathWeapon_Times|Sorcerer_DraconicBreathWeapon_Dice|Sorcerer_DraconicBreathWeapon_DC|PREVARGTEQ:Sorcerer_DraconicBreathWeapon_Cone,1|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DraconicBreathWeapon_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2446,
+    "record_key": "Draconic Bloodline ~ Breath Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

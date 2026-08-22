@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elementalist Shifter ~ Ash Storm",
+    "name": "Ash Storm",
+    "class": "Elementalist Shifter",
+    "description": "By combining air and fire, the elementalist shifter surrounds herself with a storm of swirling ash, granting her a 20%% miss chance against ranged attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elementalist Shifter ~ Ash Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "By combining air and fire, the elementalist shifter surrounds herself with a storm of swirling ash, granting her a 20%% miss chance against ranged attacks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1054,
+    "record_key": "Elementalist Shifter ~ Ash Storm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

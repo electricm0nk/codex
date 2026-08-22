@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Seize Advantage",
+    "name": "Seize Advantage",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can take advantage of your foes when they overcommit on their attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Seize Advantage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Swashbuckler ~ Opportune Parry and Riposte"
+      },
+      {
+        "key": "DESC",
+        "value": "You can take advantage of your foes when they overcommit on their attacks."
+      },
+      {
+        "key": "DESC",
+        "value": " When your foe is using Power Attack and you successfully use the opportune parry and riposte deed to parry its attack and then respond with a riposte, you add your foe's current bonus on damage rolls from Power Attack to your own damage roll, but you do not take the penalty to hit from your foe's Power Attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Seize Advantage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4183,
+    "record_key": "Warpriest Bonus Feat ~ Seize Advantage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sensate ~ Uncanny Dodge",
+    "name": "Uncanny Dodge",
+    "class": "Fighter",
+    "description": "At 3rd level, a sensate gains uncanny dodge as the barbarian ability of the same name, except supernatural in nature. This ability replaces armor training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sensate ~ Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sensate Class Feature.Fighter Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a sensate gains uncanny dodge as the barbarian ability of the same name, except supernatural in nature. This ability replaces armor training 1."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1740,
+    "record_key": "Sensate ~ Uncanny Dodge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

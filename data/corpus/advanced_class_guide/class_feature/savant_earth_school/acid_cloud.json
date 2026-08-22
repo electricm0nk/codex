@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant Earth School ~ Acid Cloud",
+    "name": "Acid Cloud",
+    "class": "Savant Earth School",
+    "description": "As a standard action, you can create a 5-foot-radius cloud of acid vapor within 30 feet that lasts for 1 round. This cloud deals 1d6+%1 points of acid damage to all creatures in the cloud and sickens them for 1 round. A successful Fortitude save DC %2 negates the sickened effect and halves the damage. Creatures that begin their turn inside the cloud can move out that turn without penalty, but those that enter the cloud are affected. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+10+INT|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Earth School ~ Acid Cloud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can create a 5-foot-radius cloud of acid vapor within 30 feet that lasts for 1 round. This cloud deals 1d6+%1 points of acid damage to all creatures in the cloud and sickens them for 1 round. A successful Fortitude save DC %2 negates the sickened effect and halves the damage. Creatures that begin their turn inside the cloud can move out that turn without penalty, but those that enter the cloud are affected. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+10+INT|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2614,
+    "record_key": "Savant Earth School ~ Acid Cloud"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

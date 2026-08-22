@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swordmaster ~ Leopard Trance Trance",
+    "name": "Leopard Trance",
+    "class": "Swordmaster",
+    "description": "Using the swiftness of the leopard, a swordmaster's evasive footwork confuses her opponents. When in this trance, a swordmaster gains the benefits of the Mobility feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swordmaster ~ Leopard Trance Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SwordmasterTrance.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Using the swiftness of the leopard, a swordmaster's evasive footwork confuses her opponents. When in this trance, a swordmaster gains the benefits of the Mobility feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 768,
+    "record_key": "Swordmaster ~ Leopard Trance Trance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

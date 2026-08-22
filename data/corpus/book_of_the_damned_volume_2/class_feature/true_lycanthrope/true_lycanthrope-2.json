@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "True Lycanthrope ~ JezeldaAfflicted",
+    "name": "True Lycanthrope",
+    "class": "True Lycanthrope",
+    "description": "Become a true lycanthrope (NB: adjust Lycanthrope type manually).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "True Lycanthrope ~ JezeldaAfflicted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal.JezeldaAfflicted"
+      },
+      {
+        "key": "PRETEMPLATE",
+        "value": "1,Afflicted Werewolf"
+      },
+      {
+        "key": "DESC",
+        "value": "Become a true lycanthrope (NB: adjust Lycanthrope type manually)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 139,
+    "record_key": "True Lycanthrope ~ JezeldaAfflicted"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ragechemist ~ Sturdy Rage",
+    "name": "Sturdy Rage",
+    "class": "Alchemist",
+    "description": "At 6th level, whenever a ragechemist uses his rage mutagen, he also gains a +4 bonus to natural armor, but the penalty on Will saving throws and to Intelligence for taking damage increases to -4. This ability replaces swift poisoning.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ragechemist ~ Sturdy Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 6th level, whenever a ragechemist uses his rage mutagen, he also gains a +4 bonus to natural armor, but the penalty on Will saving throws and to Intelligence for taking damage increases to -4. This ability replaces swift poisoning."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenACBonus|4|TYPE=Natural"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenStatBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MutagenStatPenalty|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 261,
+    "record_key": "Ragechemist ~ Sturdy Rage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

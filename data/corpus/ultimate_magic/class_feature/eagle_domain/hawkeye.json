@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Eagle Domain ~ Hawkeye",
+    "name": "Hawkeye",
+    "class": "Eagle Domain",
+    "description": "As a swift action, you may add a +%1 bonus on one ranged attack or on one Perception check. You can use this ability %2 times per day.|HawkeyeBonus|DomainEagleTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eagle Domain ~ Hawkeye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower.Eagle Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HawkeyeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you may add a +%1 bonus on one ranged attack or on one Perception check. You can use this ability %2 times per day.|HawkeyeBonus|DomainEagleTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HawkeyeBonus|max(1,DomainEagleLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainDesertTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 281,
+    "record_key": "Eagle Domain ~ Hawkeye"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

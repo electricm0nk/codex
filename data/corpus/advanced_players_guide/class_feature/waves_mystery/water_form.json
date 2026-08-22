@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Waves Mystery ~ Water Form",
+    "name": "Water Form",
+    "class": "Waves Mystery",
+    "description": "As a standard action, you can assume the form of a Small water elemental, as elemental body I. At 9th level, you can assume the form of a Medium water elemental, as elemental body II. At 11th level, you can assume the form of a Large water elemental, as elemental body III. At 13th level, you can assume the form of a Huge water elemental, as elemental body IV. You can use this ability once per day, but the duration is %1 hour.|OracleWaterFormDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waves Mystery ~ Water Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WavesRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleWaterFormDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can assume the form of a Small water elemental, as elemental body I. At 9th level, you can assume the form of a Medium water elemental, as elemental body II. At 11th level, you can assume the form of a Large water elemental, as elemental body III. At 13th level, you can assume the form of a Huge water elemental, as elemental body IV. You can use this ability once per day, but the duration is %1 hour.|OracleWaterFormDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleWaterFormDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 691,
+    "record_key": "Waves Mystery ~ Water Form"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

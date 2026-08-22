@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Focused Arcane School ~ Foresight School",
+    "name": "Foresight School",
+    "class": "Focused Arcane School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Focused Arcane School ~ Foresight School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Focused Arcane School.WizardDivination.WizardScryingAdept.WizardDivinersFortune"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Focused Arcane School ~ Foresight School],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardDivination]"
+      },
+      {
+        "key": "PRESUBCLASS",
+        "value": "1,Diviner"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Foresight School ~ Prescience"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Foresight School ~ Foretell|PREVARGTEQ:DivinationSchoolLVL,8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_DivinersFortune|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ScryingAdept|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3319,
+    "record_key": "Focused Arcane School ~ Foresight School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

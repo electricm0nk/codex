@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Arcana ~ Accursed Strike",
+    "name": "Accursed Strike",
+    "class": "Magus Arcana",
+    "description": "If you can cast bestow curse, major curse, or any spell with the curse descriptor, you can deliver these prepared spells using the spellstrike ability, even if the spells are not touch attack spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Arcana ~ Accursed Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialAttack.SpellLike.MagusArcana"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Magus Archetype ~ Hexcrafter"
+      },
+      {
+        "key": "DESC",
+        "value": "If you can cast bestow curse, major curse, or any spell with the curse descriptor, you can deliver these prepared spells using the spellstrike ability, even if the spells are not touch attack spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1318,
+    "record_key": "Magus Arcana ~ Accursed Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

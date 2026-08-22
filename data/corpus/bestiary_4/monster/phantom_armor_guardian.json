@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "2",
@@ -18,6 +16,112 @@
     ],
     "race_subtype": null,
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam|Racial Traits ~ Phantom Armor (Guardian)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1|TYPE=Shield"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|9|TYPE=Armor"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamAttacks|1"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Phantom Armor (Guardian)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Climb|Disguise|Fly|Intimidate|Knowledge (arcana)|Knowledge (religion)|Perception|Sense Motive|Spellcraft|Stealth"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Phantom Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Undead"
+      }
+    ],
     "size": "M",
     "source_page": "p.213",
     "speeds": [
@@ -27,16 +131,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 178,
-    "record_key": "Phantom Armor (Guardian)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 178,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Phantom Armor (Guardian)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Strength Blessing ~ Strength Surge",
+    "name": "Strength Surge",
+    "class": "Strength Blessing",
+    "description": "As a swift action you can focus your own strength. You gain an enhancement bonus equal to %1 on melee attack rolls, combat maneuver checks that rely on Strength, Strength-based skills, and Strength checks for 1 round.|max(1,WarpriestLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strength Blessing ~ Strength Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action you can focus your own strength. You gain an enhancement bonus equal to %1 on melee attack rolls, combat maneuver checks that rely on Strength, Strength-based skills, and Strength checks for 1 round.|max(1,WarpriestLVL/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2277,
+    "record_key": "Strength Blessing ~ Strength Surge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

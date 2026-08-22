@@ -1,0 +1,745 @@
+{
+  "id": "book_of_the_damned_volume_1",
+  "title": "Book of the Damned, Vol. 1",
+  "kinds": [
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 0,
+      "partial": 0,
+      "not_started": 8,
+      "denominator": 8,
+      "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "origin": 8,
+        "unclassified": 2
+      },
+      "items": [
+        {
+          "name": "Channel Hellfire",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary",
+          "standing": "origin",
+          "display_name": "Channel Hellfire"
+        },
+        {
+          "name": "Damned",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Weakness",
+          "standing": "unclassified",
+          "display_name": "Damned"
+        },
+        {
+          "name": "Hellfire Ray",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.SpellLike",
+          "standing": "origin",
+          "display_name": "Hellfire Ray"
+        },
+        {
+          "name": "Hellish Soul",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Hellish Soul"
+        },
+        {
+          "name": "Heresy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Heresy"
+        },
+        {
+          "name": "Imp Companion",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Animal Companion",
+          "standing": "origin",
+          "display_name": "Imp Companion"
+        },
+        {
+          "name": "Infernal Bargain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Infernal Bargain"
+        },
+        {
+          "name": "Infernal Charisma",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Infernal Charisma"
+        },
+        {
+          "name": "Infernal Transport",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Infernal Transport"
+        },
+        {
+          "name": "Master Conjurer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Master Conjurer"
+        }
+      ]
+    },
+    {
+      "kind": "class",
+      "label": "Classes",
+      "done": 0,
+      "partial": 0,
+      "not_started": 1,
+      "denominator": 1,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Diabolist",
+          "doneness": "not-started",
+          "type_facet": "PC.Prestige",
+          "standing": "origin",
+          "display_name": "Diabolist"
+        }
+      ]
+    },
+    {
+      "kind": "companion",
+      "label": "Companions",
+      "done": 0,
+      "partial": 1,
+      "not_started": 24,
+      "denominator": 25,
+      "pct": 0.0,
+      "excluded_from_percentage": 6,
+      "standing_breakdown": {
+        "unclassified": 6,
+        "origin": 25
+      },
+      "items": [
+        {
+          "name": "1",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "1"
+        },
+        {
+          "name": "Alternate Form (Boar)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ImpCompTrick.ImpCompStartTrick",
+          "standing": "origin",
+          "display_name": "Alternate Form (Boar)"
+        },
+        {
+          "name": "Alternate Form (Rat)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ImpCompTrick.ImpCompStartTrick",
+          "standing": "origin",
+          "display_name": "Alternate Form (Rat)"
+        },
+        {
+          "name": "Alternate Form (Raven)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ImpCompTrick.ImpCompStartTrick",
+          "standing": "origin",
+          "display_name": "Alternate Form (Raven)"
+        },
+        {
+          "name": "Alternate Form (Young Giant Spider)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ImpCompTrick.ImpCompStartTrick",
+          "standing": "origin",
+          "display_name": "Alternate Form (Young Giant Spider)"
+        },
+        {
+          "name": "Bonus Tricks",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Bonus Tricks"
+        },
+        {
+          "name": "Companion (Imp)",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Companion (Imp)"
+        },
+        {
+          "name": "Imp Companion",
+          "doneness": "not-started",
+          "type_facet": "Monster.Companion",
+          "standing": "origin",
+          "display_name": "Imp Companion"
+        },
+        {
+          "name": "Link",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Link"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Poison"
+        },
+        {
+          "name": "Shape Change",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "origin",
+          "display_name": "Shape Change"
+        },
+        {
+          "name": "Share Spells",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Share Spells"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Curse Water)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Curse Water)"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Floating Disk)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Floating Disk)"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Grease)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Grease)"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Hold Portal)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Hold Portal)"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Identify)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Identify)"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Silent Image)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Silent Image)"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Unseen Servant)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Unseen Servant)"
+        },
+        {
+          "name": "Spell-like Ability 1/day (Ventriloquism)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability 1/day (Ventriloquism)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Bleed)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Bleed)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Deathwatch)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Deathwatch)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Detect Evil)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Detect Evil)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Detect Law)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Detect Law)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Doom)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Doom)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Ghost Sound)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Ghost Sound)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Mage Hand)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Mage Hand)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Message)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Message)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Open/Close)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Open/Close)"
+        },
+        {
+          "name": "Spell-like Ability At-will (Prestidigitation)",
+          "doneness": "not-started",
+          "type_facet": "ImpCompTrick",
+          "standing": "origin",
+          "display_name": "Spell-like Ability At-will (Prestidigitation)"
+        },
+        {
+          "name": "Telepathy",
+          "doneness": "not-started",
+          "type_facet": "Internal.ImpCompTrick",
+          "standing": "unclassified",
+          "display_name": "Telepathy"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 15,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 15,
+      "pct": 100.0,
+      "excluded_from_percentage": 21,
+      "standing_breakdown": {
+        "origin": 15,
+        "unclassified": 21
+      },
+      "items": [
+        {
+          "name": "Blasphemous Bile",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "origin",
+          "display_name": "Blasphemous Bile"
+        },
+        {
+          "name": "Boundless Reach",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "origin",
+          "display_name": "Boundless Reach"
+        },
+        {
+          "name": "Construct Form",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Construct Form"
+        },
+        {
+          "name": "Corpulence",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Corpulence"
+        },
+        {
+          "name": "Devil Summoner",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "origin",
+          "display_name": "Devil Summoner"
+        },
+        {
+          "name": "Evangelization",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Evangelization"
+        },
+        {
+          "name": "Hellstrider",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Hellstrider"
+        },
+        {
+          "name": "Indomitable Oration",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Indomitable Oration"
+        },
+        {
+          "name": "Infernal Wound",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Infernal Wound"
+        },
+        {
+          "name": "Malleable Form",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Malleable Form"
+        },
+        {
+          "name": "Master Grappler",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Master Grappler"
+        },
+        {
+          "name": "Merciless Blow",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "origin",
+          "display_name": "Merciless Blow"
+        },
+        {
+          "name": "Noxious Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Noxious Breath (SpecialAttack.Supernatural)"
+        },
+        {
+          "name": "Noxious Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Noxious Breath (SpecialAttack.Supernatural) #2"
+        },
+        {
+          "name": "Ohrwurm",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary",
+          "standing": "origin",
+          "display_name": "Ohrwurm"
+        },
+        {
+          "name": "Phalanx",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Phalanx"
+        },
+        {
+          "name": "Rend",
+          "doneness": "done",
+          "type_facet": "SpecialAttack",
+          "standing": "unclassified",
+          "display_name": "Rend"
+        },
+        {
+          "name": "Searing Word",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "origin",
+          "display_name": "Searing Word"
+        },
+        {
+          "name": "Shared Senses",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Shared Senses (SpecialQuality.Supernatural)"
+        },
+        {
+          "name": "Shared Senses",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Shared Senses (SpecialQuality.Supernatural) #2"
+        },
+        {
+          "name": "Skills",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Skills"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "partial",
+          "type_facet": "SpecialQuality.SpellLike",
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike)"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality)"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "partial",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality) #3"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality) #4"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality) #5"
+        },
+        {
+          "name": "Stability",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Stability"
+        },
+        {
+          "name": "Summon Devil",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike",
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialAttack.SpellLike)"
+        },
+        {
+          "name": "Summon Devil",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialAttack.Supernatural)"
+        },
+        {
+          "name": "Summon Devil",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike",
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialAttack.SpellLike) #3"
+        },
+        {
+          "name": "Summon Devil",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialAttack.Supernatural) #4"
+        },
+        {
+          "name": "Summon Devil",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike",
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialAttack.SpellLike) #5"
+        },
+        {
+          "name": "Superior Grappler",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Superior Grappler"
+        },
+        {
+          "name": "Swarming",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Swarming"
+        },
+        {
+          "name": "Throne of Skulls",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Throne of Skulls"
+        },
+        {
+          "name": "Wisdom Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Wisdom Drain"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 5,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 5,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 5
+      },
+      "items": [
+        {
+          "name": "Devil, Apostate (Deimavigga)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Devil, Apostate (Deimavigga)"
+        },
+        {
+          "name": "Devil, Greater Host (Magaav)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Devil, Greater Host (Magaav)"
+        },
+        {
+          "name": "Devil, Heresy (Ayngavhaul)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Devil, Heresy (Ayngavhaul)"
+        },
+        {
+          "name": "Devil, Lesser Host (Gaav)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Devil, Lesser Host (Gaav)"
+        },
+        {
+          "name": "Devil, Warmonger (Levaloch)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Devil, Warmonger (Levaloch)"
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 1,
+      "standing_breakdown": {
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Trample",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Trample"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 0,
+      "partial": 0,
+      "not_started": 4,
+      "denominator": 4,
+      "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "unclassified": 2,
+        "origin": 4
+      },
+      "items": [
+        {
+          "name": "Agonize",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine",
+          "standing": "unclassified",
+          "display_name": "Agonize"
+        },
+        {
+          "name": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)"
+        },
+        {
+          "name": "Hellfire Ray",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine",
+          "standing": "origin",
+          "display_name": "Hellfire Ray"
+        },
+        {
+          "name": "Maledication",
+          "doneness": "not-started",
+          "type_facet": "Divine",
+          "standing": "origin",
+          "display_name": "Maledication"
+        },
+        {
+          "name": "Sacrifice",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine",
+          "standing": "origin",
+          "display_name": "Sacrifice"
+        },
+        {
+          "name": "Vision of Hell",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine",
+          "standing": "unclassified",
+          "display_name": "Vision of Hell"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gray Paladin ~ Aura of Subtlety",
+    "name": "Aura of Subtlety",
+    "class": "Paladin",
+    "description": "A gray paladin learns how to protect herself from detection. She and her allies within 10 feet gain a +4 morale bonus on saving throws against divination effects. Furthermore, casters of divinations that target the gray paladin or her nearby allies must succeed at a caster level check as though the gray paladin and her nearby allies were under the effect of a nondetection spell cast by the gray paladin, with a caster level equal to the gray paladin's paladin level. This ability functions while the gray paladin is conscious and while she is sleeping, but not if she is unconscious for any other reason, or dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gray Paladin ~ Aura of Subtlety"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Features.GrayPaladinClassFeatures.SpecialQuality.SpellLike.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A gray paladin learns how to protect herself from detection. She and her allies within 10 feet gain a +4 morale bonus on saving throws against divination effects. Furthermore, casters of divinations that target the gray paladin or her nearby allies must succeed at a caster level check as though the gray paladin and her nearby allies were under the effect of a nondetection spell cast by the gray paladin, with a caster level equal to the gray paladin's paladin level. This ability functions while the gray paladin is conscious and while she is sleeping, but not if she is unconscious for any other reason, or dead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 591,
+    "record_key": "Gray Paladin ~ Aura of Subtlety"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

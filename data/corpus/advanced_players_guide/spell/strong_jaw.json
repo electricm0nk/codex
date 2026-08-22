@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Strong Jaw",
-    "school": "Transmutation",
-    "level": 3,
     "description": "Laying a hand upon an allied creature's jaw, claws, tentacles, or other natural weapons, you enhance the power of that creature's natural attacks. Each natural attack that creature makes deals damage as if the creature were two sizes larger than it actually is (see page 302 of the Pathfinder Bestiary for more information). If the creature is already Gargantuan or Colossal-sized, double the amount of damage dealt by each of its natural attacks instead. This spell does not actually change the creature's size; all of its statistics except the amount of damage dealt by its natural attacks remain unchanged.",
-    "full_text": true
+    "full_text": true,
+    "key": "Strong Jaw",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=3|Druid=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Laying a hand upon an allied creature's jaw, claws, tentacles, or other natural weapons, you enhance the power of that creature's natural attacks. Each natural attack that creature makes deals damage as if the creature were two sizes larger than it actually is (see page 302 of the Pathfinder Bestiary for more information). If the creature is already Gargantuan or Colossal-sized, double the amount of damage dealt by each of its natural attacks instead. This spell does not actually change the creature's size; all of its statistics except the amount of damage dealt by its natural attacks remain unchanged.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Natural attacks damage as two sizes bigger.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/strongJaw.html#_strong-jaw"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.247"
+      },
+      {
+        "key": "SPELLRES",
+        "value": " yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "creature touched"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Natural;Unarmed|WEAPON|DAMAGESIZE|2|TYPE=Temporary"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 233,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2077,
-    "record_key": "Strong Jaw"
+    "record_key": "Strong Jaw",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

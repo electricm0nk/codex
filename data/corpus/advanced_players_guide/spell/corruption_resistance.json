@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Corruption Resistance",
-    "school": "Abjuration",
-    "level": 2,
     "description": "You grant the touched creature limited protection from magical effects that inflict damage based on the target creature's alignment, such as holy smite, order's wrath, a paladin's smite evil attack, or an unholy weapon. Choose one alignment type: chaos, evil, good, or law. The subject takes 5 less points of damage from effects that specifically harm creatures of that alignment. The value of the protection increases to 10 points at 7th level and 15 points at 11th level. The spell protects the recipient's equipment as well.  Corruption resistance protects against spells, spell-like abilities, and special abilities, not physical attacks. Corruption resistance only protects against damage. The subject can still suffer side effects from such attacks. When you use this spell to protect an alignment, it gains the descriptor of that alignment.",
-    "full_text": true
+    "full_text": true,
+    "key": "Corruption Resistance",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Protects creature against damage from alignment-based attacks.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You grant the touched creature limited protection from magical effects that inflict damage based on the target creature's alignment, such as holy smite, order's wrath, a paladin's smite evil attack, or an unholy weapon. Choose one alignment type: chaos, evil, good, or law. The subject takes 5 less points of damage from effects that specifically harm creatures of that alignment. The value of the protection increases to 10 points at 7th level and 15 points at 11th level. The spell protects the recipient's equipment as well.  Corruption resistance protects against spells, spell-like abilities, and special abilities, not physical attacks. Corruption resistance only protects against damage. The subject can still suffer side effects from such attacks. When you use this spell to protect an alignment, it gains the descriptor of that alignment.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/corruptionResistance.html#_corruption-resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 8,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1902,
-    "record_key": "Corruption Resistance"
+    "record_key": "Corruption Resistance",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

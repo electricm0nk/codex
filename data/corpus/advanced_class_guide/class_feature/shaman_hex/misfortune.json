@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Hex ~ Misfortune",
+    "name": "Misfortune",
+    "class": "Shaman Hex",
+    "description": "The shaman causes a creature within 30 feet to suffer grave misfortune for %1 rounds. Anytime the creature makes an ability check, attack roll, saving throw, or skill check, it must roll twice and take the worse result. A successful Will saving throw (DC %2) negates this hex. This hex affects all rolls the target must make while it lasts. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanMisfortuneHexDuration|ShamanMisfortuneHexDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Misfortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Misfortune"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMisfortuneHexDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanMisfortuneHexDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman causes a creature within 30 feet to suffer grave misfortune for %1 rounds. Anytime the creature makes an ability check, attack roll, saving throw, or skill check, it must roll twice and take the worse result. A successful Will saving throw (DC %2) negates this hex. This hex affects all rolls the target must make while it lasts. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanMisfortuneHexDuration|ShamanMisfortuneHexDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMisfortuneHexDuration|1+min(2,ShamanHexLVL/8)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanMisfortuneHexDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1435,
+    "record_key": "Shaman Hex ~ Misfortune"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

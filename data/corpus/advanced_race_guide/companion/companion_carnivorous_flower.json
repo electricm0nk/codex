@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T09:20:33Z",
   "data": {
     "ability_keys": [
       "advanced_race_guide:companion:companion_advancement_carnivorous_flower"
@@ -22,6 +20,80 @@
     ],
     "race_subtype": null,
     "race_type": "Plant",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Carnivorous Flower|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Plant Companion ~ Carnivorous Flower"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,10"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Melee.Finesseable.Piercing,*1,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Plant Companion - Carnivorous Flower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "NotAllowed,1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Plant"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.PlantCompanion"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -42,16 +114,18 @@
       "PlantCompanion"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
-    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58",
-    "line": 14,
-    "record_key": "Companion (Carnivorous Flower)"
-  },
+  "ingested_at": "2026-08-13T09:20:33Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
+    "record_key": "Companion (Carnivorous Flower)",
+    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

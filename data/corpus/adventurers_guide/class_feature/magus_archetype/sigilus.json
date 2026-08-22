@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Sigilus",
+    "name": "Sigilus",
+    "class": "Magus Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Sigilus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Sigilus],[!PREFACT:1,ABILITIES,Magus_Archetype_Spellstrike=True,Magus_Archetype_MediumArmorProficiency=True,Magus_Archetype_HeavyArmorProficiency=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sigilus ~ Inscribe Rune|PRECLASS:1,Magus=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sigilus ~ Inscribe Sihedron|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Spellstrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Spellstrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 882,
+    "record_key": "Magus Archetype ~ Sigilus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

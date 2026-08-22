@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wizard Archetype ~ Spellbinder",
+    "name": "Spellbinder",
+    "class": "Wizard Archetype",
+    "description": "A spellbinder is an elven wizard who forges an arcane bond between himself and one or more wizard spells. These spells become so well understood by the spellbinder that he can prepare them in spell slots that already have other spells prepared in them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Spellbinder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype.WizardArcaneBond"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Spellbinder],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellbinder is an elven wizard who forges an arcane bond between himself and one or more wizard spells. These spells become so well understood by the spellbinder that he can prepare them in spell slots that already have other spells prepared in them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spellbinder ~ Spell Bond|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spellbinder ~ Discoveries|PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Wizard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 107,
+    "record_key": "Wizard Archetype ~ Spellbinder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Prophet ~ Rage Prophet Mystery",
+    "name": "Rage Prophet Mystery",
+    "class": "Rage Prophet",
+    "description": "[Not Implemented]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Prophet ~ Rage Prophet Mystery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Rage ProphetClassFeatures.SpecialQuality.Extra"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageProphetMysteryLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level and every even level thereafter, a rage prophet learns an additional spell from his spirit guide. These spells are in addition to those listed in Table 2-6: Oracle Spells Known. Like spells from an oracle's mystery, the rage prophet cannot exchange these spells for different spells at higher levels. The rage prophet must be able to cast oracle spells of the listed level to learn one of these spells from his spirit guide. The rage prophet treats the spell as an oracle spell of the listed level. The possible spells are arcane eye (4th), augury (2nd), divination (4th), dream (5th), find the path (6th), helping hand (3rd), see invisibility (2nd), shadow walk (6th), speak with dead (3rd), spectral hand (2nd), spiritual weapon (2nd), unseen servant (1st), vision (7th), and whispering wind (2nd)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageProphetMysteryLVL|RageProphetLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1440,
+    "record_key": "Rage Prophet ~ Rage Prophet Mystery"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

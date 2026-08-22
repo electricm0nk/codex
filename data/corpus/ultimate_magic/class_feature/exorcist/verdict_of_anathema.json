@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Exorcist ~ Verdict of Anathema",
+    "name": "Verdict of Anathema",
+    "class": "Inquisitor",
+    "description": "While using judgment, you can unleash the verdict of anathema on your enemies. When you do, your judgment ends, and all enemy creatures within 10 feet are affected by your verdict of exorcism.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exorcist ~ Verdict of Anathema"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "While using judgment, you can unleash the verdict of anathema on your enemies. When you do, your judgment ends, and all enemy creatures within 10 feet are affected by your verdict of exorcism."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1259,
+    "record_key": "Exorcist ~ Verdict of Anathema"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Arcane Archer ~ Enhance Arrow",
+    "name": "Enhance Arrow",
+    "class": "Arcane Archer",
+    "description": "At 1st level, every nonmagical arrow an arcane archer nocks and lets fly becomes magical, gaining a +1 enhancement bonus. Unlike magic weapons created by normal means, the archer need not spend gold pieces to accomplish this task. However, an archer's magic arrows only function for him. In addition, the arcane archer's arrows gain a number of additional qualities as he gains additional levels. The elemental, elemental burst, and aligned qualities can be changed once per day, when the arcane archer prepares spells or, in the case of spontaneous spellcasters, after 8 hours of rest. At 3rd level, every nonmagical arrow fired by an arcane archer gains one of the following elemental themed weapon qualities: flaming, frost, or shock. At 5th level, every nonmagical arrow fired by an arcane archer gains the distance weapon quality. At 7th level, every nonmagical arrow fired by an arcane archer gains one of the following elemental burst weapon qualities: flaming burst, icy burst, or shocking burst. This ability replaces the ability gained at 3rd level. At 9th level, every nonmagical arrow fired by an arcane archer gains one of the following aligned weapon qualities: anarchic, axiomatic, holy, or unholy. The arcane archer cannot choose an ability that is the opposite of his alignment (for example, a lawful good arcane archer could not choose anarchic or unholy as his weapon quality). The bonuses granted by a magic bow apply as normal to arrows that have been enhanced with this ability. Only the larger enhancement bonus applies. Duplicate abilities do not stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arcane Archer ~ Enhance Arrow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArrowEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArrowEnhancementLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, every nonmagical arrow an arcane archer nocks and lets fly becomes magical, gaining a +1 enhancement bonus. Unlike magic weapons created by normal means, the archer need not spend gold pieces to accomplish this task. However, an archer's magic arrows only function for him. In addition, the arcane archer's arrows gain a number of additional qualities as he gains additional levels. The elemental, elemental burst, and aligned qualities can be changed once per day, when the arcane archer prepares spells or, in the case of spontaneous spellcasters, after 8 hours of rest. At 3rd level, every nonmagical arrow fired by an arcane archer gains one of the following elemental themed weapon qualities: flaming, frost, or shock. At 5th level, every nonmagical arrow fired by an arcane archer gains the distance weapon quality. At 7th level, every nonmagical arrow fired by an arcane archer gains one of the following elemental burst weapon qualities: flaming burst, icy burst, or shocking burst. This ability replaces the ability gained at 3rd level. At 9th level, every nonmagical arrow fired by an arcane archer gains one of the following aligned weapon qualities: anarchic, axiomatic, holy, or unholy. The arcane archer cannot choose an ability that is the opposite of his alignment (for example, a lawful good arcane archer could not choose anarchic or unholy as his weapon quality). The bonuses granted by a magic bow apply as normal to arrows that have been enhanced with this ability. Only the larger enhancement bonus applies. Duplicate abilities do not stack."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArrowEnhancement|(ArrowEnhancementLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArrowEnhancementLVL|ArcaneArcherLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.375"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|ArrowEnhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2923,
+    "record_key": "Arcane Archer ~ Enhance Arrow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

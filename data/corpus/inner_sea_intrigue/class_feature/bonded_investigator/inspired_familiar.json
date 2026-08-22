@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bonded Investigator ~ Inspired Familiar",
+    "name": "Inspired Familiar",
+    "class": "Investigator",
+    "description": "A bonded investigator's familiar becomes a cunning assistant to the investigator. The familiar can access the investigator's inspiration pool to augment its own actions; the use of inspiration is deducted from the investigator's number of daily uses as normal. The familiar can use the inspiration ability (and gains the increased benefits of investigator talents that affect the bonus dice used in this ability) but cannot expend uses of inspiration for other purposes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bonded Investigator ~ Inspired Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.BondedInvestigatorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A bonded investigator's familiar becomes a cunning assistant to the investigator. The familiar can access the investigator's inspiration pool to augment its own actions; the use of inspiration is deducted from the investigator's number of daily uses as normal. The familiar can use the inspiration ability (and gains the increased benefits of investigator talents that affect the bonus dice used in this ability) but cannot expend uses of inspiration for other purposes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 131,
+    "record_key": "Bonded Investigator ~ Inspired Familiar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

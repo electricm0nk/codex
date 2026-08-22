@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Summoner ~ Greater Aspect",
+    "name": "Greater Aspect",
+    "class": "Summoner",
+    "description": "You can divert your eidolon's evolutions to yourself. You may take up to 6 evolution points. Your eidolon loses 1 point from its evolution pool for every 2 points (or fraction thereof) diverted to you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Greater Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.Supernatural.Greater Aspect"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterLevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidMaxAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidUsedAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidArms|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidArmsUsed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidLegs|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidLegsUsed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonAspect|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can divert your eidolon's evolutions to yourself. You may take up to 6 evolution points. Your eidolon loses 1 point from its evolution pool for every 2 points (or fraction thereof) diverted to you."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Summoner Greater Aspect|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterLevel|classlevel(\"Summoner\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidMaxAttacks|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidMaxAttacks|1|PRECLASS:1,Summoner=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidArms|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidLegs|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 806,
+    "record_key": "Summoner ~ Greater Aspect"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

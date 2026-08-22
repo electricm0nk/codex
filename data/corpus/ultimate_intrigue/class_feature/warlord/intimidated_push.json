@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warlord ~ Intimidated Push",
+    "name": "Intimidated Push",
+    "class": "Skald",
+    "description": "A warlord inspires fear in his cohort and followers, ensuring they do not fail and thus suffer his wrath. When he uses inspired rage, his cohort increases her morale bonus on Will saves from inspired rage by 1 and his followers increase their morale bonuses on Will saves from inspired rage by 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warlord ~ Intimidated Push"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A warlord inspires fear in his cohort and followers, ensuring they do not fail and thus suffer his wrath. When he uses inspired rage, his cohort increases her morale bonus on Will saves from inspired rage by 1 and his followers increase their morale bonuses on Will saves from inspired rage by 2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 924,
+    "record_key": "Warlord ~ Intimidated Push"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lantern Bearer ~ Cavern Stride",
+    "name": "Cavern Stride",
+    "class": "Ranger",
+    "description": "A lantern bearer's movement is unimpeded by nonmagical difficult terrain underground and nonmagical webs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lantern Bearer ~ Cavern Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A lantern bearer's movement is unimpeded by nonmagical difficult terrain underground and nonmagical webs."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 232,
+    "record_key": "Lantern Bearer ~ Cavern Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

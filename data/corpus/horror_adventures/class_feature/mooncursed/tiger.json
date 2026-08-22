@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mooncursed ~ Tiger",
+    "name": "Tiger",
+    "class": "Mooncursed",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mooncursed ~ Tiger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MooncursedAnimalForm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed Form (Medium)|PREVARLT:MooncursedRageLarge,1,MooncursedRageHuge,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed Form (Large)|PREVARLT:MooncursedRageMedium,1,MooncursedRageHuge,1|PREABILITY:1,CATEGORY=Special Ability,Mooncursed ~ Greater Shifting Rage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed Form (Huge)|PREVARLT:MooncursedRageMedium,1,MooncursedRageLarge,1|PREABILITY:1,CATEGORY=Special Ability,Mooncursed ~ Mighty Shifting Rage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw|Bite|PREVARGTEQ:Raging,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent|PREVARGTEQ:Raging,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base|PREVARGTEQ:Raging,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab ~ Claw|Grab ~ Bite|Pounce|PREVARGTEQ:Raging,1|PREABILITY:1,CATEGORY=Special Ability,Mooncursed ~ Greater Shifting Rage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rake|PREVARGTEQ:Raging,1|PREABILITY:1,CATEGORY=Special Ability,Mooncursed ~ Mighty Shifting Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 56,
+    "record_key": "Mooncursed ~ Tiger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

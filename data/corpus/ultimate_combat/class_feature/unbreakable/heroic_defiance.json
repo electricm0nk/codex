@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Unbreakable ~ Heroic Defiance",
+    "name": "Heroic Defiance",
+    "class": "Fighter",
+    "description": "At 9th level, an unbreakable gains the Heroic Defiance feat (Advanced Player's Guide 162) as a bonus feat, if he does not have it already. If he already has this feat, the unbreakable can choose any combat feat instead. In addition, he may use this feat one additional time per day for every four levels after 9th (to a maximum of 3 times per day at 19th level). This ability replaces weapon training 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unbreakable ~ Heroic Defiance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, an unbreakable gains the Heroic Defiance feat (Advanced Player's Guide 162) as a bonus feat, if he does not have it already. If he already has this feat, the unbreakable can choose any combat feat instead. In addition, he may use this feat one additional time per day for every four levels after 9th (to a maximum of 3 times per day at 19th level). This ability replaces weapon training 2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 795,
+    "record_key": "Unbreakable ~ Heroic Defiance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

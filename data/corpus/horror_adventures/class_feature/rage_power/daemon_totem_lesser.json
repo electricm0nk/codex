@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rage Power ~ Daemon Totem (Lesser)",
+    "name": "Daemon Totem, Lesser",
+    "class": "Rage Power",
+    "description": "While raging, the barbarian gains a +%1 bonus on saving throws against acid damage, death effects, disease, and poison.|DaemonTotemResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rage Power ~ Daemon Totem (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Extraordinary.BarbarianTotemRagePower"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Special Ability,TYPE=BarbarianTotemRagePower],[PREABILITY:1,CATEGORY=Special Ability,Rage Power ~ Daemon Totem (Lesser)]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DaemonTotemResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "While raging, the barbarian gains a +%1 bonus on saving throws against acid damage, death effects, disease, and poison.|DaemonTotemResistance"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs. acid damage, death effects, disease, and poison.|DaemonTotemResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DaemonTotemResistance|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 21,
+    "record_key": "Rage Power ~ Daemon Totem (Lesser)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

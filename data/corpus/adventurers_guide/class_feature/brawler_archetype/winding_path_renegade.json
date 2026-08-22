@@ -1,0 +1,103 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brawler Archetype ~ Winding Path Renegade",
+    "name": "Winding Path Renegade",
+    "class": "Brawler Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brawler Archetype ~ Winding Path Renegade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BrawlerArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Winding Path Renegade],[!PREFACT:1,ABILITIES,Brawler_Archetype_BonusFeat2=True,Brawler_Archetype_BonusFeat8=True,Brawler_Archetype_BonusFeat14=True,Brawler_Archetype_ACBonus=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winding Path Renegade ~ School Focus|PRECLASS:1,Brawler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winding Path Renegade ~ Monk Moves|PRECLASS:1,Brawler=4"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ACBonus|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 719,
+    "record_key": "Brawler Archetype ~ Winding Path Renegade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

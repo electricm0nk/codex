@@ -1,0 +1,131 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Lore Warden ~ AG",
+    "name": "Lore Warden",
+    "class": "Fighter Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Lore Warden ~ AG"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Lore Warden],[!PREFACT:1,ABILITIES,Fighter_Archetype_MediumArmorProficiency=true,Fighter_Archetype_HeavyArmorProficiency=true,Fighter_Archetype_ShieldProficiency=true,Fighter_Archetype_TowerShieldProficiency=true,Fighter_Archetype_Bravery=true,Fighter_Archetype_BonusFeat2=true,Fighter_Archetype_ArmorTraining=true,Fighter_Archetype_ArmorMastery=true]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lore Warden ~ Scholastic ~ AG|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lore Warden ~ Skill Over Strength ~ AG|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Lore Warden ~ Swords Secret ~ AG|PRECLASS:1,Fighter=3"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_TowerShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_TowerShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 836,
+    "record_key": "Fighter Archetype ~ Lore Warden ~ AG"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

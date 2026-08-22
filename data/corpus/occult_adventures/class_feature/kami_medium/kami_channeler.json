@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Kami Medium ~ Kami Channeler",
+    "name": "Kami Channeler",
+    "class": "Medium",
+    "description": "A kami medium channels the kami at locations different from where a normal medium channels his spirits. The kami medium does not have access to the archmage legend.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kami Medium ~ Kami Channeler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A kami medium channels the kami at locations different from where a normal medium channels his spirits. The kami medium does not have access to the archmage legend."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpiritHideLocation|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1398,
+    "record_key": "Kami Medium ~ Kami Channeler"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

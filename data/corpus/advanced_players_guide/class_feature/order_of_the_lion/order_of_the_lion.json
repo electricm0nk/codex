@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Lion",
+    "name": "Order of the Lion",
+    "class": null,
+    "description": "An order of the lion cavalier can make Knowledge (nobility) skill checks untrained. If he has ranks in the skill, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1) as long as the check involves his sovereign.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderChallengeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An order of the lion cavalier can make Knowledge (nobility) skill checks untrained. If he has ranks in the skill, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1) as long as the check involves his sovereign."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Lion ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Lion ~ Lion's Call|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Lion ~ For the King|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Order of the Lion ~ Shield of the Liege|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderChallengeBonus|CavalierLVL/4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Local)|Knowledge (Nobility)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 dodge bonus to his AC against attacks made by the target of his challenge.|1+OrderChallengeBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 252,
+    "record_key": "Order of the Lion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

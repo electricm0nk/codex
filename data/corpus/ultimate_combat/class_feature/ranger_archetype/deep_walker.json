@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Deep Walker",
+    "name": "Deep Walker",
+    "class": "Ranger Archetype",
+    "description": "Some rangers devote their lives to the woods, becoming hunters, protectors, and wilderness guides among its diverse terrain types. The deep walker is instead a master of the strange terrain of the deep earth, exploring its caverns and caves, becoming a master of the dark corridors most surface dwellers fear to explore-and perhaps the reason they fear to explore them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Deep Walker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerCamouflage.RangerWoodlandStride.RangerFavoredTerrain.RangerHideInPlainSight"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ DEEP WALKER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCamouflage,TYPE.RangerWoodlandStride,TYPE.RangerFavoredTerrain,TYPE.RangerHideInPlainSight]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some rangers devote their lives to the woods, becoming hunters, protectors, and wilderness guides among its diverse terrain types. The deep walker is instead a master of the strange terrain of the deep earth, exploring its caverns and caves, becoming a master of the dark corridors most surface dwellers fear to explore-and perhaps the reason they fear to explore them."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Deep Walker ~ Deep Knowledge|PRECLASS:1,Ranger=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Deep Walker ~ Rock Hopper|PRECLASS:1,Ranger=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Deep Walker ~ Deep Walker Camouflage|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Deep Walker ~ One with the Stone|PRECLASS:1,Ranger=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1512,
+    "record_key": "Ranger Archetype ~ Deep Walker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

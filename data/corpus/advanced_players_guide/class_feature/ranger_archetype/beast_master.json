@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Archetype ~ Beast Master",
+    "name": "Beast Master",
+    "class": "Ranger Archetype",
+    "description": "Some rangers, particularly those in primitive lands or who were raised by animals, have unusually strong bonds with animals. Unique among rangers, they can bond with multiple animals of any kind, creating a menagerie of wild yet loyal creatures, like a strange family.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Archetype ~ Beast Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RangerArchetype.RangerClassSkills.RangerHuntersBond.RangerCombatStyleFeat_Six.RangerCamouflage"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Beast Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerClassSkills,TYPE.RangerHuntersBond,TYPE.RangerCombatStyleFeat_Six,TYPE.RangerCamouflage]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some rangers, particularly those in primitive lands or who were raised by animals, have unusually strong bonds with animals. Unique among rangers, they can bond with multiple animals of any kind, creating a menagerie of wild yet loyal creatures, like a strange family."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Beast Master ~ Class Skills|PRECLASS:1,Ranger=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Beast Master ~ Animal Companion|PRECLASS:1,Ranger=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Beast Master ~ Improved Empathic Link|PRECLASS:1,Ranger=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ranger Class Feature|AUTOMATIC|Beast Master ~ Strong Bond|PRECLASS:1,Ranger=12"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ranger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2664,
+    "record_key": "Ranger Archetype ~ Beast Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

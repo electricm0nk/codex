@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fearsome Defender ~ Silent Threat",
+    "name": "Silent Threat",
+    "class": "Barbarian",
+    "description": "A fearsome defender exudes hostility, creating a threatening atmosphere in her presence. The fearsome defender gains a +%1 bonus on Intimidate checks, and the DCs of Intimidate checks to demoralize her allies within 30 feet increase by %1.|FearsomeDefenderSilentThreat",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fearsome Defender ~ Silent Threat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.FearsomeDefenderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearsomeDefenderSilentThreat|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "A fearsome defender exudes hostility, creating a threatening atmosphere in her presence. The fearsome defender gains a +%1 bonus on Intimidate checks, and the DCs of Intimidate checks to demoralize her allies within 30 feet increase by %1.|FearsomeDefenderSilentThreat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearsomeDefenderSilentThreat|BarbarianLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|FearsomeDefenderSilentThreat"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 43,
+    "record_key": "Fearsome Defender ~ Silent Threat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

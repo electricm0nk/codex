@@ -1,26 +1,88 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Contagious Flame",
-    "school": "Evocation",
-    "level": 6,
     "description": "You blast several enemies with beams of fire. You may fire three rays, plus one additional ray for every four levels beyond 11th (to a maximum of five rays at 19th level). Each ray requires a ranged touch attack to hit and deals 4d6 points of fire damage.  The rays may be fired at the same or different targets, but all rays must be aimed at targets within 30 feet of each other and fired simultaneously.  Every round on your turn, a new ray of fire launches from each creature who took damage from the spell in the previous round-these new rays attack as if you fired them, but their point of origin is the previous creature damaged. You can choose the new targets as a free action, all of whom must be within close range (25 ft. + 5 ft./2 levels) of their new starting point. This contagion of flame continues for a total of three rounds-a creature can be struck more than once by this spell over the course of these three rounds, although never by a ray of fire that launches from itself.",
-    "full_text": true
+    "full_text": true,
+    "key": "Contagious Flame",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Sorcerer,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Scorching rays cause 4d6 fire damage, then move on to new targets.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You blast several enemies with beams of fire. You may fire three rays, plus one additional ray for every four levels beyond 11th (to a maximum of five rays at 19th level). Each ray requires a ranged touch attack to hit and deals 4d6 points of fire damage.  The rays may be fired at the same or different targets, but all rays must be aimed at targets within 30 feet of each other and fired simultaneously.  Every round on your turn, a new ray of fire launches from each creature who took damage from the spell in the previous round-these new rays attack as if you fired them, but their point of origin is the previous creature damaged. You can choose the new targets as a free action, all of whom must be within close range (25 ft. + 5 ft./2 levels) of their new starting point. This contagion of flame continues for a total of three rounds-a creature can be struck more than once by this spell over the course of these three rounds, although never by a ray of fire that launches from itself.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "3 rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/contagiousFlame.html#_contagious-flame"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "three or more rays"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 70,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1900,
-    "record_key": "Contagious Flame"
+    "record_key": "Contagious Flame",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

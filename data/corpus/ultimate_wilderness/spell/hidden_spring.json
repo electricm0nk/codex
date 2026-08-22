@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You spend 1 hour in quiet meditation, holding the focus component in both hands and walking around a natural area. You are simultaneously drawn to areas of natural moisture while drawing that moisture closer. As the spell's casting time concludes, you thrust the focus component into the ground. From that point, a fresh, clean water trickles forth at a rate of 1 gallon every 10 minutes. You cannot cast this spell inside a building or in an area of worked stone, but you can cast it underground. You cannot cast this spell within 1 mile of an existing hidden spring.",
+    "key": "Hidden Spring",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 hour"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Druid,Ranger,Shaman,Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,F"
+      },
+      {
+        "key": "DESC",
+        "value": "Discover a temporary spring of fresh, flowing water.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You spend 1 hour in quiet meditation, holding the focus component in both hands and walking around a natural area. You are simultaneously drawn to areas of natural moisture while drawing that moisture closer. As the spell's casting time concludes, you thrust the focus component into the ground. From that point, a fresh, clean water trickles forth at a rate of 1 gallon every 10 minutes. You cannot cast this spell inside a building or in an area of worked stone, but you can cast it underground. You cannot cast this spell within 1 mile of an existing hidden spring.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Water"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "A spring of fresh water"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Hidden Spring",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

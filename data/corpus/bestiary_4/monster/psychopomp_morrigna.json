@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:psychopomp_morrigna_spider_sight",
@@ -25,6 +23,140 @@
     ],
     "race_subtype": "Extraplanar|Psychopomp",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Psychopomp (Morrigna)"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Inquisitor"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Inquisitor|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wrappings|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "13"
+      },
+      {
+        "key": "DR",
+        "value": "10/Adamantine"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp (Morrigna)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Bluff|TYPE.Craft|Intimidate|Knowledge (planes)|Perception|Sense Motive|Stealth"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):18"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Climb,15"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Natural.Melee.Finesseable.Weapon,*2,2d6|Wrappings,Natural.Melee.Finesseable.Weapon,*1,1d6,SPROP=plus grab"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar|Psychopomp"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Psychopomp"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SR",
+        "value": "24"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      }
+    ],
     "size": "M",
     "source_page": "p.219",
     "speeds": [
@@ -38,16 +170,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 184,
-    "record_key": "Psychopomp (Morrigna)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 184,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Psychopomp (Morrigna)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

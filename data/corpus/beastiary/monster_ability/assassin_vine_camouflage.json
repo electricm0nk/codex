@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Assassin Vine ~ Camouflage",
+    "delivery": "Extraordinary",
+    "description": "Since an assassin vine looks like a normal plant when at rest, a DC 20 Perception check is required to notice it before it attacks for the first time. Anyone with ranks in Survival or Knowledge (nature) can use either of those skills instead of Perception to notice the plant.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:assassin_vine_camouflage",
+    "name": "Camouflage",
+    "owners": [
+      "beastiary:monster:assassin_vine"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC 20)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Since an assassin vine looks like a normal plant when at rest, a DC 20 Perception check is required to notice it before it attacks for the first time. Anyone with ranks in Survival or Knowledge (nature) can use either of those skills instead of Perception to notice the plant."
+      },
+      {
+        "key": "KEY",
+        "value": "Assassin Vine ~ Camouflage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Defensive"
+      }
+    ],
+    "source_page": "p.22",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Assassin Vine ~ Camouflage",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Combat Style Feat ~ Improved Bull Rush",
+    "name": "Improved Bull Rush",
+    "class": "Ranger Combat Style Feat",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Combat Style Feat ~ Improved Bull Rush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Feat,Improved Bull Rush"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Ranger_Combat_Style_Feat_Improved_Bull_Rush,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Bull Rush|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 312,
+    "record_key": "Ranger Combat Style Feat ~ Improved Bull Rush"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

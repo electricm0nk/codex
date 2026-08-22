@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Gory Finish",
+    "name": "Gory Finish",
+    "class": "Warpriest Bonus Feat",
+    "description": "By drawing upon wells of savagery, you can slay your foe in creative and horrifyingly gruesome manners, intimidating nearby foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Gory Finish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Dazzling Display,Weapon Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "By drawing upon wells of savagery, you can slay your foe in creative and horrifyingly gruesome manners, intimidating nearby foes."
+      },
+      {
+        "key": "DESC",
+        "value": " When you use the attack action, you can use a weapon with which you have Weapon Focus to make a single attack at your highest base attack bonus. If you reduce your target to negative hit points, you can spend a swift action to make an Intimidate check to demoralize all foes within 30 feet who could see your attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Gory Finish"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4453,
+    "record_key": "Warpriest Bonus Feat ~ Gory Finish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

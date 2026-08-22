@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Reincarnated Druid ~ Tongue of the Sun and Moon",
+    "name": "Tongue of the Sun and Moon",
+    "class": "Druid",
+    "description": "You can speak with any living creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reincarnated Druid ~ Tongue of the Sun and Moon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can speak with any living creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1182,
+    "record_key": "Reincarnated Druid ~ Tongue of the Sun and Moon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

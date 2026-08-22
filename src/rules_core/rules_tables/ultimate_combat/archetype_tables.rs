@@ -51,11 +51,61 @@
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
 //! ultimate_combat/uc_abilities_class.lst`), generated programmatically
 //! by a one-off extraction script, not hand-transcribed.
+//!
+//! **`SD31-E4-F1-002` addendum, 2026-08-16, hand-transcribed (not the
+//! extraction script above): 2 Gunslinger archetypes added, 65 -> 67
+//! records.** Pistolero and Mysterious Stranger, chosen specifically
+//! because each supersedes a base chassis slot this same cycle wires in
+//! `pilot_compute.rs` (Gun Training, and Grit/Nimble respectively) --
+//! unlike this table's other 65 records, this pair's `pilot_compute.rs`
+//! integration DOES land this cycle (Decision 1(a)-safe: a real
+//! `if let`/`else` supersession branch, not a table edit). Gun Tank and
+//! Musket Master, Gunslinger's other two real archetypes, remain
+//! unadded -- named here, not silently omitted, the same disclosure
+//! this module's own doc comment above already gives its 60 unresolved
+//! grants. All 5 of Pistolero's own grants and all 5 of Mysterious
+//! Stranger's own grants resolved to real `DESC:` text (both books'
+//! sub-feature rows use uppercase `KEY:PISTOLERO ~ ...`/
+//! `KEY:MYSTERIOUS STRANGER ~ ...`, confirmed by direct grep, not
+//! assumed from the master row's own mixed-case archetype name).
+//!
+//! **`SD31-E4-F1-003` addendum, 2026-08-16: 1 Ninja archetype added, 67
+//! -> 68 records.** `Ninja Archetype ~ Scout`
+//! (`ultimate_combat/support/uc_abilities_class_apg.lst:5`) -- the ONLY
+//! real Ninja archetype in the 23-book scope (Samurai remains genuinely
+//! `named_raw: 0`, re-checked this cycle). **This record's own `TYPE:`
+//! facet does NOT name a slot list** (`TYPE:Archetype.NinjaArchetype`
+//! only) -- Ninja's archetype-suppression mechanism is structurally
+//! different from every other book's own TYPE-facet convention this
+//! table's sibling tables document: each base feature is individually
+//! `PREVAREQ`-gated on a `Ninja_CF_<Feature>,0` variable
+//! (`uc_abilities_globalvar.lst`'s `CATEGORY=Class|Ninja.MOD` block),
+//! and Scout's own row instead carries two `FACT:Ninja_Archetype_
+//! UncannyDodge|true`/`FACT:Ninja_Archetype_ImprovedUncannyDodge|true`
+//! tokens that feed `BONUS:VAR|Ninja_CF_UncannyDodge|1|...|PREFACT:1,
+//! ABILITIES,Ninja_Archetype_UncannyDodge=True`-shaped rows
+//! (`:217-218`), setting the suppression variable to 1 and disabling the
+//! base grant. `replaces` below is therefore derived from the `FACT:`
+//! evidence, not a `TYPE:` slot list -- named `NinjaUncannyDodge`/
+//! `NinjaImprovedUncannyDodge` to match the `Ninja_CF_*` variable names
+//! verbatim, the same "field-level evidence, stated" discipline this
+//! program's supersession work requires elsewhere. Both grants (Scout's
+//! Charge at 4th, Skirmisher at 8th) resolved to real `DESC:` text from
+//! their own base rows in Advanced Player's Guide
+//! (`apg_abilities_class.lst:2978-2979`, `KEY:Scout ~ Scout's Charge`/
+//! `KEY:Scout ~ Skirmisher`) -- Scout is upstream a Rogue archetype UC
+//! extends to Ninja via a `.MOD` retag, so its sub-feature rows are not
+//! declared in UC's own files. `pilot_compute.rs` integration DOES land
+//! this cycle (a real `if let`/`else` supersession branch), the same
+//! Decision-1(a)-safe shape `SD31-E4-F1-002`'s Gunslinger pair used.
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
 
-/// Full UC archetype-swap catalog: 65 real, distinct master records, in
-/// source order. Built once and cached for the process lifetime.
+/// Full UC archetype-swap catalog: 68 real, distinct master records (65
+/// from the original SD28-E30 tier-1 extraction, 2 Gunslinger archetypes
+/// added by `SD31-E4-F1-002`, and 1 Ninja archetype added by
+/// `SD31-E4-F1-003` -- see this module's own doc comment), in source
+/// order. Built once and cached for the process lifetime.
 pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
@@ -1193,7 +1243,66 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spellslinger ~ Mage Bullets", at_level: 1, description: Some("A spellslinger is adept at transferring spell energy into his arcane gun attacks. As a swift action, he can sacrifice a spell and transform that energy into a weapon bonus equal to the level of the spell sacrificed on a single barrel of his firearm. With that weapon bonus the spellslinger can apply any of the following to his arcane bond: enhancement bonuses (up to +5) and dancing, defending, distance, flaming, flaming burst, frost, ghost touch, icy burst, merciful, seeking, shock, shocking burst, spell storing, thundering, vicious, and wounding. An arcane gun gains no benefit from having two of the same weapon special abilities on the same barrel. The effect of the mage bullets ability lasts for a number of minutes equal to the level of the spell sacrificed, or until this ability is used again to assign the barrel different enhancements.&nl; This ability replaces cantrips, but the spellslinger gains the detect magic and read magic cantrips and places them in his spellbook. He can cast either of these as 1st-level spells."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Spellslinger ~ School of the Gun", at_level: 1, description: None, benefit: None },
             ],
-        },        ]
+        },
+        // SD31-E4-F1-002: the first 2 of Gunslinger's own 4 archetypes,
+        // chosen because each supersedes a base chassis slot this same
+        // cycle wires in `pilot_compute.rs` (Gun Training and Grit/
+        // Nimble respectively) -- Gun Tank and Musket Master remain
+        // unadded, named here rather than silently omitted (same
+        // partial-coverage disclosure this table's own doc comment
+        // already uses for its 60 unresolved grants).
+        // Gunslinger Archetype ~ Pistolero -- uc_abilities_class.lst:807
+        ArchetypeSwapEntry {
+            key: "Gunslinger Archetype ~ Pistolero",
+            subject: "Gunslinger",
+            archetype_name: "Pistolero",
+            description: Some("While most gunslingers have favorite firearms, there are those rare ones who choose to specialize in onehanded firearms exclusively. These gunslingers are called pistoleros. While they lack the flexibility of being able to pick up any kind of firearm and use it with reasonable proficiency, they are crackerjack shots with pistols and similar firearms. Their skill and aim with these firearms at close range is second to none, and they rarely misfire with these weapons."),
+            source_page: Some("p.51"),
+            prerequisites: Some(&["PRECLASS:1,Gunslinger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ PISTOLERO],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerGunTraining,TYPE.GunslingerDeadeyeDeed,TYPE.GunslingerStartlingShotDeed,TYPE.GunslingerBleedingWoundDeed]"]),
+            replaces: Some(&["GunslingerGunTraining", "GunslingerDeadeyeDeed", "GunslingerStartlingShotDeed", "GunslingerBleedingWoundDeed"]),
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "PISTOLERO ~ Weapon Proficiency", at_level: 1, description: Some("Instead of proficiency with all firearms, a pistolero only gains proficiency with one-handed firearms. She must take Exotic Weapon Proficiency (firearm) to gain proficiency with two-handed firearms and firearm siege engines."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "PISTOLERO ~ Up Close and Deadly", at_level: 1, description: Some("At 1st level, when the pistolero hits a target with a one-handed firearm that is not making a scatter shot, she can spend 1 grit point to deal 1d6 points of extra damage on a hit. If she misses with the attack, she grazes the target, dealing half the extra damage anyway. This is precision damage and is not multiplied if the attack is a critical hit. This precision damage increases to 2d6 at 5th level, to 3d6 at 10th level, to 4d6 at 15th level, and to 5d6 at 20th level. This precision damage stacks with sneak attack and other forms of precision damage. The cost of using this deed cannot be reduced with the Signature Deed feat, the true grit class feature, or any similar effect. This deed replaces the deadeye deed."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "PISTOLERO ~ Deadeye", at_level: 7, description: Some("At 7th level, the pistolero gains the deadeye deed, which is normally a 1st-level gunslinger deed. This deed replaces the startling shot deed. The gunslinger can resolve an attack against touch AC instead of normal AC when firing beyond her firearm's first range increment. Performing this deed costs 1 grit point per range increment beyond the first. The gunslinger still takes the -2 penalty on attack rolls for each range increment beyond the first when she performs this deed."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "PISTOLERO ~ Twin Shot Knockdown", at_level: 11, description: Some("At 11th level, when the pistolero hits a single target with two or more onehanded firearm attacks during her turn, she can spend 1 grit point to knock the target prone. She can choose to spend the grit point after the attacks are made. This deed replaces the bleeding wound deed."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "PISTOLERO ~ Pistol Training", at_level: 5, description: Some("Starting at 5th level, a pistolero increases her skill with one-handed firearms. She gains a bonus on damage rolls equal to her Dexterity modifier, and when she misfires with a one-handed firearm, the misfire value increases by 2 instead of 4. Every four levels thereafter (9th, 13th, and 17th), the bonus on damage rolls increases by +1. This ability replaces gun training 1 to 4."), benefit: None },
+            ],
+        },
+        // Gunslinger Archetype ~ Mysterious Stranger -- uc_abilities_class.lst:806
+        ArchetypeSwapEntry {
+            key: "Gunslinger Archetype ~ Mysterious Stranger",
+            subject: "Gunslinger",
+            archetype_name: "Mysterious Stranger",
+            description: Some("Gunslingers use a potent mixture of common sense and manual dexterity in order to control the fickle power of their weapons. But a few rare gunslingers seem to accomplish their chosen tasks purely through willpower and an unwillingness to ever give up. These mysterious strangers use their force of personality to keep going when the chips are down, often moving on from a region as soon as they accomplish their goals-hence the name."),
+            source_page: Some("p.51"),
+            prerequisites: Some(&["PRECLASS:1,Gunslinger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ MYSTERIOUS STRANGER],[!PREABILITY:1,CATEGORY=Archetype,TYPE.GunslingerQuickClearDeed,TYPE.GunslingerNimble,TYPE.GunslingerGunTraining1,TYPE.GunslingerGrit]"]),
+            replaces: Some(&["GunslingerQuickClearDeed", "GunslingerBleedingWoundDeed", "GunslingerNimble", "GunslingerGunTraining1", "GunslingerGrit"]),
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "MYSTERIOUS STRANGER ~ Grit", at_level: 1, description: Some("A mysterious stranger is a force to be reckoned with. Instead of using her Wisdom to determine the number of grit points she gains at the start of each day, she uses Charisma. This ability works in all other ways like the gunslinger's grit class feature."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "MYSTERIOUS STRANGER ~ Focused Aim", at_level: 1, description: Some("At 1st level, as a swift action, the mysterious stranger can spend 1 grit point to gain a bonus on all firearm damage rolls equal to her Charisma modifier (minimum 1) with all firearm attacks she makes until the end of her turn. At 7th level, when she uses the dead shot deed, she multiplies this bonus by the number of hits she made while rolling the Dead Shot attack. This deed replaces the quick clear deed."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "MYSTERIOUS STRANGER ~ Clipping Shot", at_level: 11, description: Some("At 11th level, when the mysterious stranger misses with a firearm attack, she can spend 1 grit point to deal half the damage that attack would have dealt if it were a hit (roll damage normally). She can decide to use this deed and spend the grit point after making the attack. This deed has no effect if the attack used the dead shot deed. The cost of using this deed cannot be reduced with the Signature Deed feat, the true grit class feature, or any similar effect. This replaces the bleeding wound deed."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "MYSTERIOUS STRANGER ~ Lucky", at_level: 2, description: Some("Starting at 2nd level, a mysterious stranger gains a +1 luck bonus on Will saving throws. This bonus increases by +1 for every four levels beyond 2nd level (to a maximum of +5 at 20th level). This ability replaces nimble."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "MYSTERIOUS STRANGER ~ Stranger's Fortune", at_level: 5, description: Some("Starting at 5th level, a mysterious stranger can ignore a firearm misfire a number of times per day equal to her Charisma bonus. She can use this ability as a free action. This ability replaces gun training 1."), benefit: None },
+            ],
+        },
+        // SD31-E4-F1-003: Ninja's one real archetype -- see this
+        // module's own doc comment for why `replaces` is derived from
+        // `FACT:` evidence rather than a `TYPE:` slot list here.
+        // Ninja Archetype ~ Scout -- ultimate_combat/support/uc_abilities_class_apg.lst:5
+        ArchetypeSwapEntry {
+            key: "Ninja Archetype ~ Scout",
+            subject: "Ninja",
+            archetype_name: "Scout",
+            description: Some("Not all rogues live in the city. Scouts frequently roam the wilderness, often banding together as bandits, but sometimes serving as guides, as trailblazers, or as companions to a ranger or barbarian warrior. More comfortable with sneaking and hiding outdoors, the scout is still effective in the city and the dungeon."),
+            source_page: Some("p.134"),
+            prerequisites: Some(&["PRECLASS:1,Ninja=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ninja Archetype ~ Scout],[!PREFACT:1,ABILITIES,Ninja_Archetype_UncannyDodge=True,Ninja_Archetype_ImprovedUncannyDodge=True]"]),
+            replaces: Some(&["NinjaUncannyDodge", "NinjaImprovedUncannyDodge"]),
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Scout ~ Scout's Charge", at_level: 4, description: Some("Whenever you make a charge, your attack deals sneak attack damage as if the target were flat-footed. Foes with uncanny dodge are immune to this ability."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Scout ~ Skirmisher", at_level: 8, description: Some("Whenever you move more than 10 feet in a round and make an attack action, the attack deals sneak attack damage as if the target was flat-footed. If you make more than one attack this turn, this ability only applies to the first attack."), benefit: None },
+            ],
+        },
+        ]
     })
 }
 
@@ -1202,8 +1311,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn catalog_has_65_records() {
-        assert_eq!(archetype_swap_tables().len(), 65);
+    fn catalog_has_68_records() {
+        // 65 from the original SD28-E30 tier-1 extraction + 2 Gunslinger
+        // archetypes (Pistolero, Mysterious Stranger) added by
+        // `SD31-E4-F1-002` + 1 Ninja archetype (Scout) added by
+        // `SD31-E4-F1-003` -- see this module's own doc comment.
+        assert_eq!(archetype_swap_tables().len(), 68);
     }
 
     #[test]
@@ -1220,24 +1333,31 @@ mod tests {
         }
     }
 
-    /// UC's own rate: 22% (14/65) -- a fifth distinct value alongside
-    /// UPsi 33%, ACG 33%, APG 52%, UM 27%. No convergence across five
-    /// books; the durable claim is that TYPE:/ABILITY: disagree in most
-    /// records at a book-dependent rate, not any specific percentage.
+    /// UC's original 65-record rate: 22% (14/65) -- a fifth distinct
+    /// value alongside UPsi 33%, ACG 33%, APG 52%, UM 27%. No
+    /// convergence across five books; the durable claim is that
+    /// TYPE:/ABILITY: disagree in most records at a book-dependent
+    /// rate, not any specific percentage. `SD31-E4-F1-002`'s 2 added
+    /// Gunslinger records and `SD31-E4-F1-003`'s 1 added Ninja record
+    /// shift the raw totals (293/366, 16/68 = 23.5%) without changing
+    /// that claim -- Pistolero disagrees (4 replaces vs. 5 grants),
+    /// Mysterious Stranger happens to agree (5 vs. 5), and Scout also
+    /// agrees (2 vs. 2, though `replaces` is `FACT:`-derived here, not
+    /// `TYPE:`-derived -- see this module's own doc comment).
     #[test]
     fn the_type_and_ability_lists_genuinely_disagree() {
         let total_replaces: usize =
             archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
         let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
-        assert_eq!(total_replaces, 282, "total TYPE: replaced-slot count across all 65 records");
-        assert_eq!(total_grants, 354, "total ABILITY: granted-feature count across all 65 records, after the category ruling");
+        assert_eq!(total_replaces, 293, "total TYPE:/FACT:-derived replaced-slot count across all 68 records");
+        assert_eq!(total_grants, 366, "total ABILITY: granted-feature count across all 68 records, after the category ruling");
         assert_ne!(total_replaces, total_grants);
 
         let equal_count_records = archetype_swap_tables()
             .iter()
             .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
             .count();
-        assert_eq!(equal_count_records, 14, "of 65 (22%) -- UC's own rate");
+        assert_eq!(equal_count_records, 16, "of 68 -- UC's own rate, original 14 plus Mysterious Stranger's 5-vs-5 match plus Scout's 2-vs-2 match");
     }
 
     #[test]
@@ -1266,6 +1386,6 @@ mod tests {
             .flat_map(|e| e.grants.iter())
             .filter(|g| g.description.is_some() || g.benefit.is_some())
             .count();
-        assert_eq!(resolved, 294, "294 of 354 grants carry real DESC:/BENEFIT: text -- see this module's own doc comment for the 60 that did not");
+        assert_eq!(resolved, 306, "306 of 366 grants carry real DESC:/BENEFIT: text: the original 294 of 354, plus all 10 of the 2 Gunslinger archetypes' own grants, plus both of Scout's own grants -- see this module's own doc comment for the original 60 that did not");
     }
 }

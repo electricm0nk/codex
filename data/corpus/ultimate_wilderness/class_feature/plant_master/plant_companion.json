@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Plant Master ~ Plant Companion",
+    "name": "Plant Companion",
+    "class": "Hunter",
+    "description": "A plant master forms a mystic bond with a plant companion. A plant master can begin play with any plant companion. Except for the companion being a creature of the plant type, this ability otherwise works like the druid's animal companion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Master ~ Plant Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Hunter Class Features.PlantMasterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A plant master forms a mystic bond with a plant companion. A plant master can begin play with any plant companion. Except for the companion being a creature of the plant type, this ability otherwise works like the druid's animal companion."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlantCompanionLVL|HunterLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Plant Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Plant Companion|RACESUBTYPE=PlantCompanion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 676,
+    "record_key": "Plant Master ~ Plant Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

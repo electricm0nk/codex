@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Spell Deflection",
+    "name": "Spell Deflection",
+    "class": "Wild Talent",
+    "description": "Element aether; Type utility (Sp); Level 7; Burn 0 You weave strands of aether around yourself in order to deflect targeted magic back at the caster. Until the beginning of your next turn, every time you are targeted by a spell that could be affected by spell turning, roll 1d10-1 and determine the effects of the spell as if you had spell turning with that many spell levels remaining. You can accept 1 point of burn to increase the duration to 10 minutes per kineticist level you possess, but in that case, it deflects only 10 spell levels in total (still rolled 1d10-1 at a time) before ending early.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Spell Deflection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Aether"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Aether,14"
+      },
+      {
+        "key": "DESC",
+        "value": "Element aether; Type utility (Sp); Level 7; Burn 0 You weave strands of aether around yourself in order to deflect targeted magic back at the caster. Until the beginning of your next turn, every time you are targeted by a spell that could be affected by spell turning, roll 1d10-1 and determine the effects of the spell as if you had spell turning with that many spell levels remaining. You can accept 1 point of burn to increase the duration to 10 minutes per kineticist level you possess, but in that case, it deflects only 10 spell levels in total (still rolled 1d10-1 at a time) before ending early."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 779,
+    "record_key": "Wild Talent ~ Spell Deflection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

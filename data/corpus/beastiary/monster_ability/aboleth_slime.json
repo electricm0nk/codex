@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Aboleth ~ Slime",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "beastiary:monster:aboleth"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Slime"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlimeDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlimeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Slime)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlimeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature hit by an aboleth's tentacle must succeed on a DC %1 Fortitude save or his skin and flesh transform into a clear, slimy membrane over the course of 1d4 rounds. The creature's new \"flesh\" is soft and tender, reducing its Constitution score by 4 as long as it persists. If the creature's flesh isn't kept moist, it dries quickly and the victim takes 1d12 points of damage every 10 minutes. Remove disease and similar effects can restore an afflicted creature to normal, but immunity to disease offers no protection from this attack.|SlimeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Aboleth ~ Slime"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.8"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.8",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 55,
-    "record_key": "Aboleth ~ Slime"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Aboleth ~ Slime",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

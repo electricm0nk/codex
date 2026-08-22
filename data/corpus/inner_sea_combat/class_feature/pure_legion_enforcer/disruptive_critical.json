@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pure Legion Enforcer ~ Disruptive Critical",
+    "name": "Disruptive Critical",
+    "class": "Pure Legion Enforcer",
+    "description": "At 5th level, when a Pure Legion enforcer confirms a critical hit against a divine spellcaster, he temporarily severs the divine conduit between the spellcaster and her deity, preventing her from casting divine spells or using supernatural or spell-like abilities granted by divine spellcasting classes. This effect lasts for 1 round per level or until the spellcaster succeeds at a concentration check (DC = 20 + 1/2 the enforcer's class level + his Charisma modifier).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pure Legion Enforcer ~ Disruptive Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, when a Pure Legion enforcer confirms a critical hit against a divine spellcaster, he temporarily severs the divine conduit between the spellcaster and her deity, preventing her from casting divine spells or using supernatural or spell-like abilities granted by divine spellcasting classes. This effect lasts for 1 round per level or until the spellcaster succeeds at a concentration check (DC = 20 + 1/2 the enforcer's class level + his Charisma modifier)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 542,
+    "record_key": "Pure Legion Enforcer ~ Disruptive Critical"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

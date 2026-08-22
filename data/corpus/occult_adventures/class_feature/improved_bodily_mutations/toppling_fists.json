@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Improved Bodily Mutations ~ Toppling Fists",
+    "name": "Toppling Fists",
+    "class": "Improved Bodily Mutations",
+    "description": "The mutation mind's fists become large masses of flesh, allowing her to attempt a bull rush combat maneuver check against one creature within 10 feet of her as a standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Improved Bodily Mutations ~ Toppling Fists"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenic Amplification.Mutation Mind Class Feature.Psychic Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Psychic Archetype ~ Mutation Mind"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic=11"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutation mind's fists become large masses of flesh, allowing her to attempt a bull rush combat maneuver check against one creature within 10 feet of her as a standard action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.107"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1585,
+    "record_key": "Improved Bodily Mutations ~ Toppling Fists"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

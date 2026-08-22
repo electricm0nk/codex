@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You imbue a projectile, such as an arrow or shuriken, with holy energy so that it deals extra damage to undead equal to that dealt by your lay on hands feature. This extra damage is not multiplied on a critical hit. Although this spell does not expend a daily use of your lay on hands class feature, you must have at least one daily use available to cast this spell. If the projectile hits a target or is destroyed before the duration ends, the spell is discharged.",
+    "key": "Divine Arrow",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Imbues a projectile with holy energy.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You imbue a projectile, such as an arrow or shuriken, with holy energy so that it deals extra damage to undead equal to that dealt by your lay on hands feature. This extra damage is not multiplied on a critical hit. Although this spell does not expend a daily use of your lay on hands class feature, you must have at least one daily use available to cast this spell. If the projectile hits a target or is destroyed before the duration ends, the spell is discharged.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds or until discharged"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/divineArrow.html#_divine-arrow"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one projectile"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Divine Arrow",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

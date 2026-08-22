@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Feyspeaker ~ Fey Speech",
+    "name": "Fey Speech",
+    "class": "Druid",
+    "description": "A feyspeaker's words carry a tiny fragment of the otherworldly power of the fey's voices. She gains Bluff, Diplomacy, Disguise, and Sense Motive as class skills. A feyspeaker also learns Sylvan as a bonus language. In addition, the feyspeaker gains a number of skill ranks at each level equal to 6 + her Intelligence modifier, instead of 4 + her Intelligence modifier. The feyspeaker's base attack bonus from her druid levels is equal to half her druid level (much like a sorcerer's base attack bonus is calculated), rather than the usual druid base attack bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feyspeaker ~ Fey Speech"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.FeyspeakerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A feyspeaker's words carry a tiny fragment of the otherworldly power of the fey's voices. She gains Bluff, Diplomacy, Disguise, and Sense Motive as class skills. A feyspeaker also learns Sylvan as a bonus language. In addition, the feyspeaker gains a number of skill ranks at each level equal to 6 + her Intelligence modifier, instead of 4 + her Intelligence modifier. The feyspeaker's base attack bonus from her druid levels is equal to half her druid level (much like a sorcerer's base attack bonus is calculated), rather than the usual druid base attack bonus."
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|-((DruidLVL+1)/4)|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=1|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=2|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=3|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=4|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=5|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=6|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=7|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=8|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=9|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=10|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=11|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=12|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=13|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=14|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=15|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=16|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=17|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=18|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=19|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Druid;LEVEL=20|2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff|Diplomacy|Disguise|Sense Motive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 329,
+    "record_key": "Feyspeaker ~ Fey Speech"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

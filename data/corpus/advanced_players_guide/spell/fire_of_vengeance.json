@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Fire of Vengeance",
-    "school": "Evocation",
-    "level": 4,
     "description": "After casting this spell, the next creature you attack using your smite evil class ability is engulfed in holy flames that flare up when the target attacks someone other than you. If at any time during the duration of your smite evil effect the target makes an attack that does not include you, it takes 3d8 points of fire damage. Once triggered in this manner, or when your smite evil ability expires, the spell ends.",
-    "full_text": true
+    "full_text": true,
+    "key": "Fire of Vengeance",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "After casting this spell, the next creature you attack using your smite evil class ability is engulfed in holy flames that flare up when the target attacks someone other than you. If at any time during the duration of your smite evil effect the target makes an attack that does not include you, it takes 3d8 points of fire damage. Once triggered in this manner, or when your smite evil ability expires, the spell ends.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Smited creature takes 3d8 damage.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "special; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/fireOfVengeance.html#_fire-of-vengeance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 116,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1949,
-    "record_key": "Fire of Vengeance"
+    "record_key": "Fire of Vengeance",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

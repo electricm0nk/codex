@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ Social Grace",
+    "name": "Social Grace",
+    "class": "Social Talent",
+    "description": "The vigilante selects any one Intelligence-, Wisdom-, or Charisma-based skill other than Perception or Use Magic Device. Whenever the vigilante is in his social identity, he receives a +%1 circumstance bonus on checks with the selected skill.|SocialGraceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Social Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SocialGraceCraftBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SocialGraceSkillCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SocialGraceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante selects any one Intelligence-, Wisdom-, or Charisma-based skill other than Perception or Use Magic Device. Whenever the vigilante is in his social identity, he receives a +%1 circumstance bonus on checks with the selected skill.|SocialGraceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Social Grace Skill Choice|SocialGraceSkillCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SocialGraceSkillCount|(VigilanteTalentLVL+3)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SocialGraceBonus|4|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 66,
+    "record_key": "Social Talent ~ Social Grace"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

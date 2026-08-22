@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bold Schemer ~ Skald of Twists and Turns",
+    "name": "Skald of Twists and Turns",
+    "class": "Skald",
+    "description": "A bold schemer becomes increasingly adept at infiltration and devising cunning strategies to overcome enemy fortifications. A bold schemer can spend 8 hours observing a physical location (such as a fortress, a walled city, or perhaps even a section of an underground dungeon or cavern complex), contemplating methods to infiltrate the location and engage its defenders in battle in ways that subvert their defensive advantages. At the end of the 8 hours, the bold schemer gains a +%1 insight bonus on her Bluff, Disable Device, Disguise, Sleight of Hand, and Stealth checks while in that same physical location. The bonus lasts until the bold schemer observes a new location. While observing a location, the bold schemer must fully focus her attention; any distractions, such as engaging in combat, immediately ends the observation and the bold schemer must start a new period of observing a physical location to receive the bonus.|BoldSchemerObservationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bold Schemer ~ Skald of Twists and Turns"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Features.BoldSchemerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BoldSchemerObservationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A bold schemer becomes increasingly adept at infiltration and devising cunning strategies to overcome enemy fortifications. A bold schemer can spend 8 hours observing a physical location (such as a fortress, a walled city, or perhaps even a section of an underground dungeon or cavern complex), contemplating methods to infiltrate the location and engage its defenders in battle in ways that subvert their defensive advantages. At the end of the 8 hours, the bold schemer gains a +%1 insight bonus on her Bluff, Disable Device, Disguise, Sleight of Hand, and Stealth checks while in that same physical location. The bonus lasts until the bold schemer observes a new location. While observing a location, the bold schemer must fully focus her attention; any distractions, such as engaging in combat, immediately ends the observation and the bold schemer must start a new period of observing a physical location to receive the bonus.|BoldSchemerObservationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoldSchemerObservationBonus|min(10,((SkaldLVL/4)*2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 911,
+    "record_key": "Bold Schemer ~ Skald of Twists and Turns"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shark Shaman ~ Nature Bond",
+    "name": "Nature Bond",
+    "class": "Druid",
+    "description": "If you choose an animal companion, you must select a shark. If you choose a domain, you must choose from the Animal, Death, War, and Water domains.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shark Shaman ~ Nature Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.ArchetypeDruid.SpecialQuality.NaturesBondAnimalCompanion.NaturesBondDruidDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAnimalTerrainDomainNotAllowed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If you choose an animal companion, you must select a shark. If you choose a domain, you must choose from the Animal, Death, War, and Water domains."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAnimalTerrainDomainNotAllowed|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidAnimalAllowed,DruidDeathAllowed,DruidWarAllowed,DruidWaterAllowed,PreventDruidInquisitions|1|TYPE=DruidDomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1202,
+    "record_key": "Shark Shaman ~ Nature Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

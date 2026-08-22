@@ -1,0 +1,160 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Linnorm Bloodline ~ Elemental Spit",
+    "name": "Elemental Spit",
+    "class": "Linnorm Bloodline",
+    "description": "You can fire an elemental ray of",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Linnorm Bloodline ~ Elemental Spit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Linnorm Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wildblooded ~ Linnorm"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Draconic_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Draconic_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Draconic_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Fire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_LinnormElementalSpit_DamageBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can fire an elemental ray of"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "energy as a standard action, targeting any foe within 30 feet as a ranged touch attack. The ray deals 1d6"
+      },
+      {
+        "key": "DESC",
+        "value": "+ %1|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "points of damage. You can use this ability %1 times per day. This bloodline power replaces claws.|Sorcerer_Draconic_BloodlinePower1Times"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_LinnormElementalSpit_DamageBonus|Sorcerer_Draconic_BloodlinePower1LVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6 acid)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1|PREVARLT:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6 cold)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1|PREVARLT:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6 electricity)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1|PREVARLT:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6 fire)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1|PREVARLT:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6+%2 acid)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1|PREVARGTEQ:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6+%2 cold)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1|PREVARGTEQ:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6+%2 electricity)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1|PREVARGTEQ:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (1d6+%2 fire)|Sorcerer_Draconic_BloodlinePower1Times|Sorcerer_LinnormElementalSpit_DamageBonus|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1|PREVARGTEQ:Sorcerer_LinnormElementalSpit_DamageBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_Draconic_BloodlinePower1Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DraconicBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1705,
+    "record_key": "Linnorm Bloodline ~ Elemental Spit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guerrilla ~ Astonishing Strike",
+    "name": "Astonishing Strike",
+    "class": "Slayer",
+    "description": "When the guerrilla deals sneak attack damage to a target of his studied target ability during the surprise round, that target is denied its Dexterity bonus to AC against attacks from the same guerrilla until the end of the guerrilla's next turn. When the guerrilla reaches 19th level, this ability works any time he deals sneak attack damage to a target of his studied target ability during the first round of combat, whether or not it's a surprise round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guerrilla ~ Astonishing Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slayer Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When the guerrilla deals sneak attack damage to a target of his studied target ability during the surprise round, that target is denied its Dexterity bonus to AC against attacks from the same guerrilla until the end of the guerrilla's next turn. When the guerrilla reaches 19th level, this ability works any time he deals sneak attack damage to a target of his studied target ability during the first round of combat, whether or not it's a surprise round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1165,
+    "record_key": "Guerrilla ~ Astonishing Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

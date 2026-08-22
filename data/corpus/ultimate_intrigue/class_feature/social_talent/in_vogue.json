@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ In Vogue",
+    "name": "In Vogue",
+    "class": "Social Talent",
+    "description": "The vigilante's crafting or professional business is always at the height of the local trends, allowing the vigilante to gain more profits than usual. Goods he crafts with a Craft skill he chose with social grace are worth 1/3 more gp than normal due to his celebrity, without increasing the cost to create. Whenever he uses a Profession skill he chose with social grace to make money, he makes twice as much money.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ In Vogue"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Social Talent ~ Double Time,Social Talent ~ Social Grace"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante's crafting or professional business is always at the height of the local trends, allowing the vigilante to gain more profits than usual. Goods he crafts with a Craft skill he chose with social grace are worth 1/3 more gp than normal due to his celebrity, without increasing the cost to create. Whenever he uses a Profession skill he chose with social grace to make money, he makes twice as much money."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 57,
+    "record_key": "Social Talent ~ In Vogue"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vow of Cleanliness",
+    "name": "Vow of Cleanliness",
+    "class": null,
+    "description": "You must wash daily. You must change into fresh clothes daily or shortly after your robes become dirty. Your appearance must be kept immaculate, including either neatly braiding or shaving off your hair (and, for male monks, maintaining a clean-shaven face). Your vow forbids you from willingly touching the filthy, diseased, dead, or undead (though you may attempt to cleanse or heal those suffering from disease), though using manufactured weapons to attack these creatures is allowed.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.MonkVow"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "DESC",
+        "value": "You must wash daily. You must change into fresh clothes daily or shortly after your robes become dirty. Your appearance must be kept immaculate, including either neatly braiding or shaving off your hair (and, for male monks, maintaining a clean-shaven face). Your vow forbids you from willingly touching the filthy, diseased, dead, or undead (though you may attempt to cleanse or heal those suffering from disease), though using manufactured weapons to attack these creatures is allowed."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoints|max(1,floor(classlevel(\"Monk\")/5))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 431,
+    "record_key": "Vow of Cleanliness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

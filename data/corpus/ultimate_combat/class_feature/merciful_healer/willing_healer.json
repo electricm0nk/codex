@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Merciful Healer ~ Willing Healer",
+    "name": "Willing Healer",
+    "class": "Cleric",
+    "description": "A merciful healer must choose the Healing domain. She does not gain a second domain. If the cleric worships a deity, that deity must be one that grants the Healing domain. A merciful healer must channel positive energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Merciful Healer ~ Willing Healer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainHealing|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A merciful healer must choose the Healing domain. She does not gain a second domain. If the cleric worships a deity, that deity must be one that grants the Healing domain. A merciful healer must channel positive energy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Healing Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainNotAllowed|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AllowDomainHealing|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 589,
+    "record_key": "Merciful Healer ~ Willing Healer"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

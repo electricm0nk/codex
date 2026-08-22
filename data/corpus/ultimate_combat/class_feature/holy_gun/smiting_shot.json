@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Gun ~ Smiting Shot",
+    "name": "Smiting Shot",
+    "class": "Paladin",
+    "description": "A holy gun can spend 1 grit point to make a smiting shot with a firearm attack as a standard action. If the target is evil, the holy gun adds her Charisma bonus and her paladin level to the damage of the firearm attack. If the target of the smiting shot is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature, the bonus to damage increases to the Charisma modifier plus 2 points of damage per level the paladin possess. Regardless of the target, smiting shot automatically bypasses any DR the creature might have. This ability replaces smite evil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Gun ~ Smiting Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A holy gun can spend 1 grit point to make a smiting shot with a firearm attack as a standard action. If the target is evil, the holy gun adds her Charisma bonus and her paladin level to the damage of the firearm attack. If the target of the smiting shot is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature, the bonus to damage increases to the Charisma modifier plus 2 points of damage per level the paladin possess. Regardless of the target, smiting shot automatically bypasses any DR the creature might have. This ability replaces smite evil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1475,
+    "record_key": "Holy Gun ~ Smiting Shot"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

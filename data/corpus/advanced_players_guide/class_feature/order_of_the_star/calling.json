@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Star ~ Calling",
+    "name": "Calling",
+    "class": "Order of the Star",
+    "description": "At 2nd level, the cavalier can make a short prayer as a standard action, filling him with confidence in his abilities. At any point in the next minute, he can receive a competence bonus on an ability check, attack roll, saving throw, or skill check equal to his Charisma modifier. He must declare that he is using this bonus before the roll is made. He can use this ability up to four times per day, once for each type of check or roll. In addition, the cavalier adds 1/2 his cavalier level to any levels of paladin or cleric he might possess for the purposes of determining the effects of channel energy or lay on hands.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Star ~ Calling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, the cavalier can make a short prayer as a standard action, filling him with confidence in his abilities. At any point in the next minute, he can receive a competence bonus on an ability check, attack roll, saving throw, or skill check equal to his Charisma modifier. He must declare that he is using this bonus before the roll is made. He can use this ability up to four times per day, once for each type of check or roll. In addition, the cavalier adds 1/2 his cavalier level to any levels of paladin or cleric he might possess for the purposes of determining the effects of channel energy or lay on hands."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 274,
+    "record_key": "Order of the Star ~ Calling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

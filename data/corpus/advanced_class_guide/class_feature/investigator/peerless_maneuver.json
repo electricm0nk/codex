@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Rogue Talent ~ Peerless Maneuver",
+    "name": "Peerless Maneuver",
+    "class": "Investigator",
+    "description": "%1 times per day, an investigator with this talent can roll two dice while making an Acrobatics check, and take the better result. She must choose to use this talent before making the Acrobatics check.|InvestigatorPeerlessManeuverBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Rogue Talent ~ Peerless Maneuver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorRogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InvestigatorPeerlessManeuverBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, an investigator with this talent can roll two dice while making an Acrobatics check, and take the better result. She must choose to use this talent before making the Acrobatics check.|InvestigatorPeerlessManeuverBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorPeerlessManeuverBonus|max(InvestigatorLVL/5,1)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1363,
+    "record_key": "Investigator ~ Rogue Talent ~ Peerless Maneuver"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

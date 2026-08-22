@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Quick Trapsmith",
+    "name": "Quick Trapsmith",
+    "class": "Rogue Talent",
+    "description": "As a full-round action, a rogue with this talent can set a simple trap with a CR no greater than 1/2 her rogue level. To do this, she must purchase the components, spend the required time constructing the trap in advance, and have its components at hand. The type of trap that can be constructed in this way is subject to GM discretion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Quick Trapsmith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueTalent.Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a rogue with this talent can set a simple trap with a CR no greater than 1/2 her rogue level. To do this, she must purchase the components, spend the required time constructing the trap in advance, and have its components at hand. The type of trap that can be constructed in this way is subject to GM discretion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2915,
+    "record_key": "Rogue Talent ~ Quick Trapsmith"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

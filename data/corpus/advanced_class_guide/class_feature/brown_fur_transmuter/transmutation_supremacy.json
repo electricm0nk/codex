@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brown-Fur Transmuter ~ Transmutation Supremacy",
+    "name": "Transmutation Supremacy",
+    "class": "Arcanist",
+    "description": "At 20th level, the brown-fur transmuter learns to fully master the power of transmutation. Whenever she casts a transmutation spell, it is treated as it were affected by the Extend Spell feat without altering the casting time or slot used. (She cannot then alter its duration again with the Extend Spell feat). Whenever she uses her powerful change ability, the bonus increases by 4 instead of 2. Her share transmutation ability can now target a willing creature within 30 feet. This ability replaces magical supremacy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brown-Fur Transmuter ~ Transmutation Supremacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brown-Fur Transmuter Class Feature.Arcanist Class Feature.SpecialQuality.Supernatural.ArcanistMagicalSupremacy"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, the brown-fur transmuter learns to fully master the power of transmutation. Whenever she casts a transmutation spell, it is treated as it were affected by the Extend Spell feat without altering the casting time or slot used. (She cannot then alter its duration again with the Extend Spell feat). Whenever she uses her powerful change ability, the bonus increases by 4 instead of 2. Her share transmutation ability can now target a willing creature within 30 feet. This ability replaces magical supremacy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2445,
+    "record_key": "Brown-Fur Transmuter ~ Transmutation Supremacy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

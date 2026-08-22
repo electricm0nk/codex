@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Guardian Spirit",
+    "name": "Guardian Spirit",
+    "class": "Medium",
+    "description": "A guardian spirit is an exemplar of protection and defense.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Guardian Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit"
+      },
+      {
+        "key": "DESC",
+        "value": "A guardian spirit is an exemplar of protection and defense.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: City walls, forts, gates, keeps.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Influence Penalty: You are incredibly cautious and guarded in all things, and your caution sometimes gets in the way. When attacking, you always fight defensively, and when casting a spell, you always cast defensively. Because of your focus on defense, you take a -%1 penalty on damage rolls.&nl; Taboos: Choose one: you must always protect others from danger when you can (including defeated enemies, but not enemies that are an active threat to you and others); you must keep your body in fit physical condition, and you break this taboo every time you drop below half your maximum hit points; you must speak no words and use no abilities with the sonic descriptor, and you break this taboo if you become enraged, frightened, or panicked.|SpiritBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Guardian Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Guardian Seance Boon|Medium ~ Guardian's Shield"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Absorb Blow|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Sudden Block|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Guardian|PREVARGTEQ:MediumLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 831,
+    "record_key": "Medium ~ Guardian Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

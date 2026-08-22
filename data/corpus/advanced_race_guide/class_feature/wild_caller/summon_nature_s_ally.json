@@ -1,0 +1,94 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Caller ~ Summon Nature's Ally I",
+    "name": "Summon Nature's Ally",
+    "class": "Summoner",
+    "description": "Starting at 1st level, a wild caller can cast summon nature's ally %1 times per day. At 3rd level and every 2 levels thereafter, the power of this ability increases by one spell level, allowing him to summon more powerful creatures (to a maximum of summon nature's ally IX at 17th level). Furthermore, at 19th level, the wild caller cannot use gate as a spell-like ability, but can use either summon elder worm or summon froghemoth instead.|3+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Caller ~ Summon Nature's Ally I"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonersSummonNatureAllyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 1st level, a wild caller can cast summon nature's ally %1 times per day. At 3rd level and every 2 levels thereafter, the power of this ability increases by one spell level, allowing him to summon more powerful creatures (to a maximum of summon nature's ally IX at 17th level). Furthermore, at 19th level, the wild caller cannot use gate as a spell-like ability, but can use either summon elder worm or summon froghemoth instead.|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonersSummonNatureAllyLVL|(1+CL=Summoner)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally I|PREVAREQ:SummonersSummonNatureAllyLVL,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally II|PREVAREQ:SummonersSummonNatureAllyLVL,2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally III|PREVAREQ:SummonersSummonNatureAllyLVL,3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally IV|PREVAREQ:SummonersSummonNatureAllyLVL,4"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally V|PREVAREQ:SummonersSummonNatureAllyLVL,5"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally VI|PREVAREQ:SummonersSummonNatureAllyLVL,6"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally VII|PREVAREQ:SummonersSummonNatureAllyLVL,7"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally VIII|PREVAREQ:SummonersSummonNatureAllyLVL,8"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Summon Nature's Ally IX|PREVARGTEQ:SummonersSummonNatureAllyLVL,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 229,
+    "record_key": "Wild Caller ~ Summon Nature's Ally I"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

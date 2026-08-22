@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sin Eater ~ Burden of Sin",
+    "name": "Burden of Sin",
+    "class": "Inquisitor",
+    "description": "You may spend a full-round action to transfer one harmful affliction, condition, or spell effect from another creature to yourself (this includes curses, possessions, and permanent effects such as petrification, or any condition that break enchantment can end or reverse). The effect to be transferred is chosen by you and affects you as if you were the original target, continuing its duration (if any) and preventing any further effect on the original bearer. For example, you could transfer a lethal disease to yourself, or petrify yourself to restore a petrified comrade. You can use this ability as often as desired, even using it multiple times on the same creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sin Eater ~ Burden of Sin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "You may spend a full-round action to transfer one harmful affliction, condition, or spell effect from another creature to yourself (this includes curses, possessions, and permanent effects such as petrification, or any condition that break enchantment can end or reverse). The effect to be transferred is chosen by you and affects you as if you were the original target, continuing its duration (if any) and preventing any further effect on the original bearer. For example, you could transfer a lethal disease to yourself, or petrify yourself to restore a petrified comrade. You can use this ability as often as desired, even using it multiple times on the same creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1284,
+    "record_key": "Sin Eater ~ Burden of Sin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

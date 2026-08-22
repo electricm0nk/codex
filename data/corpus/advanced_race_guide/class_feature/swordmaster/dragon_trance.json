@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swordmaster ~ Dragon Trance",
+    "name": "Dragon Trance",
+    "class": "Swordmaster",
+    "description": "Like the dragon, the swordmaster has honed the steadiness of her mind and body. When in this trance, a swordmaster gains the benefits of the Dragon Style feat (Ultimate Combat 98).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swordmaster ~ Dragon Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SwordmasterTrance.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Like the dragon, the swordmaster has honed the steadiness of her mind and body. When in this trance, a swordmaster gains the benefits of the Dragon Style feat (Ultimate Combat 98)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 767,
+    "record_key": "Swordmaster ~ Dragon Trance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

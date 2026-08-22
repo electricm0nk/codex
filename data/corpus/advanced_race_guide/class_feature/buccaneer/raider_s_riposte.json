@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Buccaneer ~ Raider's Riposte",
+    "name": "Raider's Riposte",
+    "class": "Gunslinger",
+    "description": "Whenever an enemy misses a buccaneer with an attack of opportunity, it provokes an attack of opportunity from the buccaneer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Buccaneer ~ Raider's Riposte"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever an enemy misses a buccaneer with an attack of opportunity, it provokes an attack of opportunity from the buccaneer."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 362,
+    "record_key": "Buccaneer ~ Raider's Riposte"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

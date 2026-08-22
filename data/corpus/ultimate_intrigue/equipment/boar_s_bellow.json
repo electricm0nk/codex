@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 190.0,
+    "description": "Allows alchemical inspiration on 1d4 Intimidate checks, makes Diplomacy checks more difficult.",
+    "key": "Boar's Bellow",
+    "name": "Boar's Bellow",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "190"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allows alchemical inspiration on 1d4 Intimidate checks, makes Diplomacy checks more difficult."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_general.lst",
+    "record_key": "Boar's Bellow",
+    "sha256": "9d6286b856677f00d123eba26e6b4662c403dc79461dcaa5289ea793ecaea5e2"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

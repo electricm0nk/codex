@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Horticulturist ~ Plant Familiar",
+    "name": "Plant Familiar",
+    "class": "Alchemist",
+    "description": "A horticulturist creates a Diminutive or Tiny alchemical plant creature that vaguely resembles a kind of animal suitable for a familiar (such as a cat) and acts as his familiar, granting the horticulturist a skill bonus, the Alertness feat, and so on. The plant familiar has all the abilities of the animal it resembles (for example, a bat-like plant familiar can fly) but is treated as a creature of the plant type and has familiar abilities based on the horticulturist's alchemist level (though some familiar abilities may be useless to the horticulturist). An alchemist's extracts and mutagens are considered spells for the purposes of familiar abilities like share spells or deliver touch spells. If a plant familiar is lost or dies, it can be replaced 1 week later through a specialized procedure that costs 200 gp per alchemist level the horticulturist has. The ritual takes 8 hours to complete.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Horticulturist ~ Plant Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.HorticulturistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A horticulturist creates a Diminutive or Tiny alchemical plant creature that vaguely resembles a kind of animal suitable for a familiar (such as a cat) and acts as his familiar, granting the horticulturist a skill bonus, the Alertness feat, and so on. The plant familiar has all the abilities of the animal it resembles (for example, a bat-like plant familiar can fly) but is treated as a creature of the plant type and has familiar abilities based on the horticulturist's alchemist level (though some familiar abilities may be useless to the horticulturist). An alchemist's extracts and mutagens are considered spells for the purposes of familiar abilities like share spells or deliver touch spells. If a plant familiar is lost or dies, it can be replaced 1 week later through a specialized procedure that costs 200 gp per alchemist level the horticulturist has. The ritual takes 8 hours to complete."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|AlchemistLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Familiar|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 133,
+    "record_key": "Horticulturist ~ Plant Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

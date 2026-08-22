@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Team Player",
+    "name": "Team Player",
+    "class": "Vigilante Talent",
+    "description": "The vigilante gains Swift Aid as a bonus feat, ignoring its prerequisites. Additionally, the vigilante can use the feat as a standard action, in which case it applies to every ally adjacent to the vigilante.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Team Player"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Team Player"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante gains Swift Aid as a bonus feat, ignoring its prerequisites. Additionally, the vigilante can use the feat as a standard action, in which case it applies to every ally adjacent to the vigilante."
+      },
+      {
+        "key": "DESC",
+        "value": "The vigilante can increase the bonus provided to one ally by this feat to +2 by using the aid another action as a move action rather than as a swift action.PRECLASS:1,Vigilante=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Swift Aid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1230,
+    "record_key": "Vigilante Talent ~ Team Player"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

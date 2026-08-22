@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You summon a school of (min(6,1+(CASTERLEVEL/3))) hippocampi (Bestiary 2 p155) to serve as combat-trained mounts. The hippocampi avoid combat if possible but defend themselves if attacked. If any hippocampus attacks, the remaining duration of the spell changes from (CASTERLEVEL) hours to (CASTERLEVEL) rounds (so if a full 4 hours remained, the hippocampi last for only 4 more rounds).",
+    "key": "Aquatic Cavalry",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Druid,Paladin,Ranger,Shaman,Summoner=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Summon hippocampi to serve as aquatic mounts.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon a school of (min(6,1+(CASTERLEVEL/3))) hippocampi (Bestiary 2 p155) to serve as combat-trained mounts. The hippocampi avoid combat if possible but defend themselves if attacked. If any hippocampus attacks, the remaining duration of the spell changes from (CASTERLEVEL) hours to (CASTERLEVEL) rounds (so if a full 4 hours remained, the hippocampi last for only 4 more rounds).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Summoning"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(min(6,1+(CASTERLEVEL/3))) hippocampi"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Aquatic Cavalry",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

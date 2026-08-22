@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sanctified Slayer ~ Studied Target",
+    "name": "Studied Target",
+    "class": "Inquisitor",
+    "description": "A sanctified slayer gains the slayer's studied target class feature. She uses her inquisitor level as her effective slayer level to determine the effects of studied target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sanctified Slayer ~ Studied Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary.InquisitorJudgements"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorStudiesTargetLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sanctified slayer gains the slayer's studied target class feature. She uses her inquisitor level as her effective slayer level to determine the effects of studied target."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Slayer ~ Studied Target"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorStudiedTargetLVL|InquisitorLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerStudiedTargetBonus|InquisitorStudiedTargetLVL/5+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerStudiedTargetProgression|(InquisitorStudiedTargetLVL>0)+(InquisitorStudiedTargetLVL>6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3298,
+    "record_key": "Sanctified Slayer ~ Studied Target"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

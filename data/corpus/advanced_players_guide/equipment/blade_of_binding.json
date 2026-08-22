@@ -1,27 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Blade of Binding",
     "category": "ArmsArmor",
-    "name": "Blade of Binding",
     "cost_gp": 50.0,
-    "weight": 8.0,
-    "description": "A +1 greatsword that enables free grapple attempts on a successful hit; the blade transforms into a chain that wraps around the target (Escape Artist DC 20, break DC 28, hardness 10, 10 hit points)."
+    "description": "A +1 greatsword that enables free grapple attempts on a successful hit; the blade transforms into a chain that wraps around the target (Escape Artist DC 20, break DC 28, hardness 10, 10 hit points).",
+    "key": "Blade of Binding",
+    "name": "Blade of Binding",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greatsword"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.TwoHanded.Martial.Specific.Slashing.Sword.BladeHeavy"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "SPROP",
+        "value": "On a successful hit against a creature of the wielder's size or smaller, the wielder can attempt to start a grapple as a free action that doesn't provoke an attack of opportunity."
+      }
+    ],
+    "weight": 8.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 87,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Blade of Binding",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Grand Inspiring Cognatogen",
+    "name": "Grand Inspiring Cognatogen",
+    "class": "Discovery",
+    "description": "The alchemist's inspiring cognatogen now grants a +4 dodge bonus to AC and a +4 bonus to Reflex saving throws; a -6 penalty to Strength and Constitution; and the effects of having the item lore, tenacious inspiration, and underworld inspiration investigator talents. An alchemist must be at least 16th level and have the greater inspiring cognatogen discovery to select this discovery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Grand Inspiring Cognatogen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.AlchemistDiscovery.AlchemistMutagenMod"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRECLASS:1,Alchemist=16],[PREABILITY:1,CATEGORY=Special Ability,Discovery ~ Greater Inspiring Cognatogen]"
+      },
+      {
+        "key": "DESC",
+        "value": "The alchemist's inspiring cognatogen now grants a +4 dodge bonus to AC and a +4 bonus to Reflex saving throws; a -6 penalty to Strength and Constitution; and the effects of having the item lore, tenacious inspiration, and underworld inspiration investigator talents. An alchemist must be at least 16th level and have the greater inspiring cognatogen discovery to select this discovery."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Alchemist ~ Output ~ Grand Inspiring Cognatogen"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2307,
+    "record_key": "Discovery ~ Grand Inspiring Cognatogen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

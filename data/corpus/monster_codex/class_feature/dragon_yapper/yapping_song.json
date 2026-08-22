@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dragon Yapper ~ Yapping Song",
+    "name": "Yapping Song",
+    "class": "Bard",
+    "description": "A dragon yapper can use performance to annoy those that hear it, causing them to take a -%1 penalty on attack and damage rolls (minimum 1) and a -%1 penalty on saves against fear effects and charm effects as long as the dragon yapper continues performing. Yapping song is a mind-affecting ability that uses audible components, but is not language-dependent.|1+((BardLVL+1)/6)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Yapper ~ Yapping Song"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.DragonYapperClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A dragon yapper can use performance to annoy those that hear it, causing them to take a -%1 penalty on attack and damage rolls (minimum 1) and a -%1 penalty on saves against fear effects and charm effects as long as the dragon yapper continues performing. Yapping song is a mind-affecting ability that uses audible components, but is not language-dependent.|1+((BardLVL+1)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 62,
+    "record_key": "Dragon Yapper ~ Yapping Song"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

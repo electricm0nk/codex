@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dramaturgical Flourish ~ Masterpiece",
+    "name": "Masterpiece",
+    "class": "Dramaturgical Flourish",
+    "description": "The argent dramaturge gains a bardic masterpiece without needing to sacrifice a feat or spell known. She must still meet the prerequisites of the masterpiece. An argent dramaturge can take this flourish more than once, but must select a new bardic masterpiece each time she does so.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dramaturgical Flourish ~ Masterpiece"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DramaturgicalFlourish"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.173"
+      },
+      {
+        "key": "DESC",
+        "value": "The argent dramaturge gains a bardic masterpiece without needing to sacrifice a feat or spell known. She must still meet the prerequisites of the masterpiece. An argent dramaturge can take this flourish more than once, but must select a new bardic masterpiece each time she does so."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bonus Masterpiece|1"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 32,
+    "record_key": "Dramaturgical Flourish ~ Masterpiece"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Deny Succor",
+    "name": "Deny Succor",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman can place this hex on a single creature within 30 feet. The target does not heal damage from cure spells and does not benefit from any spells or effects that remove conditions. This effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the saving throw is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanDenySuccorDuration|ShamanDenySuccorDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Deny Succor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanLifeHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Deny Succor"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanLifeSpirit,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanDenySuccorDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanDenySuccorDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can place this hex on a single creature within 30 feet. The target does not heal damage from cure spells and does not benefit from any spells or effects that remove conditions. This effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the saving throw is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanDenySuccorDuration|ShamanDenySuccorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanDenySuccorDuration|ShamanSpiritLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanDenySuccorDC|ShamanHexDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1589,
+    "record_key": "Shaman Spirit Hex ~ Deny Succor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

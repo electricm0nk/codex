@@ -1,0 +1,212 @@
+[
+  {
+    "key": "Phrenologist ~ Bardic Performance",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1676
+    }
+  },
+  {
+    "key": "Phrenologist ~ Fingers of Fascination",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1676
+    }
+  },
+  {
+    "key": "Phrenologist ~ In Your Head",
+    "class": "Bard",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1676
+    }
+  },
+  {
+    "key": "Phrenologist ~ Phrenological Knowledge",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1676
+    }
+  },
+  {
+    "key": "Phrenologist ~ Phrenological Savant",
+    "class": "Bard",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1676
+    }
+  },
+  {
+    "key": "Phrenologist ~ Skull Sonata",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1676
+    }
+  },
+  {
+    "key": "Phrenologist ~ Skull-Versed",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1676
+    }
+  },
+  {
+    "key": "Silver Balladeer ~ Alignment",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1677
+    }
+  },
+  {
+    "key": "Silver Balladeer ~ Bardic Performance",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1677
+    }
+  },
+  {
+    "key": "Silver Balladeer ~ Break Curse",
+    "class": "Bard",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1677
+    }
+  },
+  {
+    "key": "Silver Balladeer ~ Holy Vibration",
+    "class": "Bard",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1677
+    }
+  },
+  {
+    "key": "Silver Balladeer ~ Mass Break Curse",
+    "class": "Bard",
+    "level": 18,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1677
+    }
+  },
+  {
+    "key": "Silver Balladeer ~ Pure Heart",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1677
+    }
+  },
+  {
+    "key": "Silver Balladeer ~ Silver Mastery",
+    "class": "Bard",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1677
+    }
+  }
+]

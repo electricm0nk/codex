@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter ~ Woodland Stride",
+    "name": "Woodland Stride",
+    "class": "Shifter",
+    "description": "A shifter can move through any sort of undergrowth (such as briars, natural thorns, overgrown areas, and similar terrain) at her normal speed and without taking damage or suffering any other impairment. Briars, thorns, and overgrown areas that are enchanted or magically manipulated to impede motion still affect the shifter.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter ~ Woodland Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shifter Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A shifter can move through any sort of undergrowth (such as briars, natural thorns, overgrown areas, and similar terrain) at her normal speed and without taking damage or suffering any other impairment. Briars, thorns, and overgrown areas that are enchanted or magically manipulated to impede motion still affect the shifter."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 18,
+    "record_key": "Shifter ~ Woodland Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

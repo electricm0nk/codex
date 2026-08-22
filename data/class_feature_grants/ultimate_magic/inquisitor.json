@@ -1,0 +1,227 @@
+[
+  {
+    "key": "Exorcist ~ Closed Mind",
+    "class": "Inquisitor",
+    "level": 17,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1247
+    }
+  },
+  {
+    "key": "Exorcist ~ Verdict of Anathema",
+    "class": "Inquisitor",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1247
+    }
+  },
+  {
+    "key": "Exorcist ~ Verdict of Exile",
+    "class": "Inquisitor",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1247
+    }
+  },
+  {
+    "key": "Exorcist ~ Verdict of Exorcism",
+    "class": "Inquisitor",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1247
+    }
+  },
+  {
+    "key": "Heretic ~ Hide Tracks",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1248
+    }
+  },
+  {
+    "key": "Heretic ~ Lore of Escape",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1248
+    }
+  },
+  {
+    "key": "Infiltrator ~ Forbidden Lore",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1249
+    }
+  },
+  {
+    "key": "Infiltrator ~ Guileful Lore",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1249
+    }
+  },
+  {
+    "key": "Infiltrator ~ Misdirection",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1249
+    }
+  },
+  {
+    "key": "Infiltrator ~ Necessary Lies",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1249
+    }
+  },
+  {
+    "key": "Judgment ~ Escape",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1248
+    }
+  },
+  {
+    "key": "Preacher ~ Determination",
+    "class": "Inquisitor",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1250
+    }
+  },
+  {
+    "key": "Sin Eater ~ Burden of Sin",
+    "class": "Inquisitor",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1251
+    }
+  },
+  {
+    "key": "Sin Eater ~ Eat Sin",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1251
+    }
+  },
+  {
+    "key": "Sin Eater ~ Speak with Dead",
+    "class": "Inquisitor",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "granted_via_archetype": true,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1251
+    }
+  }
+]

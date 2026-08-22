@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Duelist ~ Parry",
+    "name": "Parry",
+    "class": "Duelist",
+    "description": "At 2nd level, a duelist learns to parry the attacks of other creatures, causing them to miss. Whenever the duelist takes a full attack action with a light or one-handed piercing weapon, she can elect not to take one of her attacks. At any time before her next turn, she can attempt to parry an attack against her or an adjacent ally as an immediate action. To parry the attack, the duelist makes an attack roll, using the same bonuses as the attack she chose to forego during her previous action. If her attack roll is greater than the roll of the attacking creature, the attack automatically misses. For each size category that the attacking creature is larger than the duelist, the duelist takes a -4 penalty on her attack roll. The duelist also takes a -4 penalty when attempting to parry an attack made against an adjacent ally. The duelist must declare the use of this ability after the attack is announced, but before the roll is made.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duelist ~ Parry"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.DuelistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a duelist learns to parry the attacks of other creatures, causing them to miss. Whenever the duelist takes a full attack action with a light or one-handed piercing weapon, she can elect not to take one of her attacks. At any time before her next turn, she can attempt to parry an attack against her or an adjacent ally as an immediate action. To parry the attack, the duelist makes an attack roll, using the same bonuses as the attack she chose to forego during her previous action. If her attack roll is greater than the roll of the attacking creature, the attack automatically misses. For each size category that the attacking creature is larger than the duelist, the duelist takes a -4 penalty on her attack roll. The duelist also takes a -4 penalty when attempting to parry an attack made against an adjacent ally. The duelist must declare the use of this ability after the attack is announced, but before the roll is made."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.383"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2998,
+    "record_key": "Duelist ~ Parry"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

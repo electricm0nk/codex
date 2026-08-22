@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Draconic Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Draconic Bloodline",
+    "description": "Whenever you cast a spell with the",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Acid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Cold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Electricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DraconicDamageType_Fire|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell with the"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      },
+      {
+        "key": "DESC",
+        "value": "descriptor, that spell deals +1 point of damage per die rolled."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(acid spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_DraconicDamageType_Acid,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(cold spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_DraconicDamageType_Cold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(electricity spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_DraconicDamageType_Electricity,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(fire spells deal +1 damage per die)|PREVARGTEQ:Sorcerer_DraconicDamageType_Fire,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2441,
+    "record_key": "Draconic Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

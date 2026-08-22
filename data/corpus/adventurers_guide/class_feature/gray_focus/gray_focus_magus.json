@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Gray Focus ~ Magus",
+    "name": "Gray Focus ~ Magus",
+    "class": "Gray Focus",
+    "description": "You do not gain any benefit for your gray focus or gray boons. Once you gain at least 1 level in Magus, you immediately gain the appropriate powers and boons due you from your Gray Corsair class levels.|!PRECLASS:1,Magus=1",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GrayCorsairFocus"
+      },
+      {
+        "key": "DESC",
+        "value": "You do not gain any benefit for your gray focus or gray boons. Once you gain at least 1 level in Magus, you immediately gain the appropriate powers and boons due you from your Gray Corsair class levels.|!PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "DESC",
+        "value": "You automatically succeed at any concentration checks required to cast a spell while being subjected to vigorous or violent motion while either swimming or on a ship.|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Magus|1|PREMULT:2,[PRECLASS:1,Magus=1],[PREVARGTEQ:GrayCorsairLVL,2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Magus|1|PREMULT:2,[PRECLASS:1,Magus=1],[PREVARGTEQ:GrayCorsairLVL,4]"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Magus|1|PREMULT:2,[PRECLASS:1,Magus=1],[PREVARGTEQ:GrayCorsairLVL,6]"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Magus|1|PREMULT:2,[PRECLASS:1,Magus=1],[PREVARGTEQ:GrayCorsairLVL,8]"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Magus|1|PREMULT:2,[PRECLASS:1,Magus=1],[PREVARGTEQ:GrayCorsairLVL,10]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 179,
+    "record_key": "Gray Focus ~ Magus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

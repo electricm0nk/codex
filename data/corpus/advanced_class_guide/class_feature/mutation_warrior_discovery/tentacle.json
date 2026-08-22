@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Mutation Warrior Discovery ~ Tentacle",
+    "name": "Tentacle",
+    "class": "Mutation Warrior Discovery",
+    "description": "You gain a prehensile, arm-length tentacle on your body. The tentacle is fully under your control and cannot be concealed except with magic or bulky clothing. The tentacle does not give you any extra attacks or actions per round, though you can use it to make a tentacle attack (1d4 damage for a Medium mutation warrior, 1d3 damage for a Small one) with the grab ability (see page 301 of the Pathfinder RPG Bestiary). The tentacle can manipulate or hold items as well as your original arms can (for example, allowing you to use one hand to wield a weapon, the tentacle to hold a potion, and the third hand to throw a bomb). Unlike an arm, the tentacle has no magic item slots.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mutation Warrior Discovery ~ Tentacle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mutation Warrior Discovery.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a prehensile, arm-length tentacle on your body. The tentacle is fully under your control and cannot be concealed except with magic or bulky clothing. The tentacle does not give you any extra attacks or actions per round, though you can use it to make a tentacle attack (1d4 damage for a Medium mutation warrior, 1d3 damage for a Small one) with the grab ability (see page 301 of the Pathfinder RPG Bestiary). The tentacle can manipulate or hold items as well as your original arms can (for example, allowing you to use one hand to wield a weapon, the tentacle to hold a potion, and the third hand to throw a bomb). Unlike an arm, the tentacle has no magic item slots."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Fighter Tentacle"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3090,
+    "record_key": "Mutation Warrior Discovery ~ Tentacle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

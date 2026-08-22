@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rot Warden ~ Enduring Druid",
+    "name": "Enduring Druid",
+    "class": "Druid",
+    "description": "A rot warden gains a +4 bonus on saving throws against attacks and special abilities of vermin and swarms with the vermin type. This bonus also applies on saving throws against effects that would age or decay the rot warden or his equipment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rot Warden ~ Enduring Druid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.SeasonSageClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A rot warden gains a +4 bonus on saving throws against attacks and special abilities of vermin and swarms with the vermin type. This bonus also applies on saving throws against effects that would age or decay the rot warden or his equipment."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 564,
+    "record_key": "Rot Warden ~ Enduring Druid"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inspired Discovery ~ Amazing Inspiration",
+    "name": "Amazing Inspiration",
+    "class": "Inspired Discovery",
+    "description": "You roll d8 instead of d6 for inspiration.|PREVARLTEQ:AlchemistLVL,19",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inspired Discovery ~ Amazing Inspiration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InspiredInvestigatorTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AlchemistLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "You roll d8 instead of d6 for inspiration.|PREVARLTEQ:AlchemistLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "You roll 2d8 instead of 1d6 for inspiration.|PREVARGTEQ:AlchemistLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationDice|1|PREVARGTEQ:AlchemistLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationDieSize|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2334,
+    "record_key": "Inspired Discovery ~ Amazing Inspiration"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

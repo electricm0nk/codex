@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ Sanctified Rogue",
+    "name": "Sanctified Rogue",
+    "class": "Rogue Archetype",
+    "description": "The sanctified rogue serves a higher purpose, acting as a representative of a church or cult, or following the tenets of a specific faith or deity. While most sanctified rogues share the beliefs or ideals of the religions they represent, not all of them are necessarily pious. A handful of disreputable holy thieves serve purely as mercenaries. At the other end of spectrum, however, more sanctified rogues adhere to the tenets of their faith with fanatical devotion. Regardless, all seem blessed with the ability to call upon divine favor to aid them in times of need.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Sanctified Rogue"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype.RogueUncannyDodge.RogueImprovedUncannyDodge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Sanctified Rogue],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueUncannyDodge,TYPE.RogueImprovedUncannyDodge]"
+      },
+      {
+        "key": "DESC",
+        "value": "The sanctified rogue serves a higher purpose, acting as a representative of a church or cult, or following the tenets of a specific faith or deity. While most sanctified rogues share the beliefs or ideals of the religions they represent, not all of them are necessarily pious. A handful of disreputable holy thieves serve purely as mercenaries. At the other end of spectrum, however, more sanctified rogues adhere to the tenets of their faith with fanatical devotion. Regardless, all seem blessed with the ability to call upon divine favor to aid them in times of need."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Sanctified Rogue ~ Divine Purpose|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Sanctified Rogue ~ Divine Epiphany|PRECLASS:1,Rogue=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Sanctified Rogue ~ Rogue Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rogue Class Feature|AUTOMATIC|Sanctified Rogue ~ Advanced Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Rogue"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1674,
+    "record_key": "Rogue Archetype ~ Sanctified Rogue"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

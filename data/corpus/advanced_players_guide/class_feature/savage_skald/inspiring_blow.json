@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savage Skald ~ Inspiring Blow",
+    "name": "Inspiring Blow",
+    "class": "Bard",
+    "description": "A savage skald roars his war-cries with each telling blow. When he confirms a critical hit, he can start this performance as an immediate action (ending any other performances). He gains temporary hit points equal to his Charisma modifier (if positive), and all allies within 30 feet gain a +1 morale bonus on their next attack roll prior to the start of his next turn. These temporary hit points remain until the bard ends his performance. This performance replaces fascinate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savage Skald ~ Inspiring Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardFascinate"
+      },
+      {
+        "key": "DESC",
+        "value": "A savage skald roars his war-cries with each telling blow. When he confirms a critical hit, he can start this performance as an immediate action (ending any other performances). He gains temporary hit points equal to his Charisma modifier (if positive), and all allies within 30 feet gain a +1 morale bonus on their next attack roll prior to the start of his next turn. These temporary hit points remain until the bard ends his performance. This performance replaces fascinate."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1711,
+    "record_key": "Savage Skald ~ Inspiring Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

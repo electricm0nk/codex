@@ -1,0 +1,66 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 30.0,
+    "description": null,
+    "key": "Shotel",
+    "name": "Shotel",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Shotel"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.GladiatorWeapon.Melee.Exotic.Piercing.Performance"
+      },
+      {
+        "key": "COST",
+        "value": "30"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Performance.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Shotel",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

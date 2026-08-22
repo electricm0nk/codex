@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Holy Tactician ~ Battlefield Presence",
+    "name": "Battlefield Presence",
+    "class": "Paladin",
+    "description": "At 3rd level, a tactician can direct her allies in battle, granting each ally within 30 feet one teamwork feat she possesses as a bonus feat as a standard action. All allies must receive the same feat, but do not need to meet the prerequisites of this bonus feat. This ability does not function if the paladin is flat-footed or unconscious. Allies must be able to see and hear the holy tactician in order to gain this benefit. Changing the bonus feat granted is a swift action. This ability replaces aura of courage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holy Tactician ~ Battlefield Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a tactician can direct her allies in battle, granting each ally within 30 feet one teamwork feat she possesses as a bonus feat as a standard action. All allies must receive the same feat, but do not need to meet the prerequisites of this bonus feat. This ability does not function if the paladin is flat-footed or unconscious. Allies must be able to see and hear the holy tactician in order to gain this benefit. Changing the bonus feat granted is a swift action. This ability replaces aura of courage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1485,
+    "record_key": "Holy Tactician ~ Battlefield Presence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

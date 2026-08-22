@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Aeon ~ Soul Siphoning",
     "delivery": "Supernatural",
@@ -15,19 +13,51 @@
     "owners": [
       "bestiary_2:monster:aeon_akhana"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulSiphoningDC|10+HD/2+CON"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulSiphoningDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, an akhana can use its tail to siphon life essence from a grappled foe. At the start of the aeon's turn, the victim gains 1d4 negative levels (a DC %1 Fortitude save negates and grants immunity to this akhana's soul siphoning ability for 24 hours). When the number of negative levels equals the target's Hit Dice, the target's soul tears free from its mortal body and gets stored within the body of the akhana as a trap the soul spell. The victim's body remains preserved as if via a gentle repose spell for as long as the soul is held by the akhana. The akhana can keep the soul indefinitely, or can release it as a full-round action. Upon doing so, the released soul immediately returns to its body if the body is within 300 feet, at which point the body returns to life and any negative levels imparted to it by the akhana are removed. If the body is not within 300 feet (or if it has been destroyed), then the creature dies when its soul is released. A miracle, limited wish, or wish can force a displaced soul to return to its proper body. If an akhana is slain, any soul it contains is released automatically. An akhana can only hold one soul at a time.|SoulSiphoningDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Aeon ~ Soul Siphoning"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.9",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 10,
-    "record_key": "Aeon ~ Soul Siphoning"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Aeon ~ Soul Siphoning",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

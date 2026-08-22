@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Shock Bomb",
+    "name": "Shock Bomb*",
+    "class": "Discovery",
+    "description": "When the alchemist creates a bomb, he can choose to have it inflict electricity damage. Creatures that take a direct hit from a shock bomb are dazzled for 1d4 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Shock Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+      },
+      {
+        "key": "DESC",
+        "value": "When the alchemist creates a bomb, he can choose to have it inflict electricity damage. Creatures that take a direct hit from a shock bomb are dazzled for 1d4 rounds."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 146,
+    "record_key": "Discovery ~ Shock Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

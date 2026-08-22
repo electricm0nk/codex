@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald ~ Versatile Performance",
+    "name": "Versatile Performance",
+    "class": "Skald",
+    "description": "At 2nd level, a skald can choose one type of Perform skill associated with the skald class. He can use his bonus in that skill in place of his bonus in the associated skills listed below. When substituting in this way, the skald uses his total Perform skill bonus, including class skill bonus, in place of the associated skill's bonus, whether or not he has ranks in that skill or if it is a class skill. At 7th level, and every 5 levels thereafter, the bard can select an additional type of Perform to substitute. The types of Perform and their associated skills are: Oratory (Diplomacy, Sense Motive), Percussion (Handle Animal, Intimidate), Sing (Bluff, Sense Motive), String (Bluff, Diplomacy), and Wind (Diplomacy, Handle Animal).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Versatile Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SpecialQuality.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VersatilePerformanceLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a skald can choose one type of Perform skill associated with the skald class. He can use his bonus in that skill in place of his bonus in the associated skills listed below. When substituting in this way, the skald uses his total Perform skill bonus, including class skill bonus, in place of the associated skill's bonus, whether or not he has ranks in that skill or if it is a class skill. At 7th level, and every 5 levels thereafter, the bard can select an additional type of Perform to substitute. The types of Perform and their associated skills are: Oratory (Diplomacy, Sense Motive), Percussion (Handle Animal, Intimidate), Sing (Bluff, Sense Motive), String (Bluff, Diplomacy), and Wind (Diplomacy, Handle Animal)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skald Versatile Performance|min((SkaldLVL+3)/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldVersatilePerformanceLVL|SkaldLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1725,
+    "record_key": "Skald ~ Versatile Performance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Locust (Giant) ~ Voracious",
     "delivery": "Extraordinary",
@@ -14,6 +12,32 @@
     "owners": [
       "ultimate_wilderness:companion:companion_locust_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant locust bite attack deals double damage to creatures with the plant subtype and to objects made of paper, wood, or other plant materials."
+      },
+      {
+        "key": "KEY",
+        "value": "Locust (Giant) ~ Voracious"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CompanionAdvancement,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.GiantLocustRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.185",
     "stat_adjustments": [],
@@ -23,16 +47,18 @@
       "GiantLocustRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 268,
-    "record_key": "Locust (Giant) ~ Voracious"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 268,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Locust (Giant) ~ Voracious",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

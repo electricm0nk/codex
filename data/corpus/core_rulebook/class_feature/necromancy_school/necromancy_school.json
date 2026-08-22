@@ -1,0 +1,119 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Necromancy School",
+    "name": "Necromancy School",
+    "class": null,
+    "description": "You have chosen to specialize in necromancy spells.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancySchoolLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecromancyProgressionSchoolLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in necromancy spells."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Necromancy School ~ Power Over Undead|PREVAREQ:Wizard_CF_PowerOverUndead,0|PREVARGTEQ:NecromancyProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Necromancy School ~ Grave Touch|PREVAREQ:Wizard_CF_GraveTouch,0|PREVARGTEQ:NecromancyProgressionSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Necromancy School ~ Life Sight|PREVAREQ:Wizard_CF_LifeSight,0|PREVARGTEQ:NecromancyProgressionSchoolLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_ArcaneOppositionSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=3|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=4|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=5|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=6|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=7|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=8|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPECIALTYSPELLKNOWN|CLASS=Necromancer;LEVEL=9|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancySchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecromancyProgressionSchoolLVL|ArcaneSchoolProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2603,
+    "record_key": "Necromancy School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

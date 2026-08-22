@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Accursed Bloodline ~ Fearsome Survival",
+    "name": "Fearsome Survival",
+    "class": "Accursed Bloodline",
+    "description": "Your hag-blood gives you considerable resilience. You gain DR %1/cold iron, and gain SR %2.|Sorcerer_AccursedFearsomeSurvival_DR|Sorcerer_AccursedFearsomeSurvival_SR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Bloodline ~ Fearsome Survival"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Accursed Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Accursed"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Accursed_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Accursed_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AccursedFearsomeSurvival_DR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_AccursedFearsomeSurvival_SR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your hag-blood gives you considerable resilience. You gain DR %1/cold iron, and gain SR %2.|Sorcerer_AccursedFearsomeSurvival_DR|Sorcerer_AccursedFearsomeSurvival_SR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AccursedFearsomeSurvival_DR|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_AccursedFearsomeSurvival_SR|6+Sorcerer_Accursed_BloodlinePower20LVL"
+      },
+      {
+        "key": "SR",
+        "value": "Sorcerer_AccursedFearsomeSurvival_SR"
+      },
+      {
+        "key": "DR",
+        "value": "Sorcerer_AccursedFearsomeSurvival_DR/cold iron"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AccursedBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 579,
+    "record_key": "Accursed Bloodline ~ Fearsome Survival"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wrath of Frost ~ Kostchtchie",
+    "name": "Wrath of Frost",
+    "class": "Wrath of Frost",
+    "description": "You can cast giant form I 1/day. Three times during this ability's duration, you can cast an empowered cone of cold as a spell-like ability. This ability is the equivalent of a 9th-level spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wrath of Frost ~ Kostchtchie"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Giant Form I,19+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Demonic Obedience|TIMES=3|CASTERLEVEL=TL|Cone Of Cold,19+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast giant form I 1/day. Three times during this ability's duration, you can cast an empowered cone of cold as a spell-like ability. This ability is the equivalent of a 9th-level spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 155,
+    "record_key": "Wrath of Frost ~ Kostchtchie"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

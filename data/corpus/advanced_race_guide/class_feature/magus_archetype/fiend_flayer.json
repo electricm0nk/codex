@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Fiend Flayer",
+    "name": "Fiend Flayer",
+    "class": "Magus Archetype",
+    "description": "Some tiefling magi can tap the dark energy of their fiendish blood to enhance their arcane and combat talents. By physically carving away their tainted flesh, they can use its dark energies to enhance their powers, call forth weapons from thin air, and bypass enemies' strongest defenses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Fiend Flayer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsTiefling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Some tiefling magi can tap the dark energy of their fiendish blood to enhance their arcane and combat talents. By physically carving away their tainted flesh, they can use its dark energies to enhance their powers, call forth weapons from thin air, and bypass enemies' strongest defenses."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiend Flayer ~ Infernal Mortification|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fiend Flayer ~ Magus Arcana|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 778,
+    "record_key": "Magus Archetype ~ Fiend Flayer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

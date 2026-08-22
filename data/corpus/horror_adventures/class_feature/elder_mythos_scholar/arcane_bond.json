@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Elder Mythos Scholar ~ Arcane Bond",
+    "name": "Arcane Bond",
+    "class": "Wizard",
+    "description": "An Elder Mythos scholar must choose to bond with an object, inscribing that object with eldritch runes. This alters arcane bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder Mythos Scholar ~ Arcane Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wizard Class Feature.ElderMythosScholarClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      },
+      {
+        "key": "DESC",
+        "value": "An Elder Mythos scholar must choose to bond with an object, inscribing that object with eldritch runes. This alters arcane bond."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 302,
+    "record_key": "Elder Mythos Scholar ~ Arcane Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

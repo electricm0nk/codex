@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Knight ~ Implacable Knight",
+    "name": "Implacable Knight",
+    "class": "Cavalier",
+    "description": "A green knight gains Endurance and Diehard as bonus feats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Knight ~ Implacable Knight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.GreenKnightClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A green knight gains Endurance and Diehard as bonus feats."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Endurance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Diehard"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 423,
+    "record_key": "Green Knight ~ Implacable Knight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

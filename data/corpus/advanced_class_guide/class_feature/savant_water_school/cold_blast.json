@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Savant Water School ~ Cold Blast",
+    "name": "Cold Blast",
+    "class": "Savant Water School",
+    "description": "As a standard action, you can unleash a blast of freezing cold. This blast deals 1d6+%1 points of cold damage to all creatures within 5 feet of you and staggers them for 1 round. A successful Reflex save DC %2 negates the staggered effect and halves the damage. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+10+INT|INT+3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Savant Water School ~ Cold Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can unleash a blast of freezing cold. This blast deals 1d6+%1 points of cold damage to all creatures within 5 feet of you and staggers them for 1 round. A successful Reflex save DC %2 negates the staggered effect and halves the damage. You can use this ability %3 times per day.|ArcanistSavantSchoolLVL/2|ArcanistSavantSchoolLVL/2+10+INT|INT+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2620,
+    "record_key": "Savant Water School ~ Cold Blast"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T16:47:16Z",
+  "ingested_at": "2026-08-15T19:20:15Z",
   "data": {
     "key": "Elf ~ Disinterested Observer",
     "name": "Disinterested Observer",
@@ -44,11 +44,11 @@
       },
       {
         "key": "DESC",
-        "value": "Elves who frequently interact with shorterlived species, especially members who hail from Varisia, often come to rely on their ability to weight out such impatient races. These elves gain a +1 racial bonus on attack rolls and skill checks made as part of readied actions in combat."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This racial trait replaces the elven magic and weapon familiarity traits.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Disinterested Observer"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

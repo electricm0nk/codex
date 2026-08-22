@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tatterdemalion ~ Cantrips",
+    "name": "Cantrips",
+    "class": "Witch",
+    "description": "A tatterdemalion must choose mage hand, open/close, and prestidigitation as her prepared cantrips at 1st level, and they require a piece of cloth, string, rope, or other woven material (including clothing) as a focus. Any action she takes with these cantrips must involve the focus. Starting at 2nd level, she can choose any cantrip for her remaining cantrip. This alters the witch's cantrips.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tatterdemalion ~ Cantrips"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "DESC",
+        "value": "A tatterdemalion must choose mage hand, open/close, and prestidigitation as her prepared cantrips at 1st level, and they require a piece of cloth, string, rope, or other woven material (including clothing) as a focus. Any action she takes with these cantrips must involve the focus. Starting at 2nd level, she can choose any cantrip for her remaining cantrip. This alters the witch's cantrips."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 283,
+    "record_key": "Tatterdemalion ~ Cantrips"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

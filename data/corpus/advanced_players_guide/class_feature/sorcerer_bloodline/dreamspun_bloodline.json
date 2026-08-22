@@ -1,0 +1,180 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sorcerer Bloodline ~ Dreamspun",
+    "name": "Dreamspun Bloodline",
+    "class": "Sorcerer Bloodline",
+    "description": "Your family is a long line of dreamers, who dream not as ordinary mortals do but rather as those who reach through and touch the supernal realm of dreams and the farthest shores of night. Whether it is a gift or curse is not always clear, but your visions of the past and future call you ineluctably to a life of adventure.|PREVAREQ:Sorcerer_Dreamspun_Description,0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline ~ Dreamspun"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlineLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlineArcana1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlineSpells1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower1LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower9LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower1Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlineClassSkill1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your family is a long line of dreamers, who dream not as ordinary mortals do but rather as those who reach through and touch the supernal realm of dreams and the farthest shores of night. Whether it is a gift or curse is not always clear, but your visions of the past and future call you ineluctably to a life of adventure.|PREVAREQ:Sorcerer_Dreamspun_Description,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Sense Motive|PREVARGTEQ:Sorcerer_Dreamspun_BloodlineClassSkill1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamspun Bloodline ~ Bloodline Arcana|PREVARGTEQ:Sorcerer_Dreamspun_BloodlineArcana1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamspun Bloodline ~ Bonus Spells|PREVARGTEQ:Sorcerer_Dreamspun_BloodlineSpells1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dreamspun Bloodline ~ Bloodline Powers|PREVARGTEQ:Sorcerer_Dreamspun_BloodlinePowers,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Dreamspun Bloodline ~ Power LVL 01|PREVARGTEQ:Sorcerer_Dreamspun_BloodlinePower1,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Dreamspun Bloodline ~ Power LVL 03|PREVARGTEQ:Sorcerer_Dreamspun_BloodlinePower3,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Dreamspun Bloodline ~ Power LVL 09|PREVARGTEQ:Sorcerer_Dreamspun_BloodlinePower9,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Dreamspun Bloodline ~ Power LVL 15|PREVARGTEQ:Sorcerer_Dreamspun_BloodlinePower15,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|TYPE=Dreamspun Bloodline ~ Power LVL 20|PREVARGTEQ:Sorcerer_Dreamspun_BloodlinePower20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Dreamspun_BloodlinePower1LVL|Sorcerer_Dreamspun_BloodlineLVL+BloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Dreamspun_BloodlinePower3LVL|Sorcerer_Dreamspun_BloodlineLVL+BloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Dreamspun_BloodlinePower9LVL|Sorcerer_Dreamspun_BloodlineLVL+BloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Dreamspun_BloodlinePower15LVL|Sorcerer_Dreamspun_BloodlineLVL+BloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Dreamspun_BloodlinePower20LVL|Sorcerer_Dreamspun_BloodlineLVL+BloodlinePower20LVLBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Dreamspun"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3144,
+    "record_key": "Sorcerer Bloodline ~ Dreamspun"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

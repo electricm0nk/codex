@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Deinonychus ~ Major",
+    "name": "Major Aspect of the Deinonychus",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of a deinonychus (Bestiary p84). While in this form, you gain a base speed of 60 feet, low-light vision, scent (30 feet), a bite attack (1d6 damage), two foreclaw attacks (1d4 damage), and two talon attacks (1d8 damage), and pounce.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Deinonychus ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Deinonychus_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of a deinonychus (Bestiary p84). While in this form, you gain a base speed of 60 feet, low-light vision, scent (30 feet), a bite attack (1d6 damage), two foreclaw attacks (1d4 damage), and two talon attacks (1d8 damage), and pounce."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain two foreclaw attacks (these attacks cannot use your shifter claws damage) and a +4 racial bonus on Acrobatics checks.|PREVARGTEQ:ShifterDeinonychusAspectLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 dodge bonus to AC and Spring Attack as a bonus feat.|PREVARGTEQ:ShifterDeinonychusAspectLVL,15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 59,
+    "record_key": "Shifter Aspect ~ Deinonychus ~ Major"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

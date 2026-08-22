@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaitan Binder ~ Earth Glide",
+    "name": "Earth Glide",
+    "class": "Summoner",
+    "description": "If a shaitan binder's eidolon has the burrow evolution, it gains the earth glide universal monster ability and can use this ability to travel at its full base speed. This ability replaces aspect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Binder ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If a shaitan binder's eidolon has the burrow evolution, it gains the earth glide universal monster ability and can use this ability to travel at its full base speed. This ability replaces aspect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 672,
+    "record_key": "Shaitan Binder ~ Earth Glide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

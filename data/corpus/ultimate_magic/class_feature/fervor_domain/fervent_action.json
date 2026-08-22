@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fervor Domain ~ Fervent Action",
+    "name": "Fervent Action",
+    "class": "Fervor Domain",
+    "description": "Once per day as a swift action, you can make a single melee attack at your highest attack bonus, move up to your speed, or cast a prepared inquisitor spell (of a spell level up to one lower than the highest level spell you can cast) as per Quickened Spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fervor Domain ~ Fervent Action"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, you can make a single melee attack at your highest attack bonus, move up to your speed, or cast a prepared inquisitor spell (of a spell level up to one lower than the highest level spell you can cast) as per Quickened Spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 360,
+    "record_key": "Fervor Domain ~ Fervent Action"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

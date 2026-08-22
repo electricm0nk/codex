@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stalwart Defender ~ Halting Blow",
+    "name": "Halting Blow",
+    "class": "Stalwart Defender",
+    "description": "If a foe's movement in the defender's threatened area provokes an attack of opportunity and the stalwart defender successfully hits the foe with the attack, the foe's movement ends immediately. The foe cannot move again until its next turn but can still take the rest of its action. A stalwart defender must have selected the bulwark power prior to selecting halting blow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stalwart Defender ~ Halting Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Stalwart Defender ~ Bulwark"
+      },
+      {
+        "key": "DESC",
+        "value": "If a foe's movement in the defender's threatened area provokes an attack of opportunity and the stalwart defender successfully hits the foe with the attack, the foe's movement ends immediately. The foe cannot move again until its next turn but can still take the rest of its action. A stalwart defender must have selected the bulwark power prior to selecting halting blow."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1458,
+    "record_key": "Stalwart Defender ~ Halting Blow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

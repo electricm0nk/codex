@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Grenadier ~ Alchemical Weapon",
+    "name": "Alchemical Weapon",
+    "class": "Alchemist",
+    "description": "A grenadier can infuse a weapon or piece of ammunition with a single harmful alchemical liquid or powder, such as alchemist's fire or sneezing powder,",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Grenadier ~ Alchemical Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A grenadier can infuse a weapon or piece of ammunition with a single harmful alchemical liquid or powder, such as alchemist's fire or sneezing powder,"
+      },
+      {
+        "key": "DESC",
+        "value": "as a move action.|!PRECLASS:1,Alchemist=6"
+      },
+      {
+        "key": "DESC",
+        "value": "as a swift action.|PRECLASS:1,Alchemist=6|!PRECLASS:1,Alchemist=15"
+      },
+      {
+        "key": "DESC",
+        "value": "as a free action.|PRECLASS:1,Alchemist=15"
+      },
+      {
+        "key": "DESC",
+        "value": "This action consumes the alchemical item, but transfers its effect to the weapon in question. The alchemical item takes full effect on the next creature struck by the weapon, but does not splash, spread, affect additional targets, or benefit from any other effects that specifically affect splash weapons. Any extra damage added is not doubled on a critical hit. The alchemical treatment causes no harm to the weapon treated, and wears off 1 minute after being applied if no blow is struck. Infusing a new alchemical item also removes the effect of any alchemical liquid or powder previously applied with this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 15,
+    "record_key": "Grenadier ~ Alchemical Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

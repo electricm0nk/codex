@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forgepriest ~ Creator's Bond",
+    "name": "Creator's Bond",
+    "class": "Warpriest",
+    "description": "When a forgepriest uses his sacred weapon ability with an item he created personally, he can expend two uses of his fervor ability to increase the bonus granted by 1. Once the forgepriest has the sacred armor ability, he can also use this ability in conjunction with that.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgepriest ~ Creator's Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Forgepriest Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When a forgepriest uses his sacred weapon ability with an item he created personally, he can expend two uses of his fervor ability to increase the bonus granted by 1. Once the forgepriest has the sacred armor ability, he can also use this ability in conjunction with that."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3997,
+    "record_key": "Forgepriest ~ Creator's Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

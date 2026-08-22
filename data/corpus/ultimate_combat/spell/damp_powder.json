@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell causes ammunition already loaded into the target firearm is ruined with moisture. Any attempt to fire that ammunition fails, with no chance for misfire, and the user must then take a full-round action to clear the weapon before reloading and firing it. If aware of this spell's effect prior to firing the altered ammunition (a DC 16 Spellcraft check to identify the spell being cast or similar effect), the firearm's user can spend a standard action to clear the altered ammunition from the firearm. Doing so destroys that ammunition.",
+    "key": "Damp Powder",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Witch,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Ruins ammunition loaded in the targeted firearm.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell causes ammunition already loaded into the target firearm is ruined with moisture. Any attempt to fire that ammunition fails, with no chance for misfire, and the user must then take a full-round action to clear the weapon before reloading and firing it. If aware of this spell's effect prior to firing the altered ammunition (a DC 16 Spellcraft check to identify the spell being cast or similar effect), the firearm's user can spend a standard action to clear the altered ammunition from the firearm. Doing so destroys that ammunition.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a damp piece of cotton)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/dampPowder.html#_damp-powder"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "1 loaded firearm"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Damp Powder",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

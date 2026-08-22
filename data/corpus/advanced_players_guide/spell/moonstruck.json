@@ -1,26 +1,100 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Moonstruck",
-    "school": "Enchantment",
-    "level": 4,
     "description": "You invoke the mystical power of the moon to drive the target into a mad, bestial frenzy. If the target fails its save, it is dazed for 1 round, dropping held items as its nails and teeth elongate and sharpen. The target gains a bite attack and two claw attacks that deal damage appropriate for the creature's size, and for the remainder of the spell's duration the target behaves as if under simultaneous rage and confusion spells, attacking with its natural weapons in preference to other actions. During the final round of the spell's duration, the target is again dazed as it returns to its normal state.",
-    "full_text": true
+    "full_text": true,
+    "key": "Moonstruck",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Witch,Wizard=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Subject is enraged and confused.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You invoke the mystical power of the moon to drive the target into a mad, bestial frenzy. If the target fails its save, it is dazed for 1 round, dropping held items as its nails and teeth elongate and sharpen. The target gains a bite attack and two claw attacks that deal damage appropriate for the creature's size, and for the remainder of the spell's duration the target behaves as if under simultaneous rage and confusion spells, attacking with its natural weapons in preference to other actions. During the final round of the spell's duration, the target is again dazed as it returns to its normal state.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Insanity Subdomain=4"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Rage Subdomain=6"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a pinch of powdered moonstone )"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/moonstruck.html#_moonstruck"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one humanoid creature"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 168,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2007,
-    "record_key": "Moonstruck"
+    "record_key": "Moonstruck",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

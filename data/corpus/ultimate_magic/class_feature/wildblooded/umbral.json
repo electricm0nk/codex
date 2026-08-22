@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wildblooded ~ Umbral",
+    "name": "Umbral",
+    "class": "Wildblooded",
+    "description": "Your nature is to gather the darkness into yourself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wildblooded ~ Umbral"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wildblooded Bloodline"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Shadow"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Shadow_Description|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your nature is to gather the darkness into yourself."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Umbral Bloodline ~ Bloodline Arcana|Umbral Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Umbral Bloodline ~ Cloak of Shadows|PREVARGTEQ:Sorcerer_Shadow_BloodlineProgressionLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Shadow_Description|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower1|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1778,
+    "record_key": "Wildblooded ~ Umbral"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

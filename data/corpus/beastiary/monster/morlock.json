@@ -1,39 +1,137 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
+    "challenge_rating": 2.0,
     "id": "beastiary1:monster:morlock",
     "name": "Morlock",
-    "challenge_rating": 2.0,
-    "size": "M",
-    "speed_ft": 40,
-    "race_type": "Monstrous Humanoid",
-    "race_subtype": null,
-    "source_page": "p.209",
     "natural_attacks": [
       {
-        "name": "Bite (Primary)",
-        "damage_dice": "1d4"
+        "damage_dice": "1d4",
+        "name": "Bite (Primary)"
       },
       {
-        "name": "Bite (With Weapon Attack)",
-        "damage_dice": "1d4"
+        "damage_dice": "1d4",
+        "name": "Bite (With Weapon Attack)"
       }
-    ]
+    ],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Disease|Immunity to Poison|Light Blindness|Morlock ~ Expert Climber|Morlock ~ Leap Attack|Morlock ~ Sneak Attack|Morlock ~ Swarming|Scent|Sneak Attack"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Club"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In caverns|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON,WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|120|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Monstrous Humanoid:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Climb,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite (Primary),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d4|Bite (With Weapon Attack),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d4"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Monstrous Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.209",
+    "speed_ft": 40
   },
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
     "line": 297,
-    "record_key": "Morlock"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Morlock",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

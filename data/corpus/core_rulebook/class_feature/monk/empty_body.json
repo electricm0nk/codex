@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk ~ Empty Body",
+    "name": "Empty Body",
+    "class": "Monk",
+    "description": "You can assume an ethereal state for 1 minute as though using the spell Etherealness. Using this ability is a move action that consumes 3 points for your Ki pool. This ability only affects you and cannot be used to make other creatures ethereal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Empty Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality.Supernatural.ModifyMovement.Empty Body"
+      },
+      {
+        "key": "DESC",
+        "value": "You can assume an ethereal state for 1 minute as though using the spell Etherealness. Using this ability is a move action that consumes 3 points for your Ki pool. This ability only affects you and cannot be used to make other creatures ethereal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1112,
+    "record_key": "Monk ~ Empty Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

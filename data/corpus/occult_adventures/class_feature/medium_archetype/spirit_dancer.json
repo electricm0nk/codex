@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium Archetype ~ Spirit Dancer",
+    "name": "Spirit Dancer",
+    "class": "Medium Archetype",
+    "description": "A spirit dancer enacts an exuberant dance to the spirits, accepting many roles in the shifting dance and changing dance partners quickly.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium Archetype ~ Spirit Dancer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Medium Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Medium=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Spirit Dancer],[!PREFACT:1,ABILITIES,Medium_Archetype_Spirit=True,Medium_Archetype_SpiritBonus=True,Medium_Archetype_SpiritSurge=True,Medium_Archetype_Taboo=True,Medium_Archetype_SharedSeance=True,Medium_Archetype_TranceOfThree=True,Medium_Archetype_SpaciousSoul=True,Medium_Archetype_AstralBeacon=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A spirit dancer enacts an exuberant dance to the spirits, accepting many roles in the shifting dance and changing dance partners quickly."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Spirit Dancer ~ Spirit Dance|Spirit Dancer ~ Nothing Is Taboo|PRECLASS:1,Medium=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Spirit Dancer ~ Spirit Aura|PRECLASS:1,Medium=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Spirit Dancer ~ Spirit Troika|PRECLASS:1,Medium=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Spirit Dancer ~ Attaca|PRECLASS:1,Medium=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Spirit Dancer ~ Dance of Infinite Forms|PRECLASS:1,Medium=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Medium"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Spirit|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpiritBonus|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpiritSurge|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SharedSeance|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_TranceOfThree|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_SpaciousSoul|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_Archetype_AstralBeacon|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SpiritBonus|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SpiritSurge|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_Taboo|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SharedSeance|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_TranceOfThree|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_SpaciousSoul|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Medium_CF_AstralBeacon|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1394,
+    "record_key": "Medium Archetype ~ Spirit Dancer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

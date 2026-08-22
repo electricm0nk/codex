@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Overwhelming Soul ~ Overwhelming Power",
+    "name": "Overwhelming Power",
+    "class": "Kineticist",
+    "description": "At 3rd level, an overwhelming soul gains a +1 bonus on attack rolls and damage rolls with her kinetic blasts. The damage bonus doesn't apply to kinetic blade, kinetic whip, or other infusions that don't apply the damage bonus from elemental overflow. This bonus increases by 1 at 6th level and every 3 levels thereafter. This ability replaces elemental overflow.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Overwhelming Soul ~ Overwhelming Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Overwhelming Soul Class Feature.Kineticist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, an overwhelming soul gains a +1 bonus on attack rolls and damage rolls with her kinetic blasts. The damage bonus doesn't apply to kinetic blade, kinetic whip, or other infusions that don't apply the damage bonus from elemental overflow. This bonus increases by 1 at 6th level and every 3 levels thereafter. This ability replaces elemental overflow."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1386,
+    "record_key": "Overwhelming Soul ~ Overwhelming Power"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

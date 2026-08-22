@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spirit Animal ~ Mammoth",
+    "name": "Spirit Animal",
+    "class": "Spirit Animal",
+    "description": "The shaman's spirit animal appears more primal and prehistoric than an ordinary animal of its kind. It gains a +2 inherent bonus to its Strength score. The spirit animal loses this bonus when it manifests as a megafauna companion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spirit Animal ~ Mammoth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman's spirit animal appears more primal and prehistoric than an ordinary animal of its kind. It gains a +2 inherent bonus to its Strength score. The spirit animal loses this bonus when it manifests as a megafauna companion."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|TYPE=Inherent|!PREABILITY:1,CATEGORY=Special Ability,Mammoth Spirit ~ Megafauna Companion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1203,
+    "record_key": "Spirit Animal ~ Mammoth"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Apostate Devil ~ Ohrwurm",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_apostate"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Ohrwurm"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ohrwurm_DC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Ohrwurm)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ohrwurm_DC|DC_CHA_SA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ohrwurm_DC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, three times per day, a deimavigga can whisper a fundamental and terrifying multiversal truth to one creature within 5 feet. The target must make a DC 28 Will save or have the devil's words take root in its psyche. Outsiders and elementals have a +2 bonus on their saves to resist this ability. Initially, the deimavigga's words seem to have no effect. Anytime the victim tries to rest, though, he must make an additional DC %1 Will save or be affected as per the spell nightmare (even if the victim doesn't technically sleep). After a night of suffering vivid dreams and wrestling with the devil's words, the victim must make yet another DC 28 Will save or have its alignment shift one step toward lawful evil. Only by unlearning what the deimavigga told it can a victim be free of this effect, requiring a spell such as miracle, modify memory, or wish.|Ohrwurm_DC"
+      },
+      {
+        "key": "KEY",
+        "value": "Apostate Devil ~ Ohrwurm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.54",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 13,
-    "record_key": "Apostate Devil ~ Ohrwurm"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Apostate Devil ~ Ohrwurm",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

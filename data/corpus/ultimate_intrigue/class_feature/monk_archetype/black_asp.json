@@ -1,0 +1,159 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Black Asp",
+    "name": "Black Asp",
+    "class": "Monk Archetype",
+    "description": "The black asps are a sinister order of monks who train as assassins and infiltrators with no need for weapons to achieve their goals. Through meditation and study, they learn how to use poison, hide any magics they choose to employ, and even empty their minds of thought to protect themselves from divinations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Black Asp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=CLASS,Monk ~ Unchained Class"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Black Asp],[!PREFACT:1,ABILITIES,Monk_Archetype_StunningFist=True,Monk_Archetype_StillMind=True,Monk_Archetype_SlowFall=True,Monk_Archetype_HighJump=True,Monk_Archetype_WholenessOfBody=True,Monk_Archetype_DiamondBody=True,Monk_Archetype_AbundantStep=True,Monk_Archetype_DiamondSoul=True,Monk_Archetype_QuiveringPalm=True,Monk_Archetype_TongueOfTheSunAndMoon=True,Monk_Archetype_EmptyBody=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The black asps are a sinister order of monks who train as assassins and infiltrators with no need for weapons to achieve their goals. Through meditation and study, they learn how to use poison, hide any magics they choose to employ, and even empty their minds of thought to protect themselves from divinations."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Black Asp ~ Black Asp's Path|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Black Asp ~ Forbidden Powers|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondSoul|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_EmptyBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondSoul|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_EmptyBody|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 531,
+    "record_key": "Monk Archetype ~ Black Asp"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

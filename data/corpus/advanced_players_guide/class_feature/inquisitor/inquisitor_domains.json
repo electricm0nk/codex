@@ -1,0 +1,475 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inquisitor ~ Domains",
+    "name": "Inquisitor ~ Domains",
+    "class": "Inquisitor",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.CF_Domain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainAir|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainAnimal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainArtifice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainChaos|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainCharm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainCommunity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDarkness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDeath|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDestruction|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainEarth|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainFire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainGlory|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainHealing|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainKnowledge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLaw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLiberation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLuck|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainMadness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainMagic|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainNobility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainPlant|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainProtection|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainRepose|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainRune|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainStrength|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainSun|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainTravel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainTrickery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainWar|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainWater|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainWeather|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainAgathionSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainAncestorsSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainArcaneSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainArchonSubdomainGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainArchonSubdomainLaw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainAshSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainAzataSubdomainGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainAzataSubdomainChaos|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainBloodSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainCatastropheSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainCavesSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainCloudSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainConstructSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainCurseSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDaemonSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDaySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDecaySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDeceptionSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDefenseSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDemonSubdomainEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDemonSubdomainChaos|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDevilSubdomainEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDevilSubdomainLaw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDivineSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainExplorationSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainFamilySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainFateSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainFeatherSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainFerocitySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainFreedomSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainFurSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainGrowthSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainHeroismSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainHomeSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainHonorSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainIceSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainInevitableSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainInsanitySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLanguageSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLeadershipSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLightSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLossSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLoveSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainLustSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainMartyrSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainMemorySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainMetalSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainMurderSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainNightSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainNightmareSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainOceansSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainProteanSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainPuritySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainRageSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainResolveSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainRestorationSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainResurrectionSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainRevolutionSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainSeasonsSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainSmokeSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainSoulsSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainStormsSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainTacticsSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainThieverySubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainThoughtSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainToilSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainTradeSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainUndeadSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainWardsSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainWindSubdomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassInquisititorDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorDomainDeathPharasma|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domains"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Inquisitor Domain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|InquisitorLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NotesSection|Inquisitor &amp; Cleric Domain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Notes|Must use Same Domain if becoming a Cleric."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 353,
+    "record_key": "Inquisitor ~ Domains"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

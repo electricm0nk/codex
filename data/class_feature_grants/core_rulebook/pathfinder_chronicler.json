@@ -1,0 +1,197 @@
+[
+  {
+    "key": "Pathfinder Chronicler ~ Bardic Knowledge",
+    "class": "Pathfinder Chronicler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 384
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Bardic Performance",
+    "class": "Pathfinder Chronicler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 386
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Call down the Legends",
+    "class": "Pathfinder Chronicler",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 390
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Deep Pockets",
+    "class": "Pathfinder Chronicler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 384
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Epic Tales",
+    "class": "Pathfinder Chronicler",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 387
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Greater Epic Tales",
+    "class": "Pathfinder Chronicler",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 391
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Improved Aid",
+    "class": "Pathfinder Chronicler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 386
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Inspire Action",
+    "class": "Pathfinder Chronicler",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 389
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Lay of the Exalted Dead",
+    "class": "Pathfinder Chronicler",
+    "level": 10,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 392
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Live to Tell the Tale",
+    "class": "Pathfinder Chronicler",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 385
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Master Scribe",
+    "class": "Pathfinder Chronicler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 384
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Pathfinding",
+    "class": "Pathfinder Chronicler",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 385
+    }
+  },
+  {
+    "key": "Pathfinder Chronicler ~ Whispering Campaign",
+    "class": "Pathfinder Chronicler",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "granted_via_archetype": false,
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 388
+    }
+  }
+]

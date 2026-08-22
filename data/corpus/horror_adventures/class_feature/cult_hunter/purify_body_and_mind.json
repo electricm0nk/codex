@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Hunter ~ Purify Body and Mind",
+    "name": "Purify Body and Mind",
+    "class": "Investigator",
+    "description": "A cult hunter gains a +%1 bonus on saving throws against compulsions and poisons.|CultHunterPurifyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Hunter ~ Purify Body and Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CultHunterPurifyBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult hunter gains a +%1 bonus on saving throws against compulsions and poisons.|CultHunterPurifyBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "A cult hunter who fails a saving throw against a compulsion or poison can expend 1 use of his inspiration to reroll the saving throw (and his inspiration die, if added to the save). He must accept the result of this second roll, even if it is worse.|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CultHunterPurifyBonus|1+(InvestigatorLVL>=5)+(InvestigatorLVL>=8)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs. compulsions and poisons.|CultHunterPurifyBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 158,
+    "record_key": "Cult Hunter ~ Purify Body and Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

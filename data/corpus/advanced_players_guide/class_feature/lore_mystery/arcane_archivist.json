@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lore Mystery ~ Arcane Archivist",
+    "name": "Arcane Archivist",
+    "class": "Lore Mystery",
+    "description": "Your experience with lore-filled tomes has granted you the ability to cast arcane spells as if they were on your spell list. Once per day, you can cast a spell from the sorcerer/wizard spell list as if it were on your list of spells known. The spell consumes a spell slot one level higher than the level of the spell. You must have a spellbook containing the spell to cast it in this way, and the spell is erased when you complete the casting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Mystery ~ Arcane Archivist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.LoreRevelation.Supernatural.PerDayOracleRevelation"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=11"
+      },
+      {
+        "key": "DESC",
+        "value": "Your experience with lore-filled tomes has granted you the ability to cast arcane spells as if they were on your spell list. Once per day, you can cast a spell from the sorcerer/wizard spell list as if it were on your list of spells known. The spell consumes a spell slot one level higher than the level of the spell. You must have a spellbook containing the spell to cast it in this way, and the spell is erased when you complete the casting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 635,
+    "record_key": "Lore Mystery ~ Arcane Archivist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

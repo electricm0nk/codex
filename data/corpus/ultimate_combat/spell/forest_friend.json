@@ -1,0 +1,85 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "While subject to this spell, the targets find that forested areas become helpful instead of hindering. The targets suffer no hindrances to movement and suffer no penalties on Acrobatics and Stealth checks from undergrowth in forested terrain. Furthermore, forested overgrowth imposes a miss chance 10%% lower than normal. When moving in and among trees, those subject to the spell gain a +5 circumstance bonus on Acrobatics checks and Climb checks. Rangers in their favored terrain can also add their favored terrain bonus on such Acrobatics and Climb checks.",
+    "key": "Forest Friend",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 round"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Ranger=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Plants in a forested area become helpful instead of hindering you and your allies.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "While subject to this spell, the targets find that forested areas become helpful instead of hindering. The targets suffer no hindrances to movement and suffer no penalties on Acrobatics and Stealth checks from undergrowth in forested terrain. Furthermore, forested overgrowth imposes a miss chance 10%% lower than normal. When moving in and among trees, those subject to the spell gain a +5 circumstance bonus on Acrobatics checks and Climb checks. Rangers in their favored terrain can also add their favored terrain bonus on such Acrobatics and Climb checks.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a pinch of manure)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/forestFriend.html#_forest-friend-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one willing living creature per three levels, no two of which may be more than 30 ft. apart."
+      }
+    ],
+    "school": "Abjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Forest Friend",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

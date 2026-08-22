@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ Kitsune Trickster",
+    "name": "Kitsune Trickster",
+    "class": "Rogue Archetype",
+    "description": "The kitsune trickster combines her sharpened wit with minor arcane powers of charm and persuasion. She uses her talents to spin convincing lies, riddles, and stories.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Kitsune Trickster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype.RogueTrapfinding.RogueTrapSense"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Kitsune Trickster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTrapSense]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsKitsune=true"
+      },
+      {
+        "key": "DESC",
+        "value": "The kitsune trickster combines her sharpened wit with minor arcane powers of charm and persuasion. She uses her talents to spin convincing lies, riddles, and stories."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kitsune Trickster ~ Kitsune's Guile|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kitsune Trickster ~ Kitsune's Charm|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kitsune Trickster ~ Rogue Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.193"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Rogue"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 873,
+    "record_key": "Rogue Archetype ~ Kitsune Trickster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

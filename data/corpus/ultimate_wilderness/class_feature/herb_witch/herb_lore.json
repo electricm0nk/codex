@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Herb Witch ~ Herb Lore",
+    "name": "Herb Lore",
+    "class": "Witch",
+    "description": "Herb witches are masters of herbalism, and they can use what they gather from garden or grove to duplicate many of the effects of alchemy. An herb  witch can attempt Profession (herbalist) checks in place of Craft (alchemy) checks, and she gains a +%1 bonus on Profession (herbalist) checks. Herb witches are adept at brewing thick herbal cure-alls called remedies. An herb witch prepares these remedies while communing with her familiar, during which she can prepare %2 remedies. A remedy becomes inert if it leaves the herb witch's possession, reactivating as soon as it returns to her keeping. A witch can never have more than %2 remedies. As a standard action, the herb witch can administer a remedy to herself or a creature within reach which consumes the remedy. The herb witch attempts a Profession (herbalist) check against the save DC of any one disease or poison currently afflicting the consumer.|WitchLVL/2|max(1,3+INT)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Herb Witch ~ Herb Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.HerbWitchClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Herb witches are masters of herbalism, and they can use what they gather from garden or grove to duplicate many of the effects of alchemy. An herb  witch can attempt Profession (herbalist) checks in place of Craft (alchemy) checks, and she gains a +%1 bonus on Profession (herbalist) checks. Herb witches are adept at brewing thick herbal cure-alls called remedies. An herb witch prepares these remedies while communing with her familiar, during which she can prepare %2 remedies. A remedy becomes inert if it leaves the herb witch's possession, reactivating as soon as it returns to her keeping. A witch can never have more than %2 remedies. As a standard action, the herb witch can administer a remedy to herself or a creature within reach which consumes the remedy. The herb witch attempts a Profession (herbalist) check against the save DC of any one disease or poison currently afflicting the consumer.|WitchLVL/2|max(1,3+INT)"
+      },
+      {
+        "key": "DESC",
+        "value": "If she is successful, the affliction is suppressed for 1 minute.|!PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "DESC",
+        "value": "If she exceeds the DC of the check by 10 or more, the affliction immediately ends.|PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "DESC",
+        "value": "If the disease or poison doesn't allow saving throws, the remedy is ineffective. An herb witch can also use a remedy to attempt to remove the blinded, deafened, fatigued, nauseated, sickened, and staggered conditions. This requires a Profession (herbalist) check with a DC equal to the spell or effect that caused the condition, or a DC 25 check if the condition was caused by an effect that doesn't allow a saving throw. If the herb witch succeeds, the condition is removed unless the condition is permanent."
+      },
+      {
+        "key": "DESC",
+        "value": "If the herb witch succeeds by 10 or more, however, her remedy can remove a permanent condition.|PRECLASS:1,Witch=10"
+      },
+      {
+        "key": "DESC",
+        "value": "Only a single condition, disease, or poison can be removed with each application of a remedy, and a creature can only benefit from one herbal remedy each day, whether or not the herb witch succeeds at her skill check."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (herbalist)|WitchLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1250,
+    "record_key": "Herb Witch ~ Herb Lore"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

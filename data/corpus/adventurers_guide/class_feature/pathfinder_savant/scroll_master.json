@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Pathfinder Savant ~ Scroll Master",
+    "name": "Scroll Master",
+    "class": "Pathfinder Savant",
+    "description": "You use your own caster level instead of the item's caster level when using a scroll or other spell completion item.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathfinder Savant ~ Scroll Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Pathfinder Savant Class Features.ClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "DESC",
+        "value": "You use your own caster level instead of the item's caster level when using a scroll or other spell completion item."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 402,
+    "record_key": "Pathfinder Savant ~ Scroll Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

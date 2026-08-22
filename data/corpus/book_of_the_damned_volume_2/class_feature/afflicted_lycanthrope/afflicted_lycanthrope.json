@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Afflicted Lycanthrope ~ Jezelda",
+    "name": "Afflicted Lycanthrope",
+    "class": "Afflicted Lycanthrope",
+    "description": "You contract lycanthropy and become a werewolf (even if you normally couldn't gain that template). If you are already a werewolf, you become a true lycanthrope. If you are already a true lycanthrope, you gain a +2 bonus to Strength and Constitution.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Afflicted Lycanthrope ~ Jezelda"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You contract lycanthropy and become a werewolf (even if you normally couldn't gain that template). If you are already a werewolf, you become a true lycanthrope. If you are already a true lycanthrope, you gain a +2 bonus to Strength and Constitution."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Afflicted Lycanthrope ~ Jezelda|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 137,
+    "record_key": "Afflicted Lycanthrope ~ Jezelda"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

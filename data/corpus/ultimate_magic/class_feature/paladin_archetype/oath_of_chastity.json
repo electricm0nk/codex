@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Paladin Archetype ~ Oath of Chastity",
+    "name": "Oath of Chastity",
+    "class": "Paladin Archetype",
+    "description": "You prove your purity by way of your action and your abstinence from romantic activities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Oath of Chastity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinDivineGrace.PaladinAuraOfResolve"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath of Chastity],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDivineGrace,TYPE.PaladinAuraOfResolve]"
+      },
+      {
+        "key": "DESC",
+        "value": "You prove your purity by way of your action and your abstinence from romantic activities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath of Chastity ~ Pure of Mind|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath of Chastity ~ Pure of Body|PRECLASS:1,Paladin=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Oath of Chastity ~ Code of Conduct"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Oath of Chastity ~ Oath Spells"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Paladin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1527,
+    "record_key": "Paladin Archetype ~ Oath of Chastity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Crusader's Fist",
+    "name": "Crusader's Fist",
+    "class": "Warpriest Bonus Feat",
+    "description": "You pour divine energy into the enemy you strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Crusader's Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Lay on Hands,Touch of Corruption ~ Antipaladin"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "You pour divine energy into the enemy you strike."
+      },
+      {
+        "key": "DESC",
+        "value": " When you attack with an unarmed strike and hit a creature that you can harm with your lay on hands or touch of corruption feature, you can use a swift action to expend a daily use of that feature to deal its normal damage as if you had hit with the feature's normal touch attack. This extra damage is not multiplied if you scored a critical hit."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Crusader's Fist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4542,
+    "record_key": "Warpriest Bonus Feat ~ Crusader's Fist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Maestro Bloodline ~ Inspire",
+    "name": "Inspire",
+    "class": "Maestro Bloodline",
+    "description": "Your artistic magic can inspire your allies to great accomplishments. You can use greater heroism as a spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maestro Bloodline ~ Inspire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Maestro Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Maestro"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Maestro_BloodlineProgressionLVL,15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Maestro_BloodlinePower15LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_MaestroInspire_Times|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Bloodline|TIMES=Sorcerer_MaestroInspire_Times|CASTERLEVEL=Sorcerer_Maestro_BloodlinePower15LVL|Heroism (Greater),16+Sorcerer_Spells_StatBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Your artistic magic can inspire your allies to great accomplishments. You can use greater heroism as a spell-like ability."
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVARGTEQ:Sorcerer_MaestroInspire_Times,1|PREVARLT:Sorcerer_MaestroInspire_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability twice per day.|PREVARGTEQ:Sorcerer_MaestroInspire_Times,2|PREVARLT:Sorcerer_MaestroInspire_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability three times per day.|PREVARGTEQ:Sorcerer_MaestroInspire_Times,3|PREVARLT:Sorcerer_MaestroInspire_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|Sorcerer_MaestroInspire_Times|PREVARGTEQ:Sorcerer_MaestroInspire_Times,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_MaestroInspire_Times|max(floor((Sorcerer_Maestro_BloodlinePower15LVL-13)/2),0)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_MaestroInspire_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|MaestroBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 632,
+    "record_key": "Maestro Bloodline ~ Inspire"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

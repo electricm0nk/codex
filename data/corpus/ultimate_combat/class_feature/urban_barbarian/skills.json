@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Urban Barbarian ~ Skills",
+    "name": "Skills",
+    "class": "Barbarian",
+    "description": "An urban barbarian does not gain Handle Animal (Cha), Knowledge (nature) (Int), or Survival (Wis) as class skills; instead, she gains Diplomacy (Cha), Knowledge (local) (Int), Knowledge (nobility) (Int), Linguistics (Int), and Profession (Wis) as class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Urban Barbarian ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "An urban barbarian does not gain Handle Animal (Cha), Knowledge (nature) (Int), or Survival (Wis) as class skills; instead, she gains Diplomacy (Cha), Knowledge (local) (Int), Knowledge (nobility) (Int), Linguistics (Int), and Profession (Wis) as class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Climb|TYPE=Craft|Intimidate|Perception|Ride|Swim|Diplomacy|Knowledge (Local)|Knowledge (Nobility)|Linguistics|TYPE=Profession"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 356,
+    "record_key": "Urban Barbarian ~ Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

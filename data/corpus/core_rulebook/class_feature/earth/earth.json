@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Earth Domain",
+    "name": "Earth",
+    "class": null,
+    "description": "You have mastery over earth, metal, and stone, can fire darts of acid, and command earth creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Earth Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEarthLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEarthDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEarthTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEarthAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have mastery over earth, metal, and stone, can fire darts of acid, and command earth creatures."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Acid Dart|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Earth)|PREVARGTEQ:DomainEarthAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Acid Resistance|PREVARGTEQ:DomainEarthAbilityTriggerLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEarthLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEarthDC|10+(DomainEarthLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEarthTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEarthAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Earth=1|Magic Stone|Earth=2|Soften Earth and Stone|Earth=3|Stone Shape|Earth=4|Spike Stones|Earth=5|Wall of Stone|Earth=6|Stoneskin|Earth=7|Elemental Body IV (Earth Only)|Earth=8|Earthquake|Earth=9|Elemental Swarm (Earth Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 660,
+    "record_key": "Earth Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

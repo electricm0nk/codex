@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tower Shield Specialist ~ Tower Shield Specialist",
+    "name": "Tower Shield Specialist",
+    "class": "Fighter",
+    "description": "At 5th level, when a tower shield specialist employs a tower shield in combat, he does not take the -2 penalty on attack rolls because of the shield's encumbrance. This ability replaces weapon training 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tower Shield Specialist ~ Tower Shield Specialist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, when a tower shield specialist employs a tower shield in combat, he does not take the -2 penalty on attack rolls because of the shield's encumbrance. This ability replaces weapon training 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|2|PREABILITY:1,CATEGORY=FEAT,Tower Shield Proficiency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 754,
+    "record_key": "Tower Shield Specialist ~ Tower Shield Specialist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

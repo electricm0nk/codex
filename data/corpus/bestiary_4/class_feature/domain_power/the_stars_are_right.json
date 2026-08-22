@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ The Stars Are Right",
+    "name": "The Stars Are Right",
+    "class": "Domain Power",
+    "description": "If you prepare your cleric spells while the stars are visible to you, you may spontaneously cast any of your Stars subdomain domain spells by swapping out a spell of an equal spell level. Any Stars subdomain spells that you cast while the stars are visible to you heal you of damage equal to the spell's level as you cast the spell. This ability replaces the part the veil ability of the Void domain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ The Stars Are Right"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "If you prepare your cleric spells while the stars are visible to you, you may spontaneously cast any of your Stars subdomain domain spells by swapping out a spell of an equal spell level. Any Stars subdomain spells that you cast while the stars are visible to you heal you of damage equal to the spell's level as you cast the spell. This ability replaces the part the veil ability of the Void domain."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_class.lst",
+    "sha256": "41456433df73d16e6f9ac98d4c7f780df067186da8f76c4700cb1cae017fed09",
+    "line": 12,
+    "record_key": "Domain Power ~ The Stars Are Right"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

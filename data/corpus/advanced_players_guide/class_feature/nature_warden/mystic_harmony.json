@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Warden ~ Mystic Harmony",
+    "name": "Mystic Harmony",
+    "class": "Nature Warden",
+    "description": "At 2nd level, a nature warden in her favored terrain gains an insight bonus to AC equal to half her favored terrain bonus. She loses this bonus when she is immobilized or helpless.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Mystic Harmony"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 2nd level, a nature warden in her favored terrain gains an insight bonus to AC equal to half her favored terrain bonus. She loses this bonus when she is immobilized or helpless."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1424,
+    "record_key": "Nature Warden ~ Mystic Harmony"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

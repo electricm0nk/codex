@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Jungle Domain",
+    "name": "Jungle",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Jungle Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Jungle Domain ~ Brachiation|PREVARGTEQ:DomainJungleAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Jungle Domain ~ Trap Sense|PREVARGTEQ:DomainJungleAbilityTriggerLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleDC|10+(DomainJungleLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Glide|Inquisitor=2|Tar Ball|Inquisitor=3|Venomous Bolt|Inquisitor=4|Arboreal Hammer|Inquisitor=5|Blessing of the Salamander|Inquisitor=6|Swarm Skin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 781,
+    "record_key": "Green Faith Marshal ~ Jungle Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

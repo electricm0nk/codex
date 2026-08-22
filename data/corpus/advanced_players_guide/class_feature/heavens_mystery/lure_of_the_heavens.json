@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heavens Mystery ~ Lure of the Heavens",
+    "name": "Lure of the Heavens",
+    "class": "Heavens Mystery",
+    "description": "Your connection to the skies above is so strong that your feet barely touch the ground. At 1st level, you no longer leave tracks. At 5th level, you can hover up to 6 inches above the ground or even above liquid surfaces, as if levitating. At 10th level, you gain the ability to fly, as per the spell, for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|OracleLureoftheHeavensFlyDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Mystery ~ Lure of the Heavens"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Supernatural.MinutesPerDayOracleRevelation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleLureoftheHeavensFlyDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your connection to the skies above is so strong that your feet barely touch the ground. At 1st level, you no longer leave tracks. At 5th level, you can hover up to 6 inches above the ground or even above liquid surfaces, as if levitating. At 10th level, you gain the ability to fly, as per the spell, for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|OracleLureoftheHeavensFlyDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleLureoftheHeavensFlyDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 611,
+    "record_key": "Heavens Mystery ~ Lure of the Heavens"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

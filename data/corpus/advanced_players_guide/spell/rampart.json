@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Rampart",
-    "school": "Conjuration",
-    "level": 7,
     "description": "You create a massive rampart of hard-packed earth and stone 5 feet thick. The rampart cannot be conjured so that it occupies the same space as another creature or object. Each 5-foot-wide section of the rampart has hardness 0 and 180 hit points. A section of the rampart whose hit points drop to 0 is breached. If a creature tries to break through the rampart with a single attack, the DC for the Strength check is 60. A creature can climb over the rampart with a DC 20 Climb check.",
-    "full_text": true
+    "full_text": true,
+    "key": "Rampart",
+    "level": 7,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Creates 5-ft.-thick earthen barrier.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a massive rampart of hard-packed earth and stone 5 feet thick. The rampart cannot be conjured so that it occupies the same space as another creature or object. Each 5-foot-wide section of the rampart has hardness 0 and 180 hit points. A section of the rampart whose hit points drop to 0 is breached. If a creature tries to break through the rampart with a single attack, the DC for the Strength check is 60. A creature can climb over the rampart with a DC 20 Climb check.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a handful of earth)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "EarthSchool"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/rampart.html#_rampart"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "10-ft.-high earthen wall, in a line up to ((CASTERLEVEL/2)*10) ft. long, or a circle with radius of up to (CASTERLEVEL+3) ft."
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 190,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 2032,
-    "record_key": "Rampart"
+    "record_key": "Rampart",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

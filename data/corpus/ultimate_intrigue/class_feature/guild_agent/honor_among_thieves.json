@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Guild Agent ~ Honor Among Thieves",
+    "name": "Honor Among Thieves",
+    "class": "Rogue",
+    "description": "A guild agent must remain a member in good standing of a thieves' guild (he starts at rank 1 with her guild when using the organizational influence system on pages 109-117). If the guild agent leaves his guild, he loses all of the abilities granted by this archetype and does not gain their replacements. If he joins a new guild, the guild agent regains his abilities, though depending on how he joins the guild, he may regain his abilities all at once or gradually over time. Even if the guild in question operates in multiple locations, the guild agent chooses a settlement as a base of operations for his own activities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Guild Agent ~ Honor Among Thieves"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A guild agent must remain a member in good standing of a thieves' guild (he starts at rank 1 with her guild when using the organizational influence system on pages 109-117). If the guild agent leaves his guild, he loses all of the abilities granted by this archetype and does not gain their replacements. If he joins a new guild, the guild agent regains his abilities, though depending on how he joins the guild, he may regain his abilities all at once or gradually over time. Even if the guild in question operates in multiple locations, the guild agent chooses a settlement as a base of operations for his own activities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 734,
+    "record_key": "Guild Agent ~ Honor Among Thieves"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

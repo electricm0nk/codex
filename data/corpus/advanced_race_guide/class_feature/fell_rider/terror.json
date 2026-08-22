@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fell Rider ~ Terror",
+    "name": "Terror",
+    "class": "Cavalier",
+    "description": "At 14th level, a fell rider can rear up his mount as a standard action, spreading terror among his enemies. Enemies within 60 feet who can see the fell rider must succeed at a DC %1 Will save or be shaken for %2 rounds Creatures with half or fewer Hit Dice than the fell rider become frightened instead. An opponent that succeeds at the saving throw is immune to that fell rider's terror ability for 24 hours. This ability is a mind-affecting fear effect.|FellRiderTerrorSave|FellRiderTerrorDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fell Rider ~ Terror"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FellRiderTerrorSave|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FellRiderTerrorDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 14th level, a fell rider can rear up his mount as a standard action, spreading terror among his enemies. Enemies within 60 feet who can see the fell rider must succeed at a DC %1 Will save or be shaken for %2 rounds Creatures with half or fewer Hit Dice than the fell rider become frightened instead. An opponent that succeeds at the saving throw is immune to that fell rider's terror ability for 24 hours. This ability is a mind-affecting fear effect.|FellRiderTerrorSave|FellRiderTerrorDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FellRiderTerrorSave|10+CavalierLVL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FellRiderTerrorDuration|CavalierLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.122"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 575,
+    "record_key": "Fell Rider ~ Terror"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

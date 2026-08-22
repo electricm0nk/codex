@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Combat Expertise",
+    "name": "Combat Expertise",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can increase your defense at the expense of your accuracy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Combat Expertise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.AttackOption.ModifyAC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatExpertiseModifier|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatExpertiseModifierAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatExpertiseModifierAC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can increase your defense at the expense of your accuracy."
+      },
+      {
+        "key": "DESC",
+        "value": " You can choose to take a %1 penalty on melee attack rolls and combat maneuver checks to gain a +%2 dodge bonus to your Armor Class. You can only choose to use this feat when you declare that you are making an attack or a full-attack action with a melee weapon. The effects of this feat last until your next turn.|CombatExpertiseModifierAttack|CombatExpertiseModifierAC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Combat Expertise"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4212,
+    "record_key": "Warpriest Bonus Feat ~ Combat Expertise"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

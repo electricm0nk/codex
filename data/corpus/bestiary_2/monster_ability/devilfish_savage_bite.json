@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Devilfish ~ Savage Bite",
     "delivery": "Extraordinary",
@@ -13,19 +11,63 @@
     "owners": [
       "bestiary_2:monster:devilfish"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 melee, 2d6+%2/18-20 plus poison)|SavageBiteAttack|SavageBiteBonusDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SavageBiteAttack|BAB+STR-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SavageBiteBonusDamage|STR*1.5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SavageBiteAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SavageBiteBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A devilfish can attack with its savage bite whenever it makes a successful grapple check.  This attack is in place of any other action made with a successful grapple check.  The bite threatens a critical hit on a roll of 18-20, and injects the target with poison as well."
+      },
+      {
+        "key": "KEY",
+        "value": "Devilfish ~ Savage Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.88",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 407,
-    "record_key": "Devilfish ~ Savage Bite"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 407,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Devilfish ~ Savage Bite",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

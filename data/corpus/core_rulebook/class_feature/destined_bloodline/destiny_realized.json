@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Destined Bloodline ~ Destiny Realized",
+    "name": "Destiny Realized",
+    "class": "Destined Bloodline",
+    "description": "Your moment of destiny is at hand. Any critical threats made against you only confirm if the second roll results in a natural 20 on the die. Any critical threats you score with a spell are automatically confirmed. Once per day, you can automatically succeed at one caster level check made to overcome spell resistance. You must use this ability before making the roll.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Destined Bloodline ~ Destiny Realized"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Destined Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Destined"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Destined_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Destined_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DestinedDestinyRealized_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your moment of destiny is at hand. Any critical threats made against you only confirm if the second roll results in a natural 20 on the die. Any critical threats you score with a spell are automatically confirmed. Once per day, you can automatically succeed at one caster level check made to overcome spell resistance. You must use this ability before making the roll."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DestinedDestinyRealized_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|Sorcerer_DestinedDestinyRealized_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DestinedBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2430,
+    "record_key": "Destined Bloodline ~ Destiny Realized"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

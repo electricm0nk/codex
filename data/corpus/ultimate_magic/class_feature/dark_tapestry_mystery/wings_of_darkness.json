@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dark Tapestry Mystery ~ Wings of Darkness",
+    "name": "Wings of Darkness",
+    "class": "Dark Tapestry Mystery",
+    "description": "As a swift action, you can manifest a set of translucent, inky wings that grant you a fly speed of 60 feet with good maneuverability. You can use these wings for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|WingsOfDarknessDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dark Tapestry Mystery ~ Wings of Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.DarkTapestryRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WingsOfDarknessDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can manifest a set of translucent, inky wings that grant you a fly speed of 60 feet with good maneuverability. You can use these wings for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|WingsOfDarknessDuration"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use these wings to fly as if with overland flight once per day. Used in this way, the ability lasts for up to %1 hours, and counts as your total use of this ability for the day.|WingsOfDarknessDuration|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WingsOfDarknessDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 475,
+    "record_key": "Dark Tapestry Mystery ~ Wings of Darkness"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

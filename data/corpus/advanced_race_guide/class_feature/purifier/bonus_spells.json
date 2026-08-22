@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Purifier ~ Bonus Spells",
+    "name": "Bonus Spells",
+    "class": "Oracle",
+    "description": "A Purifier automatically gains bonus spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ Bonus Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A Purifier automatically gains bonus spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=1|Veil of Heaven|!PRESPELL:1,Veil of Heaven|PRECLASS:1,Oracle=2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=2|Confess|!PRESPELL:1,Confess|PRECLASS:1,Oracle=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=3|Cast Out|!PRESPELL:1,Cast Out|PRECLASS:1,Oracle=6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=4|Denounce|!PRESPELL:1,Denounce|PRECLASS:1,Oracle=8"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=5|Dispel Evil|!PRESPELL:1,Dispel Evil|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=6|Banishment|!PRESPELL:1,Banishment|PRECLASS:1,Oracle=12"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=7|Holy Word|!PRESPELL:1,Holy Word|PRECLASS:1,Oracle=14"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=8|Mind Blank|!PRESPELL:1,Mind Blank|PRECLASS:1,Oracle=16"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Oracle=9|Freedom|!PRESPELL:1,Freedom|PRECLASS:1,Oracle=18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 411,
+    "record_key": "Purifier ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

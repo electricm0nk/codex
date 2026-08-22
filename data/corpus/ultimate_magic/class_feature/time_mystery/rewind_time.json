@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Time Mystery ~ Rewind Time",
+    "name": "Rewind Time",
+    "class": "Time Mystery",
+    "description": "As an immediate action, %1/day, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll.|RewindTimeTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Time Mystery ~ Rewind Time"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.TimeRevelation.Supernatural"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RewindTimeTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, %1/day, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll.|RewindTimeTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RewindTimeTimes|(classlevel(\"Oracle\")-3)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 502,
+    "record_key": "Time Mystery ~ Rewind Time"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

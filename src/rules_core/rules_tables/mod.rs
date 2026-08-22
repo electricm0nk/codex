@@ -9,6 +9,12 @@
 //! `SD-22-content-source-ingest-and-dm-toolkit/decisions.md` §5.
 
 pub mod acg;
+/// Adventurer's Guide. SD-31 wave-29 (`lane5-book-onboard` lane) -- the
+/// book's FIRST compiled rule set of any kind, first record family: base
+/// spell declarations transcribed from `ag_spells.lst`
+/// (`rules_tables::adventurers_guide::spell_list`). See
+/// `src/bin/ingest_adventurers_guide_spells.rs` for the ingest path.
+pub mod adventurers_guide;
 pub mod advanced_race_guide;
 pub mod apg;
 pub mod archetype_swap;
@@ -29,7 +35,6 @@ pub mod book_of_the_damned_volume_1;
 pub mod book_of_the_damned_volume_2;
 pub mod class_spell_levels;
 pub mod companion_chassis;
-pub mod core_essentials;
 pub mod crb;
 pub mod equipment_gap_tables;
 pub mod feat_gap_tables;
@@ -42,6 +47,7 @@ pub mod inner_sea_intrigue;
 pub mod inner_sea_world_guide;
 pub mod monster_chassis;
 pub mod monster_codex;
+pub mod occult_adventures;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
 pub mod ultimate_equipment;
@@ -252,4 +258,64 @@ pub enum RuleSetId {
     /// root; see `rules_tables::inner_sea_gods`'s header for the derivation and
     /// for the 16-row `Race Traits ~` bundle finding it records.
     Isg,
+    /// Occult Adventures. SD31-E6-F2-003 -- the book's FIRST compiled rule
+    /// set of any kind (no prior lane has ingested any of its content), first
+    /// record family: 144 base spells (`rules_tables::occult_adventures::
+    /// spell_list`).
+    ///
+    /// **Without this variant, `v06_work_inventory::classify`'s book-level
+    /// gate (`engine_book_for` -> `rule_set_for` -> `None`) short-circuits
+    /// every one of this book's units to `not-started`/
+    /// `no_compiled_rule_set_for_book` before the per-kind `Kind::Spell` arm
+    /// ever runs its own `spell_levels` lookup** -- discovered via this
+    /// cycle's own guarded regen (a real before/after measurement, not
+    /// assumed): shipping `spell_resolver::spell_catalog_rows()` alone left
+    /// every OA spell unit reading `not-started` unchanged. This is the
+    /// SAME book-level gate `RuleSetId::Um` already crossed for Ultimate
+    /// Magic's spells -- UM's variant just happened to exist already, from
+    /// an EARLIER, unrelated feat-catalog cycle (SD-28 Epic 28), which is
+    /// why this gate's existence was easy to miss until traced.
+    Oa,
+    /// Mythic Adventures. `SD31-E6-F2-007` -- the book's FIRST compiled rule
+    /// set of any kind, first record family: 358 base feat records
+    /// (`rules_tables::feat_gap_tables::MYTHIC_ADVENTURES_FEAT_GAP_ROWS`).
+    ///
+    /// Same book-level gate `RuleSetId::Oa` records above: without this
+    /// variant, every `mythic_adventures` corpus unit reads `not-started`/
+    /// `no_compiled_rule_set_for_book` regardless of what any per-kind lane
+    /// ships.
+    ///
+    /// **Decision 10's AMENDMENT governs this book's collisions.** A Mythic
+    /// feat's corpus `KEY:` is, by game-mechanic design, the SAME key as the
+    /// base feat it upgrades (`Accursed Hex (Mythic)` carries
+    /// `KEY:Accursed Hex`, exactly the Core Rulebook feat's own key) --
+    /// this is not a reprint collision Decision 10's "newest wins" rule
+    /// reaches; it is the paradigm variant case the AMENDMENT names
+    /// (`feat:weapon_focus` vs its mythic version). Both stay in the
+    /// denominator, both ship, and `feats_all.rs`'s collision test verifies
+    /// the shape mechanically rather than accepting it on say-so: every
+    /// colliding key's Mythic row carries a `PREABILITY:...,CATEGORY=FEAT,
+    /// <that same key>` prerequisite, i.e. the corpus itself states you
+    /// must already hold the base feat to take its mythic form.
+    ///
+    /// **Only `ma_feats.lst`'s non-`.MOD` declarations are ingested here.**
+    /// The file's 208 `.MOD` rows (e.g. `Android ~ Vision.MOD`) target
+    /// records this book files under `race_trait` elsewhere in the corpus
+    /// (Android's racial Vision trait, not a feat) -- rescuing them as
+    /// standalone `feat`-kind units would misattribute a race_trait
+    /// overlay as a new feat. Reported, not ingested here (`OPEN-ISSUES.md`,
+    /// out of this card's `race_trait` file territory).
+    Mythic,
+    /// Adventurer's Guide. SD-31 wave-29 (`lane5-book-onboard` lane) -- this
+    /// book's FIRST compiled rule set of any kind, first record family: base
+    /// spell records (`rules_tables::adventurers_guide::spell_list::
+    /// SPELL_LIST`, transcribed from `ag_spells.lst`).
+    ///
+    /// Same book-level gate `RuleSetId::Oa`/`RuleSetId::Mythic` record
+    /// above: without this variant, every `adventurers_guide` corpus unit
+    /// (class_feature, spell, feat, equipment alike) reads `not-started`/
+    /// `no_compiled_rule_set_for_book` regardless of what any per-kind
+    /// table ships -- `THE-BOX.md` §2.1's G4 finding (`adventurers_guide`
+    /// 699 `class_feature` units) is this exact gate.
+    AdventurersGuide,
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:41Z",
   "data": {
     "corpus_key": "Greater Host Devil ~ Master Grappler",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "book_of_the_damned_volume_1:monster:devil_greater_host"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A magaav can wield a weapon and still make grapple checks. If it's not wielding a weapon, a magaav gains a +4 bonus on grapple checks. Noxious Breath (Su) Three times per day, a magaav can exhale a breath that reeks of pure corruption upon a creature within 5 feet. The target must make a DC 16 Fortitude save or be sickened for 1d4 rounds. The save DC is Constitutionbased. Creatures that successfully save cannot be affected by the same magaav's noxious breath for 24 hours. A delay poison or neutralize poison spell removes the effect from the sickened creature. Creatures with immunity to poison are unaffected, and creatures resistant to poison receive their normal bonuses on their saving throws. Once a magaav uses its breath weapon, it can't breathe again until 1d4 rounds later."
+      },
+      {
+        "key": "KEY",
+        "value": "Greater Host Devil ~ Master Grappler"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.59",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
-    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
-    "line": 38,
-    "record_key": "Greater Host Devil ~ Master Grappler"
-  },
+  "ingested_at": "2026-08-12T11:18:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "record_key": "Greater Host Devil ~ Master Grappler",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

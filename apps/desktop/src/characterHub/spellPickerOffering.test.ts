@@ -27,21 +27,21 @@ import { assert, assertEqual } from '../testSupport/asserts';
 
 const CATALOG: SpellCatalogEntryDto[] = [
   // On the wizard list at the character's own castable level.
-  { key: 'Magic Missile', book: 'CRB', school: 'Evocation', level: 1, description: '1d4+1 force damage.' },
+  { key: 'Magic Missile', book: 'CRB', school: 'Evocation', level: 1, description: '1d4+1 force damage.', duration: null, range: null },
   // On the wizard list, far above a Wizard 1's castable level. Legal to
   // scribe, so it must survive the filter.
-  { key: 'Tsunami', book: 'APG', school: 'Conjuration', level: 9, description: 'A wave of water.' },
+  { key: 'Tsunami', book: 'APG', school: 'Conjuration', level: 9, description: 'A wave of water.', duration: null, range: null },
   // The minimum-across-classes defect in one row: the record says 1
   // (Bard's level), a Wizard learns it at 2.
-  { key: 'Hideous Laughter', book: 'CRB', school: 'Enchantment', level: 1, description: 'Subject loses actions.' },
+  { key: 'Hideous Laughter', book: 'CRB', school: 'Enchantment', level: 1, description: 'Subject loses actions.', duration: null, range: null },
   // Cleric/Druid/Bard spell. On no wizard list — must be removed.
-  { key: 'Cure Light Wounds', book: 'CRB', school: 'Conjuration', level: 1, description: 'Cures 1d8 damage.' },
+  { key: 'Cure Light Wounds', book: 'CRB', school: 'Conjuration', level: 1, description: 'Cures 1d8 damage.', duration: null, range: null },
   // Druid-only. Must be removed.
-  { key: 'Antilife Shell', book: 'CRB', school: 'Abjuration', level: 6, description: '10-ft. field hedges out living creatures.' },
+  { key: 'Antilife Shell', book: 'CRB', school: 'Abjuration', level: 6, description: '10-ft. field hedges out living creatures.', duration: null, range: null },
   // A real `apg_spells.lst` gap: resolves, but the corpus row carries no
   // SCHOOL: token. It is on the wizard list, so it stays — with no school
   // fabricated into its detail line.
-  { key: 'Corpus Gap Spell', book: 'APG', school: null, level: null, description: null },
+  { key: 'Corpus Gap Spell', book: 'APG', school: null, level: null, description: null, duration: null, range: null },
 ];
 
 const CLASS_SPELL_LEVELS: ClassSpellLevelsDto[] = [

@@ -1,0 +1,111 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Barbarian Archetype ~ Mooncursed",
+    "name": "Mooncursed",
+    "class": "Barbarian Archetype",
+    "description": "Some barbarians exhibit an unusual form of lycanthropy powered by their fury. Such a character transforms willfully but can maintain her animal or hybrid forms only while raging.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Barbarian Archetype ~ Mooncursed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BarbarianArchetype"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,RACETYPE=Humanoid,RACETYPE=Monstrous Humanoid],[PREFACT:1,TEMPLATES,IsHumanoid=True]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "Some barbarians exhibit an unusual form of lycanthropy powered by their fury. Such a character transforms willfully but can maintain her animal or hybrid forms only while raging."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Barbarian=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Mooncursed],[!PREFACT:1,ABILITIES,Barbarian_Archetype_Rage=True,Barbarian_Archetype_ImprovedUncannyDodge=True,Barbarian_Archetype_GreaterRage=True,Barbarian_Archetype_MightyRage=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed ~ Shifting Rage|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed ~ Hybrid Rage|PRECLASS:1,Barbarian=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed ~ Greater Shifting Rage|PRECLASS:1,Barbarian=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mooncursed ~ Mighty Shifting Rage|PRECLASS:1,Barbarian=20"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_GreaterRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_MightyRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_Rage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_GreaterRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_MightyRage|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 30,
+    "record_key": "Barbarian Archetype ~ Mooncursed"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

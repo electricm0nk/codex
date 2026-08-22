@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aberrant Bloodrager Bloodline ~ Aberrant Resistance",
+    "name": "Aberrant Resistance",
+    "class": "Aberrant Bloodrager Bloodline",
+    "description": "You are immune to poison, disease, fatigue, exhaustion, and the staggered condition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant Bloodrager Bloodline ~ Aberrant Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Bloodrager Class Feature.Aberrant Bloodrager Bloodline ~ Power LVL 16.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Aberrant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_Aberrant_BloodlineProgressionLVL,16"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_Aberrant_BloodlinePower16LVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are immune to poison, disease, fatigue, exhaustion, and the staggered condition."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|AberrantBloodragerBloodlinePowers"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|CrossbloodedRagerBloodlinePowers|PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 585,
+    "record_key": "Aberrant Bloodrager Bloodline ~ Aberrant Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

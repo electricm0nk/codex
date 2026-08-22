@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dreamspun Bloodline ~ Solipsism",
+    "name": "Solipsism",
+    "class": "Dreamspun Bloodline",
+    "description": "You can drift into the dream world, fading from the world around you. You can become incorporeal for %1 minutes. You gain the incorporeal subtype and take only half damage from corporeal magical attacks (you take no damage from nonmagical weapons and objects). Your spells deal only half damage to corporeal creatures, but spells and abilities that do not deal damage function normally. The duration need not be continuous, but it must be used in 1-minute increments.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamspun Bloodline ~ Solipsism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Dreamspun Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialAttack or SpecialQuality.Ex,Sp,Su"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Dreamspun"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Dreamspun_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Dreamspun_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_DreamspunSolipsism_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can drift into the dream world, fading from the world around you. You can become incorporeal for %1 minutes. You gain the incorporeal subtype and take only half damage from corporeal magical attacks (you take no damage from nonmagical weapons and objects). Your spells deal only half damage to corporeal creatures, but spells and abilities that do not deal damage function normally. The duration need not be continuous, but it must be used in 1-minute increments."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_DreamspunSolipsism_Duration|Sorcerer_Dreamspun_BloodlinePower20LVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Sorcerer_DreamspunSolipsism_Duration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Minutes per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|DreamspunBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3158,
+    "record_key": "Dreamspun Bloodline ~ Solipsism"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

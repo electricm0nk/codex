@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Valor Domain ~ Touch of Resolve",
+    "name": "Touch of Resolve",
+    "class": "Valor Domain",
+    "description": "You may use remove fear on a single creature %1 times per day.|DomainValorTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Valor Domain ~ Touch of Resolve"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=DomainValorTimes|CASTERLEVEL=DomainValorLVL|Remove Fear"
+      },
+      {
+        "key": "DESC",
+        "value": "You may use remove fear on a single creature %1 times per day.|DomainValorTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 405,
+    "record_key": "Valor Domain ~ Touch of Resolve"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

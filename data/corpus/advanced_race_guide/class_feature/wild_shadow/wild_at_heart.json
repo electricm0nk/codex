@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Shadow ~ Wild at Heart",
+    "name": "Wild at Heart",
+    "class": "Ranger",
+    "description": "A wild shadow adds only 1/2 his class level when making wild empathy checks while in urban areas, and adds only 1/4 his class level to follow or identify tracks in such areas. In non-urban settings, he is considered two levels higher when determining the bonuses for such checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Shadow ~ Wild at Heart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wild shadow adds only 1/2 his class level when making wild empathy checks while in urban areas, and adds only 1/4 his class level to follow or identify tracks in such areas. In non-urban settings, he is considered two levels higher when determining the bonuses for such checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 234,
+    "record_key": "Wild Shadow ~ Wild at Heart"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Animal Blessing ~ Battle Companion",
+    "name": "Battle Companion",
+    "class": "Animal Blessing",
+    "description": "You can summon a battle companion. This ability functions as summon nature's ally V with a duration of 1 minute. This ability can summon only one animal, regardless of the list used. For every 2 levels beyond 10th, the level of the summon nature's ally spell increases by 1 (to a maximum of summon nature's ally IX at 18th level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Blessing ~ Battle Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a battle companion. This ability functions as summon nature's ally V with a duration of 1 minute. This ability can summon only one animal, regardless of the list used. For every 2 levels beyond 10th, the level of the summon nature's ally spell increases by 1 (to a maximum of summon nature's ally IX at 18th level)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2228,
+    "record_key": "Animal Blessing ~ Battle Companion"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

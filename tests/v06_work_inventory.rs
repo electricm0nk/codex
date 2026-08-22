@@ -194,7 +194,13 @@ fn feat_rows_without_a_type_facet_are_not_feats() {
 }
 
 /// `missing_classifying_token` for spells, and the `.COPY=` merge that takes
-/// `cr_spells.lst` from 674 raw rows to `crb::spell_list`'s documented 652.
+/// `cr_spells.lst` from 674 raw non-`.COPY=` rows to 652 base spell records.
+/// `crb::spell_list::SPELL_LIST` now carries 664 -- the 652 base records
+/// PLUS the 12 `.COPY=` racial spell-like-ability variant records ingested
+/// under SD31 `decisions.md §15` (2026-08-17), which this raw-row
+/// enumeration deliberately still excludes (`!r.first().contains(".COPY=")`)
+/// since it is reproducing the base-record count, not `SPELL_LIST`'s full
+/// count including variants.
 #[test]
 fn crb_spell_rules_reproduce_the_documented_652() {
     let dir = corpus_or_skip!();
@@ -209,11 +215,12 @@ fn crb_spell_rules_reproduce_the_documented_652() {
     assert_eq!(
         distinct(ids),
         652,
-        "CRB spell enumeration must reproduce `crb::spell_list`'s documented count"
+        "CRB base-spell (non-`.COPY=`) enumeration must reproduce this documented count"
     );
     assert_eq!(
         codex::rules_core::rules_tables::crb::spell_list::SPELL_LIST.len(),
-        652
+        664,
+        "652 base records + 12 `.COPY=` racial SLA variants (decisions.md §15)"
     );
 }
 
@@ -447,7 +454,19 @@ fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_trait
             );
         }
     }
-    assert_eq!(checked, 156, "156 already-ingested ARG alternate racial trait records");
+    assert_eq!(
+        checked,
+        414,
+        "414 already-ingested ARG race_trait records (156 -> 201 by SD-31 Epic 1-F2, \
+         2026-08-15; 201 -> 259 by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by \
+         SD-31-E6-F4-003's own alternate-trait batch for the same 6 races, both 2026-08-16; \
+         283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17; 321 -> 332 by \
+         SD31-E6-F4-006's own alternate-trait batch for the same 4 races, 2026-08-17; \
+         332 -> 350 by SD31-E6-F4-007's own 2-race chassis batch (Changeling, Samsaran), \
+         2026-08-17, closing arg_races.lst's full 37-row playable-race roster -- every new \
+         record also carries CATEGORY:Special Ability, same as every alternate this \
+         directory already held)"
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -617,14 +636,27 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
     let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
     let units = doc["units"].as_array().expect("units is an array");
 
-    // Real, verified-by-hand-trace units: zero-magnitude Rage Power records
-    // from acg_abilities_class.lst:2658,2660. Confirmed absent from every
-    // engine table this program has (rules_core, apps/desktop) -- only a
-    // slot-COUNT mechanism (barbarian_features::rage_powers_known) is
-    // wired, never a catalog of the individual named options.
+    // Real, verified-by-hand-trace units: zero-magnitude Discovery (alchemist)
+    // records from apg_abilities_class.lst:123,124. Confirmed absent from
+    // every engine table this program has (rules_core, apps/desktop) -- only
+    // a slot-COUNT mechanism (`alchemist_features`-shaped) is wired, never a
+    // catalog of the individual named options.
+    //
+    // NOT Rage Power any more (`SD31-W23-POOLMEMBER-002`): this test's
+    // original fixture (`rage_power_abyssal_blood`/`_lesser`) went stale the
+    // moment `class_feature_pool_catalog::REGISTERED_POOL_GROUPS` widened to
+    // include "Rage Power" -- both now correctly reach `text-complete` via
+    // the new reference catalog, which is exactly the class of record this
+    // test's own doc comment says should NOT stay `not-ingested`. Re-picked
+    // from "Discovery", a pool this catalog still does not register, so the
+    // fixture's assumption ("no catalog exists for the individual options")
+    // is true again. If a future wave registers "Discovery" too, THIS
+    // fixture will need re-picking the same way -- that is a feature of this
+    // test, not a flaw: it is meant to go red the moment its assumption
+    // stops holding, exactly as it did here.
     for id in [
-        "advanced_class_guide:class_feature:rage_power_abyssal_blood",
-        "advanced_class_guide:class_feature:rage_power_abyssal_blood_lesser",
+        "advanced_players_guide:class_feature:discovery_combine_extracts",
+        "advanced_players_guide:class_feature:discovery_concentrate_poison",
     ] {
         let unit = units.iter().find(|u| u["id"] == id).unwrap_or_else(|| panic!("{id} missing from inventory"));
         assert_eq!(unit["magnitude_token_count"], 0, "{id}: fixture assumption changed, re-check");
@@ -632,9 +664,23 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
             unit["status"], "not-ingested",
             "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be not-ingested, not unknown or text-complete"
         );
+        // RE-PICKED, wave 29 integration (as the prior comment predicted):
+        // `classify()` gained a THIRD owner-resolution fallback,
+        // `class_feature_owner_via_pool_catalog`, which now resolves
+        // "Discovery" to "alchemist" via `CLASS_FEATURE_POOLS` (it was
+        // previously unresolvable by any fallback, landing this record on
+        // the "no owner at all" branch). `status` is UNCHANGED (still
+        // `not-ingested` -- the fallback can never manufacture
+        // `text-complete`/`grounded` on its own, proven by
+        // `class_feature_consumer_delta_tests::
+        // a_pool_catalog_recovered_owner_can_never_ground_a_record_even_with_a_matching_explanation_id`
+        // in `src/bin/v06_work_inventory.rs`); the wave-29 guarded regen now
+        // carries the OWNED-branch evidence string, the same "owner
+        // resolved but pool catalog does not hold it" evidence the OWNED
+        // "Rogue Talent" case already carries.
         assert_eq!(
             unit["evidence"],
-            "class_feature_option_pool_record_not_held_by_engine"
+            "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
         );
     }
 
@@ -768,11 +814,24 @@ fn every_corpus_book_appears_in_the_inventory() {
         .iter()
         .filter_map(|u| u["book"].as_str().map(|s| s.to_string()))
         .collect();
+    // `shared_library` is exempted alongside `out_of_scope` as of `decisions.md
+    // §16` (operator ruling 2026-08-19, executed wave 16): a shared-library
+    // packaging directory (`core_essentials`) exists PRECISELY so its content
+    // attributes to the real books that include it, or -- for content no real
+    // book can be shown to own -- is deleted outright as a hallucination not
+    // found in print. Zero units contributed under its OWN name is that
+    // ruling's success condition, not a book silently skipped: contrast
+    // `out_of_scope`, which is skipped by operator directive and never
+    // expected to contribute regardless. Before wave 16, `core_essentials`
+    // legitimately still held units (a genuine, evidenced residual) and so
+    // was correctly caught by the stricter check; after wave 16 deleted the
+    // residual to zero, keeping the old check would fail on the ruling's own
+    // discharge of `decisions.md §9`'s condition.
     let unmeasured: Vec<String> = doc["books"]
         .as_array()
         .expect("books array")
         .iter()
-        .filter(|b| b["scope"].as_str() != Some("out_of_scope"))
+        .filter(|b| !matches!(b["scope"].as_str(), Some("out_of_scope") | Some("shared_library")))
         .filter_map(|b| b["id"].as_str().map(|s| s.to_string()))
         .filter(|id| !books_with_units.contains(id))
         .collect();

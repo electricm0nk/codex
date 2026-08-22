@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cad ~ Skills",
+    "name": "Skills",
+    "class": "Fighter",
+    "description": "Acrobatics (Dex), Bluff (Cha), Escape Artist (Dex), Sleight of Hand (Dex), and Stealth (Dex) are class skills for a cad.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cad ~ Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Acrobatics (Dex), Bluff (Cha), Escape Artist (Dex), Sleight of Hand (Dex), and Stealth (Dex) are class skills for a cad."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Bluff|Escape Artist|Sleight of Hand|Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 704,
+    "record_key": "Cad ~ Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

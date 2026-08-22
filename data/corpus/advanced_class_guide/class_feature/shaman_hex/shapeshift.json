@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Hex ~ Shapeshift",
+    "name": "Shapeshift",
+    "class": "Shaman Hex",
+    "description": "The shaman transforms herself into another form for %1 minutes per day, as|ShamanShapeshiftHexDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Hex ~ Shapeshift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Shapeshift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanShapeshiftHexDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman transforms herself into another form for %1 minutes per day, as|ShamanShapeshiftHexDuration"
+      },
+      {
+        "key": "DESC",
+        "value": "alter self.|PREVARLT:ShamanHexLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "beast shape|PREVARGTEQ:ShamanHexLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "I.|PREMULT:2,[PREVARGTEQ:ShamanHexLVL,8],[PREVARLT:ShamanHexLVL,12]"
+      },
+      {
+        "key": "DESC",
+        "value": "II.|PREMULT:2,[PREVARGTEQ:ShamanHexLVL,12],[PREVARLT:ShamanHexLVL,16]"
+      },
+      {
+        "key": "DESC",
+        "value": "III.|PREMULT:2,[PREVARGTEQ:ShamanHexLVL,16],[PREVARLT:ShamanHexLVL,20]"
+      },
+      {
+        "key": "DESC",
+        "value": "IV.|PREVARGTEQ:ShamanHexLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "This duration does not need to be consecutive, but must be spent in 1-minute increments. Changing form (including changing back) is a standard action that doesn't provoke an attack of opportunity."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanShapeshiftHexDuration|ShamanHexLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1437,
+    "record_key": "Shaman Hex ~ Shapeshift"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

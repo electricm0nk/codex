@@ -1,26 +1,96 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You send a hideous and unsettling phantasmal vision to a specific creature that you name or otherwise specifically designate. The nightmare prevents restful sleep and causes 1d10 points of damage. The nightmare leaves the subject fatigued and unable to regain arcane spells for the next 24 hours. The difficulty of the save depends on your knowledge the subject and the physical connection [if any] you have to that creature. \nKnowledge | Will Save Modifier \nNone* | +10 \nSecondhand [you have heard of the subject] | +5 \nFirsthand [you have met the subject] | +0 \nFamiliar [you know the subject well] | -5 \nConnection | Will Save Modifier \nLikeness or picture | -2 \nPossession or garment | -4 \nBody part, lock of hair, bit of nail, etc. | -10 \n*You must have some sort of connection to a creature of which you have no knowledge. \nDispel evil cast on the subject while you are casting the spell dispels the nightmare and causes you to be stunned for 10 minutes per caster level of the dispel evil. If the recipient is awake when the spell begins, you can choose to cease casting [ending the spell] or to enter a trance until the recipient goes to sleep, whereupon you become alert again and complete the casting. If you are disturbed during the trance, you must succeed on a Concentration check as if you were in the midst of casting a spell or the spell ends. If you choose to enter a trance, you are not aware of your surroundings or the activities around you while in the trance. You are defenseless, both physically and mentally, while in the trance. [You always fail Reflex and Will saving throws, for example.] Creatures who don't sleep [such as elves, but not half-elves] or dream are immune to this spell.",
     "key": "Nightmare",
-    "school": "Illusion",
     "level": 5,
-    "description": "You send a hideous and unsettling phantasmal vision to a specific creature that you name or otherwise specifically designate. The nightmare prevents restful sleep and causes 1d10 points of damage. The nightmare leaves the subject fatigued and unable to regain arcane spells for the next 24 hours. The difficulty of the save depends on your knowledge the subject and the physical connection [if any] you have to that creature. \nKnowledge | Will Save Modifier \nNone* | +10 \nSecondhand [you have heard of the subject] | +5 \nFirsthand [you have met the subject] | +0 \nFamiliar [you know the subject well] | -5 \nConnection | Will Save Modifier \nLikeness or picture | -2 \nPossession or garment | -4 \nBody part, lock of hair, bit of nail, etc. | -10 \n*You must have some sort of connection to a creature of which you have no knowledge. \nDispel evil cast on the subject while you are casting the spell dispels the nightmare and causes you to be stunned for 10 minutes per caster level of the dispel evil. If the recipient is awake when the spell begins, you can choose to cease casting [ending the spell] or to enter a trance until the recipient goes to sleep, whereupon you become alert again and complete the casting. If you are disturbed during the trance, you must succeed on a Concentration check as if you were in the midst of casting a spell or the spell ends. If you choose to enter a trance, you are not aware of your surroundings or the activities around you while in the trance. You are defenseless, both physically and mentally, while in the trance. [You always fail Reflex and Will saving throws, for example.] Creatures who don't sleep [such as elves, but not half-elves] or dream are immune to this spell."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "You send a hideous and unsettling phantasmal vision to a specific creature that you name or otherwise specifically designate. The nightmare prevents restful sleep and causes 1d10 points of damage. The nightmare leaves the subject fatigued and unable to regain arcane spells for the next 24 hours. The difficulty of the save depends on your knowledge the subject and the physical connection [if any] you have to that creature. &nl;Knowledge &pipe; Will Save Modifier &nl;None* &pipe; +10 &nl;Secondhand [you have heard of the subject] &pipe; +5 &nl;Firsthand [you have met the subject] &pipe; +0 &nl;Familiar [you know the subject well] &pipe; -5 &nl;Connection &pipe; Will Save Modifier &nl;Likeness or picture &pipe; -2 &nl;Possession or garment &pipe; -4 &nl;Body part, lock of hair, bit of nail, etc. &pipe; -10 &nl;*You must have some sort of connection to a creature of which you have no knowledge. &nl;Dispel evil cast on the subject while you are casting the spell dispels the nightmare and causes you to be stunned for 10 minutes per caster level of the dispel evil. If the recipient is awake when the spell begins, you can choose to cease casting [ending the spell] or to enter a trance until the recipient goes to sleep, whereupon you become alert again and complete the casting. If you are disturbed during the trance, you must succeed on a Concentration check as if you were in the midst of casting a spell or the spell ends. If you choose to enter a trance, you are not aware of your surroundings or the activities around you while in the trance. You are defenseless, both physically and mentally, while in the trance. [You always fail Reflex and Will saving throws, for example.] Creatures who don't sleep [such as elves, but not half-elves] or dream are immune to this spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You send a hideous and unsettling phantasmal vision to a specific creature that you name or otherwise specifically designate.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Mind-Affecting|Evil"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Madness=5"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Unlimited"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/spells/nightmare.html#_nightmare"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.316"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Phantasm"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One living creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 413,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
-    "line": 1166,
-    "record_key": "Nightmare.MOD"
+    "record_key": "Nightmare",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

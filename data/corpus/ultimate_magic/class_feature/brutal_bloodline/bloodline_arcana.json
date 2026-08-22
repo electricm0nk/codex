@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Brutal Bloodline ~ Bloodline Arcana",
+    "name": "Bloodline Arcana",
+    "class": "Brutal Bloodline",
+    "description": "Whenever you cast a spell that deals hit point damage, one target of your choice affected by the spell takes 2 additional hit points of damage. This ability has no effect on spells that do not deal hit point damage (such as ability score damage).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brutal Bloodline ~ Bloodline Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast a spell that deals hit point damage, one target of your choice affected by the spell takes 2 additional hit points of damage. This ability has no effect on spells that do not deal hit point damage (such as ability score damage)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(one target of your spell takes 2 additional damage)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1659,
+    "record_key": "Brutal Bloodline ~ Bloodline Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

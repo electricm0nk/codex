@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Forbidden Rites Domain ~ Death Domain",
+    "name": "Death",
+    "class": "Forbidden Rites Domain",
+    "description": "You can cause the living to bleed at a touch, and find comfort in the presence of the dead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forbidden Rites Domain ~ Death Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ForbiddenRiteSDomain.DeathDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause the living to bleed at a touch, and find comfort in the presence of the dead."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Bleeding Touch|PREDOMAIN:1,Death|PREVARGTEQ:DomainDeathAbilityTriggerLVL,-1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Death's Embrace|PREDOMAIN:1,Death|PREVARGTEQ:DomainDeathAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDeathLVL|DomainLVL-2|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDeathDC|10+(DomainDeathLVL/2)+CHA-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDeathTimes|DomainPowerTimes-1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDeathAbilityTriggerLVL|DomainAbilityTriggerLVL-SeparistDomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Cause Fear|Cleric=2|Death Knell|Cleric=3|Animate Dead|Cleric=4|Death Ward|Cleric=5|Slay Living|Cleric=6|Create Undead|Cleric=7|Destruction|Cleric=8|Create Greater Undead|Cleric=9|Wail of the Banshee"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1034,
+    "record_key": "Forbidden Rites Domain ~ Death Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bard Archetype ~ Street Performer",
+    "name": "Street Performer",
+    "class": "Bard Archetype",
+    "description": "Whether acrobat, troubadour, or thespian, the street performer mixes with the masses, singing for his supper.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Street Performer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardInspireCourage.BardInspireCompetence.BardInspireGreatness.BardInspireHeroics.BardCountersong.BardBardicKnowledge.BardLoreMaster"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Street Performer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardInspireCompetence,TYPE.BardInspireGreatness,TYPE.BardInspireHeroics,TYPE.BardCountersong,TYPE.BardBardicKnowledge,TYPE.BardLoreMaster]"
+      },
+      {
+        "key": "DESC",
+        "value": "Whether acrobat, troubadour, or thespian, the street performer mixes with the masses, singing for his supper."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Street Performer ~ Disappearing Act|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Street Performer ~ Harmless Performer|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Street Performer ~ Madcap Prank|PRECLASS:1,Bard=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Street Performer ~ Slip through the Crowd|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Street Performer ~ Gladhanding|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Street Performer ~ Streetwise|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Street Performer ~ Quick Change|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bard"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1626,
+    "record_key": "Bard Archetype ~ Street Performer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

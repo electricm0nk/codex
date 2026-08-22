@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Paw",
+    "name": "Order of the Paw",
+    "class": null,
+    "description": "Only dog- or wolf-riding halflings are eligible to join this order of cavaliers. When they do, they pledge to defend halflings, halfling settlements, and other innocent folks by patrolling the wilderness and seeking out possible threats to both individuals and whole communities. These cavaliers hunt down potential danger with a ruthless efficiency and determination that non-halflings find surprising and even somewhat alarming.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierOrder.SpecialQuality"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Only dog- or wolf-riding halflings are eligible to join this order of cavaliers. When they do, they pledge to defend halflings, halfling settlements, and other innocent folks by patrolling the wilderness and seeking out possible threats to both individuals and whole communities. These cavaliers hunt down potential danger with a ruthless efficiency and determination that non-halflings find surprising and even somewhat alarming."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Paw ~ Edicts|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Paw ~ Skills|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Paw ~ Order Abilities|PREVARGTEQ:OrderAbilityLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Paw ~ Danger Ward|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:OrderAbility2,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Paw ~ Canine Ferocity|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:OrderAbility8,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Order of the Paw ~ Giant Slayer|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:OrderAbility15,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderChallengeBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderChallengeBonus|CavalierLVL/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 296,
+    "record_key": "Order of the Paw"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

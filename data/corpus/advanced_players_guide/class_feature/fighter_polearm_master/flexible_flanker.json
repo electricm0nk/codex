@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Polearm Master ~ Flexible Flanker",
+    "name": "Flexible Flanker",
+    "class": "Fighter",
+    "description": "At 9th level, a polearm master may choose any square adjacent to him and treat that square as his location for determining who he is flanking, even if that square is occupied by a creature, object, or solid barrier. This ability replaces weapon training 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Polearm Master ~ Flexible Flanker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining2"
+      },
+      {
+        "key": "DESC",
+        "value": "At 9th level, a polearm master may choose any square adjacent to him and treat that square as his location for determining who he is flanking, even if that square is occupied by a creature, object, or solid barrier. This ability replaces weapon training 2."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training II|-1|PREVARGTEQ:FighterWeaponTrainingLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2181,
+    "record_key": "Fighter Polearm Master ~ Flexible Flanker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

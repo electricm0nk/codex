@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Name-Keeper ~ Scrolls Focus",
+    "name": "Scrolls",
+    "class": "Name-Keeper",
+    "description": "[NOT IMPLEMENTED] The name-keeper selects an oracle mystery. She can use any of the mystery's associated skills untrained, and she treats them as class skills. For any of those skills that were already class skills, she instead gains a +2 sacred bonus on those checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Name-Keeper ~ Scrolls Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PathfindersPastFocus.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] The name-keeper selects an oracle mystery. She can use any of the mystery's associated skills untrained, and she treats them as class skills. For any of those skills that were already class skills, she instead gains a +2 sacred bonus on those checks."
+      },
+      {
+        "key": "DESC",
+        "value": "She gains Skill Focus for one of the associated skills as a bonus feat.|PRECLASS:1,Shaman=12"
+      },
+      {
+        "key": "DESC",
+        "value": "She gains Skill Focus a second time as a bonus feat, and she always counts as having at least 10 ranks in those skills for calculating these temporary feats' benefits.|PRECLASS:1,Shaman=20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1044,
+    "record_key": "Name-Keeper ~ Scrolls Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

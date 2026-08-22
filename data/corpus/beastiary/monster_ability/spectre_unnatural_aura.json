@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Spectre ~ Unnatural Aura",
     "delivery": "Supernatural",
@@ -15,21 +13,65 @@
     "owners": [
       "beastiary:monster:spectre"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Unnatural Aura"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft.)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnnaturalAuraDC|25"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnnaturalAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Unnatural Aura)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnnaturalAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Animals, whether wild or domesticated, can sense the unnatural presence of a spectre at a distance of 30 feet. They do not willingly approach nearer than that and panic if forced to do so unless a master succeeds at a DC %1 Handle Animal, Ride, or wild empathy check. A panicked animal remains so as long as it is within 30 feet of the spectre.|UnnaturalAuraDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Spectre ~ Unnatural Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.256"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
     "source_page": "p.256",
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1141,
-    "record_key": "Spectre ~ Unnatural Aura"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1141,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Spectre ~ Unnatural Aura",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

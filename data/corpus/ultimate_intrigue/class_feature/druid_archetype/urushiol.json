@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Archetype ~ Urushiol",
+    "name": "Urushiol",
+    "class": "Druid Archetype",
+    "description": "When an urushiol druid forms a bond with nature, it takes a vastly different form than for most druids. His body becomes increasingly toxic, allowing him to secrete a deadly poison through his pores.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Archetype ~ Urushiol"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DruidArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Urushiol],[!PREFACT:1,ABILITIES,Druid_Archetype_NatureBond=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_VenomImmunity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "When an urushiol druid forms a bond with nature, it takes a vastly different form than for most druids. His body becomes increasingly toxic, allowing him to secrete a deadly poison through his pores."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Urushiol ~ Toxic Secretions|PRECLASS:1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Urushiol ~ Venom Immunity|PRECLASS:1,Druid=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_VenomImmunity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 325,
+    "record_key": "Druid Archetype ~ Urushiol"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

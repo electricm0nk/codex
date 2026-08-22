@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Plant Speaker ~ Leshy Speaker",
+    "name": "Leshy Speaker",
+    "class": "Bard",
+    "description": "The plant speaker can speak to its disembodied brethren, the spirits of nature that become leshys. He performs for 10 minutes and spends 7 rounds of bardic performance to gain the effects of commune with nature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Speaker ~ Leshy Speaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.Plant SpeakerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The plant speaker can speak to its disembodied brethren, the spirits of nature that become leshys. He performs for 10 minutes and spends 7 rounds of bardic performance to gain the effects of commune with nature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 275,
+    "record_key": "Plant Speaker ~ Leshy Speaker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

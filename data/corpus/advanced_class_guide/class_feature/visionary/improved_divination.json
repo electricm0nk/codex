@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Visionary ~ Improved Divination",
+    "name": "Improved Divination",
+    "class": "Shaman",
+    "description": "The visionary becomes more adept at divination magic. When she casts the augury spell, her chance for an accurate answer is automatically the maximum of 90%%. Likewise, when she casts divination, she has the maximum 90%% chance of an accurate answer. Finally, the visionary can prepare scrying as a 4th-level spell, and it requires only 1 minute to cast. The visionary also has a 10%% chance per caster level to cast the spells listed in the scrying spell description, instead of 5%% per caster level (to a maximum of 100%%). The visionary must still prepare these spells to receive these benefits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Visionary ~ Improved Divination"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Visionary Class Feature.Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The visionary becomes more adept at divination magic. When she casts the augury spell, her chance for an accurate answer is automatically the maximum of 90%%. Likewise, when she casts divination, she has the maximum 90%% chance of an accurate answer. Finally, the visionary can prepare scrying as a 4th-level spell, and it requires only 1 minute to cast. The visionary also has a 10%% chance per caster level to cast the spells listed in the scrying spell description, instead of 5%% per caster level (to a maximum of 100%%). The visionary must still prepare these spells to receive these benefits."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3662,
+    "record_key": "Visionary ~ Improved Divination"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

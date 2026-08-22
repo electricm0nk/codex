@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Formless Adept ~ Formless Body",
+    "name": "Formless Body",
+    "class": "Psychic",
+    "description": "A formless adept gradually sheds his body, taking on increasingly nebulous forms. A formless adept can assume a formless body as a standard action. He can remain in each formless body type for a number of rounds per day equal to 3 + his Charisma modifier. The rounds don't have to be used consecutively, but must be used in 1-round increments. Resuming his physical form takes another standard action; otherwise, the formless adept continues spending rounds of formless body until he runs out of them. The formless adept must return to his physical form before assuming a different formless body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Formless Adept ~ Formless Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Formless Adept Class Feature.Psychic Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A formless adept gradually sheds his body, taking on increasingly nebulous forms. A formless adept can assume a formless body as a standard action. He can remain in each formless body type for a number of rounds per day equal to 3 + his Charisma modifier. The rounds don't have to be used consecutively, but must be used in 1-round increments. Resuming his physical form takes another standard action; otherwise, the formless adept continues spending rounds of formless body until he runs out of them. The formless adept must return to his physical form before assuming a different formless body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1565,
+    "record_key": "Formless Adept ~ Formless Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

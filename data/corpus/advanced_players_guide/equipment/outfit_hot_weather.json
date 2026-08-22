@@ -1,27 +1,57 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Outfit (Hot Weather)",
     "category": "General",
-    "name": "Hot Weather Outfit",
     "cost_gp": 8.0,
-    "weight": 4.0,
-    "description": "A loose linen robe with a turban or head covering and veil, granting a +2 bonus on Fortitude saves against hot weather (does not stack with the Survival skill's own bonus)."
+    "description": "A loose linen robe with a turban or head covering and veil, granting a +2 bonus on Fortitude saves against hot weather (does not stack with the Survival skill's own bonus).",
+    "key": "Outfit (Hot Weather)",
+    "name": "Hot Weather Outfit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Hot Weather Outfit"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Clothing.Resizable.Starting"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      }
+    ],
+    "weight": 4.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 105,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_general.lst",
+    "record_key": "Outfit (Hot Weather)",
+    "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

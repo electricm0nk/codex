@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Infernal Bloodline ~ Power of the Pit",
+    "name": "Power of the Pit",
+    "class": "Infernal Bloodline",
+    "description": "Your form becomes infused with vile power. You gain immunity to fire and poison. You also gain resistance to acid 10 and cold 10, and the ability to see perfectly in darkness of any kind to a range of 60 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Bloodline ~ Power of the Pit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Infernal Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Infernal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Infernal_BloodlineProgressionLVL,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Infernal_BloodlinePower20LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_InfernalPowerOfThePit_VisionDistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your form becomes infused with vile power. You gain immunity to fire and poison. You also gain resistance to acid 10 and cold 10, and the ability to see perfectly in darkness of any kind to a range of 60 feet."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire|Immunity to Poison|See in Darkness"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_InfernalPowerOfThePit_VisionDistance|60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "VISION",
+        "value": "See in Darkness (Sorcerer_InfernalPowerOfThePit_VisionDistance)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Vision|See in Darkness %1 ft.|Sorcerer_InfernalPowerOfThePit_VisionDistance"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|InfernalBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2539,
+    "record_key": "Infernal Bloodline ~ Power of the Pit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

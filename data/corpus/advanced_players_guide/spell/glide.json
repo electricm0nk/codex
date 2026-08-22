@@ -1,26 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Glide",
-    "school": "Transmutation",
-    "level": 1,
     "description": "You take no damage from falls (as if from feather fall). In addition, you can move up to 5 feet in any horizontal direction for every 1 foot you fall, at a speed of 60 feet per round. You cannot use this spell to actually gain height, merely coast in other directions as you fall. If subjected to a strong wind or any other effect that causes you to rise you can take advantage of it in order to increase the distance you can glide. The spell ends as soon as your feet touch the ground regardless of its remaining duration. If the spell expires while you are still in the air you fall the remaining distance as normal.",
-    "full_text": true
+    "full_text": true,
+    "key": "Glide",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=1|Druid,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You take no damage from falls (as if from feather fall). In addition, you can move up to 5 feet in any horizontal direction for every 1 foot you fall, at a speed of 60 feet per round. You cannot use this spell to actually gain height, merely coast in other directions as you fall. If subjected to a strong wind or any other effect that causes you to rise you can take advantage of it in order to increase the distance you can glide. The spell ends as soon as your feet touch the ground regardless of its remaining duration. If the spell expires while you are still in the air you fall the remaining distance as normal.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You take no falling damage, move 60 ft./round while falling.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "until landing or (CASTERLEVEL) minutes (D)"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a leaf )"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advanced/spells/glide.html#_glide-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
+    "line": 134,
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
-    "line": 1969,
-    "record_key": "Glide"
+    "record_key": "Glide",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

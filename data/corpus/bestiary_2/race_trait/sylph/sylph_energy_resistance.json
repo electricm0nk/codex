@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T23:30:38Z",
+  "data": {
+    "key": "Sylph ~ Energy Resistance",
+    "name": "Energy Resistance",
+    "race_key": "Sylph",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Sylph Racial Trait",
+      "Sylph Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Sylph_ReplaceEnergyResistance",
+    "sets_replace_flags": [],
+    "description": "Sylphs have electricity resistance 5.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sylph ~ Energy Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Sylph_ReplaceEnergyResistance=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Sylphs have electricity resistance 5."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ElectricityResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/sylph/sylph_abilities_race.lst",
+    "sha256": "39f0cb0b0bee0f835684e08c1ef323ea657f2f737f38d2774cfcbe1cb57081bf",
+    "line": 20,
+    "record_key": "Sylph ~ Energy Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Stormborn Bloodline ~ Stormchild",
+    "name": "Stormchild",
+    "class": "Stormborn Bloodline",
+    "description": "You gain resist electricity %1 and resist sonic %1,|Sorcerer_StormbornStromchild_ResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stormborn Bloodline ~ Stormchild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature.Stormborn Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Stormborn"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_Stormborn_BloodlineProgressionLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_Stormborn_BloodlinePower3LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_StormbornStromchild_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resist electricity %1 and resist sonic %1,|Sorcerer_StormbornStromchild_ResistanceBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "and treat wind effects as being one step less severe.|PREVARLT:Sorcerer_Stormborn_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "and treat wind effects as being two steps less severe.|PREVARGTEQ:Sorcerer_Stormborn_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain blindsense 60 feet against concealment from natural or magical fog, mist, or weather effects.|PREVARGTEQ:Sorcerer_Stormborn_BloodlinePower3LVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_StormbornStromchild_ResistanceBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus,SonicResistanceBonus|Sorcerer_StormbornStromchild_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|StormbornBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3245,
+    "record_key": "Stormborn Bloodline ~ Stormchild"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

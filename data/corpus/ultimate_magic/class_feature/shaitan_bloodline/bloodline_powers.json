@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaitan Bloodline ~ Bloodline Powers",
+    "name": "Bloodline Powers",
+    "class": "Shaitan Bloodline",
+    "description": "Like a shaitan, you have both natural power over earth, and several other genie-based abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Bloodline ~ Bloodline Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Sorcerer Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "Like a shaitan, you have both natural power over earth, and several other genie-based abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|ShaitanBloodlinePowers"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 682,
+    "record_key": "Shaitan Bloodline ~ Bloodline Powers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

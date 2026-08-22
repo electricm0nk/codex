@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Stormwalker",
+    "name": "Stormwalker",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman can move through nonmagical fog, rain, mist, snow, and other environmental effects without penalty. She is never slowed by such effects, and she doesn't need to attempt Acrobatics skill checks to move across such surfaces. She can also move through magical environmental effects that she created.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Stormwalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanNatureHex.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Stormwalker"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanNatureSpirit,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can move through nonmagical fog, rain, mist, snow, and other environmental effects without penalty. She is never slowed by such effects, and she doesn't need to attempt Acrobatics skill checks to move across such surfaces. She can also move through magical environmental effects that she created."
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman can see twice as far as normal through environmental effects, whether or not they are magical in nature.|PREVARGTEQ:ShamanSpiritLVL,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1635,
+    "record_key": "Shaman Spirit Hex ~ Stormwalker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Astral Beacon",
+    "name": "Astral Beacon",
+    "class": "Medium",
+    "description": "A medium is an open connection to the Astral Plane and a shining beacon for spirits. As a free action, he can channel spirits of any of the five legends he did not contact via his seance. This ability lasts for 1 round and grants access to the intermediate, greater, and supreme spirit powers of the chosen spirits. Unlike trance of three, astral beacon allows spirits of the chosen legends (for instance, archmage) to gain influence over the medium until 24 hours from when the medium contacted his primary spirit. Also unlike trance of three, if the medium would incur influence by using one of the new spirits' abilities, that influence is added to the medium's total influence from that spirit rather than from his primary spirit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Astral Beacon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A medium is an open connection to the Astral Plane and a shining beacon for spirits. As a free action, he can channel spirits of any of the five legends he did not contact via his seance. This ability lasts for 1 round and grants access to the intermediate, greater, and supreme spirit powers of the chosen spirits. Unlike trance of three, astral beacon allows spirits of the chosen legends (for instance, archmage) to gain influence over the medium until 24 hours from when the medium contacted his primary spirit. Also unlike trance of three, if the medium would incur influence by using one of the new spirits' abilities, that influence is added to the medium's total influence from that spirit rather than from his primary spirit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 826,
+    "record_key": "Medium ~ Astral Beacon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

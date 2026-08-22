@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ninja ~ Weapon Proficiencies",
+    "name": "Ninja Weapon Proficiencies",
+    "class": "Ninja",
+    "description": "Ninja are proficient with all simple weapons, plus the kama, katana, kusarigama, nunchaku, sai, shortbow, short sword, shuriken, siangham, and wakizashi. They are proficient with light armor but not with shields.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja ~ Weapon Proficiencies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "NinjaClassFeatures.SpecialQuality.ClassFeatures"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Ninja are proficient with all simple weapons, plus the kama, katana, kusarigama, nunchaku, sai, shortbow, short sword, shuriken, siangham, and wakizashi. They are proficient with light armor but not with shields."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Shortbow|Sword (Short)|Kama|Kusarigama (Sickle and Chain)|Nunchaku|Sai|Shuriken|Siangham|Wakizashi"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Katana)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 113,
+    "record_key": "Ninja ~ Weapon Proficiencies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

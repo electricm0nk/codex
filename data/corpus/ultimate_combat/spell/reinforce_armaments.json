@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You reinforce a weapon or armor suit to give it a temporarily upgrade or mitigate the fragile quality (see page 146). A suit of armor or weapon touched that has the fragile quality is not considered to have the fragile quality for the spell's duration. Normal armor suits or weapons subjected to this spell instead gain the masterwork quality for the spell's duration and their hardness is doubled. If this spell is cast on masterwork or magical armor or weapons, their hardness is doubled for the duration of the spell.",
+    "key": "Reinforce Armaments",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Magus,Sorcerer,Witch,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M/DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Temporarily mitigates the fragile quality in targeted weapon or armor.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You reinforce a weapon or armor suit to give it a temporarily upgrade or mitigate the fragile quality (see page 146). A suit of armor or weapon touched that has the fragile quality is not considered to have the fragile quality for the spell's duration. Normal armor suits or weapons subjected to this spell instead gain the masterwork quality for the spell's duration and their hardness is doubled. If this spell is cast on masterwork or magical armor or weapons, their hardness is doubled for the duration of the spell.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(a metal pin)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/reinforceArmaments.html#_reinforce-armaments"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.241"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one armor suit or weapon touched"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 111,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Reinforce Armaments",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

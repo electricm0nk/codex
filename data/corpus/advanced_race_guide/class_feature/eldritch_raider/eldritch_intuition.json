@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Eldritch Raider ~ Eldritch Intuition",
+    "name": "Eldritch Intuition",
+    "class": "Rogue",
+    "description": "An eldritch raider gains an intuitive sense that allows her to more easily activate sorcerer and wizard spell completion and spell trigger items. She gains a +%1 bonus on Use Magic Device checks for this purpose.|RogueLVL/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Raider ~ Eldritch Intuition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch raider gains an intuitive sense that allows her to more easily activate sorcerer and wizard spell completion and spell trigger items. She gains a +%1 bonus on Use Magic Device checks for this purpose.|RogueLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Use Magic Device=Spell Trigger or Spell Completion|RogueLVL/3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 848,
+    "record_key": "Eldritch Raider ~ Eldritch Intuition"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

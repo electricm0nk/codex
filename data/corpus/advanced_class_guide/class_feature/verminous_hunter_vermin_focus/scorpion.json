@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Verminous Hunter Vermin Focus ~ Scorpion",
+    "name": "Scorpion",
+    "class": "Verminous Hunter Vermin Focus",
+    "description": "Get +%1 competence bonus on Stealth checks and +%2 on grapple combat maneuver checks|HunterVerminFocusScorpionBonus+2|HunterVerminFocusScorpionBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verminous Hunter Vermin Focus ~ Scorpion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterVerminFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterVerminFocusScorpionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1 competence bonus on Stealth checks and +%2 on grapple combat maneuver checks|HunterVerminFocusScorpionBonus+2|HunterVerminFocusScorpionBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|HunterVerminFocusScorpionBonus+2|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusScorpionBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusScorpionBonus|2|PREVARGTEQ:HunterVerminFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterVerminFocusScorpionBonus|2|PREVARGTEQ:HunterVerminFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 competence bonus on grapple combat maneuver checks|HunterVerminFocusScorpionBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3272,
+    "record_key": "Verminous Hunter Vermin Focus ~ Scorpion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

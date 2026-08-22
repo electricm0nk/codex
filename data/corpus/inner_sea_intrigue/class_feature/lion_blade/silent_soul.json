@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lion Blade ~ Silent Soul",
+    "name": "Silent Soul",
+    "class": "Lion Blade",
+    "description": "A Lion Blade has mastered the ability to still her thoughts and her movements to an amazing degree. The Lion Blade gains a +10 circumstance bonus on Stealth checks. She also gains spell resistance 20 against mind-affecting effects. If a spell is foiled by her spell resistance, she learns the spell's normal effect and can make it appear as if she were affected by it rather than causing it to obviously fail. If the spell provides a telepathic link, it functions normally, but she can disregard whichever commands she desires.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lion Blade ~ Silent Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A Lion Blade has mastered the ability to still her thoughts and her movements to an amazing degree. The Lion Blade gains a +10 circumstance bonus on Stealth checks. She also gains spell resistance 20 against mind-affecting effects. If a spell is foiled by her spell resistance, she learns the spell's normal effect and can make it appear as if she were affected by it rather than causing it to obviously fail. If the spell provides a telepathic link, it functions normally, but she can disregard whichever commands she desires."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|10|TYPE=Circumstance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 172,
+    "record_key": "Lion Blade ~ Silent Soul"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

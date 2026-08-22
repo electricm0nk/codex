@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shaman Spirit Hex ~ Phantom Stampede",
+    "name": "Phantom Stampede",
+    "class": "Shaman Spirit Hex",
+    "description": "The shaman summons a host of ghostly herd beasts to trample a single creature. These phantom beasts affect only the target creature, which is buffeted and pummeled by their passing. The creature takes no damage from the ability, but takes a -4 penalty to its CMD versus bull rush, overrun, and trip attempts. Additionally, spellcasters under the effect of this ability take a -4 penalty on concentration checks. The target receives no saving throw to negate this effect. This effect lasts %1 rounds. The creature can't be the target of this hex again for 24 hours.|ShamanLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaman Spirit Hex ~ Phantom Stampede"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanSpiritHex.ShamanMammothHex.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman summons a host of ghostly herd beasts to trample a single creature. These phantom beasts affect only the target creature, which is buffeted and pummeled by their passing. The creature takes no damage from the ability, but takes a -4 penalty to its CMD versus bull rush, overrun, and trip attempts. Additionally, spellcasters under the effect of this ability take a -4 penalty on concentration checks. The target receives no saving throw to negate this effect. This effect lasts %1 rounds. The creature can't be the target of this hex again for 24 hours.|ShamanLVL"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Witch Hex ~ Phantom Stampede"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ShamanMammothSpirit,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1208,
+    "record_key": "Shaman Spirit Hex ~ Phantom Stampede"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

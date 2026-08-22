@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Pack Attack",
+    "name": "Pack Attack",
+    "class": "Warpriest Bonus Feat",
+    "description": "You are skilled at surrounding your enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Pack Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:1],[PREVARGTEQ:WarpriestBonusFeatBAB,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at surrounding your enemies."
+      },
+      {
+        "key": "DESC",
+        "value": " When you are adjacent to an ally with this feat, the first time you melee attack an opponent, you can spend an immediate action to take a 5-foot step, even if you have otherwise moved this round. &nl; [Normal] You can take a 5-foot step only if you have not otherwise moved in a round."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Pack Attack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4504,
+    "record_key": "Warpriest Bonus Feat ~ Pack Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

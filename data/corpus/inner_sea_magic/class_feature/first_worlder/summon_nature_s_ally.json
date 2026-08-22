@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "First Worlder ~ Summon Nature's Ally",
+    "name": "Summon Nature's Ally",
+    "class": "First Worlder",
+    "description": "You can cast summon nature's ally %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds). Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|SummonMonsterLVL|SummonMonsterTimes|SummonMonsterDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "First Worlder ~ Summon Nature's Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SummonerClassFeatures.SpecialQuality.SpellLike.SummonerSummonMonster"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonMonsterDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast summon nature's ally %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds). Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|SummonMonsterLVL|SummonMonsterTimes|SummonMonsterDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterDuration|classlevel(\"Summoner\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterLVL|min(9,(classlevel(\"Summoner\")+1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterTimes|CHA+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SummonMonsterTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 371,
+    "record_key": "First Worlder ~ Summon Nature's Ally"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

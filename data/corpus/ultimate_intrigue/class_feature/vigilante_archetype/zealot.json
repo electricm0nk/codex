@@ -1,0 +1,167 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Zealot",
+    "name": "Zealot",
+    "class": "Vigilante Archetype",
+    "description": "Dedicated to a single deity, the zealot hunts the enemies of his faith in secret, often because his religion is outlawed or persecuted in the region.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Zealot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Zealot],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ClassSkills=True,Vigilante_Archetype_SkillRanks=True,Vigilante_Archetype_WeaponProficiencies=True,Vigilante_Archetype_VigilanteTalent4=True,Vigilante_Archetype_VigilanteTalent8=True,Vigilante_Archetype_VigilanteTalent10=True,Vigilante_Archetype_VigilanteTalent14=True,Vigilante_Archetype_VigilanteTalent16=True,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_VigilanteTalent=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dedicated to a single deity, the zealot hunts the enemies of his faith in secret, often because his religion is outlawed or persecuted in the region."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Zealot ~ Class Skills|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Zealot ~ Skill Ranks per Level|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Zealot ~ Weapon Proficiencies|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Zealot ~ Spellcasting|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Zealot ~ Aligned Spells|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Zealot ~ Alignment|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Zealot ~ Aura|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Zealot ~ Inquisition|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SkillRanks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Inquisitor"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Inquisitor|VigilanteLVL-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 975,
+    "record_key": "Vigilante Archetype ~ Zealot"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

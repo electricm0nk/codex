@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Advanced Mutagen ~ Grand Mutagen",
+    "name": "Grand Mutagen",
+    "class": "Advanced Mutagen",
+    "description": "This mutagen is identical to the alchemist discovery of the same name and counts as that discovery for the purpose of qualifying for other discoveries or advanced mutagens. The character must have an effective alchemist level (alchemist level plus master chymist levels) of at least 16 and must have the feral mutagen discovery or advanced mutagen to select this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Advanced Mutagen ~ Grand Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterChymistAdvancedMutagen.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Feral Mutagen,Master Chymist ~ Advanced Mutagen"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Grand Mutagen"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterChymistLVL+DiscoveryQualifyLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "This mutagen is identical to the alchemist discovery of the same name and counts as that discovery for the purpose of qualifying for other discoveries or advanced mutagens. The character must have an effective alchemist level (alchemist level plus master chymist levels) of at least 16 and must have the feral mutagen discovery or advanced mutagen to select this ability."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Discovery ~ Grand Mutagen"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Master Chymist Advanced Mutagen"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1378,
+    "record_key": "Advanced Mutagen ~ Grand Mutagen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Undine Adept ~ Augment Summoning",
+    "name": "Augment Summoning",
+    "class": "Druid",
+    "description": "Any creature with the water subtype the undine adept summons with either summon monster or summon nature's ally gains the benefits of the Augment Summoning feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine Adept ~ Augment Summoning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature with the water subtype the undine adept summons with either summon monster or summon nature's ally gains the benefits of the Augment Summoning feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Augment Summoning|!PREABILITY:1,CATEGORY=FEAT,Augment Summoning"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 802,
+    "record_key": "Undine Adept ~ Augment Summoning"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

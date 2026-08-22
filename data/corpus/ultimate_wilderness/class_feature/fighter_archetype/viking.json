@@ -1,0 +1,179 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fighter Archetype ~ Viking",
+    "name": "Viking",
+    "class": "Fighter Archetype",
+    "description": "Vikings seek to raid \"softer societies\" and return with their longships filled with plunder. A viking strikes fear into the heart of her foes, and in battle she can fly into a terrible rage. Many vikings wear the pelts of bears or wolves, drawing on the strength and ferocity of these beasts in battle. Vikings do not wear heavy armor, but they are skilled at fighting with an axe or spear in conjunction with a shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Viking"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Viking],[!PREFACT:1,ABILITIES,Fighter_Archetype_HeavyArmorProficiency=True,Fighter_Archetype_TowerShieldProficiency=True,Fighter_Archetype_Bravery=True,Fighter_Archetype_ArmorTraining=True,Fighter_Archetype_WeaponTraining=True,Fighter_Archetype_BonusFeat6=True,Fighter_Archetype_BonusFeat8=True,Fighter_Archetype_BonusFeat10=True,Fighter_Archetype_BonusFeat12=True,Fighter_Archetype_BonusFeat14=True,Fighter_Archetype_BonusFeat16=True,Fighter_Archetype_BonusFeat18=True,Fighter_Archetype_BonusFeat20=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Vikings seek to raid \"softer societies\" and return with their longships filled with plunder. A viking strikes fear into the heart of her foes, and in battle she can fly into a terrible rage. Many vikings wear the pelts of bears or wolves, drawing on the strength and ferocity of these beasts in battle. Vikings do not wear heavy armor, but they are skilled at fighting with an axe or spear in conjunction with a shield."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Viking ~ Fearsome|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Viking ~ Shield Defense|PRECLASS:1,Fighter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Viking ~ Berserker|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Viking ~ Rage Powers|PRECLASS:1,Fighter=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_TowerShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_TowerShieldProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat20|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 573,
+    "record_key": "Fighter Archetype ~ Viking"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

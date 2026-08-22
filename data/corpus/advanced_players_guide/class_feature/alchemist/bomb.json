@@ -1,0 +1,144 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist ~ Bomb",
+    "name": "Bomb",
+    "class": "Alchemist",
+    "description": "You can use %1 bombs each day. Bombs are considered weapons and can be selected using feats such as Point-Blank Shot and Weapon Focus. On a direct hit, your bomb inflicts 1d%2+%3 points of fire damage. Your bombs also inflict an additional %4d%2 points of fire damage that is not multiplied on a critical hit or by using feats such as Vital Strike. Splash damage from an your bomb is always equal to the bomb's minimum damage (%5). Those caught in the splash damage can attempt a DC %6 Reflex save for half damage.|AlchemistBombTimes|AlchemistBombDiceSize|AlchemistBombDamageBonus|AlchemistBombAdditionalDice|AlchemistBombSplashDamage|AlchemistBombDC|!PRERULE:1,FullAbilityDisplay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist ~ Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialAttack.Supernatural.Checklist.Bomb"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombDiceSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombAdditionalDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombSplashDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemistBombDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use %1 bombs each day. Bombs are considered weapons and can be selected using feats such as Point-Blank Shot and Weapon Focus. On a direct hit, your bomb inflicts 1d%2+%3 points of fire damage. Your bombs also inflict an additional %4d%2 points of fire damage that is not multiplied on a critical hit or by using feats such as Vital Strike. Splash damage from an your bomb is always equal to the bomb's minimum damage (%5). Those caught in the splash damage can attempt a DC %6 Reflex save for half damage.|AlchemistBombTimes|AlchemistBombDiceSize|AlchemistBombDamageBonus|AlchemistBombAdditionalDice|AlchemistBombSplashDamage|AlchemistBombDC|!PRERULE:1,FullAbilityDisplay"
+      },
+      {
+        "key": "DESC",
+        "value": "You are adept at swiftly mixing various volatile chemicals and infusing them with their magical reserves to create powerful bombs that you can hurl at your enemies. You can use %1 bombs each day. Bombs are unstable, and if not used in the round they are created, they degrade and become inert - their method of creation prevents large volumes of explosive material from being created and stored. In order to create a bomb, you must use a small vial containing an ounce of liquid catalyst - you can create this liquid catalyst from small amounts of chemicals from an alchemy lab, and these supplies can be readily refilled in the same manner as a spellcaster's component pouch. Most alchemists create a number of catalyst vials at the start of the day equal to the total number of bombs they can create in that day - once created, a catalyst vial remains usable for years. Drawing the components of, creating, and throwing a bomb requires a standard action that provokes an attack of opportunity. Thrown bombs have a range of 20 feet and use the Throw Splash Weapon special attack. Bombs are considered weapons and can be selected using feats such as Point-Blank Shot and Weapon Focus. On a direct hit, your bomb inflicts 1d%2+%3 points of fire damage. Your bombs also inflict an additional %4d%2 points of fire damage that is not multiplied on a critical hit or by using feats such as Vital Strike. Splash damage from an your bomb is always equal to the bomb's minimum damage (%5). Those caught in the splash damage can attempt a DC %6 Reflex save for half damage.|AlchemistBombTimes|AlchemistBombDiceSize|AlchemistBombDamageBonus|AlchemistBombAdditionalDice|AlchemistBombSplashDamage|AlchemistBombDC|PRERULE:1,FullAbilityDisplay"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Bomb"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bonus Bomb Damage Tracker|Bonus Bomb Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombDamageBonus|INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombSplashDamage|1+AlchemistBombAdditionalDice+AlchemistBombDamageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombDC|10+(AlchemistBombLVL/2)+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombTimes|AlchemistBombLVL+INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|(AlchemistBombLVL-1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombDiceSize|6|PREVAREQ:Alchemist_CF_BombReduction,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombDiceSize|4|PREVAREQ:Alchemist_CF_BombReduction,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombDamage|(AlchemistBombDiceSize-6)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombLVL|AlchemistLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bomb|DAMAGESIZE|AlchemistBombDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bomb|DAMAGE|AlchemistBombDamageBonus-INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AlchemistBombTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 73,
+    "record_key": "Alchemist ~ Bomb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

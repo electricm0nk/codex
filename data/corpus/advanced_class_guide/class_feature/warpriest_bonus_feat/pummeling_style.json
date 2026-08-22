@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Pummeling Style",
+    "name": "Pummeling Style",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your unarmed strikes weave together in an effortless combo, focusing on the spots you've weakened with the last hit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Pummeling Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6],[PREABILITY:1,CATEGORY=Special Ability,Brawler ~ Brawler's Flurry,Monk ~ Flurry of Blows]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your unarmed strikes weave together in an effortless combo, focusing on the spots you've weakened with the last hit."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you use a full-attack action or flurry of blows to make multiple attacks against a single opponent with unarmed strikes, total the damage from all hits before applying damage reduction. This ability works only with unarmed strikes, no matter what other abilities you might possess."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Pummeling Style"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4175,
+    "record_key": "Warpriest Bonus Feat ~ Pummeling Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

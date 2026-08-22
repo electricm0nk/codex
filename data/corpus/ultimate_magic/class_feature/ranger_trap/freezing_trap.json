@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Ranger Trap ~ Freezing Trap",
+    "name": "Freezing Trap",
+    "class": "Ranger Trap",
+    "description": "The trap creates a burst of ice that damages and encases the triggering creature. The creature takes 1d3+%1 points of cold damage and is entangled and stuck to the ground, similar to the effect of a tanglefoot bag. A successful Reflex save halves the damage and means the creature is not stuck to the floor by the ice. The ice is %2 inches thick, has hardness 0 and %3 hit points, and melts in 2d4 rounds.|FreezingTrapBonusDamage|FreezingTrapThickness|FreezingTrapHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranger Trap ~ Freezing Trap"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Trap Freezing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialAttack.RangerTrap.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreezingTrapBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreezingTrapThickness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreezingTrapHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap creates a burst of ice that damages and encases the triggering creature. The creature takes 1d3+%1 points of cold damage and is entangled and stuck to the ground, similar to the effect of a tanglefoot bag. A successful Reflex save halves the damage and means the creature is not stuck to the floor by the ice. The ice is %2 inches thick, has hardness 0 and %3 hit points, and melts in 2d4 rounds.|FreezingTrapBonusDamage|FreezingTrapThickness|FreezingTrapHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreezingTrapBonusDamage|RangerTrapLVL/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreezingTrapThickness|max(1,floor(TL/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreezingTrapHP|FreezingTrapThickness*3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1618,
+    "record_key": "Ranger Trap ~ Freezing Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

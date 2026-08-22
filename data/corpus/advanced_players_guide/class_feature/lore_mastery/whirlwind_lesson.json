@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Lore Mastery ~ Whirlwind Lesson",
+    "name": "Whirlwind Lesson",
+    "class": "Lore Mastery",
+    "description": "You can quickly browse through a magical tome or manual, gaining its benefits with only a single 8-hour study session (rather than the usual 48 hours over a period of 6 days). At 7th level, you may allow another character to join in your study; both of you gain the full benefit of having read the book. At 15th level, you may share your whirlwind lesson with a number of characters equal to your oracle level. The benefits to you are permanent, whereas your students gain the tome or manualUs benefits for a number of days equal to your Charisma modifier but then forget what they have learned.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lore Mastery ~ Whirlwind Lesson"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.LoreRevelation.Extraordinary.PerDayOracleRevelation"
+      },
+      {
+        "key": "DESC",
+        "value": "You can quickly browse through a magical tome or manual, gaining its benefits with only a single 8-hour study session (rather than the usual 48 hours over a period of 6 days). At 7th level, you may allow another character to join in your study; both of you gain the full benefit of having read the book. At 15th level, you may share your whirlwind lesson with a number of characters equal to your oracle level. The benefits to you are permanent, whereas your students gain the tome or manualUs benefits for a number of days equal to your Charisma modifier but then forget what they have learned."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 645,
+    "record_key": "Lore Mastery ~ Whirlwind Lesson"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

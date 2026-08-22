@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood Mystery ~ Bend the Grain",
+    "name": "Bend the Grain",
+    "class": "Wood Mystery",
+    "description": "As a standard action, %1/day, you can shape or warp wooden objects. This functions as either wood shape or warp wood.|BendTheGrainTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Bend the Grain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialAttack.OracleRevelation.WoodRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BendTheGrainTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, %1/day, you can shape or warp wooden objects. This functions as either wood shape or warp wood.|BendTheGrainTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability to push wood away from you, as repel wood.|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BendTheGrainTimes|1+min(2,classlevel(\"Oracle\")/7)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 511,
+    "record_key": "Wood Mystery ~ Bend the Grain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald ~ Dirge of Doom",
+    "name": "Dirge of Doom",
+    "class": "Skald",
+    "description": "At 10th level, a skald can create a sense of growing dread in his enemies, causing them to become shaken. This only affects enemies that are within 30 feet and able to hear the skald's performance. The effect persists for as long as the enemy is within 30 feet and the skald continues his performance. This cannot cause a creature to become frightened or panicked, even if the targets are already shaken from another effect. This is a sonic mind-affecting fear effect, and relies on audible components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald ~ Dirge of Doom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SkaldDirgeOfDoom.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a skald can create a sense of growing dread in his enemies, causing them to become shaken. This only affects enemies that are within 30 feet and able to hear the skald's performance. The effect persists for as long as the enemy is within 30 feet and the skald continues his performance. This cannot cause a creature to become frightened or panicked, even if the targets are already shaken from another effect. This is a sonic mind-affecting fear effect, and relies on audible components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1742,
+    "record_key": "Skald ~ Dirge of Doom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

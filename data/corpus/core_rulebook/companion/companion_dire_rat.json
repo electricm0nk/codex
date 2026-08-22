@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "ability_keys": [
       "core_rulebook:companion:companion_advancement_dire_rat",
@@ -23,6 +21,100 @@
     ],
     "race_subtype": null,
     "race_type": "Companion",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Advancement ~ Dire Rat|PREABILITY:1,CATEGORY=Special Ability,Companion Advancement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Level Increase Choice|1|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Companion ~ Dire Rat"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Companion:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Climb,20,Swim,20"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Companion [NAME]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:NotAllowed,1],[PRERACE:1,Companion (Dire Rat)]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Companion"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.AnimalCompanion"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -68,16 +160,18 @@
       "AnimalCompanion"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
-    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815",
-    "line": 36,
-    "record_key": "Companion (Dire Rat)"
-  },
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
+    "record_key": "Companion (Dire Rat)",
+    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

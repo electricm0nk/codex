@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Vishkanya ~ Sensual",
+    "name": "Sensual",
+    "race_key": "Vishkanya",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vishkanya Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Vishkanya_ReplaceKeenSenses"
+    ],
+    "description": "You are trained in drawing attention to yourself. You gain a +2 bonus on any one Perform skill. This racial trait replaces keen senses.",
+    "source_page": "p.208",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vishkanya ~ Sensual"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vishkanya Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vishkanya ~ Sensual],[!PREFACT:1,ABILITIES,Vishkanya_ReplaceKeenSenses=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are trained in drawing attention to yourself. You gain a +2 bonus on any one Perform skill."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses.|!PREABILITY:1,CATEGORY=Special Ability,Vishkanya ~ Sensual"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Perform"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 %1|%LIST"
+      },
+      {
+        "key": "FACT",
+        "value": "Vishkanya_ReplaceKeenSenses|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "%LIST",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1271,
+    "record_key": "Vishkanya ~ Sensual"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

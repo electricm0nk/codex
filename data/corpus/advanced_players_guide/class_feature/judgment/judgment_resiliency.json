@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Judgment ~ Resiliency",
+    "name": "Judgment / Resiliency",
+    "class": "Judgment",
+    "description": "This judgment makes the inquisitor resistant to harm, granting DR %1/magic.|1+InqJudgeResiliencyLVL/5|PREMULT:1,[PREVARLT:InqJudgeResiliencyLVL,10],[!PREALIGN:LG,NG,CG,LN,CN,LE,NE,CE]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Judgment ~ Resiliency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.InquisitorJudgmentNeither.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeResiliencyLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This judgment makes the inquisitor resistant to harm, granting DR %1/magic.|1+InqJudgeResiliencyLVL/5|PREMULT:1,[PREVARLT:InqJudgeResiliencyLVL,10],[!PREALIGN:LG,NG,CG,LN,CN,LE,NE,CE]"
+      },
+      {
+        "key": "DESC",
+        "value": "This judgment makes the inquisitor resistant to harm, granting DR %1/alignment (chaotic, evil, good, or lawful) that is opposite the inquisitor's.|1+InqJudgeResiliencyLVL/5|PREALIGN:LG,NG,CG,LN,CN,LE,NE,CE|PREVARGTEQ:InqJudgeResiliencyLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgeResiliencyLVL|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 319,
+    "record_key": "Judgment ~ Resiliency"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

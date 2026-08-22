@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Heavens Spirit ~ Void Adaptation",
+    "name": "Void Adaptation",
+    "class": "Heavens Spirit",
+    "description": "The shaman gains darkvision 60 feet. If she already possesses darkvision, the range instead increases by 30 feet. In addition, the shaman can see in supernatural darkness, is constantly under the effects of endure elements, and doesn't need to breathe.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavens Spirit ~ Void Adaptation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman gains darkvision 60 feet. If she already possesses darkvision, the range instead increases by 30 feet. In addition, the shaman can see in supernatural darkness, is constantly under the effects of endure elements, and doesn't need to breathe."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Darkvision"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|30|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1580,
+    "record_key": "Heavens Spirit ~ Void Adaptation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

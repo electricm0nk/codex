@@ -1,0 +1,159 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Magus Archetype ~ Esoteric",
+    "name": "Esoteric",
+    "class": "Magus Archetype",
+    "description": "Esoterics are drawn to the mysticism of the occult and spend their lives delving into forgotten texts and forbidden tomes. Each esoteric learns to inscribe his spells on his flesh in a complex series of occult symbols and arcane equations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Esoteric"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Esoteric],[!PREFACT:1,ABILITIES,Magus_Archetype_WeaponProficiency=true,Magus_Archetype_ArmorProficiency=true,Magus_Archetype_Spells=true,Magus_Archetype_Spellstrike=true,Magus_Archetype_ArcanePool=true,Magus_Archetype_MediumArmorProficiency=true,Magus_Archetype_HeavyArmorProficiency=true,Magus_Archetype_BonusFeats=true,Magus_Archetype_SpellRecall=true,Magus_Archetype_ImprovedSpellRecall=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Esoterics are drawn to the mysticism of the occult and spend their lives delving into forgotten texts and forbidden tomes. Each esoteric learns to inscribe his spells on his flesh in a complex series of occult symbols and arcane equations."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Weapon and Armor Proficiency|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Diminished Spellcasting|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Arcane Pool|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Unarmed Strike|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Unarmed Spellstrike|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Ki Arcana|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Tattooed Spell|PRECLASS:1,Magus=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ AC Bonus|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Esoteric ~ Improved Tattooed Spell|PRECLASS:1,Magus=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_WeaponProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Spellstrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_WeaponProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArmorProficiency|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1770,
+    "record_key": "Magus Archetype ~ Esoteric"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

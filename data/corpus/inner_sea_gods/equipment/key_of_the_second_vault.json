@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3000.0,
+    "description": "[redacted PI]",
+    "key": "Key Of The Second Vault",
+    "name": "Key Of The Second Vault",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "3000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 206,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Key Of The Second Vault",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

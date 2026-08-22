@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Anger Domain ~ Divine Anger",
+    "name": "Divine Anger",
+    "class": "Anger Domain",
+    "description": "You gain the ability to rage like a barbarian. Your effective barbarian level for this ability is %1. If you have levels in barbarian, these levels stack when determining the effect of your rage. You do not gain any rage powers from this granted power, though if you have rage powers from another class, you may use them with these rages. You can rage %2 rounds per day.|RageLVL|DivineAngerDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Anger Domain ~ Divine Anger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DivineAngerDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to rage like a barbarian. Your effective barbarian level for this ability is %1. If you have levels in barbarian, these levels stack when determining the effect of your rage. You do not gain any rage powers from this granted power, though if you have rage powers from another class, you may use them with these rages. You can rage %2 rounds per day.|RageLVL|DivineAngerDuration"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DivineAngerDuration|WIS+DomainAngerLVL-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageLVL|DomainAngerLVL-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 348,
+    "record_key": "Anger Domain ~ Divine Anger"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

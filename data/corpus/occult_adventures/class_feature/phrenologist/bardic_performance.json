@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phrenologist ~ Bardic Performance",
+    "name": "Bardic Performance",
+    "class": "Bard",
+    "description": "A phrenologist gains the following types of bardic performance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenologist ~ Bardic Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Phrenologist Class Feature.Bard Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A phrenologist gains the following types of bardic performance."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1683,
+    "record_key": "Phrenologist ~ Bardic Performance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

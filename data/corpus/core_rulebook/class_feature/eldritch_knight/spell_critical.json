@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Eldritch Knight ~ Spell Critical",
+    "name": "Spell Critical",
+    "class": "Eldritch Knight",
+    "description": "At 10th level, whenever an eldritch knight successfully confirms a critical hit, he can cast a spell as a swift action. The spell must include the target of the attack as one of its targets or in its area of effect. Casting this spell does not provoke an attack of opportunity. The caster must still meet all of the spell's components and must roll for arcane spell failure if necessary.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Knight ~ Spell Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Eldritch KnightClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, whenever an eldritch knight successfully confirms a critical hit, he can cast a spell as a swift action. The spell must include the target of the attack as one of its targets or in its area of effect. Casting this spell does not provoke an attack of opportunity. The caster must still meet all of the spell's components and must roll for arcane spell failure if necessary."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.385"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3011,
+    "record_key": "Eldritch Knight ~ Spell Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

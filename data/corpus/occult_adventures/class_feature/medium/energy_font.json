@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Energy Font",
+    "name": "Energy Font",
+    "class": "Medium",
+    "description": "(Intermediate) You can channel energy %1 times per day. Choose whether you channel positive or negative energy each time you contact a hierophant spirit; this choice must match the spirit's faith. If you choose positive energy, add cure spells of each level you can cast from the cleric list to your medium spell list and spells known. Otherwise, add inflict spells in the same way. These spells count as divine, as in the divine surge spirit power.|HierophantChannelTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Energy Font"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HierophantChannelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HierophantChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HierophantChannelTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) You can channel energy %1 times per day. Choose whether you channel positive or negative energy each time you contact a hierophant spirit; this choice must match the spirit's faith. If you choose positive energy, add cure spells of each level you can cast from the cleric list to your medium spell list and spells known. Otherwise, add inflict spells in the same way. These spells count as divine, as in the divine surge spirit power.|HierophantChannelTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hierophant Energy Font Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HierophantChannelDC|10+(MediumLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HierophantChannelDice|(MediumLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HierophantChannelTimes|1+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 861,
+    "record_key": "Medium ~ Energy Font"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

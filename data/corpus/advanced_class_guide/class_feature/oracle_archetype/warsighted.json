@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oracle Archetype ~ Warsighted",
+    "name": "Warsighted",
+    "class": "Oracle Archetype",
+    "description": "A warsighted's unique gifts are not in strange magical revelations, but in her ability to adapt in the midst of a battle with new fighting techniques. The warsighted is a master of combat, as dedicated as a fighter and as flexible as a brawler.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Warsighted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleRevelation1.OracleRevelation7.OracleRevelation11.OracleRevelation15"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Warsighted],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleRevelation1,TYPE.OracleRevelation7,TYPE.OracleRevelation11,TYPE.OracleRevelation15]"
+      },
+      {
+        "key": "DESC",
+        "value": "A warsighted's unique gifts are not in strange magical revelations, but in her ability to adapt in the midst of a battle with new fighting techniques. The warsighted is a master of combat, as dedicated as a fighter and as flexible as a brawler."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Oracle Class Feature|AUTOMATIC|Warsighted ~ Martial Flexibility|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Oracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3495,
+    "record_key": "Oracle Archetype ~ Warsighted"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

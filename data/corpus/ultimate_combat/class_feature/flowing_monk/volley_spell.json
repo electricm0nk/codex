@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Flowing Monk ~ Volley Spell",
+    "name": "Volley Spell",
+    "class": "Monk",
+    "description": "At 15th level, when a targeted spell or spell-like ability fails to overcome a flowing monk's spell resistance, he may reflect the effect onto its caster as spell turning (Core Rulebook 347) by spending a number of points from his ki pool equal to 1/2 the spell's level (minimum 1). This ability replaces quivering palm.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flowing Monk ~ Volley Spell"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, when a targeted spell or spell-like ability fails to overcome a flowing monk's spell resistance, he may reflect the effect onto its caster as spell turning (Core Rulebook 347) by spending a number of points from his ki pool equal to 1/2 the spell's level (minimum 1). This ability replaces quivering palm."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 941,
+    "record_key": "Flowing Monk ~ Volley Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

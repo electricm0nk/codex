@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 600.0,
+    "description": "The first time that the wearer is hit by two or more ranged attacks in a single round, he is immediately affected by protection from arrows",
+    "key": "Talisman of Arrow Protection (Lesser)",
+    "name": "Talisman of Arrow Protection, Lesser",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman of Arrow Protection (Lesser)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMinor"
+      },
+      {
+        "key": "COST",
+        "value": "600"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPROP",
+        "value": "The first time that the wearer is hit by two or more ranged attacks in a single round, he is immediately affected by protection from arrows"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 105,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Talisman of Arrow Protection (Lesser)",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

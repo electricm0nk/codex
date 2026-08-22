@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bounty Hunter ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Slayer",
+    "description": "A bounty hunter is proficient with all simple and martial weapons plus the aklys, bolas, dan bong, lasso, and net. Bounty hunters are proficient with light armor, light shields, and bucklers, but not heavy shields or tower shields. This ability replaces the slayer's weapon and armor proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bounty Hunter ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bounty Hunter Class Feature.Slayer Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A bounty hunter is proficient with all simple and martial weapons plus the aklys, bolas, dan bong, lasso, and net. Bounty hunters are proficient with light armor, light shields, and bucklers, but not heavy shields or tower shields. This ability replaces the slayer's weapon and armor proficiencies."
+      },
+      {
+        "key": "AUTO",
+        "value": "SHIELDPROF|SHIELDTYPE=Buckler|SHIELDTYPE=Light"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Aklys|Bolas|Dan Bong|Lasso|Net"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight|TYPE=WeaponProfMartial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3734,
+    "record_key": "Bounty Hunter ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

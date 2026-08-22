@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "base spell resistance of %CHOICE",
+    "key": "BNS_SPL_RST",
+    "name": "BNS_SPL_RST",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bonus Spell Resistance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Belt.Body.Chest.Eyes.Feet.Hands.Head.Headband.Neck.Ring.Shoulders.Wrist.Instrument.Staff.Rod"
+      },
+      {
+        "key": "COST",
+        "value": "10000*(%CHOICE-12)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Enhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.550"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETYPE:2,WeaponEnhancement,Weapon],[PRETYPE:1,Belt,Body,Chest,Eyes,Feet,Hands,Head,Headband,Neck,Ring,Shoulders,Wrist,Instrument,Staff,Rod]"
+      },
+      {
+        "key": "SR",
+        "value": "%CHOICE"
+      },
+      {
+        "key": "SPROP",
+        "value": "base spell resistance of %CHOICE"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMBER|MIN=13|MAX=32|NOSIGN|TITLE=Spell Resistance"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T19:47:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 617,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "BNS_SPL_RST",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

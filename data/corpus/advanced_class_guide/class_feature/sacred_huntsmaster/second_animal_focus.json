@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Sacred Huntsmaster ~ Second Animal Focus",
+    "name": "Second Animal Focus",
+    "class": "Inquisitor",
+    "description": "Whenever a sacred huntsmaster uses her animal focus ability, she selects two different animal aspects for herself instead of one, and can assign two aspects to her companion instead of one. As with the companion's previous aspect, the second one does not count against the minutes per day a sacred huntsmaster can take on an aspect. If her animal companion is dead and the sacred huntsmaster has applied that aspect to herself, that aspect counts toward her maximum of two aspects at once. The sacred huntsmaster can still only apply one of her dead companion's to herself, not both.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sacred Huntsmaster ~ Second Animal Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.ArchetypeAbility.SpecialQuality.Extraordinary.InquisitorSlayer"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a sacred huntsmaster uses her animal focus ability, she selects two different animal aspects for herself instead of one, and can assign two aspects to her companion instead of one. As with the companion's previous aspect, the second one does not count against the minutes per day a sacred huntsmaster can take on an aspect. If her animal companion is dead and the sacred huntsmaster has applied that aspect to herself, that aspect counts toward her maximum of two aspects at once. The sacred huntsmaster can still only apply one of her dead companion's to herself, not both."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Animal Focus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusACPool|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3294,
+    "record_key": "Sacred Huntsmaster ~ Second Animal Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

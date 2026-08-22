@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Order of the Sword ~ Alignment Selection",
+    "name": "Alignment Selection",
+    "class": "Order of the Sword",
+    "description": "As long as he maintains the selected alignment, he receives a +2 morale bonus to one saving throw of his choice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Order of the Sword ~ Alignment Selection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as he maintains the selected alignment, he receives a +2 morale bonus to one saving throw of his choice."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|CE|CG|CN|LE|LG|LN|NE|NG|TN"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 287,
+    "record_key": "Order of the Sword ~ Alignment Selection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

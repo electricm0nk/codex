@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Asavir ~ All Eyes on Me",
+    "name": "All Eyes on Me",
+    "class": "Asavir",
+    "description": "Three times per day as a swift action, an asavir can call out a challenge. Each opponent within 30 feet must succeed at a Will save (DC %1) or be distracted by the display until the beginning of the asavir's next turn. Any creature that fails is considered to be flat-footed and takes a -2 penalty to AC against attacks from the asavir's allies. This is a mind-affecting, visual effect.|10+AsavirLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ All Eyes on Me"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a swift action, an asavir can call out a challenge. Each opponent within 30 feet must succeed at a Will save (DC %1) or be distracted by the display until the beginning of the asavir's next turn. Any creature that fails is considered to be flat-footed and takes a -2 penalty to AC against attacks from the asavir's allies. This is a mind-affecting, visual effect.|10+AsavirLVL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 51,
+    "record_key": "Asavir ~ All Eyes on Me"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Alchemist Archetype ~ Winged Marauder",
+    "name": "Winged Marauder",
+    "class": "Alchemist Archetype",
+    "description": "Goblin alchemists have created a mixture of pheromones that they use to manipulate and entice giant vultures or dire bats to do their bidding. These goblins strap harnesses to the chests of these flying animals and hang beneath them, dropping flaming alchemical solutions on the helpless folks below.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemist Archetype ~ Winged Marauder"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AlchemistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Alchemist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Winged Marauder],[!PREFACT:1,ABILITIES,Alchemist_Archetype_ClassSkills=True,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_PersistentMutagen=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Goblin alchemists have created a mixture of pheromones that they use to manipulate and entice giant vultures or dire bats to do their bidding. These goblins strap harnesses to the chests of these flying animals and hang beneath them, dropping flaming alchemical solutions on the helpless folks below."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Winged Marauder ~ Class Skills|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Winged Marauder ~ Flying Beast Tamer|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PersistentMutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PersistentMutagen|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 10,
+    "record_key": "Alchemist Archetype ~ Winged Marauder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

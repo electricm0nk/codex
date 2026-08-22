@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wanderer ~ Disappear Unnoticed",
+    "name": "Disappear Unnoticed",
+    "class": "Monk",
+    "description": "The wanderer may use Stealth to hide even while being directly observed or when no cover or concealment is available, as long as he is adjacent to at least one creature of his size or larger, by spending 1 point from his ki pool. This effect lasts until the beginning of the wanderer's next turn and may be continued in consecutive rounds by spending 1 ki point each round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wanderer ~ Disappear Unnoticed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The wanderer may use Stealth to hide even while being directly observed or when no cover or concealment is available, as long as he is adjacent to at least one creature of his size or larger, by spending 1 point from his ki pool. This effect lasts until the beginning of the wanderer's next turn and may be continued in consecutive rounds by spending 1 ki point each round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 400,
+    "record_key": "Wanderer ~ Disappear Unnoticed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

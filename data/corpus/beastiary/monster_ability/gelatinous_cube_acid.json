@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Gelatinous Cube ~ Acid",
+    "delivery": "Extraordinary",
+    "description": "A gelatinous cube's acid does not harm metal or stone.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gelatinous_cube_acid",
+    "name": "Acid",
+    "owners": [
+      "beastiary:monster:gelatinous_cube"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A gelatinous cube's acid does not harm metal or stone."
+      },
+      {
+        "key": "KEY",
+        "value": "Gelatinous Cube ~ Acid"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.138",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 632,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Gelatinous Cube ~ Acid",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

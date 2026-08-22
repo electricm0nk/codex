@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Controller Savant Subschool ~ Irresistible Demand",
+    "name": "Irresistible Demand",
+    "class": "Controller Savant Subschool",
+    "description": "You can force others to do your bidding. As a standard action, you attempt to dominate a creature as though using the dominate monster spell, except that the creature must have no greater than %1 Hit Dice. The targeted creature receives a Will save DC %2 each round to negate the effect. You can dominate creatures for a %1 rounds per day. These rounds do not need to be consecutive. You must concentrate as a standard action to maintain control over a dominated creature.|ArcanistSavantSchoolLVL|10+INT+(ArcanistSavantSchoolLVL/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Controller Savant Subschool ~ Irresistible Demand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArcanistClassFeatures.SpecialQuality.SpellLike.ArcanistSavantSchoolPower.ArcanistExploit7"
+      },
+      {
+        "key": "DESC",
+        "value": "You can force others to do your bidding. As a standard action, you attempt to dominate a creature as though using the dominate monster spell, except that the creature must have no greater than %1 Hit Dice. The targeted creature receives a Will save DC %2 each round to negate the effect. You can dominate creatures for a %1 rounds per day. These rounds do not need to be consecutive. You must concentrate as a standard action to maintain control over a dominated creature.|ArcanistSavantSchoolLVL|10+INT+(ArcanistSavantSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2587,
+    "record_key": "Controller Savant Subschool ~ Irresistible Demand"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

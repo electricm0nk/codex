@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Scarred Witch Doctor ~ Fetish Mask 1",
+    "name": "Fetish Mask",
+    "class": "Witch",
+    "description": "A scarred witch doctor forms a bond with a wooden mask. As she gains power, her connection to this mask causes it to grow ever more hideous and grotesque as it absorbs the weight of the self-induced pain that underlies her magic. Her spells derive from the insights her patron grants her while she's enduring the cuts, burns, and other sorts of mutilations she inflicts upon herself. Her fetish mask acts in all ways like a witch's familiar for the purpose of preparing and gaining spells. Rather than communing with a familiar to prepare spells each day, a scarred witch doctor hangs her mask on a wall, tree branch, or something similar and contemplates the agony it represents. When wearing her fetish mask, a scarred witch doctor gains a +2 circumstance bonus on Heal and Intimidate checks and gains a +2 bonus on saving throws against effects that specifically cause pain or have the pain descriptor. If the mask is destroyed, the witch doctor can create another fetish mask (which almost immediately adopts the shocking appearance of the original) for the same price and time it takes a witch to replace a dead familiar.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarred Witch Doctor ~ Fetish Mask 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A scarred witch doctor forms a bond with a wooden mask. As she gains power, her connection to this mask causes it to grow ever more hideous and grotesque as it absorbs the weight of the self-induced pain that underlies her magic. Her spells derive from the insights her patron grants her while she's enduring the cuts, burns, and other sorts of mutilations she inflicts upon herself. Her fetish mask acts in all ways like a witch's familiar for the purpose of preparing and gaining spells. Rather than communing with a familiar to prepare spells each day, a scarred witch doctor hangs her mask on a wall, tree branch, or something similar and contemplates the agony it represents. When wearing her fetish mask, a scarred witch doctor gains a +2 circumstance bonus on Heal and Intimidate checks and gains a +2 bonus on saving throws against effects that specifically cause pain or have the pain descriptor. If the mask is destroyed, the witch doctor can create another fetish mask (which almost immediately adopts the shocking appearance of the original) for the same price and time it takes a witch to replace a dead familiar."
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Fetish Mask"
+      },
+      {
+        "key": "BONUS",
+        "value": "FOLLOWERS|Familiar|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 659,
+    "record_key": "Scarred Witch Doctor ~ Fetish Mask 1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Spire Defender ~ Exotic Weapon Proficiency",
+    "name": "Exotic Weapon Proficiency",
+    "class": "Spire Defender",
+    "description": "A spire defender is proficient with one exotic light or one-handed melee weapon that has the disarm or trip special feature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spire Defender ~ Exotic Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.SpecialQuality.SpireDefenderExotic"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Feat|Exotic Weapon Proficiency"
+      },
+      {
+        "key": "DESC",
+        "value": "A spire defender is proficient with one exotic light or one-handed melee weapon that has the disarm or trip special feature."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|TYPE=Exotic,TYPE=Light|TYPE=Exotic,TYPE=OneHanded"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|%LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 282,
+    "record_key": "Spire Defender ~ Exotic Weapon Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

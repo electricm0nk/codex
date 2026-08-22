@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Shifter Aspect ~ Mouse ~ Major",
+    "name": "Major Aspect of the Mouse",
+    "class": "Shifter Aspect",
+    "description": "Your shape changes to that of a Tiny mouse (as per the dire rat, but with a space of 2-1/2 feet and a reach of 0 feet; Bestiary 232). While in this form, you gain a climb speed of %1 feet, a swim speed of %1 feet, low-light vision, a bite attack (1d4 damage) and scent (30 feet), and you use your Dexterity modifier instead of your Strength modifier on Climb and Swim checks.|MouseAspectMoveBonuses",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shifter Aspect ~ Mouse ~ Major"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Aspect_of_the_Mouse_3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MouseAspectMoveBonuses|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your shape changes to that of a Tiny mouse (as per the dire rat, but with a space of 2-1/2 feet and a reach of 0 feet; Bestiary 232). While in this form, you gain a climb speed of %1 feet, a swim speed of %1 feet, low-light vision, a bite attack (1d4 damage) and scent (30 feet), and you use your Dexterity modifier instead of your Strength modifier on Climb and Swim checks.|MouseAspectMoveBonuses"
+      },
+      {
+        "key": "DESC",
+        "value": "You do not provoke attacks of opportunity while moving through or out of a creature's threatened area or moving into its space, but you do when you leave its space.|PREVARGTEQ:ShifterMouseAspectLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MouseAspectMoveBonuses|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MouseAspectMoveBonuses|20|PREVARGTEQ:ShifterMouseAspectLVL,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 79,
+    "record_key": "Shifter Aspect ~ Mouse ~ Major"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

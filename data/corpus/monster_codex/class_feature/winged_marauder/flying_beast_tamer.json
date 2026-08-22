@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Winged Marauder ~ Flying Beast Tamer",
+    "name": "Flying Beast Tamer",
+    "class": "Alchemist",
+    "description": "A winged marauder acquires a flying mount as an animal companion. This works as the druid animal companion class feature, except the marauder must select a dire bat (Bestiary p.30) or giant vulture (Bestiary 3 p.312). The marauder's effective druid level is equal to his alchemist level. A marauder and his companion don't gain the share spells ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winged Marauder ~ Flying Beast Tamer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.WingedMarauderClassFeatures.SpecialQuality.Extraordinary.Animal Companion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionMasterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A winged marauder acquires a flying mount as an animal companion. This works as the druid animal companion class feature, except the marauder must select a dire bat (Bestiary p.30) or giant vulture (Bestiary 3 p.312). The marauder's effective druid level is equal to his alchemist level. A marauder and his companion don't gain the share spells ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionMasterLVL|AlchemistLVL"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Animal Companion|Companion (Bat (Dire)),Companion (Giant Vulture)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 22,
+    "record_key": "Winged Marauder ~ Flying Beast Tamer"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,89 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause the air in the area to ripple where creatures have flown through it up to %1 days ago. These aerial ripples are tinged by glowing wisps, providing enough illumination to follow the tracks without penalties due to poor lighting. The area moves with you, allowing you to follow the tracks through the air over long distances provided you can fly or follow the route along the ground within range to read the aerial tracks. Other creatures can also follow the trail as long as they move with you. The base DC of Survival checks to track creatures through the air with this spell is the same as tracking creatures across soft ground.|CASTERLEVEL|PRERULE:1,DisplayFullSpell",
+    "key": "Aerial Tracks",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Ranger=3|Druid,Inquisitor,Shaman=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Track flying creatures through the air.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause the air in the area to ripple where creatures have flown through it up to %1 days ago. These aerial ripples are tinged by glowing wisps, providing enough illumination to follow the tracks without penalties due to poor lighting. The area moves with you, allowing you to follow the tracks through the air over long distances provided you can fly or follow the route along the ground within range to read the aerial tracks. Other creatures can also follow the trail as long as they move with you. The base DC of Survival checks to track creatures through the air with this spell is the same as tracking creatures across soft ground.|CASTERLEVEL|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Air"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Divination"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=Aerial Tracks"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Circle centered on you, with a radius of (100+(CASTERLEVEL*10)) feet"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Divination"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "Aerial Tracks",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ]
+}

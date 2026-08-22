@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Archetype ~ Vow Monk",
+    "name": "Vows",
+    "class": "Monk Archetype",
+    "description": "You can take vows to increase your ki pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Archetype ~ Vow Monk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MonkArchetype.MonkStillMind"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,Allow Vows"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KiPowerDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can take vows to increase your ki pool."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vow|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPowerDC|10+WIS+classlevel(\"Monk\")/2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Add Vow Placeholder"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Monk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 427,
+    "record_key": "Monk Archetype ~ Vow Monk"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

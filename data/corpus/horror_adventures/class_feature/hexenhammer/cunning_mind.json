@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hexenhammer ~ Cunning Mind",
+    "name": "Cunning Mind",
+    "class": "Inquisitor",
+    "description": "A hexenhammer gains a +2 bonus on saving throws against hexes, curses, spells of the necromancy school, and spells with the evil descriptor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hexenhammer ~ Cunning Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "DESC",
+        "value": "A hexenhammer gains a +2 bonus on saving throws against hexes, curses, spells of the necromancy school, and spells with the evil descriptor."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 129,
+    "record_key": "Hexenhammer ~ Cunning Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

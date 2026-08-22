@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Blood Drain",
+    "delivery": "Extraordinary",
+    "description": "The creature drains blood at the end of its turn if it is attached to a foe, inflicting Constitution damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:blood_drain",
+    "name": "Blood Drain",
+    "owners": [
+      "bestiary_2:monster:devil_belier",
+      "bestiary_2:monster:faceless_stalker",
+      "bestiary_2:monster:mandragora",
+      "bestiary_2:monster:mosquito_giant",
+      "bestiary_2:monster:rast",
+      "bestiary_2:monster:slithering_tracker",
+      "bestiary_2:monster:tick_giant",
+      "bestiary_2:monster:tick_swarm",
+      "bestiary_2:monster:urdefhan"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2 Constitution)|BloodDrainDice|BloodDrainDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodDrainDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodDrainDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodDrainDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature drains blood at the end of its turn if it is attached to a foe, inflicting Constitution damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.294",
+    "traits": []
+  },
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1854,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Blood Drain",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

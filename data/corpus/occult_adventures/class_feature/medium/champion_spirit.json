@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Medium ~ Champion Spirit",
+    "name": "Champion Spirit",
+    "class": "Medium",
+    "description": "A champion spirit is a paragon of skill at arms.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Champion Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit"
+      },
+      {
+        "key": "DESC",
+        "value": "A champion spirit is a paragon of skill at arms.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: Arenas, battlefields, places of violence, practice yards.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Influence Penalty: You are quick to violence and prefer a weapon to spells or contemplation. You take a -%1 penalty on Intelligence checks and Intelligence-based skill checks, and to your caster level (to a minimum of caster level 0); as usual, a reduced caster level may render you unable to cast spells. You can't benefit from effects that increase your caster level.&nl; Taboos: Choose one: you are superstitious about arcane spellcasting, so you must not be the willing target of arcane spells or abilities and you must attempt a Will saving throw against even harmless arcane spells and abilities; you may not make an attack with any weapon except a specific manufactured weapon (such as \"my father's +2 falchion\") that you choose when you take the taboo, and you may not choose unarmed strike for this taboo; you must accept any challenge to prove your prowess in battle, including challenges to single combat-if you or an ally breaks the rules of the challenge, you break this taboo.|SpiritBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Champion Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Champion Seance Boon|Medium ~ Champion's Prowess"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Sudden Attack|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Fleet Charge|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Champion|PREVARGTEQ:MediumLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 830,
+    "record_key": "Medium ~ Champion Spirit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Slowing Mud",
-    "school": "Conjuration",
-    "level": 4,
     "description": "You coat the targets in thick, sticky mud. The mud acts as a slow spell and also blinds the targets. A creature can use a standard action to remove the mud from its eyes or the eyes of an adjacent creature, ending the blinded condition for that individual. Removing enough mud to end the slow effect is a full-round action. Jumping into a lake or being subject to an effect that creates a lot of water (such as create water or hydraulic push) removes all the mud in 1 round. A haste effect cast on a creature slowed by the mud allows it to act normally for the duration of the haste. Slow does not stack with the effects of slowing mud. This spell cannot counter or dispel haste.",
-    "full_text": true
+    "full_text": true,
+    "key": "Slowing Mud",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Shaman=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, M"
+      },
+      {
+        "key": "DESC",
+        "value": "Targets are covered in mud that blinds them and acts like slow.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You coat the targets in thick, sticky mud. The mud acts as a slow spell and also blinds the targets. A creature can use a standard action to remove the mud from its eyes or the eyes of an adjacent creature, ending the blinded condition for that individual. Removing enough mud to end the slow effect is a full-round action. Jumping into a lake or being subject to an effect that creates a lot of water (such as create water or hydraulic push) removes all the mud in 1 round. A haste effect cast on a creature slowed by the mud allows it to act normally for the duration of the haste. Slow does not stack with the effects of slowing mud. This spell cannot counter or dispel haste.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [see text]"
+      },
+      {
+        "key": "FACT",
+        "value": "CompMaterial|(earth and water)"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/slowingMud.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.192"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) creatures, no two of which can be more than 30 ft. apart"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 109,
-    "record_key": "Slowing Mud"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Slowing Mud",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

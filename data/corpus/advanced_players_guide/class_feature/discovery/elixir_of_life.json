@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Discovery ~ Elixir of Life",
+    "name": "Elixir of Life",
+    "class": "Discovery",
+    "description": "Once per day, the alchemist can brew an elixir of life. This special concoction costs 25,000 gp to create and takes 1 hour of work. An elixir of life, when administered by the alchemist who brewed it, restores life to a dead creature as per the spell true resurrection. Alternatively, the alchemist himself may drink the elixir of life, after which point he is immediately targeted with a resurrection spell the next time he is killed. Used in this manner, the effects of an elixir of life persist only for a number of days equal to the alchemist's Intelligence modifier; if he does not die before that time expires, the effects of the elixir of life end.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Elixir of Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiscoveryQualifyLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, the alchemist can brew an elixir of life. This special concoction costs 25,000 gp to create and takes 1 hour of work. An elixir of life, when administered by the alchemist who brewed it, restores life to a dead creature as per the spell true resurrection. Alternatively, the alchemist himself may drink the elixir of life, after which point he is immediately targeted with a resurrection spell the next time he is killed. Used in this manner, the effects of an elixir of life persist only for a number of days equal to the alchemist's Intelligence modifier; if he does not die before that time expires, the effects of the elixir of life end."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 129,
+    "record_key": "Discovery ~ Elixir of Life"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

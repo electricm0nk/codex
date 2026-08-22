@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Traceless Operative ~ Improved Uncanny Dodge",
+    "name": "Improved Uncanny Dodge",
+    "class": "Inquisitor",
+    "description": "A traceless operative can no longer be flanked. This defense denies rogues (or other classes with the sneak attack ability) the ability to sneak attack the traceless operative by flanking her, unless the attacker has at least 4 more rogue levels (or levels in a class that grants the sneak attack class ability) than the traceless operative has inquisitor levels. If the traceless operative already has improved uncanny dodge from another class, the levels from the classes that grant improved uncanny dodge stack when determining the minimum rogue level (or level in another class with the sneak attack ability) required to flank the character.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Traceless Operative ~ Improved Uncanny Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.TracelessOperativeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A traceless operative can no longer be flanked. This defense denies rogues (or other classes with the sneak attack ability) the ability to sneak attack the traceless operative by flanking her, unless the attacker has at least 4 more rogue levels (or levels in a class that grants the sneak attack class ability) than the traceless operative has inquisitor levels. If the traceless operative already has improved uncanny dodge from another class, the levels from the classes that grant improved uncanny dodge stack when determining the minimum rogue level (or level in another class with the sneak attack ability) required to flank the character."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeLVL|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 475,
+    "record_key": "Traceless Operative ~ Improved Uncanny Dodge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

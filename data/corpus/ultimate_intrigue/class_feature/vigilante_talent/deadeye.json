@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Talent ~ Deadeye",
+    "name": "Deadeye",
+    "class": "Vigilante Talent",
+    "description": "%1/day, the gunmaster can resolve an attack against touch AC instead of normal AC when firing one increment beyond his firearm's first range increment. The gunmaster still takes the -2 penalty on attack rolls for shooting a target outside the firearm's first range increment. A gunmaster can spend multiple daily uses to resolve an attack at a further range increment (for instance, he can spend three uses to resolve an attack three increments beyond his first range increment).|VigilanteLVL+2/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Talent ~ Deadeye"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Talent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Talent ~ Deadeye"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsGunmaster,1"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day, the gunmaster can resolve an attack against touch AC instead of normal AC when firing one increment beyond his firearm's first range increment. The gunmaster still takes the -2 penalty on attack rolls for shooting a target outside the firearm's first range increment. A gunmaster can spend multiple daily uses to resolve an attack at a further range increment (for instance, he can spend three uses to resolve an attack three increments beyond his first range increment).|VigilanteLVL+2/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 1015,
+    "record_key": "Vigilante Talent ~ Deadeye"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

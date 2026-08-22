@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Tortured Crusader ~ Alone in the Dark",
+    "name": "Alone in the Dark",
+    "class": "Paladin",
+    "description": "Faced with endless foes, a tortured crusader can't ask others to confront the same horrors she does. She can't use her lay on hands ability to heal others or to channel energy, though starting at 4th level, she can convert two uses of lay on hands into an additional use of smite evil. Her aura of courage, aura of resolve, aura of faith, and aura of righteousness affect only her, not her allies. When she selects a divine bond, it must be with a weapon, not a mount. This ability alters lay on hands, channel energy, divine bond, aura of courage, aura of resolve, aura of faith, and aura of righteousness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tortured Crusader ~ Alone in the Dark"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "DESC",
+        "value": "Faced with endless foes, a tortured crusader can't ask others to confront the same horrors she does. She can't use her lay on hands ability to heal others or to channel energy, though starting at 4th level, she can convert two uses of lay on hands into an additional use of smite evil. Her aura of courage, aura of resolve, aura of faith, and aura of righteousness affect only her, not her allies. When she selects a divine bond, it must be with a weapon, not a mount. This ability alters lay on hands, channel energy, divine bond, aura of courage, aura of resolve, aura of faith, and aura of righteousness."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 197,
+    "record_key": "Tortured Crusader ~ Alone in the Dark"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

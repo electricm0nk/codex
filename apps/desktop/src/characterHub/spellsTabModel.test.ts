@@ -32,6 +32,8 @@ const CATALOG: SpellCatalogEntryDto[] = [
     school: 'Abjuration',
     level: 1,
     description: 'Invisible disc gives +4 to AC, blocks magic missiles.',
+    duration: null,
+    range: null,
   },
   {
     key: 'Magic Missile',
@@ -39,6 +41,8 @@ const CATALOG: SpellCatalogEntryDto[] = [
     school: 'Evocation',
     level: 1,
     description: '1d4+1 damage; +1 missile per two levels above 1st (max 5).',
+    duration: null,
+    range: null,
   },
   {
     key: "Mage's Disjunction",
@@ -46,6 +50,8 @@ const CATALOG: SpellCatalogEntryDto[] = [
     school: 'Abjuration',
     level: 9,
     description: 'Dispels magic, disenchants magic items.',
+    duration: null,
+    range: null,
   },
   // Shape of a real `apg_spells.lst` gap: a record that exists and
   // resolves, but whose corpus row carries no SCHOOL:/CLASSES:/DESC:.
@@ -55,6 +61,8 @@ const CATALOG: SpellCatalogEntryDto[] = [
     school: null,
     level: null,
     description: null,
+    duration: null,
+    range: null,
   },
 ];
 
@@ -70,6 +78,8 @@ const HIDEOUS_LAUGHTER: SpellCatalogEntryDto = {
   school: 'Enchantment',
   level: 1,
   description: 'The subject perceives everything as hilariously funny.',
+  duration: null,
+  range: null,
 };
 
 const CATALOG_WITH_HIDEOUS_LAUGHTER: SpellCatalogEntryDto[] = [...CATALOG, HIDEOUS_LAUGHTER];

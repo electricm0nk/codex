@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Investigator ~ Poison Lore",
+    "name": "Poison Lore",
+    "class": "Investigator",
+    "description": "You have a deep understanding and appreciation for poisons. You cannot accidentally poison yourself when applying poison to a weapon. If you spend 1 minute physically examining the poison, you can attempt a Knowledge (nature) check to identify any natural poison or Knowledge (arcana) check to identify any magical poison (DC = the poison's saving throw DC). Lastly, once a poison is identified, you can spend 1 minute and attempt a Craft (alchemy) check (DC = the poison's saving throw DC) to neutralize 1 dose of the poison. Success renders the dose harmless. You have no chance of accidentally poisoning yourself when examining or attempting to neutralize a poison.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator ~ Poison Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a deep understanding and appreciation for poisons. You cannot accidentally poison yourself when applying poison to a weapon. If you spend 1 minute physically examining the poison, you can attempt a Knowledge (nature) check to identify any natural poison or Knowledge (arcana) check to identify any magical poison (DC = the poison's saving throw DC). Lastly, once a poison is identified, you can spend 1 minute and attempt a Craft (alchemy) check (DC = the poison's saving throw DC) to neutralize 1 dose of the poison. Success renders the dose harmless. You have no chance of accidentally poisoning yourself when examining or attempting to neutralize a poison."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1246,
+    "record_key": "Investigator ~ Poison Lore"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

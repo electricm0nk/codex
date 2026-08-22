@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bones Spirit ~ Touch of the Grave",
+    "name": "Touch of the Grave",
+    "class": "Bones Spirit",
+    "description": "As a standard action, the shaman can make a melee touch attack infused with negative energy that deals 1d4 + %1 points of damage. She can instead touch an undead creature to heal it of the same amount of damage. A shaman can use this ability %2/day.|ShamanTouchOfTheGraveBonusDamage|ShamanTouchOfTheGraveTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bones Spirit ~ Touch of the Grave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shaman Class Feature.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanTouchOfTheGraveBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanTouchOfTheGraveTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, the shaman can make a melee touch attack infused with negative energy that deals 1d4 + %1 points of damage. She can instead touch an undead creature to heal it of the same amount of damage. A shaman can use this ability %2/day.|ShamanTouchOfTheGraveBonusDamage|ShamanTouchOfTheGraveTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "Any weapon that the shaman wields is treated as an unholy weapon.|PREVARGTEQ:ShamanSpiritLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanTouchOfTheGraveBonusDamage|ShamanSpiritLVL/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanTouchOfTheGraveTimes|3+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1539,
+    "record_key": "Bones Spirit ~ Touch of the Grave"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Fey Courtier ~ Summon Fey Allies",
+    "name": "Summon Fey Allies",
+    "class": "Bard",
+    "description": "The fey courtier gains Augment Summoning as a bonus feat and can call upon natural allies who owe him favors. He adds summon nature's ally I to his list of 1st-level bard spells known. Whenever he gains access to another spell level, he adds the next-higher summon nature's ally spell to his list of bard spells known. The fey courtier adds the following creatures to the summon nature's ally list: 1st-grimple (gremlin) B4, mite, sprite B3 ; 2nd-atomie B3, fuath (gremlin) B3, nixie B3; 3rd-leprechaun B2, nuglub (gremlin) B2, pooka B4; 4th-kelpie B2, korred B2, twigjack B2; 5th-lampad B4, lurker in light B2, swan maiden B4; 6th-cold rider B3, oceanid B4, sangoi B5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Courtier ~ Summon Fey Allies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bard Class Features.FeyCourtierClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The fey courtier gains Augment Summoning as a bonus feat and can call upon natural allies who owe him favors. He adds summon nature's ally I to his list of 1st-level bard spells known. Whenever he gains access to another spell level, he adds the next-higher summon nature's ally spell to his list of bard spells known. The fey courtier adds the following creatures to the summon nature's ally list: 1st-grimple (gremlin) B4, mite, sprite B3 ; 2nd-atomie B3, fuath (gremlin) B3, nixie B3; 3rd-leprechaun B2, nuglub (gremlin) B2, pooka B4; 4th-kelpie B2, korred B2, twigjack B2; 5th-lampad B4, lurker in light B2, swan maiden B4; 6th-cold rider B3, oceanid B4, sangoi B5."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Augment Summoning"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Bard=1|Summon Nature's Ally I|Bard=2|Summon Nature's Ally II|Bard=3|Summon Nature's Ally III|Bard=4|Summon Nature's Ally IV|Bard=5|Summon Nature's Ally V|Bard=6|Summon Nature's Ally VI"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 262,
+    "record_key": "Fey Courtier ~ Summon Fey Allies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

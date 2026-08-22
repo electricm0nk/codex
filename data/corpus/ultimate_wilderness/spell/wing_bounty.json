@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Your wings sprout a variety of colorful and flavorful berries. Each berry functions as if affected by goodberry. You can choose for one affected berry to also be poisonous (as striped toadstool); only you and druids of 5th level or higher can tell which is which without magic.",
+    "key": "Wing Bounty",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Shaman=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Your wings sprout a variety of colorful and flavorful berries. Each berry functions as if affected by goodberry. You can choose for one affected berry to also be poisonous (as striped toadstool); only you and druids of 5th level or higher can tell which is which without magic."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) days"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsGathlain=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "0 ft."
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "2d4+(CASTERLEVEL*2) berries"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 123,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Wing Bounty",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

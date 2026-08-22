@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Life Channeler ~ Plant Preservation",
+    "name": "Plant Preservation",
+    "class": "Druid",
+    "description": "A life channeler must choose the Plant domain with her nature bond (she can select the Growth subdomain if she wishes). When she performs a coup de grace that kills a sentient humanoid creature (not a summoned creature), she can do so ritualistically in order to affect the area centered on the body with the enrichment version of plant growth. The sacrifice is a death effect. This ability alters nature bond.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Channeler ~ Plant Preservation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "DESC",
+        "value": "A life channeler must choose the Plant domain with her nature bond (she can select the Growth subdomain if she wishes). When she performs a coup de grace that kills a sentient humanoid creature (not a summoned creature), she can do so ritualistically in order to affect the area centered on the body with the enrichment version of plant growth. The sacrifice is a death effect. This ability alters nature bond."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Druid Domain|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Life Channeler Domain|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 111,
+    "record_key": "Life Channeler ~ Plant Preservation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

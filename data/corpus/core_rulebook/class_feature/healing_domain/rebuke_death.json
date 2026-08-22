@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Healing Domain ~ Rebuke Death",
+    "name": "Rebuke Death",
+    "class": "Healing Domain",
+    "description": "You can touch a living creature as a standard action, healing it of 1d4 points of damage. You can only use this ability on a creature that is below 0 hit points. You can use this ability %1 times per day.|RebukeDeathTimes|PREVARLT:DomainHealingLVL,2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Healing Domain ~ Rebuke Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RebukeDeathTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a living creature as a standard action, healing it of 1d4 points of damage. You can only use this ability on a creature that is below 0 hit points. You can use this ability %1 times per day.|RebukeDeathTimes|PREVARLT:DomainHealingLVL,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a living creature as a standard action, healing it of 1d4+%1 points of damage. You can only use this ability on a creature that is below 0 hit points. You can use this ability %2 times per day.|DomainHealingLVL/2|RebukeDeathTimes|PREVARGTEQ:DomainHealingLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RebukeDeathTimes|DomainHealingTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|RebukeDeathTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|RebukeDeathTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3223,
+    "record_key": "Healing Domain ~ Rebuke Death"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

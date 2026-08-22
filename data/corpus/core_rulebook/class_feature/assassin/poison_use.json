@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Assassin ~ Poison Use",
+    "name": "Poison Use",
+    "class": "Assassin",
+    "description": "Assassins are trained in the use of poison and cannot accidentally poison themselves when applying poison to a blade.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Assassin ~ Poison Use"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AssassinClassFeatures.SpecialAttack.Extraordinary.Poison Use"
+      },
+      {
+        "key": "DESC",
+        "value": "Assassins are trained in the use of poison and cannot accidentally poison themselves when applying poison to a blade."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.379"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2948,
+    "record_key": "Assassin ~ Poison Use"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

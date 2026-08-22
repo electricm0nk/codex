@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vanguard ~ Ever Ready",
+    "name": "Ever Ready",
+    "class": "Slayer",
+    "description": "A vanguard is never considered an unaware combatant and is always able to act in the surprise round. The vanguard is still flat-footed in the surprise round until he acts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanguard ~ Ever Ready"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vanguard Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A vanguard is never considered an unaware combatant and is always able to act in the surprise round. The vanguard is still flat-footed in the surprise round until he acts."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3775,
+    "record_key": "Vanguard ~ Ever Ready"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

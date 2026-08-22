@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Banishment School ~ Aura of Banishment",
+    "name": "Aura of Banishment",
+    "class": "Banishment School",
+    "description": "At 8th level, you can emit a 30-foot aura of banishment for %1 rounds per day. Any summoned or called creature in the area must make a Will save DC %2 each round. Once the creature fails a Will saving throw, it is staggered as long as it remains inside the aura. If it fails a second Will saving throw, it is immediately sent back to its home plane and the spell that summoned it immediately ends. If that spell summoned more than one creature, only the creature that failed its saving throws is affected. These rounds do not need to be consecutive.|BanishmentAuraofBanishmentRounds|BanishmentAuraofBanishmentDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banishment School ~ Aura of Banishment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BanishmentAuraofBanishmentRounds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BanishmentAuraofBanishmentDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can emit a 30-foot aura of banishment for %1 rounds per day. Any summoned or called creature in the area must make a Will save DC %2 each round. Once the creature fails a Will saving throw, it is staggered as long as it remains inside the aura. If it fails a second Will saving throw, it is immediately sent back to its home plane and the spell that summoned it immediately ends. If that spell summoned more than one creature, only the creature that failed its saving throws is affected. These rounds do not need to be consecutive.|BanishmentAuraofBanishmentRounds|BanishmentAuraofBanishmentDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BanishmentAuraofBanishmentRounds|AbjurationSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BanishmentAuraofBanishmentDC|10+INT+(AbjurationSchoolLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BanishmentAuraofBanishmentRounds"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3338,
+    "record_key": "Banishment School ~ Aura of Banishment"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

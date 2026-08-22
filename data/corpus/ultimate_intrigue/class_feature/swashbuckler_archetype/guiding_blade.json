@@ -1,0 +1,179 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Swashbuckler Archetype ~ Guiding Blade",
+    "name": "Guiding Blade",
+    "class": "Swashbuckler Archetype",
+    "description": "While some swashbucklers are loners or glory hounds, always trying to take the credit for finishing off a foe with little regard for their allies, guiding blades focus their swordplay and panache on helping their allies. For a guiding blade, anything is possible when the right team comes together, and she learns how to protect and bolster her allies to ensure the team's victory. Instead of parrying attacks against her, a guiding blade redirects her enemies' ire away from her allies, interfering with enemies who attack her allies, whether that attack comes by blade or by spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Swashbuckler Archetype ~ Guiding Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SwashbucklerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Swashbuckler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Guiding Blade],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_Panache=True,Swashbuckler_Archetype_BonusFeats=True,Swashbuckler_Archetype_DerringDoDeed=True,Swashbuckler_Archetype_DodgingPanacheDeed=True,Swashbuckler_Archetype_OpportuneParryandRiposteDeed=True,Swashbuckler_Archetype_KipUpDeed=True,Swashbuckler_Archetype_SwashbucklersGraceDeed=True,Swashbuckler_Archetype_SuperiorFeintDeed=True,Swashbuckler_Archetype_TargetedStrikeDeed=True,Swashbuckler_Archetype_DizzyingDefenseDeed=True,Swashbuckler_Archetype_PerfectThrustDeed=True,Swashbuckler_Archetype_SwashbucklersEdgeDeed=True,Swashbuckler_Archetype_CharmedLife=True,Swashbuckler_Archetype_Nimble=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While some swashbucklers are loners or glory hounds, always trying to take the credit for finishing off a foe with little regard for their allies, guiding blades focus their swordplay and panache on helping their allies. For a guiding blade, anything is possible when the right team comes together, and she learns how to protect and bolster her allies to ensure the team's victory. Instead of parrying attacks against her, a guiding blade redirects her enemies' ire away from her allies, interfering with enemies who attack her allies, whether that attack comes by blade or by spell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guiding Blade ~ Daring Teamwork|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guiding Blade ~ Charmed Guardian|PRECLASS:1,Swashbuckler=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guiding Blade ~ Interfering Blade|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guiding Blade ~ Opportune Redirection and Riposte|PRECLASS:1,Swashbuckler=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DerringDoDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_KipUpDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklersGraceDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_TargetedStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_DizzyingDefenseDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_PerfectThrustDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklersEdgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_CharmedLife|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DerringDoDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_KipUpDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklersGraceDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_TargetedStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DizzyingDefenseDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_PerfectThrustDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklersEdgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Nimble|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 942,
+    "record_key": "Swashbuckler Archetype ~ Guiding Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

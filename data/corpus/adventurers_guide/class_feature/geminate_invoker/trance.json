@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Geminate Invoker ~ Trance",
+    "name": "Trance",
+    "class": "Barbarian",
+    "description": "As a free action, a geminate invoker can enter a self-imposed trance, ignoring the physical limits of his body. This ability functions similarly to a barbarian's rage, except where noted below, and feats, spells, and abilities that affect a barbarian's rage (such as the Extra Rage feat) apply to an geminate invoker's trance. A geminate invoker gains rage powers as per a normal barbarian, but he can never gain totem rage powers (Advanced Player's Guide p74) via this ability. Instead of the normal rage bonuses and penalties, a geminate invoker in a trance gains a +%1 morale bonus to his Constitution; gains a +%2 morale bonus on Reflex and Will saving throws; takes no penalties to AC; can still use Dexterity-, Intelligence-, and Charisma-based skills; and gains Diehard as a bonus feat.|RageConBonus|RageSaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geminate Invoker ~ Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Barbarian Class Feature.GeminateInvokerClassFeatures.SpecialQuality.Extraordinary.Rage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a geminate invoker can enter a self-imposed trance, ignoring the physical limits of his body. This ability functions similarly to a barbarian's rage, except where noted below, and feats, spells, and abilities that affect a barbarian's rage (such as the Extra Rage feat) apply to an geminate invoker's trance. A geminate invoker gains rage powers as per a normal barbarian, but he can never gain totem rage powers (Advanced Player's Guide p74) via this ability. Instead of the normal rage bonuses and penalties, a geminate invoker in a trance gains a +%1 morale bonus to his Constitution; gains a +%2 morale bonus on Reflex and Will saving throws; takes no penalties to AC; can still use Dexterity-, Intelligence-, and Charisma-based skills; and gains Diehard as a bonus feat.|RageConBonus|RageSaveBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Geminate Invoker Trance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageLVL|BarbarianLVL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|RageDuration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 615,
+    "record_key": "Geminate Invoker ~ Trance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

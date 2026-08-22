@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Archetype ~ Disenchanter",
+    "name": "Disenchanter",
+    "class": "Warpriest Archetype",
+    "description": "While many warpriests focus on threats to the body, the disenchanter focuses on dangers to the mind and the soul. Using the power of his patron, the disenchanter seeks to keep the powers of magic in check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Archetype ~ Disenchanter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WarpriestArchetype.WarpriestBonusFeat6.WarpriestChannelEnergy.CF_WarpriestBonusFeat.WarpriestBonusFeat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Warpriest=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Disenchanter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestBonusFeat6,TYPE.WarpriestChannelEnergy,TYPE.CF_WarpriestBonusFeat,TYPE.WarpriestBonusFeat]"
+      },
+      {
+        "key": "DESC",
+        "value": "While many warpriests focus on threats to the body, the disenchanter focuses on dangers to the mind and the soul. Using the power of his patron, the disenchanter seeks to keep the powers of magic in check."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Disenchanter ~ Bonus Feats|PRECLASS:1,Warpriest=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Disenchanter ~ Mystic Interference|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Class Feature|AUTOMATIC|Disenchanter ~ Banish Enchantment|PRECLASS:1,Warpriest=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Warpriest"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3932,
+    "record_key": "Warpriest Archetype ~ Disenchanter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Envy (Abjuration) School",
+    "name": "Envy (Abjuration) School",
+    "class": null,
+    "description": "You have chosen to specialize in Envy, the art of suppressing magic other than your own.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool.ThassilonianSchool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbjurationSchoolLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to specialize in Envy, the art of suppressing magic other than your own."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Abjuration School ~ Resistance|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardResistance|PREVARGTEQ:AbjurationSchoolLVL,1|PREVARLT:AbjurationSchoolLVL,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Abjuration School ~ Protective Ward|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardProtectiveWard|PREVARGTEQ:AbjurationSchoolLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Abjuration School ~ Energy Absorption|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WizardEnergyAbsorption|PREVARGTEQ:AbjurationSchoolLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbjurationSchoolLVL|ArcaneSchoolLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisallowWizardArcaneSchoolArchetype|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OppositionalSchool|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1245,
+    "record_key": "Envy (Abjuration) School"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

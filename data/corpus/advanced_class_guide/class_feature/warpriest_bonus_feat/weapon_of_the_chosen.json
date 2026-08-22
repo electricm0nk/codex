@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Weapon of the Chosen",
+    "name": "Weapon of the Chosen",
+    "class": "Warpriest Bonus Feat",
+    "description": "As a swift action, you can call upon your deity to guide an attack you make with your deity's favored weapon. On your next attack in that round with that weapon, your weapon counts as magical for the purpose of overcoming damage reduction or striking an incorporeal creature. If your attack misses because of concealment, you can reroll your miss chance one time to see whether you actually hit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Weapon of the Chosen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,SPELLCASTER.Divine=1"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Must have Weapon Focus with one of the deity's favored weapons."
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can call upon your deity to guide an attack you make with your deity's favored weapon. On your next attack in that round with that weapon, your weapon counts as magical for the purpose of overcoming damage reduction or striking an incorporeal creature. If your attack misses because of concealment, you can reroll your miss chance one time to see whether you actually hit."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Weapon of the Chosen"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4193,
+    "record_key": "Warpriest Bonus Feat ~ Weapon of the Chosen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

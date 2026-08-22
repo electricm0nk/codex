@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Slithering Tracker ~ Paralysis",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:slithering_tracker"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralysis"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlitheringTrackerParalysisDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlitheringTrackerParalysisDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paralysis)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlitheringTrackerParalysisDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature that is hit by a slithering tracker's slam attack comes into contact with the anesthetizing slime it secretes.  The opponent must succeed on a DC %1 Fortitude save or be paralyzed - at the end of each round thereafter, the paralyzed victim can attempt a new Fortitude save to recover from this paralysis.  When a victim recovers from a slithering tracker's paralysis, the victim is staggered for 1d6 rounds.|SlitheringTrackerParalysisDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Slithering Tracker ~ Paralysis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.250",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1174,
-    "record_key": "Slithering Tracker ~ Paralysis"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1174,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Slithering Tracker ~ Paralysis",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

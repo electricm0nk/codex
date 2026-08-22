@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Improved Feint Partner",
+    "name": "Improved Feint Partner",
+    "class": "Warpriest Bonus Feat",
+    "description": "Knowledge of your companions' tricks and techniques allow you to take even greater advantage of your allies' feints.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Improved Feint Partner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Teamwork"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Combat Reflexes,Feint Partner"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:6],[PREVARGTEQ:WarpriestBonusFeatBAB,6]"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Bluff=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Knowledge of your companions' tricks and techniques allow you to take even greater advantage of your allies' feints."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever an ally who also has this feat successfully feints against an opponent, that opponent provokes an attack of opportunity from you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Feint Partner"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.105"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4468,
+    "record_key": "Warpriest Bonus Feat ~ Improved Feint Partner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

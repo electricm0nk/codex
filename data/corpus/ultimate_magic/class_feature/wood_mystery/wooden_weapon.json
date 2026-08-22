@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wood Mystery ~ Wooden Weapon",
+    "name": "Wooden Weapon",
+    "class": "Wood Mystery",
+    "description": "You can create a wooden club, quarterstaff, longspear, shortspear, or spear that lasts for %1 minutes. This weapon is appropriate for your size. You are considered proficient with the weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %2 times per day.|WoodenWeaponDuration|WoodenWeaponTimes|!PRECLASS:1,Oracle=3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wood Mystery ~ Wooden Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "OracleClassFeatures.SpecialQuality.OracleRevelation.WoodRevelation.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodenWeaponDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodenWeaponTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoodenWeaponEnhancement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a wooden club, quarterstaff, longspear, shortspear, or spear that lasts for %1 minutes. This weapon is appropriate for your size. You are considered proficient with the weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %2 times per day.|WoodenWeaponDuration|WoodenWeaponTimes|!PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a masterwork wooden club, quarterstaff, longspear, shortspear, or spear that lasts for %1 minutes. This weapon is appropriate for your size. You are considered proficient with the weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %2 times per day.|WoodenWeaponDuration|WoodenWeaponTimes|PREMULT:2,[!PRECLASS:1,Oracle=7],[PRECLASS:1,Oracle=3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a +%2 wooden club, quarterstaff, longspear, shortspear, or spear that lasts for %1 minutes. This weapon is appropriate for your size. You are considered proficient with the weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %3 times per day.|WoodenWeaponDuration|WoodenWeaponEnhancement|WoodenWeaponTimes|PREMULT:2,[!PRECLASS:1,Oracle=11],[PRECLASS:1,Oracle=7]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can create a +%2 keen (or equivalent increase to its critical threat range, if it is a bludgeoning weapon) wooden club, quarterstaff, longspear, shortspear, or spear that lasts for %1 minutes. This weapon is appropriate for your size. You are considered proficient with the weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %3 times per day.|WoodenWeaponDuration|WoodenWeaponEnhancement|WoodenWeaponTimes|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodenWeaponDuration|classlevel(\"Oracle\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodenWeaponTimes|3+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodenWeaponEnhancement|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodenWeaponEnhancement|1|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoodenWeaponEnhancement|1|PRECLASS:1,Oracle=19"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 519,
+    "record_key": "Wood Mystery ~ Wooden Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

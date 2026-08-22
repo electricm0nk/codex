@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Jerboa",
@@ -20,6 +18,104 @@
     ],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "1/4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|D"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "D"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "D",
@@ -60,16 +156,18 @@
       "Animal"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
-    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
-    "line": 154,
-    "record_key": "Jerboa"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 154,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "record_key": "Jerboa",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

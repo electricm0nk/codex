@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Eldritch Knight ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "class": "Eldritch Knight",
+    "description": "At 1st level, an eldritch knight may choose a bonus combat feat. This is in addition to the feats that a character of any class normally gets from advancing levels. The character must still meet any prerequisites for these bonus feats. An eldritch knight gains an additional combat feat at 5th and 9th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eldritch Knight ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Eldritch KnightClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchKnightBonusFeatCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, an eldritch knight may choose a bonus combat feat. This is in addition to the feats that a character of any class normally gets from advancing levels. The character must still meet any prerequisites for these bonus feats. An eldritch knight gains an additional combat feat at 5th and 9th level."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|EldritchKnightBonusFeatCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchKnightBonusFeatCount|1|PREVARGTEQ:EldritchKnightLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchKnightBonusFeatCount|1|PREVARGTEQ:EldritchKnightLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchKnightBonusFeatCount|1|PREVARGTEQ:EldritchKnightLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.385"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3009,
+    "record_key": "Eldritch Knight ~ Bonus Feat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

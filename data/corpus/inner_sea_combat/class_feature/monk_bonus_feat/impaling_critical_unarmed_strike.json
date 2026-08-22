@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Monk Bonus Feat ~ Impaling Critical ~ unarmed strike",
+    "name": "Impaling Critical (unarmed strike)",
+    "class": "Monk Bonus Feat",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Bonus Feat ~ Impaling Critical ~ unarmed strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkBonusFeat_ImpalingCritical_UnarmedStrike,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Impaling Critical (unarmed strike)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 116,
+    "record_key": "Monk Bonus Feat ~ Impaling Critical ~ unarmed strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

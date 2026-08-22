@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric Archetype ~ Blossoming Light",
+    "name": "Blossoming Light",
+    "class": "Cleric Archetype",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Blossoming Light"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREDEITYALIGN",
+        "value": "LG,NG,CG,LN,TN,CN"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Blossoming Light],[!PREFACT:1,ABILITIES,Cleric_Archetype_Proficiencies=True,Cleric_Archetype_Domains=True,Cleric_Archetype_ChannelEnergy=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blossoming Light ~ Promise of Faith|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blossoming Light ~ Promise of Purity|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blossoming Light ~ Luminous Font|PRECLASS:1,Cleric=1"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ArmorProficiency|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 773,
+    "record_key": "Cleric Archetype ~ Blossoming Light"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

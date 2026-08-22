@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Community Guardian ~ Renewing Radiance",
+    "name": "Renewing Radiance",
+    "class": "Oracle",
+    "description": "Once per day you can produce a burst of swirling white light that provides a measure of protection and renewal to allies within 30 feet for 1 round. On their turn, the allies can choose either to gain a +%1 sacred bonus to AC for 1 round or to heal a number of hit points equal to %1d6 + %2 (their choice). If an ally is dying, it is stabilized instead.|1+OracleLVL/7|CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Community Guardian ~ Renewing Radiance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day you can produce a burst of swirling white light that provides a measure of protection and renewal to allies within 30 feet for 1 round. On their turn, the allies can choose either to gain a +%1 sacred bonus to AC for 1 round or to heal a number of hit points equal to %1d6 + %2 (their choice). If an ally is dying, it is stabilized instead.|1+OracleLVL/7|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 305,
+    "record_key": "Community Guardian ~ Renewing Radiance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

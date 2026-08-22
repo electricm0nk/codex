@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cult Leader ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Warpriest",
+    "description": "Cult leaders are proficient with all simple weapons, plus the hand crossbow, rapier, sap, shortbow, and short sword, as well as the favored weapon of their deity. They are proficient with light armor and light shields. The cult leader does not gain Weapon Focus as a bonus feat as a warpriest normally would. This replaces the warpriest's weapon and armor proficiencies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cult Leader ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cult Leader Class Feature.Warpriest Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Cult leaders are proficient with all simple weapons, plus the hand crossbow, rapier, sap, shortbow, and short sword, as well as the favored weapon of their deity. They are proficient with light armor and light shields. The cult leader does not gain Weapon Focus as a bonus feat as a warpriest normally would. This replaces the warpriest's weapon and armor proficiencies."
+      },
+      {
+        "key": "AUTO",
+        "value": "SHIELDPROF|SHIELDTYPE=Light"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Crossbow (Hand)|Rapier|Sap|Shortbow|Sword (Short)"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|DEITYWEAPONS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfLight|TYPE=WeaponProfSimple"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3951,
+    "record_key": "Cult Leader ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

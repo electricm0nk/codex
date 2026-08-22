@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Treetop Monk ~ Branch Runner",
+    "name": "Branch Runner",
+    "class": "Monk",
+    "description": "A treetop monk adds half the base speed bonus from his fast movement ability to his racial climb speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Treetop Monk ~ Branch Runner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A treetop monk adds half the base speed bonus from his fast movement ability to his racial climb speed."
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Climb|MonkFastMovementBonus/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 983,
+    "record_key": "Treetop Monk ~ Branch Runner"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

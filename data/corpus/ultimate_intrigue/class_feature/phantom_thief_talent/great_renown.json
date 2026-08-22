@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Phantom Thief Talent ~ Great Renown",
+    "name": "Great Renown",
+    "class": "Phantom Thief Talent",
+    "description": "The phantom thief is known on a broader scale. He can gain renown in a single community of up to 5,000 individuals (a large town) or up to two communities of no more than 2,000 individuals each (two small towns). The bonus remains unchanged.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phantom Thief Talent ~ Great Renown"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Phantom Thief Talent ~ Renown,Phantom Thief ~ Broad Education"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom thief is known on a broader scale. He can gain renown in a single community of up to 5,000 individuals (a large town) or up to two communities of no more than 2,000 individuals each (two small towns). The bonus remains unchanged."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 873,
+    "record_key": "Phantom Thief Talent ~ Great Renown"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

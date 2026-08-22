@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Domain Power ~ Door Sight",
+    "name": "Door Sight",
+    "class": "Domain Power",
+    "description": "You can lay your hand upon any surface and see what is on the other side, as if using clairvoyance. Using this power takes 1 minute, during which time you must be touching the surface you want to see through. You can keep looking for as long as 10 minutes with each use of this power, but must touch the surface and take no other action the entire time. The surface cannot be thicker than %1 inches. You can use this power %2 times per day.|6+DomainLVL|DomainTravelTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Door Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "You can lay your hand upon any surface and see what is on the other side, as if using clairvoyance. Using this power takes 1 minute, during which time you must be touching the surface you want to see through. You can keep looking for as long as 10 minutes with each use of this power, but must touch the surface and take no other action the entire time. The surface cannot be thicker than %1 inches. You can use this power %2 times per day.|6+DomainLVL|DomainTravelTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainTravelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1834,
+    "record_key": "Domain Power ~ Door Sight"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

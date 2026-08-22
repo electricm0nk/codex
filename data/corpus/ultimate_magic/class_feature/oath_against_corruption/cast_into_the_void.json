@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Oath against Corruption ~ Cast into the Void",
+    "name": "Cast into the Void",
+    "class": "Paladin",
+    "description": "You become a conduit for the power of your god. Your DR increases to 10/evil. Whenever you use smite evil and successfully strike an aberration, the creature must make a Will save (DC %1) or be banished to oblivion. This ability does not kill the creature, but it is sent to a remote place, such as deep underground or far into space (if it is a creature native to space), and cannot return under its own power for at least 100 years. Whenever the paladin channels positive energy or uses lay on hands to heal a creature, she heals the maximum possible amount.|CastIntoTheVoidDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oath against Corruption ~ Cast into the Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CastIntoTheVoidDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You become a conduit for the power of your god. Your DR increases to 10/evil. Whenever you use smite evil and successfully strike an aberration, the creature must make a Will save (DC %1) or be banished to oblivion. This ability does not kill the creature, but it is sent to a remote place, such as deep underground or far into space (if it is a creature native to space), and cannot return under its own power for at least 100 years. Whenever the paladin channels positive energy or uses lay on hands to heal a creature, she heals the maximum possible amount.|CastIntoTheVoidDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Cast into the Void"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Evil|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CastIntoTheVoidDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Cast into the Void)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CastIntoTheVoidDC|10+classlevel(\"Paladin\")/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1537,
+    "record_key": "Oath against Corruption ~ Cast into the Void"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

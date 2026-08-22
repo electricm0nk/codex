@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cave Fisher ~ Pull",
+    "delivery": "Extraordinary",
+    "description": "A cave fisher has a +4 racial bonus on CMB checks made using its pull special attack.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:cave_fisher_pull",
+    "name": "Pull",
+    "owners": [
+      "beastiary:monster:cave_fisher"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Filament, 10 Feet)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A cave fisher has a +4 racial bonus on CMB checks made using its pull special attack."
+      },
+      {
+        "key": "KEY",
+        "value": "Cave Fisher ~ Pull"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.41",
+    "traits": []
+  },
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 201,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Cave Fisher ~ Pull",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Undine ~ Hydrated Vitality",
+    "name": "Hydrated Vitality",
+    "race_key": "Undine",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Undine Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Undine_ReplaceWaterAffinity"
+    ],
+    "description": "An undine with this racial trait gains fast healing 2 for 1 round anytime she submerges completely within a body of natural salt water, fresh water, or brackish water. Stagnant, poisoned, or trapped water (such as an artificial pit or a bag of holding) does not activate this ability. The undine can heal up to 2 hit points per level per day with this ability, after which it ceases to function. This racial trait replaces water affinity.",
+    "source_page": "p.175",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Undine ~ Hydrated Vitality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Undine Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Undine ~ Hydrated Vitality],[!PREFACT:1,ABILITIES,Undine_ReplaceWaterAffinity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "An undine with this racial trait gains fast healing 2 for 1 round anytime she submerges completely within a body of natural salt water, fresh water, or brackish water. Stagnant, poisoned, or trapped water (such as an artificial pit or a bag of holding) does not activate this ability. The undine can heal up to 2 hit points per level per day with this ability, after which it ceases to function."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces water affinity.|!PREABILITY:1,CATEGORY=Special Ability,Undine ~ Hydrated Vitality"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.175"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Gain fast healing 2 for 1 round anytime you submerge completely within a body of natural salt water, fresh water, or brackish water. Stagnant, poisoned, or trapped water (such as an artificial pit or a bag of holding) does not activate this ability. You can heal up to %1 hit points with this ability, after which it ceases to function.|2*TL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|2*TL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Hit Points per Day"
+      },
+      {
+        "key": "FACT",
+        "value": "Undine_ReplaceWaterAffinity|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 780,
+    "record_key": "Undine ~ Hydrated Vitality"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ]
+}

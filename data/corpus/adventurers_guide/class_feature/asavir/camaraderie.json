@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Asavir ~ Camaraderie",
+    "name": "Camaraderie",
+    "class": "Asavir",
+    "description": "An asavir is skilled at forging those who battle by her side into a loyal and well-coordinated team and exhorting them to fight bravely. As long as the asavir can speak aloud, the bonus she grants to any allies within 30 feet when she takes the aid another action in combat increases by %1. This bonus does not stack with other abilities that enhance the aid another action.|AsavirCamaraderieBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Asavir ~ Camaraderie"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.AsavirClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsavirCamaraderieBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "DESC",
+        "value": "An asavir is skilled at forging those who battle by her side into a loyal and well-coordinated team and exhorting them to fight bravely. As long as the asavir can speak aloud, the bonus she grants to any allies within 30 feet when she takes the aid another action in combat increases by %1. This bonus does not stack with other abilities that enhance the aid another action.|AsavirCamaraderieBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirCamaraderieBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirCamaraderieBonus|1|PREVARGTEQ:AsavirLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsavirCamaraderieBonus|1|PREVARGTEQ:AsavirLVL,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 41,
+    "record_key": "Asavir ~ Camaraderie"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

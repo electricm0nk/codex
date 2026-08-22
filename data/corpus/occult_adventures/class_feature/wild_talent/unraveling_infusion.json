@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Unraveling Infusion",
+    "name": "Unraveling Infusion",
+    "class": "Wild Talent",
+    "description": "Element fire; Type substance infusion; Level 5; Burn 3 Associated Blasts blue flame, fire Saving Throw none Your kinetic blast burns so hot that it melts away your foe's magical effects. Whenever your infused blast hits a foe and penetrates its spell resistance, you can attempt a caster level check as if using a targeted dispel magic before determining whether the foe takes damage from the blast. You can choose to reduce the blast's damage by half to increase your bonus on the caster level check by 2. If you don't choose a specific spell effect to attempt to dispel, you automatically attempt to dispel effects that would protect the target from fire damage before other spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Unraveling Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Fire"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Fire,10"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire; Type substance infusion; Level 5; Burn 3 Associated Blasts blue flame, fire Saving Throw none Your kinetic blast burns so hot that it melts away your foe's magical effects. Whenever your infused blast hits a foe and penetrates its spell resistance, you can attempt a caster level check as if using a targeted dispel magic before determining whether the foe takes damage from the blast. You can choose to reduce the blast's damage by half to increase your bonus on the caster level check by 2. If you don't choose a specific spell effect to attempt to dispel, you automatically attempt to dispel effects that would protect the target from fire damage before other spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 721,
+    "record_key": "Wild Talent ~ Unraveling Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

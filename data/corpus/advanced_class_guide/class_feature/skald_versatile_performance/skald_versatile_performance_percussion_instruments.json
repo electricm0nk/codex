@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Skald Versatile Performance ~ Percussion Instruments",
+    "name": "Skald Versatile Performance (Percussion Instruments)",
+    "class": "Skald Versatile Performance",
+    "description": "You can use your Perform (Percussion) skill instead of Handle Animal and Intimidate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skald Versatile Performance ~ Percussion Instruments"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skald Class Feature.SpecialQuality.Extraordinary.SkaldVersatilePerformance"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your Perform (Percussion) skill instead of Handle Animal and Intimidate."
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Handle Animal (Perform (Percussion Instruments))|var(\"SKILL.Perform (Percussion Instruments).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate (Perform (Percussion Instruments))|var(\"SKILL.Perform (Percussion Instruments).MISC\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Handle Animal (Perform (Percussion Instruments))|skillinfo(\"TOTALRANK\", \"Perform (Percussion Instruments)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Skald Versatile Performance ~ Percussion Instruments"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Intimidate (Perform (Percussion Instruments))|skillinfo(\"TOTALRANK\", \"Perform (Percussion Instruments)\")|TYPE=SkillGranted|PREABILITY:1,CATEGORY=Special Ability,Skald Versatile Performance ~ Percussion Instruments"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1748,
+    "record_key": "Skald Versatile Performance ~ Percussion Instruments"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

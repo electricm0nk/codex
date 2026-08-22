@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Social Talent ~ Any Guise",
+    "name": "Any Guise",
+    "class": "Social Talent",
+    "description": "A vigilante can use his everyman social talent to disguise himself as any specific person, even a king or high priest. Furthermore, if the actual individual wouldn't normally be able to be found via magic (such as by being dead or protected from divinations designed to locate the individual), such divinations always find the vigilante instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Social Talent ~ Any Guise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Social Talent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Social Talent ~ Everyman"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VigilanteTalentLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "A vigilante can use his everyman social talent to disguise himself as any specific person, even a king or high priest. Furthermore, if the actual individual wouldn't normally be able to be found via magic (such as by being dead or protected from divinations designed to locate the individual), such divinations always find the vigilante instead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 47,
+    "record_key": "Social Talent ~ Any Guise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

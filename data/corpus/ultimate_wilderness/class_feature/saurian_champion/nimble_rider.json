@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Saurian Champion ~ Nimble Rider",
+    "name": "Nimble Rider",
+    "class": "Cavalier",
+    "description": "A saurian champion gains a +%1 dodge bonus to AC when mounted. Anything that causes the saurian champion to lose his Dexterity bonus to AC also causes him to lose this dodge bonus.|min(4,(CavalierLVL+4)/6)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saurian Champion ~ Nimble Rider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cavalier Class Features.SaurianChampionClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A saurian champion gains a +%1 dodge bonus to AC when mounted. Anything that causes the saurian champion to lose his Dexterity bonus to AC also causes him to lose this dodge bonus.|min(4,(CavalierLVL+4)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 dodge bonus to AC when mounted|min(4,(CavalierLVL+4)/6)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 439,
+    "record_key": "Saurian Champion ~ Nimble Rider"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

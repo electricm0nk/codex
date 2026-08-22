@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Dirty Fighter ~ Maneuver Training",
+    "name": "Maneuver Training",
+    "class": "Fighter",
+    "description": "The dirty fighter becomes a master of dirty tricks. He gains a +2 bonus on dirty trick combat maneuver checks and +2 to his CMD when he is the target of a dirty trick combat maneuver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dirty Fighter ~ Maneuver Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The dirty fighter becomes a master of dirty tricks. He gains a +2 bonus on dirty trick combat maneuver checks and +2 to his CMD when he is the target of a dirty trick combat maneuver."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_DirtyTrick,CMD_DirtyTrick|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 650,
+    "record_key": "Dirty Fighter ~ Maneuver Training"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

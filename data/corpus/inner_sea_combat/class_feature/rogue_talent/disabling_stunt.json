@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Talent ~ Disabling Stunt",
+    "name": "Disabling Stunt",
+    "class": "Rogue Talent",
+    "description": "A rogue with this talent can attempt a Disable Device check against a construct's CMD as a standard action that does not provoke attacks of opportunity. If the check is successful, the rogue can ignore the construct's damage reduction when dealing sneak attack damage for 1 minute. The normal penalties apply to this check if the rogue attempts it without using thieves' tools. A rogue must be trained in Disable Device to select this talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Talent ~ Disabling Stunt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Disable Device=1"
+      },
+      {
+        "key": "DESC",
+        "value": "A rogue with this talent can attempt a Disable Device check against a construct's CMD as a standard action that does not provoke attacks of opportunity. If the check is successful, the rogue can ignore the construct's damage reduction when dealing sneak attack damage for 1 minute. The normal penalties apply to this check if the rogue attempts it without using thieves' tools. A rogue must be trained in Disable Device to select this talent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 499,
+    "record_key": "Rogue Talent ~ Disabling Stunt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

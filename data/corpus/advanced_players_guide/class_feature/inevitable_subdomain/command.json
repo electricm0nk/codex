@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Inevitable Subdomain ~ Command",
+    "name": "Command",
+    "class": "Inevitable Subdomain",
+    "description": "As a standard action, you can give a creature an emotionless yet undeniable order, as per the spell command. A Will save negates this effect. You cannot target a creature more than once per day with this ability. You can use this ability %1 times per day.|DomainLawTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inevitable Subdomain ~ Command"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can give a creature an emotionless yet undeniable order, as per the spell command. A Will save negates this effect. You cannot target a creature more than once per day with this ability. You can use this ability %1 times per day.|DomainLawTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1776,
+    "record_key": "Inevitable Subdomain ~ Command"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

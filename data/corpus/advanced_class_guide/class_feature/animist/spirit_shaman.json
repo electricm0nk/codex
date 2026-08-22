@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Animist ~ Spirit Shaman",
+    "name": "Spirit Shaman",
+    "class": "Shaman",
+    "description": "The animist can use ethereal jaunt as at will as a spell-like ability, and cast astral projection once per day as a spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animist ~ Spirit Shaman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animist Class Feature.Shaman Class Feature.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=ShamanLVL|Ethereal Jaunt"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=ShamanLVL|Astral Projection"
+      },
+      {
+        "key": "DESC",
+        "value": "The animist can use ethereal jaunt as at will as a spell-like ability, and cast astral projection once per day as a spell-like ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3602,
+    "record_key": "Animist ~ Spirit Shaman"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

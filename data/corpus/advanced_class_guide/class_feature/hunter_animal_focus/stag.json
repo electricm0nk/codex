@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter Animal Focus ~ Stag",
+    "name": "Stag",
+    "class": "Hunter Animal Focus",
+    "description": "Get %1-foot enhancement bonus to base land speed|HunterAnimalFocusStagBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter Animal Focus ~ Stag"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HunterAnimalFocusAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HunterAnimalFocusStagBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get %1-foot enhancement bonus to base land speed|HunterAnimalFocusStagBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|HunterAnimalFocusStagBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusStagBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusStagBonus|5|PREVARGTEQ:HunterAnimalFocusLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterAnimalFocusStagBonus|5|PREVARGTEQ:HunterAnimalFocusLVL,15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 1223,
+    "record_key": "Hunter Animal Focus ~ Stag"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

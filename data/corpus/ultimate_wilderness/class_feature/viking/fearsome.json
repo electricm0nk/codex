@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Viking ~ Fearsome",
+    "name": "Fearsome",
+    "class": "Fighter",
+    "description": "A viking can attempt an Intimidate check to demoralize an opponent as a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Viking ~ Fearsome"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fighter Class Features.VikingClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A viking can attempt an Intimidate check to demoralize an opponent as a"
+      },
+      {
+        "key": "DESC",
+        "value": "move action.|PREVARLT:FighterLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "swift action.|PREVARGTEQ:FighterLVL,10|PREVARLT:FighterLVL,18"
+      },
+      {
+        "key": "DESC",
+        "value": "free action once per round.|PREVARGTEQ:FighterLVL,18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 593,
+    "record_key": "Viking ~ Fearsome"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

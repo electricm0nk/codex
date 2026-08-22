@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bloodrager Archetype ~ Untouchable Rager",
+    "name": "Untouchable Rager",
+    "class": "Bloodrager Archetype",
+    "description": "While most bloodragers are known for their inexplicable ability to focus their bloodline into a horrifying mix of martial terror and spellcasting fury, from time to time a bloodrager's bloodline acts differently. Instead of empowering the bloodrager, it shields the bloodrager from magic of all types, often keeping the bloodrager untouched within the midst of magical effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Archetype ~ Untouchable Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BloodragerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Untouchable Rager]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most bloodragers are known for their inexplicable ability to focus their bloodline into a horrifying mix of martial terror and spellcasting fury, from time to time a bloodrager's bloodline acts differently. Instead of empowering the bloodrager, it shields the bloodrager from magic of all types, often keeping the bloodrager untouched within the midst of magical effects."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Untouchable Rager ~ Raging Resistance|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Untouchable Rager ~ Resistance Control|PRECLASS:1,Bloodrager=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2710,
+    "record_key": "Bloodrager Archetype ~ Untouchable Rager"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

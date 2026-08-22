@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Grabbing Master",
+    "name": "Grabbing Master",
+    "class": "Warpriest Bonus Feat",
+    "description": "You can grapple two foes as easily as one.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Grabbing Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Grabbing Drag,Grabbing Style,Improved Grapple"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:12],[PREVARGTEQ:WarpriestBonusFeatBAB,12],[PREVARGTEQ:MonkFeatQualify,8],[PRECLASS:1,Monk=8,Brawler=8]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can grapple two foes as easily as one."
+      },
+      {
+        "key": "DESC",
+        "value": " When you are grabbing two opponents while using Grabbing Style, you can use your grapple to move or damage one or both opponents you are grappling, instead of just one."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Grabbing Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4157,
+    "record_key": "Warpriest Bonus Feat ~ Grabbing Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

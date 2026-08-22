@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Searcher ~ Psychic Talent",
+    "name": "Psychic Talent",
+    "class": "Oracle",
+    "description": "[NOT IMPLEMENTED] A psychic searcher's mastery of her supernatural insight grows, granting her a new investigator talent from the following list: amazing inspiration, eidetic recollection, empathy, inspired alertness, item lore, perceptive tracking (except using Sense Motive instead of Perception or Survival), rogue talent (only for hard to fool), and tenacious inspiration. Whenever a psychic searcher can select a new revelation, she can instead select an investigator or rogue talent from the above list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Searcher ~ Psychic Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Searcher Class Feature.Oracle Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] A psychic searcher's mastery of her supernatural insight grows, granting her a new investigator talent from the following list: amazing inspiration, eidetic recollection, empathy, inspired alertness, item lore, perceptive tracking (except using Sense Motive instead of Perception or Survival), rogue talent (only for hard to fool), and tenacious inspiration. Whenever a psychic searcher can select a new revelation, she can instead select an investigator or rogue talent from the above list."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3500,
+    "record_key": "Psychic Searcher ~ Psychic Talent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

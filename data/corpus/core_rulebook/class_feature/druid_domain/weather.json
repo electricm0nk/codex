@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Druid Domain ~ Weather",
+    "name": "Weather",
+    "class": "Druid Domain",
+    "description": "With power over storm and sky, you can call down the wrath of the gods upon the world below.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Druid Domain ~ Weather"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Domain ~ Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "DruidWeatherAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With power over storm and sky, you can call down the wrath of the gods upon the world below."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Druid=1|Obscuring Mist|Druid=2|Fog Cloud|Druid=3|Call Lightning|Druid=4|Sleet Storm|Druid=5|Ice Storm|Druid=6|Control Winds|Druid=7|Control Weather|Druid=8|Whirlwind|Druid=9|Storm of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 791,
+    "record_key": "Druid Domain ~ Weather"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

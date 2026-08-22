@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Janni ~ Change Size",
     "delivery": "SpellLike",
@@ -16,19 +14,59 @@
       "beastiary:monster:genie_janni",
       "beastiary:monster:genie_janni_noble"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Change Size"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|JanniChangeSizeDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|JanniChangeSizeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Change Size)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "JanniChangeSizeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Twice per day, a janni can magically change a creature's size. This works just like an enlarge person or reduce person spell (the janni chooses when using the ability), except that the ability can work on the janni. A DC %1 Fortitude save negates the effect. This is the equivalent of a 2nd-level spell.|JanniChangeSizeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Janni ~ Change Size"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      }
+    ],
     "source_page": "p.141",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 649,
-    "record_key": "Janni ~ Change Size"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 649,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Janni ~ Change Size",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

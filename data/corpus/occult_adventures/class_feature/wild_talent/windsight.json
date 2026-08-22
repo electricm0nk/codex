@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Wild Talent ~ Windsight",
+    "name": "Windsight",
+    "class": "Wild Talent",
+    "description": "Element air; Type utility (Su); Level 3; Burn - You can see through mist and fog (including fog cloud and similar magic). In areas of moderate or stronger wind, you can see and hear as if you were standing at both your own position and a position a number of feet in the wind's direction equal to the wind's speed in miles per hour, potentially allowing you to see around corners and other obstacles.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Windsight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Air"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Air,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Element air; Type utility (Su); Level 3; Burn - You can see through mist and fog (including fog cloud and similar magic). In areas of moderate or stronger wind, you can see and hear as if you were standing at both your own position and a position a number of feet in the wind's direction equal to the wind's speed in miles per hour, potentially allowing you to see around corners and other obstacles."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 802,
+    "record_key": "Wild Talent ~ Windsight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

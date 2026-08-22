@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Aerie Protector ~ Wild Empathy",
+    "name": "Wild Empathy",
+    "class": "Druid",
+    "description": "An aerie protector gains a +4 bonus on wild empathy checks on flying animals, but she takes a -4 penalty on checks on other animals. This alters wild empathy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aerie Protector ~ Wild Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.AerieProtectorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An aerie protector gains a +4 bonus on wild empathy checks on flying animals, but she takes a -4 penalty on checks on other animals. This alters wild empathy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 505,
+    "record_key": "Aerie Protector ~ Wild Empathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

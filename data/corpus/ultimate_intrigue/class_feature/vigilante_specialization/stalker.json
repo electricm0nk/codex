@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Vigilante Specialization ~ Stalker",
+    "name": "Stalker",
+    "class": "Vigilante Specialization",
+    "description": "A stalker gains an ability called hidden strike, which allows him to deal an extra %1d8 points of precision damage on melee attacks (or ranged attacks from within 30 feet) against foes who are unaware of his presence, who consider him an ally, or who are made flat-footed by startling appearance. A stalker vigilante can also deal hidden strike damage to a target that he is flanking or that is denied its Dexterity bonus to AC, but in these cases, the damage is reduced to %1d4. A stalker can deal hidden strike damage against targets with concealment (but not total concealment). A stalker can apply only one talent marked with an asterisk (*) to a given hidden strike, and only when that hidden strike is dealt against a foe that is unaware of the stalker vigilante's presence (or who considers him an ally), unless otherwise noted.|HiddenStrikeDiceCount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Specialization ~ Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VigilanteSpecialization.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HiddenStrikeDiceCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A stalker gains an ability called hidden strike, which allows him to deal an extra %1d8 points of precision damage on melee attacks (or ranged attacks from within 30 feet) against foes who are unaware of his presence, who consider him an ally, or who are made flat-footed by startling appearance. A stalker vigilante can also deal hidden strike damage to a target that he is flanking or that is denied its Dexterity bonus to AC, but in these cases, the damage is reduced to %1d4. A stalker can deal hidden strike damage against targets with concealment (but not total concealment). A stalker can apply only one talent marked with an asterisk (*) to a given hidden strike, and only when that hidden strike is dealt against a foe that is unaware of the stalker vigilante's presence (or who considers him an ally), unless otherwise noted.|HiddenStrikeDiceCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HiddenStrikeDiceCount|(VigilanteLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteIsStalker|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1d8 (or %1d4)|HiddenStrikeDiceCount"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 43,
+    "record_key": "Vigilante Specialization ~ Stalker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

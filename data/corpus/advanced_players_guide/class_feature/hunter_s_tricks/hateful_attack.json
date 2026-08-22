@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Hunter's Tricks ~ Hateful Attack",
+    "name": "Hateful Attack",
+    "class": "Hunter's Tricks",
+    "description": "The ranger can use this trick as a free action when he makes an attack against one of his favored enemies. The ranger doubles the threat range of his weapon for this attack. This does not stack with other abilities that increase a weapon's threat range.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hunter's Tricks ~ Hateful Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice"
+      },
+      {
+        "key": "DESC",
+        "value": "The ranger can use this trick as a free action when he makes an attack against one of his favored enemies. The ranger doubles the threat range of his weapon for this attack. This does not stack with other abilities that increase a weapon's threat range."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Hunter's Trick"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 2851,
+    "record_key": "Hunter's Tricks ~ Hateful Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

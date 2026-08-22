@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Slayer Archetype ~ Avalancher",
+    "name": "Avalancher",
+    "class": "Slayer Archetype",
+    "description": "Avalanchers attack from overhead cliffs and mesas like a landslide of arrows and blades.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slayer Archetype ~ Avalancher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SlayerArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Slayer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Avalancher],[!PREFACT:1,ABILITIES,Slayer_Archetype_StudiedTarget=True,Slayer_Archetype_Track=True,Slayer_Archetype_SwiftTracker=True,Slayer_Archetype_Stalker=True,Slayer_Archetype_Quarry=True,Slayer_Archetype_ImprovedQuarry=True,Slayer_Archetype_MasterSlayer=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Avalanchers attack from overhead cliffs and mesas like a landslide of arrows and blades."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avalancher ~ Falling Strike|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avalancher ~ Cliff Jumper|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avalancher ~ Falling Dodge|PRECLASS:1,Slayer=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avalancher ~ Fall-By Attack|PRECLASS:1,Slayer=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Avalancher ~ Death from Above|PRECLASS:1,Slayer=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_StudiedTarget|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_MasterSlayer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_StudiedTarget|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Stalker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_MasterSlayer|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1143,
+    "record_key": "Slayer Archetype ~ Avalancher"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

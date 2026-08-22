@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Rogue Archetype ~ Eldritch Raider",
+    "name": "Eldritch Raider",
+    "class": "Rogue Archetype",
+    "description": "An eldritch raider is a rogue who seeks to unravel the mysteries of the destruction of the Gillman's homeland. They explore old ruins that date back to the days of the old human empire and track down relics and lore from its glory days.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue Archetype ~ Eldritch Raider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.RogueArchetype.RogueTalent2.RogueTrapSense"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Rogue=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Eldritch Raider],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent2,TYPE.RogueTrapSense]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGillman=true"
+      },
+      {
+        "key": "DESC",
+        "value": "An eldritch raider is a rogue who seeks to unravel the mysteries of the destruction of the Gillman's homeland. They explore old ruins that date back to the days of the old human empire and track down relics and lore from its glory days."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eldritch Raider ~ Class Skills|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eldritch Raider ~ Skill Ranks per Level|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eldritch Raider ~ Detect Magic|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eldritch Raider ~ Eldritch Intuition|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eldritch Raider ~ New Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eldritch Raider ~ Rogue Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eldritch Raider ~ Advanced Talents|PRECLASS:1,Rogue=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Rogue"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 842,
+    "record_key": "Rogue Archetype ~ Eldritch Raider"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Cleric ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Cleric",
+    "description": "Clerics are proficient with all simple weapons, light armor, medium armor, and shields (except tower shields). Clerics are also proficient with the favored weapon of their deity.|!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericArmorProficiency.TYPE.ClericWeaponProficiency",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Clerics are proficient with all simple weapons, light armor, medium armor, and shields (except tower shields). Clerics are also proficient with the favored weapon of their deity.|!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericArmorProficiency.TYPE.ClericWeaponProficiency"
+      },
+      {
+        "key": "DESC",
+        "value": "Weapon and Armor Proficiencies are altered from the base cleric.|PREABILITY:1,CATEGORY=Archetype,TYPE.ClericArmorProficiency.TYPE.ClericWeaponProficiency"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|DEITYWEAPONS|!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericWeaponProficiency"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|TYPE=ArmorProfMedium|!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericArmorProficiency"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Simple|Weapon Proficiencies ~ Cleric|!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericWeaponProficiency"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|TYPE=ArmorProfMedium|!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericArmorProficiency"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 562,
+    "record_key": "Cleric ~ Weapon and Armor Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

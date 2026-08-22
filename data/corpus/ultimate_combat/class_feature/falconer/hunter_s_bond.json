@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Falconer ~ Hunter's Bond",
+    "name": "Hunter's Bond",
+    "class": "Ranger",
+    "description": "At 4th level, a falconer must select an animal companion when he gains hunter's bond. He does not gain a new companion at 4th level; rather, his feathered companion gains full hit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Falconer ~ Hunter's Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a falconer must select an animal companion when he gains hunter's bond. He does not gain a new companion at 4th level; rather, his feathered companion gains full hit points."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hunter's Bond ~ Animal Companion|Ranger ~ Hunter's Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter's Bond|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1555,
+    "record_key": "Falconer ~ Hunter's Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

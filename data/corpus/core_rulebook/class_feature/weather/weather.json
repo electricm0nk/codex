@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Weather Domain",
+    "name": "Weather",
+    "class": null,
+    "description": "With power over storm and sky, you can call down the wrath of the gods upon the world below.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weather Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.Domain.ClericDomain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWeatherAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With power over storm and sky, you can call down the wrath of the gods upon the world below."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Storm Burst|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Weather)|PREVARGTEQ:DomainWeatherAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Lightning Lord|PREVARGTEQ:DomainWeatherAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherDC|10+(DomainWeatherLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainWeatherAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Weather=1|Obscuring Mist|Weather=2|Fog Cloud|Weather=3|Call Lightning|Weather=4|Sleet Storm|Weather=5|Ice Storm|Weather=6|Control Winds|Weather=7|Control Weather|Weather=8|Whirlwind|Weather=9|Storm of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 683,
+    "record_key": "Weather Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,82 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": null,
+    "key": "Severis",
+    "name": "Severis, the Scourge Slayer",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Severis, the Scourge Slayer"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Battleaxe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.OneHanded.Martial.Standard.Slashing.Axe.Psionic.Legendary"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Severis / Enhancement Bonus.Special Quality ~ Severis / Scourgebane"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.440"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Severis Attunement|PREMULT:4,[PRETOTALAB:4],[PREABILITY:1,CATEGORY=FEAT,Power Attack],[PRESKILL:1,Knowledge (Psionics)=4],[PREVARGTEQ:TL,4]"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 472,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Severis",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

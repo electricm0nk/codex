@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Psychic Discipline Rivethun ~ Metamorphosis",
+    "name": "Metamorphosis",
+    "class": "Psychic",
+    "description": "By meditating for 1 hour, you can trigger a slow, physical metamorphosis that takes 24 hours to complete (during which you do not gain the benefits of this new form). This ability cannot change your type or subtype, grant new abilities or natural weapons, or change your size category, but otherwise allows you to transform your appearance into anything possible for creatures of your type and subtype. You gain a +%1 enhancement bonus to one physical ability score of your choice (Strength, Dexterity, or Constitution) while in this altered form. Your shape and ability score bonus persist until you assume a new form or your current altered form ends. When meditating to begin your metamorphosis, you can spend 1 point from your phrenic pool either to change your size category to Small or Medium, or to gain a new ability from those provided by the alter self spell. If you do so, your altered form lasts only %2 hours.|1+(PsychicLVL/5)|PsychicLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Rivethun ~ Metamorphosis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "DESC",
+        "value": "By meditating for 1 hour, you can trigger a slow, physical metamorphosis that takes 24 hours to complete (during which you do not gain the benefits of this new form). This ability cannot change your type or subtype, grant new abilities or natural weapons, or change your size category, but otherwise allows you to transform your appearance into anything possible for creatures of your type and subtype. You gain a +%1 enhancement bonus to one physical ability score of your choice (Strength, Dexterity, or Constitution) while in this altered form. Your shape and ability score bonus persist until you assume a new form or your current altered form ends. When meditating to begin your metamorphosis, you can spend 1 point from your phrenic pool either to change your size category to Small or Medium, or to gain a new ability from those provided by the alter self spell. If you do so, your altered form lasts only %2 hours.|1+(PsychicLVL/5)|PsychicLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 1180,
+    "record_key": "Psychic Discipline Rivethun ~ Metamorphosis"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

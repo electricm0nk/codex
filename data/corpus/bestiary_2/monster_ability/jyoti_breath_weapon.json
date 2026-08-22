@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Jyoti ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -13,19 +11,63 @@
     "owners": [
       "bestiary_2:monster:jyoti"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60-ft. cone, 11d6 fire, Reflex DC %1 half, usable once every 1d4 rounds)|JyotiBreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|JyotiBreathWeaponDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|JyotiBreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "JyotiBreathWeaponDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A jyoti's breath weapon is a focused burst of searing fire infused with positive energy.  Undead in the area take 11d8 damage rather than 11d6."
+      },
+      {
+        "key": "KEY",
+        "value": "Jyoti ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.171",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 739,
-    "record_key": "Jyoti ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 739,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Jyoti ~ Breath Weapon",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "River Druid ~ Read the Currents",
+    "name": "Read the Currents",
+    "class": "Druid",
+    "description": "A river druid gains a bonus equal to half her druid level on initiative checks and Acrobatics, Knowledge (geography), Perception, Stealth, Survival, and Swim checks when she is in, on, or adjacent to flowing water.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "River Druid ~ Read the Currents"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.RiverDruidClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A river druid gains a bonus equal to half her druid level on initiative checks and Acrobatics, Knowledge (geography), Perception, Stealth, Survival, and Swim checks when she is in, on, or adjacent to flowing water."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=On or near flowing water,Knowledge (geography)=On or near flowing water,Perception=On or near flowing water,Stealth=On or near flowing water,Survival=On or near flowing water,Swim=On or near flowing water|DruidLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 on Initiative when On or near flowing water|DruidLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 541,
+    "record_key": "River Druid ~ Read the Currents"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

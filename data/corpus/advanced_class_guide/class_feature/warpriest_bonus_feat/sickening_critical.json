@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Sickening Critical",
+    "name": "Sickening Critical",
+    "class": "Warpriest Bonus Feat",
+    "description": "Your critical hits cause opponents to become sickened.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Sickening Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat.Critical"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Critical Focus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:11],[PREVARGTEQ:WarpriestBonusFeatBAB,11],[PREVARGTEQ:CriticalFocusQualify,11]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your critical hits cause opponents to become sickened."
+      },
+      {
+        "key": "DESC",
+        "value": " Whenever you score a critical hit, your opponent becomes sickened for 1 minute. The effects of this feat do not stack. Additional hits instead add to the effect's duration."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Sickening Critical"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4283,
+    "record_key": "Warpriest Bonus Feat ~ Sickening Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

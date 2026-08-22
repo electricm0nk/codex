@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Black Asp ~ Forbidden Powers",
+    "name": "Forbidden Powers",
+    "class": "Monk",
+    "description": "A black asp can select a forbidden ki power in place of any of the following monk class abilities: slow fall (4th), high jump (5th), wholeness of body (7th), diamond body (11th), abundant step (12th), diamond soul (13th), quivering palm (15th), tongue of the sun and moon (17th), and empty body (19th). If he chooses to do so, he replaces the monk class ability the black asp gives up for the chosen forbidden ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Black Asp ~ Forbidden Powers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.BlackAspClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlackAspForbiddenPowerCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A black asp can select a forbidden ki power in place of any of the following monk class abilities: slow fall (4th), high jump (5th), wholeness of body (7th), diamond body (11th), abundant step (12th), diamond soul (13th), quivering palm (15th), tongue of the sun and moon (17th), and empty body (19th). If he chooses to do so, he replaces the monk class ability the black asp gives up for the chosen forbidden ki power."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Black Asp Forbidden Power|BlackAspForbiddenPowerCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlackAspForbiddenPowerCount|1+(MonkLVL>=5)+(MonkLVL>=7)+(MonkLVL>=11)+(MonkLVL>=12)+(MonkLVL>=13)+(MonkLVL>=15)+(MonkLVL>=17)+(MonkLVL>=19)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 536,
+    "record_key": "Black Asp ~ Forbidden Powers"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

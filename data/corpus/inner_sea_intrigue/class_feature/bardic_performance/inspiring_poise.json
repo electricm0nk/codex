@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Bardic Performance ~ Inspiring Poise",
+    "name": "Inspiring Poise",
+    "class": "Bardic Performance",
+    "description": "A Lion Blade gains a +%1 competence bonus on checks with a skill of her choice for as long as she maintains the performance. The performance is ended by any condition that imposes a penalty to her Dexterity score or immobilizes her.|InspiringPoiseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bardic Performance ~ Inspiring Poise"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Extraordinary.BardicPerformance.Bardic Performance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspiringPoiseBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A Lion Blade gains a +%1 competence bonus on checks with a skill of her choice for as long as she maintains the performance. The performance is ended by any condition that imposes a penalty to her Dexterity score or immobilizes her.|InspiringPoiseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspiringPoiseBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspiringPoiseBonus|2|PREVARGTEQ:LionBladeLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspiringPoiseBonus|2|PREVARGTEQ:LionBladeLVL,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 174,
+    "record_key": "Bardic Performance ~ Inspiring Poise"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

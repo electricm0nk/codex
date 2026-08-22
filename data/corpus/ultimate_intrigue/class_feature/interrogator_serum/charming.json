@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Interrogator Serum ~ Charming",
+    "name": "Charming",
+    "class": "Interrogator Serum",
+    "description": "The injected creature must succeed at a Will save or treat the interrogator favorably, as if affected by",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Interrogator Serum ~ Charming"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InterrogatorSerum.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Interrogator ~ Serums"
+      },
+      {
+        "key": "DESC",
+        "value": "The injected creature must succeed at a Will save or treat the interrogator favorably, as if affected by"
+      },
+      {
+        "key": "DESC",
+        "value": "charm person with a caster level of %1.|AlchemistDiscoveryLVL|PREVARLT:AlchemistDiscoveryLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "charm monster with a caster level of %1.|AlchemistDiscoveryLVL|PREVARGTEQ:AlchemistDiscoveryLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 167,
+    "record_key": "Interrogator Serum ~ Charming"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

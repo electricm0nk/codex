@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T14:49:05Z",
+  "data": {
+    "key": "Nature Warden ~ Companion Walk",
+    "name": "Companion Walk",
+    "class": "Nature Warden",
+    "description": "At 7th level, the nature warden's companion shares the benefits of travel spells (such as tree stride and transport via plants) and polymorph and similar spells (including tree shape) cast by the warden from the druid or ranger spell list. The companion counts either as part of the warden or as an object with no weight, whichever is more favorable for the warden.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nature Warden ~ Companion Walk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Nature WardenClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, the nature warden's companion shares the benefits of travel spells (such as tree stride and transport via plants) and polymorph and similar spells (including tree shape) cast by the warden from the druid or ranger spell list. The companion counts either as part of the warden or as an object with no weight, whichever is more favorable for the warden."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 1431,
+    "record_key": "Nature Warden ~ Companion Walk"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
