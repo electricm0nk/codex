@@ -750,6 +750,46 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   "complete or filed under Open blockers" condition is satisfied by this filing, not by closing the
   card's remaining scope.
 
+## Closure epilogue — full worktree/branch sweep (card 13, `workflow-instruction.md §13` step 3)
+
+Run 2026-08-22, after all four gates and cards 1-10,12 landed on origin and card 11 was filed
+under Open blockers above. Real counts, from `git worktree list` / `git branch -a` re-run before
+and after this sweep (not "none found" without having run the commands).
+
+- **Worktrees removed: 7** — `.claude/worktrees/wf_efd6f5fc-a9c-{1,6,7,8,9,11,13}` (the Gate 2
+  engine-chain cycles, the Epic 5 sweep, Epic 1 and Epic 3's cycles). All verified fully merged
+  into `origin/tranche/12` before removal (`git log origin/tranche/12..<branch> --oneline` → `0`
+  lines, for every one of the 7) and none `locked` (`git worktree list --porcelain` carried no
+  `locked` line for any of them). `git worktree remove` for each, then `git branch -D` for the
+  matching 7 branches plus 2 more fully-merged/superseded local branches:
+  `worktree-wf_efd6f5fc-a9c-12` (card 11's own worktree, unmerged-count 0, no active worktree
+  directory left to remove — branch-only cleanup) and `worktree-wf_c1156061-e3f-3` (superseded,
+  per the `## DISCOVERED` entry below this section — its fix landed independently under
+  `epic-5-protective-sweep`'s own commit `3b470c56f`; the branch itself still carries 1 commit not
+  literally present on `tranche/12`, deletion is authorized by that DISCOVERED entry's own text,
+  not a merged-content claim). **9 local branches deleted total.**
+- **Worktrees remaining: 1** — the primary checkout (`/home/ubuntu/workspace/repos/codex`,
+  `tranche/12`). `git worktree list` confirms.
+- **Local branches remaining (excluding `develop`/`tranche/11`/`tranche/12`): 4**, unchanged from
+  card 2's own disposition — none deleted at this sweep, all per standing instruction:
+  `sd31/racetrait4-SD31-E6-F4-005` (rescue branch, never gated/PI-screened/merged on trust, carried
+  forward untouched across the whole package); `worktree-wf_13156488-c9b-1`,
+  `worktree-wf_a45ece26-3fc-1`, `worktree-wf_be4660f2-72a-3` (three GAMED branches — kept only so
+  a future attempt can read the rejected implementation, per `UNMERGED-BRANCHES.md` §1; not
+  SD-32's call to delete without an explicit ruling). `worktree-wf_c1156061-e3f-5` (real, orphaned
+  doc corrections that never landed — `todo/levers.md` L3, `todo/defects.md` D9-collision finding)
+  is **still present**, left preserved (its content is SD-31-doc scope, not an SD-32 card's own
+  write surface; the `## DISCOVERED` entry below names its own proposed target).
+- **Origin branches: 6** — `develop`, `main`, `sd31/racetrait4-SD31-E6-F4-005` (rescue, mirrored),
+  `tranche/11`, `tranche/12`, `update-index`. `update-index` is left untouched: `git log
+  origin/develop..origin/update-index --oneline | wc -l` → 37, `git log
+  origin/main..origin/update-index --oneline | wc -l` → 245 — a large, actively-diverged
+  channel-index automation feed with no relationship to SD-32's corpus/compute-library scope and
+  not named in `UNMERGED-BRANCHES.md`'s disposition list (card 2's own 8-branch origin cleanup was
+  the 7 `worktree-wf_*` + `test` branches that sweep named, not this one). Deleting an
+  unrelated-automation origin branch without an explicit ruling is out of this card's scope.
+- **Disk:** `df -h /` → 968G total, 239G used, 730G available, 25% used. No pressure.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).
