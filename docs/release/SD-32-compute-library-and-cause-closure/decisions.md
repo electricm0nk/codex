@@ -15,15 +15,20 @@ closes, so the reasoning is captured while it is fresh.
 
 **Status:** Operator-pinned.
 
-* **Branch:** `tranche/12` (cut from `tranche/11`'s tip after SD-31's closure PR is merged). The
+* **Branch:** `tranche/12` (cut from `tranche/11`'s tip). SD-31's content reached `develop` via
+  PR #374 (merged 2026-08-22T19:53Z), verified **by content** (`git diff origin/develop b1b7f4290 --
+  src scripts data docs/retro docs/release/SD-31-corpus-closure-grind` is empty), not by ancestry —
+  merge-commit topology makes `--is-ancestor` report false even when every byte is present. The
   `SD-31-corpus-closure-grind/decisions.md §6` rationale — "tranche/N+1 carries tranche/N's full
-  history" — applies symmetrically; SD-31's work will be present in `tranche/12`'s history.
+  history" — applies symmetrically; SD-31's work is present in `tranche/12`'s history.
 * **Build version:** `<major>.<tranche-base>.<build>` per the 2026-07-17 amendment. **`tranche-base`
   is the numeral in the branch name** (per SD-31 decisions §6, which is the canonical pattern this
-  bundle inherits). For `tranche/12` that is `12`, so SD-32's first concrete value is
-  `0.12.<build_at_launch>`. The `0.11.x` line in `apps/desktop/package.json` /
-  `apps/desktop/src-tauri/tauri.conf.json` is the SD-31 close-out value; SD-32's first cycle
-  increments `build` to `0.12.<next>`. Major stays `0` until first publish to `main`.
+  bundle inherits). For `tranche/12` that is `12`. The tranche digit bumps **once, at the tranche
+  cut** (SD-31 precedent commit `147f1c2b7`, `0.11.0` for `tranche/11`): SD-32's bump to **`0.12.0`**
+  in `apps/desktop/package.json` / `apps/desktop/src-tauri/tauri.conf.json` landed on `tranche/12`
+  at launch-readiness remediation (2026-08-22). Published builds stamp `0.12.<build>` at publish
+  time. Major stays `0` until first publish to `main`. Derivation command (§9):
+  `grep -h '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json | head -2`.
 * **Board:** local-file `kanban.md` paired with `progress.md` — no Hermes kanban board. The Hermes
   board was retired 2026-08-01 (`SD-30-class-feature-archetype-bundle/decisions.md` Decision 14a);
   SD-30 and its successors use the local-file pattern. Cycle dispatch reads `kanban.md` at the top
@@ -50,6 +55,9 @@ case is a red light.
 SD-32 is scoped to reach a **definition of done**, not to a wave budget. The operator was
 explicit: measurement waves are acceptable, and the board may barely move for several of them.
 That cost is accepted deliberately in exchange for never running the same shape engine twice.
+**Reaffirmed 2026-08-22 at launch-readiness review: SD-32 closes when the content achieves the
+Definition of Done — all four gates' AT-32-* criteria met — and on no other trigger** (not a wave
+count, a date, or a token budget; `workflow-instruction.md §13`).
 
 ```
 census closure   →   shape closure   →   engines
@@ -176,12 +184,13 @@ Each gate's work touches a different surface and runs in a different order:
 Epic 1 (compute library) and Epic 2 (cause closure) are sequenced behind Gates 1+2 by
 construction. Epic 3 (class reachability) and Epic 4 (book onboarding) are sequenced behind Gate 0
 by construction. Epic 5 (automation, decided on evidence) runs throughout — its first deliverable
-is the *protective* self-erasure sweep across all 30 Rust generators, which fires before Gate 0
+is the *protective* self-erasure sweep across all 29 Rust generators
+(`ls src/bin/{gen_,ingest_,enrich_}*.rs | wc -l`), which fires before Gate 0
 because scaling engines over a generator that silently empties its own fixtures is how thousands
 of banked units disappear with the suite green.
 
-The file-disjointness claim is verified at `workflow-instruction.md §3` (per-epic parallel/sequential
-map), not assumed.
+The file-disjointness claim is verified at `workflow-instruction.md §3` (per-phase
+parallel/sequential map) and `§4` (file-touch verification), not assumed.
 
 ## Decision 7 — Open operator rulings (B1/B2/B4/B5 from SD-31 `todo/blocked.md`)
 
@@ -195,6 +204,12 @@ because they would shrink the honest denominator without changing a line of code
 * **B4** — do the 48 structurally-non-PC-class `class` units belong under the class doneness gate
   at all? Monster hit-dice progressions, Eidolon, psionic power-list menus.
 * **B5** — are the 5 `Ex-*` records real classes, or PCGen alignment-violation bookkeeping?
+
+(There is no **B3** here: the identifiers are SD-31 `todo/blocked.md`'s own numbering, carried
+unchanged so cross-references to SD-31 stay valid. B3 — "prerequisites in open pools" — was CLOSED
+in SD-31 wave 29 with a corpus-wide count (`SD-31-corpus-closure-grind/todo/blocked.md` B3;
+`is_archetype_locked()` in `src/rules_core/class_feature_pool_catalog.rs`) and does not carry
+forward.)
 
 Rulings on these belong in `risks-and-open-questions.md` (not here) so they stay visible as live
 operator questions, not bundled into doctrinal closure. B4 and B5 are the most leveraged: a single
@@ -210,18 +225,29 @@ down anywhere else. The five operator-pattern footguns it lists (wrong-base work
 -newermt` lies, omitted `model` on `agent()` calls, `git stash` taking the whole shared checkout,
 rulings not in force until committed) are not the bundle's scope, but they are the load-bearing
 **operator-pattern** knowledge the next session will need. They are mirrored into
-`workflow-instruction.md §6/§7` and into `risks-and-open-questions.md §"Five footguns from the SD-31
-session"`. The HANDOFF itself stays as the canonical source of record.
+`workflow-instruction.md §9` (with §6 step 1 as the mechanical control for footgun 1) and into
+`risks-and-open-questions.md §"Five footguns from the SD-31 session"`. The HANDOFF itself stays as
+the canonical source of record and is not edited; where its figures have since been re-derived
+(29 generators, not ~30; the stale local branches are `site-deploy` / `fix/site-deploy-page-workflow`,
+not a `site-publish/*` glob), the citing documents carry the corrected value and its command.
 
-## Decision 9 — Build counter resolution at first cycle
+## Decision 9 — Build counter resolution (resolved 2026-08-22)
 
-**Status:** Authoring-time rule.
+**Status:** Resolved at launch-readiness remediation.
 
 **`build` is a monotonic counter across all builds across all branches — never resets**, per the
 2026-07-17 amendment. `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` are
 the live version source of truth (`Cargo.toml` stays pinned at `0.1.0` and is not authoritative).
-SD-32's first concrete build value is whatever `cargo run --locked --bin v06_work_inventory` or
-the equivalent version-derivation tool returns at cycle-0, written into the cycle-0 receipt —
-**not** left as `0.12.<build_at_launch>` in any shipped file. The `0.12.<build_at_launch>` form
-appears only in `README.md` "Bundle at a glance" and in `workflow-instruction.md §1.7` as the
-template-time placeholder; both are replaced by the literal value at the first cycle.
+The tranche digit bumps once, at the tranche cut (SD-31 precedent `147f1c2b7`). SD-32's literal
+first concrete value is **`0.12.0`**, landed on `tranche/12` 2026-08-22 by a dispatched housekeeping
+agent (shipping-code edit, per `workflow-instruction.md §2.2`). Published builds stamp
+`0.12.<build>` at publish time. One derivation command, quoted wherever the value is quoted:
+
+```bash
+grep -h '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json | head -2
+```
+
+The literal is written in `README.md` (frontmatter `build_version_target` + "Bundle at a glance"),
+this file's §1, `workflow-instruction.md §0` and `§1` item 7 and `§11`, `progress.md` "Pre-launch
+receipt", and `risks-and-open-questions.md` risk 7. The old build-at-launch template marker no
+longer appears anywhere in the bundle (`workflow-instruction.md §10`).

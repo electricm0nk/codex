@@ -37,7 +37,7 @@ mandatory at planning time — cycles load them when they need them.
 |---|---|
 | `wired-integration-discipline` | Any cycle that touches production code and needs the four-check audit recipe (`OK_NO_TOKENS` / `OK_NO_NOOP_HANDLERS` / `OK_NO_MOCK_LEAKS` / `OK_NO_WOULD_STRINGS`) |
 | `identifier-discipline` | Any cycle that touches production code and needs the source-identifier audit recipe |
-| `graphify-update` | The closure epilogue cycle (architecture-docs refresh; `workflow-instruction.md §6.4`) |
+| `graphify-update` | The closure epilogue cycle (architecture-docs refresh; `workflow-instruction.md §13` step 4) |
 | `architecture-truth-up` | The closure epilogue cycle (architecture-docs refresh) |
 | `merge-conflict-resolution` | The closure epilogue cycle (PR open + merge-conflict resolution) |
 | `kanban-worker` | Any cycle that needs the local-file kanban pattern (this bundle uses the pattern) |
@@ -49,11 +49,19 @@ mandatory at planning time — cycles load them when they need them.
 |---|---|---|
 | `../../../retro/sd31-retrospective.md` | The SD-31 retrospective, grounded in the 1,940-event log. Our own written artifacts (briefs, dispatch prompts, README/kanban bodies) are the most frequently wrong thing in the program — not code, not people. Two infrastructure failures (disk-full 120x + disk-pressure 16x; wrong-base-worktree 27x) went unfixed for 30 waves. | First cycle of every gate, and any cycle authoring a dispatch prompt or planning-doc figure — this is the source for why the dual-audit gate and re-derive-don't-transcribe rules exist. |
 
+## This bundle's own artifacts (read first)
+
+| Path | What it carries | When a SD-32 cycle reads it |
+|---|---|---|
+| `../artifacts/HANDOFF.md` | The SD-31 → SD-32 session handoff: five operator-pattern footguns, two theses refuted, the anti-gaming apparatus, what is immediately actionable. Captured 2026-08-22; not edited — where a figure has since been re-derived, the citing doc carries the correction (`decisions.md §8`). | **Before anything else** in every dispatched cycle. |
+| `../artifacts/UNMERGED-BRANCHES.md` | Ten branches at the `tranche/11 → tranche/12` boundary (nine local-only) and their disposition order. | Card 2 (`boundary-branch-review`) and the §13 closure sweep. |
+| `../artifacts/corpus/README.md` | The repo-local PCGen oracle slot (`operator-supplied/pcgen`, git-ignored) — the only oracle location this bundle references. | Every cycle that touches the corpus (`workflow-instruction.md §2.1` env block). |
+
 ## Sibling bundles
 
 | Path | Bundle | Relationship to SD-32 |
 |---|---|---|
-| `../SD-31-corpus-closure-grind/` | SD-31 — Corpus Closure: the Grind and the Capability Builds | **Predecessor.** Closes 100% mandate, carries the inventory + interpreter + anti-gaming apparatus SD-32 inherits. `artifacts/HANDOFF.md` is the captured session context. |
+| `../SD-31-corpus-closure-grind/` | SD-31 — Corpus Closure: the Grind and the Capability Builds | **Predecessor.** Content merged to develop via PR #374 (2026-08-22). Carries the inventory + interpreter + anti-gaming apparatus SD-32 inherits; its `loop-instruction.md` is the worked example `workflow-instruction.md` follows; its `todo/blocked.md` is the source of the B1/B2/B4/B5 numbering. This bundle's own `../artifacts/HANDOFF.md` (row above) is the captured session context. |
 | `../SD-30-class-feature-archetype-bundle/` | SD-30 — Class Feature Archetype Bundle | **Indirect predecessor.** Owns `pi_screening::*`, the `doneness_verdict()` table, and the build-version numbering amendment SD-32 inherits via `decisions.md §1`. SD-30 absorbed the previous `SD-32-instrument-coverage-and-consumer-wiring/` package on 2026-08-15; the precedent for SD-32's swap is in SD-30's own `decisions.md §50`. |
 | `../SD-29-corpus-wide-catch-up-lanes/` | SD-29 — Corpus-Wide Catch-Up Lanes | **Pre-predecessor.** Carries `corpus-shape-37-books.md` and the per-kind `done`-floor table that SD-32's Gate 0 census walk reads. |
 | `../SD-28-ultimate-book-content-ingestion/` | SD-28 — Ultimate Book Content Ingestion | **Pre-predecessor.** Carries `forward-scope-register.md`'s C2.x precedent for third-party publisher tiering (Dreamscarred Press, Ultimate Psionics). |
@@ -67,8 +75,8 @@ mandatory at planning time — cycles load them when they need them.
 |---|---|
 | `../../../AGENTS.md` | The repo-root conduct surface — non-negotiable rules, hard stops, retrospective-log discipline. Every cycle reads this once per bundle. |
 | `../../../CLAUDE.md` | Lightweight activation surface. Read for the project-specific pointers (file structure, tooling). |
-| `../../../architecture/` | Architecture docs; refreshed at closure per the closure pipeline (`workflow-instruction.md §6` step 4). |
-| `../../../corpus-work-channels.md` | The 37-book workchannel map SD-32's Gate 0 census diff reads. |
+| `../../../architecture/` | Architecture docs; refreshed at closure per the closure pipeline (`workflow-instruction.md §13` step 4). |
+| `../../corpus-work-channels.md` | The 37-book workchannel map SD-32's Gate 0 census diff reads (`docs/release/corpus-work-channels.md`). |
 
 ## What is NOT in `references/`
 

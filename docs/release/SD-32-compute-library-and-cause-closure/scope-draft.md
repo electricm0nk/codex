@@ -187,7 +187,7 @@ gates by construction, not by preference. Its measured ceilings are in `epic-bre
 
 **A percentage.** `epic-breakdown.md` arithmetic suggests 72–74% if every epic fully lands, but that
 figure sums populations whose overlaps are mostly unmeasured — and SD-31's own THE-BOX had to correct
-1,212 double-counted units across just two lanes that each counted honestly. Six epics will collide
+1,212 double-counted units across just two lanes that each counted honestly. Five epics will collide
 worse than two lanes did.
 
 This program's unit estimates have been wrong in both directions and by large factors: 10,163

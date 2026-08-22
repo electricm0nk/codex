@@ -39,16 +39,16 @@ date: 2026-08-22
    run on every `scripts/verify.sh` invocation with no opt-out flag. A PR that adds the stage
    with `--skip shape-coverage-standing-gate` is out of protocol.
 6. **The Epic 5 protective sweep misses a vulnerable generator.** Three of the twelve SD-31
-   checked generators are vulnerable; ~30 (per HANDOFF) have never been checked. Scaling Gate 2
+   checked generators are vulnerable; 17 of the 29 (`ls src/bin/{gen_,ingest_,enrich_}*.rs | wc -l`;
+   HANDOFF's "~30" was an estimate) have never been checked. Scaling Gate 2
    over an unchecked generator is the failure mode this epic prevents. **Mitigation:** the
    sweep's first cycle enumerates *every* generator (not just the suspected ones), runs the
    self-erasure assertion against each, and the receipt names the count of generators that
    passed, failed, and were skipped (zero of the last).
-7. **The build counter `0.12.<build_at_launch>` is left as a template marker through Gate 0.**
-   A bundle that ships with template markers is not planning-ready per the governance template's
-   §9 / §1.7. **Mitigation:** `workflow-instruction.md §11` requires the literal next value to be
-   resolved before the first cycle's commit, and `README.md`'s `build_version_target` is updated
-   in the same commit.
+7. **~~The build counter is left as a template marker.~~ Resolved 2026-08-22.** The tranche-cut bump
+   to `0.12.0` landed on `tranche/12` (SD-31 precedent `147f1c2b7`), the literal is written in every
+   site `workflow-instruction.md §11` lists, and the marker no longer appears in the bundle (`§10`
+   placeholder gate). Published builds stamp `0.12.<build>`.
 
 ## Five footguns from the SD-31 session
 
@@ -57,9 +57,10 @@ Mirrored from `artifacts/HANDOFF.md` for visibility. The full pattern lives in t
 this program in real cycles; a SD-32 cycle that hits any of them is operating on a known landmine,
 not a surprise.
 
-1. **Wrong-base worktrees.** Pin the base SHA in every dispatch. Verify with `git log` and
-   `git reset --hard` if wrong. Delete spent `site-publish/*` branches — they are what poisons
-   the base.
+1. **Wrong-base worktrees.** Pin the base SHA in every dispatch; `workflow-instruction.md §6` step 1
+   is the mechanical check (nonzero exit, `git reset --hard "$PIN"` if wrong). The poison was spent
+   site-publish commits; the stale local site branches at the tranche/12 boundary are `site-deploy`
+   and `fix/site-deploy-page-workflow` (card 2 dispositions them).
 2. **`find -newermt` lies.** Use a Python mtime comparison when freshness matters.
 3. **Omitted `model` on `agent()` calls inherits the orchestrator's model.** Set it explicitly
    every time: Sonnet for build and integration, Opus only for adversarial verifiers.
@@ -76,13 +77,15 @@ filed here as live operator questions, not bundled into doctrinal closure (`deci
 * **B1** — `mod_only_rescue`: a 249-unit cross-kind phantom-duplicate population that would shrink
   both the `feat` kind and the denominator. Proposed, never ruled.
 * **B2** — per-race branch 1/2/3 classification. Race attribution stays frozen until this is
-  answered. Affects how SD-32's chassi builds resolve race-trait compound keys (Epic 2 T2b,
+  answered. Affects how SD-32's chassis builds resolve race-trait compound keys (Epic 2 T2b,
   2,472 measured units).
 * **B4** — do the 48 structurally-non-PC-class `class` units belong under the class doneness gate
   at all? Monster hit-dice progressions, Eidolon, psionic power-list menus. **A ruling here would
   lower the denominator by 48 units.**
 * **B5** — are the 5 `Ex-*` records real classes, or PCGen alignment-violation bookkeeping?
   **A ruling here would lower the denominator by 5 units.**
+
+(No B3: SD-31's B3, "prerequisites in open pools", was closed in SD-31 wave 29 — `decisions.md §7`.)
 
 B4 + B5 together would lower the denominator by 53 units with no engine work. They are the most
 leveraged rulings on this list.

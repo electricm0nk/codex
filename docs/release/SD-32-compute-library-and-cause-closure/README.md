@@ -4,7 +4,7 @@ owner: god-emporer
 status: planning-ready (chassis completed 2026-08-22 from SD-31 session handoff)
 date: 2026-08-22
 canonical_branch: tranche/12
-build_version_target: 0.12.<build_at_launch> (decisions.md §1, operator ruling 2026-08-22)
+build_version_target: 0.12.0 (tranche cut bump landed 2026-08-22; published builds stamp 0.12.<build>; decisions.md §1/§9)
 predecessor: SD-31-corpus-closure-grind
 companion_to: ./scope-draft.md, ./decisions.md
 ---
@@ -33,11 +33,12 @@ The dead `SD-32-instrument-coverage-and-consumer-wiring/` directory was cleaned 
 | Slug | `compute-library-and-cause-closure` |
 | Canonical branch | `tranche/12` (operator ruling 2026-08-22) |
 | Kanban board | **local-file** `kanban.md` (no Hermes board; per SD-30 decisions §14a, retired 2026-08-01) |
-| Epics / criteria | 5 epics / 4 gates (G0/G1/G2/G3) |
-| Target version | `0.12.<build_at_launch>` (operator ruling 2026-08-22) |
+| Epics / criteria | 5 epics / 4 gates (G0/G1/G2/G3) / 13 kanban cards |
+| Target version | `0.12.0` bumped on `tranche/12` at launch (2026-08-22); published builds stamp `0.12.<build>` (`decisions.md §1/§9`) |
 | Dispatch mechanism | `Workflow` tool, invoked from a live session, per `workflow-instruction.md §2` |
 | Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
-| Closure gate | Retrospective written + cited; worktree/branch sweep; `tranche/12 → develop` PR; architecture-docs refresh (§6); release-notes generation — full sequence in `workflow-instruction.md §13` |
+| PCGen oracle | Repo-local: `artifacts/corpus/operator-supplied/pcgen` (git-ignored slot; `artifacts/corpus/README.md`) — never `~/workspace/repos/pcgen` |
+| Closure gate | **Definition of Done — all four gates' AT-32-* criteria met (operator ruling 2026-08-22), never a wave budget.** Then: retrospective written + cited; worktree/branch sweep; `tranche/12 → develop` PR; architecture-docs refresh; release-notes generation — full sequence in `workflow-instruction.md §13` |
 
 ## Why this package exists
 
@@ -68,16 +69,16 @@ Load-bearing, and none of it should be rediscovered:
 * **A trustworthy grant-fact parser** and the merged grant data it produces.
 * **The anti-gaming apparatus**, which is the reason any of these numbers can be believed: four GAMED verdicts across waves 18–27, every one correct; integration cycles that re-derive rather than trust and have caught a load-bearing defect in every wave since 18.
 * **The todo directory** (`SD-31-corpus-closure-grind/todo/`) as the scheduling layer, reconciled every wave.
-* **Five operator-pattern footguns** captured in `artifacts/HANDOFF.md` from the SD-31 session — wrong-base worktrees, `find -newermt` lies, omitted `model` on `agent()` calls, `git stash` taking the whole shared checkout, rulings not in force until committed. These belong in `workflow-instruction.md` §pitfalls, not in this README.
+* **Five operator-pattern footguns** captured in `artifacts/HANDOFF.md` from the SD-31 session — wrong-base worktrees, `find -newermt` lies, omitted `model` on `agent()` calls, `git stash` taking the whole shared checkout, rulings not in force until committed. These live in `workflow-instruction.md §9`, not in this README.
 
 ## Epics
 
 | # | Epic | Rests on |
 |---|---|---|
-| 1 | **The compute library.** Build the top shape families once, prove each once, and reuse. Harvest what already exists — ~166 hand-modelled functions are already proven byte-exact. | Gate 1 (shape closure) |
-| 2 | **Cause closure.** Take each blocker shape from the root-cause taxonomy and close it corpus-wide rather than instance by instance. | Gate 1 |
-| 3 | **Class reachability.** The 77 prestige classes need entry-requirement gating that exists nowhere in the codebase; 18 real base classes have no table; 28 sit in books with no compiled rule set. | SD-31 wave 27 census |
-| 4 | **Book onboarding.** Four books have no compiled rule set at all — 2,300+ units, recurring across five kinds. Cost is calibrated at roughly 1.5–2h per book, dominated by ~7 count-pinning files. | `SD-31-corpus-closure-grind/artifacts/THE-BOX.md §3 #3` |
+| 1 | **The compute library.** Build the top shape families once, prove each once, and reuse. Harvest what already exists — ~166 hand-modelled functions are already proven byte-exact. | Gates 1 + 2 (`decisions.md §6`; kanban card 10) |
+| 2 | **Cause closure.** Take each blocker shape from the root-cause taxonomy and close it corpus-wide rather than instance by instance. | Gates 1 + 2 (`decisions.md §6`; kanban card 11) |
+| 3 | **Class reachability.** The 77 prestige classes need entry-requirement gating that exists nowhere in the codebase; 18 real base classes have no table; 28 sit in books with no compiled rule set. | Gate 0 (`decisions.md §6`; kanban card 12); figures from SD-31 wave 27 census |
+| 4 | **Book onboarding.** Four books have no compiled rule set at all — **422 units** behind a missing `RuleSetId` variant (`epic-breakdown.md` Epic 4; re-derive: `jq` over `docs/work-inventory.json` by book). Cost is calibrated at roughly 1.5–2h per book, dominated by ~7 count-pinning files. | Gate 0 precondition (kanban card 4); `SD-31-corpus-closure-grind/artifacts/THE-BOX.md §3 #3` |
 | 5 | **Automation, decided on evidence.** Only candidates whose output can be independently checked. A tool that generates values needs a fixture from bytes it does not read, or it manufactures plausible numbers faster than a human could. | SD-31 wave 31's automation case |
 
 Sequencing lives in `scope-draft.md` §"Sequencing" — the hard ordering is `census closure → shape closure → engines`, not by preference but by construction: an engine's correctness claim *"this shape is now handled"* is false if the shape's population can still grow.
@@ -104,6 +105,7 @@ Sequencing lives in `scope-draft.md` §"Sequencing" — the hard ordering is `ce
 | `artifacts/HANDOFF.md` | SD-31 → SD-32 session handoff (read first) | operator (captured 2026-08-22) |
 | `artifacts/UNMERGED-BRANCHES.md` | 10 branches at tranche/11 → tranche/12 boundary | operator (captured 2026-08-22) |
 | `artifacts/README.md` | Cycle-artifacts index | operator |
+| `artifacts/corpus/` | The repo-local PCGen oracle slot (`operator-supplied/pcgen`, git-ignored); the only oracle location this bundle references | operator (populated by `scripts/fetch-pcgen-oracle.sh --dest`) |
 | `references/` | Doctrine pointers, skill pointers, sibling bundle pointers | operator |
 | `references/README.md` | Doctrine / skill / sibling-bundle reference index | operator |
 
@@ -121,4 +123,4 @@ These are not negotiable and were each bought with a failure:
 
 ## Status
 
-**Planning-ready.** Opened 2026-08-22 during SD-31 wave 31 so the reasoning is captured while it is fresh. The four source documents (README, scope-draft, epic-breakdown, HANDOFF) were filled out the same day. The chassis is complete: 15 files, full `artifacts/` and `references/` trees, dead `SD-32-instrument-coverage-and-consumer-wiring/` folder cleaned up. The bundle is ready to launch on `tranche/12` once SD-31's closure PR is merged.
+**Planning-ready.** Opened 2026-08-22 during SD-31 wave 31 so the reasoning is captured while it is fresh. The four source documents (README, scope-draft, epic-breakdown, HANDOFF) were filled out the same day. The chassis is complete: 14 root `.md` files (the 13 template-canonical files plus `technical-requirements.md`/`technical-design.md`/`forward-scope-register.md`/`kanban.md`/`release-notes.md` per house convention — see the table above), full `artifacts/` and `references/` trees, dead `SD-32-instrument-coverage-and-consumer-wiring/` folder cleaned up. Launch-readiness remediation ran 2026-08-22: SD-31's content is on `develop` (PR #374, verified by content), `workflow-instruction.md §1` was run for real with outputs pasted, the PCGen oracle moved into `artifacts/corpus/`, and the version bump to `0.12.0` landed. **Launch-ready on `tranche/12`.**

@@ -52,8 +52,9 @@ This bundle's work touches five distinct surfaces, organised by the four gates t
 
 ### Epic 5 — Automation, decided on evidence
 
-- **Rust generator self-erasure sweep** — the protective check across all 30 (per HANDOFF) /
-  ~29 (per SD-31 wave 30 measurement — reconcile in Epic 5's first cycle) Rust generators. One
+- **Rust generator self-erasure sweep** — the protective check across all 29 Rust generators
+  (`ls src/bin/{gen_,ingest_,enrich_}*.rs | wc -l`, verified 2026-08-22; HANDOFF's "~30" was an
+  estimate — Epic 5's first cycle re-runs the command and states the live count). One
   already live-reproduced wiping 93 spell and 15 equipment records
   (`gen_advanced_race_guide`); the fix that closed it is the template, not an exception.
 - **`scripts/coverage_ledger.py`** (read, not modified) — proves inventory completeness
@@ -87,8 +88,9 @@ By construction, each gate's work touches a different surface:
 | Gate 1 | `scripts/{coverage,shape}_ledger.py` (read or new); read-only on corpus |
 | Gate 2 | `src/rules_core/pilot_compute/*.rs`; new test files |
 | Gate 3 | `scripts/shape_coverage_standing_gate.py` (new); `scripts/verify.sh` |
-| Epic 5 | `src/bin/gen_*.rs` (read + assertion); the protective sweep is read-mostly, the fix where needed is per-generator |
+| Epic 5 | `src/bin/{gen_,ingest_,enrich_}*.rs` (read + assertion); the protective sweep is read-mostly, the fix where needed is per-generator |
 
 A cycle that finds itself editing a file outside this list should stop and check whether it has
-drifted out of scope. The parallel-within-gate work in Gate 0 / Gate 2 must use
-`isolation: 'worktree'` (`workflow-instruction.md §3`); the other phases are serial by construction.
+drifted out of scope. Parallel phases (Pre-G0, Gate 2's two engine chains, Epics 1-3) must use
+`isolation: 'worktree'` (`workflow-instruction.md §3`); Gate 0 (card 4 behind card 3), Gate 1
+(single card) and Gate 3 are serial by construction.

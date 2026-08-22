@@ -9,13 +9,16 @@ date: 2026-08-22
 
 ## Pre-loop prerequisites
 
-- `tranche/12` checked out, `git pull --ff-only` clean (cut from `tranche/11`'s tip after SD-31's
-  closure PR lands; `decisions.md §1`).
-- The PCGen oracle checkout at the pin (`scripts/pcgen-oracle-pin.env`), verified with
-  `scripts/verify.sh --only preflight-oracle` (bootstrap with `scripts/fetch-pcgen-oracle.sh` if
-  it fails). Resolve via `$PCGEN_CORPUS_ROOT`/`$PCGEN_REPO_DIR`, never a literal local path.
-- `SD-31-corpus-closure-grind` closure PR merged to develop (verified by reading
-  `origin/develop`'s tip and confirming the SD-31 closure commit is HEAD or in HEAD's ancestry).
+- `tranche/12` checked out, `git pull --ff-only` clean (cut from `tranche/11`'s tip; `decisions.md §1`).
+- The PCGen oracle checkout at the pin (`scripts/pcgen-oracle-pin.env`) **in the repo-local slot**
+  `artifacts/corpus/operator-supplied/pcgen` (git-ignored; `artifacts/corpus/README.md`), verified
+  with `scripts/verify.sh --only preflight-oracle` after exporting the `workflow-instruction.md §2.1`
+  env block (bootstrap with `scripts/fetch-pcgen-oracle.sh --dest "$PCGEN_REPO_DIR"` if it fails).
+  `$PCGEN_CORPUS_ROOT`/`$PCGEN_REPO_DIR` always resolve to that slot — never to `~/workspace/repos/pcgen`
+  or any path outside the repo.
+- `SD-31-corpus-closure-grind` content merged to develop — PR #374, merged 2026-08-22, verified **by
+  content** (`git diff origin/develop b1b7f4290 -- src scripts data docs/retro
+  docs/release/SD-31-corpus-closure-grind` empty), not by ancestry (`workflow-instruction.md §1` item 3).
   Cited, not re-verified per cycle.
 - `cargo run --locked --bin v06_work_inventory` regenerates `docs/work-inventory.json` at cycle-0
   of any card that cites a figure from it — never transcribed stale.
@@ -31,7 +34,8 @@ date: 2026-08-22
   value is transcribed from bytes the engine never reads. An interpreted value with no fixture is
   not done (operator ruling §20, restated in `decisions.md §3`).
 - **Every Gate 0 cycle cites the live PCGen oracle pin** (`scripts/pcgen-oracle-pin.env`,
-  `PCGEN_ORACLE_SHA`) in its re-derive receipt. A figure re-derived against an unstated oracle
+  `PCGEN_ORACLE_SHA`) in its re-derive receipt, and reads the oracle from the repo-local slot
+  (`artifacts/corpus/operator-supplied/pcgen`). A figure re-derived against an unstated oracle
   commit is not re-derived.
 - **Every Gate 2 cycle quotes the corpus arithmetic family** the engine handles (F1..F10 from
   `epic-breakdown.md Epic 1`) and the corpus units it claims to reach. A cycle that emits
@@ -49,7 +53,8 @@ date: 2026-08-22
   Scaling engines over a generator that silently empties its own fixtures is the failure class
   Gate 2 depends on not existing. See `artifacts/HANDOFF.md` for the live precedent
   (`scripts/derive_derived_evaluator_fixtures.py` was destroying 2,110 fixture entries per run
-  before the fix; ~30 generators have never been checked for the same shape).
+  before the fix; 17 of the 29 generators — `ls src/bin/{gen_,ingest_,enrich_}*.rs | wc -l` — have
+  never been checked for the same shape, per `epic-breakdown.md` Epic 5).
 
 ## Out of scope (technical)
 

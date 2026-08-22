@@ -54,7 +54,12 @@ leverage — it is the biggest and the least helped.
 
 ## Epic 2 — Cause closure
 
-Twelve blocker shapes, closed **by class rather than by instance**. Ranked by measured population.
+Eleven named blocker shapes — ten with measured populations in the table below plus T10 (no unit
+count) — closed **by class rather than by instance**. Epic 2's closure targets are the eight
+measured shapes T2a, T2b, T9, T4, T12, T5, T1, T3 (T5 is credited via Epic 4 / card 4 and T3 via
+Epic 5 / card 1; Epic 2 cites those receipts rather than re-closing them); T8/T7 are sub-20-unit
+residuals closed opportunistically (`acceptance-and-verification.md` AT-32-E2-001, `kanban.md` #11).
+Ranked by measured population.
 
 | T# | Shape | Units | Note |
 |---|---|---:|---|

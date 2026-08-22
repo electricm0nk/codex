@@ -16,7 +16,9 @@ and is not re-derived here.
 ## Gate 0 — Census closure
 
 **AT-32-G0-001.** Given the 158-book PCGen oracle directory tree at the pinned SHA
-(`scripts/pcgen-oracle-pin.env`, `$PCGEN_CORPUS_ROOT`).
+(`scripts/pcgen-oracle-pin.env`), read from the **repo-local slot**
+`artifacts/corpus/operator-supplied/pcgen/data` (`$PCGEN_CORPUS_ROOT` as exported by
+`workflow-instruction.md §2.1`; `artifacts/corpus/README.md`) — never from a path outside the repo.
 
 When the new independent walker (`scripts/census_independent.py`, Gate 0 deliverable) runs against
 it.
@@ -44,7 +46,12 @@ open hole in the census guarantees the rerun the operator does not want.
 **Verification commands:**
 
 ```bash
-# Independent walker diff against inventory
+# Oracle is the repo-local slot (workflow-instruction.md §2.1)
+export PCGEN_REPO_DIR="$(git rev-parse --show-toplevel)/docs/release/SD-32-compute-library-and-cause-closure/artifacts/corpus/operator-supplied/pcgen"
+export PCGEN_CORPUS_ROOT="$PCGEN_REPO_DIR/data"
+scripts/verify.sh --only preflight-oracle
+
+# Independent walker diff against inventory (scripts/census_independent.py is the Gate 0 deliverable — card 3 creates it)
 python3 scripts/census_independent.py --pcgen-root "$PCGEN_CORPUS_ROOT" \
   --inventory docs/work-inventory.json --output artifacts/gate-0-census-closure/diff.json
 test "$(jq -r '.unexplained' artifacts/gate-0-census-closure/diff.json)" = "0"
@@ -105,9 +112,10 @@ print(l['families'])
 
 **AT-32-G2-001.** For each of the ten semantic families, an engine exists in
 `src/rules_core/pilot_compute/` and emits values for the family's unit population. The engine
-**may** be `formula_interpreter.rs` for the nine families it already handles (the binding layer
-for F1..F9 is in place), **or** the generalised `bonus_stack_reader.rs` for the tenth family, or
-a new engine. Whatever the implementation, it is named in the cycle receipt.
+**may** be `formula_interpreter.rs` for the nine families it already evaluates directly (F1..F9
+need no binding layer — `epic-breakdown.md` Epic 1), **or** the generalised `bonus_stack_reader.rs`
+as the binding layer the tenth family (F10) needs, or a new engine. Whatever the implementation, it
+is named in the cycle receipt.
 
 **AT-32-G2-002.** Every value emitted by every engine clears `derived_evaluator_fixture_check`,
 whose expected value is transcribed from bytes the engine never reads. **An interpreted value
@@ -120,7 +128,9 @@ states:
 * The proof's unit population (measured, not estimated).
 * The proof width — which shapes the corpus's value space the engine does **not** cover.
 * The fixture sample size and how it was chosen.
-* The re-derive command (`cargo run --locked --bin <engine> --emit-fixtures` or equivalent).
+* The re-derive command (`cargo run --locked --bin <engine> -- --emit-fixtures` or equivalent — the
+  per-engine binary is a Gate 2 deliverable; today `formula_interpreter` and `bonus_stack_reader`
+  are library modules under `src/rules_core/pilot_compute/`, not `src/bin/` targets).
 
 **AT-32-G2-004.** No engine is "complete" until it has been run corpus-wide once. The corpus-wide
 run is itself a cycle, with its own receipt, and its own fixture-check, against the closed Gate 1
@@ -130,19 +140,29 @@ protocol — the subset is not the population the engine claims to handle.
 **Verification commands:**
 
 ```bash
-# Per-engine fixture check
+# The fixture-check gate is the existing Rust CLI src/bin/derived_evaluator_fixture_check.rs
+# (library: src/rules_core/derived_evaluator_fixture_check.rs; standing fixture:
+# tests/fixtures/rules_core/derived-evaluator-fixtures.json). There is no scripts/*.py for it.
+cargo run --locked --bin derived_evaluator_fixture_check -- --help   # flags are the CLI's own; cite the ones used
+
+# Per-engine fixture emission (the `--bin <engine>` targets are Gate 2 deliverables — cards 6/7
+# create them; until then this block is the contract, not a runnable command)
+export PCGEN_REPO_DIR="$(git rev-parse --show-toplevel)/docs/release/SD-32-compute-library-and-cause-closure/artifacts/corpus/operator-supplied/pcgen"
+export PCGEN_CORPUS_ROOT="$PCGEN_REPO_DIR/data"
 for engine in formula_interpreter bonus_stack_reader; do
-  cargo run --locked --bin "$engine" --emit-fixtures \
-    | tee "artifacts/gate-2-engines/${engine}.fixtures.json" \
-    | python3 scripts/derived_evaluator_fixture_check.py --input /dev/stdin
+  cargo run --locked --bin "$engine" -- --emit-fixtures \
+    > "artifacts/gate-2-engines/${engine}.fixtures.json"
 done
 
-# Corpus-wide run, one engine at a time, fixture-checked
-cargo run --locked --bin formula_interpreter --corpus-wide \
+# Corpus-wide run, one engine at a time (card 8, one cycle per engine), fixture-checked against
+# an expected-value file that lives in THIS bundle's artifacts and is transcribed from oracle bytes
+# the engine does NOT read (never regenerated from engine output)
+cargo run --locked --bin formula_interpreter -- --corpus-wide \
   --output artifacts/gate-2-engines/formula_interpreter.corpus-wide.json
-python3 scripts/derived_evaluator_fixture_check.py \
+cargo run --locked --bin derived_evaluator_fixture_check -- \
   --input artifacts/gate-2-engines/formula_interpreter.corpus-wide.json \
-  --expected-from "$(PCGEN_CORPUS_ROOT)/expected.json"  # bytes the engine does NOT read
+  --expected-from artifacts/gate-2-engines/formula_interpreter.expected.json
+# Receipt cites: grep PCGEN_ORACLE_SHA scripts/pcgen-oracle-pin.env
 ```
 
 ## Gate 3 — Closure invariant
@@ -162,7 +182,7 @@ manufacture false 100%. The verifier itself is part of the proof.
 * Names the per-family unit count at closure.
 * Names the unclassified count (must be zero for Gate 3 to be met).
 * Names the corpus SHA (`scripts/pcgen-oracle-pin.env`'s `PCGEN_ORACLE_SHA`) against which the
-  count was re-derived.
+  count was re-derived, read from the repo-local slot `artifacts/corpus/operator-supplied/pcgen`.
 
 **Verification commands:**
 
@@ -187,8 +207,10 @@ flat-constant family (which gets zero benefit from any shared function — see
 `epic-breakdown.md Epic 1`). The ceiling is not a target; it is the measured upper bound.
 
 **AT-32-E2-001 — Cause closure closes by class, not by instance.** (Epic 2 T2a/T2b deliver.) The
-eight blocker shapes (T2a, T2b, T9, T4, T12, T5, T1, T3 — see `epic-breakdown.md Epic 2`) are
-each closed corpus-wide rather than instance-by-instance. A cycle that closes T2a for a single
+eight measured blocker shapes (T2a, T2b, T9, T4, T12, T5, T1, T3 — see `epic-breakdown.md Epic 2`;
+T5 is credited via Epic 4's card 4 and T3 via Epic 5's card 1, and Epic 2's receipt cites both rather
+than re-closing them) are each closed corpus-wide rather than instance-by-instance. T8/T7 (16 units
+together) close opportunistically; T10 has no unit count and is a census-process item. A cycle that closes T2a for a single
 class and stops is out of protocol; the rule is *class-closure*, not *instance-closure*.
 
 **AT-32-E3-001 — Class reachability.** (Epic 3.) The 77 prestige classes have entry-requirement
@@ -203,15 +225,17 @@ behind a missing `RuleSetId` enum variant. The `adventurers_guide` precedent sho
 (`scope-draft.md`, `decisions.md §2`).
 
 **AT-32-E5-001 — Automation, decided on evidence.** (Epic 5.) The protective self-erasure sweep
-across all Rust generators runs **before Gate 0**. A cycle that touches an engine before this
+across all 29 Rust generators (`ls src/bin/{gen_,ingest_,enrich_}*.rs | wc -l`) runs **before Gate 0**. A cycle that touches an engine before this
 sweep is out of protocol — the failure mode is documented in `artifacts/HANDOFF.md`
 (`scripts/derive_derived_evaluator_fixtures.py` was destroying 2,110 fixture entries per run
 before the fix).
 
 ## Bundle closure criterion (in addition to the four gates and five epics)
 
-**AT-32-CLOSE-001 — The bundle closure epilogue actually ran, not just the PR.** Per
-`workflow-instruction.md §13`, closure requires, in order, before the PR opens:
+**AT-32-CLOSE-001 — The bundle closure epilogue actually ran, not just the PR.** The closure trigger
+is the **Definition of Done — all four gates' AT-32-* criteria met** — never a wave count, date, or
+budget (operator ruling 2026-08-22, `decisions.md §2`). Per `workflow-instruction.md §13`, closure
+then requires, in order, before the PR opens:
 
 1. Every gate G0-G3 met and every Epic 1-5 card `complete` or filed under `## Open blockers` with
    a named owner.
