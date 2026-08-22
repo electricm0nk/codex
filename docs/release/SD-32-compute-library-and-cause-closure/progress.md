@@ -191,6 +191,40 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
 - **Next-cycle plan:** Gate 0 (card 3) is now gated only on Pre-G0 being fully closed (cards 1+2 both
   `complete` as of this commit) — card 3 is ready to dispatch.
 
+### Cycle 2 — Gate 0 / Card 3 `gate-0-census-closure`
+
+- **Card ID:** `gate-0-census-closure`
+- **Commit SHA:** `58726ddfcc19d438d78af4f92ef978aff0f367e4` (implementation);
+  `9b8f5ade0eb48ea139a37f8a81e4f62e829e8601` (receipt SHA fixups after rebase).
+- **Files touched:** `scripts/census_independent.py` (new), `scripts/tests/test_census_independent.py`
+  (new, 11 tests), `artifacts/gate-0-census-closure/{diff.json,excluded-directories.md,
+  object-definition-rules.md,001_cycle_receipt.md}` (new), `docs/retro/events/gate-0-census.jsonl`
+  (new).
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS.
+- **Wired-integration audit result:** OK_NO_TOKENS.
+- **Acceptance criterion:** AT-32-G0-001 (independent walker, zero-unexplained per-book diff),
+  AT-32-G0-002 (honest per-kind object-definition rules, `.MOD`/`.COPY=`/template rows covered,
+  kind-unenumerable named and counted).
+- **Status:** complete
+- **Notes:** Independent walker (reader/analyser/reporter) discovers 186 book directories in the
+  pinned oracle (own reproducible definition, docstring + receipt), diffs against the 38-book
+  `docs/work-inventory.json` roster, reaches `unexplained=0`. Ten-kind total 28,037 units;
+  kind-unenumerable 27,847 units across 11 named buckets (largest: `class_feature` 18,231, the
+  ten-kind list's own gap — flagged, not force-mapped). Two undocumented-figure corrections logged
+  ("158-book" claimed vs. 186 actual; "38,372 units" claimed vs. 38,391 actual live
+  `docs/work-inventory.json`) — did **not** regenerate `work-inventory.json` in this cycle; the
+  binary fail-closed-refuses without `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT`,
+  a different pipeline, and forcing past that guard was out of scope for a census card. Full detail:
+  `artifacts/gate-0-census-closure/001_cycle_receipt.md`.
+- **Discovery forwards:** `## DISCOVERED` below — `class_feature` + 26 other kind-unenumerable
+  buckets outside AT-32-G0-002's ten-kind list, needs an operator ruling; the "158-book"/"38,372-unit"
+  figures across `acceptance-and-verification.md`/`technical-design.md`/`scope-draft.md` have no
+  reproducible derivation command and disagree with this cycle's re-derivation.
+- **Next-cycle plan:** Card 4 (`gate-0-book-onboarding-precondition`) picks up AT-32-G0-003 —
+  onboarding the 4 `future_state`-scoped books (`inner_sea_faiths`, `inner_sea_magic`,
+  `inner_sea_taverns`, `inner_sea_temples`) — sequenced behind this cycle per `kanban.md`. Gate 0
+  is not closed until card 4 also lands.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
@@ -204,6 +238,25 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
      One line each: date, discovering cycle, what, proposed card or forward-scope-register id.
      Queue > 10 entries is non-self-healable (§8). Empty at launch. -->
 
+- 2026-08-22, Cycle 2 (`gate-0-census-closure`): AT-32-G0-002's ten-kind list (`feat`, `class`,
+  `spell`, `monster`, `monster_ability`, `equipment`, `equipment_modifier`, `companion`, `race`,
+  `race_trait`) omits `class_feature`, the largest kind in `docs/work-inventory.json` (`totals.by_kind
+  .class_feature` = 15,439). `scripts/census_independent.py`'s own count finds 18,231
+  `class_feature`-shaped rows plus 26 other named, real content buckets (skills files, `deity`,
+  `domain`, `kit`, `language`, `power`, `template_row`, 25 `ability_category:*` values) outside the
+  ten kinds — 27,847 units total, none force-mapped. Needs an operator ruling: extend the ten-kind
+  vocabulary, or state explicitly what Gate 0's per-kind counting scope excludes. Proposed target:
+  Gate 1 shape closure (card 5) or a standalone operator ruling before Gate 1 opens. Full breakdown:
+  `artifacts/gate-0-census-closure/object-definition-rules.md`.
+- 2026-08-22, Cycle 2 (`gate-0-census-closure`): the "158-book PCGen oracle directory tree" figure
+  (`acceptance-and-verification.md` AT-32-G0-001, `technical-design.md`, `scope-draft.md`) and the
+  "38,372 units" denominator (`acceptance-and-verification.md` AT-32-G0-002) both carry no
+  reproducible derivation command anywhere in the bundle. This cycle's own reproducible commands
+  (`python3 scripts/census_independent.py ...`; `jq '.totals.units' docs/work-inventory.json`)
+  yield 186 book directories and 38,391 units respectively. Logged as two `scripts/retro.py
+  correction` events (`docs/retro/events/gate-0-census.jsonl`); not silently reconciled to the
+  stated figures. Proposed target: whichever cycle next edits those three planning docs corrects
+  the cited numbers or adds the missing derivation commands.
 - 2026-08-22, Cycle 1 (`boundary-branch-review`): `worktree-wf_c1156061-e3f-3`'s `gen_book_cache.rs`
   self-erasure fix (`index_existing_records_by_key`, extends the `gen_monster_book` exists-guard to
   `gen_pathfinder_unchained`/`gen_advanced_race_guide`/`gen_companion_book`) is real, unmerged, and
