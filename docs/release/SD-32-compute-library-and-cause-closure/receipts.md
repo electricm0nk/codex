@@ -47,3 +47,21 @@ contract, not by `workflow-instruction.md`'s own local-file convention.
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: no architecture impact — diff is outside architecture scope
+
+- cycle_id: 2026-08-22T23:56:09Z
+  row_or_kind: architecture:truth_up
+  bundle: SD-32
+  branch: 8e7b1420561f4b4d63de4c125de3eea5abab427f
+  integration_target: develop
+  branch_tip_before: 8e7b1420
+  branch_tip_after: 8e7b1420
+  diff_path_count: 25618
+  docs_touched: []
+  stub_graduations: []
+  stub_regressions: []
+  obsolete_removals: 0
+  cited_path_check: fail
+  relative_link_check: pass
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: no architecture impact — diff is outside architecture scope
