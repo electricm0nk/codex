@@ -164,6 +164,33 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   protective sweep) is confirmed still live this cycle (`worktree-wf_efd6f5fc-a9c-1`, locked
   worktree).
 
+### Cycle 1 — Pre-G0 / Card 1 `epic-5-protective-sweep`
+
+- **Card ID:** `epic-5-protective-sweep`
+- **Commit SHA:** `3b470c56f` (rebased onto `8d1e1dd78` after card 2 landed concurrently).
+- **Files touched:** `src/bin/gen_book_cache.rs` (`gen_advanced_race_guide`, `gen_companion_book`,
+  `gen_pathfinder_unchained`), `src/bin/gen_core_rulebook_cache.rs` (`main`),
+  `src/rules_core/cache_gen/{acg,apg,beastiary1,spell_lane_dump,ultimate_equipment}.rs`, plus
+  `kanban.md`, this file, and `docs/retro/events/epic-5-protective-sweep.jsonl` (new).
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS.
+- **Wired-integration audit result:** OK_NO_TOKENS.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E5-001 — the protective
+  self-erasure sweep across all 29 Rust generators runs before Gate 0.
+- **Status:** complete
+- **Notes:** Re-verified population = 29. Fixed the 2 SD-31 D9 binaries (4 vulnerable functions
+  total) PLUS 5 more genuinely vulnerable generators discovered in the "17 never checked" bucket
+  (`gen_cache_acg`, `gen_cache_apg`, `gen_cache_beastiary`, `gen_cache_spell_lane_dump`,
+  `gen_cache_ultimate_equipment`) — SD-31's own "12 checked (3 vulnerable)" framing undercounted
+  the residual; see the two `correction` retro events and Discovery entries below. Live RED→GREEN
+  reproduction for the 4 binary functions (isolated worktree, `git checkout --`/`git clean -fd`
+  reverted between runs); permanent unit-test RED→GREEN for the 5 library modules. Full detail,
+  every command, and the per-generator SAFE/VULNERABLE table: this card's own receipt,
+  `artifacts/epic-5-protective-sweep/cycle-1_cycle_receipt.md`.
+- **Discovery forwards:** resolves card 2's DISCOVERED-1 below (superseded, see its own note) — no
+  new forwards opened by this cycle.
+- **Next-cycle plan:** Gate 0 (card 3) is now gated only on Pre-G0 being fully closed (cards 1+2 both
+  `complete` as of this commit) — card 3 is ready to dispatch.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
@@ -184,6 +211,11 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   still shows 3 unguarded call sites). Same defect class as Epic 5's own sweep (card 1) — proposed
   target: card 1's dispatch or a dedicated follow-up cycle, fresh TDD (RED→GREEN), not a raw
   cherry-pick of the pre-SD-32 branch.
+  **RESOLVED, Cycle 1 (`epic-5-protective-sweep`), same day:** fixed independently with a fresh
+  TDD cycle exactly as this note's own target proposed, not a cherry-pick of
+  `worktree-wf_c1156061-e3f-3`. `worktree-wf_c1156061-e3f-3` itself remains unmerged and can be
+  deleted as superseded (its content is now landed under this cycle's own commit `3b470c56f`,
+  independently re-derived and RED→GREEN proven).
 - 2026-08-22, Cycle 1 (`boundary-branch-review`): `worktree-wf_c1156061-e3f-5`'s two doc corrections
   (`todo/levers.md` L3 → DEAD; `todo/defects.md` new finding re `MonsterAbilityRecord` missing a
   `DEFINE:`/`SPELLS:` field, needs a fresh ID — current `D9` is taken by a different, already-landed
