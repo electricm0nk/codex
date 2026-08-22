@@ -133,6 +133,37 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   the unlisted origin branches).
 - **Next-cycle plan:** dispatch `workflow-instruction.md §2.4` — Pre-G0 phase.
 
+### Cycle 1 — Pre-G0 / Card 2 `boundary-branch-review`
+
+- **Card ID:** `boundary-branch-review`
+- **Commit SHA:** see this cycle's own commit in git log (git-refs-only scope; no shipping/doc diff
+  beyond this receipt, `kanban.md`, this file, and the retro log).
+- **Files touched:** `artifacts/epic-5-protective-sweep/boundary-branch-review_cycle_receipt.md`
+  (new), `kanban.md` (card 2 → complete), `progress.md` (this entry),
+  `docs/retro/events/boundary-branch-review.jsonl` (new, correction + deferral events).
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS (docs only).
+- **Wired-integration audit result:** OK_NO_TOKENS — 2 raw grep hits against the full
+  `BASE_BRANCH...HEAD` diff (which spans the whole bundle branch, not just this cycle), both false
+  positives on the literal directory name `todo/sweeps.md` (`kanban.md`'s pre-existing card-2 note
+  text and `workflow-instruction.md`'s pre-existing §remediation note), neither introduced by this
+  cycle and neither a stub/placeholder token. No real violation.
+- **Acceptance criterion:** kanban.md #2 — review and disposition the 3 orphaned-but-real branches,
+  confirm the closed sweep landed, disposition the site branches and the 9 unlisted origin branches,
+  leave the GAMED + rescue branches untouched.
+- **Status:** complete
+- **Notes:** Full disposition table, evidence, and commands in the cycle receipt (path above).
+  Deleted 4 local branches (`site-deploy`, `fix/site-deploy-page-workflow`, `review-merge-test`,
+  `worktree-wf_cb84ba1e-439-2`) and 8 origin branches (7 `worktree-wf_*` at 0 unique commits +
+  `test`, superseded). Kept `worktree-wf_c1156061-e3f-3`/`-5` (real unlanded work, forwarded below).
+  **Correction:** `UNMERGED-BRANCHES.md` §3 mis-categorized `worktree-wf_be4660f2-72a-3` as
+  mergeable late-landing work — it is a **third GAMED branch** (`OPEN-ISSUES.md` row 365,
+  RULING-NEEDED, referenced directly in `src/rules_core/pilot_compute/mod.rs:9645`), left untouched
+  alongside the other two named GAMED branches. Logged via `scripts/retro.py correction`.
+- **Discovery forwards:** DISCOVERED-1, DISCOVERED-2 (below).
+- **Next-cycle plan:** Gate 0 (card 3) is gated on Pre-G0 (cards 1+2) both closing — card 1 (Epic 5
+  protective sweep) is confirmed still live this cycle (`worktree-wf_efd6f5fc-a9c-1`, locked
+  worktree).
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
@@ -146,4 +177,15 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
      One line each: date, discovering cycle, what, proposed card or forward-scope-register id.
      Queue > 10 entries is non-self-healable (§8). Empty at launch. -->
 
-(none)
+- 2026-08-22, Cycle 1 (`boundary-branch-review`): `worktree-wf_c1156061-e3f-3`'s `gen_book_cache.rs`
+  self-erasure fix (`index_existing_records_by_key`, extends the `gen_monster_book` exists-guard to
+  `gen_pathfinder_unchained`/`gen_advanced_race_guide`/`gen_companion_book`) is real, unmerged, and
+  the vulnerability is confirmed still live at HEAD (`grep -n remove_dir_all src/bin/gen_book_cache.rs`
+  still shows 3 unguarded call sites). Same defect class as Epic 5's own sweep (card 1) — proposed
+  target: card 1's dispatch or a dedicated follow-up cycle, fresh TDD (RED→GREEN), not a raw
+  cherry-pick of the pre-SD-32 branch.
+- 2026-08-22, Cycle 1 (`boundary-branch-review`): `worktree-wf_c1156061-e3f-5`'s two doc corrections
+  (`todo/levers.md` L3 → DEAD; `todo/defects.md` new finding re `MonsterAbilityRecord` missing a
+  `DEFINE:`/`SPELLS:` field, needs a fresh ID — current `D9` is taken by a different, already-landed
+  finding) never landed under any wording. Doc-only, low risk — proposed target: next cycle touching
+  `docs/release/SD-31-corpus-closure-grind/todo/`.
