@@ -369,6 +369,49 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   closed Gate 1 census (AT-32-G2-004), which is also the natural place for the still-open
   `--bin`/fixture-check items above to land.
 
+### Cycle 1 — Gate 2 / Card 8 `gate-2-corpus-wide-runs` (F10 engine)
+
+- **Card ID:** `gate-2-corpus-wide-runs` — engine cycle: `gate-2-engines-f10-binding` (card 7)
+- **Commit SHA:** `250eef2db`
+- **Files touched:** `src/rules_core/pilot_compute/bonus_stack_reader.rs` (added
+  `resolve_all_producer_chains_corpus_wide`/`CorpusWideOutcome`/`CorpusWideReport`),
+  `src/bin/bonus_stack_reader.rs` (new CLI: `--corpus-wide`, `--fixture-check`),
+  `artifacts/gate-2-engines/bonus_stack_reader.corpus-wide.json` (new, the real run's output),
+  `artifacts/gate-2-engines/bonus_stack_reader.expected.json` (new, hand-transcribed fixture),
+  `artifacts/gate-2-engines/008_cycle_receipt.md` (new), `docs/retro/events/gate-2-corpus-run.jsonl`
+  (new, one `correction` event).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** AT-32-G2-004 (`acceptance-and-verification.md` Gate 2 — "no engine is
+  complete until it has been run corpus-wide once... its own receipt, its own fixture-check").
+- **Status:** complete
+- **Notes:** Built the `--bin bonus_stack_reader` CLI target card 7's own receipt left open, and
+  ran it corpus-wide: 26,932 real `data/corpus/**/*.json` records (the whole shipped population,
+  not a subset), finding 4,736 distinct F10 `BONUS:VAR` target variables (3,519 resolved, 1,217
+  correctly refused — a different, real denominator from card 7's cited 77.2%/893-of-1,156
+  custom-identifier figure; both stand, neither supersedes the other). Fixture-checked against a
+  hand-transcribed `expected.json` (3 real variables, sourced directly off corpus bytes, never
+  regenerated from the CLI's own output): all 3 matched exactly; a deliberate mutation of one
+  expected value proved the check mechanism itself fails correctly (exit 1) before being reverted.
+  Deviated from `acceptance-and-verification.md`'s literal `derived_evaluator_fixture_check
+  --input/--expected-from` command block — that binary is scoped to `derived`-unit fixtures only
+  and takes no such flags, and the doc's own text flags the block as "the contract, not a runnable
+  command" pending this card's deliverable; implemented the fixture-check as this binary's own
+  mode instead, flagged explicitly in the receipt rather than silently reinterpreted. RED→GREEN:
+  `resolve_all_producer_chains_corpus_wide`/`CorpusWideReport` did not exist at the pinned base
+  (`git show HEAD:...bonus_stack_reader.rs | grep -c ...` → 0); 21/21 module tests pass now (18
+  pre-existing + 3 new), 833/833 `pilot_compute` suite passes (no regression from card 7's 830).
+  **Discovery:** the corpus-wide sweep found a REAL third `AlchemistBombLVL` producer
+  (`inner_sea_magic/class_feature/crypt_breaker/alkahest_bombs.json`) beyond the two card 7's own
+  receipt named — logged as a `scripts/retro.py correction`, not a new card (corrects a stated
+  fact, does not change scope), and now the load-bearing fixture case. Full detail:
+  `artifacts/gate-2-engines/008_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card (see correction above).
+- **Next-cycle plan:** Gate 2 for the F10 engine is closed (AT-32-G2-001 via card 7,
+  AT-32-G2-004 via this cycle). Gate 2 overall stays open until the sibling `formula_interpreter`
+  (F1-F9) chain's own card 6 → card 8 cycles land (disjoint files, independent chain per
+  `workflow-instruction.md §2.4`'s pipeline). Gate 3 (card 9) is gated on Gate 2 as a whole.
+
 ### Cycle 1 — `gate-2-engines-f1-f9` (Gate 2, card 6)
 
 - **Criterion:** AT-32-G2-001/002/003 — confirm `formula_interpreter.rs` reaches all 9 in-scope
