@@ -45,7 +45,10 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.1 OUTPUT -->
+   # 2026-08-22, HEAD d60377a7e
+      61 docs/release/SD-32-compute-library-and-cause-closure/kanban.md
+     131 docs/release/SD-32-compute-library-and-cause-closure/progress.md
+     192 total
    ```
 2. **Bundle branch is on origin, pushed and ahead of develop.**
    ```bash
@@ -55,7 +58,9 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.2 OUTPUT -->
+   # 2026-08-22 (origin tip before the receipt push; pushed again after this commit)
+   8d387c39ce82a68a944796c24850cfb97456c60f	refs/heads/tranche/12
+   ahead=11 behind=0
    ```
 3. **Predecessor bundle's content is merged to develop.** Verify **by content, not by commit count**
    — squash/merge-commit topology makes `--is-ancestor` lie (SD-31's tip is not an ancestor of
@@ -66,7 +71,9 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.3 OUTPUT -->
+   # 2026-08-22
+   374 MERGED 2026-08-22T19:53:56Z tranche/11->develop
+   content-diff-lines=0      # git diff --stat ... | wc -l → nothing differs
    ```
 4. **PAT present** at whatever path the operator's runbook expects. Per the standing doctrine,
    the classic PAT lives at `~/.config/gh/.claude_gh_token` (ghp_ prefix, broad-scope, can write
@@ -76,7 +83,7 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.4 OUTPUT -->
+   PAT_PRESENT
    ```
 5. **Working tree clean** on the bundle branch.
    ```bash
@@ -84,7 +91,9 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.5 OUTPUT -->
+   # 2026-08-22, immediately after commit d60377a7e
+   tranche/12
+   0
    ```
 6. **Doctrine gates.**
    ```bash
@@ -92,7 +101,7 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.6 OUTPUT -->
+   DOCTRINE_PRESENT
    ```
 7. **Build counter captured.** The live version source of truth is `apps/desktop/package.json` and
    `apps/desktop/src-tauri/tauri.conf.json` (**`Cargo.toml` stays pinned at `0.1.0` and is not
@@ -103,7 +112,9 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output (literal first concrete value for SD-32: **`0.12.0`**):
    ```
-   <!-- §1.7 OUTPUT -->
+   # 2026-08-22, after commit 29160889d "feat(sd32): version bump 0.12.0 for tranche/12"
+     "version": "0.12.0",
+     "version": "0.12.0",
    ```
 8. **Artifact directories exist**, one per gate plus the Epic 5 sweep (matches `artifacts/README.md`):
    ```bash
@@ -111,7 +122,12 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.8 OUTPUT -->
+   docs/release/SD-32-compute-library-and-cause-closure/artifacts/corpus/operator-supplied
+   docs/release/SD-32-compute-library-and-cause-closure/artifacts/epic-5-protective-sweep
+   docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-0-census-closure
+   docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-1-shape-closure
+   docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-2-engines
+   docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant
    ```
 9. **PCGen oracle present in the repo-local slot, at the pin.** Bootstrap with
    `scripts/fetch-pcgen-oracle.sh --dest "$PCGEN_REPO_DIR"` if the check fails. The slot is
@@ -125,7 +141,10 @@ the "Pre-launch receipt" in `progress.md` (SD-31 precedent: commit `1980d6b95`).
    ```
    Output:
    ```
-   <!-- §1.9 OUTPUT -->
+   # 2026-08-22; oracle at 7f818006e371188e5717fd18d74d18a420747fc6 (scripts/pcgen-oracle-pin.env)
+   RESULT: PASS
+   logs in /tmp/codex-verify-aCOe8n
+   0                         # git status --porcelain | grep -c operator-supplied
    ```
 
 ## 2. Orchestration mode

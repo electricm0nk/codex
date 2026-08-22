@@ -40,7 +40,25 @@ like before the first dispatched cycle landed. Every figure names its command.
 SD-31 precedent: commit `1980d6b95` (S6-prelaunch). Run from the repo root on `tranche/12`; every
 item's literal output is also pasted under the command in `workflow-instruction.md §1`.
 
-<!-- PRELAUNCH RECEIPT -->
+| # | Item | Command (abridged — full form in `workflow-instruction.md §1`) | Output | Verdict |
+|---|---|---|---|---|
+| 1 | Local kanban reachable | `test -f kanban.md && wc -l kanban.md progress.md` | `61 kanban.md`, `131 progress.md` | PASS |
+| 2 | Branch on origin, ahead of develop | `git ls-remote --heads origin tranche/12`; `git rev-list --count …` | `8d387c39c refs/heads/tranche/12`; ahead=11 behind=0 (pushed again after this receipt) | PASS |
+| 3 | SD-31 content on develop (by content) | `gh pr view 374 …`; `git diff --stat origin/develop b1b7f4290 -- src scripts data docs/retro docs/release/SD-31-corpus-closure-grind \| wc -l` | `374 MERGED 2026-08-22T19:53:56Z tranche/11->develop`; `0` | PASS |
+| 4 | PAT present | `test -f ~/.config/gh/.claude_gh_token && echo PAT_PRESENT` | `PAT_PRESENT` | PASS |
+| 5 | Working tree clean | `git branch --show-current; git status --porcelain \| wc -l` | `tranche/12`; `0` (after commit `d60377a7e`) | PASS |
+| 6 | Doctrine docs present | `test -f docs/doctrine-external/identifier-discipline.md && test -f docs/governance/no-stub-mvp-doctrine.md && echo DOCTRINE_PRESENT` | `DOCTRINE_PRESENT` | PASS |
+| 7 | Build counter literal | `grep -h '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json \| head -2` | `"version": "0.12.0"` ×2 (commit `29160889d`) | PASS |
+| 8 | Artifact dirs exist | `ls -d artifacts/{epic-5-protective-sweep,gate-0-…,gate-1-…,gate-2-…,gate-3-…,corpus/operator-supplied}` | all six listed | PASS |
+| 9 | PCGen oracle in the repo-local slot, at pin, git-ignored | `export PCGEN_REPO_DIR=…/artifacts/corpus/operator-supplied/pcgen; export PCGEN_CORPUS_ROOT=$PCGEN_REPO_DIR/data; scripts/verify.sh --only preflight-oracle; git status --porcelain \| grep -c operator-supplied` | `RESULT: PASS` (oracle `7f818006e371188e5717fd18d74d18a420747fc6`); `0` | PASS |
+
+**Verdict: 9/9 PASS — launch-ready.** Launch base for `workflow-instruction.md §6` step 1: the
+orchestrator captures `PIN=$(git rev-parse origin/tranche/12)` at dispatch time; at receipt time
+`origin/tranche/12` was `8d387c39c` and local HEAD `d60377a7e` (pushed with this receipt).
+Non-blocking notes: (a) `tranche/12` ran 1 commit behind develop at audit time (the #374 merge
+commit) — merged in as `8d387c39c`, now 0 behind; (b) the chassis commit `5586706b7` had been
+unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
+(`docs/retro/events/sd31-transcribe.jsonl`) — committed alongside, per commit `e28d79a8c`'s precedent.
 
 ## Cycles
 
