@@ -288,9 +288,21 @@ impl From<std::io::Error> for GenerationError {
     }
 }
 
+/// SD-32 Epic 5 protective sweep: an existing file is left COMPLETELY
+/// untouched -- not rewritten, not re-derived -- the same
+/// `out_path.exists()`-then-skip discipline `gen_book_cache.rs`'s
+/// `gen_monster_book` already established (`SD31-E6-F9-005`). Without this
+/// guard, `enrich_equipment_raw_tokens.rs`/`enrich_spell_raw_tokens.rs`'s
+/// `raw_tokens` field (added to this book's spell/equipment records in a
+/// LATER, SEPARATE pass this generator's own `SpellData`/`EquipmentData`
+/// cannot reconstruct) is silently stripped the next time this generator
+/// runs.
 fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
     std::fs::create_dir_all(out_dir)?;
     let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(());
+    }
     let json = serde_json::to_string_pretty(record)
         .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
     std::fs::write(path, json)
@@ -669,5 +681,64 @@ mod tests {
         let a = slugify("Special Ability ~ Sneaky ~ Melee", &mut used2);
         let b = slugify("Special Ability ~ Sneaky ~ Amulet of Mighty Fists", &mut used2);
         assert_ne!(a, b);
+    }
+
+    /// SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    /// residual): `write_json` used to overwrite whatever file already
+    /// sat at `slug.json` unconditionally, with no per-file exists-guard
+    /// -- the identical S6/D9 self-erasure shape `gen_book_cache.rs`'s
+    /// `gen_monster_book` was already fixed for (`SD31-E6-F9-005`), never
+    /// extended here. `enrich_equipment_raw_tokens.rs`/
+    /// `enrich_spell_raw_tokens.rs` write a `raw_tokens` field into this
+    /// generator's own `advanced_class_guide` spell/equipment output
+    /// AFTER this generator runs (413 of 2,867 on-disk records carry it
+    /// today, `grep -l raw_tokens data/corpus/advanced_class_guide/**/*.json`);
+    /// a bare re-run of `gen_cache_acg` would silently strip every one of
+    /// them the next time it ran, since this function's own record never
+    /// carries that field. Proves `write_json` leaves an existing file
+    /// completely alone rather than re-deriving it in the narrower
+    /// pre-enrichment shape.
+    #[test]
+    fn write_json_never_overwrites_an_existing_file() {
+        let dir = std::env::temp_dir().join(format!(
+            "acg_write_json_test_{}_{}",
+            std::process::id(),
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("foo.json");
+        std::fs::write(&path, r#"{"data":{"key":"foo"},"raw_tokens":["ENRICHED-MARKER"]}"#).unwrap();
+
+        let record = CacheRecord {
+            population: Population::InScope,
+            completeness: Completeness::Full,
+            ingested_at: "2026-08-22T00:00:00Z".to_string(),
+            data: SpellData {
+                key: "foo".to_string(),
+                school: "Evocation".to_string(),
+                level: 1,
+                description: None,
+                full_text: false,
+            },
+            source: Source::LstToken {
+                path: "acg_spells.lst".to_string(),
+                sha256: "deadbeef".to_string(),
+                line: 1,
+                record_key: "foo".to_string(),
+            },
+            wiring_class: "display".to_string(),
+            wiring_class_signals: vec!["display".to_string()],
+            license: crate::rules_core::shape_b_v1::License::Ogl,
+            pi_field: None,
+            pi_marker: None,
+        };
+        write_json(&dir, "foo", &record).expect("write_json must succeed");
+
+        let content = std::fs::read_to_string(&path).unwrap();
+        assert!(
+            content.contains("ENRICHED-MARKER"),
+            "write_json clobbered a file a later enrichment pass had already written into: {content}"
+        );
+        std::fs::remove_dir_all(&dir).ok();
     }
 }

@@ -377,18 +377,25 @@ fn main() {
     let root = corpus_root();
     let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/core_rulebook");
 
-    // Fresh regenerate: clear prior generated output (keep .gitkeep only if
-    // the dir is empty afterward -- re-created below if needed).
-    if out_root.exists() {
-        for entry in fs::read_dir(&out_root).expect("read output root") {
-            let entry = entry.expect("dir entry");
-            let path = entry.path();
-            if path.is_dir() {
-                fs::remove_dir_all(&path).expect("clear stale generated subdir");
-            }
-        }
-    }
-
+    // **SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    // residual / `defects.md` D9), live-reproduced**: this used to wipe
+    // EVERY subdirectory of `out_root` on every run -- not just the three
+    // kinds (`class`/`spell`/`equipment`) this binary itself owns.
+    // Live-reproduced against this repo's real committed corpus in an
+    // isolated worktree (git status clean before, `git checkout -- ` +
+    // `git clean -fd` after): one run deleted 959 `class_feature`, 84
+    // `companion`, 330 `equipment`, 7 `race` and 67 `race_trait` records --
+    // every one of them owned by a DIFFERENT generator
+    // (`cache_gen::class_feature`, companion books that cite
+    // `core_rulebook`, `ingest_races.rs`/`ingest_race_traits.rs`,
+    // `cache_gen::equipment_gap`) that also writes into this same book's
+    // `out_root`, none of which this binary's own class/spell/equipment
+    // loops below ever touch -- and stripped `raw_tokens` from all 664 of
+    // this book's own spell records (`enrich_spell_raw_tokens.rs` writes
+    // that field in a later pass this generator's own `SpellCacheData`
+    // cannot reconstruct). Fixed at the root: this binary now touches
+    // ONLY the three kind directories it actually writes, each with its
+    // own guard (see the write loops below and their doc comments).
     let ingested_at = ingested_at_now();
     let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &root);
     let mut wiring_lines = wiring_index.lines();
@@ -418,8 +425,13 @@ fn main() {
                     pi_field,
                     pi_marker,
                 };
+                // Exists-guard only -- `ClassId::ALL` has no `key` field to
+                // key a stale-sweep on (see this fn's own doc comment), and
+                // the 11-class population is effectively fixed.
                 let path = out_root.join("class").join(format!("{}.json", slugify(&class_name)));
-                write_record(&path, &record);
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 class_written += 1;
             }
             None => class_unattributed.push(class_name),
@@ -431,6 +443,7 @@ fn main() {
     let mut spell_written = 0u32;
     let mut spell_unattributed: Vec<String> = Vec::new();
     let mut spell_slugs_used: HashMap<u8, HashSet<String>> = HashMap::new();
+    let mut current_spell_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
     for entry in spell_list::SPELL_LIST {
         let mod_identity = format!("{}.MOD", entry.key);
         let mut found: Option<(u32, String)> = None;
@@ -512,17 +525,29 @@ fn main() {
                     pi_field,
                     pi_marker,
                 };
+                current_spell_keys.insert(entry.key.to_string());
                 let used = spell_slugs_used.entry(entry.level).or_default();
                 let slug = unique_slug(used, &slugify(entry.key));
                 let path = out_root
                     .join("spell")
                     .join(format!("level_{}", entry.level))
                     .join(format!("{slug}.json"));
-                write_record(&path, &record);
+                // `SD31-E6-F9-005`-shaped guard: a file already on disk
+                // (including one `enrich_spell_raw_tokens.rs` has since
+                // written `raw_tokens` into) is left completely untouched.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 spell_written += 1;
             }
             None => spell_unattributed.push(entry.key.to_string()),
         }
+    }
+    if out_root.join("spell").exists() {
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("spell"),
+            &current_spell_keys,
+        );
     }
 
     // ---- Equipment ----
@@ -629,7 +654,13 @@ fn main() {
                 let used = equipment_slugs_used.entry(category_slug).or_default();
                 let slug = unique_slug(used, &slugify(entry.key));
                 let path = out_root.join("equipment").join(category_slug).join(format!("{slug}.json"));
-                write_record(&path, &record);
+                // Exists-guard only, deliberately NO stale-key sweep here --
+                // `cache_gen::equipment_gap` ("CRB" routing) also writes
+                // real records into this same `equipment` directory; a
+                // sweep keyed on this loop's own entries would delete them.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 equipment_written += 1;
             }
             None => equipment_unattributed.push(format!("{:?}:{}", entry.category, entry.key)),

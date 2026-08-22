@@ -398,19 +398,26 @@ pub fn generate(
 
         let out_book_dir = data_corpus_root.join(spec.book_id);
         let out_spell_dir = out_book_dir.join("spell");
-        // Rebuild from scratch every run, the same durability discipline
-        // `cache_gen::ultimate_equipment` established (row 38's fix): a
-        // record dropped this run (NAMEISPI:YES, or removed from the
-        // compiled table upstream) must actually disappear from disk, not
-        // merely stop being re-written.
-        if out_spell_dir.exists() {
-            std::fs::remove_dir_all(&out_spell_dir)?;
-        }
         std::fs::create_dir_all(&out_spell_dir)?;
 
         let wiring_index = WiringClassIndex::build(spec.book_id, &book_dir);
         let mut wiring_lines = wiring_index.lines();
         let mut used_slugs = std::collections::BTreeSet::new();
+        // **SD-32 Epic 5 protective sweep, CORRECTED**: this directory used
+        // to be wiped wholesale on every run (the durability discipline
+        // comment this replaces) so a record dropped this run would
+        // actually disappear -- but that also erased every STILL-VALID
+        // record's file, discarding whatever `enrich_spell_raw_tokens.rs`
+        // had separately written into it in a later pass this generator's
+        // own `SpellData` cannot reconstruct (the S6/D9 self-erasure
+        // shape; 712 of 712 on-disk spell records across these five books
+        // carry `raw_tokens` today, `grep -l raw_tokens
+        // data/corpus/{occult_adventures,ultimate_magic,ultimate_combat,
+        // inner_sea_gods,ultimate_wilderness}/spell/*.json`). See
+        // `cache_gen::ultimate_equipment::remove_stale_owned_files`'s twin
+        // fix and doc comment for the exact same shape and the same
+        // "genuinely stale, not merely about to be rewritten" rule.
+        let mut current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
         for entry in &spec.entries {
             let line = lines_by_name.get(entry.key).copied().unwrap_or(0);
@@ -466,17 +473,30 @@ pub fn generate(
                 pi_marker,
             };
 
+            current_keys.insert(entry.key.to_string());
             let slug = slugify(entry.key, &mut used_slugs);
             write_json(&out_spell_dir, &slug, &record)?;
             report.spells_written += 1;
         }
+
+        crate::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_spell_dir,
+            &current_keys,
+        );
     }
 
     Ok(report)
 }
 
+/// SD-32 Epic 5 protective sweep -- see `cache_gen::acg::write_json`'s
+/// identical doc comment; same shape, same fix. This module's own
+/// `remove_stale_owned_files` call (see the per-book loop above) is what
+/// still makes a genuinely dropped record's file disappear.
 fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
     let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(());
+    }
     let json = serde_json::to_string_pretty(record)
         .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
     std::fs::write(path, json + "\n")
@@ -539,6 +559,49 @@ mod tests {
         );
         assert!(report.spells_written > 0, "must write at least one record");
         std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    /// residual): a second `generate()` call must not erase a later
+    /// enrichment pass on a record that is still valid this run -- the
+    /// S6/D9 self-erasure shape, live-reproduced against the real pinned
+    /// PCGen oracle rather than a synthetic fixture.
+    #[test]
+    fn a_second_run_does_not_erase_a_later_enrichment_pass_on_a_still_valid_record() {
+        let corpus_root = pcgen_corpus_root();
+        if !corpus_root.exists() {
+            eprintln!("skipping: no pinned PCGen corpus checkout at {corpus_root:?}");
+            return;
+        }
+        let tmp = std::env::temp_dir().join(format!(
+            "spell_lane_dump_no_self_erasure_test_{}_{}",
+            std::process::id(),
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        generate(&corpus_root, &tmp, "2026-08-16T00:00:00Z").expect("run 1 must succeed");
+        let occult_dir = tmp.join("occult_adventures").join("spell");
+        let written = std::fs::read_dir(&occult_dir)
+            .expect("run 1 must have created occult_adventures/spell")
+            .flatten()
+            .map(|e| e.path())
+            .find(|p| p.extension().and_then(|e| e.to_str()) == Some("json"))
+            .expect("run 1 must write at least one occult_adventures spell record");
+
+        // Simulate `enrich_spell_raw_tokens.rs` running after generation.
+        let original = std::fs::read_to_string(&written).unwrap();
+        let enriched = original.replacen("\"license\":", "\"ENRICHED-MARKER\": true,\n  \"license\":", 1);
+        std::fs::write(&written, &enriched).unwrap();
+        let marker_present_after_edit = std::fs::read_to_string(&written).unwrap().contains("ENRICHED-MARKER");
+
+        generate(&corpus_root, &tmp, "2026-08-17T00:00:00Z").expect("run 2 must succeed");
+        let after = std::fs::read_to_string(&written).unwrap();
+        std::fs::remove_dir_all(&tmp).ok();
+
+        assert!(marker_present_after_edit, "the fixture edit must actually take");
+        assert!(
+            after.contains("ENRICHED-MARKER"),
+            "a second run must not erase a later enrichment pass on a still-valid record: {after}"
+        );
     }
 
     #[test]

@@ -620,12 +620,20 @@ fn gen_pathfinder_unchained() {
     let wiring_index = WiringClassIndex::build("pathfinder_unchained", &root);
     let mut wiring_lines = wiring_index.lines();
 
-    for sub in ["feat", "equipment"] {
-        let dir = out_root.join(sub);
-        if dir.exists() {
-            fs::remove_dir_all(&dir).expect("clear stale generated subdir");
-        }
-    }
+    // **SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    // residual / `defects.md` D9)**: this used to unconditionally
+    // `remove_dir_all` both `feat` and `equipment` on every run, then
+    // rewrite every entry from scratch -- the S6/D9 self-erasure shape
+    // `gen_monster_book`, in this SAME FILE, was already fixed for
+    // (`SD31-E6-F9-005`), never extended here. All 42 of 42 on-disk
+    // `pathfinder_unchained` equipment records carry a `raw_tokens` field
+    // `enrich_equipment_raw_tokens.rs` writes AFTER this generator runs,
+    // which this generator's own `EquipmentCacheData` cannot reconstruct.
+    // Same fix as `gen_monster_book`: a file is removed ONLY when its key
+    // is ABSENT from the set this run just computed (per write loop,
+    // below), never wiped wholesale up front.
+    let mut current_feat_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+    let mut current_equipment_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     // ---- Feats ----
     let feats_file = load_corpus_file(&root, "pu_feats.lst");
@@ -669,12 +677,24 @@ fn gen_pathfinder_unchained() {
                     wiring_class_signals,
                     description_source: None,
                 };
+                current_feat_keys.insert(entry.key.to_string());
                 let path = out_root.join("feat").join(format!("{}.json", slugify(entry.key)));
-                write_record(&path, &record);
+                // `SD31-E6-F9-005`-shaped guard (see this fn's own doc
+                // comment above): a file already on disk is left completely
+                // untouched, not re-derived.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 feat_written += 1;
             }
             None => feat_unattributed.push(entry.key.to_string()),
         }
+    }
+    if out_root.join("feat").exists() {
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("feat"),
+            &current_feat_keys,
+        );
     }
 
     // ---- Equipment (equipmods) ----
@@ -723,16 +743,28 @@ fn gen_pathfinder_unchained() {
                     wiring_class_signals,
                     description_source: None,
                 };
+                current_equipment_keys.insert(entry.key.to_string());
                 let base_slug = slugify(entry.name);
                 let count = used_slugs.entry(base_slug.clone()).or_insert(0);
                 *count += 1;
                 let slug = if *count == 1 { base_slug } else { format!("{base_slug}_{count}") };
                 let path = out_root.join("equipment").join(format!("{slug}.json"));
-                write_record(&path, &record);
+                // `SD31-E6-F9-005`-shaped guard: a file already on disk
+                // (including one `enrich_equipment_raw_tokens.rs` has since
+                // written `raw_tokens` into) is left completely untouched.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 equipment_written += 1;
             }
             None => equipment_unattributed.push(entry.name.to_string()),
         }
+    }
+    if out_root.join("equipment").exists() {
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("equipment"),
+            &current_equipment_keys,
+        );
     }
 
     println!("SD-27 E2.2 pathfinder_unchained cache generation report");
@@ -809,12 +841,26 @@ fn gen_advanced_race_guide() {
     let wiring_index = WiringClassIndex::build("advanced_race_guide", &root);
     let mut wiring_lines = wiring_index.lines();
 
-    for sub in ["spell", "equipment", "feat"] {
-        let dir = out_root.join(sub);
-        if dir.exists() {
-            fs::remove_dir_all(&dir).expect("clear stale generated subdir");
-        }
-    }
+    // **SD-32 Epic 5 protective sweep (`defects.md` D9), live-reproduced**:
+    // this used to unconditionally `remove_dir_all` all three of `spell`,
+    // `equipment`, `feat` on every run, then rewrite every entry from
+    // scratch. Live-reproduced against this repo's real committed corpus
+    // in an isolated worktree (git status clean before, `git checkout --`
+    // after): one run wiped `raw_tokens` from all 93 `advanced_race_guide`
+    // spell records (100% of the book's spell population) and permanently
+    // deleted 15 real, populated `equipment` records belonging to
+    // `gen_equipment_gap_tables.rs`/`cache_gen::equipment_gap`'s own write
+    // into the SAME `equipment` directory. Same fix as `gen_monster_book`
+    // (`SD31-E6-F9-005`) for `spell`/`feat` -- a file is removed ONLY when
+    // its key is ABSENT from the set this run just computed. `equipment`
+    // gets the exists-guard WITHOUT a stale-key sweep (unlike `spell`/
+    // `feat`): a stale-key sweep there would delete
+    // `cache_gen::equipment_gap`'s own 15 records the instant this
+    // generator ran, since their keys are never in this generator's own
+    // `equipment_tables()` -- the exact collision this fix must not
+    // reintroduce.
+    let mut current_spell_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+    let mut current_feat_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     // ---- Spells ----
     let spells_file = load_corpus_file_rel(&root, ARG_BOOK_RELATIVE, "arg_spells.lst");
@@ -867,11 +913,21 @@ fn gen_advanced_race_guide() {
                         n += 1;
                     }
                 };
-                write_record(&out_root.join("spell").join(format!("{slug}.json")), &record);
+                current_spell_keys.insert(entry.key.to_string());
+                let path = out_root.join("spell").join(format!("{slug}.json"));
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 spell_written += 1;
             }
             None => spell_unattributed.push(entry.key.to_string()),
         }
+    }
+    if out_root.join("spell").exists() {
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("spell"),
+            &current_spell_keys,
+        );
     }
 
     // ---- Equipment ----
@@ -975,7 +1031,14 @@ fn gen_advanced_race_guide() {
                         n += 1;
                     }
                 };
-                write_record(&out_root.join("equipment").join(category_slug).join(format!("{slug}.json")), &record);
+                // Exists-guard only, deliberately NO stale-key sweep here --
+                // see this fn's own doc comment for why a sweep would
+                // wrongly delete `cache_gen::equipment_gap`'s own 15
+                // records sharing this same directory.
+                let path = out_root.join("equipment").join(category_slug).join(format!("{slug}.json"));
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 equipment_written += 1;
             }
             None => equipment_unattributed.push(format!("{:?}:{}", entry.category, entry.key)),
@@ -1053,11 +1116,21 @@ fn gen_advanced_race_guide() {
                         n += 1;
                     }
                 };
-                write_record(&out_root.join("feat").join(category_slug).join(format!("{slug}.json")), &record);
+                current_feat_keys.insert(entry.key.to_string());
+                let path = out_root.join("feat").join(category_slug).join(format!("{slug}.json"));
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 feat_written += 1;
             }
             None => feat_unattributed.push(format!("{:?}:{}", entry.category, entry.key)),
         }
+    }
+    if out_root.join("feat").exists() {
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("feat"),
+            &current_feat_keys,
+        );
     }
 
     let total = spell_written + equipment_written + feat_written;
@@ -1575,10 +1648,19 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
     };
     let mut wiring_lines = wiring_index.lines();
 
-    let dir = out_root.join("companion");
-    if dir.exists() {
-        fs::remove_dir_all(&dir).expect("clear stale generated subdir");
-    }
+    // **SD-32 Epic 5 protective sweep (`defects.md` D9)**: this used to
+    // unconditionally `remove_dir_all` the whole `companion` directory on
+    // every run, then rewrite every entry from scratch -- confirmed
+    // vulnerable by code-read the same way `gen_advanced_race_guide` was
+    // live-reproduced (`grep -n "out_path.exists()" src/bin/gen_book_cache.rs`
+    // returns zero hits for this function). 927 of 927 companion records
+    // (100% of the kind, across 16 `CompanionBookSpec` books) carry a
+    // `raw_tokens` field `enrich_companion_raw_tokens.rs` writes AFTER this
+    // generator runs, which this generator's own inline `serde_json::json!`
+    // shape cannot reconstruct. Same fix as `gen_monster_book`
+    // (`SD31-E6-F9-005`): a file is removed ONLY when its key is ABSENT
+    // from the set this run just computed.
+    let mut current_companion_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     // Keyed by file name, because a record's `source_line` is only meaningful
     // together with its `source_file` -- see `CompanionRecord::source_file`.
@@ -1675,10 +1757,12 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             wiring_class_signals,
             description_source: None,
         };
-        write_record(
-            &out_root.join("companion").join(format!("{}.json", slugify(companion.key))),
-            &record,
-        );
+        let key = format!("{book_id}:companion:{}", slugify(companion.key));
+        current_companion_keys.insert(key);
+        let path = out_root.join("companion").join(format!("{}.json", slugify(companion.key)));
+        if !path.exists() {
+            write_record(&path, &record);
+        }
         creature_written += 1;
     }
 
@@ -1742,11 +1826,19 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             wiring_class_signals,
             description_source: None,
         };
-        write_record(
-            &out_root.join("companion").join(format!("{}.json", slugify(ability.key))),
-            &record,
-        );
+        let key = format!("{book_id}:companion:{}", slugify(ability.key));
+        current_companion_keys.insert(key);
+        let path = out_root.join("companion").join(format!("{}.json", slugify(ability.key)));
+        if !path.exists() {
+            write_record(&path, &record);
+        }
         ability_written += 1;
+    }
+    if out_root.join("companion").exists() {
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("companion"),
+            &current_companion_keys,
+        );
     }
 
     if !pi_hits.is_empty() {

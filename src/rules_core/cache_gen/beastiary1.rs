@@ -317,9 +317,14 @@ impl From<std::io::Error> for GenerationError {
     }
 }
 
+/// SD-32 Epic 5 protective sweep -- see `cache_gen::acg::write_json`'s
+/// identical doc comment; same shape, same fix.
 fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
     std::fs::create_dir_all(out_dir)?;
     let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(());
+    }
     let json = serde_json::to_string_pretty(record)
         .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
     std::fs::write(path, json)
@@ -620,5 +625,59 @@ mod tests {
         assert_eq!(slugify("Rag Armor (Dark Creeper)"), "rag_armor_dark_creeper");
         assert_eq!(slugify("Goblin Dog"), "goblin_dog");
         assert_eq!(slugify("Heartstone (Night Hag)"), "heartstone_night_hag");
+    }
+
+    /// SD-32 Epic 5 protective sweep, same shape as `cache_gen::acg`'s
+    /// finding: `write_json` clobbered an already-enriched file with no
+    /// exists-guard. `enrich_equipment_raw_tokens.rs` lists `"beastiary"`
+    /// among its books and writes `raw_tokens` onto this generator's own
+    /// equipment output AFTER it runs (3 of the book's 4 on-disk equipment
+    /// records carry it today) -- this generator's own `EquipmentData`
+    /// cannot reconstruct that field, so a bare re-run would silently
+    /// strip it.
+    #[test]
+    fn write_json_never_overwrites_an_existing_file() {
+        let dir = std::env::temp_dir().join(format!(
+            "beastiary1_write_json_test_{}_{}",
+            std::process::id(),
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("foo.json");
+        std::fs::write(&path, r#"{"data":{"key":"foo"},"raw_tokens":["ENRICHED-MARKER"]}"#).unwrap();
+
+        let record = CacheRecord {
+            population: Population::InScope,
+            completeness: Completeness::Full,
+            ingested_at: "2026-08-22T00:00:00Z".to_string(),
+            data: EquipmentData {
+                key: "foo".to_string(),
+                category: "General".to_string(),
+                name: "Foo".to_string(),
+                cost_gp: None,
+                weight: None,
+                description: None,
+            },
+            source: Source::LstToken {
+                path: "b1_equip.lst".to_string(),
+                sha256: "deadbeef".to_string(),
+                line: 1,
+                record_key: "foo".to_string(),
+            },
+            field_provenance: None,
+            wiring_class: "display".to_string(),
+            wiring_class_signals: vec!["display".to_string()],
+            license: crate::rules_core::shape_b_v1::License::Ogl,
+            pi_field: None,
+            pi_marker: None,
+        };
+        write_json(&dir, "foo", &record).expect("write_json must succeed");
+
+        let content = std::fs::read_to_string(&path).unwrap();
+        assert!(
+            content.contains("ENRICHED-MARKER"),
+            "write_json clobbered a file a later enrichment pass had already written into: {content}"
+        );
+        std::fs::remove_dir_all(&dir).ok();
     }
 }

@@ -283,12 +283,53 @@ impl From<std::io::Error> for GenerationError {
     }
 }
 
+/// SD-32 Epic 5 protective sweep -- see `cache_gen::acg::write_json`'s
+/// identical doc comment; same shape, same fix. `generate_equipment`'s own
+/// stale-key sweep (see its doc comment) is what still makes a genuinely
+/// dropped record's file disappear -- this guard only protects a record
+/// that is STILL VALID this run from being needlessly re-derived in a
+/// narrower, pre-enrichment shape.
 fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
     std::fs::create_dir_all(out_dir)?;
     let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(());
+    }
     let json = serde_json::to_string_pretty(record)
         .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
     std::fs::write(path, json)
+}
+
+/// Removes every JSON file directly or recursively under `dir` whose
+/// `data.key` is NOT in `current_keys` -- the same "genuinely stale, not
+/// merely about to be rewritten" rule `gen_book_cache.rs`'s `gen_monster_book`
+/// established (`SD31-E6-F9-005`). Replaces `generate_equipment`'s former
+/// unconditional `remove_dir_all` of the whole directory: that fix kept a
+/// dropped record's file from lingering (OPEN-ISSUES row 38) but did so by
+/// erasing every STILL-VALID record too, discarding whatever
+/// `enrich_equipment_raw_tokens.rs` had separately written into them. This
+/// keeps the "dropped record does not linger" property while leaving every
+/// still-valid record's file (and any enrichment already on it) untouched.
+pub fn remove_stale_owned_files(dir: &Path, current_keys: &std::collections::HashSet<String>) {
+    let Ok(entries) = std::fs::read_dir(dir) else { return };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            remove_stale_owned_files(&path, current_keys);
+            continue;
+        }
+        if path.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue;
+        }
+        let key = std::fs::read_to_string(&path)
+            .ok()
+            .and_then(|raw| serde_json::from_str::<serde_json::Value>(&raw).ok())
+            .and_then(|v| v.get("data")?.get("key")?.as_str().map(str::to_string));
+        let Some(key) = key else { continue };
+        if !current_keys.contains(&key) {
+            let _ = std::fs::remove_file(&path);
+        }
+    }
 }
 
 fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
@@ -336,17 +377,19 @@ fn generate_equipment(
     }
     let mut used = BTreeSet::new();
     let equipment_dir = out_dir.join("equipment");
-    // Rebuilt every run, matching `ingest_races.rs`'s own precedent ("A
-    // stale record from a previous run ... would be indistinguishable from
-    // a fresh one, so the output tree is rebuilt"): a record dropped by the
-    // NAMEISPI:YES check below must actually disappear from disk on the
-    // next run, not merely stop being re-written. Fixes the shipped-but-
-    // stale `otyugh_hide.json` this cycle found (OPEN-ISSUES row 38) --
-    // clearing the whole directory is what makes "dropped" durable rather
-    // than a one-time hand delete.
-    if equipment_dir.exists() {
-        std::fs::remove_dir_all(&equipment_dir)?;
-    }
+    // **SD-32 Epic 5 protective sweep, CORRECTED**: this used to wipe the
+    // whole directory unconditionally on every run (OPEN-ISSUES row 38's
+    // fix, to make a NAMEISPI:YES-dropped record's stale file actually
+    // disappear) -- but that also erased every STILL-VALID record's file,
+    // discarding whatever `enrich_equipment_raw_tokens.rs` had separately
+    // written into it in a later pass this generator's own `EquipmentData`
+    // cannot reconstruct (the exact S6/D9 self-erasure shape). The new
+    // rule, matching `gen_book_cache.rs`'s `gen_monster_book`
+    // (`SD31-E6-F9-005`): a file is removed ONLY when its key is ABSENT
+    // from the set this run just computed (`remove_stale_owned_files`
+    // below, after the write loop) -- a real drop still disappears, a
+    // still-valid record's file is left completely untouched.
+    let mut current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
     // `Equipmods` records go in a nested `equipment/equipmods/` subdirectory,
     // matching `core_rulebook`'s own already-shipped layout
     // (`data/corpus/core_rulebook/equipment/equipmods/*.json`) rather than
@@ -439,6 +482,7 @@ fn generate_equipment(
             pi_field,
             pi_marker,
         };
+        current_keys.insert(entry.key.to_string());
         let slug = slugify(entry.key, &mut used);
         if entry.category == EquipmentCategory::Equipmods {
             write_json(&equipmods_dir, &slug, &record)?;
@@ -447,6 +491,9 @@ fn generate_equipment(
             write_json(&equipment_dir, &slug, &record)?;
             report.equipment_written += 1;
         }
+    }
+    if equipment_dir.exists() {
+        remove_stale_owned_files(&equipment_dir, &current_keys);
     }
     Ok(())
 }
@@ -636,5 +683,49 @@ mod tests {
             let text = std::fs::read_to_string(&path).unwrap();
             assert!(!text.contains("Otyugh Hide"), "{path:?} is a stale pre-drop file: {text}");
         }
+    }
+
+    /// SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    /// residual): `generate_equipment` wiped `equipment_dir` wholesale on
+    /// every run (the "OPEN-ISSUES row 38" fix above), then rewrote every
+    /// entry from scratch -- the S6/D9 self-erasure shape `gen_book_cache.rs`'s
+    /// `gen_monster_book` was already fixed for (`SD31-E6-F9-005`), never
+    /// extended here. `enrich_equipment_raw_tokens.rs` writes a `raw_tokens`
+    /// field onto this generator's own output AFTER it runs (1,368 of the
+    /// 1,548 on-disk `ultimate_equipment` equipment records carry it today,
+    /// `grep -l raw_tokens data/corpus/ultimate_equipment/equipment/*.json`);
+    /// a bare re-run would silently strip every one of them. Proves a
+    /// second `generate()` call leaves an already-enriched, still-valid
+    /// record's file completely alone.
+    #[test]
+    fn a_second_run_does_not_erase_a_later_enrichment_pass_on_a_still_valid_record() {
+        let corpus = ScratchCorpus::new("no_self_erasure");
+        corpus.write_arms_armor(&[&otyugh_hide_row(false)]);
+        let out_dir = corpus.root.join("out");
+
+        generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
+        let written = out_dir_json_files(&out_dir)
+            .into_iter()
+            .find(|p| std::fs::read_to_string(p).unwrap().contains("Otyugh Hide"))
+            .expect("run 1 must write the Otyugh Hide record");
+
+        // Simulate `enrich_equipment_raw_tokens.rs` running after generation
+        // and adding a field this generator's own `EquipmentData` cannot
+        // reconstruct.
+        let enriched = std::fs::read_to_string(&written).unwrap().replace(
+            "\"description\": null",
+            "\"description\": null,\n  \"raw_tokens\": [\"ENRICHED-MARKER\"]",
+        );
+        assert!(enriched.contains("ENRICHED-MARKER"), "the fixture edit must actually take");
+        std::fs::write(&written, &enriched).unwrap();
+
+        // Run 2: the same row, unchanged, still resolves -- the record is
+        // still valid, not dropped.
+        generate(&corpus.root, &out_dir, "2026-01-02T00:00:00Z").unwrap();
+        let after = std::fs::read_to_string(&written).unwrap();
+        assert!(
+            after.contains("ENRICHED-MARKER"),
+            "a second run must not erase a later enrichment pass on a still-valid record: {after}"
+        );
     }
 }
