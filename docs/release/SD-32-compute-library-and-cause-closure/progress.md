@@ -443,6 +443,46 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   chained `card(6) -> card(8)` per `workflow-instruction.md §2.4`'s pipeline; card 7's own
   `card(7) -> card(8)` chain for `bonus_stack_reader.rs`/F10 runs independently.
 
+### Cycle 008-f1f9 — Gate 2 / Card 8 `gate-2-corpus-wide-runs` (F1..F9 engine)
+
+- **Card ID:** `gate-2-corpus-wide-runs` — engine cycle: `gate-2-engines-f1-f9` (card 6). This is
+  the second (and closing) leg of card 8; the sibling F10 leg (`bonus_stack_reader`) landed as the
+  cycle immediately above (`250eef2db`).
+- **Commit SHA:** `25dbee17a`
+- **Files touched:** `src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs` (new
+  library module — joins the closed Gate 1 census's F1..F9 rows against `docs/work-inventory.json`
+  and the real corpus, then runs `formula_interpreter::recognises_shape` on every DEFINE/BONUS
+  segment found), `src/rules_core/pilot_compute/mod.rs` (registered the module),
+  `src/bin/formula_interpreter.rs` (new CLI: `--corpus-wide --output <path>`),
+  `artifacts/gate-2-engines/formula_interpreter.corpus-wide.json` (new, the real run's output),
+  `artifacts/gate-2-engines/008-f1f9_cycle_receipt.md` (new), `docs/retro/events/gate-2-corpus-run
+  .jsonl` (new, one `incident` event — wrong-base worktree, self-healed per §6 step 1).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** AT-32-G2-004 (`acceptance-and-verification.md` Gate 2 — "no engine is
+  complete until it has been run corpus-wide once... its own receipt, its own fixture-check,
+  against the closed Gate 1 census").
+- **Status:** complete
+- **Notes:** `formula_interpreter.rs` refuses any unbound variable identifier (module doc), so a
+  full numeric-value proof over 4,798 units would need 4,798 fabricated `vars` maps — exactly the
+  "plausible number nobody checks" shape the no-stub doctrine refuses. Built instead a real,
+  population-scoped grammar-reach proof: every one of the closed Gate 1 census's 4,798 F1..F9 units
+  (never a hand-picked subset) re-joined to its real `data/corpus` DEFINE/BONUS formula text, run
+  through the production `recognises_shape`. Result: 4,696 recognised (97.9%), 102 refused —
+  documented proof-width gaps already named in the module's own doc (`var()`, `count()`, `cl()`,
+  `mastervar()`, `charbonusto()`) plus a few malformed-parenthesis / unrecognised-token corpus rows,
+  not a new gap. "Fixture-check against the closed Gate 1 census" implemented as a population-parity
+  check (`ScanError::PopulationMismatch`): the scan's own walked population must equal the ledger's
+  independently-produced F1..F9 row count. RED→GREEN: deliberately dropped the last census row
+  before calling the scan and confirmed the mismatch (`scanned: 4797, census: 4798`) trips the check
+  and fails the load-bearing test; reverted, re-ran green. No regression: `cargo test --locked --lib
+  rules_core::pilot_compute::` 832/832 pass; `formula_interpreter_family_fixture_check` (card 6's
+  own suite) still 5/5.
+- **Discovery forwards:** none — the 102 refusals fall entirely within the engine's own
+  already-disclosed proof-width, not a new finding requiring a card.
+- **Next-cycle plan:** Gate 2 is now closed in full (AT-32-G2-001..004 met for both engines via
+  cards 6/7/8). Gate 3 (`gate-3-closure-invariant`, card 9) is unblocked.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
