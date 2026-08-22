@@ -1,7 +1,9 @@
 # Cycle 010 — Epic 1 (compute library) / Criterion AT-32-E1-001 (F3: wire the library behind a consumer)
 
 - **Card ID:** `epic-1-compute-library` (kanban.md #10)
-- **Commit SHA:** (recorded after commit — see push step below; confirmed in `progress.md`'s append)
+- **Commit SHA:** `af4cb462d` (this receipt's own file content was updated once more after that
+  commit to fill in this SHA and tighten the identifier-audit section below; the final pushed
+  commit — see §5 push step — carries both)
 - **Files touched:**
   - `src/rules_core/pilot_compute/mod.rs` — new `resolve_class_feature_bonus_var` helper
     (reuses `class_feature_grant_consumer::{class_feature_record_tokens, resolve_pcgen_var_chain}`,
@@ -176,11 +178,20 @@ from each fixture's own `human_rogue_input`/`human_ranger_input` ability scores,
 git diff --unified=0 1bb523773d32705d1b7387fd4c494861523f55ba..HEAD \
   -- src/rules_core/pilot_compute/mod.rs tests/sd18_ranger_level20_widening.rs \
      tests/sd18_rogue_level20_widening.rs tests/sd20_levelup_ranger.rs tests/sd20_levelup_rogue.rs \
+  > /tmp/sd32-epic1-committed-diff.txt
+grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' /tmp/sd32-epic1-committed-diff.txt \
+  || echo 'OK_NO_BUNDLE_TAGS'
+```
+Raw run surfaces 8 matches, all on `diff --git a/... b/...` / `---` / `+++` file-header lines
+naming the four pre-existing `sd18_*`/`sd20_*` test filenames (unchanged by this cycle, not new
+identifiers) — the same known false-positive shape card 008's own receipt documented and excluded
+(that card's own `007_cycle_receipt.md` self-matching its own documented grep pattern). Filtering
+those header lines confirms zero real matches:
+```
+grep -vE '^(diff --git|---|\+\+\+|index )' /tmp/sd32-epic1-committed-diff.txt \
   | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' || echo 'OK_NO_BUNDLE_TAGS'
 ```
-`OK_NO_BUNDLE_TAGS` (the diff's own prose comments name `SD-31`/`SD-32` with a hyphen, which the
-pattern's `sd[0-9]+_`/`SD[0-9]+_` underscore-suffix shape does not match — confirmed by direct
-inspection of the grep's own zero matches, not assumed).
+`OK_NO_BUNDLE_TAGS`.
 
 ## Wired-integration audit result
 
