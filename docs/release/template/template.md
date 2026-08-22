@@ -16,13 +16,13 @@ date: <ISO-8601>
 
 > ## ⚠️  OPERATING METHOD — REQUIRED FOR THIS BUNDLE  ⚠️
 >
-> **This bundle is operated via `Workflow`-orchestrated dispatch, invoked from a live session — NOT `/loop /batch` and NOT a one-shot task.** `/loop /batch` cannot run unattended (`/batch` requires a human to type it per invocation). The full per-cycle procedure, orchestration mode, concurrency map, and dual-audit gate live in `loop-instruction.md`'s body, authored from `../../governance/loop-instruction-template.md`. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the loop-instruction is the *how*.
+> **This bundle is operated via `Workflow`-orchestrated dispatch, invoked from a live session — NOT `/loop /batch` and NOT a one-shot task.** `/loop /batch` cannot run unattended (`/batch` requires a human to type it per invocation). The full per-cycle procedure, orchestration mode, concurrency map, and dual-audit gate live in `workflow-instruction.md`'s body, authored from `../../governance/workflow-instruction-template.md`. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the workflow-instruction is the *how*.
 
 This folder is the canonical surface for SD-NN. Everything the bundle needs is in this folder and the in-repo doc tree (sibling release folders, `../../doctrine-external/`, `../../architecture/`). The operator's workspace is referenced only at initial-package construction time; once the package lands here, the harness reads the repo-local copy and the workspace copy is no longer consulted.
 
 ## 0. Preamble
 
-The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-draft.md`](./scope-draft.md). The per-cycle launch form, eligibility checks, and self-heal mechanics live in [`loop-instruction.md`](./loop-instruction.md). This README is the index.
+The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-draft.md`](./scope-draft.md). The per-cycle launch form, eligibility checks, and self-heal mechanics live in [`workflow-instruction.md`](./workflow-instruction.md). This README is the index.
 
 ## 1. Bundle snapshot
 
@@ -34,7 +34,7 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 | Kanban board | `<codex-tranche-N>` (operator directive `<date>`) |
 | Epics / criteria | `<N epics>` / `<N criteria>` |
 | Target version | `<major>.<tranche-base>.<build>` |
-| Dispatch mechanism | `Workflow` tool, invoked from a live session, per `loop-instruction.md §2` |
+| Dispatch mechanism | `Workflow` tool, invoked from a live session, per `workflow-instruction.md §2` |
 | Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
 | Closure gate | `tranche/N → develop` PR; release-notes generation; architecture-docs refresh (§6) |
 
@@ -43,7 +43,7 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 | File | Job | Owner |
 |---|---|---|
 | `scope-draft.md` | Canonical handoff *what* — bundle intent, epics, criteria | operator |
-| `loop-instruction.md` | Per-cycle launch *how* — eligibility, self-heal, post-mortem schema | operator |
+| `workflow-instruction.md` | Per-cycle launch *how* — eligibility, self-heal, post-mortem schema | operator |
 | `progress.md` | Live cycle-by-cycle progress + status matrix | loop (created on first cycle) |
 | `decisions.md` | Bundle-specific ADRs | operator |
 | `technical-requirements.md` | Pre-loop prerequisites + normative requirements | operator |
@@ -102,7 +102,7 @@ sub-step fires regardless of diff content:
    and appends a `graphify:update` receipt to `receipts.md`. Graphify non-zero exit does
    NOT refuse the closure pipeline — the failure receipt is the audit trail; operator
    decides retry-vs-proceed.
-4. **PR open?** If not, open it. (PR creation is a bash-level command in the loop-instruction.)
+4. **PR open?** If not, open it. (PR creation is a bash-level command in the workflow-instruction.)
 5. **Merge conflicts resolved?** If any, fix them via the merge-conflict-resolution script at
    `~/.hermes/profiles/god-emporer/skills/devops/merge-conflict-resolution/scripts/resolve_merge_conflicts.py`.
    The script runs `git pull --rebase origin <target>` (pre-flight mode) or queries the GitHub
@@ -123,10 +123,10 @@ Before this folder exists, the operator constructs the STC package from initial 
 
 Required canonical files (the promotion skill refuses to copy if any are missing):
 
-- `README.md`, `scope-draft.md`, `loop-instruction.md`, `progress.md`
+- `README.md`, `scope-draft.md`, `workflow-instruction.md`, `progress.md`
 - `epic-breakdown.md`, `decisions.md`, `risks-and-open-questions.md`, `acceptance-and-verification.md`
 - `content-unit-inventory.md`, `artifacts/`, `artifacts/README.md`, `references/`, `references/README.md`
 
 ## 8. Cross-reference
 
-- `../../governance/loop-instruction-template.md` — the per-cycle dispatch procedure `loop-instruction.md` is authored from. Distinct scope: this template covers the release-folder's file index and bundle-snapshot table; that one covers the per-cycle dispatch procedure. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.
+- `../../governance/workflow-instruction-template.md` — the per-cycle dispatch procedure `workflow-instruction.md` is authored from. Distinct scope: this template covers the release-folder's file index and bundle-snapshot table; that one covers the per-cycle dispatch procedure. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.

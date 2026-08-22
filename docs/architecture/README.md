@@ -82,7 +82,7 @@ jump straight to the doc that owns the surface you're touching:
 1. All acceptance criteria done? If not, self-heal and run more loops. Repeat until done.
 2. Architecture docs updated? If not, run the truth-up script (`~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`). It edits in place, removes obsolete content, refreshes headers, runs the verification one-liners, appends a YAML receipt to `<bundle>/receipts.md`. Repeat until verification one-liners pass and the receipt is in `receipts.md`.
 3. Graphify run? If not, run the graphify-update script (`~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py`). The script invokes graphify against the codex repo, captures stdout/stderr/exit-code, appends a `graphify:update` receipt — **success OR failure, do not refuse on graphify non-zero exit**. Operator decides retry-vs-proceed.
-4. PR open? If not, open it. (PR creation is a bash-level command in the loop-instruction, not a separate skill.)
+4. PR open? If not, open it. (PR creation is a bash-level command in the workflow-instruction, not a separate skill.)
 5. Merge conflicts resolved? If any, fix them via the merge-conflict-resolution skill (`~/.hermes/profiles/god-emporer/skills/devops/merge-conflict-resolution/scripts/resolve_merge_conflicts.py`). Otherwise proceed.
 6. Stop the loop.
 

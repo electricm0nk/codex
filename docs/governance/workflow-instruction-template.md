@@ -1,24 +1,29 @@
 ---
-title: SD-N Loop Instruction Template (Workflow-Orchestrated Dispatch)
-stc_id: GOV-LOOP-INSTRUCTION-TEMPLATE
+title: SD-N Workflow Instruction Template (Workflow-Orchestrated Dispatch)
+stc_id: GOV-WORKFLOW-INSTRUCTION-TEMPLATE
 canonical: true
 owner: Todd Hintzmann
 scope: universal
 status: active
 review_state: accepted
 last_reviewed_at: 2026-07-22
-canonical_source: ~/workspace/repos/codex/docs/governance/loop-instruction-template.md (this file)
+canonical_source: ~/workspace/repos/codex/docs/governance/workflow-instruction-template.md (this file)
 upstream_targets:
-  - programs/codex/requirements/SD-N-.../loop-instruction.md (every future bundle authors from this template)
+  - programs/codex/requirements/SD-N-.../workflow-instruction.md (every future bundle authors from this template)
 related_artifacts:
   - ./no-stub-mvp-doctrine.md (referenced by §6's dual-audit gate)
   - ./wired-integration-stubs-registry.md
 date: 2026-07-22
 ---
 
-# SD-N Loop Instruction Template — Workflow-Orchestrated Dispatch
+# SD-N Workflow Instruction Template — Workflow-Orchestrated Dispatch
 
-Every SD-N bundle authors its `loop-instruction.md` from this template, not from a prior bundle's copy-pasted instance. This file states the current, desired dispatch procedure only — it is not a changelog and does not narrate why any rule exists.
+> **Naming note:** this template was `loop-instruction-template.md` before 2026-08-22. Every
+> bundle launched before that date still names its per-cycle file `loop-instruction.md`; those
+> files are not renamed retroactively. Every bundle launched on or after 2026-08-22 names it
+> `workflow-instruction.md`, per this template.
+
+Every SD-N bundle authors its `workflow-instruction.md` from this template, not from a prior bundle's copy-pasted instance. This file states the current, desired dispatch procedure only — it is not a changelog and does not narrate why any rule exists.
 
 ## 0. Bundle at a glance
 
@@ -67,7 +72,7 @@ The session that plans, scopes, or launches a bundle is the orchestrator. §6's 
 
 Discovering that a cycle's real scope differs from what the cycle doc assumed is common and expected (see §4) — it is a reason to **pause, record the corrected scope, and dispatch (or re-dispatch) an `agent()` call with that scope**, never a license to keep executing inline because the investigation already surfaced the fix.
 
-**Self-check before any `Edit`/`Write`/`Bash`-that-mutates-a-file call while driving a bundle:** is the target path under the bundle's implementation trees (e.g. `apps/desktop/`, `apps/desktop/src-tauri/`, `src/`, `scripts/`) or otherwise part of a criterion's RED→GREEN work? If yes, stop — that call belongs inside a dispatched `agent()`, not here. The orchestrating session's own direct tool calls are reserved for: read-only investigation/scoping, authoring or correcting this bundle's own planning docs (`loop-instruction.md`, `epic-breakdown.md`, `decisions.md`, `cycles/*.md`), and git plumbing on those planning-doc commits — never on the shipped-code diff itself.
+**Self-check before any `Edit`/`Write`/`Bash`-that-mutates-a-file call while driving a bundle:** is the target path under the bundle's implementation trees (e.g. `apps/desktop/`, `apps/desktop/src-tauri/`, `src/`, `scripts/`) or otherwise part of a criterion's RED→GREEN work? If yes, stop — that call belongs inside a dispatched `agent()`, not here. The orchestrating session's own direct tool calls are reserved for: read-only investigation/scoping, authoring or correcting this bundle's own planning docs (`workflow-instruction.md`, `epic-breakdown.md`, `decisions.md`, `cycles/*.md`), and git plumbing on those planning-doc commits — never on the shipped-code diff itself.
 
 **Corollary:** mint kanban done-receipts inside the dispatched agent, not from the orchestrating session's own `Bash` calls. Kanban card creation is one more §6 per-cycle step; it happens inside the dispatched agent's scoped task, never as a bare orchestrating-session Bash call.
 

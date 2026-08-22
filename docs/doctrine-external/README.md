@@ -19,7 +19,7 @@ nav:
 
 # docs/doctrine-external/
 
-**Not to be confused with `docs/governance/`** (sibling directory): `docs/governance/` holds this repo's own real, in-repo canonical doctrine content (`loop-instruction-template.md`, `no-stub-mvp-doctrine.md`, `wired-integration-stubs-registry.md`) — actual files, not stubs. This directory (`docs/doctrine-external/`) holds only thin resolver stubs for doctrine that genuinely lives outside the repo, at `~/workspace/governance/` on the operator's machine.
+**Not to be confused with `docs/governance/`** (sibling directory): `docs/governance/` holds this repo's own real, in-repo canonical doctrine content (`workflow-instruction-template.md`, `no-stub-mvp-doctrine.md`, `wired-integration-stubs-registry.md`) — actual files, not stubs. This directory (`docs/doctrine-external/`) holds only thin resolver stubs for doctrine that genuinely lives outside the repo, at `~/workspace/governance/` on the operator's machine.
 
 ## Purpose
 

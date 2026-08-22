@@ -9,7 +9,7 @@ review_state: accepted
 last_reviewed_at: 2026-08-22
 canonical_source: ~/workspace/repos/codex/docs/governance/STC-Skill-Creation.md (this file)
 related_artifacts:
-  - ./loop-instruction-template.md (every bundle's loop-instruction.md is authored from this)
+  - ./workflow-instruction-template.md (every bundle's workflow-instruction.md is authored from this)
   - ./no-stub-mvp-doctrine.md (referenced by §6's dual-audit gate)
   - ./wired-integration-stubs-registry.md
   - ../release/template/template.md (every bundle's README.md is authored from this)
@@ -27,14 +27,14 @@ templates, or the live skills. It recommends the *interface contract* a skill sh
 that bundles authored against this project's chassis behave correctly when the skill loads.
 
 If you have Hermes profile access, the live skills at
-`~/.hermes/profiles/<your-profile>/skills/{standard-template-constructs,spec-domain-bundle-authoring,loop-instruction-doctrine,governed-workflow-doctrine}/`
+`~/.hermes/profiles/<your-profile>/skills/{standard-template-constructs,spec-domain-bundle-authoring,workflow-instruction-doctrine,governed-workflow-doctrine}/`
 are the *implementation* of this contract. This document is the *interface*.
 
 ## 0. Why this document exists
 
 A contributor's harness can author a bundle correctly against `docs/release/template/template.md`
 without ever knowing what an STC *is* in the abstract. The chassis template carries the bundle
-shape; the loop-instruction template carries the dispatch shape; the governance docs carry the
+shape; the workflow-instruction template carries the dispatch shape; the governance docs carry the
 discipline. Skills on the contributor's profile are the *executor* — they read the templates,
 enforce the discipline, and emit the receipts.
 
@@ -58,8 +58,8 @@ This document recommends the interface contract that prevents those three failur
 ### Rule 1 — Mirror the chassis template, don't fork it
 
 The canonical bundle shape lives at `docs/release/template/template.md`. Every bundle's
-`README.md` is authored from that template; every bundle's `loop-instruction.md` is authored
-from `docs/governance/loop-instruction-template.md`.
+`README.md` is authored from that template; every bundle's `workflow-instruction.md` is authored
+from `docs/governance/workflow-instruction-template.md`.
 
 **Recommendation.** When your skill needs to *generate* a new bundle's chassis, it must read
 both templates and emit them verbatim, replacing only the bundle-specific fields (slug, branch,
@@ -78,7 +78,7 @@ docs.
 
 Bundles carry a `status: planning-ready | ...` field in their README frontmatter. A bundle is
 *not* dispatchable until it is `planning-ready`. The pre-launch checklist in
-`docs/governance/loop-instruction-template.md §1` enumerates the eight checks that gate launch.
+`docs/governance/workflow-instruction-template.md §1` enumerates the eight checks that gate launch.
 
 **Recommendation.** Your skill should refuse to launch a bundle whose status is not
 `planning-ready`, and should refuse to skip a checklist item. The checklist's item 7 ("Build
@@ -135,7 +135,7 @@ receipt, not an aside.
 field at cycle start and write it into every cycle receipt that quotes a corpus-derived
 figure. A figure re-derived against an unstated corpus commit is not re-derived; it is a number
 that may have drifted between sessions. The cycle receipt schema lives at
-`docs/governance/loop-instruction-template.md §7`.
+`docs/governance/workflow-instruction-template.md §7`.
 
 ### Rule 6 — Wire fixtures from bytes the engine does not read
 
@@ -185,7 +185,7 @@ must set `model` explicitly. The standing tiering: Sonnet for build and integrat
 for adversarial verification, Haiku for housekeeping.
 
 **2.6 Shipment of `<...>` placeholders.** Per Rule 2's item 7 and the placeholder-resolution
-checklist in `loop-instruction-template.md §9`. **Recommendation.** The skill should run the
+checklist in `workflow-instruction-template.md §9`. **Recommendation.** The skill should run the
 placeholder grep (`grep -rn '<[a-z_-]*>' docs/release/<bundle>/*.md`) as a pre-publish gate.
 Any match must be a documented schema/receipt placeholder (e.g. `<cycle-id>` in the receipt
 template), a documented deferred value (e.g. `0.12.<build_at_launch>` captured at first cycle),
@@ -207,13 +207,13 @@ correctly with the chassis. The four source documents from the predecessor sessi
 - `epic-breakdown.md` (5 epics with measured ceilings)
 - `artifacts/HANDOFF.md` (5 operator-pattern footguns captured from SD-31's session)
 
-A contributor's skill that read the template and the loop-instruction template, and then followed
+A contributor's skill that read the template and the workflow-instruction template, and then followed
 the six rules above, would have:
 
 - **Rule 1** — read the template, NOT forked a new shape. Emitted the 15 canonical files with the
   bundle-specific fields filled in.
 - **Rule 2** — flagged the `0.12.<build_at_launch>` placeholder as a deferred-to-first-cycle
-  value with the resolution procedure in `decisions.md §9` and `loop-instruction.md §11`.
+  value with the resolution procedure in `decisions.md §9` and `workflow-instruction.md §11`.
 - **Rule 3** — used the orchestrating session for the chassis authoring (planning-doc work) and
   did not attempt any source-code edits in the same session.
 - **Rule 4** — ran the dual-audit grep on the chassis-only diff and recorded
@@ -244,8 +244,8 @@ recommendation.
 
 - `../release/template/template.md` — the chassis template every bundle's `README.md` is
   authored from. Read this first when authoring a new bundle.
-- `./loop-instruction-template.md` — the per-cycle dispatch procedure every bundle's
-  `loop-instruction.md` is authored from. Read this first when writing or auditing a cycle.
+- `./workflow-instruction-template.md` — the per-cycle dispatch procedure every bundle's
+  `workflow-instruction.md` is authored from. Read this first when writing or auditing a cycle.
 - `./no-stub-mvp-doctrine.md` — the wired-integration doctrine-of-record. The dual-audit gate
   enforces this on every cycle.
 - `./wired-integration-stubs-registry.md` — the operator-granted stub exceptions. The
@@ -259,7 +259,7 @@ recommendation.
 
 - **Not a copy of the live skills.** The actual implementation lives in the operator's Hermes
   profile at `~/.hermes/profiles/<profile>/skills/{standard-template-constructs,
-  spec-domain-bundle-authoring, loop-instruction-doctrine, governed-workflow-doctrine}/`. Those
+  spec-domain-bundle-authoring, workflow-instruction-doctrine, governed-workflow-doctrine}/`. Those
   carry the version_history metadata, the curator-backup snapshots, and the frontmatter
   relationships to other skills. A contributor without profile access should read this
   document; a contributor with profile access should read the live skills directly because they
