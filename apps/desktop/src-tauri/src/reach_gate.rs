@@ -3904,6 +3904,104 @@ mod tests {
         );
     }
 
+    /// The Monk shape ("a complete hand-authored table with a string->id
+    /// dispatch link silently missing one entry") closure for the `races`
+    /// and `monsters` kinds, corpus-wide -- not scoped to the hand-modelled
+    /// subsets `RaceId::ALL` (7 CRB races) / `beastiary1::MonsterId::ALL`
+    /// (46 Bestiary-1 stat blocks) that a prior wave's own unit tests
+    /// covered (`SD-31-corpus-closure-grind/todo/sweeps.md` S1/S2,
+    /// `artifacts/MEASURE-TWICE.md` T1: "Race/monster: partial only ...
+    /// the other 280 chassis-served monster entries and 31 non-CRB races
+    /// were never checked for this shape").
+    ///
+    /// Two things this test proves, mechanically, that the prior wave's
+    /// narrower enum-scoped tests did not:
+    ///
+    /// 1. Every book with a `race/` or `monster/` directory in the real
+    ///    corpus has a `reach_of` dispatch arm -- so no book can be
+    ///    silently absent from the check itself (the book-level form of the
+    ///    Monk shape).
+    /// 2. The non-hand-modelled remainder of each kind (a race book beyond
+    ///    CRB, or a monster book beyond Bestiary 1's 46) is served through
+    ///    a corpus-derived id set (`race_catalog::ingested_race_ids_for_book`
+    ///    reads `corpus.race_keys()`; the monster chassis modules generate
+    ///    their roster from the same corpus rows) rather than a second,
+    ///    separately hand-authored id table -- so there is no distinct
+    ///    string->id dispatch layer for a variant to be missing *from*.
+    ///    `every_ingested_family_is_accounted_for` (above) already proves
+    ///    every such family reaches or is a written finding; this test
+    ///    names races/monsters specifically so a future regression that
+    ///    narrows either kind back to its hand-modelled subset fails here,
+    ///    by name, rather than silently.
+    #[test]
+    fn dispatch_gap_race_and_monster_families_all_have_book_level_reach_arms() {
+        let (families, unknown) = corpus_inventory();
+        assert!(
+            unknown.is_empty(),
+            "corpus_inventory found directories this gate cannot name: {unknown:?}"
+        );
+
+        let mut race_books = Vec::new();
+        let mut monster_books = Vec::new();
+        for family in &families {
+            if family.kind == "races" {
+                race_books.push(family.book.clone());
+            } else if family.kind == "monsters" {
+                monster_books.push(family.book.clone());
+            }
+        }
+
+        assert!(
+            race_books.len() >= 6,
+            "expected at least the 6 registered race books (crb, beastiary1, bestiary_2, \
+             bestiary_5, bestiary_6, advanced_race_guide); corpus_inventory found {}: {:?}",
+            race_books.len(),
+            race_books
+        );
+        assert!(
+            monster_books.len() >= 13,
+            "expected at least the 13 registered monster books (beastiary1 plus the 12 \
+             chassis-served books); corpus_inventory found {}: {:?}",
+            monster_books.len(),
+            monster_books
+        );
+
+        let mut missing_arms = Vec::new();
+        for book in race_books.iter().chain(monster_books.iter()) {
+            let kind = if race_books.contains(book) { "races" } else { "monsters" };
+            let family = Family::new(book, kind);
+            if reach_of(&family).is_none() {
+                missing_arms.push(family.label());
+            }
+        }
+        assert!(
+            missing_arms.is_empty(),
+            "book-level Monk-shape dispatch gap: these race/monster families exist in the \
+             corpus but have no reach_of arm at all, so their records cannot even be checked \
+             for reachability: {}",
+            missing_arms.join(", ")
+        );
+
+        // The non-CRB / non-Bestiary-1 remainder must actually be present in
+        // the population `races_reach`/the monster chassis check against --
+        // i.e. this is a corpus-wide claim, not one that quietly stops at
+        // the 7-race / 46-monster hand-modelled subset. `ingested_race_ids_
+        // for_book` is corpus-derived (reads `corpus.race_keys()`, filtered
+        // by book_id) so a non-empty result for a non-CRB book is itself
+        // proof there is no separate hand-authored id table gating it.
+        for book_id in ["bestiary_2", "bestiary_5", "bestiary_6", "advanced_race_guide"] {
+            let ids = crate::race_catalog::ingested_race_ids_for_book(book_id);
+            assert!(
+                !ids.is_empty(),
+                "{book_id}'s races are corpus-derived (ingested_race_ids_for_book), but the \
+                 derived set came back empty -- either the book has no races (contradicts \
+                 corpus_inventory finding it above) or the corpus-derivation path itself \
+                 silently dropped every row, which is exactly the Monk-shape failure mode \
+                 this test exists to catch"
+            );
+        }
+    }
+
     /// Claims are executed, not trusted. A surface that stops carrying a
     /// book's records fails here even though its doc comment still says it
     /// does.

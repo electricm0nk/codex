@@ -546,6 +546,65 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   'worktree'`, disjoint files per `workflow-instruction.md §2.4`) are the next dispatchable phase;
   card 13 (Closure epilogue) follows once 10-12 are `complete` or filed under `## Open blockers`.
 
+### Cycle 1 — Epic 2 / Card 11 `epic-2-cause-closure` (T1 closed; T2a/T2b/T9/T4/T12/T7/T8 scoped and deferred)
+
+- **Card ID:** `epic-2-cause-closure`
+- **Commit SHA:** see this cycle's own commit in git log (filled in at push time).
+- **Files touched:** `apps/desktop/src-tauri/src/reach_gate.rs` (one new test),
+  `docs/retro/events/epic-2-cause-closure.jsonl` (new — 1 correction, 3 deferrals), `kanban.md`
+  (card 11 → in-progress, cycle 1), this file.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — cause closure by class
+  for the eight measured blocker shapes (T2a, T2b, T9, T4, T12, T5, T1, T3), T8/T7 opportunistic,
+  T10 census-process.
+- **Status:** complete for this cycle's own scope (T1); card 11 overall stays `in-progress` — see
+  kanban.md.
+- **Notes:** **T1 (dispatch gap / "Monk shape") closed, corpus-wide, all three kinds.** Equipment
+  leg was already fully mitigated by existing infrastructure (verified: APG's 37 `Equipmods` gap
+  rows in `equipment_gap_tables.rs`, 0 units silently lost — no code change needed). Race/monster
+  leg — the part SD-31's `todo/sweeps.md` S1/S2 flagged "never fully checked" beyond the 7-race
+  CRB / 46-monster Bestiary-1 hand-modelled subsets (`RaceId::ALL`/`MonsterId::ALL`) — closed by
+  tracing the architecture, not by hand-checking 311 records: every non-hand-modelled race/monster
+  is served through a corpus-derived path (`race_catalog::ingested_race_ids_for_book` reads
+  `corpus.race_keys()`, no hand-authored id table; `bestiary::mod.rs`'s 280-monster complement is
+  transcribed from the sibling table's own shipped records, per its own doc comment), which is
+  structurally immune to the Monk shape (no second, separate string→id table to have a missing
+  entry). Confirmed book-level coverage is complete by direct count: `data/corpus/*/race` has
+  exactly the 6 books `reach_gate.rs` names, `data/corpus/*/monster` has exactly the 13 it names —
+  matching its `("<book>", "races"/"monsters")` match arms one-for-one. `scripts/verify.sh --only
+  reach` already passes `30/30` at HEAD (unchanged by this cycle), proving both the book-level and
+  record-level claim already hold. New standing test locks the closure in as a named, permanent
+  assertion rather than a one-time argument:
+  `reach_gate::tests::dispatch_gap_race_and_monster_families_all_have_book_level_reach_arms`.
+  RED→GREEN: temporarily raised the race-book-count assertion to `>= 999`, re-ran, failed for the
+  intended reason (`"found 6: [...]"`, all 6 named exactly); reverted, re-ran green (1/1). No
+  regression: `reach_gate::` module 31/31 (was 30), desktop `--bins` suite 516/516 (was 515).
+  **Cited, not re-closed:** T5 (card 4's own receipt, all four books' `RuleSetId`s land, 422 units
+  matching `epic-breakdown.md`) and T3 (card 1's own receipt, 7 of 29 generators fixed). **Scoped
+  and deferred, not attempted:** T2a (8,243 units — `MEASURE-TWICE.md` itself says only 2,360 are
+  cleanly remappable, the other 5,883 need per-value re-examination and 1,354-2,124 overlap T12
+  directly, so the two need one combined cycle) and T12 (~3,000 units, same overlap) together;
+  T2b (2,472), T9 (2,651), T4 (up to 2,763, prior wave's own 471-unit claim already flagged false —
+  "true reachable count of zero" — needs the real driver re-run before any number is trusted); T7
+  (D12, 4 units — fix site identified, `class_feature_grant_consumer.rs:374`'s
+  `granted_via_archetype` derivation, not implemented); **T8 is a scope-boundary finding, not a
+  difficulty deferral** — its fix site, `scripts/observer/pf1e_dashboard_producer.py`, is a
+  read-only SD-30 surface per `technical-design.md`'s own "What this bundle does not touch"
+  section, so it needs an operator ruling on write-scope before any SD-32 cycle can touch it, not
+  more engineering time. T10 is census-process per card 11's own note, left untouched as scoped.
+  All five deferrals logged via `scripts/retro.py deferral`/`correction` with named next steps
+  (`docs/retro/events/epic-2-cause-closure.jsonl`). This is a first, closed cycle of what card 11
+  needs, not the whole card — the Gate 2 precedent (3 separate cards for a narrower ten-family
+  scope) is the model for how many more cycles this card likely needs. Full detail:
+  `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** next `epic-2-cause-closure` cycle picks one target: T2a+T12 combined (the
+  largest, most leveraged, and the only pair that cannot close independently), T2b, or T9/T4 —
+  each needs its own measurement-then-close pass, not a single fix. T7 (4 units) is a cheap
+  opportunistic pickup if a future cycle has spare scope. T8 needs an operator ruling before any
+  cycle can pick it up at all.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
