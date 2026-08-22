@@ -53,7 +53,7 @@ A contributor's skill fails in three predictable ways:
 
 This document recommends the interface contract that prevents those three failure modes.
 
-## 1. The interface contract — six rules
+## 1. The interface contract — seven rules
 
 ### Rule 1 — Mirror the chassis template, don't fork it
 
@@ -150,6 +150,23 @@ the PCGen corpus's expected-value corpora; for a generator, this is the corpus t
 supposed to reproduce. The discipline-of-record is `SD-31-corpus-closure-grind/artifacts/THE-BOX.md`'s
 fixture check. A cycle without this is not a closed cycle even if `cargo test` is green.
 
+### Rule 7 — Log retro events throughout; write and cite the retrospective at closure
+
+Git records what landed; it records nothing about what nearly landed wrong or who caught it.
+`AGENTS.md §Retrospective Logging` and `scripts/retro.py` are this project's mechanism for
+capturing that, and SD-31's own retrospective (`docs/retro/sd31-retrospective.md`) is grounded in
+its 1,940-event log rather than recollection *because* the logging happened throughout the run,
+not as a single write-up at the end.
+
+**Recommendation.** Your skill must (a) emit a retro event — `correction` / `incident` /
+`deferral` / `rework` — the moment it catches one, not batched at cycle end; (b) after every epic,
+run `scripts/retro.py summary --since <epic-start>` and fold the result into that epic's closing
+receipt; and (c) at bundle closure, run the full-bundle summary, write it up as
+`docs/retro/<bundle-slug>-retrospective.md` in the shape `sd31-retrospective.md` uses, and **cite
+it from the bundle's own `references/README.md`** — a retrospective nobody links from the package
+it's about is a completeness gap, not a formality (an SD-32 chassis review found and fixed exactly
+this). The full procedure lives in `docs/governance/workflow-instruction-template.md §§2.3, 10–11`.
+
 ## 2. Failure modes your skill must NOT introduce
 
 These are the recurring ways contributor skills break the chassis. Each one has a concrete
@@ -197,6 +214,19 @@ wrong in a way only an independent verifier catches. **Recommendation.** Even if
 primitive returns success, the skill must re-derive against the live corpus (Rule 5) and the
 audit gates (Rule 4) before accepting the cycle.
 
+**2.8 Treating a written summary as the deliverable.** SD-31 lost four full stalls this way — a
+wave finished, a summary got written, and the turn ended without dispatching the next phase. Work
+stopped until the operator noticed. **Recommendation.** Your skill's dispatch loop must not treat
+"I wrote a summary" as a terminal state while ready, undispatched work remains. Dispatch first;
+the summary then describes something that already happened.
+
+**2.9 Writing a better-worded warning for a recurring incident instead of a control.** SD-31
+wrote a wrong-base-worktree warning into every dispatch prompt from wave 15 onward; it fired 27
+times anyway, because a sentence in a prompt is not a control. **Recommendation.** When your
+skill's own incident log (Rule 7) shows the same failure recurring more than a handful of times,
+the fix is a command with a nonzero exit code that stops the cycle, not an additional paragraph of
+prose asking an agent to be careful.
+
 ## 3. Worked example — SD-32 chassis completion (2026-08-22)
 
 The SD-32 chassis fill-out is the cleanest recent example of a contributor skill interacting
@@ -208,7 +238,7 @@ correctly with the chassis. The four source documents from the predecessor sessi
 - `artifacts/HANDOFF.md` (5 operator-pattern footguns captured from SD-31's session)
 
 A contributor's skill that read the template and the workflow-instruction template, and then followed
-the six rules above, would have:
+the seven rules above, would have:
 
 - **Rule 1** — read the template, NOT forked a new shape. Emitted the 15 canonical files with the
   bundle-specific fields filled in.
@@ -221,6 +251,11 @@ the six rules above, would have:
 - **Rule 5** — captured `PCGEN_ORACLE_SHA` from `scripts/pcgen-oracle-pin.env` at cycle-0 and
   recorded it in the pre-launch state block.
 - **Rule 6** — N/A for this cycle (no engine fixture was emitted at chassis time).
+- **Rule 7** — **missed, and caught only by a later content-completeness review.** SD-31's
+  retrospective (`docs/retro/sd31-retrospective.md`) existed and was real, but the chassis
+  fill-out never linked it from SD-32's own `references/README.md`. This is the concrete, real
+  instance Rule 7 exists to prevent — a skill following Rule 7 would have added the citation in
+  the same chassis-completion cycle instead of needing a follow-up fix.
 
 The result was a planning-ready chassis with 15/15 canonical files, all 21 references resolving,
 all placeholders explicitly justified at call site. The contributor's skill produced a chassis
@@ -254,6 +289,9 @@ recommendation.
   The dual-audit gate's first grep enforces this.
 - `../doctrine-external/spec-domain-lifecycle.md` — how spec-domain routing works. If your
   skill is routing work into spec domains, this is the rule set.
+- `../../AGENTS.md §Retrospective Logging`, `scripts/retro.py`, `docs/retro/schema.json` — the
+  event-logging discipline Rule 7 enforces.
+- `docs/retro/sd31-retrospective.md` — the worked example Rule 7's write-up format follows.
 
 ## 6. What this document is NOT
 
@@ -267,7 +305,7 @@ recommendation.
 - **A Claude-Code-native rendering of this contract also lives in-repo** at
   `.claude/skills/stc-authoring/SKILL.md` — a project-scoped skill (not a personal one) so any
   Claude Code session working in this repo picks it up automatically. It condenses this
-  document's six rules into an actionable form for generating a new bundle's chassis or auditing
+  document's seven rules into an actionable form for generating a new bundle's chassis or auditing
   an existing one for content completeness. Update it alongside this document when the interface
   contract changes; the two should never drift.
 - **Not a substitute for reading the templates.** A contributor's skill that reads only this

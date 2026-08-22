@@ -1,6 +1,6 @@
 ---
 name: stc-authoring
-description: Author, fill out, or audit an SD-N release package (an "STC" chassis) under docs/release/. Use when creating a new SD-N bundle, filling in its chassis files from predecessor docs, reviewing an existing package for content completeness, evaluating launch readiness, or checking a workflow-instruction.md / kanban.md dispatch cycle for protocol violations. Also use when the user asks to "evaluate loop-instruction.md" or "workflow-instruction.md for launch readiness," or to review a release package for gaps.
+description: Author, fill out, or audit an SD-N release package (an "STC" chassis) under docs/release/. Use when creating a new SD-N bundle, filling in its chassis files from predecessor docs, reviewing an existing package for content completeness, evaluating launch readiness, checking a workflow-instruction.md / kanban.md dispatch cycle for protocol violations, writing a Workflow-tool dispatch script for a bundle, or checking whether an epic's or bundle's closure (retrospective written and cited, worktree/branch cleanup, PR) actually happened. Also use when the user asks to "evaluate loop-instruction.md" or "workflow-instruction.md for launch readiness," or to review a release package for gaps.
 ---
 
 # STC Authoring
@@ -77,10 +77,17 @@ practice:
    ```bash
    grep -rn "retro" docs/release/SD-NN-<slug>/references/README.md
    ```
-5. Sanity-check any verification command that reads a file as structured data (`json.load`,
+5. If the package under audit has itself closed (or claims to), check that *its own* closure
+   actually ran the full epilogue, not just the PR: `docs/retro/<slug>-retrospective.md` exists
+   and is cited from `references/README.md`; `progress.md`/`decisions.md` records a worktree/
+   branch sweep with a real count (not just "PR opened"); and the retrospective's own "changes for
+   next bundle" section, if any, actually landed somewhere (this skill, the governance templates,
+   or the successor bundle's `decisions.md`) rather than sitting unread. See "Epic and bundle
+   closure" below for the full checklist.
+6. Sanity-check any verification command that reads a file as structured data (`json.load`,
    `jq`, etc.) — confirm the target path is actually the right format. A command that tries to
    parse a markdown file as JSON is a real, verifiable defect, not a style nit.
-6. Report gaps concretely (file + line + what's missing), then fix them as small, targeted edits
+7. Report gaps concretely (file + line + what's missing), then fix them as small, targeted edits
    — this is planning-doc authoring, not shipping-code work, so it's fine for the orchestrating
    session to make these edits directly (see the boundary rule below).
 
@@ -95,6 +102,53 @@ change. That work happens inside a dispatched `agent()` / `Workflow` call — se
 `workflow-instruction.md §2.2` for the full self-check. Discovering the real scope of a fix while
 investigating is a reason to dispatch (or re-dispatch) an agent call with the corrected scope,
 never a license to make the fix inline because the context is already loaded.
+
+## Retro event logging and running the retro
+
+Git records what landed; it records nothing about what nearly landed wrong or who caught it.
+`AGENTS.md §Retrospective Logging` + `scripts/retro.py` is this project's mechanism, and
+`docs/retro/sd31-retrospective.md` is grounded in numbers only because the logging happened
+throughout the run, not written up once at the end.
+
+- **Every dispatched cycle** emits a `correction` / `incident` / `deferral` / `rework` event via
+  `scripts/retro.py` the moment it happens, with `RETRO_ACTOR` set. `--verified-by` is required on
+  a `correction` — an unverified one is a competing assertion, not a finding.
+- **After every epic** (light touch): `scripts/retro.py summary --since <epic-start>`, folded into
+  that epic's closing receipt.
+- **At bundle closure** (full write-up): run the full-bundle summary, write
+  `docs/retro/<bundle-slug>-retrospective.md` in the shape `sd31-retrospective.md` uses (raw event
+  tally, what the data says, what worked, what didn't, named changes for the next bundle), and
+  **cite it from `references/README.md` in the same closure cycle** — not as a follow-up.
+
+## Creating the Workflow script
+
+Dispatch is a script passed to the `Workflow` tool from the live orchestrating session — plain
+JavaScript, not a shell script, not `/loop`. `docs/governance/workflow-instruction-template.md
+§2.4` has the full worked skeleton; condensed:
+
+1. `export const meta = { name, description, phases }` — one phase per epic/gate row in the
+   bundle's own `workflow-instruction.md §3` table, same titles.
+2. `phase()` calls fire in the gated order that table states.
+3. `pipeline()` by default for a chain of cycles within one criterion; `parallel()` only where §3
+   marked `parallel: yes`, and then every agent gets `isolation: 'worktree'`.
+4. Every `agent()` call sets `model` explicitly — never omit it (see failure modes below).
+5. Every dispatched agent's prompt embeds `workflow-instruction.md §6`'s procedure or points at it
+   plus the specific criterion — it starts with zero context of this bundle.
+
+## Epic and bundle closure
+
+`workflow-instruction-template.md §10` (every epic) and `§11` (once, as the bundle's final epic)
+define the full procedure; condensed:
+
+- **After every epic:** retro summary for that epic's window (above) + a worktree sweep scoped to
+  that epic's own worktrees only (never remove a `locked` one or one carrying unmerged commits).
+  No PR at this granularity.
+- **Bundle closure (once):** final-acceptance scan of every criterion → write and cite the
+  bundle's retrospective (above) → full worktree/branch sweep for the whole bundle → architecture-
+  docs refresh + graphify + PR + merge-conflict resolution (`docs/release/template/template.md
+  §6`) → release notes + version bump. The retro write-up and worktree sweep happen **before** the
+  PR opens — finding either one missing after the PR is already open means the closure needs a
+  correction cycle, not a clean pass.
 
 ## The dual-audit gate (every dispatched cycle)
 
@@ -139,6 +193,13 @@ Each of these has a real, recorded incident in this project's history (full deta
   planning-ready.
 - **Trusting a "complete" cycle status without re-deriving.** The whole point of an integration
   cycle is to catch what the lane that produced the work got wrong.
+- **Treating a written summary as the deliverable.** SD-31 lost four full stalls this way — a
+  wave finished, a summary got written, and the turn ended without dispatching the next phase.
+  Dispatch first; the summary then describes something that already exists.
+- **Writing a better-worded warning for a recurring incident instead of a control.** A
+  wrong-base-worktree warning went into every SD-31 dispatch prompt from wave 15 onward and still
+  fired 27 times. When the same incident type recurs more than a handful of times, the fix is a
+  command with a nonzero exit code, not another sentence of prose.
 
 ## Fixture and corpus-SHA discipline (when a cycle emits engine values)
 
@@ -156,4 +217,6 @@ Each of these has a real, recorded incident in this project's history (full deta
 - `docs/governance/workflow-instruction-template.md` — the per-cycle dispatch procedure template.
 - `docs/governance/no-stub-mvp-doctrine.md`, `docs/doctrine-external/identifier-discipline.md` —
   doctrine-of-record for the dual-audit gate.
-- `docs/retro/` — retrospectives. Check whether the package under audit cites the relevant one.
+- `docs/retro/`, `AGENTS.md §Retrospective Logging`, `scripts/retro.py`, `docs/retro/schema.json`
+  — retrospectives and the event-logging discipline behind them. Check whether the package under
+  audit cites the relevant one.

@@ -76,6 +76,87 @@ Discovering that a cycle's real scope differs from what the cycle doc assumed is
 
 **Corollary:** mint kanban done-receipts inside the dispatched agent, not from the orchestrating session's own `Bash` calls. Kanban card creation is one more §6 per-cycle step; it happens inside the dispatched agent's scoped task, never as a bare orchestrating-session Bash call.
 
+**Dispatch first, report second.** SD-31 lost four full stalls this way — twice the operator had
+to say *"you look idle"* / *"you stopped working again"* before work resumed. A wave finished, the
+orchestrating session wrote a summary, and the turn ended without dispatching the next phase. The
+summary **feels** like the deliverable. It is not. Before ending any turn while the bundle has
+ready, undispatched work, dispatch it first — the summary then describes something that already
+exists, rather than substituting for it.
+
+### 2.3 Retrospective event logging (every cycle)
+
+Every dispatched cycle emits retro events during the work itself, not just a written summary at
+the end — per `AGENTS.md`'s "Retrospective Logging" discipline. Git records what landed; it says
+nothing about what nearly landed wrong or who caught it, and nothing survives the run except this
+log. SD-31's 1,940-event log is the reason its own retrospective
+(`docs/retro/sd31-retrospective.md`) is grounded in numbers instead of recollection.
+
+- **When you catch an error, hit an incident, defer work, or redo something**, emit the event via
+  `scripts/retro.py` at the moment it happens — not batched at cycle end. A "batch it at the end"
+  habit is how events silently never get written.
+- **Correction:** `scripts/retro.py correction --subject <who-was-wrong> --claimed <value> --actual <value> --verified-by <command-or-check>`. `--verified-by` is required — an unverified correction is a competing assertion, not a finding.
+- **Incident / deferral / rework:** `scripts/retro.py <type> ...` — run `python3 scripts/retro.py help <type>` for that type's required fields.
+- **`RETRO_ACTOR` must already be set** (§2.1) so the by-actor breakdown resolves to a real role
+  name instead of an opaque worktree path once the run ends.
+- Full vocabulary and field contract: `docs/retro/schema.json`. The tool builds its own CLI from
+  that schema, so it cannot drift from what it accepts.
+
+### 2.4 Creating the Workflow script
+
+The bundle's dispatch is a script passed to the `Workflow` tool from the live orchestrating
+session — plain JavaScript (no TypeScript syntax), not a shell script and not a `/loop`
+invocation. If the bundle has a `scripts/workflow-dispatch.sh`, it is read as **data**: its
+`EPIC_PARALLEL` / `EPIC_SUBAGENT` / `PARALLEL_OVERRIDE` / `SUBAGENT_OVERRIDE` maps supply the
+concurrency and tiering values the script below plugs in. It is never executed as a standalone
+process.
+
+Every `Workflow` script for this project's bundles follows the same shape:
+
+1. `export const meta = { name, description, phases }` — one `phases` entry per epic/gate row in
+   §3's parallel/sequential map, same titles, so the progress display groups cleanly.
+2. One `phase('<epic/gate title>')` call per §3 row, fired in the gated order that table states —
+   never out of order, even when two epics are each individually parallel-safe.
+3. Inside a phase, default to `pipeline()` for a chain of cycles within one criterion (RED → GREEN
+   → audit → receipt is a chain, not independent work); use `parallel()` only when §3 marked that
+   epic `parallel: yes` for genuinely disjoint files, and then every agent in that call gets
+   `isolation: 'worktree'` per §3's rule.
+4. Every `agent()` call sets `model` explicitly, per §2's tiering table (Sonnet for build/
+   integration, Opus only for adversarial verification, Haiku for housekeeping). **Never omit
+   `model`** — an omitted `model` silently inherits the orchestrating session's own model. SD-31
+   wave 18 did this and burned 97% of a week's Opus quota on six inherited-Opus build lanes in
+   three hours.
+5. Every `agent()` prompt for a criterion cycle embeds §6's procedure verbatim (or points at this
+   file plus the specific criterion) — the dispatched agent starts with zero context of this
+   bundle.
+
+**Worked skeleton** (adapt phase titles/counts to this bundle's own §3 table — never copy
+another bundle's script verbatim any more than you'd copy its `workflow-instruction.md`
+verbatim, per `docs/governance/STC-Skill-Creation.md` Rule 1):
+
+```javascript
+export const meta = {
+  name: 'sd-nn-dispatch',
+  description: '<bundle one-line>',
+  phases: [
+    { title: 'Epic 1 — <name>' },
+    { title: 'Epic 2 — <name>' },
+  ],
+}
+
+phase('Epic 1 — <name>')
+const epic1Results = await pipeline(
+  criteriaForEpic1,                          // [{id, prompt}, ...] from epic-breakdown.md
+  c => agent(cycleProcedurePrompt(c), { model: 'sonnet', phase: 'Epic 1 — <name>' }),
+)
+
+phase('Epic 2 — <name>')
+// parallel: yes per §3 — genuinely disjoint files, each agent gets its own worktree
+const epic2Results = await parallel(
+  criteriaForEpic2.map(c => () =>
+    agent(cycleProcedurePrompt(c), { model: 'sonnet', phase: 'Epic 2 — <name>', isolation: 'worktree' })),
+)
+```
+
 ## 3. Per-epic parallel/sequential map
 
 Fill in one row per epic, only after completing §4's path verification. A `parallel: yes` row is only valid if the epic's criteria touch genuinely disjoint files (verified, not assumed).
@@ -108,7 +189,18 @@ On non-fast-forward rejection, repeat up to 5 times. If it still fails after 5 a
 
 **This procedure runs inside a dispatched `agent()`/`Workflow` call — see §2.2.** The orchestrating session never performs steps 1–9 itself with its own tool calls.
 
-1. Ensure the working tree/worktree is based on the latest bundle branch (§5's fetch+rebase).
+1. Ensure the working tree/worktree is based on the latest bundle branch (§5's fetch+rebase), **and
+   verify the base is real rather than assuming it.** SD-31 wrote a prose warning about wrong-base
+   worktrees into every dispatch prompt from wave 15 onward; it still fired 27 times, because a
+   warning in a prompt is not a control. Run this and stop if it fails, before doing anything else:
+   ```bash
+   test -d docs && test -d data && test -d scripts \
+     || { echo 'WRONG BASE — reset before continuing'; exit 1; }
+   ```
+   On failure, `git reset --hard <pinned bundle-branch SHA>` and re-verify. If the bundle has
+   accumulated spent `site-publish/*` (or similarly-shaped throwaway) branches, delete them once
+   merged — SD-31's actual fix was removing the branches that could be wrongly selected as a base,
+   not a better-worded warning.
 2. `BASE_BRANCH=$(git merge-base HEAD origin/develop)` — define this before either grep block below, not between them.
    ```bash
    BASE_BRANCH=$(git merge-base HEAD origin/develop)
@@ -166,8 +258,75 @@ grep -rn '<[a-z_-]*>' docs/release/SD-N-<slug>/*.md
 
 Every match must be resolved to a real value, or explicitly justified as intentionally deferred (e.g., "filled in by Epic 8's cycle, not at authoring time").
 
+## 10. Epic wrap-up (fires after every epic)
+
+Lightweight, and distinct from §11's bundle-final closure — this runs at the end of **every**
+epic, not just the last one:
+
+1. **Retro summary for the epic's work window.** `scripts/retro.py summary --since <epic-start-date> --json` (or a tighter window if the epic's actual start is known more precisely). Read it — don't just run it and move on. Append a short "what the retro log shows for this epic" note to the epic's own closing cycle receipt: incident/correction/deferral counts, any recurrence key firing more than once.
+2. **Worktree sweep for this epic's worktrees only.** `git worktree list`; remove any worktree used by this epic's now-merged, no-longer-live cycles. Never remove one still `locked` (an agent is actively using it) or carrying unmerged commits — confirm via `git worktree list`'s lock annotation and `git log <branch>..origin/<branch>` showing nothing unmerged, per §8's existing safety rule.
+3. **No PR here.** The bundle's single tranche→develop PR is §11's job, fired once, as the bundle's own final epic — an epic wrap-up is not a promotion event.
+
+## 11. Bundle closure epilogue (fires once, as the bundle's final epic)
+
+Every bundle's last epic is a Closure Epilogue — the pattern every prior bundle since SD-21 has
+used (`SD-21-.../decisions.md §189`), extended here to also write the retrospective:
+
+1. **Final-acceptance scan.** Every acceptance criterion 1..N is `complete` or has a filed `## Open blockers` entry with a named resolution owner — no criterion left silently unaddressed.
+2. **Write the bundle's retrospective**, grounded in the event log, not recollection:
+   ```bash
+   scripts/retro.py summary --since <bundle-launch-date> --json
+   ```
+   Read the output and write `docs/retro/<bundle-slug>-retrospective.md`, in the shape
+   `docs/retro/sd31-retrospective.md` uses: the raw event tally, what the data says before
+   interpretation, what worked, what didn't, and named changes for the next bundle. **Then cite it**
+   from this bundle's own `references/README.md` — a retrospective that exists but is never linked
+   from the package it's about is the exact gap an SD-32 chassis review found and had to fix by hand.
+3. **Full worktree/branch sweep** for the whole bundle (not just this epic's, per §10) — the real
+   worked example is `SD-22-.../progress.md` E7.22-26: enumerate every worktree and local branch
+   tied to this bundle, report count found vs. removed, and leave anything outside this bundle's
+   own lane untouched (out-of-scope cleanup is explicitly not this epic's job, per
+   `SD-21-.../decisions.md §195`).
+4. **Architecture-docs refresh, graphify, PR, merge-conflict resolution** — the pipeline in
+   `docs/release/template/template.md §6`, unchanged by this section; that template covers the
+   chassis-level closure steps, this file covers the per-cycle procedure they run inside.
+5. **Release notes and version bump**, per this bundle's own versioning convention.
+
+## 12. Standing lessons (carried from prior bundles' retrospectives)
+
+These are rules, not context — read `docs/retro/sd31-retrospective.md` for the incidents behind
+them if the reasoning matters for a judgment call.
+
+- **A ruling that defers a capability must name the condition under which it is revisited, and
+  that condition must be checked, not remembered.** SD-31's no-formula-interpreter ruling sat
+  unexamined for ~18 waves after its own stated precondition (a fixture mechanism) had already
+  landed, because nobody re-read it. If `decisions.md` defers something, state the revisit
+  trigger explicitly and check for it at every closure scan, not just when someone happens to
+  recall the deferral.
+- **A headline figure written before the wave meant to establish it has returned is provisional,
+  and must be marked as such in the text — never settled fact.** SD-31's own worst instance: "1,049
+  formula shapes" was written into a package's scope as fact before the measuring wave returned;
+  two lanes then failed to reproduce it and it was retracted, but it had already been load-bearing
+  scope text for a day. If a number is estimated rather than measured, say "estimated" in the
+  sentence that states it.
+- **Recurring incidents get a mechanical control, not a better-worded warning.** SD-31 wrote a
+  wrong-base-worktree warning into every dispatch prompt from wave 15 onward; it fired 27 times
+  anyway. The actual fix (§6 step 1 of this file) is a command that stops the cycle, not prose
+  asking an agent to be careful. When the same incident type recurs more than a handful of times
+  across a bundle, the fix is a check with a nonzero exit code, not another sentence.
+- **Sum the piles, always.** Any partition of a corpus into groups/kinds/epics is only trustworthy
+  once something mechanically confirms the parts add up to the stated whole and nothing sits in
+  two groups or none. `scripts/coverage_ledger.py`'s fail-closed-on-empty posture is the pattern;
+  do not ship epic/gate arithmetic that "should" sum without a command proving it does.
+- **Measurement work that bank zero units is still a legitimate deliverable**, and should be
+  reported and judged as one — not treated as a stall because the board didn't move. SD-31's three
+  highest-value waves banked almost nothing and changed the program's direction twice.
+
 ## Cross-references
 
 - `./no-stub-mvp-doctrine.md`, `docs/doctrine-external/identifier-discipline.md` — the two doctrine docs §6's dual-audit gate enforces inline.
 - `./wired-integration-stubs-registry.md` — operator-granted stub exceptions.
 - `docs/release/template/template.md` — the sibling template every bundle's own `README.md` (folder index) is authored from. Distinct scope: that template covers the release-folder's file index and bundle-snapshot table; this template covers the per-cycle dispatch procedure. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.
+- `AGENTS.md §Retrospective Logging`, `scripts/retro.py`, `docs/retro/schema.json` — the event-logging discipline §2.3 points at. Emission happens throughout every cycle; §10/§11 are where the accumulated log gets read and turned into a written retrospective.
+- `docs/retro/sd31-retrospective.md` — the worked example §11 step 2 follows, and the source of §12's standing lessons.
+- `.claude/skills/stc-authoring/SKILL.md` — the Claude-Code-native rendering of this file plus `docs/release/template/template.md`, for a session auditing or authoring a bundle directly in this repo.

@@ -16,7 +16,7 @@ date: <ISO-8601>
 
 > ## ⚠️  OPERATING METHOD — REQUIRED FOR THIS BUNDLE  ⚠️
 >
-> **This bundle is operated via `Workflow`-orchestrated dispatch, invoked from a live session — NOT `/loop /batch` and NOT a one-shot task.** `/loop /batch` cannot run unattended (`/batch` requires a human to type it per invocation). The full per-cycle procedure, orchestration mode, concurrency map, and dual-audit gate live in `workflow-instruction.md`'s body, authored from `../../governance/workflow-instruction-template.md`. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the workflow-instruction is the *how*.
+> **This bundle is operated via a `Workflow`-tool script, invoked from a live session — NOT `/loop /batch` and NOT a one-shot task.** `/loop /batch` cannot run unattended (`/batch` requires a human to type it per invocation). For how to actually **create** that script — phase structure, tiering, worked skeleton — see `workflow-instruction.md §2.4`. The full per-cycle procedure, orchestration mode, concurrency map, dual-audit gate, retro-event-logging discipline, and epic/bundle closure steps live in `workflow-instruction.md`'s body, authored from `../../governance/workflow-instruction-template.md`. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the workflow-instruction is the *how*.
 
 This folder is the canonical surface for SD-NN. Everything the bundle needs is in this folder and the in-repo doc tree (sibling release folders, `../../doctrine-external/`, `../../architecture/`). The operator's workspace is referenced only at initial-package construction time; once the package lands here, the harness reads the repo-local copy and the workspace copy is no longer consulted.
 
@@ -36,7 +36,7 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 | Target version | `<major>.<tranche-base>.<build>` |
 | Dispatch mechanism | `Workflow` tool, invoked from a live session, per `workflow-instruction.md §2` |
 | Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
-| Closure gate | `tranche/N → develop` PR; release-notes generation; architecture-docs refresh (§6) |
+| Closure gate | `tranche/N → develop` PR; retrospective written + cited; worktree/branch sweep; release-notes generation; architecture-docs refresh (§6) — full sequence in `workflow-instruction.md §11` |
 
 ## 2. Files in this folder
 
@@ -81,13 +81,26 @@ For SD-NN, the release version triple is `<major>.<tranche-base>.<build>`:
 
 SD-NN's first concrete value is `<major>.<tranche-base>.<current_build_at_launch>`.
 
-## 6. Architecture-docs closure obligation (Epic Closure sub-step)
+## 6. Architecture-docs, graphify, and PR closure obligation (bundle closure epilogue, artifact sub-steps)
+
+This section is the *artifact-level* half of the bundle closure epilogue — architecture docs,
+graphify, the PR, and merge-conflict resolution. It fires **once**, as the bundle's own final
+epic, never per-epic. The *procedural* half — writing and citing the bundle's retrospective, and
+the full worktree/branch sweep — is defined in `workflow-instruction.md §11`; both halves are one
+pipeline, split across these two files only because this file owns the chassis/artifact shape and
+that one owns the per-cycle procedure. Do not duplicate either half's content into the other file;
+cross-reference instead.
 
 The living architecture documentation at `../../architecture/` (repo-relative) is
-part of this bundle's closure gate. The Epic Closure pipeline is sequential — every
+part of this bundle's closure gate. The pipeline is sequential — every
 sub-step fires regardless of diff content:
 
-1. **All acceptance criteria done?** If not, self-heal and run more loops.
+1. **All acceptance criteria done?** If not, self-heal and dispatch more cycles.
+
+   **Between step 1 and step 2, `workflow-instruction.md §11` steps 2–3 fire**: write and cite the
+   bundle's retrospective, then run the full worktree/branch sweep. Both must be done before
+   step 2 below opens the PR — a retrospective or a stray worktree found *after* the PR is open is
+   a correction cycle, not a clean closure.
 2. **Architecture docs updated?** If not, run the truth-up script at
    `~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`
    with `--integration-target <target> --receipts-md <this-folder>/receipts.md --bundle <SD-NN>`.
@@ -109,7 +122,7 @@ sub-step fires regardless of diff content:
    API for the PR's `mergeable` state (post-pr mode). On conflicts, the script emits a
    `merge_conflict:*` receipt and exits non-zero — the loop self-heals, operator resolves
    manually, loop re-runs until clean.
-6. **Stop the loop.**
+6. **Stop — closure is complete.**
 
 The full rules and procedure live in `../../architecture/README.md`
 §Maintenance contract. Skills: `architecture-truth-up` (sub-step 2), `graphify-update`
@@ -129,4 +142,6 @@ Required canonical files (the promotion skill refuses to copy if any are missing
 
 ## 8. Cross-reference
 
-- `../../governance/workflow-instruction-template.md` — the per-cycle dispatch procedure `workflow-instruction.md` is authored from. Distinct scope: this template covers the release-folder's file index and bundle-snapshot table; that one covers the per-cycle dispatch procedure. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.
+- `../../governance/workflow-instruction-template.md` — the per-cycle dispatch procedure `workflow-instruction.md` is authored from. Distinct scope: this template covers the release-folder's file index and bundle-snapshot table; that one covers the per-cycle dispatch procedure, including §10's epic wrap-up and §11's bundle closure epilogue (the retro-write and worktree-sweep half of §6 above). Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.
+- `docs/retro/` — retrospectives written at bundle closure (§6 / `workflow-instruction.md §11`). `docs/retro/sd31-retrospective.md` is the worked example.
+- `.claude/skills/stc-authoring/SKILL.md` — the Claude-Code-native rendering of this template plus `workflow-instruction-template.md`, for a session authoring or auditing a bundle directly in this repo.
