@@ -1,8 +1,8 @@
 # Cycle 003 — Epics 1-3 (class reachability) / Criterion AT-32-E3-001
 
 - **Card ID:** `epic-3-class-reachability`
-- **Commit SHA:** recorded in the follow-up commit message after push (this receipt is written and
-  committed in the same push; see `git log --oneline -3` on `tranche/12` after this lands).
+- **Commit SHA:** `a5cf4d3d5` (rebased onto `origin/tranche/12` at push time; implementation +
+  receipt landed in one commit).
 - **Files touched:**
   - `src/rules_core/pilot_compute/prestige_class_entry_gate.rs` (new) — the entry-requirement gating
     mechanism: a 62-entry corpus-derived registry (`tests/fixtures/rules_core/prestige-class-entry-requirements.json`)
