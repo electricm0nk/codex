@@ -1,65 +1,54 @@
 ---
 canonical: true
-wave: 28
-wave_29_addendum: true
+wave: 30
+supersedes: "wave 28 (+ wave 29 addendum) six-pile framing — see 'What changed since wave 28' below"
 purpose: >
-  The consolidated map of the whole box. Six lanes looked at every not-done unit corpus-wide,
-  banked nothing, and named what they found. Two independent adversarial reviews stress-tested
-  every count. This document merges the two, applies every correction, reconciles the piles
-  against the board total, and ranks what to do next. It is the wave's entire deliverable.
-board_at_close: "13,456 / 38,372 (35.07%) at wave 28 close; 13,458 / 38,372 (35.08%) at wave 29 close — see the wave-29 addendum immediately below"
+  The complete inventory. Wave 28 mapped six piles and left 298 units in no lane at all; naming that
+  gap did not close it. Wave 30 finishes the inspection: every one of the 24,914 not-done units is
+  now assigned to exactly one of 46 evidence-code-keyed groups, verified by a purpose-built tool
+  (not hand arithmetic), with zero uncovered and zero overlap, and every group carries a todo entry.
+  This document is the ranked map of what those 46 groups actually are and what to do about each.
+board_at_close: "13,458 / 38,372 (35.07%) — UNCHANGED from wave 29 close. This wave banks nothing."
 ---
 
-# THE BOX — SD-31 wave 28 consolidated visibility map
+# THE BOX — SD-31 wave 30 complete inventory
 
-## Wave 29 addendum (2026-08-21) — what this wave actually proved or disproved against §3's ranked list
+## Answer to the operator's question, first: is the inspection now complete?
 
-**#1, fix the self-erasing fixture generator — DONE, and genuinely proven dead, not merely
-patched.** Reproduced the exact defect this map named (2,110 rows, 8 families, one run from
-committed state — the map's own "~2,109" was one unit low, corrected here). The landed fix had
-TWO root causes, not the one this map's own filed "obvious one-line fix" theory assumed:
-preserve-by-exclusion (fixes the write step rebuilding the whole document and dropping every
-sibling family) is what actually restores all 8 families; `HELD_STATUSES` missing
-`fixture-verified` is a real, separate, independently-necessary bug, but adding `literal-verified`
-alongside it (the integration lane's first attempt) restores **zero** additional rows — it is
-structurally unreachable (`literal-verified` only stamps `wiring_class == static`; this generator
-only ever selects `wiring_class == "derived"`). Corrected in `todo/defects.md` D7 / `todo/sweeps.md`
-S6. Both real causes are now independently mutation-proven (module-level `assert` +
-`main()`-level FATAL guard for the `HELD_STATUSES` half, `shrunk_families` for the preserve half) —
-run twice from the merged state by the integration cycle itself, byte-identical both times. Ruling
-§20's interpreter-scale regen can now proceed against this seam.
+**Structurally, yes — provably, not by assertion.** Every one of the 24,914 not-done units is
+covered by exactly one of 46 named groups; the coverage tool reports **uncovered = 0, overlap = 0**,
+reproduced by the exact command below against the live, unmodified `docs/work-inventory.json`.
+Every group carries a `todo/*.md` entry — `--strict` exits 0.
 
-**#2, wire `class_feature_pool_group_matches()` — DONE, exactly as sized.** 612 units moved
-`unmeasurable` → mostly `not-started` (610) / `deferred` (2). Confirmed SOUND by a THIRD independent
-review (this map's own #2 already called it SOUND; wave 29's own adversarial review re-confirmed
-via full guarded regen, catching two self-inflicted test breaks the lane itself had not disclosed,
-both fixed by integration). Zero doneness gain from this lever alone, as predicted.
+```
+python3 scripts/coverage_ledger.py --groups docs/release/SD-31-corpus-closure-grind/artifacts/w30-coverage-table.json --strict
+population (not-done units considered): 24914
+covered by >=1 group:                    24914
+uncovered (0 groups):                     0
+overlap (>1 group):                        0
+```
 
-**#3, book onboarding — STARTED, not finished, and it surfaced Ruling §18's #1 residual risk.**
-`adventurers_guide` registered via its spell family (45/49 base spells; PI-screened, 4 correctly
-dropped). All 973 `adventurers_guide` units moved off the `no_compiled_rule_set_for_book` gate this
-map's G4 group named. But unblocking the book also unblocked 5 archetype-adjacent Rage Power
-`class_feature` records that reached `done` through the SAME pool-catalog seam this map's §2.2 #2
-lever uses — 3 of the 5 are genuinely archetype-locked (`PREABILITY CATEGORY=Archetype`, a
-character who never takes that archetype can never take the option) and would have been a real,
-if small, Ruling §18 violation if left uncaught. **This is the first live-fire case of `blocked.md`
-B3** ("has anyone checked whether the shipped pool catalog honours §18's prerequisite condition") —
-answered this cycle: `is_archetype_locked()` now refuses any `PREABILITY ... CATEGORY=Archetype`
-record corpus-wide (6 of 300 Rogue Talent/Rage Power records total), with **zero regression to any
-of the 123 units already banked through this same catalog** — the fix is scoped precisely enough
-that it costs nothing already shipped. B3 closed with a real corpus-wide count, not a proposal.
-Remaining 3 books (`inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`) and this book's own
-feat/equipment/class_feature-chassis families are still open, ≥1,300 units behind the same gate
-shape — see `todo/levers.md` L10.
+**But "covered" and "deeply examined" are not the same claim, and conflating them is exactly the
+gaming shape this wave was warned against (Decision 1a).** Be precise about which of the 46 groups
+got which treatment this wave:
 
-**New this wave, not on the wave-28 map at all**: F2 (the class_feature→feat cross-reference
-bridge, `todo/levers.md` L9) was built, tested, and independently re-verified to identify 471 real
-records — but adversarial review found the render path it rides cannot reach ANY current character
-sheet (0 of 471, not "up to 471"; only 1 of 471 even names a holdable class token, and that one has
-no engine explanation to attach to). Filed as a corrected, explicitly-guarded lever rather than a
-ready-to-hook doneness lever — the wrong hook here would have been a 471-unit manufactured-credit
-trap. L8 (F1's render-surface gap) reconfirmed unchanged: still genuinely blocked on a new frontend
-surface, not a `classify()` change. Full detail: `progress.md`'s wave 29 receipt.
+- **14 groups (17,948 units, 72.0%)** were individually examined this wave or a prior wave, with a
+  named root cause, a general fix, and — where the fix is cheap — an exact sub-costed lever. This
+  includes the entire 141-unit "never examined by any wave" population the operator's own directive
+  named (§2 below, groups R1–R5/D1–D3/H1–H2), the corrected class_feature G1/G3/G6 populations
+  (9,791 units — G1 3,064 + its sibling branch 3,378 + G3 3,320 + G6 29), the race-trait
+  key-matcher sweep's first-ever corpus-wide count (2,472), and the
+  book-onboarding gate (422).
+- **32 groups (6,966 units, 28.0%)** are real, reproducible, evidence-code-exact corpus-wide counts
+  — genuine structural coverage, not a placeholder — but were **not individually root-caused this
+  wave**. They are named, sized, and filed under one consolidated lever (`levers.md` L20) with an
+  explicit recommendation for how a future wave should be split (by evidence-code family, not by
+  `kind` — see "What changed" below for why kind-scoped lanes are the failure mode that produced the
+  298-unit gap in the first place).
+
+**So: nothing is face-down anymore. A meaningful fraction (28.0%) is face-up but not yet read in
+detail.** That is a true, checkable, non-gamed status — worse than "100% examined," better than
+wave 28's "295 units nobody looked at," and it is reported as exactly that rather than rounded up.
 
 ---
 
@@ -67,13 +56,14 @@ surface, not a `classify()` change. Full detail: `progress.md`'s wave 29 receipt
 
 ```
 md5sum docs/work-inventory.json
-de0dfa8614efdd027316ccf274ad8490   (matches e90ba9ec1, matches wave-start, matches wave-close)
+d64ddfc677fd1683f5b7638889a25c54  (matches wave-29 close, matches wave-30 start, matches wave-30 close)
 ```
 
 No lane wrote production logic, reclassified a unit, ran the guarded regen, or touched
-`docs/work-inventory.json`. Both adversarial reviews independently confirm this — each lane's
-entire git diff is exactly one new file under `artifacts/`. **Board movement this wave = 0.** That
-is correct; this wave banks nothing by design.
+`docs/work-inventory.json`. Confirmed independently by two adversarial reviewers across all 6
+lanes: every lane's git diff is new files under `artifacts/`/`todo/` (documents) plus, for lane 1,
+two new untracked files under `scripts/` (a tool, not production logic — `docs/work-inventory.json`
+untouched by it). **Board movement this wave = 0.**
 
 ```
 python3 -c "
@@ -86,472 +76,235 @@ v=lambda u: P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind
 c=collections.Counter(v(u) for u in U)
 print(len(U), c.most_common())
 "
-# -> 38372 [('not-started', 18188), ('done', 13456), ('unmeasurable', 4270),
-#           ('in-progress', 1231), ('held', 1185), ('deferred', 42)]
+# -> 38372 [('not-started', 18645), ('done', 13458), ('unmeasurable', 3763),
+#           ('in-progress', 1231), ('held', 1230), ('deferred', 45)]
 ```
 
-`13,456/38,372 = 35.07%`. Not-done = `18,188 + 4,270 + 1,231 + 1,185 + 42 = 24,916`. **The
-dispatch brief's in-progress/held figures (1,241/1,187) were a few hours' drift against the
-committed inventory — the real, current, byte-verified figures are 1,231/1,185, plus a 42-unit
-`deferred` bucket the brief did not name at all.** Corrected here, not treated as an error anywhere
-below.
+`13,458/38,372 = 35.07%`. Not-done = `18,645 + 3,763 + 1,231 + 1,230 + 45 = 24,914`. Matches the
+wave dispatch's frozen denominator exactly.
 
 ---
 
-## 1. Reconciliation — do the piles sum to 24,916?
+## 1. Methodology — how "every unit examined" is actually proven, not asserted
 
-**No, not as filed — and finding out why is the check no individual lane could perform.** Two
-things had to be corrected before the piles line up: an undercount (295 units nobody examined) and
-an overcount (1,212 units two lanes both examined and both counted).
+Wave 28 reconciled six lane piles by hand: sum each lane's reported count, subtract the hand-found
+1,212-unit overlap, compare to the population, and hope nothing was missed. It missed 298 units.
+Hand arithmetic across free-text lane reports cannot be checked by anyone who did not redo it.
 
-### 1.1 Per-kind ground truth (the board split by `kind`, independent of any lane)
+Wave 30 builds a **tool** instead (`scripts/coverage_ledger.py`, lane 1, extended by this
+integration cycle after adversarial review found it could not express 4 of lane 6's 6 findings — it
+had a `match` schema with no key for `evidence`, `visible`, or `origin`, only `kind`/`book`/
+`status`/`wiring_class`/`verdict` plus regex on `id`/`name`/`corpus_key`/`type_facet`/`source_file`;
+`evidence_regex` + `visible`/`origin` list-match were added this cycle, with new tests, 22/22
+passing). It takes a **classification table** — plain JSON, not code, not prose — naming every
+group's exact match predicate and its `todo/*.md` entry, and reports population, per-group counts,
+uncovered units (named by id, not just counted), overlap (named by id and by which groups), and
+which groups lack a todo entry. Anyone can re-run it; it cannot be talked past.
+
+**Why the partition is keyed on `evidence`, not `kind`+`verdict`.** The adversarial review of wave
+30's own lane 6 flagged its (kind, verdict) 33-cell grid as the Decision-1a gaming shape — "a group
+defined as everything, split by two fields already on the unit" — because `kind` and `verdict` carry
+no diagnostic content; every unit has exactly one of each by construction, so partitioning on them
+proves nothing about whether anyone looked. `evidence` is different: it is the specific diagnostic
+string the engine itself attaches explaining WHY a unit is not done (`no_compiled_rule_set_for_book`,
+`race_trait_race_not_modelled`, `class_feature_owner_matched_by_name_but_record_not_held_by_engine`,
+...) — it is literally what every prior wave's G1/G3/G6/F1/F2 groups already were, just never
+formalized into one exhaustive table. 219 distinct evidence strings exist across the 24,914 not-done
+units; this wave clusters them (by exact match or regex family, e.g. every
+`class_feature_of_unmodelled_corpus_class:<X>` for 90-odd unmodelled classes) into 46 groups that
+partition the population exactly, verified by the tool, not by hand:
 
 ```
 python3 -c "
-import json,sys,collections
+import json, re, collections, sys
 sys.path.insert(0,'scripts/observer')
 import pf1e_dashboard_producer as P
-d=json.load(open('docs/work-inventory.json'))
-U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
-v=lambda u: P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind'))
-by_kind=collections.defaultdict(collections.Counter)
-for u in U: by_kind[u.get('kind')][v(u)] += 1
-for k in sorted(by_kind):
-    c=by_kind[k]; nd=sum(n for verdict,n in c.items() if verdict!='done')
-    print(k, dict(c), 'not-done=', nd)
+inv=json.load(open('docs/work-inventory.json'))
+units=[u for u in inv['units'] if (u.get('book') or 'unknown') not in frozenset(P.EXCLUDED_BOOKS)]
+notdone=[u for u in units if P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind'))!=P.DONENESS_DONE]
+print(len(notdone), 'not-done units,', len(set(u.get('evidence') for u in notdone)), 'distinct evidence codes')
 "
+# -> 24914 not-done units, 219 distinct evidence codes
 ```
 
-| kind | not-started | unmeasurable | in-progress | held | deferred | **not-done** |
-|---|---:|---:|---:|---:|---:|---:|
-| class | 157 | – | – | – | – | **157** |
-| class_feature | 11,971 | 3,058 | – | 38 | 40 | **15,107** |
-| companion | 769 | – | – | 56 | – | **825** |
-| equipment | 222 | 205 | 261 | 207 | – | **895** |
-| equipment_modifier | 63 | 416 | 568 | 17 | – | **1,064** |
-| feat | 496 | 565 | 1 | 87 | 2 | **1,151** |
-| monster | 28 | – | – | 253 | – | **281** |
-| monster_ability | 879 | – | – | 273 | – | **1,152** |
-| race | 57 | – | 3 | – | – | **60** |
-| race_trait | 2,712 | – | 241 | 1 | – | **2,954** |
-| spell | 834 | 26 | 157 | 253 | – | **1,270** |
-| **TOTAL** | **18,188** | **4,270** | **1,231** | **1,185** | **42** | **24,916** |
-
-This table is the actual population. Every lane pile is a slice or union of it.
-
-### 1.2 What each lane pile actually is, in these terms
-
-| Lane pile (as filed) | Population | What it really covers |
-|---|---:|---|
-| class_feature not-started | 11,971 | class_feature's `not-started` slice ONLY — not its `held` (38) or `deferred` (40) |
-| unmeasurable | 4,270 | **ALL** `unmeasurable` units, cutting across 5 kinds: class_feature 3,058 / feat 565 / equipment_modifier 416 / equipment 205 / spell 26 |
-| race_trait | 2,954 | **ALL** of race_trait's not-done population (every verdict) |
-| monster-companion | 2,258 | **ALL** of monster_ability (1,152) + companion (825) + monster (281) — every verdict in all three kinds |
-| spell-feat-equipment | 4,380 | **ALL** of spell (1,270) + feat (1,151) + equipment_modifier (1,064) + equipment (895) — every verdict in all four kinds, **including their unmeasurable subsets** |
-| sweeps | n/a | Not a unit-population pile — a structural/mechanism census (6 sweeps + one net-new defect measurement). Excluded from this sum; reconciled separately in §6. |
-
-### 1.3 The overcount: unmeasurable ∩ spell-feat-equipment = 1,212 units, counted twice
-
-The unmeasurable lane's 4,270 includes the unmeasurable subsets of spell/feat/equipment_modifier/
-equipment (26+565+416+205 = 1,212). The spell-feat-equipment lane's 4,380 is the **entire**
-not-done population of those same four kinds — which by construction also includes those same
-1,212 unmeasurable units. Verified directly against both lanes' own printed sub-tables (feat
-516+49=565 exactly; equipment_modifier 416 exactly; equipment 205 exactly; spell's 26-unit
-"hand to unmeasurable lane" sub-group exactly). **These are the same 1,212 records, not
-look-alikes** — both lanes filter `docs/work-inventory.json` by the identical `kind` + verdict
-predicate.
-
-### 1.4 The undercount: 295 units no lane examined at all
+The full 46-group table, with every match predicate and every todo entry, lives at
+`docs/release/SD-31-corpus-closure-grind/artifacts/w30-coverage-table.json` — re-run it yourself:
 
 ```
-11,971 + 4,270 + 2,954 + 2,258 + 4,380 = 25,833
-25,833 − 1,212 (dedup) = 24,621 distinct units covered
-24,916 − 24,621 = 295 units covered by NO lane this wave
+python3 scripts/coverage_ledger.py --groups docs/release/SD-31-corpus-closure-grind/artifacts/w30-coverage-table.json --strict
+echo $?   # 0
 ```
-
-The 295 resolve exactly to:
-
-| Uncovered group | Count | Why |
-|---|---:|---|
-| `class` kind, entire population | 157 | No lane was dispatched against `class` this wave. It carries forward wave 27's own census (§sweeps.md, the 157-classified-by-shape table) unchanged — not re-derived, not stale-checked. |
-| `race` kind, entire population | 60 | **A genuine gap, not a carry-forward.** `race` (the race chassis itself — distinct from `race_trait`) was not named, referenced, or examined by any of the six lanes. No prior wave's census is on file for it either. |
-| `class_feature` held | 38 | Falls between lane 1 (not-started only) and lane 2 (unmeasurable only). |
-| `class_feature` deferred | 40 | Same gap. |
-| **Total** | **295** | 157 + 60 + 38 + 40 = 295 ✓ |
-
-**Reconciled: 24,621 (98.8%) examined by at least one lane, 1,212 examined redundantly by two
-(now deduplicated in every table below), 295 (1.2%) examined by none.** The race-kind gap (60
-units, a whole kind never once named) is the single most useful thing this reconciliation step
-surfaced — worth a dedicated look next wave, sized here for the first time as its own line item.
 
 ---
 
-## 2. The six piles, corrected
+## 2. The 46 groups, ranked by size, with disposition
 
-Every group below carries the adversarial-review-corrected figure where one exists; the lane's
-original figure is shown struck through only where it changed. "SOUND" piles are reported as
-filed. Full per-command reproduction lives in each `VISIBILITY-*.md`; only the corrected headline
-numbers are restated here.
+**Column key**: *Depth* = EXAMINED (root-caused this wave or a prior wave, with a real fix path) or
+NAMED (real corpus-wide count, not yet root-caused — filed under L20). *Todo* = the exact
+`todo/*.md` entry.
 
-### 2.1 class_feature not-started — 11,971 — **verdict PARTIAL**
+| Group (evidence code / family) | Count | Depth | Disposition | Todo |
+|---|---:|---|---|---|
+| `class_feature_owner_matched_by_name_but_record_not_held_by_engine` | 3,378 | EXAMINED | Sibling branch to G1 below — SAME `REGISTERED_POOL_GROUPS` catalog gate, owner class name DOES match. Combined real L5 population is 6,442, not the previously-filed ~10,000/3,347. | `levers.md` L5 |
+| `no_explanation_id_and_no_diagnostic_names_this_feature` (G3) | 3,320 | EXAMINED | Real parser run (not a regex proxy): ~2,287 formula-interpretable/no consumer wired, 3 genuinely refuse, ~864 no formula token at all, 167 no corpus record. Corrected population from wave 28's stale ≥1,764/2,583. | `levers.md` L6 |
+| `class_feature_option_pool_record_not_held_by_engine` (G1) | 3,064 | EXAMINED | 1,017 no corpus record, 391 empty description, 1,656 real-prose (the Ruling §18 OPEN/EXCLUSIVE population) — of which 488 units/17 names now have a proposed axis (corrected from a first-filed 546/20; 3 names were wrongly counted, one is `defects.md` D10's false positive). | `levers.md` L5 |
+| `class_feature_group_names_no_class_at_all` | 2,551 | EXAMINED (evidence-honesty) | 471 of the 1,971 matched-with-corpus-record units carry an unambiguous TYPE-token class signature contradicting the evidence string's own "no class at all" claim — corrected from a first-filed 1,377/12,114 (5-code table sums to 1,321, not 1,377). Not reclassified; may still lack a real consumer once re-owned. | `sweeps.md` S12 |
+| `race_trait_race_not_modelled` | 2,472 | EXAMINED (first corpus-wide count) | The 6-wave-old compound-key matcher gap (S3) finally has a real number. Not fixed — a reclassification project, out of this no-banking wave's scope. | `sweeps.md` S3 |
+| `class_feature_of_unmodelled_corpus_class:*` (regex family, ~90 classes) | 2,453 | EXAMINED (family-level) | class_feature belongs to a class outside the 34-dispatch universe (Vigilante 196, Medium 147, Magus 127, Occultist 125, Psychic 125, Mesmerist 114, Shifter 110, Kineticist 99, Spiritualist 86, Aegis 131, + ~80 more, mostly Ultimate Psionics/occult/3pp classes at 1-30 each). Same lever as the 152-unit `class` kind itself. | `levers.md` L0/L1 |
+| `equipment_table_entry_with_corpus_magnitude` | 775 | NAMED | Equipment in engine tables with a real corpus magnitude, not-done for a reason not yet individually read. | `levers.md` L20 |
+| `spell_key_absent_from_spell_list` | 726 | NAMED | Spell ingestion/onboarding gap, per-book. | `levers.md` L20 |
+| `companion_absent_from_*` (regex family, 8 books) | 726 | NAMED | Companion book-by-book onboarding backlog: ultimate_wilderness 248, advanced_players_guide 203, ultimate_magic 138, core_rulebook 86, advanced_race_guide 18, bestiary_4/5 2+2, book_of_the_damned_volume_1 29. | `levers.md` L20 |
+| `text_only_but_corpus_record_carries_no_description_to_show_a_player` | 632 | NAMED | Text-only record, corpus row has no player-showable description. | `levers.md` L20 |
+| `monster_ability_absent_from_*` (regex family, 8 books) | 517 | NAMED | monster_ability book-by-book onboarding backlog: bestiary_4 191, bestiary_1 83, horror_adventures 65, ultimate_psionics 64, inner_sea_bestiary 38, bestiary_2 49, inner_sea_world_guide 16, inner_sea_gods 7, bestiary_3 4. | `levers.md` L20 |
+| `in_catalog_with_corpus_magnitude_but_no_observed_consumer` | 516 | NAMED | Feat in catalog, real magnitude, no observed engine consumer. | `levers.md` L20 |
+| `feat_key_absent_from_catalog` | 480 | NAMED | Feat ingestion/onboarding gap, per-book. | `levers.md` L20 |
+| `no_compiled_rule_set_for_book` | 422 | EXAMINED | Book-onboarding gate. `adventurers_guide` already registered (wave 29, 971 not-done units now gated on OTHER levers, not this one — corrected from a filed 973/973). Remaining: `inner_sea_magic` 335, `inner_sea_temples` 64 (no `data/corpus` tree at all), `inner_sea_taverns` 20, `inner_sea_faiths` 3 (previously unnamed). | `levers.md` L10 |
+| `monster_ability_resolve_returned_a_real_record` (suffix family, 8 books) | 263 | NAMED | Monster_ability resolves via a book resolver but is held/in-progress for another reason. | `levers.md` L20 |
+| `monster_*_resolve_returned_a_real_stat_block` (suffix family, 7 books) | 253 | NAMED | Monster resolves via a book resolver but is held/in-progress for another reason. | `levers.md` L20 |
+| `equipment_key_absent_from_equipment_tables` | 174 | NAMED | Equipment ingestion/onboarding gap, per-book. | `levers.md` L20 |
+| `monster_ability_has_no_engine_table` | 362 | NAMED | monster_ability kind has no engine table for this book at all. | `levers.md` L20 |
+| `spell_list_entry_with_resolved_level` | 310 | NAMED | Spell list entry with a resolved level, not-done for another reason. | `levers.md` L20 |
+| `in_equipment_tables_and_corpus_record_carries_no_magnitude_token` | 276 | NAMED | Equipment in engine tables, corpus record carries no magnitude token at all. | `levers.md` L20 |
+| `class_absent_from_ClassId_ALL_and_book_class_id_enums` | 152 | EXAMINED (prior wave) | The wave-27 157-class census family (prestige/structurally-non-PC/untabled-base/book-gated/CRB-NPC/Ninja-Samurai). Already thoroughly examined; see `sweeps.md`'s wave-27 table. | `sweeps.md` wave-27 table + `levers.md` L0/L1 |
+| `race_trait_applied_by_the_race_corpus_but_no_verified_consumer` | 234 | NAMED | race_trait applied by corpus, no verified consumer. | `levers.md` L20 |
+| `companion_resolve_returned_a_real_record` (suffix family, 6 books) | 56 | NAMED | Companion resolves via a book resolver but is held/in-progress for another reason. | `levers.md` L20 |
+| `race_trait_absent_from_race_traits` | 238 | NAMED | race_trait ingestion/onboarding gap. | `levers.md` L20 |
+| `race_absent_from_the_character_creation_roster` | 57 | EXAMINED | The full wave-30 race census: R1 6 (book missing from `RACE_CORPUS_BOOKS`) + R2 7 (book registered, never transcribed) — both cheap onboarding; R4 43 (non-PC monster/companion/eidolon content reusing RACE syntax) + R5 1 (ARG Race Builder meta-tool) — both need an operator ruling. | `levers.md` L11 (13) + `blocked.md` B12 (43) + B13 (1) |
+| `in_catalog_and_corpus_record_carries_no_magnitude_token` | 65 | NAMED | Zero-magnitude text-only feat, in catalog. | `levers.md` L20 |
+| `companion_content_has_no_engine_table` | 43 | NAMED | Companion, no engine table for its book at all. | `levers.md` L20 |
+| `engine_diagnostic:class_feature.*` (regex family) | 43 | EXAMINED | 38 units (D1+D2) need three new engine mechanisms (companion sub-engine, bardic-performance engine, generic sub-choice chooser). 5 units (D3, PU Unchained Barbarian/Rogue) are a join gap, not a capability gap — magnitude already computed under a sibling explanation id. | `levers.md` L13 (38) + L14 (5) |
+| `feat_served_description_is_a_placeholder_marker_not_prose` | 38 | NAMED | Feat's served description is a placeholder, not real prose. | `levers.md` L20 |
+| `spell_list_entry_with_description_but_no_corpus_level` | 33 | NAMED | Spell has description, no corpus level. | `levers.md` L20 |
+| `class_feature_no_dedicated_magnitude_id_matched_the_record_slug` (G6) | 29 | EXAMINED | Population confirmed unchanged at 29 (pathfinder_unchained 24 / core_rulebook 3 / advanced_players_guide 2). Real split: 5 cheap (4 allowlist-word-away, 1 dot-namespace-miss), 10 two-words-away, 14 no-candidate-at-all. | `levers.md` L18 (5) + `sweeps.md` S15 |
+| `monster_absent_from_*` (regex family) | 28 | NAMED | Monster book-by-book onboarding backlog, incl. `monster_absent_from_MonsterId_ALL`. | `levers.md` L20 |
+| `spell_list_entry_with_no_corpus_level_and_no_description` | 26 | NAMED | Spell, neither corpus level nor description. | `levers.md` L20 |
+| `feat_effect_probe_observed_computed_delta` | 23 | NAMED | Feat probe observed a real delta, still held. | `levers.md` L20 |
+| `explanation_id_observed_in_a_real_computation` | 20 | NAMED | class_feature explanation id observed in a real computation, still held. | `levers.md` L20 |
+| `explanation_id_observed_after_known_magnitude_suffix_strip` | 17 | NAMED | class_feature explanation id observed only after suffix strip, still held. | `levers.md` L20 |
+| `spell_effect_probe_observed_computed_delta` | 110 | NAMED | Spell probe observed a real delta, still held. | `levers.md` L20 |
+| `race_trait_states_a_universal_sheet_modifier_pending_compute` | 8 | NAMED | Universal sheet modifier, compute pending. | `levers.md` L20 |
+| `monster_ability_held_and_corpus_record_carries_real_description` | 10 | NAMED | monster_ability held, real description present. | `levers.md` L20 |
+| `race_offered_by_the_roster_but_no_pilot_compute_magnitude_consumer` | 3 | EXAMINED | Aasimar, Tiefling, Changeling — ingested and roster-visible, need `race_magnitude_consumer_races` registration. | `levers.md` L12 |
+| `engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON` | 2 | EXAMINED | 2 UCA feats, confirmed upstream-splice `.MOD BENEFIT:` row. | `levers.md` L21 |
+| `superseded_byte_identical_reprint_first_print_owns_it_decisions_13_19` | 2 | EXAMINED (already ruled) | Disposition already settled, decisions.md §13/§19. Not a gap. | decisions.md 13/19 |
+| `equipment_effect_probe_observed_computed_delta` | 2 | NAMED | Equipment probe observed a real delta, still held. | `levers.md` L20 |
+| `race_trait_record_loaded_but_never_applies` | 2 | NAMED | race_trait loaded, never applies. | `levers.md` L20 |
+| `class_modelled_but_no_observed_delta_on_the_rendered_snapshot` | 2 | NAMED | Class modelled, no observed delta on rendered snapshot. | `levers.md` L20 |
+| `class_feature_probe_observed_a_delta_attributable_to_this_record` | 1 | NAMED | class_feature probe observed a delta, still held. | `levers.md` L20 |
 
-| Group | Count | Fix |
-|---|---:|---|
-| G1 option-pool records, no modelled owner | 3,347 | Split OPEN vs EXCLUSIVE per Ruling §18 first; 817 pool names, only 161 units (6 names) cross-checked against the 27-pool registry — 3,186 units/811 names never examined |
-| G2 real owner, no explanation-id/pool match | 2,890 | Feeds F1 (below), blocked on the same gates |
-| G3 no consumer function at all | 2,583 | 1,751 computed / 526 derived / 302 static / 4 ambiguous — real per-feature computation (hand function or Ruling §20's interpreter); the 554/882/1,690 regex-proxy split is explicitly **not verified**, do not plan against it |
-| G4 no compiled rule set for book | 928 | adventurers_guide 699 / inner_sea_magic 218 / inner_sea_taverns 11 — book-onboarding lever, see §4 |
-| G5 unmodelled corpus class | 2,194 | 80 distinct classes, gated behind L0/L1. **Correction:** sweeps.md's "18 real base classes with zero table" is **≥20**, not 18 — Magus, Vigilante, and Shifter all carry `class_absent_from_ClassId_ALL_and_book_class_id_enums`; only Magus was named |
-| G6 near-miss (S9 candidate) | 29 | **Correction:** book split is `pathfinder_unchained 24 / core_rulebook 3 / advanced_players_guide 2`, **not** `advanced_class_guide 17 / pathfinder_unchained 7 / advanced_players_guide 3 / ultimate_wilderness 2` as filed. A follow-up S9 trace pointed at the original split would search two books holding none of it. |
-| Cross-cutting F2 (feat bridge) | 1,378 | 431 units cheap-fixable outright (bridge feat_catalog's existing render path); **correction:** the group's title ("sole content is ABILITY:FEAT\|AUTOMATIC") is false for ≥475 of the 1,378 (463 carry a real local description, 12 carry no ABILITY token at all) — the 431/463 sub-figures themselves reproduced exactly |
-
-**F1 (biggest_single_lever as filed) — DOWNGRADED, not a cheap lever.** Filed ceiling 3,536, filed
-as "one classify()-side branch change." Corrected:
-
-1. **Ceiling drops to ≤2,763.** 773 of the 3,536 (21.9%) carry a live `ENGINE_EFFECT_TOKEN_KEYS`
-   token (ABILITY 657 / CSKILL 52 / AUTO 51 / SELECT 12 / ADD 1) — the exact refusal gate wave-22
-   review forced into existence for this same class of mistake. Filed report never mentions this
-   gate.
-2. **The proposed fix cannot reach a player.** `apps/desktop/src/characterHub/classFeaturesModel.ts`
-   builds every row by iterating `explanations`; a record with no explanation id (which is what
-   defines G1/G2) produces no row at all, regardless of what `classify()` decides. A NEW,
-   unscoped, uncosted frontend surface is required first.
-3. **1,656 of the 3,536 are G1 option-pool members** whose OPEN/EXCLUSIVE classification (Ruling
-   §18) is unresolved for 811 of 817 pool names. Blind widening is exactly what §18 forbids.
-
-F1 is a real three-part scoping project (refusal gate + new render surface + per-pool ruling),
-not a lever to schedule as filed.
-
-### 2.2 unmeasurable — 4,270 — **verdict SOUND, no corrections**
-
-Both reviews tried to break this one; neither could. Every number reproduced exactly, including
-the two that required real work (a live cargo test + a full, non-sampled 136-row oracle sweep).
-
-| Group | Count | Fix |
-|---|---:|---|
-| class_feature bucket A — matches an already-registered pool | 612 | **Wire `class_feature_pool_group_matches()` into `classify()`'s ClassFeature owner-resolution fallback.** Matcher, 27-entry table, false-positive guard all already exist and are already tested elsewhere in the same file. Zero regression risk (none of the 612 are currently `done`). **The cheapest confirmed unit-mover in the whole census — see §3.** |
-| class_feature bucket B — real content, wrong owner (correctly excluded) | 53 | Per-group ownership work, no shortcut |
-| class_feature bucket C — unrecognized group prefix (958 distinct groups) | 2,393 | Extend `CLASS_FEATURE_POOLS`; this wave's own 4-group spot check found 2 of 4 are NOT pool-shaped at all — bulk registration would introduce false positives |
-| feat — real magnitude, no observed consumer | 516 | Posture/opponent/action simulation-coverage gap, not a description problem |
-| **equipment_modifier — description-closure defect** | 136 declared | **111 of 136 (82%) confirmed via full oracle sweep to carry real SPROP:/DESC:/BENEFIT: text and are misclassified.** A real extraction bug, new to `defects.md`. |
-| equipment_modifier — .COPY= alias rows | 280 | Needs a real alias-chain resolver; 22 of 24 spot-checked base rows confirmed real content (verified lower bound only) |
-| equipment — genuinely description-free (stat-only) | 173/173 | Confirmed via full oracle sweep — render-surface gap (`EquipmentCatalogEntryDto` has no weight/damage/crit field), not an extraction bug |
-| equipment — .FORGET / pfs_*.lst | 32 | 2 confirmed PCGen loader-retraction directives (ruling candidate); 30 Pathfinder-Society legality files (scoping question) |
-| feat — placeholder marker / genuinely empty | 38 / 10 of 11 | Correctly refused; permanent |
-| spell — genuinely empty | 26/26 | Confirmed, permanent for this printing |
-
-### 2.3 race_trait — 2,954 — **verdict PARTIAL**
-
-**G1 survives fully: 1,619 of 2,954 (55%) are not race-trait content at all.** Seven whole files
-(b3/b2/ce/acg/cr/ma/pu `abilities_race.lst`) return **zero** race-trait-shaped rows from the
-corpus discriminator while two control files return real counts (arg 236, isr 95). This is the
-wave's single most consequential finding: no prior wave asked whether the class_feature-adjacent
-denominator was measuring the right thing for over half its own not-done population.
-
-The rest needed correcting — the filed partition did not sum to 2,954 because G3 mixed three
-doneness states as if it were one not-done group, then G4 was derived by subtracting from it:
-
-| Group | Filed | **Corrected** | Fix |
-|---|---:|---:|---|
-| G1 misclassified non-race content | 1,619 | 1,619 | TYPE-facet triage tool (see §4) |
-| G2 CamelCase-glued race suffix | 159 | 159 | Widen the space-separated regex — trivial, additive |
-| G3 real races out of ingest scope | ~~284~~ | **249** | 284 was a corpus-ROW count spanning done(25)/in-progress(10, already inside G6)/not-started(249); only 249 are actually not-done and outside G6. Per-race: Skinwalker 74 (not 75); **Rougarou (8 rows, 8/8 already done) and Samsaran (9 of 11 already done) should not be counted here at all.** |
-| G4 undetermined remainder, race-not-modelled | ~~518~~ | **553** | Absorbs the G3 correction so the partition sums; same triage method, not yet run |
-| G5 undetermined remainder, absent-from-race-traits | 130 | 130 | Same triage tool |
-| G6 real magnitude, no compute seam | 234 | 234 | Continue L4 exactly as scoped, one race at a time |
-| G7 universal-modifier size-trait shape | 8 | 8 | Extend `SIZE_ONLY_RACE_TRAIT_BUNDLE` — trivial |
-| G8 loaded but never applies | 2 | 2 | Too small to generalize |
-| **Sum** | 2,954 (did not add up) | **2,954 ✓** | |
-
-**The lane's proposed new sweep is dangerous as stated and must NOT be scheduled that way.**
-Widening `refine_kind()`'s monster-ability check from first-TYPE-segment-only to any-segment would
-strip **539 already-done** race_trait units (confirmed: 2,371 rows corpus-wide carry a monster
-facet in a later segment; joined to unit verdicts, 539 are `done`, 1,561 not-started, 233
-in-progress, 1 held, 37 unmatched). A non-first SpecialQuality/SpecialAttack facet does not by
-itself mean "this is a monster ability" — the real fix needs the fuller triage tool from §4, not a
-one-line widening. (The lane's own filed figure of "1,253 not-first-facet rows" also does not
-reproduce from its own stated predicate — 2,371 does; use 2,371, flagged as needing the triage
-tool's finer classification before any code changes, not as a ready-to-ship count.)
-
-### 2.4 monster / companion / monster_ability — 2,258 — **verdict PARTIAL**
-
-monster_ability's not-started partition (879) now sums exactly after one correction:
-
-| Group | Filed | **Corrected** | Fix |
-|---|---:|---:|---|
-| G1 native content, book not registered | 172 | 172 | Register 8 books in `MONSTER_BOOKS`; hand-transcribe |
-| G2 Core Essentials glossary, no table | 190 | 190 | Architecture ruling needed (shared pseudo-table vs. per-book duplication) |
-| G3a epic-tier creatures (bundles with `monster` kind) | 87 | 87 | Hand-build 19 stat blocks; closes 106 units total (19 monster + 87 monster_ability) |
-| G3b template-shaped, no single stat block | ~~498~~ | **430** | 517 total absent_from units, 209 distinct parent names; exactly 19 exact-match a monster-kind unit (= G3a's 87); **517 − 87 = 430**, not the filed ~498 (which double-counted ~68 units via imprecise substring matching, e.g. "Cthulhu" hitting two different names) |
-| **Sum (not-started)** | 947 (over by 68) | **879 ✓** | |
-
-held (273): 197 derived-formula-blocked + 49 universally-refused-display + 27 unexamined
-static/ambiguous remainder = 273 ✓ (unchanged, sums correctly as filed).
-
-**L7 (template-application mechanism, biggest_single_lever) corrected: 430 + 49 (companion's own
-template-shaped EMPTY-facet group) = 479, not the filed "≥547."** The filed number used the
-uncorrected 498; the lane's own body text elsewhere calls 498 an upper bound while the summary
-called 479's predecessor a floor — use 479 as the reproducible figure. Only 2 of the pile's 3
-kinds were checked for this shape (monster itself was not), so 479 is legitimately a
-**partial-coverage floor**, just not the specific inflated number filed.
-
-companion (825): 310 Eidolon/SLA content (ruling needed, same shape as blocked.md B4/B5) + 130
-archetype-chain rows (hand-transcribe) + 142 feat/trick sub-catalogs (need new tables) + 49
-template EMPTY-facet + 43 Core Essentials glossary (same ruling as monster_ability's G2) ≈ 674 of
-825; the remaining ~151 (a ~72-unit "other" type_facet remainder plus an 11-unit CompStatChoice
-pool group not checked against Ruling §18) were **not individually characterized** — said plainly,
-per the lane's own could_not_determine.
-
-monster (281): 253 held (already correctly censused at wave-17's OPEN-ISSUES row 310, not
-re-derived) + 28 not-started (19 bundle with G3a above, 9 standalone: Gug Savant, both Hydra
-variants, both Iron Cobra variants, Herd Animal Storval Aurochs, Magma Ooze Poisonous, Kami
-Shikigami).
-
-### 2.5 spell / feat / equipment_modifier / equipment — 4,380 — **verdict PARTIAL**
-
-Population and every per-kind evidence-code group reproduced **exactly** — this is the best census
-in the wave on population arithmetic. It fails on exactly the one tool it told the operator to
-build first.
-
-**REJECTED — do not schedule: the `equipment_key_is_wired()` two-clause widen.** Filed as
-`biggest_single_lever` and "BUILD FIRST," closing "at least 162" units at "zero new production
-logic." Proven false by reading the two functions it names:
-
-- The probe that would exercise the widen constructs its selection with
-  `applied_modifiers: Vec::new()`. `resolve_intelligent_item_contribution()` iterates that slice and
-  ends `found.then_some(total)` — with an empty slice, `found` is always `false`.
-  **`intelligent_item.is_some()` can never be true under this probe.**
-- `to_hit_bonus` is `is_weapon_record(record).then(...)` — `Some(0)` for weapon records, `None`
-  for the 154 named Intelligent Item / Legendary Item modifier rows the lever was justified by
-  (those rows carry no DAMAGE token, so `is_weapon_record` is false for them).
-
-**The widen closes zero of the claimed 162 units, and the only records it CAN touch it would flip
-on a fabricated literal zero — the exact anti-gaming shape Decision 1a forbids.** This is the
-inverse of the wave's own target pattern: it looks like an S9 one-row fix and is not one.
-
-Other corrections, both low materiality: spell's undiagnosed remainder is **284** units (not the
-filed "~55" — 722 total minus 329 occult_adventures minus 109 bestiary-attributed = 284, spread
-across 9+ books); book-onboarding reach within this lane's own 4 kinds is closer to 424 (its own
-groups sum to 437) than the filed 373 — the corpus-wide, all-kind 1,372 figure is correct and
-unaffected.
-
-**Standing findings that hold up, unaffected by either correction:**
-
-- **B6 spell gap (confirmed by both reviews independently).** `derived_evaluator_fixture_check.rs`
-  has zero references to B6/bestiary_6, while `spell_resolver.rs` defines `SPELL_BOOK_B6`. Dormant,
-  zero live impact today — but the coverage test meant to catch this recurring hardcodes its own
-  comparison list instead of deriving from `spell_resolver::SPELL_BOOK_*`, so it cannot catch the
-  *next* occurrence either. New `defects.md` candidate.
-- Mythic Adventures feat-catalog key registration — 353 units, one mechanism, book already has 358
-  ingested non-.MOD records to hang it on.
-- equipment_modifier's 504 `VISIBLE:NO` units (47% of its not-done population, essentially unique
-  to this kind) — new `blocked.md`-shaped ruling question, parallel to B4/B5.
-- .COPY=-alias description-inheritance gap, up to 861 units across equipment + equipment_modifier
-  (reported by the lane, not independently re-verified by either review at this specific figure —
-  treat as lane-reported pending confirmation).
-
-### 2.6 sweeps — structural census, not a unit-population pile — **verdict PARTIAL, two closures reverted**
-
-See §6 for the full todo/ reconciliation. Headline correction: the lane's own `todo/sweeps.md`
-edit (this session did not carry forward, see the merge note in §7) marked S9 and S2 **CLOSED**;
-both closures are premature and are reverted to **PARTIAL** below.
+**Sum check**: every count above is the tool's own `count` field for that group; the tool's own
+`population`/`covered_distinct`/`uncovered_count` fields (24,914 / 24,914 / 0) are the authoritative
+total, not a manual re-addition of this table (46 rows is error-prone to hand-sum; the tool doesn't
+have that problem).
 
 ---
 
-## 3. Ranked recommendation — the next three things, by units-closed-per-unit-of-effort
+## 3. What changed since wave 28 — and why the six-pile framing is retired
 
-Ranked by ROI, not size. The units-closed number is only trustworthy where a reviewer confirmed it.
+Wave 28's six piles (class_feature not-started 11,971 / unmeasurable 4,270 / race_trait 2,954 /
+monster·companion·monster_ability 2,258 / spell·feat·equipment_modifier·equipment 4,380 / sweeps)
+were assembled by splitting lane assignments along `kind` boundaries. **That split is the direct
+cause of the 298-unit gap the operator caught**: `class_feature`'s not-started slice got a lane;
+its held and deferred piles did not, because "not-started" was the big number and held/deferred
+were small ones that lost the assignment. `race` got no lane at all, for the same reason — 60 units
+is small next to 11,971. Small piles keep losing to big ones under a kind-scoped split; this wave's
+own dispatch names that as the root cause, not the individual lanes.
 
-### #1 — Fix the self-erasing fixture generator, BEFORE anything else touches it (protective, ~1 hour)
+Wave 30 does two things differently. First, it dedicated a whole lane (lane 2) to exactly the
+residual the operator named — the 141 units in no lane at all — and treated it as a first-class
+census, not a footnote. Second, this integration cycle replaced the kind-scoped organizing
+principle with the evidence-code partition (§1 above), which cannot leave a same-shaped gap: every
+not-done unit has exactly one `evidence` string, so a table built by iterating the 219 distinct
+strings (not the 11 `kind` values) cannot silently drop a small `kind`. **`levers.md` L20's own
+recommendation makes this explicit for the next wave**: assign census lanes by evidence-code
+family, not by `kind`.
 
-`scripts/derive_derived_evaluator_fixtures.py` destroys its own committed fixture on its very first
-run from the committed state: **2,109 fixture entries across 8 families** (not the originally-filed
-"11 equipment units") — confirmed by literally running it twice in an isolated worktree. The
-one-line `HELD_STATUSES` fix restores only 11 of the fixture's own 94 entries; the other 2,015
-losses (spell_entries, companion_entries, class_feature_description_entries, etc.) come from a
-separate cause (a hardcoded sibling-key allowlist) and need root-causing beyond the one-line patch.
-
-**This does not close a single unit by itself, and it is still #1.** Ruling §20 just authorised the
-formula interpreter, whose correctness gate IS `derived_evaluator_fixture_check` — the exact seam
-this bug lives in. Scaling that seam by orders of magnitude, as §20 explicitly calls for, without
-first closing this hole means the next large interpreter-fixture regen can silently zero out
-thousands of already-banked units in one run, with the program's own test suite reporting green
-(the filed "twice-run-diff" test cannot catch it — proven by running it twice and getting a clean
-diff on the very defect it was built to catch). Build the corrected check instead: run the
-generator **once** against the committed fixture and assert, per top-level `*_entries` key,
-`len(after) >= len(before)`. Cheap, and it goes red immediately on today's bug.
-
-### #2 — Wire `class_feature_pool_group_matches()` into `classify()`'s owner-resolution fallback (612 units, near-zero cost)
-
-Confirmed SOUND by adversarial review (cargo test re-run + independent group→unit join). The
-matcher, its 27-entry pool table, and its false-positive guard already exist and are already used
-elsewhere in the same file for the wiring probe — this is a wiring change, not new construction.
-612 units move from `unmeasurable` to a real, honest verdict (mostly `not-started`, per the lane's
-own characterization) with **zero regression risk**, since none of the 612 are currently `done`.
-Cheapest confirmed unit-mover in the entire census.
-
-### #3 — Book onboarding for the 4-book cluster: adventurers_guide, inner_sea_magic, inner_sea_temples, inner_sea_taverns (2,300+ units, moderate & bounded cost)
-
-The single largest corpus-wide-reaching lever this wave measured, and it recurs across **five
-different kinds independently**, which no single lane could see on its own:
-
-```
-class_feature G4:  adventurers_guide 699 + inner_sea_magic 218 + inner_sea_taverns 11  =  928
-spell/feat/equipment/equipment_modifier (lane 5, same 3 books + inner_sea_taverns overlap) = 1,372
-                                                                          non-overlapping total ≥ 2,300
-```
-
-Already a named, calibrated lever (`docs/release/.../e13-book-ingest-cost-calibration` memory: fixed
-cost dominates at ~1.5–2h/book, content is nearly free once ~7 count-pinning files exist per book).
-Not cheap in absolute terms, but the best return of any multi-hundred-unit item this wave found,
-and unlike #1/#2 it actually moves the board once done, not just re-verdicts units.
-
-**Runner-up, not in the top 3 only because it is smaller:** Mythic Adventures feat-catalog key
-registration (353 units, one mechanism, book already ingested) — do it in the same cycle as #3 if
-capacity allows; it is cheaper than #3 per unit and does not compete for the same files.
+The wave-28 six-pile detail (§2.1–§2.6 of the prior version of this document) is superseded by the
+46-group table above, which is a strict refinement: every wave-28 pile's units are inside one or
+more of the 46 groups (verified by the tool's population/coverage numbers matching exactly), and
+every wave-28 finding that still holds (G1/G3/G6 corrected populations, the book-onboarding gate,
+S3's race-trait matcher) is carried forward with its wave-30-corrected number, cited in §2 above.
+Nothing from wave 28 was silently dropped; what changed is cited in `todo/`, not buried in prose.
 
 ---
 
 ## 4. Tools worth building, across the whole box
 
-Individual lanes each proposed a tool for their own pile. Looking across all six:
+**The coverage ledger tool itself (`scripts/coverage_ledger.py`), now that it exists, should be the
+required handoff format for every future census wave** — not a nice-to-have. Its own adversarial
+review proved it can detect a real hole (fed a deliberately-incomplete table, it named the missing
+units by id and `--strict` exited 1) and cannot be gamed by an empty predicate (fails closed, not
+open). The one gap the review found — no match key for `evidence`/`visible`/`origin` — is fixed
+this cycle (`evidence_regex`, `visible`, `origin`, 3 new tests, 22/22 passing).
 
-### Worth building — serves 3+ piles
+**A TYPE-facet / group-name corpus-row triage tool** (wave 28 finding, still valid, still not
+built) — the same underlying need recurs in the G1 pool-name census (444 real-prose names, 424-426
+still unclassified on the OPEN/EXCLUSIVE axis) and the `class_feature_group_names_no_class_at_all`
+TYPE-token cross-check (S12, 471 of 1,971 misfiled by evidence-string). Estimated at about half a
+day, unchanged by review.
 
-**A TYPE-facet / group-name corpus-row triage tool.** This is the SAME underlying need in three
-different piles, proposed independently and never connected:
-
-- class_feature not-started G1 (817 unclassified pool names, 3,186 units)
-- unmeasurable bucket C (958 unrecognized group prefixes, 2,393 units)
-- race_trait G1/G4/G5 (proven on 7 files at 1,619 units; ~30 files, 683 units, not yet run)
-
-All three need the identical operation: read every dot-segment of a corpus row's TYPE/group-prefix
-chain (not just the first), classify it against known catalogs, and route non-matches to a named
-bucket instead of leaving them ambiguously typed. `scripts/classify_race_trait_rows.py`'s `classify()`
-predicate is the closest existing implementation and is proven on 7 files. **Extend it once,
-generalize its destination-bucket logic, and it directly answers up to ~7,200 units' worth of
-"what is this, really" question across three piles** — none of which by itself would justify
-building it, together they clearly do. Estimated at about half a day per the original lane's
-sizing, unchanged by review.
-
-**The corrected S6 fixture regression check** (§3, item #1) — small, but its reach is not one
-pile, it is every kind the interpreter (Ruling §20) will eventually touch, i.e. the whole program
-going forward. This is infrastructure, not content, and the two adversarial reviews' independent
-confirmation that the ORIGINAL proposed tool cannot catch its own motivating bug makes the
-corrected version urgent rather than optional.
-
-### Rejected — do not build
-
-- **`equipment_key_is_wired()` two-clause widen.** Closes 0, risks fabricating a computed zero.
-  See §2.5.
-- **The twice-run-diff pytest as originally specified.** Provably cannot detect the S6 bug it was
-  proposed for (destruction happens on run 1 from committed state, stable after — a two-run diff is
-  clean). Build the corrected once-run-vs-committed check instead (already folded into §3 #1).
-
-### Named but not costed this wave — real, not urgent
-
-- GROUP_PREFIX→CLASS remap table for S8/D5 (2,682-unit reach) — real and tool-shaped, but needs
-  validation against the upstream PCGen `.lst` granting-class text, not against the same key text
-  the mapping itself is built from (review's caveat).
-- The equipment_modifier SPROP-extraction fix (111+ confirmed misclassified units) — a genuine bug
-  worth its own cycle, but root-causing it means reading the closure-construction code path, which
-  a measurement-only wave correctly declined to do.
+**Rejected — do not build**: `equipment_key_is_wired()` two-clause widen (closes 0, risks
+fabricating a computed zero — §2.5 of the wave-28 version); the twice-run-diff fixture regression
+test (provably blind to the S6 bug it was proposed for — see `sweeps.md` S6/`defects.md` D7).
 
 ---
 
 ## 5. Expensive but unavoidable
 
-- **L0 — prestige-class entry-requirement gating.** Does not exist anywhere in the codebase. Gates
-  77 of the 157 `class` units (re-confirmed, not re-derived, this wave — `class` itself was one of
-  the two uncovered kinds, §1.4). No shortcut; a real gating mechanism has to be built.
-- **The formula interpreter itself (Ruling §20).** Authorised, and it is the real fix behind G3
-  (2,583 class_feature units), monster_ability's 246-of-273 held units, and a large share of
-  spell/equipment's held/in-progress buckets. Linear-cost hand-modelling was accepted for years
-  specifically to avoid this; now that it is authorised, it remains genuinely expensive per unit —
-  just less expensive than the alternative at this remaining scale. Gate #1 (§3) is a **precondition**
-  for spending this cost safely, not an alternative to it.
-- **L7 — template-application mechanism.** ≥479 units (monster_ability + companion alone, 2 of 3
-  kinds checked) need representing a PF1e creature/familiar TEMPLATE, which the current
-  one-stat-block-per-creature chassis structurally cannot do. A genuinely new engine mechanism, not
-  a data-transcription task.
-- **G1's 817 pool names (class_feature) / 958 group prefixes (unmeasurable bucket C).** The triage
-  tool (§4) only classifies; each large group still needs individual oracle verification before
-  registration (this wave's own 4-group spot check found 2 of 4 large groups are NOT pool-shaped).
-  Real, unavoidable, per-group hand-work — the tool reduces the search space, not the verification
-  cost.
+- **L0 — prestige-class entry-requirement gating.** Gates 77 of the 157 `class` units. No shortcut.
+- **The formula interpreter itself (Ruling §20).** The real fix behind G3's 3,320 units (corrected
+  this wave) and a large share of the L20 residual's held/in-progress buckets.
+- **L13 — three new engine mechanisms** (companion sub-engine, bardic-performance engine, generic
+  sub-choice chooser) for the 38-unit class_feature capability-gap family, named for the first time
+  this wave with an exact count.
+- **L1 — the ~90-class `class_feature_of_unmodelled_corpus_class:*` family** (2,453 units). Each
+  unmodelled class needs its own chassis table before any of its features can move.
+- **L20's 6,966-unit residual.** Real, structural, individually cheap-to-verify per group (each is
+  one evidence code with an exact reproduction command) but there are 29 of them — genuine,
+  unavoidable per-family verification work, not a single mechanism.
 
 ## 6. Probably not worth doing
 
-- **G3's regex-proxy formula-shape split (554 likely-refused / 882 likely-readable / 1,690
-  unclassified) as a planning input.** The lane itself flags it as unverified; it is a substring
-  scan, not a dry run of the real tokenizer. Do not size interpreter work against it — re-run
-  against the real parser once it exists instead.
-- **Bulk-registering class_feature/race_trait pool or group names without per-group oracle
-  verification.** Both piles found real false positives on small spot checks (2 of 4 large
-  race_trait/bucket-C groups this wave alone). A bulk tool that skips verification will bank wrong
-  content faster than a human would notice.
-- **The race_trait "any-segment monster-facet" reclassification, as a blanket rule.** Would strip
-  539 already-done units (§2.3). Only worth revisiting once the full triage tool (§4) can
-  distinguish real monster-ability rows from co-facet false positives.
-- **equipment_key_is_wired() widen** — covered in §2.5/§4; actively harmful, not merely low-value.
+- **Bulk-registering class_feature pool names or race_trait groups without per-group oracle
+  verification.** Wave 28 found real false positives on small spot checks; wave 30's own G1 axis
+  classification found 3 of 20 named groups received no real axis at all when first summarized —
+  confirming the same caution applies to axis classification, not just registration.
+- **Treating the DESC-tail formula-extraction experiment's 2,507 figure (`levers.md` L17) as a
+  planning input.** It has a known, unguarded false-positive shape (a `PRE*` token in a `DESC` tail
+  misread as a formula). Re-derive once the guard is built.
 
 ---
 
-## 7. Needs operator ruling (consolidated across all piles)
+## 7. Needs operator ruling (consolidated)
 
-New this wave:
+New this wave: `blocked.md` B12 (43 units, non-PC race-syntax content), B13 (1 unit, ARG Race
+Builder), B14 (10 units, "First Boon" — named wave 28, finally filed), B15 (Supersession Register
+origin-ownership, gates the whole mechanism — fully formed in decisions.md §14, finally filed).
 
-1. **Do the ~310 companion-kind Eidolon evolution/SLA-upgrade units belong under the companion
-   doneness gate at all**, or are they class_feature-shaped content misfiled (same question shape
-   as `blocked.md` B4/B5)?
-2. **Core Essentials shared ability-glossary files** (`ce_abilities_race.lst` for monster_ability,
-   `ce_*_familiar*.lst` for companion — 233 units across 2 kinds) were re-attributed by book label
-   under Ruling §16 but never given a table. Shared pseudo-table, or manual per-book duplication?
-3. **Do equipment_modifier's 504 `VISIBLE:NO` units** (47% of its not-done population, essentially
-   unique to this kind) belong under the doneness gate at all — structurally parallel to `blocked.md`
-   B4/B5?
-4. **Are equipment `.FORGET`-suffixed rows** (confirmed PCGen loader-retraction directives, 2 units)
-   a Structural Exclusion Register entry, same disposition as core_essentials residuals (§16)?
-5. **Is `pfs_*.lst`** (Pathfinder Society legality cross-reference, 30 equipment units) in-corpus
-   scope at all?
-6. **Should ABP** (Automatic Bonus Progression, 12 class_feature units) be reclassified out of
-   `kind=class_feature` — it is a whole-table optional variant rule owned by no class.
-7. **Should feat-owned content wrongly modelled as class-owned option pools** (e.g. "First Boon"
-   demon-lord Obedience boons, 10 units) get a distinct classification mechanism?
+Corrected in scope, question unchanged: B7 (Core Essentials shared glossary — 566 not-done across 7
+kinds, not 233 across 2), B8 (equipment_modifier `VISIBLE:NO` — 921 not-done across 8 kinds, not 504
+in 1), B2 (race branch classification — narrowed to a precise 24-unit question with evidence already
+assembled, not "unknown").
 
-Still open, re-raised, not newly answered:
+Reconfirmed exact: B4 (48), B5 (5). Not reproduced this wave (flagged, not corrected — the original
+predicates were not available to re-run): B6 (310 filed / 344 by an unverified proxy), B9 (2 filed /
+0 by an unverified proxy), B10 (30 filed / 34 by this wave's proxy), B11 (12 filed / 0 by an
+unverified proxy).
 
-- `blocked.md` B1 (`mod_only_rescue`, 249 units) — new evidence added (36 of the 249 now duplicate
-  content Ruling §16 already deleted), core question unchanged.
-- `blocked.md` B4/B5 (48 + 5 units, structurally-non-PC-class question) — the new companion/
-  equipment_modifier ruling asks (above) are the same question shape recurring in two more kinds;
-  sequence S8's closure behind these, not before.
+Full text of every question: `docs/release/SD-31-corpus-closure-grind/todo/blocked.md`.
 
 ---
 
-## 8. Wave-28 receipt (for `progress.md`)
+## 8. Wave-30 receipt (summary — full detail in `progress.md`)
 
-Six lanes, plus two independent adversarial-review lanes, ran corpus-wide census work across every
-kind except `class` and `race` (the two uncovered kinds identified in §1.4). Banked zero units by
-design. All six lane deliverables merged as documents only:
-
-```
-git log --oneline e90ba9ec1..HEAD -- docs/release/SD-31-corpus-closure-grind/artifacts/
-5bdfb846f docs(sd31): W28 visibility census — 5 lane deliverables merged (no banking)
-e61adbb6d docs(sd31): W28 visibility census — sweeps lane deliverable (no banking)
-```
-
-`docs/work-inventory.json` confirmed byte-identical (`de0dfa8614efdd027316ccf274ad8490`) before and
-after every merge. Board: **13,456/38,372 (35.07%), unchanged.**
-
-**Reconciliation found:** 24,621 of 24,916 not-done units (98.8%) examined by at least one lane;
-1,212 units examined by two lanes redundantly (now deduplicated, §1.3); 295 units (`class` 157,
-`race` 60, `class_feature` held+deferred 78) examined by none (§1.4) — most notably `race`, a whole
-kind no lane touched or even named.
-
-**Two adversarial reviews found:** 3 of 6 lanes SOUND-or-PARTIAL-with-real-value, 3 of 6
-PARTIAL-with-a-load-bearing-error; zero lanes GAMED. The most consequential error (§2.5) was a
-tool recommendation that would have closed zero units while fabricating computed zeros on the
-records it touched — caught before scheduling, not after building.
-
-Full detail in §§1–7 above; per-lane detail in `artifacts/VISIBILITY-*.md` (6 files).
+Six lanes (5 census + 1 tool-build) plus two independent adversarial-review lanes. Zero units
+banked, zero code touched in production paths, `docs/work-inventory.json` byte-identical
+throughout. The coverage tool (built this wave, extended by integration after review) proves
+structural completeness for the first time — 46 groups, 24,914 population, 0 uncovered, 0 overlap,
+every group has a todo entry. 14 of 46 groups (17,948 units, 72.0%) were individually root-caused;
+32 groups (6,966 units, 28.0%) are real, named, corpus-wide counts filed for a future evidence-code-
+scoped wave under `levers.md` L20. `todo/` reconciled: 5 new sweeps (S12-S16), 4 new defects
+(D10-D13), 4 new blocked items (B12-B15), corrected scope on 2 existing blocked items (B7, B8), 9
+new levers (L11, L12, L13, L14, L15, L17, L18, L20, L21), 2 existing levers corrected (L5, L6), 1
+existing lever's remaining scope corrected (L10). Full wave-30 receipt with every reproducible
+command: `progress.md`.

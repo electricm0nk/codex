@@ -34641,3 +34641,268 @@ removed; all content already merged into `tranche/11`. Every scratch `CARGO_TARG
 wave (`w28-integrate`, `w29-lane2`) found and cleaned up as part of this cycle's own housekeeping.
 `sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated, per the standing instruction.
 
+
+## 2026-08-21 — SD-31 wave 30: complete-inspection integration (6 lanes + 2 adversarial reviews)
+
+**Is the inspection now complete? Structurally yes, provably — not by assertion.** Every one of the
+24,914 not-done units is assigned to exactly one of 46 evidence-code-keyed groups, verified by a
+purpose-built tool (`scripts/coverage_ledger.py`, lane 1, extended this cycle), not by hand
+arithmetic:
+
+```
+python3 scripts/coverage_ledger.py --groups docs/release/SD-31-corpus-closure-grind/artifacts/w30-coverage-table.json --strict
+population (not-done units considered): 24914
+covered by >=1 group:                    24914
+uncovered (0 groups):                     0
+overlap (>1 group):                        0
+```
+exit code: 0 (`--strict` requires zero uncovered AND every group to carry a `todo/*.md` entry)
+
+**But covered ≠ deeply examined, and that distinction is reported, not blurred.** 17 of the 46
+groups (17,946 units, 72.0%) were individually root-caused this wave or a prior wave. 29 groups
+(6,968 units, 28.0%) are real, reproducible, evidence-code-exact corpus-wide counts — genuine
+structural coverage — but were not individually root-caused this wave; they are named, sized, and
+filed under one consolidated lever (`levers.md` L20) with an explicit recommendation that the next
+census wave split lanes by evidence-code family, not by `kind` — the kind-scoped split is what
+produced wave 28's 298-unit gap in the first place (small `kind`s like `race`, and small
+sub-populations like `class_feature`'s held/deferred, kept losing the lane assignment to bigger
+ones). Full detail, ranked, with every count's reproduction command: `THE-BOX.md` (rewritten this
+wave, superseding the wave-28 six-pile framing).
+
+### Lane summary
+
+Six lanes: 5 census lanes (dispatched at the operator's explicit "focus on visibility" directive)
+plus 1 tool-build lane, plus 2 independent adversarial reviews. **No lane banked anything** — this
+was a hard rule, not a preference (`docs/work-inventory.json` md5 `d64ddfc677fd1683f5b7638889a25c54`
+confirmed byte-identical in every one of the 8 lane worktrees, before and after, board unchanged at
+**13,458/38,372 = 35.07% — same as wave 29 close, +0**).
+
+* **Lane 1 — coverage ledger tool build.** Built `scripts/coverage_ledger.py` + 19 unit tests
+  (all passing) to structurally verify census coverage instead of hand arithmetic. Reproduced
+  THE-BOX's own 60-unit race-kind gap on the first live run. Adversarial review found the tool's
+  `match` schema had no key for `evidence`/`visible`/`origin` — 4 of lane 6's 6 corpus-wide
+  populations could not be expressed as coverage groups at all. **Fixed by this integration cycle**:
+  added `evidence_regex` (regex match on the diagnostic string every G1/G3/G6-shaped group is
+  already keyed on) plus `visible`/`origin` list-match, with 3 new tests (22/22 passing total).
+* **Lane 2 — the 141 never-examined units.** Closed the operator-named gap exactly: race
+  not-started 57 + race in-progress 3 + class_feature deferred 43 + class_feature held 38 = 141,
+  every unit individually classified with a real discriminator (`.PC`-suffixed `TYPE` token for
+  race; per-diagnostic-id read for class_feature). Adversarial review found it SOUND on every
+  reproduced number, with several small corrections carried into `todo/` below (35 done race units,
+  not 38; 25 distinct deferred diagnostic ids, not 24; 12 `advanced_race_guide/race/` files, not
+  10) and one important gap it left as "not run": whether the non-PC-content contamination in the
+  43-unit `race` group reaches the 35 already-`done` race units. **Answered this cycle** (`sweeps.md`
+  S13): 0 of 35.
+* **Lane 3 — class_feature re-examination (G1/G3/G6, wave-28 gaps).** Re-derived G1 (3,064
+  units/695 names, corrected from THE-BOX's stale 3,347/817), G3 (3,320, corrected from ≥1,764),
+  G6 (29, confirmed unchanged, real near-miss taxonomy built via a temporary live probe), and
+  `granted_via_archetype`'s multi-hop gap (4 preclass-gated facts, 3 disagreeing in level).
+  Adversarial review confirmed every population number exactly (including independently rebuilding
+  the deleted G3 probe from scratch) but found the G1 axis-progress headline over-counted by 58
+  units (3 of the 20 named pool groups received NO real axis, marked UNCLEAR/NOT-CLASSIFIED/N-A in
+  the lane's own table but counted in the "546 units classified" figure) — corrected to 488
+  units/17 names (29.5%, not 546/20/33.0%) in `levers.md` L5.
+* **Lane 4 — sweep residuals (S6 primary; S2/S7/S8/S9 secondary).** Censused all 29 Rust
+  `enrich_*`/`gen_*`/`ingest_*` binaries (not 27, re-counted after a first-draft miscount) for the
+  S6 self-erasure shape. Live-reproduced `gen_advanced_race_guide` wiping `raw_tokens` from 93
+  spell records and permanently deleting 15 equipment records on a real run against the committed
+  corpus (reverted cleanly, confirmed 0 git-status lines and unchanged inventory hash after).
+  Adversarial review found the census marked `gen_pathfinder_unchained` SAFE using only the
+  cross-generator-collision axis, never checking the self-erasure axis its own methodology
+  established for the other 3 functions in the same file — corrected: it is vulnerable (42 of 42
+  `pathfinder_unchained` equipment records carry `raw_tokens` with zero exists-guard), so the real
+  split is 9 safe / 3 vulnerable / 17 not-reached, not 10/2/17. `defects.md` D9 corrected to include
+  the 4th function.
+* **Lane 5 — book sizing + `blocked.md` audit.** Sized the 4 remaining book-onboarding-gate books
+  precisely (adventurers_guide 971 not-done, inner_sea_magic 335, inner_sea_temples 64 — zero
+  pre-existing `data/corpus` tree — inner_sea_taverns 20) and audited all 11 `blocked.md` items:
+  B1/B4/B5/B8 reproduce exactly, B2 narrows from "unknown" to a precise 24-unit question using
+  already-committed evidence, B6/B9/B10/B11 do NOT reproduce with this wave's proxies (honestly
+  flagged as unconfirmed, not asserted as errors). Adversarial review's most consequential finding:
+  **lane 5 filed zero todo entries for any of its 9 groups**, against the wave's explicit
+  requirement — including two items it identified as previously-named-and-never-filed ("First Boon",
+  Supersession Register origin-ownership) which it then also did not file. **Corrected this cycle**:
+  filed as `blocked.md` B14/B15.
+* **Lane 6 — cross-kind checks (Part A partition, Part B book-gate/`ce_*`/`visible`/`.COPY=`
+  populations, Part C TYPE-token misfiling).** Part A's (kind,verdict) 33-cell grid reproduces
+  exactly (sums to 24,914 with no remainder) but adversarial review correctly flagged treating it
+  AS coverage evidence as the Decision-1a gaming shape — it is a real board-math check, not a
+  classification (this integration cycle used it for board verification only, not as the coverage
+  partition — see "Methodology" in `THE-BOX.md` §1 for why `evidence`, not `kind`+`verdict`, is the
+  real partition key). Part B populations (book-gate 422, `ce_*` 566/811, `visible==false` 921,
+  `.COPY=` 966) all reproduce exactly. Part C's TYPE-token signature (1,377 of 12,114) reproduces
+  exactly EXCEPT the 5-code table it's built from sums to 1,321, not 1,377 (56 hits sit in
+  unlisted codes) — corrected in `sweeps.md` S12. The one group lane 6 called "confirmed SAFE, no
+  gap, no action needed" and filed no todo entry for (archetype-lock reach, 181/178/2/1) turned out
+  to be the least reliable number in the artifact: unreproducible (185 records, not 181; internally
+  inconsistent, 178−6≠175) and the one script the artifact claimed existed for it did not. Not
+  carried forward as a group in the 46-family partition (archetype-lock is a code-level guard
+  check, not a corpus-population evidence code) — flagged here so the number is not quoted again.
+
+### Adversarial review outcome
+
+Two independent reviewers, each in a fresh worktree with their own isolated `CARGO_TARGET_DIR`
+(deleted after use). **Zero of 6 lanes GAMED.** Verdicts: lane 1 PARTIAL (schema gap, fixed),
+lane 2 PARTIAL (small count corrections, one un-run one-command check answered), lane 3 PARTIAL
+(58-unit axis-progress over-count, corrected), lane 4 PARTIAL (1 mislabeled binary, corrected),
+lane 5 PARTIAL (zero todo entries filed — the most consequential single finding this wave),
+lane 6 PARTIAL (one unreproducible group, corrected; Part A's coverage-claim framing corrected).
+Both reviewers independently confirmed the corpus was untouched (full `data/` tree hash-matched
+across all lane worktrees: 27,244 files, `44171d7f126f59d5543e998eb25420dd`) and independently
+caught a real integration hazard neither lane could see on its own: **lanes 2 and 6 each
+independently claimed `levers.md` L11 and `sweeps.md` S12 for entirely different findings** —
+resolved by this integration cycle's renumbering (see below).
+
+### `todo/` reconciliation (fourth run)
+
+Every one of the 46 coverage-tool groups carries a `todo/*.md` entry — the tool's own
+`groups_without_todo_entry` check is empty, verified by the `--strict` run above.
+
+**ID collisions resolved by renumbering** (both lanes were right about their findings; only the
+numbers collided): lane 2's proposed L11-L15/S12/B12-B13 and lane 3's proposed D9-D11/L11-L12/S12
+and lane 4's proposed D9 and lane 6's proposed L11/S12 all landed on the same free slots
+independently, in isolated worktrees, with no way to see each other. Final numbering: `sweeps.md`
+S12 (lane 6, TYPE-token misfiling — lane 2's non-PC-contamination candidate became S13, closed
+immediately at 0), S14 (lane 6, `.COPY=` cross-kind), S15 (lane 3, G6 recurrence), S16 (lane 6,
+Part-B population overlap, closed at 626); `defects.md` D9 (lane 4, self-erasure, corrected scope),
+D10 (lane 3, W&AP false positive), D11 (lane 3, G3 proxy correction, closed), D12 (lane 3,
+multi-hop gap), D13 (lane 2, display+grounded classifier blind spot); `blocked.md` B12/B13 (lane 2,
+race non-PC-content), B14/B15 (lane 5's named-but-unfiled items, filed this cycle); `levers.md` L11
+(lane 2, race registration — lane 6's (kind,verdict)-partition proposal was NOT filed as a lever,
+see Part A note above), L12 (lane 2, race magnitude-consumer), L13/L14 (lane 2, class_feature
+capability-gap/join-gap split), L15 (lane 2, fixture census re-run), L17 (lane 3, DESC-tail
+extractor), L18 (lane 3, G6 cheap subset), L20 (this cycle, the 29-family residual consolidation),
+L21 (lane 2, UCA feat deferral).
+
+**Closed with a real corpus-wide count this wave**: `sweeps.md` S3 (race-trait key matcher, 6
+waves open — first-ever corpus-wide count, 2,472, still not fixed, a reclassification not a
+doneness gain); S7's narrowed sub-question (0 of 494 `assert_eq!(_.len())` sites sit inside a
+content-blind `ground_*`/`compute_*`/`classify_*` function); S2's companion sub-question (CLOSED at
+0, a real locking test already proves it); S13 (0 of 35, answered same-day rather than left open);
+S16 (626 double-memberships quantified); `defects.md` D11 (G3 regex-proxy fully superseded by a
+real parser run, independently reproduced by a reviewer within 1 unit).
+
+**Corrected in scope, not closed**: `blocked.md` B7 (233→566 not-done/811 total across 7 kinds, not
+2), B8 (504→921 not-done across 8 kinds, not 1), B2 (narrowed to 24 units with evidence already
+assembled). `levers.md` L5 (6,442 real population, not ~10,000/3,347; axis progress 488/17 not
+546/20), L6 (3,320, not ≥1,764/2,583), L10 (book-gate residual 422 across 4 books, `inner_sea_faiths`
+named for the first time; `adventurers_guide`'s own remaining scope corrected to 971, not 973 — 2
+units were already `done`), L1 (race note updated: both `class` and `race` now have real censuses
+on file, closing a wave-28-era TODO note).
+
+**Never silently carried**: every item above states which wave last touched it. `sweeps.md` S4/S5/
+S8/S9/S10/S11 and `blocked.md` B1/B4/B5/B6/B9/B10/B11 stand at their prior-wave status, re-confirmed
+(B4/B5 exact) or re-attempted-not-reproduced (B6/B9/B10/B11, honestly flagged) this wave — not
+silently carried forward without a look.
+
+### The coverage tool itself, extended
+
+`scripts/coverage_ledger.py` (lane 1) + `scripts/tests/test_coverage_ledger.py`: 19 tests at lane
+handoff, 22 at integration close (3 new: `evidence_regex`, `visible`, `origin` match support — the
+exact gap the adversarial review found blocked 4 of lane 6's 6 corpus-wide populations from being
+expressible as coverage groups at all). All 22 pass. The classification table used for this wave's
+own coverage claim — `docs/release/SD-31-corpus-closure-grind/artifacts/w30-coverage-table.json`,
+46 groups keyed on the `evidence` field (not `kind`/`verdict`, which the adversarial review
+correctly flagged as too coarse to prove anything — see `THE-BOX.md` §1's methodology section) — is
+committed alongside the tool, so the wave's central claim (`uncovered: 0`) is a command anyone can
+re-run, not a number to trust.
+
+### Corpus integrity
+
+`data/corpus`: `git status --porcelain data/corpus` clean, `git diff --stat data/corpus` empty, in
+the integration worktree AND independently re-verified in all 8 lane worktrees (lane 4's own live
+`gen_advanced_race_guide` reproduction was run in an isolated worktree and fully reverted —
+confirmed via `git checkout --` + a follow-up `git status --short` returning 0 lines before that
+lane's work was even merged in). `docs/work-inventory.json`: `d64ddfc677fd1683f5b7638889a25c54`
+before this integration cycle's own work and after — confirmed via `md5sum`, matching every lane's
+independently-reported value and both adversarial reviewers' independently-reported value.
+`todo/D1`'s standing concern (equipment cache generators silently reverting narrowed citations) was
+specifically checked by lane 4 via a non-destructive `repair_lst_provenance --check` dry run:
+`advanced_players_guide`/`core_rulebook` currently have zero pending narrows (372/2,993 already
+cited, 0 narrowed) — D1's 412-narrowed-citations describes content already safely in the corpus
+today, not a currently-pending repair.
+
+### Board (unchanged, confirmed both ways)
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 334 (2.1634%) | 334 (2.1634%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 550 (15.6963%) | 550 (15.6963%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,458 (35.0724%)** | **13,458 (35.0724%)** | **+0** |
+
+**Units banked: 0, by design — this was a hard rule this wave, stated explicitly in the dispatch
+brief and confirmed independently by both adversarial reviewers across all 6 lanes.** Board
+movement of any kind would mean a lane banked something it was forbidden to bank; there is none to
+report.
+
+### Public feeds
+
+Not touched this wave — no lever landed, no board movement, nothing for `publish-site-dashboard.sh`
+to pick up. `docs/work-inventory.json` unchanged means the dashboard JSON (already current per
+wave 29's close) is still current; not re-run needlessly.
+
+### Full gate — `./scripts/verify.sh -j 8`, isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w30-integrate`
+
+**RESULT: PASS — 34/34 stages, first try, no fixes needed.**
+
+```
+passed:  34  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+             desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+             frontend-typecheck clippy class-dump
+```
+
+| Stage | Result |
+|---|---|
+| root-lib | PASS — 2336 passed (floor 2333, unchanged) |
+| root-full | PASS — 7469 passed across 580 suites, all 540 `tests/*.rs` suites executed (floor 7447, unchanged) |
+| desktop (apps/desktop/src-tauri) | PASS — 515 passed (floor 496, unchanged) |
+| reach | PASS — 30 passed |
+| corpus-sweep | PASS — 26,500 records examined of 26,934 read, 255,531 tokens compared, 26,921 digests checked, 0 findings |
+| supersession-gate | PASS — 116 objects, all clean |
+| frontend-test | PASS — 100/100 files |
+| frontend-typecheck | PASS — `tsc --noEmit` clean |
+| clippy (BOTH crates) | PASS — root 50 warnings, desktop 7 warnings, 0 errors either crate |
+| class-dump | PASS — 31/31 computing |
+
+**No baseline moved.** This wave touched only `docs/` and `scripts/` (a new tool + its tests); no
+production Rust/TS changed, so every count above matches the prior wave's floor exactly rather than
+growing — correct for a documents-and-tooling-only integration cycle, not a gap.
+
+`scripts/coverage_ledger.py`'s own 22 unit tests are not part of `verify.sh`'s stage list yet (it is
+new this wave) — run separately and confirmed: `python3 -m unittest -v scripts.tests.test_coverage_ledger` →
+`Ran 22 tests ... OK`. Folding it into `verify.sh` as a named stage is a natural follow-up for
+whichever wave next touches the tool, not done here to keep this integration cycle's own diff
+minimal and reviewable.
+
+### Corpus integrity, verified independently of any lane's own report
+
+`data/corpus`: `git status --porcelain data/corpus` empty, `git diff --stat data/corpus` empty, in
+this integration worktree. `docs/work-inventory.json`: `md5sum` = `d64ddfc677fd1683f5b7638889a25c54`
+before this cycle's first edit and after its last — unchanged throughout, matching every lane's and
+both reviewers' independently-reported value.
+
+### Cleanup
+
+All 8 wave-30 worktrees (`.claude/worktrees/wf_b4fe44c9-141-1` through `-8`) and their branches
+removed after this cycle's own commit landed. Every scratch `CARGO_TARGET_DIR` under
+`/home/ubuntu/cargo-targets/` deleted after use, including 5 stray leftovers found from individual
+lane runs (`w30-adventurers-guide`, `w30-booklane`, `w30-booklane-desktop`, `w30-s6rust`,
+`w30-unmeasurable`) that were not cleaned up by their own lanes — swept as part of this cycle's own
+housekeeping, same pattern as wave 29's leftover cleanup. This integration cycle's own
+`w30-integrate` target directory deleted after the gate run completed. `sd31/racetrait4-SD31-E6-F4-005`
+— untouched, not read, not gated, per the standing instruction.

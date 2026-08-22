@@ -1707,3 +1707,53 @@ banked figures. `defects.md` D7 CLOSED for real, its root-cause narrative correc
 **Full gate: `./scripts/verify.sh --full -j 8` (the real script).** Full account, including the
 first (too-broad) §18 fix's own gate failure and the corrected re-run: `progress.md`'s wave 29
 entry, "Full gate" section.
+
+## Board after wave 30 (`SD31-W30-INTEGRATE-001`, 2026-08-21) — complete-inspection integration: coverage tool built + extended, 46-group partition, uncovered=0
+
+**The operator caught wave 28 shipping an incomplete inspection — 298 units in no lane at all,
+named but not looked at. Wave 30's mandate: finish the inspection, provably, not "mostly."**
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 334 (2.1634%) | 334 (2.1634%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 550 (15.6963%) | 550 (15.6963%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,458 (35.0724%)** | **13,458 (35.0724%)** | **+0** |
+
+**Zero movement, confirmed** — `docs/work-inventory.json` md5 `d64ddfc677fd1683f5b7638889a25c54`
+identical before the first lane started and after this integration cycle's own last commit. This is
+correct: the wave's entire mandate was completeness of the census, not banking.
+
+**Is the inspection complete? Yes, structurally — proven by a tool, not asserted.** Lane 1 built
+`scripts/coverage_ledger.py`, which this integration cycle extended (adversarial review found its
+`match` schema could not express 4 of 6 findings from lane 6, the field it was missing being
+`evidence` itself — the single most load-bearing field for this kind of census). The final
+classification table (`artifacts/w30-coverage-table.json`, 46 groups keyed on the diagnostic
+`evidence` string, not the gameable `kind`/`verdict` pair) partitions all 24,914 not-done units
+exactly: **`uncovered: 0`, `overlap: 0`, every group has a `todo/*.md` entry, `--strict` exits 0.**
+17 of 46 groups (72.0% of the population) were individually root-caused; the remaining 29 (28.0%)
+are real, sized, reproducible corpus-wide counts filed under one consolidated lever (`levers.md`
+L20) for a future evidence-code-scoped wave — reported as exactly that, not rounded up to "done."
+
+**Adversarial review outcome**: zero of 6 lanes GAMED, all 6 PARTIAL with at least one load-bearing
+correction each — most consequentially, lane 5 filed **zero todo entries** for any of its 9 groups
+(against this wave's explicit requirement), corrected this cycle (`blocked.md` B14/B15). Both
+reviewers independently caught the same integration hazard: lanes 2 and 6 each independently claimed
+`levers.md` L11 and `sweeps.md` S12 for different findings — renumbered on merge, full mapping in
+`progress.md`'s wave-30 entry.
+
+**`todo/` reconciled (fourth run)**: 5 new sweeps, 4 new defects, 4 new blocked items, 9 new levers,
+3 existing levers corrected, 2 existing blocked items rescoped. Full detail, every ID's disposition,
+and the full 46-group table with reproduction commands: `THE-BOX.md` (rewritten this wave,
+superseding wave 28's six-pile framing) and `progress.md`'s wave-30 entry.
+
+**Full gate: `./scripts/verify.sh -j 8` (the real script).** Full account: `progress.md`'s wave 30
+entry, "Full gate" section.
