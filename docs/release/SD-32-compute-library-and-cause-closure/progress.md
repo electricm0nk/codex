@@ -483,6 +483,69 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
 - **Next-cycle plan:** Gate 2 is now closed in full (AT-32-G2-001..004 met for both engines via
   cards 6/7/8). Gate 3 (`gate-3-closure-invariant`, card 9) is unblocked.
 
+### Cycle 1 — Gate 3 closure invariant
+
+- **Card ID:** `gate-3-closure-invariant`
+- **Commit SHA:** `03d4046c9`
+- **Files touched:** `scripts/shape_coverage_standing_gate.py` (new, the Gate 3 deliverable),
+  `scripts/tests/test_shape_coverage_standing_gate.py` (new, 9 tests), `scripts/verify.sh` (two
+  new stages — `shape-coverage-standing-gate`, `shape-coverage-standing-gate-selftest`, both stage
+  sets), `artifacts/gate-3-closure-invariant/20260822-191308.run.json` (new, real run against the
+  live inventory), `artifacts/gate-3-closure-invariant/001_cycle_receipt.md` (new),
+  `docs/retro/events/gate-3-invariant.jsonl` (new, one correction event),
+  `docs/retro/events/sd31-transcribe.jsonl` (append-only, two auto-emitted `verification` events).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** AT-32-G3-001/002/003 (`acceptance-and-verification.md` Gate 3 —
+  verbatim in the cycle receipt).
+- **Status:** complete
+- **Notes:** New `scripts/shape_coverage_standing_gate.py` reuses `shape_ledger.py`'s classification
+  and `coverage_ledger.py`'s `not_done_population` (no re-derivation) and adds a sum-the-piles
+  reconciliation check (`family_total == population`) independent of `unclassified_count`, so a
+  `build_ledger` regression that silently drops rows is caught even when `unclassified_count` reads
+  0 (`workflow-instruction.md §9` standing lesson 5). Wired into `scripts/verify.sh` as two real
+  stages in both `ALL_STAGES`/`QUICK_STAGES`. Live run against `docs/work-inventory.json` +
+  `data/corpus`: population 24,914, unclassified 0, piles reconcile
+  (24,914 == 24,914), corpus SHA `7f818006e371188e5717fd18d74d18a420747fc6`. Fails closed:
+  `echo '{}' | python3 scripts/shape_coverage_standing_gate.py` → `GATE_G3_FAILS_CLOSED_ON_EMPTY_OK`.
+  `classify_unit()` structurally never returns an uncovered family (falls through to F0/F8), so the
+  real inventory cannot organically exercise "an object no shape covers" — per Decision 1a ("a gate
+  that cannot fail is worse than no gate"), the self-test proves the gate's failure mechanism
+  directly with a FABRICATED uncovered row and a fabricated pile mismatch (the same "prove it can
+  fail before it is trusted" discipline `reachability-audit-selftest` uses), both confirmed to fail
+  the gate's exit code. RED→GREEN, twice: (1) module-does-not-exist RED confirmed before writing
+  the script; (2) temporarily forced the gate predicate to `ok = True`, re-ran the suite, 2/9 tests
+  failed for the intended reason (both fabricated-failure tests), reverted, 9/9 green. **Dispatch-
+  ordering finding, not a blocker:** `workflow-instruction.md §3`/`kanban.md` state Gate 3 is
+  "gated on G2 met"; at dispatch time this checkout's Gate 2 cards (6-8) locally still read
+  `pending`. Read `acceptance-and-verification.md` Gate 3 closely: AT-32-G3-001/002/003 test
+  shape-coverage closure only (`unclassified_count`, `families`, corpus SHA) — none references an
+  engine or `derived_evaluator_fixture_check`. The real technical dependency is Gate 1's
+  `shape_ledger.py` output (already complete), not Gate 2's engines; built and verified with cards
+  6-8 pending, logged as a `scripts/retro.py correction` rather than an `## Open blockers` entry.
+  The §5 rebase before this cycle's push found Gate 2 had in fact already landed on origin in the
+  interim (cards 6/7/8, commit `f754c71db`), so the finding's practical stakes are now moot, but
+  the correction stands as written — the judgment was made and verified against the acceptance doc
+  before that rebase, not with hindsight. Retro gate-wrap-up (§12 step 1):
+  `scripts/retro.py summary --since 2026-08-22 --json` — 40 events total (11 correction / 2
+  deferral / 7 incident / 6 note / 1 rework / 13 verification), 8 distinct correction subjects, no
+  new recurrence key from this cycle; the only key firing more than once in the window is
+  `disk-full` (3, pre-existing, not triggered by this card). Worktree sweep (§12 step 2): this gate
+  ran serially in the primary checkout (no worktree-isolated cycle of its own — `technical-
+  design.md`'s file-disjointness note, Gate 3 "serial by construction"), so nothing of this gate's
+  own to sweep; `git worktree list` at cycle end showed five live worktrees, all belonging to
+  Gate 2 (cards 6/7/8) and Epic 5 (card 1), already merged to origin by the time this cycle's push
+  landed — left for whichever cycle next claims those cards' own gate wrap-up, per §12's "this
+  gate's worktrees only" scope. Open rulings check (§12 step 3): B1/B2/B4/B5 (`decisions.md §7`) —
+  none touched or triggered by standing-gate infrastructure. **All four gates (G0/G1/G2/G3) are now
+  met — the Definition of Done's gate condition is satisfied** (`decisions.md §2`); Epics 1-3
+  (cards 10-12) and the Closure epilogue (card 13) are unblocked, pending each card's own remaining
+  criteria. Full detail: `artifacts/gate-3-closure-invariant/001_cycle_receipt.md`.
+- **Discovery forwards:** none new.
+- **Next-cycle plan:** Gate 3 closed; all four gates met. Epics 1-3 (cards 10-12, `isolation:
+  'worktree'`, disjoint files per `workflow-instruction.md §2.4`) are the next dispatchable phase;
+  card 13 (Closure epilogue) follows once 10-12 are `complete` or filed under `## Open blockers`.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
