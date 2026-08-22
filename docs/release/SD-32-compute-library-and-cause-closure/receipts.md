@@ -29,3 +29,21 @@ contract, not by `workflow-instruction.md`'s own local-file convention.
 ## Receipts
 
 (Append new YAML blocks below this line, most recent at the bottom.)
+
+- cycle_id: 2026-08-22T23:51:06Z
+  row_or_kind: architecture:truth_up
+  bundle: SD-32
+  branch: 89a71b2832d50a0d432c6e0fb0fb8ff1f96fa39a
+  integration_target: develop
+  branch_tip_before: 89a71b28
+  branch_tip_after: 89a71b28
+  diff_path_count: 25618
+  docs_touched: []
+  stub_graduations: []
+  stub_regressions: []
+  obsolete_removals: 0
+  cited_path_check: fail
+  relative_link_check: pass
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: no architecture impact — diff is outside architecture scope
