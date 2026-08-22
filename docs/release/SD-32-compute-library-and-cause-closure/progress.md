@@ -369,6 +369,37 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   closed Gate 1 census (AT-32-G2-004), which is also the natural place for the still-open
   `--bin`/fixture-check items above to land.
 
+### Cycle 1 — `gate-2-engines-f1-f9` (Gate 2, card 6)
+
+- **Criterion:** AT-32-G2-001/002/003 — confirm `formula_interpreter.rs` reaches all 9 in-scope
+  shape families (F1..F9, the shape_ledger.py in-scope set) with fixtures; F10 is card 7's own
+  scope, not re-claimed here.
+- **Files touched:** `tests/fixtures/rules_core/formula-interpreter-family-fixtures.json` (new);
+  `tests/formula_interpreter_family_fixture_check.rs` (new, 5 tests); appended an AT-32-G2-003
+  entry to `acceptance-and-verification.md`'s existing Gate 2 section.
+- **Commit SHA:** _filled in after push, see below_
+- **RED→GREEN:** deliberately corrupted the committed F5 fixture entry's expected value (4 →
+  999) and confirmed `cargo test --locked --test formula_interpreter_family_fixture_check
+  engine_reaches_every_in_scope_family` failed for the intended reason (evaluator's real, correct
+  `4` disagreeing with the wrong fixture `999`); reverted and re-ran green (5/5 pass).
+- **Dual-audit:** `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS` on the scoped diff.
+- **No engine source change needed** — `formula_interpreter.rs`'s existing grammar (wave 25b/26
+  shape closure) already parses and correctly evaluates all nine families' real corpus shapes;
+  this cycle proved that with 9 committed, oracle-provenance-verified fixtures (one per family,
+  each independently confirmed byte-identical against the pinned oracle checkout via
+  `sha256sum`/`sed` at authoring time — see the receipt for the exact commands). Population:
+  F1=1,790, F2=1,490, F3=303, F4=570, F5=361, F6=211, F7=5, F8=41, F9=27 = **4,798 not-done
+  units** (from Gate 1's own `ledger.json`). No regression: `cargo test --locked --lib
+  rules_core::pilot_compute::` 820/820 pass; the separate, unit-kind-scoped
+  `derived_evaluator_fixture_check` gate (not touched by this cycle) still clears 1,836/2,577.
+  **AT-32-G2-004 (corpus-wide run) explicitly NOT claimed** — card 8's own criterion.
+  Full detail: `artifacts/gate-2-engines/001_cycle_receipt.md`.
+- **Discovery forwards:** none new — the engine already reached all nine families' grammar.
+- **Next-cycle plan:** card 8 (`gate-2-corpus-wide-runs`) picks up AT-32-G2-004 for
+  `formula_interpreter.rs` against the full not-done population (or the 4,798-unit F1..F9 subset),
+  chained `card(6) -> card(8)` per `workflow-instruction.md §2.4`'s pipeline; card 7's own
+  `card(7) -> card(8)` chain for `bonus_stack_reader.rs`/F10 runs independently.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
