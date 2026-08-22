@@ -380,15 +380,31 @@ fn ranger_level20_master_hunter_is_granted() {
     let input = load(RANGER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // SD-32 Epic 1 (compute-library wiring): the fixture's Wisdom 12
+    // (modifier +1) is now run through the SAME formula_interpreter-backed
+    // `resolve_pcgen_var_chain` mechanism already fixture-checked at
+    // `tests/fixtures/rules_core/derived-evaluator-fixtures.json`'s
+    // `class_feature_description_entries` (`ranger_master_hunter`), which
+    // pins `10+(MasterHunterLVL/2)+WIS` byte-identical against the pinned
+    // oracle's `cr_abilities_class.lst:1427`. At level 20 with WIS modifier
+    // +1: `10 + 20/2 + 1 = 21`. This is no longer a fabricated value -- it
+    // is the corpus's own formula, evaluated by the already-authorised
+    // interpreter (`decisions.md §3`, operator ruling §20).
     let master_hunter = explanation(&computation, MASTER_HUNTER_ID);
     assert_eq!(
-        master_hunter.value, 0,
-        "Master Hunter must be a bounded grant-only identity record (value 0): {}",
+        master_hunter.value, 21,
+        "Master Hunter's save DC at ranger level 20 with Wisdom modifier +1 is \
+         10 + level/2 + WIS = 21, computed via the corpus's own BONUS:VAR formula: {}",
         master_hunter.detail
     );
     assert!(
         master_hunter.detail.to_lowercase().contains("fortitude"),
         "the record must name the Fortitude-save-or-die upgrade: {}",
+        master_hunter.detail
+    );
+    assert!(
+        master_hunter.detail.contains("21"),
+        "the detail text must name the computed DC, not just describe the rule: {}",
         master_hunter.detail
     );
 }

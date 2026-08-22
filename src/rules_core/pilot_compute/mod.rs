@@ -8151,7 +8151,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut explanations,
         &mut diagnostics,
     );
-    explain_rogue_level1_chassis(input, &mut explanations);
+    explain_rogue_level1_chassis(input, &ability_modifiers, &mut explanations);
 
 
     // SD13-E3/E4/E5 Paladin-only decomposition: split the F6 hybrid class-feature
@@ -31890,10 +31890,20 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  computed. Master Hunter is the 20th-level ranger capstone."
             ),
         });
-    } else {
+    } else if let Some(dc) = resolve_class_feature_bonus_var(
+        "Ranger ~ Master Hunter",
+        "RangerLVL",
+        "MasterHunterDC",
+        level,
+        ability_modifiers,
+    ) {
+        // SD-32 Epic 1 (compute-library wiring, F3): the corpus's own
+        // `BONUS:VAR|MasterHunterDC|10+(MasterHunterLVL/2)+WIS`
+        // (`cr_abilities_class.lst:1427`), resolved through
+        // `resolve_class_feature_bonus_var` -- no longer a fabricated 0.
         explanations.push(ComputationExplanation {
             id: "class_feature.ranger.master_hunter".to_owned(),
-            value: 0,
+            value: dc,
             detail: format!(
                 "Ranger Master Hunter granted at ranger level {level} (PF1 Core Rulebook, \
                  20th-level ranger capstone): \"A ranger of 20th level becomes a master \
@@ -31901,14 +31911,30 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  tracks without penalty. He can, as a standard action, make a single attack \
                  against a favored enemy at his full attack bonus. If the attack hits, the \
                  target takes damage normally and must make a Fortitude save or die. The DC \
-                 of this save is equal to 10 + 1/2 the ranger's level + the ranger's Wisdom \
-                 modifier. A ranger can choose instead to deal an amount of nonlethal damage \
+                 of this save is {dc} (10 + 1/2 the ranger's level + the ranger's Wisdom \
+                 modifier). A ranger can choose instead to deal an amount of nonlethal damage \
                  equal to the creature's current hit points... A ranger can use this ability \
                  once per day against each favored enemy type he possesses, but not against \
-                 the same creature more than once in a 24-hour period.\" This is a bounded \
-                 grant-only identity record only (value 0, non-fabricated): no action-economy \
-                 engine, no attack-resolution engine, and no saving-throw-resolution engine \
-                 exists anywhere in this codebase to apply any of this to."
+                 the same creature more than once in a 24-hour period.\" The save DC is a \
+                 genuinely computed magnitude (corpus formula, resolved against this \
+                 character's real Wisdom modifier); no action-economy engine and no \
+                 attack-resolution engine exists anywhere in this codebase to apply this to, \
+                 so this still grounds no actual attack or damage resolution -- only the save \
+                 DC itself is computed"
+            ),
+        });
+    } else {
+        // The interpreter's own formula chain did not resolve -- refuse
+        // rather than guess, falling back to the bounded grant-only
+        // identity record the pre-wiring behaviour always used.
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.master_hunter".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Master Hunter granted at ranger level {level} (PF1 Core Rulebook, \
+                 20th-level ranger capstone). This is a bounded grant-only identity record \
+                 (value 0, non-fabricated): the corpus formula for the save DC did not \
+                 resolve, so no save-DC computation is claimed."
             ),
         });
     }
@@ -36813,8 +36839,38 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 /// is ever computed here); this seam keeps that blocked posture but makes the
 /// Rogue chassis identity and its grounded pillars legible on the runtime
 /// path.
+/// SD-32 Epic 1 (compute-library wiring, `epic-breakdown.md` F3): resolves one
+/// `BONUS:VAR|<target_var>|<formula>` value straight off a real corpus `class_feature`
+/// record's own token chain, through the SAME already-authorised, already-fixture-checked
+/// mechanism `class_feature_grant_consumer::resolve_pcgen_var_chain` already proves
+/// correct at `tests/fixtures/rules_core/derived-evaluator-fixtures.json`'s
+/// `class_feature_description_entries` (operator ruling §20, `decisions.md §3`: "every
+/// interpreted value clears `derived_evaluator_fixture_check`" -- this call site reuses
+/// that already-cleared mechanism rather than adding a second, uncoordinated evaluator).
+///
+/// `None` when the chain does not fully resolve (record missing, formula shape refused,
+/// or the target variable was never bound) -- never guessed, mirroring
+/// `resolve_pcgen_var_chain`'s own "refuse rather than default" contract.
+fn resolve_class_feature_bonus_var(
+    record_key: &str,
+    class_level_var: &str,
+    target_var: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<i16> {
+    let record = class_feature_grant_consumer::class_feature_record_tokens().get(record_key)?;
+    let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
+        &record.bonus_vars,
+        class_level_var,
+        level,
+        ability_modifiers,
+    );
+    vars.get(target_var).copied().and_then(|v| i16::try_from(v).ok())
+}
+
 fn explain_rogue_level1_chassis(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let Some(level) = supported_rogue_level(input) else {
@@ -37266,10 +37322,20 @@ fn explain_rogue_level1_chassis(
                  Master Strike is the 20th-level rogue capstone."
             ),
         });
-    } else {
+    } else if let Some(dc) = resolve_class_feature_bonus_var(
+        "Rogue ~ Master Strike",
+        "RogueLVL",
+        "MasterStrikeDC",
+        level,
+        ability_modifiers,
+    ) {
+        // SD-32 Epic 1 (compute-library wiring, F3): the corpus's own
+        // `BONUS:VAR|MasterStrikeDC|10+(MasterStrikeLVL/2)+INT`
+        // (`cr_abilities_class.lst:1619`), resolved through
+        // `resolve_class_feature_bonus_var` -- no longer a fabricated 0.
         explanations.push(ComputationExplanation {
             id: "class_feature.rogue.master_strike".to_owned(),
-            value: 0,
+            value: dc,
             detail: format!(
                 "Rogue Master Strike granted at rogue level {level} (PF1 Core Rulebook, \
                  20th-level rogue capstone): \"Upon reaching 20th level, a rogue becomes \
@@ -37277,15 +37343,30 @@ fn explain_rogue_level1_chassis(
                  sneak attack damage, she can choose one of the following three effects: the \
                  target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. \
                  Regardless of the effect chosen, the target receives a Fortitude save to \
-                 negate the additional effect. The DC of this save is equal to 10 + 1/2 the \
-                 rogue's level + the rogue's Intelligence modifier. Once a creature has been \
+                 negate the additional effect. The DC of this save is {dc} (10 + 1/2 the \
+                 rogue's level + the rogue's Intelligence modifier). Once a creature has been \
                  the target of a master strike, regardless of whether or not the save is made, \
-                 that creature is immune to that rogue's master strike for 24 hours.\" This is \
-                 a bounded grant-only identity record only (value 0, non-fabricated): no \
-                 action-economy engine, no attack-resolution engine, and no \
-                 saving-throw-resolution engine exists anywhere in this codebase to apply this \
-                 to, so this grounds no actual sleep, paralysis, or death effect and no save-DC \
-                 computation"
+                 that creature is immune to that rogue's master strike for 24 hours.\" The save \
+                 DC is a genuinely computed magnitude (corpus formula, resolved against this \
+                 character's real Intelligence modifier); no action-economy engine and no \
+                 attack-resolution engine exists anywhere in this codebase to apply this to, so \
+                 this still grounds no actual sleep, paralysis, or death effect -- only the \
+                 save DC itself is computed"
+            ),
+        });
+    } else {
+        // The interpreter's own formula chain did not resolve (e.g. the
+        // corpus record's token shape changed underneath this call site) --
+        // refuse rather than guess, falling back to the same bounded
+        // grant-only identity record the pre-wiring behaviour always used.
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.master_strike".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Master Strike granted at rogue level {level} (PF1 Core Rulebook, \
+                 20th-level rogue capstone). This is a bounded grant-only identity record \
+                 (value 0, non-fabricated): the corpus formula for the save DC did not resolve, \
+                 so no save-DC computation is claimed"
             ),
         });
     }

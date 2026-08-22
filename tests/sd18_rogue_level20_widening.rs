@@ -203,11 +203,26 @@ fn rogue_level20_gains_master_strike() {
     let input = load(ROGUE_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // SD-32 Epic 1 (compute-library wiring): the fixture's Intelligence 12
+    // (modifier +1) is now run through the SAME formula_interpreter-backed
+    // `resolve_pcgen_var_chain` mechanism already fixture-checked at
+    // `tests/fixtures/rules_core/derived-evaluator-fixtures.json`'s
+    // `class_feature_description_entries` (`rogue_master_strike`), which
+    // pins `10+(MasterStrikeLVL/2)+INT` byte-identical against the pinned
+    // oracle's `cr_abilities_class.lst:1619`. At level 20 with INT modifier
+    // +1: `10 + 20/2 + 1 = 21`. This is no longer a fabricated value -- it
+    // is the corpus's own formula, evaluated by the already-authorised
+    // interpreter (`decisions.md §3`, operator ruling §20).
     let master_strike = explanation(&computation, ROGUE_MASTER_STRIKE_ID);
     assert_eq!(
-        master_strike.value, 0,
-        "Master Strike must be a bounded grant-only +0 identity record at level 20, not a \
-         fabricated mechanical value: {}",
+        master_strike.value, 21,
+        "Master Strike's save DC at rogue level 20 with Intelligence modifier +1 is \
+         10 + level/2 + INT = 21, computed via the corpus's own BONUS:VAR formula: {}",
+        master_strike.detail
+    );
+    assert!(
+        master_strike.detail.contains("21"),
+        "the detail text must name the computed DC, not just describe the rule: {}",
         master_strike.detail
     );
 }
