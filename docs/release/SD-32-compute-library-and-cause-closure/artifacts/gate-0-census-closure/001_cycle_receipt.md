@@ -1,7 +1,7 @@
 # Cycle 001 — Gate 0 census closure / Criterion AT-32-G0-001, AT-32-G0-002
 
 - **Card ID:** `gate-0-census-closure`
-- **Commit SHA:** (recorded after commit, see §6 step 6 — filled in below before push)
+- **Commit SHA:** `1683d23c08010044128184d7246b4dada273f306`
 - **Files touched:**
   - `scripts/census_independent.py` (new — the independent walker, reader/analyser/reporter)
   - `scripts/tests/test_census_independent.py` (new — 11 unit tests)
