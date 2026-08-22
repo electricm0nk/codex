@@ -1,0 +1,75 @@
+---
+canonical: true
+owner: god-emporer
+status: planning-ready (chassis completed 2026-08-22)
+date: 2026-08-22
+---
+
+# SD-32 References — Index
+
+Doctrine pointers, skill pointers, and sibling-bundle pointers this package's cycles read.
+Every entry resolves to a real file (relative to this folder) or to a repo-relative path; no
+`~/workspace/...` or `programs/codex/requirements/...` paths — those live at
+initial-package-construction time only.
+
+## Doctrine (repo-local)
+
+| Path | What it carries | When a SD-32 cycle reads it |
+|---|---|---|
+| `../../../governance/no-stub-mvp-doctrine.md` | The doctrine that no stubs / mocks / "would" strings / empty onClick handlers ship in production code | Every cycle (dual-audit gate, `loop-instruction.md §6`) |
+| `../../../governance/wired-integration-stubs-registry.md` | Operator-granted stub exceptions | Any cycle that needs to defer a wired-integration audit violation |
+| `../../../governance/loop-instruction-template.md` | The dispatch procedure this bundle's `loop-instruction.md` is authored from | First cycle of every bundle, for the dispatch mechanism |
+| `../../../governance/ogl-pi-blacklist.md` | The Product Identity blacklist terms | Not consumed by SD-32 directly; consumed by `pi_screening::PI_BLACKLIST_TERMS` (SD-30 Epic 3 surface, read-only) |
+| `../../../governance/book-ingestion-playbook.md` | Per-book cycle procedure | Not consumed by SD-32 (SD-32 is not a book-ingestion bundle); useful for Epic 4's per-book cycles if the procedure is needed |
+| `../../../governance/deferral-revisit-doctrine.md` | When a deferred item comes back | Any cycle that proposes a `## Open blockers` entry or a `forward-scope-register.md` item |
+| `../../../governance/license-matrix.md` | Licensing per source | Epic 4 book-onboarding cycles that need to verify a book's licence before ingest |
+| `../../../governance/third-party-tier-licensing-survey.md` | Third-party publisher tiering (Dreamscarred Press, etc.) | Epic 4 if any third-party books are onboarded (per the operator-pinned 2026-08-01 amendment) |
+| `../../../governance/pi-sweep-baseline.tsv` | The PI-sweep baseline data | Not consumed by SD-32 directly; the linked reader (`pi_screening::*`) reads it |
+| `../../../doctrine-external/identifier-discipline.md` | The forbidden source-identifier patterns | Every cycle (dual-audit gate, `loop-instruction.md §6`) |
+| `../../../doctrine-external/spec-domain-lifecycle.md` | How spec-domain routing works | Not directly relevant to SD-32 (this is a research/CODE bundle, not a spec-domain routing decision); useful when defining how SD-32's outputs route into a successor spec-domain bundle |
+
+## Skills (profile-local)
+
+These are skills the bundle's cycles may load at runtime via `skill_view(name)`. They are not
+mandatory at planning time — cycles load them when they need them.
+
+| Skill | When a SD-32 cycle loads it |
+|---|---|
+| `wired-integration-discipline` | Any cycle that touches production code and needs the four-check audit recipe (`OK_NO_TOKENS` / `OK_NO_NOOP_HANDLERS` / `OK_NO_MOCK_LEAKS` / `OK_NO_WOULD_STRINGS`) |
+| `identifier-discipline` | Any cycle that touches production code and needs the source-identifier audit recipe |
+| `graphify-update` | The closure epilogue cycle (architecture-docs refresh; `loop-instruction.md §6.4`) |
+| `architecture-truth-up` | The closure epilogue cycle (architecture-docs refresh) |
+| `merge-conflict-resolution` | The closure epilogue cycle (PR open + merge-conflict resolution) |
+| `kanban-worker` | Any cycle that needs the local-file kanban pattern (this bundle uses the pattern) |
+| `kanban-handoff-projection-audit` | Any cycle that needs to audit which handoff files belong on which cards |
+
+## Sibling bundles
+
+| Path | Bundle | Relationship to SD-32 |
+|---|---|---|
+| `../SD-31-corpus-closure-grind/` | SD-31 — Corpus Closure: the Grind and the Capability Builds | **Predecessor.** Closes 100% mandate, carries the inventory + interpreter + anti-gaming apparatus SD-32 inherits. `artifacts/HANDOFF.md` is the captured session context. |
+| `../SD-30-class-feature-archetype-bundle/` | SD-30 — Class Feature Archetype Bundle | **Indirect predecessor.** Owns `pi_screening::*`, the `doneness_verdict()` table, and the build-version numbering amendment SD-32 inherits via `decisions.md §1`. SD-30 absorbed the previous `SD-32-instrument-coverage-and-consumer-wiring/` package on 2026-08-15; the precedent for SD-32's swap is in SD-30's own `decisions.md §50`. |
+| `../SD-29-corpus-wide-catch-up-lanes/` | SD-29 — Corpus-Wide Catch-Up Lanes | **Pre-predecessor.** Carries `corpus-shape-37-books.md` and the per-kind `done`-floor table that SD-32's Gate 0 census walk reads. |
+| `../SD-28-ultimate-book-content-ingestion/` | SD-28 — Ultimate Book Content Ingestion | **Pre-predecessor.** Carries `forward-scope-register.md`'s C2.x precedent for third-party publisher tiering (Dreamscarred Press, Ultimate Psionics). |
+| `../SD-33-pcgen-character-import/` | SD-33 — PCGen Character Import | **Parallel (out-of-scope adjacent).** Renamed from the original SD-31 by operator ruling 2026-08-14. No file-level touch points with SD-32. |
+| `../SD-27-future-state-book-content-ingestion/` | SD-27 — Future-State Book Content Ingestion | **Pre-predecessor.** Source of the "two advanced guides" book list pattern (`APG` + `ACG`). Not consumed by SD-32 directly. |
+| `../template/template.md` | Bundle template | The release-folder's file index and bundle-snapshot table this package's `README.md` was authored from. |
+
+## Root-level cross-references
+
+| Path | What it is |
+|---|---|
+| `../../../AGENTS.md` | The repo-root conduct surface — non-negotiable rules, hard stops, retrospective-log discipline. Every cycle reads this once per bundle. |
+| `../../../CLAUDE.md` | Lightweight activation surface. Read for the project-specific pointers (file structure, tooling). |
+| `../../../architecture/` | Architecture docs; refreshed at closure per the closure pipeline (`loop-instruction.md §6` step 4). |
+| `../../../corpus-work-channels.md` | The 37-book workchannel map SD-32's Gate 0 census diff reads. |
+
+## What is NOT in `references/`
+
+- Operator-ruling text — those live in `SD-31-corpus-closure-grind/artifacts/OPERATOR-RULINGS-*.md`
+  and are read by reference, not duplicated here.
+- The anti-gaming apparatus itself — that lives in the cycle procedure (`loop-instruction.md §6`'s
+  dual-audit gate) and the recipe (`SD-31-.../state-goals-and-lessons.md`). Duplication would
+  drift; a reference is sufficient.
+- The form-interpreter PMMG build — referenced from `SD-30-.../state-goals-and-lessons.md §1.3`,
+  not from here.
