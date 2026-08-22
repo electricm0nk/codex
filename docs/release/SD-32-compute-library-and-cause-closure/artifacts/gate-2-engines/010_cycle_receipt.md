@@ -1,9 +1,8 @@
 # Cycle 010 — Epic 1 (compute library) / Criterion AT-32-E1-001 (F3: wire the library behind a consumer)
 
 - **Card ID:** `epic-1-compute-library` (kanban.md #10)
-- **Commit SHA:** `af4cb462d` (this receipt's own file content was updated once more after that
-  commit to fill in this SHA and tighten the identifier-audit section below; the final pushed
-  commit — see §5 push step — carries both)
+- **Commit SHA:** `eab89b08e` (feat commit; the receipt-fixup commit `52b0b3485` is on top of it,
+  both pushed to `origin/tranche/12`)
 - **Files touched:**
   - `src/rules_core/pilot_compute/mod.rs` — new `resolve_class_feature_bonus_var` helper
     (reuses `class_feature_grant_consumer::{class_feature_record_tokens, resolve_pcgen_var_chain}`,

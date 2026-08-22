@@ -658,6 +658,66 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   arms for `PREALIGN`/`PRESPELLTYPE`/`PRESPELLSCHOOL` (19/14/6 occurrences in the 62-class census)
   to shrink the `Unmodelled` surface further.
 
+### Cycle 1 — Epic 1 / Card 10 `epic-1-compute-library` (F3: library wired behind a real consumer)
+
+- **Card ID:** `epic-1-compute-library`
+- **Commit SHA:** `eab89b08e` (feat), `52b0b3485` (receipt SHA fixup)
+- **Files touched:** `src/rules_core/pilot_compute/mod.rs` (new `resolve_class_feature_bonus_var`
+  helper; Rogue Master Strike / Ranger Master Hunter explanations now compute their save DC
+  instead of a fabricated `value: 0`), `tests/sd18_rogue_level20_widening.rs`,
+  `tests/sd18_ranger_level20_widening.rs`, `tests/sd20_levelup_rogue.rs`,
+  `tests/sd20_levelup_ranger.rs` (four widened assertions), `kanban.md` (card 10 → complete), this
+  file. Receipt: `artifacts/gate-2-engines/010_cycle_receipt.md`.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (raw grep's 8 matches are all pre-existing
+  `sd18_*`/`sd20_*` test filenames on `diff --git`/`---`/`+++` header lines — filtering those
+  header lines confirms zero real matches, same false-positive shape card 008's own receipt
+  documented).
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E1-001 — compute library
+  delivers the 3,201 ceiling (Epic 1 F1/F2/F3 deliver). F1 (extract the general form of each
+  family) and F2 (generalise the F10 binding layer) are already delivered by Gate 2's own cards
+  6-8, cited here rather than re-closed. This cycle's own scope is F3 ("wire the library behind
+  the consumers, every value clearing `derived_evaluator_fixture_check`") — the genuinely open
+  item, since neither engine was reachable by a real player-facing consumer before this cycle.
+- **Status:** complete
+- **Notes:** Rogue Master Strike and Ranger Master Hunter's save-DC explanations carried a
+  fabricated `value: 0` ("named but not computed") even though both corpus records carry a fully
+  resolvable `BONUS:VAR` formula chain — `10+(MasterStrikeLVL/2)+INT` /
+  `10+(MasterHunterLVL/2)+WIS`, both already reachable through the interpreter-backed
+  `class_feature_grant_consumer::resolve_pcgen_var_chain` (SD-31 waves 26/27) and already
+  fixture-checked by `tests/fixtures/rules_core/derived-evaluator-fixtures.json`'s
+  `class_feature_description_entries` (`rogue_master_strike`/`ranger_master_hunter`,
+  `derived_evaluator_fixture_check_class_feature_description.rs`, 5/5 green, unchanged by this
+  cycle). The value never reached the player because `push_generic_class_feature_grant_records`'s
+  own `already_computed_slugs` guard correctly suppresses a duplicate in favor of the
+  pre-existing hand-modelled explanation — exactly the gap SD-31's own
+  `OPEN-ISSUES.md` row 375 (`SD31-W27-INTEGRATE-005`) named as concrete future-wave work. New
+  `resolve_class_feature_bonus_var` reuses that already-cleared mechanism (Decision 3 satisfied by
+  construction: the surfaced value is the SAME value the pre-existing fixture already
+  independently checks, not a new unchecked computation) and wires it into both explanation
+  branches, refusing to the pre-wiring `value: 0` if the chain ever fails to resolve. Four existing
+  tests asserted the old fabricated 0 (two widening tests, two level-up-plan tests found by running
+  a wider net than the two files initially touched) — all four widened to the real computed DC (21
+  in both fixtures, hand-verified: `10 + 20/2 + 1 = 21` from each fixture's own ability score).
+  RED→GREEN confirmed for both call sites; full suites green after (`--lib rules_core::pilot_compute`
+  856/856, `--lib` 2,356/0/13 ignored, all named integration test files listed in the receipt).
+  **Explicitly not claimed:** the 3,201-unit ceiling (this cycle wires exactly 2 units, both
+  already counted `derived`+`grounded` before this cycle — the `value` field changes, not the
+  wiring class or the board denominator) or a board-percentage delta. §5's push hit one
+  non-fast-forward rejection (card 12's own concurrent landing); rebased clean, no conflicts,
+  re-pushed. Footgun 1 fired at cycle start (fresh worktree's `HEAD` was a site-publish merge
+  commit, not a `PIN` descendant) — self-healed per §8 (`git reset --hard origin/tranche/12`,
+  tree was clean), no correction filed (the known, named, self-healable case). Full detail:
+  `artifacts/gate-2-engines/010_cycle_receipt.md`.
+- **Discovery forwards:** logged in the receipt's own "Discovery forwards" section (a systematic
+  sweep for other `already_computed_slugs`-suppressed hand-modelled `value: 0` explanations whose
+  corpus record carries a resolvable `BONUS:VAR` chain — real, scoped, not queued here since it
+  fits squarely inside card 10's own remaining scope rather than needing a new card).
+- **Next-cycle plan:** the corpus-wide sweep named above, then extending the same
+  `resolve_class_feature_bonus_var` pattern to every resolvable hit, measuring how close that
+  reaches Epic 1's 3,201-unit ceiling and naming honestly what fraction needs a different consumer
+  shape.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
