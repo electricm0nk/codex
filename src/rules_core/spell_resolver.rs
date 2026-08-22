@@ -18,8 +18,9 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::{
-    acg, adventurers_guide, advanced_race_guide, apg, bestiary_6, crb, inner_sea_gods,
-    occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    acg, adventurers_guide, advanced_race_guide, apg, bestiary_6, crb, inner_sea_faiths,
+    inner_sea_gods, inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat,
+    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -68,6 +69,23 @@ pub const SPELL_BOOK_B6: &str = "B6";
 /// of any kind (`RuleSetId::AdventurersGuide`). See
 /// `src/bin/ingest_adventurers_guide_spells.rs` for the ingest path.
 pub const SPELL_BOOK_AG: &str = "AG";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Faiths, the thirteenth book --
+/// this book's FIRST compiled `RuleSetId` of any kind. See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub const SPELL_BOOK_ISF: &str = "ISF";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Magic, the fourteenth book --
+/// this book's FIRST compiled `RuleSetId` of any kind (its 218
+/// `class_feature` units were already ingested corpus-wide but were
+/// unreachable through the book-level gate before this variant existed).
+/// See `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub const SPELL_BOOK_ISM: &str = "ISM";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Temples, the fifteenth book --
+/// this book's FIRST compiled `RuleSetId` of any kind. See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub const SPELL_BOOK_ISTEM: &str = "ISTEM";
 
 /// One ingested spell record, normalized across every book's own
 /// `spell_list` table.
@@ -229,6 +247,30 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
                 level: entry.level,
                 description: entry.description,
             });
+        let isf_rows =
+            inner_sea_faiths::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+                book: SPELL_BOOK_ISF,
+                key: entry.key,
+                school: entry.school.map(|school| format!("{school:?}")),
+                level: entry.level,
+                description: entry.description,
+            });
+        let ism_rows =
+            inner_sea_magic::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+                book: SPELL_BOOK_ISM,
+                key: entry.key,
+                school: entry.school.map(|school| format!("{school:?}")),
+                level: entry.level,
+                description: entry.description,
+            });
+        let istem_rows =
+            inner_sea_temples::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+                book: SPELL_BOOK_ISTEM,
+                key: entry.key,
+                school: entry.school.map(|school| format!("{school:?}")),
+                level: entry.level,
+                description: entry.description,
+            });
         let chained: Vec<SpellCatalogRow> = crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -241,6 +283,9 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             .chain(uw_rows)
             .chain(b6_rows)
             .chain(ag_rows)
+            .chain(isf_rows)
+            .chain(ism_rows)
+            .chain(istem_rows)
             .collect();
         // SD-31 wave-24 (integration cycle, W24-INTEGRATE): a later-chained
         // book can genuinely reprint an earlier book's spell verbatim (e.g.

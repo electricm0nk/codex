@@ -76,8 +76,9 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 };
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
-    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures,
-    ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_faiths, inner_sea_gods,
+    inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue,
+    ultimate_magic, ultimate_wilderness,
 };
 use codex::rules_core::spell_resolver;
 
@@ -98,6 +99,18 @@ const BOOK_UW: &str = "UW";
 /// SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide, the
 /// twelfth book -- this book's first record family of any kind.
 const BOOK_AG: &str = "AG";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Faiths, the thirteenth book --
+/// this book's first record family of any kind.
+const BOOK_ISF: &str = "ISF";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Magic, the fourteenth book --
+/// this book's first record family of any kind.
+const BOOK_ISM: &str = "ISM";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Temples, the fifteenth book --
+/// this book's first record family of any kind.
+const BOOK_ISTEM: &str = "ISTEM";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -382,6 +395,54 @@ fn map_ag_entry(entry: &adventurers_guide::spell_list::SpellListEntry) -> SpellC
     }
 }
 
+/// ISF's table types `school`, `level` and `description` optionally, like
+/// AG's/UW's/UC's/ISG's -- SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) ingest found all 3
+/// shipped base declarations carry no `CLASSES:`/`DOMAINS:` level at all
+/// (`isf_spells.lst` names no class list on any of its rows), a real corpus
+/// gap, not fabricated.
+fn map_isf_entry(entry: &inner_sea_faiths::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISF.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISF, entry.key),
+        range: range_for(BOOK_ISF, entry.key),
+    }
+}
+
+/// ISM's table types `school`, `level` and `description` optionally, like
+/// ISF's above -- SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) ingest.
+fn map_ism_entry(entry: &inner_sea_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISM.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISM, entry.key),
+        range: range_for(BOOK_ISM, entry.key),
+    }
+}
+
+/// ISTem's table types `school`, `level` and `description` optionally, like
+/// ISF's/ISM's above -- SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) ingest.
+fn map_istem_entry(entry: &inner_sea_temples::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISTEM.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISTEM, entry.key),
+        range: range_for(BOOK_ISTEM, entry.key),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -512,6 +573,9 @@ mod tests {
             .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(map_isg_entry))
             .chain(ultimate_wilderness::spell_list::SPELL_LIST.iter().map(map_uw_entry))
             .chain(adventurers_guide::spell_list::SPELL_LIST.iter().map(map_ag_entry))
+            .chain(inner_sea_faiths::spell_list::SPELL_LIST.iter().map(map_isf_entry))
+            .chain(inner_sea_magic::spell_list::SPELL_LIST.iter().map(map_ism_entry))
+            .chain(inner_sea_temples::spell_list::SPELL_LIST.iter().map(map_istem_entry))
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -529,7 +593,15 @@ mod tests {
         let response = build_spell_catalog();
         // SD-31 wave-29 (`lane5-book-onboard` lane): +45 AG spells, the
         // twelfth book, 2011 -> 2056.
-        assert_eq!(response.entries.len(), 2056);
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): +2 ISF + 34 ISM + 21
+        // ISTEM, the thirteenth/fourteenth/fifteenth books, 2056 -> 2113.
+        // ISF's raw `isf_spells.lst` carries 3 base declarations but one
+        // ("Curse of Disgust (Besmaran)") is genuinely restated a second
+        // time later in the same file; the ingest binary dedups within a
+        // book (first-declaration-wins, mirroring `spell_resolver`'s own
+        // cross-book policy), so only 2 of the 3 ship.
+        assert_eq!(response.entries.len(), 2113);
         assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -541,6 +613,9 @@ mod tests {
         assert_eq!(book_entries(BOOK_ISG).len(), 92);
         assert_eq!(book_entries(BOOK_UW).len(), 61);
         assert_eq!(book_entries(BOOK_AG).len(), 45);
+        assert_eq!(book_entries(BOOK_ISF).len(), 2);
+        assert_eq!(book_entries(BOOK_ISM).len(), 34);
+        assert_eq!(book_entries(BOOK_ISTEM).len(), 21);
     }
 
     #[test]
@@ -569,7 +644,7 @@ mod tests {
             assert!(
                 [
                     BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC,
-                    BOOK_ISG, BOOK_UW, BOOK_AG
+                    BOOK_ISG, BOOK_UW, BOOK_AG, BOOK_ISF, BOOK_ISM, BOOK_ISTEM
                 ]
                 .contains(&entry.book.as_str())
             );

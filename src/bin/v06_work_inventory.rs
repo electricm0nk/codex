@@ -2224,6 +2224,13 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     // SD-31 wave-29 (`lane5-book-onboard` lane) -- this book's first
     // compiled rule set of any kind.
     RuleSetId::AdventurersGuide,
+    // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+    // precondition`, AT-32-G0-003) -- each of these four books' first
+    // compiled rule set of any kind.
+    RuleSetId::InnerSeaFaiths,
+    RuleSetId::InnerSeaMagic,
+    RuleSetId::InnerSeaTaverns,
+    RuleSetId::InnerSeaTemples,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -2265,6 +2272,10 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Oa => "occult_adventures",
         RuleSetId::Mythic => "mythic_adventures",
         RuleSetId::AdventurersGuide => "adventurers_guide",
+        RuleSetId::InnerSeaFaiths => "inner_sea_faiths",
+        RuleSetId::InnerSeaMagic => "inner_sea_magic",
+        RuleSetId::InnerSeaTaverns => "inner_sea_taverns",
+        RuleSetId::InnerSeaTemples => "inner_sea_temples",
     }
 }
 
@@ -2320,6 +2331,10 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Oa => "occult_adventures",
         RuleSetId::Mythic => "mythic_adventures",
         RuleSetId::AdventurersGuide => "adventurers_guide",
+        RuleSetId::InnerSeaFaiths => "inner_sea_faiths",
+        RuleSetId::InnerSeaMagic => "inner_sea_magic",
+        RuleSetId::InnerSeaTaverns => "inner_sea_taverns",
+        RuleSetId::InnerSeaTemples => "inner_sea_temples",
     }
 }
 
@@ -2461,6 +2476,19 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         // attribution or measurement logic. See
         // `src/bin/ingest_adventurers_guide_spells.rs`.
         "AG" => "adventurers_guide",
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+        // precondition`, AT-32-G0-003): ISF/ISM/ISTEM join
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 13th,
+        // 14th and 15th books, each book's FIRST reach claim of any kind.
+        // Same additive, single-line registration every prior spell-lane
+        // cycle made here before it -- this function is a closed-set lookup
+        // table with its own dedicated test
+        // (`spell_book_slug_for_covers_every_catalog_book`), not
+        // attribution or measurement logic. See
+        // `src/bin/ingest_inner_sea_setting_spells.rs`.
+        "ISF" => "inner_sea_faiths",
+        "ISM" => "inner_sea_magic",
+        "ISTEM" => "inner_sea_temples",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \

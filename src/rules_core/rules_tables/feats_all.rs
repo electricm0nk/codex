@@ -981,6 +981,14 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // /Botd2)`'s rows join on below.
             BookFeatTable { rule_set: RuleSetId::Isi, entries: &[] },
             BookFeatTable { rule_set: RuleSetId::Botd2, entries: &[] },
+            // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+            // onboarding-precondition`, AT-32-G0-003) -- Inner Sea Taverns'
+            // first compiled rule set of any kind. Same shape as `Mythic`
+            // above: no hand-authored table, an empty slice here so
+            // `feat_gap_rows_for(RuleSetId::InnerSeaTaverns)`'s rows (all
+            // of `istav_feats.lst`'s non-`.MOD` declarations) join on
+            // below.
+            BookFeatTable { rule_set: RuleSetId::InnerSeaTaverns, entries: &[] },
         ]
     })
 }
@@ -1034,7 +1042,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = hand_authored_feat_tables();
-        assert_eq!(books.len(), 20);
+        assert_eq!(books.len(), 21);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -1086,6 +1094,13 @@ mod tests {
         assert_eq!(books[18].entries.len(), 0);
         assert_eq!(books[19].rule_set, RuleSetId::Botd2);
         assert_eq!(books[19].entries.len(), 0);
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003) -- Inner Sea Taverns'
+        // first compiled rule set of any kind, given an empty
+        // hand-authored feat slice so its real `istav_feats.lst` rows can
+        // join via `feat_gap_rows_for` below.
+        assert_eq!(books[20].rule_set, RuleSetId::InnerSeaTaverns);
+        assert_eq!(books[20].entries.len(), 0);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
@@ -1115,15 +1130,18 @@ mod tests {
         }
         let total: usize = joined.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
-            total, 2109,
-            "1578 hand-authored + 531 corpus gap rows: the original 325 \
+            total, 2118,
+            "1578 hand-authored + 540 corpus gap rows: the original 325 \
              (SD31-E6-F8-001's 83: 1 CRB, 15 core_essentials, 48 ARG, 12 UM, 3 UI, \
              2 UC, 1 UPsi, 1 UW; SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, 31 Iswg, \
              32 MonsterCodex) + 199 more from Mythic Adventures' first-ever compiled \
              rule set (SD31-E6-F2-007, `ma_feats.lst`'s non-`.MOD` declarations -- \
              SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing \
              twins from the original 358) + 7 more from two more already-compiled \
-             books (SD31-E6-F8-003: inner_sea_intrigue 6 + book_of_the_damned_volume_2 1)"
+             books (SD31-E6-F8-003: inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) \
+             + 9 more from Inner Sea Taverns' first-ever compiled rule set \
+             (SD-32 Gate 0 book-onboarding precondition, `gate-0-book-onboarding-\
+             precondition`, AT-32-G0-003, `istav_feats.lst`'s non-`.MOD` declarations)"
         );
     }
 
@@ -1259,7 +1277,12 @@ mod tests {
         // damned_volume_2 1) -- all 7 carry at least one real `PRE`-family
         // token (verified by direct read of both `.lst` files), so the
         // numerator and denominator both move by exactly +7.
-        assert_eq!(total, 1917, "1917 of the joined catalog's 2109 records have a prerequisite");
+        // SD-32 Gate 0 book-onboarding precondition adds 9 more
+        // (inner_sea_taverns) -- 5 of the 9 carry at least one real `PRE`-
+        // family token (`Drunken God's Blessings`, `Drunken Sing-Along`,
+        // `Hardy Liver`, `Read the Room`, `Tavern Regular`), so the
+        // numerator moves by +5 and the denominator by +9.
+        assert_eq!(total, 1922, "1922 of the joined catalog's 2118 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read

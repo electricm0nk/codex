@@ -390,7 +390,10 @@ mod tests {
         // +7 with `SD31-E6-F8-003`'s two more gap-lane books joined on: all
         // 7 (inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) carry a
         // real `DESC:` token, so `with_description` moves by exactly 7.
-        assert_eq!(with_description, 2043, "66 of the 2109 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows plus 35 Mythic gap rows whose records carry neither DESC: nor BENEFIT: (SD31-W10-INTEGRATE-001: 199 Mythic gap rows, not 358 -- 159 VISIBLE:EXPORT display-plumbing twins excluded, none of which lacked a description)");
+        // +9 with SD-32 Gate 0 book-onboarding precondition's inner_sea_taverns
+        // rows joined on: all 9 carry a real `DESC:` (joined with `BENEFIT:`),
+        // so `with_description` moves by exactly 9.
+        assert_eq!(with_description, 2052, "66 of the 2118 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows plus 35 Mythic gap rows whose records carry neither DESC: nor BENEFIT: (SD31-W10-INTEGRATE-001: 199 Mythic gap rows, not 358 -- 159 VISIBLE:EXPORT display-plumbing twins excluded, none of which lacked a description)");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -416,7 +419,11 @@ mod tests {
         // own `DESC:`/`BENEFIT:` text, rewritten by `render_pcgen_desc`
         // exactly like every other book's leaking rows.
         assert_eq!(raw_leaks, 187, "the raw tables' own leak count (SD31-W10-INTEGRATE-001: 188 - 1, one of the two excluded VISIBLE:EXPORT Mythic twins carried a raw leak of its own -- the other's `changed` membership came from the two-field DESC/BENEFIT join differing from either raw field alone, not from a leak marker)");
-        assert_eq!(changed.len(), 198, "exactly the leaking/rewritten records (SD31-W10-INTEGRATE-001: 200 - 2, the two excluded VISIBLE:EXPORT Mythic twins)");
+        // +1 with SD-32 Gate 0 book-onboarding precondition's inner_sea_taverns
+        // rows joined on: one record's own DESC/BENEFIT join differs from
+        // either raw field alone (the same shape as the Mythic twin above),
+        // not from a new raw leak (`raw_leaks` stays 187).
+        assert_eq!(changed.len(), 199, "exactly the leaking/rewritten records (SD31-W10-INTEGRATE-001: 200 - 2, the two excluded VISIBLE:EXPORT Mythic twins, + 1 SD-32 inner_sea_taverns row)");
         // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 UM + 34 new
         // UPsi records. Every served description for all 185 is
         // confirmed leak-free by this same test's per-record
@@ -606,6 +613,7 @@ mod tests {
                 "Subtle Enchantments",
                 "Superior Scryer",
                 "Sword and Pistol",
+                "Tavern Regular",
                 "Thrill of the Hunt",
                 "Tiger Style",
                 "Toughened Suit",
@@ -662,7 +670,7 @@ mod tests {
                 );
             }
         }
-        assert_eq!(total, 531, "the feat gap lane is 531 rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199 Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins from the original 358 -- + SD31-E6-F8-003's 7)");
+        assert_eq!(total, 540, "the feat gap lane is 540 rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199 Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins from the original 358 -- + SD31-E6-F8-003's 7 + SD-32 Gate 0 book-onboarding precondition's 9 inner_sea_taverns rows)");
     }
 
     #[test]
@@ -670,15 +678,18 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            2109,
+            2118,
             "1578 hand-authored (185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA \
              + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa \
-             + 0 Iswg + 0 MonsterCodex + 0 Mythic + 0 Isi + 0 Botd2) + 531 corpus gap rows \
+             + 0 Iswg + 0 MonsterCodex + 0 Mythic + 0 Isi + 0 Botd2 + 0 InnerSeaTaverns) \
+             + 540 corpus gap rows \
              (SD31-E6-F8-001's original 83 + SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, \
              31 Iswg, 32 MonsterCodex + SD31-E6-F2-007's 199 Mythic Adventures rows -- \
              SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins \
              from the original 358 -- + SD31-E6-F8-003's 7: inner_sea_intrigue 6, \
-             book_of_the_damned_volume_2 1). \
+             book_of_the_damned_volume_2 1 + SD-32 Gate 0 book-onboarding \
+             precondition's 9 inner_sea_taverns rows, this book's FIRST \
+             compiled rule set of any kind). \
              Each per-source count below is that book's hand-authored figure \
              plus its gap rows; the rows themselves are asserted by key in \
              `catalog_serves_every_corpus_gap_row`."
@@ -722,6 +733,11 @@ mod tests {
         // of their served entries is a gap row.
         assert_eq!(by_source("Isi"), 6, "0 + 6");
         assert_eq!(by_source("Botd2"), 1, "0 + 1");
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003) -- Inner Sea Taverns'
+        // first compiled rule set of any kind; every served entry is a gap
+        // row (`istav_feats.lst`'s 9 non-`.MOD` declarations).
+        assert_eq!(by_source("InnerSeaTaverns"), 9, "0 + 9");
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
@@ -735,12 +751,16 @@ mod tests {
         // +7 with `SD31-E6-F8-003`'s two more gap-lane books joined on: all
         // 7 (inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) carry
         // `TYPE:General`.
-        assert_eq!(counts("General"), 782);
+        // + 7 with SD-32 Gate 0 book-onboarding precondition's 9
+        // inner_sea_taverns rows joined on (7 of the 9 carry `TYPE:General`).
+        assert_eq!(counts("General"), 789);
         // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182 + UM 3 + UPsi 9,
         // and so on.
         // + 2 corpus gap rows + 65 SD31-E6-F8-002 gap rows (Ha 24, Isr 18,
         // Iswg 7, MonsterCodex 16).
-        assert_eq!(counts("Combat"), 649);
+        // + 1 with SD-32 Gate 0 book-onboarding precondition's 9
+        // inner_sea_taverns rows joined on (`Implacable`, `TYPE:Combat`).
+        assert_eq!(counts("Combat"), 650);
         // + UW 1 + UM 2 + UPsi 3.
         // + 1 corpus gap row (`Craft Construct`, via core_essentials).
         assert_eq!(counts("ItemCreation"), 15);
@@ -751,7 +771,9 @@ mod tests {
         assert_eq!(counts("Metamagic"), 59);
         // + UI 2 + UW 3 + UC 7 + UM 1.
         // + 29 SD31-E6-F8-002 gap rows (Isr 26, MonsterCodex 3).
-        assert_eq!(counts("Teamwork"), 52);
+        // + 1 with SD-32 Gate 0 book-onboarding precondition's 9
+        // inner_sea_taverns rows joined on (`Drinking Buddy`, `TYPE:Teamwork`).
+        assert_eq!(counts("Teamwork"), 53);
         assert_eq!(counts("Panache"), 4);
         // PU's three `###Block:`-derived categories; no other book has them.
         assert_eq!(counts("Alignment"), 9);

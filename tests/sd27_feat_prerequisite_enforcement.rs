@@ -190,13 +190,24 @@ fn the_pre_kind_census_is_the_real_one() {
         // PREDEITY +1, PREMULT +2, PRESKILL +7 (5 top-level + 2 nested),
         // PRETEXT +6, PREVARGTEQ +1 -- re-derived directly against each of
         // the 7 raw `.lst` rows, not guessed from the delta alone.
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003) adds 9 more gap rows
+        // (inner_sea_taverns), moving 4 kinds: PREABILITY +2 (`Hardy
+        // Liver`, `Read the Room`'s own PREABILITY clause), PREDEITY +1
+        // (`Drunken God's Blessings`, whose deity name was PI-redacted
+        // in the record's own text but the `PREDEITY:` token itself
+        // survives), PRESKILL +2 (`Drunken Sing-Along`'s and `Read the
+        // Room`'s own PRESKILL token, one occurrence each regardless of
+        // how many skills each token names), PREVARGTEQ +1 (`Tavern
+        // Regular`'s `PreStatScore_CHA` clause) --
+        // re-derived directly against each of the 9 raw `.lst` rows.
         ("!PREABILITY", 35),
         ("!PREALIGN", 6),
-        ("PREABILITY", 1602),
+        ("PREABILITY", 1604),
         ("PREALIGN", 26),
         ("PRECHECKBASE", 2),
         ("PRECLASS", 130),
-        ("PREDEITY", 3),
+        ("PREDEITY", 4),
         ("PREDEITYALIGN", 2),
         ("PREDOMAIN", 5),
         ("PREDR", 1),
@@ -215,7 +226,7 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRESIZEEQ", 2),
         ("PRESIZEGTEQ", 3),
         ("PRESIZELTEQ", 7),
-        ("PRESKILL", 344),
+        ("PRESKILL", 346),
         ("PRESPELL", 38),
         ("PRESPELLCAST", 13),
         ("PRESPELLDESCRIPTOR", 2),
@@ -228,7 +239,7 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRETOTALAB", 368),
         ("PREVAREQ", 12),
         ("PREVARGT", 9),
-        ("PREVARGTEQ", 962),
+        ("PREVARGTEQ", 963),
         ("PREVARLT", 4),
         ("PREVARLTEQ", 2),
         ("PREVISION", 2),
@@ -260,14 +271,18 @@ fn the_pre_kind_census_is_the_real_one() {
     // +4, PREDEITY +1, PREMULT +2, PRESKILL +7, PRETEXT +6, PREVARGTEQ +1),
     // 14 of which are modelled (all but PREDEITY's +1 and PRETEXT's +6,
     // neither in `MODELLED_KINDS`).
+    // SD-32 Gate 0 book-onboarding precondition's 9 new gap rows
+    // (inner_sea_taverns) add 6 total clauses (PREABILITY +2, PREDEITY +1,
+    // PRESKILL +2, PREVARGTEQ +1), 5 of which are modelled (all but
+    // PREDEITY's +1, not in `MODELLED_KINDS`).
     let total: usize = expected.values().sum();
-    assert_eq!(total, 4802);
+    assert_eq!(total, 4808);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
         .map(|(_, count)| *count)
         .sum();
-    assert_eq!(modelled, 4436);
+    assert_eq!(modelled, 4441);
 }
 
 /// 599 of the catalog's 690 records carry at least one prerequisite -- the
@@ -292,7 +307,10 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     // + 7 of `SD31-E6-F8-003`'s 7 more gap rows (inner_sea_intrigue 6 +
     // book_of_the_damned_volume_2 1) -- all 7 carry a real `PRE`-family
     // token.
-    assert_eq!(with_any, 1917, "of 2109");
+    // + 5 of SD-32 Gate 0 book-onboarding precondition's 9 inner_sea_taverns
+    // rows (`Drunken God's Blessings`, `Drunken Sing-Along`, `Hardy Liver`,
+    // `Read the Room`, `Tavern Regular`) carry a real `PRE`-family token.
+    assert_eq!(with_any, 1922, "of 2118");
 }
 
 // ---------------------------------------------------------------------------
@@ -489,7 +507,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 2109);
+        assert_eq!(reports.len(), 2118);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);

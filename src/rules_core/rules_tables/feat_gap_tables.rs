@@ -18,7 +18,7 @@
 //! table to take a variant from, and mapping the corpus facet onto some
 //! book's enum would invent a classification the corpus never made.
 //!
-//! Total: 531 rows.
+//! Total: 540 rows.
 
 use super::feats_all::FeatCatalogRecord;
 use super::RuleSetId;
@@ -45,6 +45,7 @@ pub fn feat_gap_rows_for(rule_set: RuleSetId) -> &'static [FeatCatalogRecord] {
         RuleSetId::Mythic => MYTHIC_ADVENTURES_FEAT_GAP_ROWS,
         RuleSetId::Isi => INNER_SEA_INTRIGUE_FEAT_GAP_ROWS,
         RuleSetId::Botd2 => BOOK_OF_THE_DAMNED_VOLUME_2_FEAT_GAP_ROWS,
+        RuleSetId::InnerSeaTaverns => INNER_SEA_TAVERNS_FEAT_GAP_ROWS,
         _ => &[],
     }
 }
@@ -642,4 +643,17 @@ pub static INNER_SEA_INTRIGUE_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
 /// book_of_the_damned_volume_2 — 1 record(s) the hand-authored `book_of_the_damned_volume_2` feat table does not hold.
 pub static BOOK_OF_THE_DAMNED_VOLUME_2_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
     FeatCatalogRecord { key: "Demonic Obedience", category: "General", name: "Demonic Obedience", description: Some("You physically defile yourself, others, or holy objects in order to prove your blasphemous devotion to a demon lord and gain special boons. Once you spend an hour performing the required obedience of your demon lord, you gain the associated benefits. If you ever fail to perform a daily obedience, you lose all benefits granted by this feat until you next perform the obedience."), prerequisites: Some(&["PREDEITY:1,PANTHEON.Demon Lords", "PRESKILL:1,Knowledge (Planes)=3"]) },
+];
+
+/// inner_sea_taverns — 9 record(s) the hand-authored `inner_sea_taverns` feat table does not hold.
+pub static INNER_SEA_TAVERNS_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
+    FeatCatalogRecord { key: "Drinking Buddy", category: "Teamwork", name: "Drinking Buddy", description: Some("You and your allies have almost preternatural luck when you've all had a few drinks. Once per day, if you are drunk (or worse) within 10 feet of an ally who has this feat and is also drunk (or worse), you can reroll one d20 roll as a free action. You must take the result of the second roll, even if it is worse."), prerequisites: None },
+    FeatCatalogRecord { key: "Drunken God's Blessings", category: "General", name: "Drunken God's Blessings", description: Some("[redacted PI]"), prerequisites: Some(&["PREDEITY:[redacted PI]"]) },
+    FeatCatalogRecord { key: "Drunken Sing-Along", category: "General", name: "Drunken Sing-Along", description: Some("With a raised tankard and catchy tune, you can get large groups of people on your side. While in a tavern or other drinking establishment, you can change the attitude of the patrons from unfriendly to indifferent or from indifferent to friendly by spending 10 minutes engaging in a group sing-along. For the following 24 hours, your attempts to gather information in that tavern take only 2d6 minutes if the patrons are indifferent or 1d4 minutes if the patrons are friendly. You must be able to speak the same language as the majority of the patrons to use this feat. [Special] You can use this feat with a large crowd of people outside of a tavern if you supply at least 5 gp worth of alcohol to the group."), prerequisites: Some(&["PRESKILL:2,Diplomacy=1,Perform (Sing)=1"]) },
+    FeatCatalogRecord { key: "Extreme Mood Swings", category: "General", name: "Extreme Mood Swings", description: Some("Your emotions sometimes get the better of you. Increase each morale bonus you receive by 1. You take a −1 penalty on saves against emotion and fear effects. When you are drunk (or worse), this penalty doubles, but you increase each morale bonus you receive by 2 instead."), prerequisites: None },
+    FeatCatalogRecord { key: "Hardy Liver", category: "General", name: "Hardy Liver", description: Some("You can hold your liquor and poisons better than most. You gain a +2 bonus on Fortitude saving throws against ingested poisons. You take no penalties when you are tipsy, and the penalties for being drunk or soused are halved for you."), prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Great Fortitude"]) },
+    FeatCatalogRecord { key: "Implacable", category: "Combat", name: "Implacable", description: Some("You aren't easily fazed, especially when you've been drinking. You gain a +2 bonus on saving throws against pain effects. When you are drunk or soused, you gain DR 5/piercing or slashing."), prerequisites: None },
+    FeatCatalogRecord { key: "Muddled Morals", category: "General", name: "Muddled Morals", description: Some("Your conviction is strong... unless you've had a few drinks. You gain a +2 bonus on saving throws against effects that affect you based on your alignment. In addition, choose an alignment one step away from your true alignment; when you are drunk (or worse), spells and other effects affect you as if this alignment were your alignment."), prerequisites: None },
+    FeatCatalogRecord { key: "Read the Room", category: "General", name: "Read the Room", description: Some("You can gain some insight into the mood of a crowd with just a look. Before you use the Drunken Sing-Along feat, you can attempt a DC 20 Sense Motive check as a free action to pick the exact right song for that crowd. If you are successful, you gain a +4 circumstance bonus on your next Diplomacy check to gather information in that tavern."), prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Drunken Sing-Along", "PRESKILL:3,Diplomacy=1,Perform (Sing)=1,Sense Motive=1"]) },
+    FeatCatalogRecord { key: "Tavern Regular", category: "General", name: "Tavern Regular", description: Some("You are quite popular at the pubs you frequent and the bartenders remember you. You receive a 10% discount at any tavern after you have spent a cumulative 500 gp there. In addition, if a bar fight occurs in that tavern, you gain a +2 bonus on your checks to use the redirect action. On a round in which you don't attempt the redirect action, the crowd reduces your tenacity by only 1d4 (instead of by the normal amount)."), prerequisites: Some(&["PREVARGTEQ:PreStatScore_CHA,14"]) },
 ];

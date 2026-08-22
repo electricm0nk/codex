@@ -54,8 +54,9 @@ use codex::rules_core::pilot_compute::{
 };
 use codex::rules_core::rules_tables::class_spell_levels;
 use codex::rules_core::rules_tables::{
-    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures,
-    ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_faiths, inner_sea_gods,
+    inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue,
+    ultimate_magic, ultimate_wilderness,
 };
 
 const WIZARD_LEVEL_3_FIXTURE: &str =
@@ -128,6 +129,9 @@ fn full_desktop_spell_catalog() -> Vec<&'static str> {
         .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(|e| e.key))
         .chain(ultimate_wilderness::spell_list::SPELL_LIST.iter().map(|e| e.key))
         .chain(adventurers_guide::spell_list::SPELL_LIST.iter().map(|e| e.key))
+        .chain(inner_sea_faiths::spell_list::SPELL_LIST.iter().map(|e| e.key))
+        .chain(inner_sea_magic::spell_list::SPELL_LIST.iter().map(|e| e.key))
+        .chain(inner_sea_temples::spell_list::SPELL_LIST.iter().map(|e| e.key))
         .collect()
 }
 
@@ -175,15 +179,18 @@ fn every_catalog_row_off_the_wizard_list_is_refused() {
 
     assert_eq!(
         catalog.len(),
-        2056,
+        2113,
         "the desktop Add Spell picker serves this many records"
     );
     assert_eq!(
         off_list.len(),
-        1369 + 45,
+        1369 + 45 + 57,
         "this many of them are on no wizard list in any ingested book -- SD-31 wave-29 \
          (`lane5-book-onboard` lane) added `adventurers_guide`'s 45 spells, none of which are \
-         on any wizard list in any ingested book (re-derived, not assumed)"
+         on any wizard list in any ingested book (re-derived, not assumed); SD-32 Gate 0 \
+         book-onboarding precondition (`gate-0-book-onboarding-precondition`, AT-32-G0-003) \
+         added inner_sea_faiths/inner_sea_magic/inner_sea_temples' 57 spells (2 + 34 + 21), \
+         none of which are on any wizard list in any ingested book either (re-derived)"
     );
 
     // Sampling the whole 543 through `compute_pilot_base_chassis` would be

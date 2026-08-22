@@ -42,8 +42,29 @@ pub mod feats_all;
 pub mod horror_adventures;
 pub mod inner_sea_bestiary;
 pub mod inner_sea_combat;
+/// Inner Sea Faiths. SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled rule set of any kind, first record family: base spell
+/// declarations transcribed from `isf_spells.lst`
+/// (`rules_tables::inner_sea_faiths::spell_list`). See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub mod inner_sea_faiths;
 pub mod inner_sea_gods;
 pub mod inner_sea_intrigue;
+/// Inner Sea Magic. SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled rule set of any kind, first record family: base spell
+/// declarations transcribed from `ism_spells.lst`
+/// (`rules_tables::inner_sea_magic::spell_list`). See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub mod inner_sea_magic;
+/// Inner Sea Temples. SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled rule set of any kind, first record family: base spell
+/// declarations transcribed from `istem_spells.lst`
+/// (`rules_tables::inner_sea_temples::spell_list`). See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub mod inner_sea_temples;
 pub mod inner_sea_world_guide;
 pub mod monster_chassis;
 pub mod monster_codex;
@@ -318,4 +339,46 @@ pub enum RuleSetId {
     /// table ships -- `THE-BOX.md` §2.1's G4 finding (`adventurers_guide`
     /// 699 `class_feature` units) is this exact gate.
     AdventurersGuide,
+    /// Inner Sea Faiths. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003, one of the
+    /// four books `epic-breakdown.md` Epic 4 names) -- this book's FIRST
+    /// compiled rule set of any kind, first record family: base spell
+    /// records (`rules_tables::inner_sea_faiths::spell_list::SPELL_LIST`,
+    /// transcribed from `isf_spells.lst`). See
+    /// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+    InnerSeaFaiths,
+    /// Inner Sea Magic. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this
+    /// book's FIRST compiled rule set of any kind, first record family:
+    /// base spell records (`rules_tables::inner_sea_magic::spell_list::
+    /// SPELL_LIST`, transcribed from `ism_spells.lst`).
+    ///
+    /// Same book-level gate `RuleSetId::AdventurersGuide` record above:
+    /// without this variant, every `inner_sea_magic` corpus unit
+    /// (class_feature, spell, feat, equipment, equipment_modifier, class
+    /// alike) reads `not-started`/`no_compiled_rule_set_for_book`
+    /// regardless of what any per-kind table ships -- this book's 218
+    /// `class_feature` units are already ingested corpus-wide
+    /// (`data/corpus/inner_sea_magic/class_feature/`) but were unreachable
+    /// through this exact gate before this variant existed. See
+    /// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+    InnerSeaMagic,
+    /// Inner Sea Taverns. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this
+    /// book's FIRST compiled rule set of any kind. Unlike the other three
+    /// SD-32 Gate 0 books, this one has no `*_spells.lst` at all, so its
+    /// first record family is `feat` instead: `istav_feats.lst`'s 9 base
+    /// declarations, joined via the same `feat_gap_tables` mechanism
+    /// `RuleSetId::Mythic` above uses (an empty `hand_authored_feat_tables`
+    /// entry plus a `gen_feat_gap_tables::BOOK_INPUTS` row) -- so, like
+    /// `Mythic`, this book has no dedicated `rules_tables::<book>` module
+    /// directory of its own.
+    InnerSeaTaverns,
+    /// Inner Sea Temples. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this
+    /// book's FIRST compiled rule set of any kind, first record family:
+    /// base spell records (`rules_tables::inner_sea_temples::spell_list::
+    /// SPELL_LIST`, transcribed from `istem_spells.lst`). See
+    /// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+    InnerSeaTemples,
 }

@@ -113,7 +113,8 @@ use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
     acg, adventurers_guide as ag, advanced_race_guide as arg, apg, beastiary1, crb,
-    inner_sea_gods as isg, occult_adventures as oa, pathfinder_unchained as pu,
+    inner_sea_faiths as isf, inner_sea_gods as isg, inner_sea_magic as ism,
+    inner_sea_temples as istem, occult_adventures as oa, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
     ultimate_magic as um, ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
 };
@@ -901,6 +902,23 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // non-empty category, so `feats_reach`'s own check is
         // satisfied for all 221.
         ("ultimate_psionics", "feats") => Some(feats_reach(RuleSetId::Upsi, "Upsi")),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Taverns'
+        // first reach claim of any kind, and its first compiled
+        // `RuleSetId`. Unlike the other three SD-32 Gate 0 books, this
+        // one has no `*_spells.lst` at all -- its first family is `feat`
+        // via `gen_feat_gap_tables`'s `BOOK_INPUTS` (`istav_feats.lst`'s
+        // 9 base declarations, same mechanism `RuleSetId::Mythic` uses),
+        // joined into `feats_all::all_feat_tables()` and served by
+        // `list_feat_catalog` under `source: "InnerSeaTaverns"` (the
+        // `RuleSetId`'s own `{:?}` name -- `feat_catalog::
+        // build_feat_catalog_for` derives `source` generically for every
+        // book, so this claim is a real reach test rather than new wiring
+        // of its own). Every one of the 9 records carries a non-empty
+        // `category`, so `feats_reach`'s own check is satisfied for all 9.
+        ("inner_sea_taverns", "feats") => {
+            Some(feats_reach(RuleSetId::InnerSeaTaverns, "InnerSeaTaverns"))
+        }
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell
@@ -1054,6 +1072,58 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("adventurers_guide", "spells") => Some(spells_reach(
             "AG",
             ag::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Faiths joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 13th
+        // book, the same `build_spell_catalog`/"All books" render path
+        // AG/UW/ISG use -- this book's FIRST reach claim of any kind, and
+        // its first compiled `RuleSetId`. All 3 base declarations carry no
+        // `CLASSES:`/`DOMAINS:` level (a real corpus gap -- this book's
+        // `isf_spells.lst` names no class list at all), but every shipped
+        // record still carries a real `SCHOOL:` and/or `DESC:`, so
+        // `has_payload` is satisfied (`src/bin/
+        // ingest_inner_sea_setting_spells.rs`).
+        ("inner_sea_faiths", "spells") => Some(spells_reach(
+            "ISF",
+            isf::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Magic joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 14th
+        // book, the same "All books" render path -- this book's FIRST
+        // reach claim of any kind and its first compiled `RuleSetId`
+        // (its 218 `class_feature` units were already ingested corpus-wide
+        // but were unreachable through the book-level gate before this
+        // variant existed -- see `RuleSetId::InnerSeaMagic`'s own doc
+        // comment). Every shipped record carries a real `SCHOOL:`,
+        // `CLASSES:` level and/or `DESC:`, so `has_payload` is satisfied
+        // (`src/bin/ingest_inner_sea_setting_spells.rs`).
+        ("inner_sea_magic", "spells") => Some(spells_reach(
+            "ISM",
+            ism::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Temples
+        // joins `spell_resolver::spell_catalog_rows()` as the catalog's
+        // 15th book, the same "All books" render path -- this book's
+        // FIRST reach claim of any kind, and its first compiled
+        // `RuleSetId`. Every one of the 21 base declarations carries a
+        // real `SCHOOL:`, `CLASSES:` level and `DESC:`, so `has_payload`
+        // is satisfied for all 21 (`src/bin/
+        // ingest_inner_sea_setting_spells.rs`).
+        ("inner_sea_temples", "spells") => Some(spells_reach(
+            "ISTEM",
+            istem::spell_list::SPELL_LIST
                 .iter()
                 .map(|entry| entry.key.to_owned())
                 .collect(),

@@ -98,6 +98,9 @@ use codex::rules_core::rules_tables::adventurers_guide as ag;
 use codex::rules_core::rules_tables::advanced_race_guide as arg;
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::MonsterId;
+use codex::rules_core::rules_tables::inner_sea_faiths as isf;
+use codex::rules_core::rules_tables::inner_sea_magic as ism;
+use codex::rules_core::rules_tables::inner_sea_temples as istem;
 use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables, feats as crb_feats,
     race_tables::RaceId, spell_list as crb_spell_list,
@@ -536,6 +539,42 @@ fn adventurers_guide_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Inner Sea Faiths: SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled record family of any kind. 2 base spell records (of 3
+/// raw base declarations; a genuine intra-book reprint dedups to 1) -- see
+/// `inner_sea_faiths::spell_list`'s own doc comment.
+fn inner_sea_faiths_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), isf::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Inner Sea Magic: SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled record family of any kind. 34 base spell records -- see
+/// `inner_sea_magic::spell_list`'s own doc comment. Its 218 `class_feature`
+/// records are corpus-JSON-only (no `rules_tables` module carries
+/// class_feature data for this book, the same shape ARG's own
+/// corpus-JSON-only class_feature records document above), so they are
+/// deliberately not summed into this row -- this panel counts compiled
+/// `rules_tables` families only.
+fn inner_sea_magic_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), ism::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Inner Sea Temples: SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled record family of any kind. 21 base spell records -- see
+/// `inner_sea_temples::spell_list`'s own doc comment.
+fn inner_sea_temples_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), istem::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
 /// Ultimate Psionics: SD-28 Epic 29 (`epic-29-upsi-complete`) from-scratch
 /// book ingest, and the last Ultimate book. 221 feat records -- see
 /// `ultimate_psionics::feat_tables`'s own doc comment for the catalog and
@@ -838,6 +877,24 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             adventurers_guide_counts(),
             &races,
         ),
+        book_status(
+            "inner_sea_faiths",
+            "src/rules_core/rules_tables/inner_sea_faiths",
+            inner_sea_faiths_counts(),
+            &races,
+        ),
+        book_status(
+            "inner_sea_magic",
+            "src/rules_core/rules_tables/inner_sea_magic",
+            inner_sea_magic_counts(),
+            &races,
+        ),
+        book_status(
+            "inner_sea_temples",
+            "src/rules_core/rules_tables/inner_sea_temples",
+            inner_sea_temples_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -994,7 +1051,15 @@ mod tests {
                 // first compiled record family of any kind, same
                 // appended-at-the-end placement as `occult_adventures`
                 // above, for the same reason.
-                "adventurers_guide"
+                "adventurers_guide",
+                // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+                // onboarding-precondition`, AT-32-G0-003) -- each of these
+                // three books' first compiled record family of any kind,
+                // same appended-at-the-end placement as `adventurers_guide`
+                // above, for the same reason.
+                "inner_sea_faiths",
+                "inner_sea_magic",
+                "inner_sea_temples"
             ]
         );
     }
