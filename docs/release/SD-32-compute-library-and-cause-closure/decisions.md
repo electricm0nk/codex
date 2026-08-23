@@ -251,3 +251,35 @@ The literal is written in `README.md` (frontmatter `build_version_target` + "Bun
 this file's §1, `workflow-instruction.md §0` and `§1` item 7 and `§11`, `progress.md` "Pre-launch
 receipt", and `risks-and-open-questions.md` risk 7. The old build-at-launch template marker no
 longer appears anywhere in the bundle (`workflow-instruction.md §10`).
+
+## Decision 10 — Closure requires every Epic card `complete`; "filed under Open blockers" is not a closure path (operator ruling 2026-08-22, post-run)
+
+**Status:** Operator-pinned. **Supersedes** the "complete **or** filed under `## Open blockers`
+with a named owner" clause in `acceptance-and-verification.md` AT-32-CLOSE-001 item 1 and
+`workflow-instruction.md §13` step 1, as those read at the first dispatch run.
+
+The first SD-32 dispatch run (`wf_efd6f5fc-a9c`, 2026-08-22) closed all four gates and cards
+1-10 and 12, then closed the bundle and opened PR #375 with card 11 (`epic-2-cause-closure`) at
+`returned-to-backlog` — its remaining eight blocker shapes deferred to a successor bundle via
+`forward-scope-register.md` C2.5. The closure cycle did this correctly under the criterion as
+written. **The operator ruled the criterion itself wrong:**
+
+> "if card 11 is returned to the backlog, then sd-32 isn't ready for a pr, nor a merge."
+
+**In force from now on:**
+
+1. The Definition of Done is **all four gates met AND every Epic 1-5 kanban card at `complete`**.
+   A card at `returned-to-backlog`, `in-progress`, or `DISCOVERED-forked` blocks closure.
+2. An `## Open blockers` filing is a **request for a ruling**, not a disposition. It pauses the
+   bundle and surfaces the blocker to the operator; it never authorises closure past the card.
+   Only an operator ruling may move scope out of a card and into `forward-scope-register.md`.
+3. **No PR opens while any Epic card is short of `complete`.** PR #375 was opened prematurely
+   under the old wording and was closed 2026-08-22 pending card 11's real closure.
+4. This applies to a card's *deferred halves* too, not only whole cards: card 12
+   (`epic-3-class-reachability`) was marked `complete` with its 18-untabled-base-class half
+   explicitly deferred. Under this ruling that half is reopened and must land before closure.
+
+**Why:** a bundle that ships with its largest content epic deferred has moved work, not done it.
+The gates measure that the *method* is sound; the cards measure that the *content* is closed.
+Closing on gates alone lets a green board describe an unfinished bundle — the exact
+shape `Decision 1a`'s anti-gaming doctrine exists to refuse.

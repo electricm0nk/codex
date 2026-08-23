@@ -285,12 +285,16 @@ before the fix).
 ## Bundle closure criterion (in addition to the four gates and five epics)
 
 **AT-32-CLOSE-001 — The bundle closure epilogue actually ran, not just the PR.** The closure trigger
-is the **Definition of Done — all four gates' AT-32-* criteria met** — never a wave count, date, or
-budget (operator ruling 2026-08-22, `decisions.md §2`). Per `workflow-instruction.md §13`, closure
-then requires, in order, before the PR opens:
+is the **Definition of Done — all four gates' AT-32-* criteria met AND every Epic 1-5 kanban card at
+`complete`** — never a wave count, date, or budget (operator rulings 2026-08-22, `decisions.md §2`
+and **`decisions.md §10`**). Per `workflow-instruction.md §13`, closure then requires, in order,
+before the PR opens:
 
-1. Every gate G0-G3 met and every Epic 1-5 card `complete` or filed under `## Open blockers` with
-   a named owner.
+1. Every gate G0-G3 met and **every Epic 1-5 card at `complete`**. A card at `returned-to-backlog`,
+   `in-progress`, or `DISCOVERED-forked` blocks closure, as does a card marked `complete` with a
+   half of its criterion explicitly deferred. Filing under `## Open blockers` is a request for an
+   operator ruling, **not** a closure path (`decisions.md §10`, superseding this item's earlier
+   "complete or filed under Open blockers" wording).
 2. `docs/retro/sd32-compute-library-and-cause-closure-retrospective.md` written (grounded in
    `scripts/retro.py summary`, not recollection) **and cited from `references/README.md`** — a
    retrospective that exists but isn't linked from this package is not a closed criterion.

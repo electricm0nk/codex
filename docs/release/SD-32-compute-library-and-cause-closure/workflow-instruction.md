@@ -573,8 +573,13 @@ standard part of every spec-domain handoff"), with the retro write-up folded in.
 the Definition of Done — all four gates' AT-32-* criteria met (`acceptance-and-verification.md`) —
 not a wave count, a date, or a token budget** (operator ruling 2026-08-22; `decisions.md §2`).
 
-1. **Final-acceptance scan.** All four gates met, every Epic 1-5 card `complete` or filed under
-   `## Open blockers` with a named owner.
+1. **Final-acceptance scan.** All four gates met **and every Epic 1-5 card at `complete`**
+   (`decisions.md §10`, operator ruling 2026-08-22 — supersedes this step's earlier "complete or
+   filed under `## Open blockers` with a named owner" wording). A card at `returned-to-backlog`,
+   `in-progress`, or `DISCOVERED-forked` blocks closure, as does a card marked `complete` with a
+   half of its criterion explicitly deferred. An `## Open blockers` filing pauses the bundle and
+   requests an operator ruling; it never authorises closure past the card, and **no PR opens**
+   while any Epic card is short of `complete`.
 2. **Write the bundle's retrospective:**
    ```bash
    scripts/retro.py summary --since <SD-32 launch date> --json
