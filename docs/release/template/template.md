@@ -95,7 +95,11 @@ The living architecture documentation at `../../architecture/` (repo-relative) i
 part of this bundle's closure gate. The pipeline is sequential — every
 sub-step fires regardless of diff content:
 
-1. **All acceptance criteria done?** If not, self-heal and dispatch more cycles.
+1. **All acceptance criteria done, and every epic/kanban card at `complete`?** If not, self-heal and dispatch more cycles.
+
+   **This is a hard gate, and a filed blocker does not satisfy it** (`../../governance/blocker-closure-doctrine.md`). A `## Open blockers` entry is a request for an operator ruling — not a disposition and never a closure path; filing one **pauses the bundle**. A blocker standing between the bundle and 100% of its Definition of Done gets **cleared** (decompose it and run the cycles — a large blocker is a sequencing problem, not an exemption) or **escalated to the operator** with the specific ruling, write scope, or precondition named — never deferred, never handed to a successor bundle on the cycle's own authority. Never write a closure criterion as "complete *or* filed under `## Open blockers`": that phrasing is the defect this doctrine removes.
+
+   If anything is short, **the closure epilogue stops here** — no retrospective, no sweep, **no PR**. Report what is short with the command that shows it, and exit. That is a correct outcome for a closure cycle, not a failure.
 
    **Between step 1 and step 2, `workflow-instruction.md §11` steps 2–3 fire**: write and cite the
    bundle's retrospective, then run the full worktree/branch sweep. Both must be done before
@@ -143,5 +147,7 @@ Required canonical files (the promotion skill refuses to copy if any are missing
 ## 8. Cross-reference
 
 - `../../governance/workflow-instruction-template.md` — the per-cycle dispatch procedure `workflow-instruction.md` is authored from. Distinct scope: this template covers the release-folder's file index and bundle-snapshot table; that one covers the per-cycle dispatch procedure, including §10's epic wrap-up and §11's bundle closure epilogue (the retro-write and worktree-sweep half of §6 above). Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.
+- `../../governance/blocker-closure-doctrine.md` — a blocker on the Definition of Done is cleared or escalated, never deferred; `## Open blockers` is a request for an operator ruling, not a closure path. Gates §6 step 1 above.
+- `../../governance/deferral-revisit-doctrine.md` — the sibling rule for a *planned capability deferral*. The test that separates the two: was this scope in the Definition of Done at launch?
 - `docs/retro/` — retrospectives written at bundle closure (§6 / `workflow-instruction.md §11`). `docs/retro/sd31-retrospective.md` is the worked example.
 - `.claude/skills/stc-authoring/SKILL.md` — the Claude-Code-native rendering of this template plus `workflow-instruction-template.md`, for a session authoring or auditing a bundle directly in this repo.

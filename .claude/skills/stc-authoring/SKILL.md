@@ -143,12 +143,28 @@ define the full procedure; condensed:
 - **After every epic:** retro summary for that epic's window (above) + a worktree sweep scoped to
   that epic's own worktrees only (never remove a `locked` one or one carrying unmerged commits).
   No PR at this granularity.
-- **Bundle closure (once):** final-acceptance scan of every criterion → write and cite the
-  bundle's retrospective (above) → full worktree/branch sweep for the whole bundle → architecture-
-  docs refresh + graphify + PR + merge-conflict resolution (`docs/release/template/template.md
-  §6`) → release notes + version bump. The retro write-up and worktree sweep happen **before** the
-  PR opens — finding either one missing after the PR is already open means the closure needs a
-  correction cycle, not a clean pass.
+- **Bundle closure (once):** final-acceptance scan of every criterion **and every epic/kanban card
+  at `complete`** → write and cite the bundle's retrospective (above) → full worktree/branch sweep
+  for the whole bundle → architecture-docs refresh + graphify + PR + merge-conflict resolution
+  (`docs/release/template/template.md §6`) → release notes + version bump. The retro write-up and
+  worktree sweep happen **before** the PR opens — finding either one missing after the PR is
+  already open means the closure needs a correction cycle, not a clean pass.
+
+**A filed blocker does not satisfy the final-acceptance scan**
+(`docs/governance/blocker-closure-doctrine.md`). A `## Open blockers` entry is a request for an
+operator ruling — not a disposition, never a closure path; filing one **pauses the bundle**. A
+blocker between the bundle and 100% of its Definition of Done gets **cleared** (decompose it and
+run the cycles — a large blocker is a sequencing problem, not an exemption) or **escalated to the
+operator** with the specific ruling, write scope, or precondition named. Never deferred, never
+handed to a successor bundle on a cycle's own authority.
+
+**When authoring or auditing a package, treat `"complete or filed under ## Open blockers"` in any
+closure criterion as a defect to fix before launch** — that exact phrasing let SD-32's first
+closure cycle pass its own gate over an open card and open a PR the operator had to close. If the
+scan is short, the closure cycle stops: no retrospective, no sweep, **no PR**; report what is short
+with the command that shows it. Separate this from a planned *capability deferral*
+(`docs/governance/deferral-revisit-doctrine.md`) with one test: was this scope in the Definition of
+Done at launch? If yes, it is a blocker.
 
 ## The dual-audit gate (every dispatched cycle)
 
@@ -180,6 +196,12 @@ Each of these has a real, recorded incident in this project's history (full deta
 - **Counterfeit completion.** A closed cycle whose diff is empty or trivially green. Re-derive
   the claimed outcome against the live corpus and the audit gates before accepting it — don't
   transcribe a dispatched agent's self-report.
+- **Laundering a blocker into a deferral.** Scope that was in the Definition of Done at launch
+  reappears as a forward-scope-register row with a "named owner", and the board goes green over
+  unfinished work. This is the single most-repeated procedural failure in the program. Recognise
+  it by the phrasing — "filed with a named owner", "forwarded to a successor bundle", "deferred
+  with reason", "out of scope for this cycle" — and by a criterion that permits it. Doctrine:
+  `docs/governance/blocker-closure-doctrine.md`.
 - **Boundary bypass.** See above. Single most-violated rule in this project's history.
 - **`git stash` from a subdirectory.** Never — the bare form stashes the whole shared checkout
   even when called from inside `docs/release/SD-NN/`. Use `git show HEAD:<file> > /tmp/<file>` to
@@ -217,6 +239,11 @@ Each of these has a real, recorded incident in this project's history (full deta
 - `docs/governance/workflow-instruction-template.md` — the per-cycle dispatch procedure template.
 - `docs/governance/no-stub-mvp-doctrine.md`, `docs/doctrine-external/identifier-discipline.md` —
   doctrine-of-record for the dual-audit gate.
+- `docs/governance/blocker-closure-doctrine.md` — a blocker on the Definition of Done is cleared or
+  escalated, never deferred; `## Open blockers` is a request for an operator ruling, not a closure
+  path. Check every package under audit for a closure criterion that permits a filed blocker.
+- `docs/governance/deferral-revisit-doctrine.md` — the sibling rule for a *planned capability
+  deferral* (condition, checker, accepted cost).
 - `docs/retro/`, `AGENTS.md §Retrospective Logging`, `scripts/retro.py`, `docs/retro/schema.json`
   — retrospectives and the event-logging discipline behind them. Check whether the package under
   audit cites the relevant one.

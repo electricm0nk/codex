@@ -246,6 +246,15 @@ On non-fast-forward rejection, repeat up to 5 times. If it still fails after 5 a
 - **Self-healable (resolve inline, exit GREEN):** dirty tree, single-token audit violation, unrelated test-setup breakage, build-counter out of sync, `## DISCOVERED` duplicates.
 - **Non-self-healable (write `## Open blockers`, exit FAIL):** working tree diverged from the bundle branch needing manual rebase; two live cycles on conflicting files; a launch-gate dependency not actually merged; `## DISCOVERED` queue > 10 entries; RED → GREEN not preserved in the cycle receipt; a cycle finds `success: true` from a fake operation, an inline mock in a shipping module, or a "Would …" string in shipping code.
 
+**A `## Open blockers` entry is a request for an operator ruling — not a disposition, and never a closure path** (`docs/governance/blocker-closure-doctrine.md`). Filing one **pauses the bundle**. It does not authorise any later cycle to proceed past the blocked card, and only an operator ruling may move blocked scope into a forward-scope register.
+
+A blocker standing between the bundle and 100% of its Definition of Done has exactly **two** dispositions:
+
+1. **Clear it.** Do the work. If it is bigger than one cycle, decompose it and run the cycles — a large blocker is a sequencing problem, not an exemption.
+2. **Raise your hand.** Escalate to the operator, naming what blocks you, what you already tried, and the specific ruling, write scope, or precondition you need. Then stop and wait.
+
+"Filed with a named owner", "forwarded to a successor bundle", "deferred with reason", and "out of scope for this cycle" are **not** dispositions for such a blocker — they are ways of writing down that the bundle is not done. A cycle that correctly refuses to write outside its granted scope has not failed; it has hit a blocker only the operator can clear, and the right move is to prepare the exact change, escalate, and wait. Distinguish this from a planned **capability deferral** (`docs/governance/deferral-revisit-doctrine.md`) by one test: **was this scope in the Definition of Done at launch?** If yes, it is a blocker.
+
 **Disk usage — check proactively, not reactively.** After every wave of `parallel: yes` cycles completes (not just when something breaks), run `df -h /` and `git worktree list`; if usage is climbing toward the disk's ceiling, prune merged worktrees and their `target`/build-cache directories immediately — don't wait for a build to fail with `ENOSPC` first. Never remove a worktree that's still `locked` (an agent is actively using it); confirm via `git worktree list`'s lock annotation and via `git status --porcelain`/`git log <branch>..origin/<branch>` showing no unmerged, uncommitted work before removing anything.
 
 ## 9. Placeholder-resolution checklist (final gate before "planning-ready")
@@ -272,7 +281,9 @@ epic, not just the last one:
 Every bundle's last epic is a Closure Epilogue — the pattern every prior bundle since SD-21 has
 used (`SD-21-.../decisions.md §189`), extended here to also write the retrospective:
 
-1. **Final-acceptance scan.** Every acceptance criterion 1..N is `complete` or has a filed `## Open blockers` entry with a named resolution owner — no criterion left silently unaddressed.
+1. **Final-acceptance scan.** Every acceptance criterion 1..N is `complete`, and every epic/kanban card is at `complete`. **Never write "complete *or* filed under `## Open blockers`"** — that phrasing is the defect `docs/governance/blocker-closure-doctrine.md` exists to remove; a gate that can be satisfied by writing down that you did not do the work is not a gate. A card at `returned-to-backlog`, `in-progress`, or `DISCOVERED-forked` blocks closure, as does a card marked `complete` with a half of its criterion explicitly deferred.
+
+   **If anything is short, this cycle stops here.** Do not write the retrospective, do not sweep, **do not open the PR**. Report what is short with the command that shows it, and exit — that is a correct and expected outcome for a closure cycle, not a failure. (SD-32's first closure cycle passed its own gate, closed over an open card, and opened a PR the operator had to close.)
 2. **Write the bundle's retrospective**, grounded in the event log, not recollection:
    ```bash
    scripts/retro.py summary --since <bundle-launch-date> --json
@@ -297,6 +308,14 @@ used (`SD-21-.../decisions.md §189`), extended here to also write the retrospec
 These are rules, not context — read `docs/retro/sd31-retrospective.md` for the incidents behind
 them if the reasoning matters for a judgment call.
 
+- **A blocker on the Definition of Done gets attacked until cleared, or escalated — never
+  deferred.** SD-32's first dispatch run met all four gates, filed its largest content epic's
+  remaining ~16,000 units under `## Open blockers` with a named owner ("a successor bundle"),
+  marked another card `complete` with half its criterion deferred, and opened the PR. Every step
+  satisfied the criterion as written; the operator rejected the result and named the pattern as
+  recurring. Deferral was the cheapest legal move, and the criterion made it legal. Two
+  dispositions only: clear it, or raise your hand and wait. Full doctrine:
+  `./blocker-closure-doctrine.md`, applied in §8 and §11 step 1.
 - **A ruling that defers a capability must name the condition under which it is revisited, and
   that condition must be checked, not remembered.** SD-31's no-formula-interpreter ruling sat
   unexamined for ~18 waves after its own stated precondition (a fixture mechanism) had already
@@ -324,6 +343,8 @@ them if the reasoning matters for a judgment call.
 
 ## Cross-references
 
+- `./blocker-closure-doctrine.md` — a blocker on the Definition of Done is cleared or escalated, never deferred; `## Open blockers` is a request for a ruling, not a closure path. Enforced by §8 and §11 step 1.
+- `./deferral-revisit-doctrine.md` — the sibling rule for a *planned capability deferral* (condition, checker, accepted cost). Easy to conflate with the above; the test is whether the scope was in the Definition of Done at launch.
 - `./no-stub-mvp-doctrine.md`, `docs/doctrine-external/identifier-discipline.md` — the two doctrine docs §6's dual-audit gate enforces inline.
 - `./wired-integration-stubs-registry.md` — operator-granted stub exceptions.
 - `docs/release/template/template.md` — the sibling template every bundle's own `README.md` (folder index) is authored from. Distinct scope: that template covers the release-folder's file index and bundle-snapshot table; this template covers the per-cycle dispatch procedure. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.
