@@ -6906,3 +6906,52 @@ predating this session on the affected corpus directories).
   `shape_ledger.py` kind-blind-join fix (its own dedicated, adversarially-reviewed cycle) then
   `ingest_generic_kind.py --kind trait --ledger <shape_ledger output>`.
 - Commit: (this cycle's commit — see push output).
+
+## Cycle sd32-integrity-sweep-corpus-ingest-diagnostic-red (2026-08-23)
+
+Verified the possible RED branch named by `monster_ability` round 5, which the orchestrator
+could not confirm (compile timeout): **real, confirmed RED**,
+`cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml corpus_ingest_diagnostic`
+→ 13 passed, 2 failed.
+
+- `every_book_landed_in_rules_tables_is_reported`: `inner_sea_races`, `mythic_adventures`,
+  `ultimate_magic_wordsofpower` landed real compiled `rules_tables` modules with no panel row.
+  Added the three missing `book_status(..)` rows.
+- `the_two_ingested_books_totals_reconcile_with_their_license_artifacts`: `advanced_race_guide`
+  `left: 1579, right: 2157`. Root-caused: `LICENSE.json`'s `records_processed` field was stale
+  at write time (`git diff --name-status` from its own commit to HEAD: 0 files added/removed,
+  so the drift predates that commit), 48 short of the live on-disk count. **Attempted the
+  obvious fix — regenerate `LICENSE.json` — and it was destructive**: `cargo run --locked --bin
+  gen_book_cache -- advanced_race_guide` staged deletion of 48 legitimate `feat` records a
+  sibling lane (`1410424cf3`, `decisions.md §20`) had landed through a different ingest path,
+  because `gen_advanced_race_guide`'s feat-sync runs an unscoped stale-key sweep
+  (`remove_stale_owned_files(.., &|_,_| true)`) that treats any key outside its own compiled
+  `feat_tables()` as garbage. Reproduced live, `git status --porcelain` confirmed the 48 D + 1
+  M, reverted with `git checkout --`, never committed. Logged as an incident
+  (`generator-orphans-unowned-files-on-directory-sync`) — real, general, out of this cycle's
+  territory (touches `feat`/`equipment`/`companion`, other lanes' scope).
+
+Fix: switched the reconciliation test off `LICENSE.json` onto a new read-only
+`live_on_disk_record_count` walk (mirrors `gen_book_cache.rs::count_on_disk_records`'s
+exclusion rules), then re-derived `corpus_only_records` fresh: `advanced_race_guide` `1073 →
+1699` (`2205` live `− 506` reported), `pathfinder_unchained` `69 → 1137` (`1264` live `− 127`
+reported — this branch had never actually run green; the `for` loop's first assertion, ARG,
+always panicked before the loop reached PU, so PU's own staleness was invisible until this
+cycle). Also filtered `mythic_adventures_counts()`'s zero-`monsters` row (a known
+"zero-monster book", `monster_chassis.rs`'s own comments) so it doesn't trip
+`every_book_is_populated_with_real_nonzero_counts`, caught live when adding the unfiltered row
+broke that other test.
+
+`cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml corpus_ingest_diagnostic`
+→ 15 passed, 0 failed. Mutation-proved: bumped the repinned `1699 → 1700`, re-ran, failed for
+the intended reason (`left: 2206, right: 2205`); reverted.
+
+Dual audit on `git diff -- apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`:
+`OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+
+- Receipt: `artifacts/gate-3-closure-invariant/sd32-integrity-sweep-corpus-ingest-diagnostic-red_cycle-1_cycle_receipt.md`.
+- Retro: `docs/retro/events/t9-onboarding.jsonl` — one `incident`, one `correction`.
+- **What remains:** `gen_book_cache.rs`'s destructive directory-sync on `advanced_race_guide`
+  (and structurally the same unscoped-predicate shape appears on `pathfinder_unchained`'s feat
+  sync too) is a real, general hazard, not fixed here — named for a future cycle.
+- Commit: (this cycle's commit — see push output).
