@@ -2126,6 +2126,18 @@ and after this sweep (not "none found" without having run the commands).
   (the fix site is `docs/work-inventory.json`'s producer, not the ingest tools that consume it —
   out of this lane's granted scope). Full evidence:
   `artifacts/gate-3-closure-invariant/epic-2-t2b-w1-c_cycle-1_cycle_receipt.md §0`.
+  **STILL OPEN, confirmed by `t9-onboarding` reconciliation, 2026-08-23:** two later classifier
+  cycles landed and both explicitly do NOT touch this population. `t2b-refine-kind-fix` (commit
+  cited in this file's own entry below) reads a row's `KEY:` prefix against a same-book
+  `CR:`-bearing race name — it cannot match a plumbing row with no race name in it at all.
+  `epic-2-t2b-cluster4-classfeature-fix` (this file, `§4108`) went further and added an explicit
+  `is_player_favored_class_choice_row` guard so a bare-class-name-KEY Favored-Class-Bonus row
+  (`advanced_players_guide`'s `Alchemist`, `TYPE:FavoredClass`) **stays untouched by design**,
+  proven by its own dedicated regression test — i.e. a second cycle independently confirmed this
+  exact population is a distinct, unaddressed shape rather than closing it. Count not independently
+  re-run this cycle (would need the same custom row-classification script the original lane used,
+  out of a docs-reconciliation cycle's reach) — reported as structurally still-open, not re-sized.
+  Proposed target unchanged: a dedicated classifier/consolidation cycle.
 - 2026-08-23, Cycle `epic-2-t2b-w1-c/1` (`epic-2-cause-closure`, T2b lane): the "Adopted Race"
   selector-plus-grant-link mechanism spans **4** books, not the 3 the census memo counted
   separately — `bestiary_2`/`bestiary_5`/`bestiary_6`'s 9 `Adopted Race ~ <X>` units
@@ -2136,6 +2148,12 @@ and after this sweep (not "none found" without having run the commands).
   books together, rather than two T2b lanes race-conditioning the same shared
   `ingest_races.rs`/`race_catalog.rs` surface independently. Full evidence:
   `artifacts/gate-3-closure-invariant/epic-2-t2b-w1-c_cycle-1_cycle_receipt.md §2` item 3.
+  **SUPERSEDED, same day, `t2b-adoptive-parentage/1`'s correction entry below ("correction to two
+  prior DISCOVERED entries above"):** this is not one mechanism across 4 (then 5) books — it is two
+  structurally different PCGen row shapes. `advanced_race_guide`'s 7 units are a flat automatic
+  grant into an already-modelled trait and are now closed (cited below). The genuine selector-picker
+  mechanism this entry named is 14 units, not present in `advanced_race_guide` at all — see the
+  `kind: trait` escalation entry below for its current, re-derived state.
 - 2026-08-23, Cycle `t2b-w1-d/1` (`epic-2-cause-closure`, T2b lane, `bestiary_3`): independent
   confirmation of the SAME classifier defect `epic-2-t2b-w1-c`'s cycle above found, in a different
   book and via a different check (KEY-prefix-vs-`CR:`-token cross-reference, not direct
@@ -2152,6 +2170,19 @@ and after this sweep (not "none found" without having run the commands).
   any-dot-segment match: every real race's own `Favored Enemy ~ Humanoid (<Race>)` row shares an
   inner `SpecialAttack` segment with the monster-only facet vocabulary). Full evidence:
   `artifacts/gate-3-closure-invariant/t2b-bestiary_3-measurement-receipt.md §6`.
+  **PARTIALLY RESOLVED, `t2b-refine-kind-fix` (this file's own entry, cycle receipt
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-refine-kind-fix_cycle-1_cycle_receipt.md`),
+  2026-08-23:** the proposed classifier fix landed and moved `bestiary_3` `819 -> 194` (625 of the
+  ~805 misclassified monster rows reclassified `race_trait -> monster_ability` corpus-wide, proven
+  by full coordinate join, 0 false-move). Residual **194**, broken down by that cycle: 9 by-design
+  header exclusions, 5 `Adopted Race` selector rows (now part of the 14-unit `kind: trait`
+  escalation below), 58 template-name matches + 122 name-variant matches deliberately **not**
+  forced — the fix cycle's own stress test found widening past exact `*_races.lst` match introduces
+  real false positives. **Confirmed by `t9-onboarding` re-derivation, 2026-08-23:** re-ran
+  `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`; `race_trait`'s corpus-wide
+  `no_record` is 0 (all closed by the generic-ingest campaign, `decisions.md §17`/`§20`), so the
+  194-unit residual named here is now reachability/classification scope, not a `no_record` gap —
+  still real, still open, not re-sized further this cycle.
 
 - 2026-08-22, Cycle 2 (`gate-0-census-closure`): AT-32-G0-002's ten-kind list (`feat`, `class`,
   `spell`, `monster`, `monster_ability`, `equipment`, `equipment_modifier`, `companion`, `race`,
@@ -2195,6 +2226,14 @@ and after this sweep (not "none found" without having run the commands).
   `DEFINE:`/`SPELLS:` field, needs a fresh ID — current `D9` is taken by a different, already-landed
   finding) never landed under any wording. Doc-only, low risk — proposed target: next cycle touching
   `docs/release/SD-31-corpus-closure-grind/todo/`.
+  **STILL OPEN, re-checked by `t9-onboarding`, 2026-08-23:** `todo/levers.md` L3 is still `NOT
+  STARTED — now sized` (not `DEAD`); `todo/defects.md`'s highest ID is now `D14` (a new finding
+  would be `D15`, not `D9` — `D9` is unchanged, still the `gen_book_cache.rs` self-erasure finding
+  this file's own entry two above already tracks and resolved separately). The source
+  worktree (`worktree-wf_c1156061-e3f-5`) is confirmed gone — absent from `git worktree list` and
+  from `git log --all --oneline`, so its exact proposed wording for the L3→DEAD reasoning and the
+  new defect's text cannot be recovered; the next cycle must re-derive both from
+  `docs/release/SD-31-corpus-closure-grind/` current state directly rather than cherry-pick.
 - 2026-08-23, Cycle `t2b-adoptive-parentage/1` (`epic-2-cause-closure`, T2b lane): **correction to
   two prior DISCOVERED entries above** (`epic-2-t2b-w1-c/1`'s "same PCGen mechanism, 4 books" and
   `t2b-w1-d/1`'s "makes it 5") — the "Adoptive Parentage" mechanism is actually **two structurally
@@ -2219,6 +2258,28 @@ and after this sweep (not "none found" without having run the commands).
   picker), not a T2b-shaped ingest-tool row extension. Proposed target: an operator ruling on
   whether this scope belongs in SD-32 or a successor bundle, per `AGENTS.md` Blocker Discipline
   disposition 2. Full evidence: `artifacts/gate-3-closure-invariant/epic-2-t2b-adoptive-parentage_cycle-1_cycle_receipt.md §9`.
+  **ESCALATED, re-confirmed open by `t9-onboarding` reconciliation, 2026-08-23** (`AGENTS.md`
+  Blocker Discipline disposition 2 — needs an operator ruling, cannot self-heal): re-derived fresh
+  rather than trusted (`decisions.md §17a`) — `find data/corpus -mindepth 2 -maxdepth 2 -type d
+  -name trait` still returns **zero** directories anywhere in the corpus, and no landed commit since
+  this entry was filed touches a new content kind or these 14 units. **The count is still 14**
+  (`bestiary_2` 7 / `bestiary_3` 5 / `bestiary_5` 1 / `bestiary_6` 1), confirmed unchanged.
+  **The question the operator must answer:** does closing these 14 `adopted_race_choose_selector`
+  units belong in SD-32's Definition of Done, or does it move to a successor bundle? PF1e's
+  chargen "Trait" mechanic has never been modelled in this corpus — closing them is not a T2b-shaped
+  ingest-tool row extension but a new-kind epic: a new `kind: trait` schema, a new ingest tool, a
+  new reach-gate family, a new character-builder picker, plus onboarding at least one currently-
+  unregistered `player_companion` book that carries the real trait pool for the affected races.
+  **Cost of "yes, in SD-32 now":** the bundle does not close until that new-kind epic lands —
+  correctly sized as an epic, not a cycle, per `blocker-closure-doctrine.md`'s "decompose it and run
+  the cycles," so this is a real, multi-cycle addition to the bundle's remaining work, not a small
+  extension. **Cost of "no, defer to a successor bundle":** under `decisions.md §10`, this is scope
+  that was inside the Definition of Done when the bundle launched (card 11's T2b shape covers it),
+  so `blocker-closure-doctrine.md`'s test ("was this scope in the DoD when scoped? if yes, it is a
+  blocker") means deferring it is not a capability deferral — it requires an explicit operator
+  ruling narrowing card 11's scope, stated as such, not a forward-scope-register entry written on a
+  cycle's own authority (`decisions.md §10` item 2; `workflow-instruction.md` forbids moving scope
+  into `forward-scope-register.md` without exactly this kind of ruling).
 - 2026-08-23, Cycle `decisions.md §24 / ability-pi-rename` (`epic-2-cause-closure`): while proving
   the new `§24` rename generator leaks nothing, found **503 of the ~4,248 already-shipped
   (pre-`§24`, non-`codex_named_unit_*`) `ability` corpus records** carry a Golarion deity/proper-
@@ -2249,6 +2310,30 @@ and after this sweep (not "none found" without having run the commands).
   itself is the proposed target and has landed; the 4 outstanding leaks are real, still-open PI
   work for the next cycle touching those 4 kinds' generators — **not** closed by this note. Full
   table: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-corpus-report.md`.
+  **3 of the 4 FIXED, count corrected up not down, Cycle `t9-onboarding` (sibling lane, commit
+  `5c0178a397`), 2026-08-23** (landed on `origin/tranche/12` before this reconciliation cycle
+  rebased onto it — confirmed by `git show 5c0178a397 --stat`, not merely by its own claim, per
+  `decisions.md §17a`): fixed the `domain`/`equipment`/`language` leaks at the cause
+  (`ingest_simple_filename_kinds.py`'s `scrub_blacklist_pi_tokens` now runs unconditionally, plus a
+  61st blacklist term); the `spell` one (`bard_s_escape.json`) is a **confirmed false positive** —
+  the OCR-confusion fold in `normalized_term_hit` collided with an ordinary English word in genuine
+  OGL prose, correctly left un-redacted, not a leak. **The same commit's own corpus-wide re-scan
+  independently found the same 9 additional leaks this reconciliation cycle found**
+  (`python3 scripts/pi_key_rawtokens_audit.py --json-out <path>`, re-run 2026-08-23 against
+  the current HEAD: `confirmed_records=10` — 1 is the confirmed-false-positive `spell` record,
+  leaving **9 real, unremediated**: 7 `feat_generic` in `adventurers_guide`, 2 `monster_generic` in
+  `inner_sea_bestiary` — both kinds landed by sibling generic-ingest lanes after the original
+  503-record audit ran, and both hit by `decisions.md §19a`-3d's two term-list additions (a
+  weapon-lineage term and an institution term — not reproduced here, `§24b`-2 forbids a PI original
+  appearing in any committed artifact under `docs/release/**`; see `ogl-pi-blacklist.md §2.3c` for
+  the terms themselves), not by anything this cycle wrote). Neither this reconciliation cycle nor commit
+  `5c0178a397` remediated the 9 — `5c0178a397`'s own message states `ingest_generic_kind.py`'s
+  writer is `no_record`-ledger-gated and cannot re-touch already-shipped records, so redacting these
+  needs a small new remediation-only path, not the ingest tool itself. Retro correction logged:
+  `docs/retro/events/t9-onboarding.jsonl` id `1787499981214-t9-onboarding-252784`. **Still open,
+  real count is now 9 (not 4), across `feat_generic`/`monster_generic` (not
+  `domain`/`equipment`/`language`/`spell`)** — the next cycle touching those two kinds' generators
+  picks this up.
 
 ## Cycle `t9-pi-audit/1` — Card 11, shape T9 — Product-Identity exposure audit, `decisions.md §15`
 
