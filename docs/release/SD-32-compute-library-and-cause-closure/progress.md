@@ -7240,3 +7240,62 @@ HEAD too); companion/PI test modules 24/24.
 
 Full receipt: `artifacts/gate-3-closure-invariant/decision-27b-carveout-closure_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit — see push output).
+
+## Cycle: t9-onboarding-equipment-modifier-ability-rootcause (2026-08-23)
+
+Scope: `equipment_modifier` (19) / `equipment` (10) / `ability` (1) `no_record` units — root-cause
+tracing only, per dispatch brief ("root cause is NOT yet isolated... your first deliverable is the
+actual root cause, per group, not a fix"). Population re-derived and confirmed unchanged at 130
+total `no_record` (19+10+1 in this cycle's three kinds), matching the brief.
+
+**Five distinct root causes isolated, evidence-backed, no fix implemented this cycle:**
+
+- **(A) ACG `equipment_modifier` (14 units).** `docs/work-inventory.json` mints two units per
+  PCGen equipmod object -- a long-form unit at the primary declaration line, a short-form unit at
+  its `.COPY=` "Old KEYs" alias line. `find_citation`'s `.COPY=`-before-first-column search order
+  resolves the corpus record to the ALIAS line, orphaning the long-form unit. Content is already
+  correctly ingested; this is a duplicate-walker-unit defect.
+- **(B) `pathfinder_unchained` `equipment_modifier` (4 units).** Correct records exist at the right
+  `(book, source_file, source_line)` but sit flat under `equipment/` instead of `equipment/
+  equipmods/`, so `shape_ledger.py` (which derives `kind` from the directory one level under the
+  book) indexes them as `equipment`, not `equipment_modifier`. Writer not `gen_equipment_gap_
+  tables.rs` (book absent from its `BOOK_INPUTS`) or `hand_authored_equipment.rs` (book not in its
+  four-book scope) -- unidentified, predates the equipmods-nesting convention (`ingested_at`
+  2026-08-03).
+- **(C) `adventurers_guide` `equipment_modifier` (1 unit).** `ag_equipmods.lst` is simply absent
+  from `gen_equipment_gap_tables.rs`'s `adventurers_guide` `BOOK_INPUTS.files` list (only 3 of the
+  book's 4 real equip files are registered). One-line fix, confirmed by direct read.
+- **(D) PFS-overlay-vs-base citation mismatch (10 units: `equipment`×9, `ability`×1, across
+  `ultimate_magic`/`advanced_class_guide`/`bestiary_3`/`ultimate_campaign`).** One generic cause:
+  the walker cites a `_pfs/pfs_*.lst` legality-overlay row (a `.FORGET` flag or `PFSNotLegal`
+  restriction, not content) instead of resolving through to the base declaration every real ingest
+  pipeline already cites. All 10 corpus records already exist, at a different, correct citation.
+  Exact base-file line traced and confirmed for 9 of 10 (the 10th, `ultimate_campaign`'s "Corpse
+  Cannibal", narrowed to one of two adjacent lines, not yet disambiguated). Highest-leverage fix in
+  this scope: one mechanism closes ~⅓ of this cycle's population, and is worth a corpus-wide
+  `_pfs/`-citation resweep once built (`§17` generic-pass instruction).
+- **(E) `ultimate_equipment`'s `otyugh_hide` (1 unit).** The one genuine ingest gap in this scope:
+  `NAMEISPI:YES`, no corpus record anywhere. `ultimate_equipment`'s dedicated per-book generator
+  predates `decisions.md §24`'s Codex-neutral-rename mechanism and has never had it ported (unlike
+  `hand_authored_equipment.rs`, which already reuses it).
+
+**Correction, re-derived against HEAD (`§17a`):** the dispatch brief's "`gen_equipment_gap_
+tables.rs::collect_base_fields`'s cross-book blindness is confirmed and un-fixed" does not hold —
+the function is already correctly scoped per-book at commit `c27375ee1d` (doc comment + call site
+both confirm; no fourth site of the defect class found in this binary). Logged:
+`scripts/retro.py correction` id `1787515659162-t9-onboarding-60d66c`.
+
+**Why no fix landed:** covering all five groups with committed evidence, rather than fixing one
+group and leaving four re-investigated by a successor cycle, was judged the higher-value use of
+this cycle's budget — every fix location is now fully specified for direct implementation. Card 11
+stays `in-progress`. Next cycle should implement in order: C (trivial) -> D (highest leverage,
+generic) -> B -> A -> E.
+
+`docs/work-inventory.json` regen dependency: not touched (`corpus_literal_sweep` still `clean:
+false`, sibling lane's territory, per dispatch brief). Groups A and D are walker-enumeration
+defects a bare regen would not fix on its own -- the walker needs correcting first, then a regen.
+Groups B, C, E are corpus-record-generator-side and independent of the walker/regen.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/t9-onboarding-equipment-modifier-ability-rootcause_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).
