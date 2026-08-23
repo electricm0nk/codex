@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Popobala ~ Popobala Fever",
+    "delivery": "Supernatural",
+    "description": "A creature wounded by a popobala's talons becomes sickened for 1d6 minutes unless it makes a DC 25 Fortitude save. A creature already sickened by the fever becomes nauseated for 1d6 rounds. One already nauseated by the fever is helpless for 1d6 rounds. This is a disease effect. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:popobala_popobala_fever",
+    "name": "Popobala Fever",
+    "owners": [
+      "bestiary_3:monster:popobala"
+    ],
+    "source_page": "p.221",
+    "traits": [
+      "PopobalaRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1425,
+    "record_key": "Popobala ~ Popobala Fever"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

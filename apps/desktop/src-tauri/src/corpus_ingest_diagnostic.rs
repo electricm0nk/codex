@@ -1340,7 +1340,13 @@ mod tests {
         // `rules_tables::beastiary1` (46 legacy monsters) rather than
         // dropping them, keyed to that real owner's name
         // (`MonsterBook::abilities_owned_by_name`).
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 522);
+        // T9 `MonsterAbilityFacet` widening cycle: 522 -> 529 (+7), 7 more
+        // owned, reachable ability rows shipped once the widened facet
+        // vocabulary (`Weakness`/`Defensive`/`Aura`/`Sense`/`Communicate`)
+        // and the multi-`TYPE:`-token parsing fix landed
+        // (`rules_tables::bestiary::mod.rs`'s own comment carries the full
+        // derivation).
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 529);
     }
 
     #[test]

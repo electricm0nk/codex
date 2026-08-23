@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Globster ~ Decompose",
+    "delivery": "Extraordinary",
+    "description": "A slain globster decays into a mass of goo in the span of 24 hours. However, the corpse retains the creature's stench aura for 1d10 days after its death.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:globster_decompose",
+    "name": "Decompose",
+    "owners": [
+      "bestiary_3:monster:globster"
+    ],
+    "source_page": "p.131",
+    "traits": [
+      "GlobsterRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 927,
+    "record_key": "Globster ~ Decompose"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

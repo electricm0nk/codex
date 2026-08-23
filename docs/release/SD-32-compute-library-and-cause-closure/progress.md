@@ -3931,4 +3931,108 @@ reflected in the checked-in inventory until a future regen. Budget constants lef
   `monster` ~7) stand, and whether each already has its own `transcribe_monster_tables.py`-shaped
   generic mechanism (this cycle's own central finding) is the first question to check before
   assuming one needs to be built.
+
+## Cycle epic-2-t9-monster-ability-facet-widening (2026-08-23) — Card 11, T9 — `MonsterAbilityFacet` widened, 442 new records across the 5 previously-blocked books
+
+Picked up the prior cycle's own "next-cycle plan": widen `MonsterAbilityFacet` for the 876
+PI-cleared `monster_ability` units blocking `bestiary`/`bestiary_2`/`bestiary_3`/
+`inner_sea_bestiary`/`inner_sea_gods`.
+
+**Re-derived the 876 and the facet-shape breakdown fresh** (`decisions.md §17a`) rather than
+trusting the prior receipt's own figures at face value. Confirmed 876 exactly. Broke it down by
+`TYPE:` facet shape: **21 distinct shapes, not the brief's 4 named ones.** 763 of the 876 already
+resolve under the existing `SpecialAttack`/`SpecialQuality` vocabulary once read correctly; 113 do
+not.
+
+**A real parsing bug, found while deriving the breakdown, independent of any vocabulary
+question**: `parse_type` read only the FIRST `TYPE:` token on a row via `token()`'s single-match
+semantics. 27 `bestiary_3` dragon-subtype rows (`Forest Dragon ~ Change Shape` and siblings) carry
+a SECOND `TYPE:` token stating the real facet (`TYPE:Supernatural` then
+`TYPE:RaceAbility.SpecialQuality`) — silently discarded before this cycle. Fixed with
+`type_segments()`, which scans every `TYPE:` field on the row.
+
+**Widened `MonsterAbilityFacet` with 5 new corpus-native variants** — `Weakness`/`Defensive`/
+`Aura`/`Sense`/`Communicate` — each a distinct, repeated label PCGen itself uses in `TYPE:`, never
+a semantic remapping onto the existing two. Resolves 61 of the 113 unmodelled units. Combined with
+the multi-`TYPE:`-token fix (27 rescued) and the ownership rows that newly resolves (33 more,
+sharing the `Legion Archon`/`Asurendra` name-vs-key shape — see below), **442 net new records
+shipped**: 522→529 (beastiary), 511→571 (bestiary_2), 36→409 (bestiary_3), 152→152
+(inner_sea_bestiary — no reachable row needed the new vocabulary), 154→156 (inner_sea_gods).
+
+**Deliberately did NOT model** (86 units remain, each named by exact shape and key in the cycle
+receipt): bare-delivery-only `TYPE:` with no facet at all (`SpellLike`/`Extraordinary`, 4 units —
+the brief's own flagged "modelling call this cycle did not make unilaterally"); `Internal` (1 —
+this bundle's own `CATEGORY:Internal` 2,371/243 split means one sample can't settle it);
+`ModifyHP`/`ModifyMovement` (1 each — single-occurrence, doesn't meet the "repeated" bar §3's
+table sets); two corpus typos (`Spelllike`, `SpecialAttck` — the transcriber's own "verbatim, never
+inferred" contract forbids silent spelling correction); a comma-delimited `TYPE:` anomaly (2 units
+— comma is a real, heavily-used PCGen list separator elsewhere, so splitting on it here without a
+broader stress-test risked an unvetted global behavior change); and several tokens that read as
+NOT real abilities at all (`Unfettered Eidolon Stat Selection` and four similarly-shaped strings, 7
+units — same shape as this bundle's own `CATEGORY:Internal` finding, needs a per-record read).
+
+**A pre-existing test defect the widening exposed, fixed generically rather than patched**:
+`bestiary_3::every_shipped_ability_is_reached_by_its_namespaced_key` hard-coded a 9-entry
+exception list for rows namespaced to a monster's short display `name` rather than its
+parenthesised `key` (`Archon (Legion)` / `Legion Archon`). This cycle's widening newly shipped 33
+MORE rows of the identical shape, which would have grown the list to 42 — the exact un-scalable
+pattern `decisions.md §16` warns against. Rewrote the test to resolve through the owning monster's
+`name` field generically; zero hardcoded exceptions remain, and it passes for all 409 shipped
+`bestiary_3` abilities.
+
+**Proved the widening reclassifies nothing already shipped** (`decisions.md §16`'s own caution,
+applied properly this time): a whole-`MONSTER_BOOKS`-registry pinning test
+(`monster_chassis::tests::widening_the_facet_vocabulary_does_not_reclassify_any_existing_record`).
+Mutation-proved by deliberately flipping one already-shipped record's facet
+(`bestiary_2`'s `Draconal ~ Celestial Focus`, `SpecialQuality` → `SpecialAttack`) and confirming
+the test failed for the correct reason, then reverting. The assertion iterates the WHOLE registry,
+not a hardcoded subset — its failure branch is real for any book, unlike the `refine_kind` stress
+test's "0 false positives on 10 hardcoded Paizo paths" gap this bundle already learned from once.
+After the real data regen, independently confirmed (not by trusting the re-pinned digest alone):
+diffed every touched book's `monster_data.rs` against its pre-regen `git show HEAD:` content — 0
+removed, 0 reclassified, 442 added, exactly matching. Re-pinned only after that.
+
+```
+$ cargo test --locked --lib monster                                              # 83 passed, 0 failed
+$ cargo test --locked --lib                                                      # 2410 passed, 0 failed, 13 ignored
+$ cargo test --locked --bin v06_work_inventory                                    # 335 passed, 0 failed
+$ cargo test --locked --bin gen_book_cache                                        # 3 passed, 0 failed
+$ cargo build --locked --manifest-path apps/desktop/src-tauri/Cargo.toml --bins   # clean
+$ cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml --bins    # 518 passed, 0 failed
+$ cargo run --locked --release --bin corpus_literal_sweep
+corpus-literal-sweep: 26538 records examined, 255839 tokens compared, 0 findings — CLEAN
+$ cargo run --locked --release --bin pi_sweep_rules_tables
+pi-sweep: 10 hits, 10 baseline rows — CLEAN, 0 new
+$ cargo run --locked --release --bin v06_corpus_trap_report -- --audit
+# 0 findings in any of the 5 books' new files (1191 pre-existing wiring-class-mismatch findings
+# elsewhere in the corpus, unrelated, unchanged by this cycle)
+```
+
+**Reachability, proven live, honestly scoped**: `reach_gate` bin 31/31 GREEN. `beastiary`/
+`bestiary_2`/`bestiary_3` have dedicated per-book claims, all three re-pinned and GREEN.
+`inner_sea_bestiary`/`inner_sea_gods` have no dedicated per-book reach test yet — their
+reachability is covered by the corpus-wide invariant tests
+(`every_declared_claim_actually_carries_the_records`/`unreached_records_are_exactly_the_recorded_
+findings`/`unsurfaced_families_are_exactly_the_recorded_findings`), all three GREEN with zero new
+findings. Scoped the claim to what genuinely has a dedicated test, per the T9 spell lane's own
+precedent, rather than over-claiming.
+
+**§15**: `pi_sweep_rules_tables` CLEAN, 0 new hits. Every one of the 5 regenerated books' own PI
+screens agreed with the T9 §19 disposition already applied. No record reached this cycle that this
+cycle believed carried Product Identity despite its `clear` disposition. Nothing was stopped on.
+
+**Gate 3's `no_record`, re-derived, NOT repinned** (committed inventory, not regenerated, same
+reason as the prior cycle): `scripts/verify.sh --only shape-coverage-standing-gate` → PASS
+(population=36028 unclassified=0 **no_record=20889**). Pre-existing (down from the prior receipt's
+21349 by concurrent sibling-lane work, not by this cycle); not moved by this cycle's 442-record
+addition, which is not reflected in the checked-in inventory until a future regen. Budget constants
+left untouched.
+
+- **Status:** complete (partial widening — 86 units of 876 remain not-yet-modelled, each named by
+  exact shape; row 11 stays `in-progress`).
+- **Kanban:** row 11 prepended (T9 facet-widening entry); rows 11, 15 left `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t9-monster-ability-facet-widening_cycle-2_cycle_receipt.md`.
+- **What remains:** the 86 not-yet-modelled units (itemised by exact shape in the receipt), each
+  needing a per-record read rather than a blanket vocabulary entry. `feat`/`equipment`/`companion`/
+  `monster` kinds untouched, as the prior cycle left them.
 - Commit: (recorded after push).

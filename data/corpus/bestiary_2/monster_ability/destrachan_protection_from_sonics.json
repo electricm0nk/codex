@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Destrachan ~ Protection from Sonics",
+    "delivery": "Extraordinary",
+    "description": "A destrachan gains a +4 racial bonus on all saves against sonic attacks.  It is immune to the effects of its own destructive harmonics.  A destrachan whose sense of hearing is impaired is effectively blinded, treating all targets as if they had total concealment.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:destrachan_protection_from_sonics",
+    "name": "Protection from Sonics",
+    "owners": [
+      "bestiary_2:monster:destrachan"
+    ],
+    "source_page": "p.83",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 383,
+    "record_key": "Destrachan ~ Protection from Sonics"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

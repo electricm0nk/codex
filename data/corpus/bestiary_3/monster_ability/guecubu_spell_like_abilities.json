@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Guecubu ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 8th; concentration +13) At will-stone shape 3/day-soften earth and stone, spike growth (DC 18) 1/day-spike stones (DC 19), transmute mud to rock (DC 20), transmute rock to mud (DC 20)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:guecubu_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:guecubu"
+    ],
+    "source_page": null,
+    "traits": [
+      "GuecubuRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1034,
+    "record_key": "Guecubu ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

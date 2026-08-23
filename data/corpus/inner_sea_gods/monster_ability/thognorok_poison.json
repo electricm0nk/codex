@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Thognorok ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Injury; Save Fort DC %1; Frequency 1/round for 4 rounds; Effect 1d2 Str; Cure 2 consecutive saves.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:thognorok_poison",
+    "name": "Poison",
+    "owners": [
+      "inner_sea_gods:monster:qlippoth_thognorok"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 237,
+    "record_key": "Thognorok ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Siyokoy ~ Stunning Shock",
+    "delivery": "Supernatural",
+    "description": "A siyokoy can emit a strong electrical charge from its tail. When it hits a creature with its tail slap, the attack deals 3d6 points of electrical damage and the target must succeed at a DC 22 Fortitude save or be stunned for 1d4 rounds.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:siyokoy_stunning_shock",
+    "name": "Stunning Shock",
+    "owners": [
+      "bestiary_3:monster:siyokoy"
+    ],
+    "source_page": "p.246",
+    "traits": [
+      "SiyokoyRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1536,
+    "record_key": "Siyokoy ~ Stunning Shock"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

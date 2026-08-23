@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Shining Child ~ Blinding Light",
+    "delivery": "Extraordinary",
+    "description": "A shining child can radiate a 60-foot-radius aura of blinding light as a free action.  Creatures within the affected area must succeed on a DC %1 Fortitude save or be permanently blinded.  A creature that successfully saves cannot be affected again by the same shining child's aura for 24 hours.",
+    "description_variables": [
+      "ShiningChildBlindingLightDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:shining_child_blinding_light",
+    "name": "Blinding Light",
+    "owners": [
+      "bestiary_2:monster:shining_child"
+    ],
+    "source_page": "p.245",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1141,
+    "record_key": "Shining Child ~ Blinding Light"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

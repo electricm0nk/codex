@@ -4723,7 +4723,15 @@ mod tests {
         // raw-candidate population this test does not itself assert on and
         // this cycle did not re-derive -- not restated here to avoid
         // quoting a number nobody has re-checked against the new total.
-        assert_eq!(abilities.len(), 493, "the owned rows on disk for this book/kind");
+        // T9 `MonsterAbilityFacet` widening cycle: 493 -> 571 (+78 on disk,
+        // via `gen_book_cache -- bestiary_2` catching disk up to the
+        // widened Rust table -- 60 of the 78 are genuinely new records this
+        // cycle's `transcribe_monster_tables.py` run shipped; the other 18
+        // were the pre-existing `CATEGORY:Internal` bundle-owned rows this
+        // very test's own `BUNDLE_OWNED_NO_JSON_TWIN_YET` list already named
+        // as served-but-not-yet-on-disk -- `gen_book_cache` wrote their JSON
+        // twin for the first time, closing that gap incidentally).
+        assert_eq!(abilities.len(), 571, "the owned rows on disk for this book/kind");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -4804,7 +4812,10 @@ mod tests {
         {
             Reach::Surfaced { records, surface } => {
                 // SD31-E6-F9-005 (transcription lane, wave 12): 401 -> 493.
-                assert_eq!(records, 493);
+                // T9 `MonsterAbilityFacet` widening cycle: 493 -> 571 (see
+                // the `abilities.len()` assertion above in this same test
+                // for the full derivation).
+                assert_eq!(records, 571);
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected every linked ability to reach, got {other:?}"),
@@ -4844,10 +4855,16 @@ mod tests {
             261,
             "every one of this book's corpus monster rows ships; no PI row, no `.COPY=` delta"
         );
+        // T9 `MonsterAbilityFacet` widening cycle: 27 -> 409. The widened
+        // facet vocabulary and the multi-`TYPE:`-token parsing fix together
+        // unlocked most of this book's population — `rules_tables::
+        // bestiary_3::mod.rs`'s own comment carries the full derivation, and
+        // `gen_book_cache -- bestiary_3` wrote all 409 to disk, closing the
+        // `BUNDLE_OWNED_NO_JSON_TWIN_YET` gap below for every key it names.
         assert_eq!(
             abilities.len(),
-            27,
-            "the 27 owned rows; the book's other 13 are orphans owned by no monster row here"
+            409,
+            "the 409 owned, reachable rows on disk after the T9 widening cycle"
         );
 
         let response = crate::monster_catalog::build_monster_catalog();
@@ -4915,7 +4932,9 @@ mod tests {
             .expect("a claim is declared")
         {
             Reach::Surfaced { records, surface } => {
-                assert_eq!(records, 27);
+                // T9 `MonsterAbilityFacet` widening cycle: 27 -> 409 (see the
+                // `abilities.len()` assertion above in this same test).
+                assert_eq!(records, 409);
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected every linked ability to reach, got {other:?}"),
@@ -4980,13 +4999,18 @@ mod tests {
         // book_cache` run wrote -- 68 of those were wave 21's own +399->467
         // Rust-table delta, never previously cache-generated to JSON, plus
         // this cycle's own +55 cross-table-owner rows, `decisions.md §58.3`).
+        // T9 `MonsterAbilityFacet` widening cycle: 522 -> 529 (+7 more owned,
+        // reachable abilities shipped once the widened facet vocabulary and
+        // the multi-`TYPE:`-token parsing fix landed;
+        // `rules_tables::bestiary::mod.rs`'s own comment carries the full
+        // derivation).
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 522, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 529, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 522),
-            other => panic!("expected all 522 abilities to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 529),
+            other => panic!("expected all 529 abilities to reach, got {other:?}"),
         }
     }
 

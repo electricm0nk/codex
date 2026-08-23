@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Thognorok ~ Acid Web",
+    "delivery": "Supernatural",
+    "description": "This ability functions like the Web universal monster ability, except a creature entangled by a thognorok's web also takes 1 point of acid damage (web DC %1).",
+    "description_variables": [
+      "AcidWebDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:thognorok_acid_web",
+    "name": "Acid Web",
+    "owners": [
+      "inner_sea_gods:monster:qlippoth_thognorok"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 235,
+    "record_key": "Thognorok ~ Acid Web"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

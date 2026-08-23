@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:51Z",
+  "data": {
+    "corpus_key": "Treant ~ Double Damage",
+    "delivery": "Extraordinary",
+    "description": "A treant or animated tree that makes a full attack against an object or structure deals double damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:treant_double_damage",
+    "name": "Double Damage Against Objects",
+    "owners": [
+      "beastiary:monster:treant"
+    ],
+    "source_page": "p.266",
+    "traits": [
+      "TreantRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1193,
+    "record_key": "Treant ~ Double Damage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

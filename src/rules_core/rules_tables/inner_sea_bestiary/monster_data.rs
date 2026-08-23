@@ -380,7 +380,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         source_page: Some("p.26"),
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: Some("1d6") }],
         ability_keys: &["Good ~ Regeneration", "Lorthact ~ Infernal Duke Traits", "Lorthact ~ Intelligence Drain", "Lorthact ~ Scholastic Masquerade", "Lorthact ~ Spell Reservoir", "Lorthact ~ Temporal Anomaly"],
-        external_ability_refs: &["Lorthact ~ Spell-Like Abilities"],
+        external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 12 }, StatAdjustment { ability: "DEX", amount: 22 }, StatAdjustment { ability: "CON", amount: 24 }, StatAdjustment { ability: "INT", amount: 20 }, StatAdjustment { ability: "WIS", amount: 16 }, StatAdjustment { ability: "CHA", amount: 26 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,

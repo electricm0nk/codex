@@ -260,7 +260,18 @@ mod tests {
         // 493 -> 511 (SD31-W21-MONSTER-001, +18): the `CATEGORY:Internal`
         // bundle-row ownership hop resolved 18 previously-orphaned ability
         // rows this book's monsters name only indirectly.
-        assert_eq!(monster_abilities().len(), 511);
+        // 511 -> 571 (T9 `MonsterAbilityFacet` widening cycle, +60): the
+        // widened facet vocabulary (`Weakness`/`Defensive`/`Aura`/`Sense`/
+        // `Communicate`) shipped 60 more owned, reachable ability rows that
+        // previously carried a `TYPE:` shape the chassis did not model. 9
+        // owned rows remain excluded and named on stderr — 3 with no
+        // `TYPE:` token at all, 2 bare-delivery-only (`Extraordinary` with
+        // no facet segment), and 4 needing a per-record read
+        // (`ModifyHP`/`Spelllike`-typo/`SpecialAttck`-typo/an
+        // un-investigated `Bunyip ~ Blood Rage`) — see
+        // `scripts/transcribe_monster_tables.py bestiary_2`'s own stderr for
+        // the live list.
+        assert_eq!(monster_abilities().len(), 571);
     }
 
     /// Every transcribed ability row is owned by a monster row of this book.

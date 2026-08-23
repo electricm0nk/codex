@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Vampiric Mist ~ Sense Blood",
+    "delivery": "Extraordinary",
+    "description": "A vampiric mist can immediately sense the presence of warm-blooded creature in a 60-foot radius as if by scent.  It can detect exposed blood within a mile.",
+    "description_variables": [],
+    "facet": "Sense",
+    "key": "bestiary_2:monster_ability:vampiric_mist_sense_blood",
+    "name": "Sense Blood",
+    "owners": [
+      "bestiary_2:monster:vampiric_mist"
+    ],
+    "source_page": "p.277",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1327,
+    "record_key": "Vampiric Mist ~ Sense Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

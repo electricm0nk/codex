@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b1_races.lst` -- 280 monster rows
-//!   * `b1_abilities_race.lst` -- 438 monster-ability rows
+//!   * `b1_abilities_race.lst` -- 445 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 84 monster-ability rows
 //!
 //! 4 monster row(s) of this book are `<Record>.MOD` OVERLAY
@@ -26,7 +26,7 @@
 //! ANOTHER compiled table of this repo and are deliberately NOT transcribed here
 //! (`decisions.md §58.3`: this chassis sits ALONGSIDE that table and takes the
 //! book's complement -- emitting them too would put two records for one creature
-//! under one wire code). 55 further ability row(s) ARE
+//! under one wire code). 57 further ability row(s) ARE
 //! transcribed below despite this (`SD31-W23-MONSTER-001`, `§58.3`'s own deferred
 //! 'different remedy'): CROSS-TABLE OWNER rows are well-formed and owned, only by
 //! a monster whose STAT BLOCK lives in the other table. An ability record needs no
@@ -122,9 +122,11 @@
 //!   * `b1_abilities_race.lst:867` (ability row, owner: Lizardfolk)
 //!   * `b1_abilities_race.lst:943` (ability row, owner: Morlock)
 //!   * `b1_abilities_race.lst:944` (ability row, owner: Morlock)
+//!   * `b1_abilities_race.lst:945` (ability row, owner: Morlock)
 //!   * `b1_abilities_race.lst:946` (ability row, owner: Morlock)
 //!   * `b1_abilities_race.lst:1022` (ability row, owner: Pegasus)
 //!   * `b1_abilities_race.lst:1072` (ability row, owner: Rust Monster)
+//!   * `b1_abilities_race.lst:1073` (ability row, owner: Rust Monster)
 //!   * `b1_abilities_race.lst:1078` (ability row, owner: Sahuagin)
 //!   * `b1_abilities_race.lst:1079` (ability row, owner: Sahuagin)
 //!   * `b1_abilities_race.lst:1118` (ability row, owner: Shocker Lizard)
@@ -5247,7 +5249,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         source_page: Some("p.256"),
         natural_attacks: &[NaturalAttack { name: "Incorporeal touch", damage_dice: Some("1d8") }],
         ability_keys: &["Channel Resistance", "Spectre ~ Resurrection Vulnerability", "Spectre ~ Sunlight Powerlessness", "Spectre ~ Unnatural Aura"],
-        external_ability_refs: &["Flight Maneuverability", "Spectre ~ Create Spawn"],
+        external_ability_refs: &["Flight Maneuverability"],
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "INT", amount: 4 }, StatAdjustment { ability: "CHA", amount: 4 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
@@ -5486,7 +5488,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Plant:12"),
         source_page: Some("p.266"),
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: Some("2d6") }],
-        ability_keys: &["Rock Throwing", "Trample", "Vulnerability to Fire"],
+        ability_keys: &["Rock Throwing", "Trample", "Vulnerability to Fire", "Treant ~ Animate Trees", "Treant ~ Double Damage", "Treant ~ Treespeech"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 18 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CON", amount: 10 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: 2 }],
         has_spell_like_abilities: false,
@@ -5546,8 +5548,8 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Magical Beast:4"),
         source_page: Some("p.269"),
         natural_attacks: &[NaturalAttack { name: "Gore", damage_dice: Some("1d8") }, NaturalAttack { name: "Hoof", damage_dice: Some("1d3") }],
-        ability_keys: &["Immunity to Charm", "Immunity to Compulsion", "Immunity to Poison", "Powerful Charge", "Scent"],
-        external_ability_refs: &["Unicorn ~ Magical Strike", "Unicorn ~ Magic Circle against Evil", "Unicorn ~ Wild Empathy", "Unicorn Deflection", "Unicorn Resistance"],
+        ability_keys: &["Immunity to Charm", "Immunity to Compulsion", "Immunity to Poison", "Powerful Charge", "Scent", "Unicorn ~ Magical Strike", "Unicorn ~ Magic Circle against Evil", "Unicorn ~ Wild Empathy"],
+        external_ability_refs: &["Unicorn Deflection", "Unicorn Resistance"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "WIS", amount: 10 }, StatAdjustment { ability: "CHA", amount: 14 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
@@ -5957,7 +5959,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary monster-ability record (522 rows).
+/// Every bestiary monster-ability record (529 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Aboleth ~ Mucus Cloud",
@@ -10744,6 +10746,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 1072,
     },
     MonsterAbilityRecord {
+        key: "Rust Monster ~ Scent Metals",
+        name: "Scent Metal",
+        facet: MonsterAbilityFacet::Sense,
+        delivery: None,
+        traits: &["SpecialQuality,Extraordinary"],
+        description: Some("This ability functions much the same as the scent ability, except that the range is 90 feet and the rust monster can only use it to sense metal objects (including creatures wearing or carrying metal objects)."),
+        description_variables: &[],
+        source_page: Some("p.238"),
+        owners: &["Rust Monster"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1073,
+    },
+    MonsterAbilityRecord {
         key: "Sahuagin ~ Blood Frenzy",
         name: "Blood Frenzy",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -11184,6 +11199,84 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Tarrasque"],
         source_file: "b1_abilities_race.lst",
         source_line: 1186,
+    },
+    MonsterAbilityRecord {
+        key: "Treant ~ Animate Trees",
+        name: "Animate Trees",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &["TreantRacialTrait"],
+        description: Some("A treant can animate any trees within 180 feet at will, controlling up to two trees at a time. It takes 1 full round for a tree to uproot itself, after which it moves at a speed of 10 feet and fights as a treant (although it has only one slam attack and lacks the treant's animation and rockthrowing abilities), gaining the treant's vulnerability to fire. If the treant that animated it terminates the animation, moves out of range, or is incapacitated, the tree immediately takes root wherever it is and returns to its normal state."),
+        description_variables: &[],
+        source_page: Some("p.266"),
+        owners: &["Treant"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1192,
+    },
+    MonsterAbilityRecord {
+        key: "Treant ~ Double Damage",
+        name: "Double Damage Against Objects",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["TreantRacialTrait"],
+        description: Some("A treant or animated tree that makes a full attack against an object or structure deals double damage."),
+        description_variables: &[],
+        source_page: Some("p.266"),
+        owners: &["Treant"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1193,
+    },
+    MonsterAbilityRecord {
+        key: "Treant ~ Treespeech",
+        name: "Treespeech",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["TreantRacialTrait", "Communicate"],
+        description: Some("A treant has the ability to converse with plants as if subject to a continual speak with plants spell, and most plants greet them with an attitude of friendly or helpful."),
+        description_variables: &[],
+        source_page: Some("p.266"),
+        owners: &["Treant"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1194,
+    },
+    MonsterAbilityRecord {
+        key: "Unicorn ~ Magic Circle against Evil",
+        name: "Magic Circle against Evil",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["UnicornRacialTrait", "Aura"],
+        description: Some("This ability continually duplicates the effect of the spell. The unicorn cannot suppress this ability."),
+        description_variables: &[],
+        source_page: Some("p.269"),
+        owners: &["Unicorn"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1200,
+    },
+    MonsterAbilityRecord {
+        key: "Unicorn ~ Magical Strike",
+        name: "Magical Strike",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["UnicornRacialTrait"],
+        description: Some("A unicorn's gore attack is treated as a magic good weapon for the purposes of damage reduction."),
+        description_variables: &[],
+        source_page: Some("p.269"),
+        owners: &["Unicorn"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1201,
+    },
+    MonsterAbilityRecord {
+        key: "Unicorn ~ Wild Empathy",
+        name: "Wild Empathy",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["UnicornRacialTrait"],
+        description: Some("This works like the druid's wild empathy class feature, except the unicorn has a +6 racial bonus on the check."),
+        description_variables: &[],
+        source_page: Some("p.269"),
+        owners: &["Unicorn"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1202,
     },
     MonsterAbilityRecord {
         key: "Vampire Spawn ~ Resurrection Vulnerability",

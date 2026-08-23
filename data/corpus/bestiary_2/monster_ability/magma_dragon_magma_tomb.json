@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Magma Dragon ~ Magma Tomb",
+    "delivery": "Supernatural",
+    "description": "Once per day, a great wyrm magma dragon can spit lava onto a target within 120 feet, dealing damage normally for its breath weapon. This magma cools instantly - it does not continue doing damage at this point but does entrap the victim (DC %1, 3d6 minutes, hardness 8, hp 45).",
+    "description_variables": [
+      "MagmaDragonMagmaTombDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:magma_dragon_magma_tomb",
+    "name": "Magma Tomb",
+    "owners": [
+      "bestiary_2:monster:dragon_magma"
+    ],
+    "source_page": "p.100",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 495,
+    "record_key": "Magma Dragon ~ Magma Tomb"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

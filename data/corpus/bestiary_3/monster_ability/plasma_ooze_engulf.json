@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Plasma Ooze ~ Engulf",
+    "delivery": null,
+    "description": "The creature can engulf creatures in its path as part of a standard action.  It cannot make other attacks during a round in which it engulfs.  The creature merely has to move over its opponents, affecting as many as it can cover.  Targeted creatures can make attacks of opportunity against the creature, but if they do so, they are not entitled to a saving throw against the engulf attack.  Those who do not attempt attacks of opportunity can attempt a DC %1 Reflex save to avoid being engulfed - on a success, they are pushed back or aside (target's choice) as the creature moves forward.  Engulfed opponents gain the pinned condition, are in danger of suffocating, are trapped within the creature's body until they are no longer pinned, and may be subject to other special attacks from the creature. 4d6 electricity plus 4d6 fire",
+    "description_variables": [
+      "EngulfDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_3:monster_ability:plasma_ooze_engulf",
+    "name": "Engulf",
+    "owners": [
+      "bestiary_3:monster:plasma_ooze"
+    ],
+    "source_page": "p.296",
+    "traits": [
+      "PlasmaOozeRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1419,
+    "record_key": "Plasma Ooze ~ Engulf"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

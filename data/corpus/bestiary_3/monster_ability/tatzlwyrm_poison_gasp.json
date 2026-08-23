@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Tatzlwyrm ~ Poison Gasp",
+    "delivery": "Extraordinary",
+    "description": "A tatzlwyrm's breath contains a poisonous vapor. While grappling, instead of making a bite or rake attack, a tatzlwyrm can breathe poison into its victim's face. A tatzlwyrm must begin its turn grappling to use this ability-it can't begin a grapple and use its poison gasp in the same turn. Tatzlwyrm poison: Breath-inhaled; save Fort DC 12; frequency 1/round for 2 rounds; effect 1d2 Str damage; cure 1 save. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tatzlwyrm_poison_gasp",
+    "name": "Poison Gasp",
+    "owners": [
+      "bestiary_3:monster:tatzlwyrm"
+    ],
+    "source_page": "p.261",
+    "traits": [
+      "TatzlwyrmRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1592,
+    "record_key": "Tatzlwyrm ~ Poison Gasp"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

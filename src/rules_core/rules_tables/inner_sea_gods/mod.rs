@@ -165,7 +165,14 @@ mod tests {
     #[test]
     fn the_shipped_counts_are_the_reachable_ones() {
         assert_eq!(monsters().len(), 39, "every corpus monster row of this book ships");
-        assert_eq!(monster_abilities().len(), 154);
+        // 154 -> 156 (T9 `MonsterAbilityFacet` widening cycle, +2): the
+        // widened facet vocabulary shipped `Mother's Maw ~ Desecrate Aura`
+        // (`TYPE:Aura.Supernatural`) and `Orsheval ~ Truespeech`
+        // (`TYPE:Communicate.Supernatural`) — the exact `Communicate` shape
+        // the widening cycle's own dispatch brief named. 1 owned row remains
+        // excluded and named on stderr (`Xocothian ~ Speed Burst`,
+        // `TYPE:ModifyMovement.Extraordinary`).
+        assert_eq!(monster_abilities().len(), 156);
     }
 
     /// The three `support/` monster rows ship, and they are the reason this

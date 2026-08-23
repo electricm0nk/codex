@@ -11,7 +11,7 @@
 //!   * `isg_races.lst` -- 36 monster rows
 //!   * `isg_races_b4.lst` -- 3 monster rows
 //!   * `isg_abilities_races_b4.lst` -- 16 monster-ability rows
-//!   * `isg_abilities_races.lst` -- 138 monster-ability rows
+//!   * `isg_abilities_races.lst` -- 140 monster-ability rows
 //!
 //! 0 monster row(s) and 5 ability row(s) of this
 //! book are Product Identity and are NOT transcribed -- either because the corpus
@@ -88,7 +88,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Will):5"),
         source_page: Some("p.277"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d6") }, NaturalAttack { name: "Hoof", damage_dice: Some("1d4") }],
-        ability_keys: &["Orsheval ~ Electric Hooves", "Orsheval ~ Glittering Radiance"],
+        ability_keys: &["Orsheval ~ Electric Hooves", "Orsheval ~ Glittering Radiance", "Orsheval ~ Truespeech"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 6 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CON", amount: 4 }],
         has_spell_like_abilities: false,
@@ -748,7 +748,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Undead:18"),
         source_page: Some("p.312"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("5d6") }],
-        ability_keys: &["Mother's Maw ~ Spell Deflection", "Mother's Maw ~ Devour Soul", "Mother's Maw ~ Deathless", "Mother's Maw ~ Breath Weapon", "Mother's Maw ~ Channel Negative Energy", "Mother's Maw ~ Swallow Whole"],
+        ability_keys: &["Mother's Maw ~ Desecrate Aura", "Mother's Maw ~ Spell Deflection", "Mother's Maw ~ Devour Soul", "Mother's Maw ~ Deathless", "Mother's Maw ~ Breath Weapon", "Mother's Maw ~ Channel Negative Energy", "Mother's Maw ~ Swallow Whole"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 22 }, StatAdjustment { ability: "DEX", amount: 14 }, StatAdjustment { ability: "INT", amount: 10 }, StatAdjustment { ability: "WIS", amount: 10 }, StatAdjustment { ability: "CHA", amount: 12 }],
         has_spell_like_abilities: false,
@@ -819,7 +819,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_gods monster-ability record (154 rows).
+/// Every inner_sea_gods monster-ability record (156 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "First Blade ~ Powerful Blows (Slam)",
@@ -1093,6 +1093,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Orsheval"],
         source_file: "isg_abilities_races.lst",
         source_line: 94,
+    },
+    MonsterAbilityRecord {
+        key: "Orsheval ~ Truespeech",
+        name: "Truespeech",
+        facet: MonsterAbilityFacet::Communicate,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("An orsheval can speak with any creature that has a language, as if using a tongues spell (caster level 5th).  This ability is always active."),
+        description_variables: &[],
+        source_page: None,
+        owners: &["Orsheval"],
+        source_file: "isg_abilities_races.lst",
+        source_line: 95,
     },
     MonsterAbilityRecord {
         key: "Basileus ~ Gaze",
@@ -2601,6 +2614,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Chalkost"],
         source_file: "isg_abilities_races.lst",
         source_line: 277,
+    },
+    MonsterAbilityRecord {
+        key: "Mother's Maw ~ Desecrate Aura",
+        name: "Desecrate Aura",
+        facet: MonsterAbilityFacet::Aura,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("The herald has a 20-foot-radius emanation equivalent to a Desecrate spell centered on a shrine of evil power.  Undead within this radius (including the Maw) gain a +2 profane bonus on attack and damage rolls and saving throws, as well as +2 hit points per die, and the save DC of channeled negative energy is increased by +6 (these adjustments are included for the Maw in its entry).  This aura can be negated by Dispel Evil, but the herald can reactivate it on its turn as a free action.  A desecrating aura suppresses and is suppressed by Consecrate or Hallow; both effects are negated within any overlapping area of effect."),
+        description_variables: &[],
+        source_page: None,
+        owners: &["Mother's Maw"],
+        source_file: "isg_abilities_races.lst",
+        source_line: 280,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Spell Deflection",

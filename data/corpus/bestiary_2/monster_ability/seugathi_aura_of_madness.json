@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Seugathi ~ Aura of Madness",
+    "delivery": "Supernatural",
+    "description": "Any sane being within 30 feet of a conscious seugathi must make a DC %1 Will save each round or become confused for 1 round.  A creature that fails 5 saves in a row becomes permanently insane, as per the insanity spell.  A seugathi can suppress or activate this aura as a free action.  This is a mind-affecting effect.",
+    "description_variables": [
+      "SeugathiAuraOfMadnessDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:seugathi_aura_of_madness",
+    "name": "Aura of Madness",
+    "owners": [
+      "bestiary_2:monster:seugathi"
+    ],
+    "source_page": "p.243",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1127,
+    "record_key": "Seugathi ~ Aura of Madness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

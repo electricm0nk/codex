@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Ahmuuth ~ Death's Dagger",
+    "delivery": "Supernatural",
+    "description": "An ahmuuth's dagger is treated as a +1 returning undead bane dagger. It loses this ability if it is held by anyone other than the ahmuuth, and regains it once returned.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:ahmuuth_death_s_dagger",
+    "name": "Death's Dagger",
+    "owners": [
+      "inner_sea_gods:monster:psychopomp_ahmuuth"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 33,
+    "record_key": "Ahmuuth ~ Death's Dagger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

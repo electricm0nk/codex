@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Umbral Dragon ~ Energy Drain",
+    "delivery": "Supernatural",
+    "description": "A great wyrm umbral dragon deals 1 negative level with each successful bite or claw attack (1 level, DC %1).",
+    "description_variables": [
+      "UmbralDragonEnergyDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:umbral_dragon_energy_drain",
+    "name": "Energy Drain",
+    "owners": [
+      "bestiary_2:monster:dragon_umbral"
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 503,
+    "record_key": "Umbral Dragon ~ Energy Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

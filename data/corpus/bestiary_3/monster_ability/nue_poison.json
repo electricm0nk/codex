@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Nue ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC 21; frequency 1/round for 6 rounds; effect 1d4 Strength damage; cure 2 consecutive saves. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:nue_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_3:monster:nue"
+    ],
+    "source_page": "p.204",
+    "traits": [
+      "NueRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1334,
+    "record_key": "Nue ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

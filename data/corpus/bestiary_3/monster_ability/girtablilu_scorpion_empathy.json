@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Girtablilu ~ Scorpion Empathy",
+    "delivery": "Extraordinary",
+    "description": "This ability functions as a druid's wild empathy ability, save that it works only on scorpions. A girtablilu gains a racial bonus on this check equal to its Hit Dice (normally +10). Scorpions are normally mindless, but this empathic communication imparts upon them a modicum of implanted intelligence, allowing girtablilus to train scorpions and use them as guardians (though it does not grant them skills or feats).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:girtablilu_scorpion_empathy",
+    "name": "Scorpion Empathy",
+    "owners": [
+      "bestiary_3:monster:girtablilu"
+    ],
+    "source_page": "p.130",
+    "traits": [
+      "GirtabliluRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 922,
+    "record_key": "Girtablilu ~ Scorpion Empathy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

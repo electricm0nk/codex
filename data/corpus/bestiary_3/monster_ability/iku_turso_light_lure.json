@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Iku-Turso ~ Light Lure",
+    "delivery": "Supernatural",
+    "description": "As a standard action, an iku-turso can call forth a few small points of light, functioning like a dancing lights spell (CL equals the iku-turso's HD) except as described here. Creatures within 100 feet of one of these lights must make a DC 18 Will save upon sighting them or be compelled to approach them by the safest and most direct path. A creature that successfully saves is immune to the same iku-turso's light lure for 24 hours. If a subject of this effect has to move through hazardous terrain to reach the lights, that subject receives another saving throw to end the effect before entering the hazardous terrain. This effect ends once the character reaches the light or takes any form of damage. This is a visual mindaffecting charm effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:iku_turso_light_lure",
+    "name": "Light Lure",
+    "owners": [
+      "bestiary_3:monster:iku_turso"
+    ],
+    "source_page": "p.153",
+    "traits": [
+      "IkuTursoRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1073,
+    "record_key": "Iku-Turso ~ Light Lure"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

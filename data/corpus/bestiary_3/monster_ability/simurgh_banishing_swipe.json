@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Simurgh ~ Banishing Swipe",
+    "delivery": "Supernatural",
+    "description": "A simurgh can use its radiant tail to return creatures to their native planes. In addition to taking damage, any extraplanar creature touched by a simurgh's tail must succeed at a DC 28 Will save or be affected as if by banishment. A creature that makes this save cannot be affected by the same simurgh's banishing swipe for the next 24 hours. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:simurgh_banishing_swipe",
+    "name": "Banishing Swipe",
+    "owners": [
+      "bestiary_3:monster:simurgh"
+    ],
+    "source_page": "p.245",
+    "traits": [
+      "SimurghRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1530,
+    "record_key": "Simurgh ~ Banishing Swipe"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

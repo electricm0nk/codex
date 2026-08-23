@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Cloud Dragon ~ Cloud Breath",
+    "delivery": "Supernatural",
+    "description": "A great wyrm cloud dragon's breath weapon creates a cloud that persists in its cone shape for 1d4 rounds.  Treat this cloud as a fog cloud that deals electricity damage equal to half the dragon's breath weapon damage to any creature that ends its turn still within the cloud (Reflex save halves the damage - DC %1).",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:cloud_dragon_cloud_breath",
+    "name": "Cloud Breath",
+    "owners": [
+      "bestiary_2:monster:dragon_cloud"
+    ],
+    "source_page": "p.96",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 480,
+    "record_key": "Cloud Dragon ~ Cloud Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

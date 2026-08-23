@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Attic Whisperer ~ Aura of Sobs",
+    "delivery": "Supernatural",
+    "description": "All of the voices that an attic whisperer steals linger around it in an invisible but audible aura of unnerving childlike whimpers, songs, and sobs.  Any living creature that enters this area loses the benefit of all bardic performances affecting it and takes a -1 penalty on all attack rolls, damage rolls, and Will saving throws.  The attic whisperer can suppress or reactivate its aura as a free action.  This is a sonic, mind-affecting effect.",
+    "description_variables": [],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:attic_whisperer_aura_of_sobs",
+    "name": "Aura of Sobs",
+    "owners": [
+      "bestiary_2:monster:attic_whisperer"
+    ],
+    "source_page": "p.34",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 132,
+    "record_key": "Attic Whisperer ~ Aura of Sobs"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ]
+}

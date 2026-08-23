@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Jubjub Bird ~ Adaptive Defense",
+    "delivery": "Supernatural",
+    "description": "When first encountered, a jubjub bird has no energy resistance. When damaged by an attack that causes cold, electricity, fire, or sonic damage, it gains resistance 30 to that energy type until the end of its next turn. If an attack causes more than one type of energy damage, the jubjub bird gains resistance 30 to all the types of energy damage dealt.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jubjub_bird_adaptive_defense",
+    "name": "Adaptive Defense",
+    "owners": [
+      "bestiary_3:monster:jubjub_bird"
+    ],
+    "source_page": "p.157",
+    "traits": [
+      "JubjubBirdRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1096,
+    "record_key": "Jubjub Bird ~ Adaptive Defense"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

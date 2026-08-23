@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Umbral Dragon ~ Shadow Breath",
+    "delivery": "Supernatural",
+    "description": "Three times per day, an adult or older umbral dragon can breathe a cone of shadows.  Creatures who fail a Fortitude save are blinded for 1d4 rounds and take %1 points of Str drain.  A successful save negates the blindness and reduces Str drain to 1d4 points.",
+    "description_variables": [
+      "DragonAgeCategory"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:umbral_dragon_shadow_breath",
+    "name": "Shadow Breath",
+    "owners": [
+      "bestiary_2:monster:dragon_umbral"
+    ],
+    "source_page": "p.102",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 506,
+    "record_key": "Umbral Dragon ~ Shadow Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

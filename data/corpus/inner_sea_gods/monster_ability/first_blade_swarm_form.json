@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "First Blade ~ Swarm Form",
+    "delivery": "Supernatural",
+    "description": "The First Blade can transform into a floating swarm of Tiny sharp metal fragments. In this form it has the swarm subtype, cannot make slam attacks, gains the distraction ability (DC %1), and can make a swarm attack that deals 4d6 points of slashing damage to its targets.",
+    "description_variables": [
+      "10+(HD/2)+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:first_blade_swarm_form",
+    "name": "Swarm Form",
+    "owners": [
+      "inner_sea_gods:monster:the_first_blade"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 17,
+    "record_key": "First Blade ~ Swarm Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

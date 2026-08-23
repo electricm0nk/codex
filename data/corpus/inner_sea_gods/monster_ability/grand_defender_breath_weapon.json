@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Grand Defender ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Like an iron golem, as a free action once every 1d4+1 rounds, the Grand Defender can exhale a 10-foot cube of poisonous gas. This gas cloud persists for 1 round; any creature within the area when the Grand Defender creates it (as well as any creature that passes through the cloud during the remainder of that round) is exposed to the cloud's poisonous effects. This poison is magically created each time the golem uses this power. Inhaled; save Fort %1; frequency 1/round for 4 rounds; effect 1d4 Constitution damage; cure 2 saves.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:grand_defender_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "inner_sea_gods:monster:the_grand_defender"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 269,
+    "record_key": "Grand Defender ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

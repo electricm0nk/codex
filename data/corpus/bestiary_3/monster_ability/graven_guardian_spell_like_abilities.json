@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Graven Guardian ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 5th; concentration +0) 1/day-haste (self only)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:graven_guardian_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:graven_guardian"
+    ],
+    "source_page": null,
+    "traits": [
+      "GravenGuardianRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 975,
+    "record_key": "Graven Guardian ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

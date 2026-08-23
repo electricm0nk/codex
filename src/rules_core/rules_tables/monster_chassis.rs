@@ -119,12 +119,50 @@ pub struct MonsterSpellLikeAbility {
     pub save_dc_token: Option<&'static str>,
 }
 
-/// Which of `monster_ability`'s facets a record is, read from the first segment
-/// of its corpus `TYPE:` token.
+/// Which of `monster_ability`'s facets a record is, read from its corpus
+/// `TYPE:` token(s) — the FIRST segment, across every book's row, that names a
+/// facet the chassis models (`transcribe_monster_tables.py::parse_type`).
+///
+/// The five variants below `SpecialQuality` were added by the T9
+/// `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/`inner_sea_gods`
+/// widening cycle (`decisions.md §16`'s own caution against a naive widening
+/// applied here): each is a **distinct, repeated, corpus-native** facet label
+/// PCGen itself uses in `TYPE:` — never a semantic remapping onto
+/// `SpecialAttack`/`SpecialQuality`. `Weakness` (a monster's own
+/// vulnerability line), `Defensive` (a passive defensive trait), `Aura` (an
+/// area effect centred on the monster), `Sense` (a perception trait) and
+/// `Communicate` (a communication-only trait, e.g. `Communicate.Supernatural`
+/// — telepathy/truespeech) each occur multiple times across the five books'
+/// 876 PI-cleared units, verbatim, the same way `SpecialAttack`/
+/// `SpecialQuality` already do. A **bare** delivery-only `TYPE:` (no facet
+/// segment at all, e.g. a lone `TYPE:SpellLike`), the `CATEGORY:Internal`
+/// shape (this bundle's own finding: 2,371 real / 243 not — a single sample
+/// cannot settle which), one-off non-facet strings
+/// (`Unfettered Eidolon Stat Selection`, `AsurendraAdditional`, …), and two
+/// corpus typos (`Spelllike`, `SpecialAttck`) are deliberately **not**
+/// modelled here — each needs its own per-record read, not a vocabulary
+/// entry guessed from one sample (`t9-onboarding` cycle receipt, "What
+/// remains").
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MonsterAbilityFacet {
     SpecialAttack,
     SpecialQuality,
+    /// `TYPE:Weakness.Extraordinary` etc — a stated vulnerability or
+    /// drawback line (`Akata ~ Deaf`, `Bodak ~ Vulnerability to Sunlight`).
+    Weakness,
+    /// `TYPE:Defensive.Extraordinary` etc — a passive defensive trait that
+    /// PCGen's own vocabulary distinguishes from `SpecialQuality`
+    /// (`Chaos Beast ~ Resistant to Transformation`).
+    Defensive,
+    /// `TYPE:Aura.Supernatural` etc — an area effect centred on the monster
+    /// (`Quickwood ~ Fear Aura`, `Winterwight ~ Aura of Cold`).
+    Aura,
+    /// `TYPE:Sense.Supernatural` etc — a perception trait
+    /// (`Dragon Horse ~ Know Alignment`, `Banshee ~ Hear Heartbeat`).
+    Sense,
+    /// `TYPE:Communicate.Supernatural` etc — a communication-only trait
+    /// (`Orsheval ~ Truespeech`).
+    Communicate,
 }
 
 impl MonsterAbilityFacet {
@@ -133,6 +171,11 @@ impl MonsterAbilityFacet {
         match self {
             MonsterAbilityFacet::SpecialAttack => "SpecialAttack",
             MonsterAbilityFacet::SpecialQuality => "SpecialQuality",
+            MonsterAbilityFacet::Weakness => "Weakness",
+            MonsterAbilityFacet::Defensive => "Defensive",
+            MonsterAbilityFacet::Aura => "Aura",
+            MonsterAbilityFacet::Sense => "Sense",
+            MonsterAbilityFacet::Communicate => "Communicate",
         }
     }
 }
@@ -806,6 +849,77 @@ mod tests {
             !animated_object.has_spell_like_abilities,
             "Animated Object (Medium)'s row (b1_races.lst:13) carries no SLA_CL token — it \
              has no spell-like abilities"
+        );
+    }
+
+    /// **Pinning test for the T9 `MonsterAbilityFacet` widening
+    /// (`decisions.md §16`'s caution, applied).** Hashes every currently-
+    /// shipped `(corpus_book, ability_key, facet)` triple across every
+    /// registered book and pins the digest. Adding `Weakness`/`Defensive`/
+    /// `Aura`/`Sense`/`Communicate` to the enum must not change ONE existing
+    /// record's facet — those variants are reached only by
+    /// `scripts/transcribe_monster_tables.py` re-running against rows that
+    /// were previously unparseable (`facet is None` → `SystemExit`), never by
+    /// reinterpreting a row that already resolved to `SpecialAttack`/
+    /// `SpecialQuality`.
+    ///
+    /// **This test was proven to actually fail, not just pass by
+    /// construction**, by temporarily widening `parse_type` to a naive
+    /// first-non-facet-segment-wins rule (mirroring the `refine_kind`
+    /// unsafe-widening shape `decisions.md §16` names) and re-running
+    /// `transcribe_monster_tables.py` for `bestiary_2` — the run reclassified
+    /// `Denizen of Leng ~ Planar Fast Healing` from an unmodelled row into a
+    /// wrong `SpecialQuality` (its true first TYPE segment is `ModifyHP`, not
+    /// a real facet), and THIS test caught it (digest mismatch) before the
+    /// change reached this file. The naive widening was reverted; the
+    /// deliberate, per-shape widening actually shipped here does not trigger
+    /// it. The failure branch is real for ANY book in [`MONSTER_BOOKS`], not
+    /// only the one used to prove it: the assertion iterates the whole
+    /// registry, and a naive widening's failure mode (misreading whichever
+    /// row happens first in `TYPE:` order) is not specific to `bestiary_2`.
+    ///
+    /// **Pin history.** `2214` (this test's original pin, immediately after
+    /// the enum widened but before any of the five books were re-transcribed)
+    /// -> `2656` (+442, after re-running `transcribe_monster_tables.py` for
+    /// `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/
+    /// `inner_sea_gods`). The 442 new records were verified additions-only —
+    /// every one of the original 2214 `(book, key)` pairs still carries the
+    /// SAME facet in the regenerated files, checked by diffing each touched
+    /// book's `monster_data.rs` against its pre-regen `git show HEAD:` content
+    /// (0 removed, 0 changed, 442 added, exactly matching this test's own
+    /// count delta) — this test's own before/after count is one more
+    /// independent confirmation of the same fact.
+    #[test]
+    fn widening_the_facet_vocabulary_does_not_reclassify_any_existing_record() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut triples: Vec<(&str, &str, &str)> = Vec::new();
+        for book in MONSTER_BOOKS {
+            for ability in book.monster_abilities {
+                triples.push((book.corpus_book, ability.key, ability.facet.corpus_token()));
+            }
+        }
+        triples.sort_unstable();
+
+        let mut hasher = DefaultHasher::new();
+        triples.hash(&mut hasher);
+        let digest = hasher.finish();
+
+        assert_eq!(
+            triples.len(),
+            2656,
+            "the number of currently-shipped monster_ability records changed — re-derive \
+             this pin (and the digest below) only from a real corpus regen, never to make a \
+             facet-widening change pass"
+        );
+        assert_eq!(
+            digest, 0x7f1f_d137_006b_6cbd,
+            "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
+             `Communicate` may only be reached by rows that previously raised \
+             `parse_type`'s SystemExit — if this fires, some already-shipped \
+             SpecialAttack/SpecialQuality row was reclassified, which is exactly the \
+             defect this test exists to catch (decisions.md §16)"
         );
     }
 }

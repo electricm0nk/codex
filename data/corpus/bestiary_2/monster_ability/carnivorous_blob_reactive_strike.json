@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Carnivorous Blob ~ Reactive Strike",
+    "delivery": "Extraordinary",
+    "description": "Whenever a carnivorous blob takes damage, it reflexively lashes out with a slam attack. This ability effectively grants the carnivorous blob an attack of opportunity against any adjacent foe that deals it damage. These attacks of opportunity do not count against the normal limit the creature can make in a round. Attacks that deal sonic or slashing damage do not trigger a reactive strike - rather, they cause the creature to split. Whenever a carnivorous blob takes cold damage, the creature cannot use its reactive strike ability until after it takes its next action in combat.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:carnivorous_blob_reactive_strike",
+    "name": "Reactive Strike",
+    "owners": [
+      "bestiary_2:monster:carnivorous_blob"
+    ],
+    "source_page": "p.51",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 213,
+    "record_key": "Carnivorous Blob ~ Reactive Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

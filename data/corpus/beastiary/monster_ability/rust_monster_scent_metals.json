@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:51Z",
+  "data": {
+    "corpus_key": "Rust Monster ~ Scent Metals",
+    "delivery": null,
+    "description": "This ability functions much the same as the scent ability, except that the range is 90 feet and the rust monster can only use it to sense metal objects (including creatures wearing or carrying metal objects).",
+    "description_variables": [],
+    "facet": "Sense",
+    "key": "beastiary:monster_ability:rust_monster_scent_metals",
+    "name": "Scent Metal",
+    "owners": [
+      "beastiary:monster:rust_monster"
+    ],
+    "source_page": "p.238",
+    "traits": [
+      "SpecialQuality,Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1073,
+    "record_key": "Rust Monster ~ Scent Metals"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

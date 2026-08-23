@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Tenebrous Worm ~ Bristles",
+    "delivery": "Supernatural",
+    "description": "Long bristles of shadowstuff extend from between the tenebrous worm's armor plates. These bristles react swiftly to attacks, stabbing at any creature that attempts to harm the worm.  Each time a creature attacks a tenebrous worm, it must make a DC %1 Reflex save to avoid being punctured by several bristles.  Each time a creature is punctured by these bristles, it takes 1d4 points of piercing damage and is exposed to the tenebrous worm's poison.  A creature that grapples a tenebrous worm is automatically hurt by these bristles.",
+    "description_variables": [
+      "TenebrousWormBristlesDC"
+    ],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:tenebrous_worm_bristles",
+    "name": "Bristles",
+    "owners": [
+      "bestiary_2:monster:tenebrous_worm"
+    ],
+    "source_page": "p.260",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1229,
+    "record_key": "Tenebrous Worm ~ Bristles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

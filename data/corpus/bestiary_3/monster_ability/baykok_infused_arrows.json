@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Baykok ~ Infused Arrows",
+    "delivery": "Supernatural",
+    "description": "A baykok creates arrows of bone as it fires its bow-it need not carry arrows as ammunition. These bone arrows do normal damage for arrows fired from the bow, but gain a +1 enhancement bonus on attack and damage rolls. In addition, each arrow deals an additional 1d6 points of negative energy on a hit. Further, the first creature struck in a round by a baykok's arrow must make a DC 19 Fortitude save to avoid being paralyzed for 1d3 rounds. A baykok can fire normal arrows from its bow if it wishes-such arrows, however, do not gain the special negative energy damage or paralysis effects. The DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:baykok_infused_arrows",
+    "name": "Infused Arrows",
+    "owners": [
+      "bestiary_3:monster:baykok"
+    ],
+    "source_page": "p.35",
+    "traits": [
+      "BaykokRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 479,
+    "record_key": "Baykok ~ Infused Arrows"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -194,7 +194,16 @@ mod tests {
         // own `monsters()` count above is UNCHANGED (still 280 -- these 55
         // rows' owners are still not among them, by the same `§58.3` ruling
         // this test already asserts on the line above).
-        assert_eq!(monster_abilities().len(), 522);
+        // 522 -> 529 (T9 `MonsterAbilityFacet` widening cycle): re-running
+        // `scripts/transcribe_monster_tables.py bestiary` against the widened
+        // facet vocabulary (`Weakness`/`Defensive`/`Aura`/`Sense`/
+        // `Communicate` added to `FACETS`) shipped 7 more owned, reachable
+        // ability rows that previously carried a `TYPE:` shape the chassis
+        // did not model. 2 owned rows remain excluded and named on stderr
+        // (`Morlock ~ Sneak Attack`, bare `Internal`; `Spectre ~ Create
+        // Spawn`, comma-joined `TYPE:SpecialAttack,Supernatural` — a likely
+        // corpus typo for `.`, deliberately not auto-corrected).
+        assert_eq!(monster_abilities().len(), 529);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -241,7 +250,9 @@ mod tests {
         // and `cross_table_owner_names` above). `monsters().len()` (280) is
         // UNCHANGED: these 55 rows' real owners still ship from
         // `beastiary1`, never from here.
-        assert_eq!(monsters().len() + monster_abilities().len(), 802);
+        // 802 -> 809 (T9 `MonsterAbilityFacet` widening cycle, +7 abilities;
+        // see `the_chassis_ships_the_books_complement`'s own comment).
+        assert_eq!(monsters().len() + monster_abilities().len(), 809);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the

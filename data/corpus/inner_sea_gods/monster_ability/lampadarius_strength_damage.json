@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Lampadarius ~ Strength Damage",
+    "delivery": "Supernatural",
+    "description": "A lampadarius's touch deals 1d%1 points of Strength damage to a living creature. This is a negative energy effect. If the kyton deals Strength damage that equals or exceeds the target's Strength score, the kyton gains the benefits of death knell for 1 hour.",
+    "description_variables": [
+      "StrengthDamageDieSize"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:lampadarius_strength_damage",
+    "name": "Strength Damage",
+    "owners": [
+      "inner_sea_gods:monster:kyton_lampadarius"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 302,
+    "record_key": "Lampadarius ~ Strength Damage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

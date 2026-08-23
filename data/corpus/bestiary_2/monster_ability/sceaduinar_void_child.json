@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Sceaduinar ~ Void Child",
+    "delivery": "Extraordinary",
+    "description": "Sceaduinars are immune to effects that target souls (such as trap the soul) or require knowledge of a creature's identity (such as scrying).  When one is slain, it cannot be restored to life by magic save by a miracle or wish, or by divine intervention.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:sceaduinar_void_child",
+    "name": "Void Child",
+    "owners": [
+      "bestiary_2:monster:sceaduinar"
+    ],
+    "source_page": "p.239",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1106,
+    "record_key": "Sceaduinar ~ Void Child"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

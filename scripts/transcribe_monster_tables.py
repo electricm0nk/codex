@@ -238,9 +238,27 @@ BOOKS = {
 # rows, not all 330.
 CROSS_TABLE_MONSTER_RECORDS = {"bestiary": "beastiary"}
 
-# The `TYPE:` first segment that names which facet of `monster_ability` a row
-# is. Spelled exactly as the corpus spells it.
-FACETS = {"SpecialAttack": "SpecialAttack", "SpecialQuality": "SpecialQuality"}
+# The `TYPE:` segment that names which facet of `monster_ability` a row is.
+# Spelled exactly as the corpus spells it. `Weakness`/`Defensive`/`Aura`/
+# `Sense`/`Communicate` were added by the T9 five-book widening cycle
+# (`decisions.md §16`'s caution applied): each is a distinct, repeated,
+# corpus-native facet label -- never a semantic remapping onto
+# `SpecialAttack`/`SpecialQuality` -- verified against
+# `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/`inner_sea_gods`'s
+# own PI-cleared population before being added (the cycle's own receipt has
+# the per-shape counts). A bare delivery-only `TYPE:` (no facet segment at
+# all), the `CATEGORY:Internal` shape and one-off non-facet strings are
+# deliberately NOT in this dict -- each needs a per-record read, not a
+# vocabulary entry guessed from one sample.
+FACETS = {
+    "SpecialAttack": "SpecialAttack",
+    "SpecialQuality": "SpecialQuality",
+    "Weakness": "Weakness",
+    "Defensive": "Defensive",
+    "Aura": "Aura",
+    "Sense": "Sense",
+    "Communicate": "Communicate",
+}
 # The `TYPE:` segment naming how the ability is delivered, when the row says.
 DELIVERIES = {
     "Supernatural": "Supernatural",
@@ -972,10 +990,44 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     return parts[0], [p for p in parts[1:] if p and not is_prerequisite(p)]
 
 
+def type_segments(row: list[str]) -> list[str]:
+    """Every dot-separated segment across EVERY `TYPE:` token on the row, in
+    field order.
+
+    A row can carry more than one `TYPE:` token — `bestiary_3`'s dragon
+    subtypes state `TYPE:Supernatural` and `TYPE:RaceAbility.SpecialQuality`
+    as two separate fields on the same line (`Forest Dragon ~ Change Shape`
+    and 26 more). `token()` returns only the first field with a given prefix,
+    which silently discarded the SECOND token's facet for those 27 rows
+    before this existed — not a vocabulary gap, a parsing bug, found and
+    fixed by the T9 `MonsterAbilityFacet`-widening cycle while deriving the
+    real refusal population (`decisions.md §17a`: re-derive, don't trust).
+    """
+    segments: list[str] = []
+    for field in row:
+        if field.startswith("TYPE:"):
+            segments.extend(s for s in field[len("TYPE:") :].split(".") if s)
+    return segments
+
+
+class UnmodelledFacet(Exception):
+    """A row's `TYPE:` segments name no facet the chassis models.
+
+    Raised rather than exiting so the caller can decide whether the row
+    matters — same fix, same reason, as `UnmodelledDesc`
+    (`SD31-E6-F9-005`'s doc comment above `unscreenable_shipping`): a row
+    this cannot resolve is fine to drop, but must never crash every OTHER
+    row in the same book. Before this existed, `parse_type` raised
+    `SystemExit` directly and stopped `bestiary`/`bestiary_2`/`bestiary_3`/
+    `inner_sea_bestiary`/`inner_sea_gods` from transcribing ANY ability row
+    at all, not just the ones carrying an unmodelled shape — the identical
+    defect class, found again in the same script.
+    """
+
+
 def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:
     """`TYPE:SpecialAttack.Supernatural.Aura` -> facet, delivery, traits."""
-    raw = token(row, "TYPE:") or ""
-    segments = [s for s in raw.split(".") if s]
+    segments = type_segments(row)
     facet = None
     delivery = None
     traits: list[str] = []
@@ -987,9 +1039,10 @@ def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:
         else:
             traits.append(segment)
     if facet is None:
-        raise SystemExit(
-            f"row carries no `monster_ability` facet in TYPE:{raw!r} — the chassis "
-            "models SpecialAttack/SpecialQuality only; widen it deliberately"
+        raise UnmodelledFacet(
+            f"row carries no `monster_ability` facet in TYPE segments {segments!r} — the "
+            "chassis models SpecialAttack/SpecialQuality/Weakness/Defensive/Aura/Sense/"
+            "Communicate only; widen it deliberately"
         )
     return facet, delivery, traits
 
@@ -1176,6 +1229,13 @@ def transcribe(book: str) -> str:
     # transcription, because they are about to be emitted.
     unscreenable: set[str] = set()
 
+    # Ability rows whose `TYPE:` segments name no facet the chassis models
+    # (`UnmodelledFacet`). Same shape as `unscreenable` above and for the
+    # identical reason (`SD31-E6-F9-005`'s fix, applied to the sibling defect
+    # this cycle found in the same function): a row this cannot resolve is
+    # filtered out below, not fatal for the rest of the book.
+    unmodelled_facet: set[str] = set()
+
     # Ability rows whose `DESC:` text is declared Product Identity
     # (`DESCISPI:YES`) but whose ROW is not otherwise dropped -- these ship,
     # with `description` (and its variables) replaced by
@@ -1192,7 +1252,16 @@ def transcribe(book: str) -> str:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         if token(row, "NAMEISPI:") == "YES":
             return "NAMEISPI:YES"
-        _facet, _delivery, traits = parse_type(row)
+        try:
+            _facet, _delivery, traits = parse_type(row)
+        except UnmodelledFacet:
+            # This row will not ship regardless of PI status -- same
+            # reasoning as the `UnmodelledDesc` branch just below: an
+            # unresolvable row is not a clean row, so it is reported as
+            # neither PI-clear nor PI-blocked. Filtered out of `abilities`
+            # below, before the `unscreenable` pass runs.
+            unmodelled_facet.add(unit["corpus_key"])
+            return None
         try:
             description, variables = parse_desc(row)
         except UnmodelledDesc:
@@ -1498,6 +1567,33 @@ def transcribe(book: str) -> str:
             + "; ".join(
                 f"{u['source_file']}:{u['source_line']} ({u['corpus_key']})"
                 for u in unscreenable_shipping
+            ),
+            file=sys.stderr,
+        )
+
+    # Same shape, same reason, for a row whose `TYPE:` segments name no facet
+    # this chassis models (`UnmodelledFacet`). Before this pass existed
+    # `parse_type` raised `SystemExit` directly from the emission loop and
+    # stopped `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/
+    # `inner_sea_gods` from transcribing ANY ability row at all -- the T9
+    # widening cycle's own re-derivation found this crashed every genuinely
+    # modelled row in the same book, the identical `SD31-E6-F9-005` defect
+    # class found again.
+    unmodelled_facet_shipping = [u for u in abilities if u["corpus_key"] in unmodelled_facet]
+    if unmodelled_facet_shipping:
+        unmodelled_facet_keys = {u["corpus_key"] for u in unmodelled_facet_shipping}
+        abilities = [u for u in abilities if u["corpus_key"] not in unmodelled_facet_keys]
+        for key in monster_ability_keys:
+            monster_ability_keys[key] = [
+                a for a in monster_ability_keys[key] if a not in unmodelled_facet_keys
+            ]
+        print(
+            f"{book}: {len(unmodelled_facet_shipping)} owned ability row(s) NOT transcribed "
+            "(TYPE: segments name no facet this chassis models -- widen MonsterAbilityFacet "
+            "deliberately, never guess): "
+            + "; ".join(
+                f"{u['source_file']}:{u['source_line']} ({u['corpus_key']})"
+                for u in unmodelled_facet_shipping
             ),
             file=sys.stderr,
         )

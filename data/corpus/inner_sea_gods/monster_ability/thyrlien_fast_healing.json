@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Thyrlien ~ Fast Healing",
+    "delivery": "Extraordinary",
+    "description": "Regain 1 hp/round when outside under a night sky. Except where noted here, fast healing is just like natural healing. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts. Unless otherwise stated, it does not allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:thyrlien_fast_healing",
+    "name": "Fast Healing",
+    "owners": [
+      "inner_sea_gods:monster:azata_thyrlien"
+    ],
+    "source_page": null,
+    "traits": [
+      "ModifyHP"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 144,
+    "record_key": "Thyrlien ~ Fast Healing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

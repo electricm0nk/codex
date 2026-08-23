@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Crysmal ~ Crystal Sense",
+    "delivery": "SpellLike",
+    "description": "Crysmals can sense the presence of any crystals or gems within 30 feet as if using the scent ability.",
+    "description_variables": [],
+    "facet": "Sense",
+    "key": "bestiary_2:monster_ability:crysmal_crystal_sense",
+    "name": "Crystal Sense",
+    "owners": [
+      "bestiary_2:monster:crysmal"
+    ],
+    "source_page": "p.61",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 269,
+    "record_key": "Crysmal ~ Crystal Sense"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

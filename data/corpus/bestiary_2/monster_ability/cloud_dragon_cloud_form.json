@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Cloud Dragon ~ Cloud Form",
+    "delivery": "Supernatural",
+    "description": "An adult or older cloud dragon can change itself into a cloudy vapor as a swift action for %1 rounds per day.  This ability functions as gaseous form but the dragon's fly speed is unchanged.",
+    "description_variables": [
+      "TL"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:cloud_dragon_cloud_form",
+    "name": "Cloud Form",
+    "owners": [
+      "bestiary_2:monster:dragon_cloud"
+    ],
+    "source_page": "p.96",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 479,
+    "record_key": "Cloud Dragon ~ Cloud Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

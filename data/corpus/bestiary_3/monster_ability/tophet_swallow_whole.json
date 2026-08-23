@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Tophet ~ Swallow Whole",
+    "delivery": "Extraordinary",
+    "description": "Once swallowed by a tophet, an opponent takes no damage, but is trapped inside the creature's hollow interior. The construct's maw locks down, preventing creatures from climbing back out. A creature can attempt to hack or smash its way out as normal, but a tophet's stomach has hit points equal to one-tenth its actual hit points plus its bonus hit points for being a construct (totalling 40 hit points for most tophets). Alternatively, a swallowed creature can attempt to pick the lock on the iron hatch in the tophet's stomach by making a DC 30 Disable Device check. If a creature exits by picking the lock, the tophet closes its hatch and can swallow whole again. These locks can also be picked from the outside, but only after the tophet is slain. A Large tophet's belly can hold 1 Medium creature at a time.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tophet_swallow_whole",
+    "name": "Swallow Whole",
+    "owners": [
+      "bestiary_3:monster:tophet"
+    ],
+    "source_page": "p.271",
+    "traits": [
+      "TophetRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1626,
+    "record_key": "Tophet ~ Swallow Whole"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -206,7 +206,23 @@ mod tests {
     #[test]
     fn the_book_ships_every_monster_and_thirty_six_linked_abilities() {
         assert_eq!(monsters().len(), 261);
-        assert_eq!(monster_abilities().len(), 36);
+        // 36 -> 409 (T9 `MonsterAbilityFacet` widening cycle). Two fixes
+        // together: (1) the widened facet vocabulary
+        // (`Weakness`/`Defensive`/`Aura`/`Sense`/`Communicate`) and (2) a
+        // real parsing bug fix, reading EVERY `TYPE:` token on a row instead
+        // of only the first (`scripts/transcribe_monster_tables.py::
+        // type_segments`) — 27 dragon-subtype rows state their facet on a
+        // SECOND `TYPE:` token (`Forest Dragon ~ Change Shape`:
+        // `TYPE:Supernatural` then `TYPE:RaceAbility.SpecialQuality`), which
+        // the old single-token `token()` read silently dropped. This
+        // remains the "36" function name deliberately — renaming it is out
+        // of this cycle's scope, and the number it names is now stale by
+        // construction, exactly like `the_shipped_total_is_the_books_
+        // real_measured_count`'s own precedent in `bestiary/mod.rs`. 1
+        // owned row remains excluded and named on stderr (`Adlet ~
+        // Spell-Like Abilities`, bare `TYPE:SpellLike` with no facet
+        // segment at all).
+        assert_eq!(monster_abilities().len(), 409);
     }
 
     /// The first book in the lane to lose NO monster row: no `NAMEISPI:YES`, no
@@ -279,44 +295,47 @@ mod tests {
     }
 
     /// Every shipped ability of this book is reached by the namespaced-prefix
-    /// link rather than by a monster row naming it — EXCEPT the 9 named below,
-    /// added by `SD31-W21-MONSTER-001`'s `CATEGORY:Internal` bundle-row hop,
-    /// whose namespace prefix is a human-readable short name distinct from
-    /// their real owner's corpus `KEY:` (`Adhukait`/`Aghasura`/`Legion Archon`
-    /// versus `Asura (Adhukait)`/`Asura (Aghasura)`/`Archon (Legion)`). This
-    /// was the first book in the lane where the property held for the WHOLE
-    /// shipped set (`row-named` reads 0 against `b3_races.lst`'s 100
+    /// link — either directly (the prefix IS an owner's corpus `KEY:`) or
+    /// through an owner's human-readable `name` (`SD31-W21-MONSTER-001`'s
+    /// `CATEGORY:Internal` bundle-row hop first surfaced this: a monster like
+    /// `key: "Archon (Legion)", name: "Legion Archon"` is namespaced by its
+    /// SHORT display name, not its parenthesised corpus key). This was the
+    /// first book in the lane where the property held for the WHOLE shipped
+    /// set (`row-named` reads 0 against `b3_races.lst`'s 100
     /// `ABILITY:Special Ability|AUTOMATIC|` tokens, which name rows the
     /// inventory files under `race_trait` — `file_kind` reads only the first
     /// `TYPE:` segment; see this module's header for the 341-unit scope
-    /// finding that follows from it) — it still holds for every OTHER shipped
-    /// ability, which this test now asserts explicitly rather than trusting
-    /// the exception list to stay exhaustive by construction.
+    /// finding that follows from it).
+    ///
+    /// **Rewritten by the T9 `MonsterAbilityFacet` widening cycle.** The
+    /// prior version hand-maintained a 9-entry exception list for exactly
+    /// this `name`-vs-`key` shape; re-running the transcriber against the
+    /// widened facet vocabulary (plus a real multi-`TYPE:`-token parsing fix
+    /// — `Forest`/`Sea`/`Sky`/`Sovereign`/`Underworld` Dragon subtypes, each
+    /// stating their facet on a SECOND `TYPE:` token) newly shipped 33 more
+    /// ability rows of this exact shape, which would have made the list
+    /// 42 entries and counting — the un-scalable pattern `decisions.md §16`
+    /// warns against. Resolving through `monster.name` instead is the fix
+    /// for the shape itself, not one more name added to a list.
     #[test]
     fn every_shipped_ability_is_reached_by_its_namespaced_key() {
-        const BUNDLE_OWNED_EXCEPTIONS: &[&str] = &[
-            "Legion Archon ~ Flames of Faith",
-            "Legion Archon ~ Second Skin",
-            "Adhukait ~ Dance of Disaster",
-            "Adhukait ~ Dual Mind",
-            "Adhukait ~ Spell-Like Abilities",
-            "Aghasura ~ Attraction Aura",
-            "Aghasura ~ Dual Wielder",
-            "Aghasura ~ Infused Weapons",
-            "Aghasura ~ Poison",
-        ];
         for ability in monster_abilities() {
-            if BUNDLE_OWNED_EXCEPTIONS.contains(&ability.key) {
-                continue;
-            }
             let (prefix, _) = ability
                 .key
                 .split_once(" ~ ")
                 .unwrap_or_else(|| panic!("{} is not a namespaced key", ability.key));
+            let reached = ability.owners.iter().any(|owner| {
+                *owner == prefix
+                    || monsters()
+                        .iter()
+                        .find(|m| m.key == *owner)
+                        .is_some_and(|m| m.name == prefix)
+            });
             assert!(
-                ability.owners.contains(&prefix),
-                "{} is namespaced to {prefix}, which is not among its owners",
-                ability.key
+                reached,
+                "{} is namespaced to {prefix}, which is not among its owners ({:?}) either by \
+                 key or by the owning monster's display name",
+                ability.key, ability.owners
             );
         }
     }

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Vodyanoi ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 6th; concentration +7) 3/day- control water, dancing lights, grease (DC 12), hydraulic push* (DC 12), water breathing 1/day-aqueous orb* (DC 14), cure disease, neutralize poison",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:vodyanoi_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:vodyanoi"
+    ],
+    "source_page": null,
+    "traits": [
+      "VodyanoiRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1668,
+    "record_key": "Vodyanoi ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

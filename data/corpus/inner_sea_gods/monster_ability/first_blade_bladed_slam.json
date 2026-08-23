@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "First Blade ~ Bladed Slam",
+    "delivery": "Extraordinary",
+    "description": "The First Blade's slam attacks deal bludgeoning and slashing damage. Its slams count as natural weapons or manufactured weapons (whichever is most beneficial to it) for the purpose of spells that enhance attacks, and as adamantine, chaotic, and magic for the purpose of overcoming damage reduction and bypassing hardness.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:first_blade_bladed_slam",
+    "name": "Bladed Slam",
+    "owners": [
+      "inner_sea_gods:monster:the_first_blade"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 16,
+    "record_key": "First Blade ~ Bladed Slam"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

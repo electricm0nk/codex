@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "data": {
+    "corpus_key": "Sard ~ Death Throes",
+    "delivery": "Supernatural",
+    "description": "When a sard dies, its remains explode with a blast of lightning into razor-sharp splinters of wood.  All creatures within 30 feet of a sard when it explodes in this manner take 12d6 points of electricity damage and 12d6 points of piercing damage.  A DC %1 Reflex save halves this damage.",
+    "description_variables": [
+      "SardDeathThroesDC"
+    ],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:sard_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "bestiary_2:monster:sard"
+    ],
+    "source_page": "p.237",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1091,
+    "record_key": "Sard ~ Death Throes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

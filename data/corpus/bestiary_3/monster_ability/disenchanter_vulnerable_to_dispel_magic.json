@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "data": {
+    "corpus_key": "Disenchanter ~ Vulnerable to Dispel Magic",
+    "delivery": "Extraordinary",
+    "description": "A disenchanter targeted by dispel magic takes 1d6 points of damage per caster level (maximum 10d6, Fortitude save for half). Greater dispel magic functions similarly (maximum 20d6 damage, Fortitude save for half).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:disenchanter_vulnerable_to_dispel_magic",
+    "name": "Vulnerable to Dispel Magic",
+    "owners": [
+      "bestiary_3:monster:disenchanter"
+    ],
+    "source_page": "p.81",
+    "traits": [
+      "DisenchanterRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 697,
+    "record_key": "Disenchanter ~ Vulnerable to Dispel Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}
