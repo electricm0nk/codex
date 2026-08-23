@@ -585,12 +585,15 @@ mod kind_ability_tests {
         assert_eq!(out.units.len(), 0, "{:?}", out.units);
     }
 
-    /// Every OTHER kind's `internal_namespace` trap behaviour is unchanged:
-    /// a `Kind::ClassFeature` row carrying `CATEGORY:Internal` is still
-    /// dropped by the file-wide trap exactly as before this cycle -- the
-    /// `kind != Kind::Ability` guard is scoped to `Ability` alone.
+    /// SD-32 card 15-internal: a content-bearing `Kind::ClassFeature`
+    /// `CATEGORY:Internal` row is now enumerated, NOT dropped by the
+    /// file-wide trap -- `decisions.md §12b`'s adjudication found this exact
+    /// shape (`DEFINE:` present) is disposition (A), 90.7% of the 2,614-row
+    /// population. Before card 15-internal's fix, this test asserted the
+    /// OPPOSITE (blanket drop) -- that assertion was itself the bug the
+    /// adjudication memo found wrong.
     #[test]
-    fn class_feature_internal_row_is_still_dropped_by_the_blanket_trap() {
+    fn content_bearing_class_feature_internal_row_is_enumerated_not_dropped() {
         let text = "Panache Tracker\tCATEGORY:Internal\tDEFINE:PanacheLVL|0\n";
         let empty = BTreeSet::new();
         let mut out = BookEnumeration::default();
@@ -602,8 +605,87 @@ mod kind_ability_tests {
             &empty,
             &mut out,
         );
-        assert_eq!(out.units.len(), 0);
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(out.units[0].kind, Kind::ClassFeature);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
+    }
+
+    /// The memo's own worked (B) example ("Damage Reduction ~ All") --
+    /// `CATEGORY:Internal`, `DR:` only, no `DEFINE:`/`BONUS:` -- flips to (A)
+    /// under the wider content list: `DR:` names a class-feature-specific
+    /// damage-reduction variable the engine's DR machinery reads, so it is
+    /// real content, not bookkeeping. This is the exact regression the
+    /// memo's §2a narrowness finding warns about: a `DEFINE:`/`BONUS:`-only
+    /// test misses it.
+    #[test]
+    fn dr_only_class_feature_internal_row_counts_as_content_not_bare() {
+        let fields = ["Damage Reduction ~ All", "CATEGORY:Internal", "DR:ClassFeatureDR_ALL/-"];
+        assert!(!class_feature_internal_row_is_bare_marker(&fields));
+    }
+
+    /// A genuinely bare `CATEGORY:Internal` tracker row -- no content field
+    /// from the wide list, no gateway token, only structural markers -- is
+    /// still dropped by the trap. This is the narrow (B) class
+    /// (`decisions.md §12b`'s adjudication: 40 of 2,614) that the fix must
+    /// NOT start eating real facets while still catching.
+    #[test]
+    fn bare_class_feature_internal_marker_row_is_still_dropped_by_the_trap() {
+        let text = "Foo Tracker\tCATEGORY:Internal\tKEY:Foo Tracker\tTYPE:Choice\tVISIBLE:NO\tSOURCEPAGE:p.1\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
         assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 1);
+    }
+
+    /// A gateway-only row (`ABILITY:...|AUTOMATIC|<target>`, no content
+    /// field) stays counted as `class_feature` -- the shipped rule
+    /// deliberately does not attempt cross-file gateway-target resolution
+    /// (the adjudication memo's own conservative default, §5), so this row
+    /// is neither silently dropped nor swallowed as bare.
+    #[test]
+    fn gateway_only_class_feature_internal_row_stays_counted_not_dropped() {
+        let text = "Elemental Fist ~ Acid\tCATEGORY:Internal\tABILITY:Special Ability|AUTOMATIC|Elemental Fist\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
+    }
+
+    /// An ordinary (non-`CATEGORY:Internal`) `Kind::ClassFeature` row is
+    /// entirely unaffected by this fix -- the `carries_internal_category_field`
+    /// guard is false, so `is_internal_category` is false via the same path
+    /// it always was.
+    #[test]
+    fn non_internal_class_feature_row_is_unaffected_by_this_fix() {
+        let text = "Rage\tCATEGORY:Special Ability\tDEFINE:RageLVL|0\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
     }
 }
 
@@ -1841,6 +1923,67 @@ fn ability_row_has_content(fields: &[&str]) -> bool {
         .any(|f| ABILITY_CONTENT_PREFIXES.iter().any(|p| f.starts_with(p)) || is_bonus_token(f))
 }
 
+/// SD-32 card 15-internal (`decisions.md §12b`, adjudicated by
+/// `15-card-15-category-internal-adjudication-memo.md`): the field list a
+/// `Kind::ClassFeature` (`_abilities_class.lst`) row carrying
+/// `CATEGORY:Internal` is tested against before it is dropped as bookkeeping
+/// -- ported byte-identical from `census_independent.py`'s
+/// `_ROW_CONTENT_FIELD_RE`. Deliberately WIDER than [`ABILITY_CONTENT_PREFIXES`]
+/// (which governs the DIFFERENT, already-adjudicated bare-`*abilities*.lst`
+/// population): the adjudication memo found the narrower list misses real
+/// non-formula payload -- `DR:` (names a class-feature-specific
+/// damage-reduction variable the engine's DR machinery reads) and
+/// `SPELLLEVEL:` (a class-level-to-spell mapping) both flip the memo's own
+/// original worked (B) examples ("Damage Reduction ~ All/Silver") to (A).
+/// See that memo §2a for the full derivation (1,034 -> 2,219 -> 2,369
+/// content-bearing rows across three widening passes).
+const CLASS_FEATURE_INTERNAL_CONTENT_PREFIXES: &[&str] = &[
+    "DEFINE:", "DESC:", "ASPECT:", "CSKILL:", "MOVE:", "AUTO:", "TEMPLATE:", "SPROP:", "QUALITY:",
+    "SR:", "DR:", "SAB:", "VISION:", "TEMPBONUS:", "CHOOSE:", "NATURALATTACKS:", "COMPANIONLIST:",
+    "ADD:", "FOLLOWERS:", "UDAM:", "UMULT:", "SELECT:", "COST:", "MOVECLONE:", "SPELLS:",
+    "SERVESAS:", "DEFINESTAT:", "UNENCUMBEREDMOVE:", "BENEFIT:", "SPELLLEVEL:", "CMB:",
+];
+
+/// `SPELLKNOWN[A-Z]*:` -- the single highest-volume field the adjudication
+/// memo's field-inventory pass found (1,185 of 2,614 rows), same shape as
+/// [`is_bonus_token`]'s `BONUS[A-Z]*:` matcher.
+fn is_spellknown_token(field: &str) -> bool {
+    let Some(rest) = field.strip_prefix("SPELLKNOWN") else { return false };
+    let upper_len = rest
+        .char_indices()
+        .find(|(_, c)| !c.is_ascii_uppercase())
+        .map(|(i, _)| i)
+        .unwrap_or(rest.len());
+    rest[upper_len..].starts_with(':')
+}
+
+/// The adjudication memo's `_ROW_GATEWAY_FIELD_RE`: an `ABILITY:...|AUTOMATIC|`
+/// token proves this row is a gateway to another (already-real) record rather
+/// than orphaned content -- one of the two ways a `CATEGORY:Internal` row
+/// proves disposition (A)-or-(B)-gateway-resolved rather than bare bookkeeping.
+fn is_internal_gateway_token(field: &str) -> bool {
+    field.starts_with("ABILITY:") && field.contains("|AUTOMATIC|")
+}
+
+/// True only for a `CATEGORY:Internal`-bearing `Kind::ClassFeature` row that
+/// carries neither a content-bearing field
+/// ([`CLASS_FEATURE_INTERNAL_CONTENT_PREFIXES`], `BONUS[A-Z]*:`, or
+/// `SPELLKNOWN[A-Z]*:`) nor a gateway token -- the narrow, provable (B) class
+/// the adjudication memo found is 40 of 2,614 (1.5%) rows, not the class_feature
+/// memo's original blanket claim of all 2,614. Deliberately does NOT attempt
+/// gateway-target resolution (the memo's own conservative default, §5): the
+/// 203 proven-facet rows stay counted as `class_feature` here too, since
+/// under-excluding is the safe direction under `decisions.md §1a`/§12b's
+/// burden-of-proof rule.
+fn class_feature_internal_row_is_bare_marker(fields: &[&str]) -> bool {
+    !fields.iter().any(|f| {
+        CLASS_FEATURE_INTERNAL_CONTENT_PREFIXES.iter().any(|p| f.starts_with(p))
+            || is_bonus_token(f)
+            || is_spellknown_token(f)
+            || is_internal_gateway_token(f)
+    })
+}
+
 #[cfg(test)]
 mod refine_kind_monster_ability_tests {
     use super::*;
@@ -2815,12 +2958,37 @@ fn enumerate_file(
         // below decide is required so a real, content-bearing Internal
         // ability row (`685`-ish of the `879`-unit `ability_category:Internal`
         // bucket, `15-card-15-ability-category-memo.md`) is not silently
-        // dropped before ever reaching that test. Every other kind's
-        // behaviour is byte-for-byte unchanged (the `kind != Kind::Ability`
-        // guard is new; the rest of this rule is not).
-        let is_internal_category = kind != Kind::Ability
-            && (first.starts_with("CATEGORY=Internal|")
-                || fields.iter().any(|f| f.trim() == "CATEGORY:Internal"));
+        // dropped before ever reaching that test.
+        //
+        // SD-32 card 15-internal (`decisions.md §12b`, adjudicated by
+        // `15-card-15-category-internal-adjudication-memo.md`): the SAME
+        // defect exists for `Kind::ClassFeature` -- the class_feature memo's
+        // own original blanket claim ("all 2,614 `_abilities_class.lst`
+        // `CATEGORY:Internal` rows are bookkeeping, not an object") was
+        // tested by class and found wrong for 90.7% (2,371/2,614), plus a
+        // further 203 rows proven a facet of an already-real target
+        // (203/2,614, `B-gateway-resolved`) -- only 40/2,614 (1.5%) are
+        // genuinely bare. Unlike `Kind::Ability` (whose disposition is
+        // decided entirely by `has_classifying_token` below, since a
+        // content-or-gateway ability row still needs `refine_kind`'s
+        // FEAT-redirect first), `Kind::ClassFeature` decides its own
+        // disposition right here via `class_feature_internal_row_is_bare_marker`
+        // -- this mirrors `census_independent.py`'s shipped rule exactly
+        // (2,574 of 2,614 stay counted, 40 excluded; the burden-of-proof
+        // rule in `decisions.md §12b` makes under-excluding the safe
+        // default, so the 203 proven-facet rows stay counted too rather than
+        // needing this walker to also do cross-file gateway-target
+        // resolution). Every other kind's behaviour is byte-for-byte
+        // unchanged.
+        let carries_internal_category_field = first.starts_with("CATEGORY=Internal|")
+            || fields.iter().any(|f| f.trim() == "CATEGORY:Internal");
+        let is_internal_category = match kind {
+            Kind::Ability => false,
+            Kind::ClassFeature => {
+                carries_internal_category_field && class_feature_internal_row_is_bare_marker(&fields)
+            }
+            _ => carries_internal_category_field,
+        };
         if is_internal_category {
             *out.trap_hits.entry("internal_namespace").or_default() += 1;
             continue;

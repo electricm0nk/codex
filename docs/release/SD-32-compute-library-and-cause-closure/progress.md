@@ -3463,3 +3463,68 @@ this sign-off is read more broadly than T9's own four amendments + two ruled que
 - **Next-cycle plan:** T9 onboarding (separate cycle, out of this cycle's read-only scope)
   transcribes the 20 fully-resolved books per this disposition.
 - Receipt: `artifacts/gate-3-closure-invariant/t9-pi-signoff-application_cycle-1_cycle_receipt.md`.
+## Cycle card-15-internal (2026-08-23) — `is_internal_category` narrowed for `Kind::ClassFeature` +
+`class_feature` residual cause pinned
+
+- **Both populations re-derived fresh** (`decisions.md §17a`): item 1's 2,574-unit
+  `CATEGORY:Internal` adjudication was already committed to `census_independent.py` before this
+  cycle (`e79d508b4`) — this cycle's own scope, `v06_work_inventory.rs`'s separate
+  `is_internal_category` trap, was confirmed still unnarrowed for `Kind::ClassFeature` at cycle
+  start. Item 2's 179-unit residual reproduced exactly with an independent script.
+- **Landed:** `is_internal_category`'s computation restructured to a `match kind` — `Kind::Ability`
+  unchanged, **`Kind::ClassFeature` now decides its own disposition inline**
+  (`class_feature_internal_row_is_bare_marker`, the adjudication memo's WIDER field list ported
+  byte-identical from `census_independent.py`'s `_ROW_CONTENT_FIELD_RE`), every other kind
+  byte-for-byte unchanged. `docs/work-inventory.json`'s `class_feature` kind grew **15,439 → 18,032
+  (+2,593)**, every other kind unaffected (`totals.units` 46,923 → 49,516, delta matches exactly).
+- **Both directions proved by id-diff** (`decisions.md §16`): 5 units re-suffixed (new
+  slug-colliding content landed, 0 content lost, each verified present at its new id); **1 unit
+  displaced** (`ultimate_psionics:class_feature:disable_device_class_skill` moved
+  `up_abilities_class.lst:468` → `:186`, id stable — a newly-visible `CATEGORY:Internal` row won the
+  pre-existing corpus-wide `duplicate_identity` dedup race against the row that was previously the
+  sole occupant of that identity; no content lost, same conceptual feature, physical location moved).
+- **Mid-cycle incident, caught and corrected before commit:** the first regen run used
+  `--allow-stamp-loss` without regenerating `CORPUS_LITERAL_SWEEP_REPORT`/
+  `DERIVED_FIXTURE_CHECK_REPORT` first, silently dropping all 6,506 `literal-verified` and all 1,741
+  `fixture-verified` stamps corpus-wide. Caught by diffing the FULL status distribution (not just
+  `class_feature`'s own delta), reverted, both reports regenerated fresh (sweep: CLEAN, 0 findings;
+  fixture check: 1,836 cleared, 0 failed), producer re-run correctly — both stamp counts confirmed
+  exactly preserved on the second run.
+- **§12b item 2 — the 179-unit residual's cause, pinned:** **NOT `is_internal_category`.** The
+  corpus-wide `duplicate_identity` (kind, key) dedup pass collapses genuinely distinct PCGen records
+  sharing a bare display name (no `KEY:` field) into one surviving unit per book+kind — 158/179
+  (88.3%) of the pre-fix residual collides on key with another `class_feature` row in the same book,
+  proved by class with a worked 4-way collision (`Aberrant Bloodline`, `advanced_class_guide`, 4
+  distinct per-class records, 1 survives). This cycle's own fix demonstrates the mechanism live in
+  both directions: the residual grows 179 → 180 (1 more displacement) and 27 of the 2,574 newly
+  eligible internal rows lose their OWN key race — **total pinned-cause residual after this cycle:
+  207**, none of it `is_internal_category`. **Not rescued this cycle** (dispatch brief's own risk
+  framing: distinguishing "genuinely different records sharing a name" from "byte-identical
+  restatement" needs a per-collision content comparison at the `duplicate_identity` pass itself, a
+  different, larger fix). Full derivation:
+  `artifacts/gate-0-census-closure/15-card-15-internal-duplicate-identity-memo.md`.
+- **`scripts/card15_reconcile.py`** updated (`class_feature_internal_adjudicated_pending`/
+  `class_feature_residual_original` retired, merged into one live-derived
+  `class_feature_residual_duplicate_identity` entry) and re-run: **`equals_total_this_run: True`,
+  `remaining_undisposed: 0`** — the piles still sum exactly for the live 18,992-unit total.
+- **Gate 3** (budget constants **NOT** modified): still `FAIL`. `no_record` share
+  **21,497/36,015** (59.7%, up from 49.3% pre-cycle) vs. the committed budget baseline
+  13,968/28,490 — `decisions.md §14`'s already-reopened tension, not a new blocker.
+- **Suites:** `cargo test --locked --bin v06_work_inventory` 329/329 (325 pre-cycle + 5 new, 1
+  renamed-in-place); `cargo test --locked --lib` 2,402/2,402 (unaffected); `cargo test --locked
+  --manifest-path apps/desktop/src-tauri/Cargo.toml` 518/518 (unaffected); `python3 -m unittest
+  scripts.tests.test_census_independent` 26/26 (unaffected — this cycle does not touch
+  `census_independent.py`).
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS. **Wired-integration audit result:** OK_NO_TOKENS.
+- **Sweep of pinned counts** across `tests/`/`src/`/`scripts/`/`apps/`: no `.rs` test or binary
+  source asserts an exact `class_feature` population number (checked, structural invariants only);
+  `scripts/card15_reconcile.py`'s hardcoded narrative entries updated.
+- **Status:** complete (cycle), `in-progress` (kanban card 15 — the `duplicate_identity`-caused
+  residual, 207 units, cause pinned but not rescued, is the only remaining disposition-(A)
+  population).
+- **Kanban:** row 15 stays `in-progress`, appended with this cycle's full narrative.
+- **Next-cycle plan:** the `duplicate_identity`-collision-caused residual (207 units) needs a
+  per-collision content comparison at the `duplicate_identity` pass itself — a different fix site
+  and a real next-cycle scope, not a quick follow-on. 21 rows remain genuinely unpinned even by that
+  mechanism.
+- Receipt: `artifacts/gate-0-census-closure/15-internal_cycle_receipt.md`.
