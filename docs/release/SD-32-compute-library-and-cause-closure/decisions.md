@@ -283,3 +283,31 @@ written. **The operator ruled the criterion itself wrong:**
 The gates measure that the *method* is sound; the cards measure that the *content* is closed.
 Closing on gates alone lets a green board describe an unfinished bundle — the exact
 shape `Decision 1a`'s anti-gaming doctrine exists to refuse.
+
+## Decision 11 — T8 write scope granted for `scripts/observer/pf1e_dashboard_producer.py` (operator ruling 2026-08-22)
+
+**Status:** Operator-pinned. Resolves the scope-boundary block recorded in card 11's cycle-1
+receipt (`artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`,
+"T8 (D13, 12 units) — scope-boundary block").
+
+Card 11's cycle 1 identified T8's fix site as `scripts/observer/pf1e_dashboard_producer.py` — the
+`wiring_class`-vs-`status` classifier blind spot, 12 units — and correctly refused to touch it,
+because that file is SD-30's Epic 0 surface and read-only from SD-32 absent a ruling.
+
+**Ruling: SD-32 is granted write scope to `scripts/observer/pf1e_dashboard_producer.py`, bounded to
+the T8 classifier fix.** The grant is for that defect only; it is not a general licence over SD-30's
+Epic 0 surface, and no other file under `scripts/observer/` is in scope.
+
+**Conditions:**
+
+1. The change is TDD'd like any other cycle — RED proved for the intended reason, GREEN, the
+   population re-derived with a committed command, and the fix proved by class over all 12 units,
+   not by instance.
+2. `scripts/observer/pf1e_dashboard_producer.py` is the **producer** in the
+   producer → JSON → static-viewer pipeline; a separate one-minute renderer writes a different
+   file. The cycle must confirm which artifact its change actually lands in and prove the corrected
+   classification reaches the dashboard's consumed JSON, not only the producer's own output.
+3. Any dashboard figure the fix moves is re-derived and stated with its command — a count change
+   compiles clean but can leave other files' pinned assertions red, so the cycle greps the old and
+   new counts across `tests/`, `src/`, `scripts/`, and `apps/` before committing.
+4. T8 closing removes the last non-`complete` condition on card 11 under `decisions.md §10`.
