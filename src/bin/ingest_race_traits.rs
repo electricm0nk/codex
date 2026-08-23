@@ -1708,6 +1708,49 @@ fn ingest_book(book: &BookSource) {
                 }
             }
         }
+        // t9-onboarding-pi-final-leaks-and-generators cycle: "the DESC key
+        // is the only raw token this record type ever redacts" (comment
+        // above) was true for the `description`-mirrors-`raw_tokens.DESC`
+        // shape, but a DIFFERENT token key can independently carry a live
+        // blacklist term with NO relation to `description` at all -- found
+        // live, corpus-wide re-derivation this cycle:
+        // `inner_sea_races/race_trait/elf/elf_elven_arrogance.json`'s two
+        // `ABILITY` tokens each carry a `PREREGION:<place>` mechanical
+        // prerequisite naming a blacklisted setting region, unredacted,
+        // even though `DESC`/`description` were already correctly clean
+        // for this record (no DESCISPI declaration, no blacklist hit in the
+        // prose itself). Mirrors `decisions.md §19a` amendment 3d's own
+        // precedent ("a citation of a PI term in a mechanical PREABILITY
+        // prerequisite field redacts the citing record too") -- a
+        // `PREREGION:`/`PREABILITY:` gate naming a real place/deity is a
+        // Product-Identity citation, not a game-rule formula (unlike a
+        // `BONUS:`/`DEFINE:` numeric value, which this scan never touches).
+        // Scans EVERY token value (not just `DESC`) with the STRONG,
+        // word-bounded + OCR-normalized + concatenated-identifier scan --
+        // never re-redacts a value already equal to the marker.
+        let mut license = license;
+        let mut pi_field = pi_field;
+        let mut pi_marker = pi_marker;
+        let mut concat_redacted = false;
+        for token in raw_tokens.iter_mut() {
+            if token.value.is_empty() || token.value == codex::rules_core::shape_b_v1::REDACTED_PI_MARKER {
+                continue;
+            }
+            if pi_screening::blacklist_term_hit_including_concatenated(&token.value).is_some() {
+                token.value = codex::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string();
+                concat_redacted = true;
+            }
+        }
+        if concat_redacted {
+            license = codex::rules_core::shape_b_v1::License::PiRedacted;
+            pi_marker = Some(codex::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+            if !pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "raw_tokens")) {
+                pi_field = Some(match pi_field.take() {
+                    Some(existing) => format!("{existing},raw_tokens"),
+                    None => "raw_tokens".to_string(),
+                });
+            }
+        }
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::Full,
@@ -1839,6 +1882,29 @@ fn ingest_book(book: &BookSource) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// t9-onboarding-pi-final-leaks-and-generators cycle: reproduces the
+    /// live `inner_sea_races/elf_elven_arrogance` shape -- an `ABILITY`
+    /// token's `PREREGION:<place>` mechanical prerequisite carries a
+    /// blacklisted setting-region name even when `DESC`/`description` are
+    /// both clean. Proves the strong scan this generator's raw-tokens loop
+    /// now runs on EVERY token (not just `DESC`) catches it.
+    #[test]
+    fn a_preregion_prerequisite_naming_a_blacklisted_place_is_caught_by_the_strong_scan() {
+        let place = pi_screening::PI_BLACKLIST_TERMS[31];
+        let ability_value = format!("Internal|AUTOMATIC|Elven Arrogance ~ Sylvan|!PREREGION:{place}");
+        assert!(
+            pi_screening::blacklist_term_hit_including_concatenated(&ability_value).is_some(),
+            "the strong scan this generator's raw-tokens loop now runs must catch a PREREGION prerequisite naming a blacklisted place"
+        );
+        // Sanity: a clean, ordinary ABILITY value must not false-positive.
+        assert!(
+            pi_screening::blacklist_term_hit_including_concatenated(
+                "Internal|AUTOMATIC|Elven Arrogance ~ Sylvan"
+            )
+            .is_none()
+        );
+    }
 
     /// `arg_abilities_race.lst:38` verbatim except for a shortened first
     /// `DESC:` (tokens joined with single tabs; the corpus pads with tab

@@ -99,11 +99,20 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import census_independent as ci  # noqa: E402
-from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
-    PI_BLACKLIST_TERMS,
-    canonicalize,
-    normalized_term_hit,
-)
+from sd32_t9_pi_review_feat_equipment import PI_BLACKLIST_TERMS  # noqa: E402
+# t9-onboarding-pi-final-leaks-and-generators cycle: `normalized_term_hit`
+# (word-bounded only) missed an adjectival/demonym form of a blacklisted
+# place name (`PI_BLACKLIST_TERMS` indices 23 and 33) with a suffix
+# concatenated directly onto the root with no separator -- the root term
+# followed immediately by an alphanumeric suffix has NO word boundary
+# after the root, so the word-bounded scan never fires. This is the exact
+# shape `pi_scrub.blacklist_term_hit_including_concatenated` exists for --
+# `declared_pi_shipping_audit`'s corpus-wide CHECK C found 3 live
+# `template` leaks of exactly this shape shipped by this script, in
+# `data/corpus/inner_sea_world_guide/template/` (coordinates in this
+# cycle's receipt). Used for BOTH `name` and `description` screening
+# below -- the weaker call was symmetric across both fields.
+from pi_scrub import blacklist_term_hit_including_concatenated  # noqa: E402
 from shape_ledger import BOOK_CORPUS_DIR_ALIASES  # noqa: E402
 from codex_neutral_name import (  # noqa: E402
     divergence_entry,
@@ -174,6 +183,20 @@ def row_identity(raw_line: str) -> str:
         if field.upper().startswith("KEY:"):
             return field.split(":", 1)[1].strip()
     return raw_line.split("\t", 1)[0].strip()
+
+
+def unit_in_scope(kind: str, kinds: set[str], book: str, books: set[str] | None) -> bool:
+    """`True` when `(kind, book)` should be processed this run -- `kind`
+    must be a member of `kinds`, and `book` must be a member of `books`
+    when `books` is not `None` (the `--book` scoped-remediation filter,
+    `t9-onboarding-pi-final-leaks-and-generators` cycle). `books=None`
+    means "no restriction", matching every existing caller's behaviour
+    before this cycle added the flag."""
+    if kind not in kinds:
+        return False
+    if books is not None and book not in books:
+        return False
+    return True
 
 
 def resolve_out_dir(out_root: str, book: str, kind: str) -> str:
@@ -293,11 +316,22 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--pcgen-root", required=True)
     ap.add_argument("--out-root", default="data/corpus")
     ap.add_argument("--kind", action="append", choices=TARGET_KINDS)
+    # t9-onboarding-pi-final-leaks-and-generators cycle: a scoped-remediation
+    # mode, the Python-side sibling of `gen_cache_class_feature.rs`'s own
+    # `--coordinates <file>` mode (`decisions.md §19`'s "no re-screen on
+    # amendment" gap) -- re-screening a full `--kind` pass touches every
+    # unit of that kind corpus-wide (2,248 for `template` alone), an
+    # unacceptable blast radius for closing a handful of newly-confirmed
+    # leaks. `--book` narrows the SAME kind pass to one book's units only,
+    # so a re-run after a blacklist amendment (or, as here, a scan-strength
+    # fix) touches only the book that actually needs it.
+    ap.add_argument("--book", action="append", help="restrict to these book id(s) only (repeatable)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--report-out", default=None, help="write the full JSON summary (incl. renamed_records) here")
     args = ap.parse_args(argv)
 
     kinds = set(args.kind) if args.kind else set(TARGET_KINDS)
+    books = set(args.book) if args.book else None
 
     with open(args.inventory, "r", encoding="utf-8") as fh:
         inv = json.load(fh)
@@ -318,9 +352,9 @@ def main(argv: list[str] | None = None) -> int:
 
     for unit in inv["units"]:
         kind = unit.get("kind")
-        if kind not in kinds:
-            continue
         book = unit["book"]
+        if not unit_in_scope(kind, kinds, book, books):
+            continue
         basename = unit["source_file"]
         line_no = unit["source_line"]
         corpus_key = unit["corpus_key"]
@@ -355,9 +389,9 @@ def main(argv: list[str] | None = None) -> int:
 
         raw_tokens = parse_row(raw_line)
         name_pi, desc_pi = declared_pi(raw_tokens)
-        term_hit_name = normalized_term_hit(name)
+        term_hit_name = blacklist_term_hit_including_concatenated(name)
         free_text = free_text_of(raw_tokens)
-        term_hit_desc = normalized_term_hit(free_text) if free_text else None
+        term_hit_desc = blacklist_term_hit_including_concatenated(free_text) if free_text else None
 
         # `decisions.md §24`: `deity` (and any other `NAME_ALWAYS_PI_KINDS`
         # member) renames UNCONDITIONALLY -- the name IS PI in every case

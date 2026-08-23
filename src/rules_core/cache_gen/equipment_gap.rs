@@ -769,6 +769,39 @@ pub fn generate(
             entry.description,
             declared.description,
         );
+        // t9-onboarding-pi-final-leaks-and-generators cycle (mirrors
+        // `cache_gen::class_feature`'s identical "third defect" fix,
+        // byte-for-byte): `classify_optional_field_declared` screens
+        // `description` via `classify_field`'s BARE-SUBSTRING, CASE-
+        // SENSITIVE scan against the literal `PI_BLACKLIST_TERMS` list --
+        // it never applies the word-bounded, case-folded, OCR-normalized
+        // `blacklist_term_hit_including_concatenated` scan. Found live,
+        // corpus-wide re-derivation this cycle:
+        // `inner_sea_gods/equipment/codex_named_unit_equipment_
+        // inner_sea_gods_isg_equip_lst_20.json` shipped an unredacted
+        // lowercase occurrence of a blacklisted deity name in its
+        // description (the weak scan only matches the capitalized form).
+        // Re-screens `stored_desc` with the STRONG scan and forces the
+        // marker if the weaker scan above missed it -- never weakens an
+        // existing redaction, only strengthens a miss.
+        let stored_desc = match &stored_desc {
+            Some(v) if v != crate::rules_core::shape_b_v1::REDACTED_PI_MARKER => {
+                if pi_screening::blacklist_term_hit_including_concatenated(v).is_some() {
+                    license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                    pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                    if !pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "description")) {
+                        pi_field = Some(match pi_field.take() {
+                            Some(existing) => format!("{existing},description"),
+                            None => "description".to_string(),
+                        });
+                    }
+                    Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string())
+                } else {
+                    stored_desc.clone()
+                }
+            }
+            _ => stored_desc,
+        };
 
         let completeness =
             if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
@@ -1176,6 +1209,31 @@ mod tests {
     fn a_blacklisted_name_is_flagged_by_the_term_scan() {
         let (license, _, _, _) = pi_screening::classify_field("name", "Iomedae's Blessed Blade");
         assert_eq!(license, crate::rules_core::shape_b_v1::License::PiRedacted);
+    }
+
+    /// t9-onboarding-pi-final-leaks-and-generators cycle: reproduces the
+    /// live `inner_sea_gods` leak this cycle found -- the weak,
+    /// case-sensitive `classify_optional_field_declared` (via
+    /// `classify_field`) misses a LOWERCASE occurrence of a blacklisted
+    /// deity name, while the strong `blacklist_term_hit_including_
+    /// concatenated` scan (case-folded) catches it. Proves the exact
+    /// disagreement `generate()`'s new supplementary re-screen closes --
+    /// mirrors `cache_gen::class_feature`'s identical regression test.
+    #[test]
+    fn the_weak_scan_misses_a_lowercase_deity_occurrence_the_strong_scan_catches() {
+        let canonical_deity = pi_screening::PI_BLACKLIST_TERMS[9];
+        let lowercase_variant = canonical_deity.to_lowercase();
+        let text = format!("carvings of {lowercase_variant} in one or both aspects");
+        let (weak_license, ..) = pi_screening::classify_field("description", &text);
+        assert_eq!(
+            weak_license,
+            crate::rules_core::shape_b_v1::License::Ogl,
+            "sanity: the weak scan must miss the lowercase form -- otherwise this test proves nothing new"
+        );
+        assert!(
+            pi_screening::blacklist_term_hit_including_concatenated(&text).is_some(),
+            "the strong scan `generate()`'s supplementary re-screen now uses must catch what the weak scan missed"
+        );
     }
 
     #[test]

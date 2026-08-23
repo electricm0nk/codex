@@ -1,10 +1,10 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-23T22:08:29Z",
   "data": {
-    "key": "Varisian Pilgrim Domain ~ Trade Subdomain",
-    "name": "Trade Subdomain",
+    "key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_227)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_227)",
     "class": "Cleric",
     "description": null,
     "raw_tokens": [
@@ -22,31 +22,31 @@
       },
       {
         "key": "DEFINE",
-        "value": "TravelDomain|0"
+        "value": "WeatherDomain|0"
       },
       {
         "key": "DEFINE",
-        "value": "DomainTravelLVL|0"
+        "value": "DomainWeatherLVL|0"
       },
       {
         "key": "DEFINE",
-        "value": "DomainTravelDC|0"
+        "value": "DomainWeatherDC|0"
       },
       {
         "key": "DEFINE",
-        "value": "DomainTravelTimes|0"
+        "value": "DomainWeatherTimes|0"
       },
       {
         "key": "DEFINE",
-        "value": "DomainTravelAbilityTriggerLVL|0"
+        "value": "DomainWeatherAbilityTriggerLVL|0"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Trade Subdomain ~ Silver-Tongued Haggler|PREVARGTEQ:DomainTravelAbilityTriggerLVL,1"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Travel Domain ~ Dimensional Hop|PREVARGTEQ:DomainTravelAbilityTriggerLVL,8"
+        "value": "Special Ability|AUTOMATIC|Weather Domain ~ Lightning Lord|PREVARGTEQ:DomainWeatherAbilityTriggerLVL,8"
       },
       {
         "key": "BONUS",
@@ -54,27 +54,23 @@
       },
       {
         "key": "BONUS",
-        "value": "MOVEADD|TYPE=Walk|10"
+        "value": "VAR|WeatherDomain|1|TYPE=Domain"
       },
       {
         "key": "BONUS",
-        "value": "VAR|TravelDomain|1|TYPE=Domain"
+        "value": "VAR|DomainWeatherLVL|DomainLVL|TYPE=Domain"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DomainTravelLVL|DomainLVL|TYPE=Domain"
+        "value": "VAR|DomainWeatherDC|10+(DomainWeatherLVL/2)+CHA|TYPE=Domain"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DomainTravelDC|10+(DomainTravelLVL/2)+CHA|TYPE=Domain"
+        "value": "VAR|DomainWeatherTimes|DomainPowerTimes|TYPE=Domain"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DomainTravelTimes|DomainPowerTimes|TYPE=Domain"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|DomainTravelAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+        "value": "VAR|DomainWeatherAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
       },
       {
         "key": "SOURCELONG",
@@ -86,7 +82,7 @@
       },
       {
         "key": "SOURCEPAGE",
-        "value": "p.97"
+        "value": "p.96"
       }
     ]
   },
@@ -94,8 +90,8 @@
     "kind": "lst_token",
     "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
     "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
-    "line": 228,
-    "record_key": "Varisian Pilgrim Domain ~ Trade Subdomain"
+    "line": 227,
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_227)"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
@@ -103,7 +99,11 @@
     "derived:bonus"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "raw_tokens",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_magic:ism_abilities_class.lst:227"
+  }
 }

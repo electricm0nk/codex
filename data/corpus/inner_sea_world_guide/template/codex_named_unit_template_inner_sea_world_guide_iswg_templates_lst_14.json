@@ -1,10 +1,10 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:18Z",
+  "ingested_at": "2026-08-23T22:22:16Z",
   "data": {
-    "key": "Human Ethnicity (Varisian)",
-    "name": "Human Ethnicity (Varisian)",
+    "key": "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_14)",
+    "name": "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_14)",
     "raw_tokens": [
       {
         "key": "VISIBLE",
@@ -12,11 +12,11 @@
       },
       {
         "key": "SOURCEPAGE",
-        "value": "p.22"
+        "value": "p.14"
       },
       {
         "key": "AUTO",
-        "value": "[redacted PI]"
+        "value": "LANG|Osiriani"
       },
       {
         "key": "SUBRACE",
@@ -28,16 +28,19 @@
     "kind": "lst_token",
     "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst",
     "sha256": "9b17113984faaf6ff39729e8eef0a9944518518d78c419e80379ff059226cdf7",
-    "line": 25,
-    "record_key": "Human Ethnicity (Varisian)"
+    "line": 14,
+    "record_key": "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_14)"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:sd32_simple_filename_kind_ingest"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "raw_tokens",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false,
-  "rename": null
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_templates.lst:14"
+  }
 }

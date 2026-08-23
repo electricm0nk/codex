@@ -791,4 +791,66 @@ mod tests {
         let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
         assert_eq!(violations.len(), 1, "{violations:?}");
     }
+
+    /// t9-onboarding-pi-final-leaks-and-generators cycle: requirement 3
+    /// ("a test that fails when a generator writes a field it does not
+    /// screen"). CHECK C is deliberately generator-agnostic and
+    /// field-name-agnostic (its own doc comment above), so it is the
+    /// closest enforceable equivalent -- it does not know or care that
+    /// `cache_gen::{acg,apg,beastiary1}` never called a `name`-screening
+    /// function; it only re-derives PI-safety from the CURRENT shipped
+    /// bytes. This test proves that generality against the EXACT shape
+    /// this cycle's own three generators write for an `equipment` record
+    /// (`key`+`name`+`category`+`cost_gp`+`weight`+`description`, no
+    /// `raw_tokens`) -- if any of the three (or a fourth, not-yet-found
+    /// generator of the same shape) ever ships a `name` carrying a live
+    /// blacklist term with no marker, this exact fixture shape fails.
+    ///
+    /// **What this does NOT cover** (`AGENTS.md` non-negotiable rule 7):
+    /// CHECK C only fires on records that reach `data/corpus/**` on disk --
+    /// it is a shipping-time gate, not a compile-time or generation-time
+    /// one. A generator that never runs at all (dead code) or a field this
+    /// walker's `iter_strings` cannot reach (a non-string leaf, e.g. a
+    /// numeric or boolean field a future PI leak somehow encoded into)
+    /// would not be caught by this specific test or by CHECK C itself.
+    #[test]
+    fn an_equipment_name_field_carrying_a_live_blacklist_term_with_no_marker_is_a_violation() {
+        // Mirrors `cache_gen::acg`/`apg`/`beastiary1`'s real `EquipmentData`
+        // shape exactly -- `key`+`name`+`category`+`cost_gp`+`weight`+
+        // `description`, no `raw_tokens` -- proving CHECK C catches THIS
+        // shape specifically, not just the `class_feature`/`feat` shapes
+        // the other CHECK C tests already cover.
+        let s = Scratch::new("equipment_name_leak");
+        let term = pi_screening::PI_BLACKLIST_TERMS[0];
+        s.write(
+            "corpus/some_book/equipment/x.json",
+            &format!(
+                r#"{{"data":{{"key":"x","name":"{term}'s Holy Symbol","category":"General","cost_gp":50.0,"weight":1.0,"description":null}},
+                "source":{{"kind":"lst_token","path":"some_book/rows.lst","line":1,"record_key":"x"}},
+                "license":"OGL","pi_field":null,"codex_generated_name":false}}"#
+            ),
+        );
+        let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "{violations:?}");
+        assert!(violations[0].reason.contains("data.name"), "{violations:?}");
+    }
+
+    /// Mutation proof (`§1a`: a gate that cannot fail is worse than no
+    /// gate): a correctly-redacted equipment `name` (the marker in place,
+    /// as `cache_gen::{acg,apg,beastiary1}`'s new `§24` rename path now
+    /// produces) must NOT trip the same check -- proving the previous test
+    /// fails for the PRESENCE of a live term, not merely for the SHAPE of
+    /// an equipment record.
+    #[test]
+    fn a_properly_redacted_equipment_name_is_never_flagged() {
+        let s = Scratch::new("equipment_name_clean");
+        s.write(
+            "corpus/some_book/equipment/x.json",
+            r#"{"data":{"key":"Codex-Named Unit (equipment_some_book_rows_lst_1)","name":"Codex-Named Unit (equipment_some_book_rows_lst_1)","category":"General","cost_gp":50.0,"weight":1.0,"description":null},
+                "source":{"kind":"lst_token","path":"some_book/rows.lst","line":1,"record_key":"x"},
+                "license":"PI-REDACTED","pi_field":"name","codex_generated_name":true}"#,
+        );
+        let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
+        assert!(violations.is_empty(), "{violations:?}");
+    }
 }

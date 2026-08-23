@@ -1187,7 +1187,30 @@ fn scrub_name_pi_tokens(tokens: &[RawToken], name: &str, key: &str) -> (Vec<RawT
                 && (PI_BLACKLIST_TERMS.iter().any(|term| value.contains(term))
                     || RENAME_SCRUB_SUPPLEMENTAL_TERMS.iter().any(|term| value.contains(term)));
             let lower_value = value.to_lowercase();
-            let identity_hit = !value.is_empty() && needles.iter().any(|n| lower_value.contains(n.as_str()));
+            // `word_bounded_contains`, not a bare `.contains()` -- found live,
+            // this cycle (t9-onboarding-pi-final-leaks-and-generators): a bare
+            // substring match against a `~`-delimited KEY segment
+            // over-redacted a record's own CLEAN `BONUS`/`VAR` formula tokens
+            // whenever the formula's variable-identifier name happened to
+            // CONTAIN a generic, non-PI segment as a coincidental substring
+            // (a live `inner_sea_magic:ism_abilities_class.lst` record's KEY
+            // -- a `<demonym-of-index-23> Pilgrim Domain ~ Chaos`-shaped
+            // string, see this cycle's receipt for the coordinate -- splits
+            // to the segment "chaos", which then matched inside the CLEAN
+            // token value `VAR|DomainChaosLVL|2` -- "domainchaoslvl" contains
+            // "chaos" with no separator on either side). The universal rule
+            // this violates: "a BONUS:/DEFINE: value is a game rule, not
+            // Product Identity -- never redact one" (this bundle already
+            // restored 63 formulas destroyed by exactly this shape once).
+            // Word-boundary matching preserves the check's real intent
+            // (catching a token that RESTATES the record's own original
+            // identity, verbatim or as a whole delimited segment) while
+            // refusing a coincidental mid-identifier substring match --
+            // mirrors `pi_screening::normalized_term_hit`'s own reasoning
+            // for the SAME shape of false positive against the blacklist
+            // scan itself.
+            let identity_hit =
+                !value.is_empty() && needles.iter().any(|n| pi_screening::word_bounded_contains(&lower_value, n));
             if blacklist_hit || identity_hit {
                 any_redacted = true;
                 RawToken { key: t.key.clone(), value: crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string() }
@@ -1888,6 +1911,41 @@ mod tests {
         assert_eq!(by_key["KEY"], crate::rules_core::shape_b_v1::REDACTED_PI_MARKER, "own key restatement must scrub");
         assert_eq!(by_key["CATEGORY"], "Special Ability", "an ordinary token must survive untouched");
         assert_eq!(by_key["SOURCEPAGE"], "p.12");
+    }
+
+    /// t9-onboarding-pi-final-leaks-and-generators cycle: reproduces the
+    /// live `inner_sea_magic:ism_abilities_class.lst` shape (coordinate in
+    /// this cycle's receipt) -- a `~`-delimited key segment that is an
+    /// ordinary, non-PI word
+    /// ("Chaos") must NOT redact a CLEAN `BONUS`/`VAR` formula token whose
+    /// variable-identifier name merely happens to contain that word as a
+    /// coincidental substring with no separator on either side. Mutation
+    /// proof: reproducing the OLD bare-`.contains()` check directly (not by
+    /// reverting the fix) shows it WOULD have redacted this token, so this
+    /// test would have failed red before the word-boundary fix.
+    #[test]
+    fn scrub_name_pi_tokens_does_not_over_redact_a_clean_formula_sharing_a_generic_key_segment() {
+        let tokens = vec![
+            RawToken { key: "KEY".to_string(), value: "Domain Feature ~ Chaos".to_string() },
+            RawToken { key: "BONUS".to_string(), value: "VAR|DomainChaosLVL|2".to_string() },
+            RawToken { key: "CATEGORY".to_string(), value: "Special Ability".to_string() },
+        ];
+        let (scrubbed, any_redacted) = scrub_name_pi_tokens(&tokens, "Chaos", "Domain Feature ~ Chaos");
+        let by_key: BTreeMap<&str, &str> = scrubbed.iter().map(|t| (t.key.as_str(), t.value.as_str())).collect();
+        assert_eq!(by_key["KEY"], crate::rules_core::shape_b_v1::REDACTED_PI_MARKER, "own key restatement must still scrub");
+        assert_eq!(
+            by_key["BONUS"], "VAR|DomainChaosLVL|2",
+            "a clean formula must survive even though its identifier coincidentally contains the generic segment \"chaos\" with no separator"
+        );
+        assert_eq!(by_key["CATEGORY"], "Special Ability");
+        assert!(any_redacted, "the KEY restatement alone must still trigger any_redacted");
+
+        // Mutation proof: the OLD unbounded check, reproduced inline (never
+        // by reverting the real fix), DOES flag the BONUS token -- proving
+        // this test exercises a real behavioural difference, not a vacuous
+        // assertion.
+        let old_unbounded_would_flag = "var|domainchaoslvl|2".contains("chaos");
+        assert!(old_unbounded_would_flag, "sanity: the pre-fix bare-substring check must reproduce the over-redaction");
     }
 
     #[test]

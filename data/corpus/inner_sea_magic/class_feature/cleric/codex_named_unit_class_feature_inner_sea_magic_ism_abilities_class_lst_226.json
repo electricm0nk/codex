@@ -1,10 +1,10 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-23T22:08:29Z",
   "data": {
-    "key": "Varisian Pilgrim Domain ~ Freedom Subdomain",
-    "name": "Freedom Subdomain",
+    "key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_226)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_226)",
     "class": "Cleric",
     "description": null,
     "raw_tokens": [
@@ -42,7 +42,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Freedom Subdomain ~ Liberty's Blessing|PREVARGTEQ:DomainLiberationAbilityTriggerLVL,1"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
@@ -91,7 +91,7 @@
     "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
     "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
     "line": 226,
-    "record_key": "Varisian Pilgrim Domain ~ Freedom Subdomain"
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_226)"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
@@ -99,7 +99,11 @@
     "derived:bonus"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "raw_tokens",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_magic:ism_abilities_class.lst:226"
+  }
 }

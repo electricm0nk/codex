@@ -63,12 +63,57 @@ class FreeTextAndPiScanTests(unittest.TestCase):
         self.assertEqual(isfk.free_text_of(tokens), "Some prose about Nex.")
 
     def test_term_list_hit_on_core_deity_name_in_free_text(self):
+        # t9-onboarding-pi-final-leaks-and-generators cycle: the module now
+        # scans via `blacklist_term_hit_including_concatenated` (strong scan),
+        # not the weaker `normalized_term_hit` -- see that import's own
+        # module-level comment for why (adjectival/demonym forms with a
+        # suffix concatenated onto the root, no word boundary after it).
         self.assertEqual(
-            isfk.normalized_term_hit("A shrine sacred to Abadar stands here."), "Abadar"
+            isfk.blacklist_term_hit_including_concatenated("A shrine sacred to Abadar stands here."), "Abadar"
         )
 
     def test_term_list_no_hit_on_ordinary_text(self):
-        self.assertIsNone(isfk.normalized_term_hit("A shrine sacred to nobody stands here."))
+        self.assertIsNone(isfk.blacklist_term_hit_including_concatenated("A shrine sacred to nobody stands here."))
+
+    def test_term_list_hit_on_a_demonym_form_with_no_word_boundary_after_the_root(self):
+        # The exact live shape this cycle's fix closes: `declared_pi_shipping_
+        # audit`'s CHECK C found 3 `template` records shipped by this script
+        # under a demonym name -- a real blacklisted place-name root
+        # (indices 23 and 33) immediately followed by a suffix with no
+        # separator, so the OLD word-bounded-only `normalized_term_hit`
+        # never caught it (no boundary exists after the root). Built from
+        # the indexed term, never typed literally, per `decisions.md §24b`-2.
+        demonym_23 = isfk.PI_BLACKLIST_TERMS[23] + "n"
+        demonym_33 = isfk.PI_BLACKLIST_TERMS[33] + "i"
+        self.assertIsNotNone(isfk.blacklist_term_hit_including_concatenated(demonym_23))
+        self.assertIsNotNone(isfk.blacklist_term_hit_including_concatenated(demonym_33))
+
+
+class UnitInScopeTests(unittest.TestCase):
+    """`--book` scoped-remediation filter (t9-onboarding-pi-final-leaks-and-
+    generators cycle): the Python-side sibling of `gen_cache_class_feature.
+    rs`'s own `--coordinates <file>` mode -- re-running a full `--kind` pass
+    touches every unit of that kind corpus-wide (2,248 for `template`
+    alone), an unacceptable blast radius for closing a handful of newly-
+    confirmed leaks after a scan-strength fix."""
+
+    def test_wrong_kind_is_out_of_scope_regardless_of_book(self):
+        self.assertFalse(isfk.unit_in_scope("power", {"template"}, "any_book", None))
+
+    def test_right_kind_with_no_book_filter_is_in_scope(self):
+        self.assertTrue(isfk.unit_in_scope("template", {"template"}, "any_book", None))
+
+    def test_right_kind_but_book_not_in_the_filter_set_is_out_of_scope(self):
+        self.assertFalse(isfk.unit_in_scope("template", {"template"}, "other_book", {"inner_sea_world_guide"}))
+
+    def test_right_kind_and_book_in_the_filter_set_is_in_scope(self):
+        self.assertTrue(isfk.unit_in_scope("template", {"template"}, "inner_sea_world_guide", {"inner_sea_world_guide"}))
+
+    def test_empty_book_filter_set_excludes_everything(self):
+        # Sanity: `books=None` (unset) must behave differently from
+        # `books=set()` (explicitly empty) -- the former means "no
+        # restriction", the latter means "nothing matches".
+        self.assertFalse(isfk.unit_in_scope("template", {"template"}, "inner_sea_world_guide", set()))
 
 
 class ComposeSourcePathTests(unittest.TestCase):

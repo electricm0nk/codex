@@ -82,6 +82,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::acg::equipment_tables::EquipmentCategory;
 use crate::rules_core::rules_tables::acg::{self, AcgClassId};
@@ -169,6 +170,40 @@ pub struct CacheRecord<T: Serialize> {
     pub license: crate::rules_core::shape_b_v1::License,
     pub pi_field: Option<String>,
     pub pi_marker: Option<String>,
+    /// `decisions.md §24b`-3: `true` only when this record's `data.key`/
+    /// `data.name` was replaced with a Codex-generated neutral identity
+    /// because the row's own key/name carried a live blacklist hit
+    /// (`name_or_key_is_pi` below). `false` (the default, unconditionally
+    /// written per every existing record's own doc note precedent in
+    /// `cache_gen::class_feature`) for every record whose identity is the
+    /// real corpus value, i.e. every ACG record shipped before this cycle
+    /// and every one still shipped after it (zero live hits today --
+    /// `t9-onboarding-pi-final-leaks-and-generators` cycle's own
+    /// corpus-wide re-derivation found none in this book).
+    pub codex_generated_name: bool,
+}
+
+/// SD-32 `decisions.md §24` gap-close (t9-onboarding-pi-final-leaks-and-
+/// generators cycle): `cache_gen::{acg,apg,beastiary1}` screened only
+/// `description` (`pi_screening::classify_field`/`classify_optional_field`)
+/// -- never the `key`/`name` fields that ARE a record's real identity, the
+/// same "screens one field, not every shipped field" shape
+/// `cache_gen::class_feature`'s `key`/`class` fix and `feat_gap.rs`'s
+/// `prerequisites` fix both already closed. **Zero live impact today**
+/// (every ACG/APG/Bestiary-1 `key`/`name` value is a hardcoded, curated
+/// Rust table entry, none of which currently hits the blacklist -- proven
+/// by this cycle's own corpus-wide re-derivation, `declared_pi_shipping_
+/// audit`'s CHECK C), but the gap is real: a future `PI_BLACKLIST_TERMS`
+/// amendment (this bundle has amended it at least four times,
+/// `decisions.md §19`) could make an EXISTING curated entry newly PI
+/// without any code here ever re-screening it, since these generators'
+/// `write_json` is no-clobber. Uses the STRONG, word-bounded +
+/// OCR-normalized + concatenated-identifier scan
+/// (`blacklist_term_hit_including_concatenated`) -- the same scan
+/// `class_feature.rs`'s own `key`/`class` fix uses for exactly this reason
+/// (a bare `classify_field` substring check is weaker and case-sensitive).
+fn name_or_key_is_pi(values: &[&str]) -> bool {
+    values.iter().any(|v| pi_screening::blacklist_term_hit_including_concatenated(v).is_some())
 }
 
 // ---------------------------------------------------------------------
@@ -424,6 +459,7 @@ fn generate_classes(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name: false,
         };
         let slug = slugify(class_id.name(), &mut used);
         write_json(&class_dir, &slug, &record)?;
@@ -511,14 +547,27 @@ fn generate_spells(
             entry.key,
         );
 
-        let (license, pi_field, pi_marker, stored_desc) =
+        let (mut license, mut pi_field, pi_marker, stored_desc) =
             pi_screening::classify_field("description", entry.description);
+        let key_is_pi = name_or_key_is_pi(&[entry.key]);
+        let out_key = if key_is_pi {
+            license = crate::rules_core::shape_b_v1::License::PiRedacted;
+            let mut fields: Vec<&str> = Vec::new();
+            if pi_field.as_deref() == Some("description") {
+                fields.push("description");
+            }
+            fields.push("key");
+            pi_field = Some(fields.join(","));
+            neutral_key("spell", WIRING_CLASS_BOOK_ID, spell_file, resolved_line)
+        } else {
+            entry.key.to_string()
+        };
         let record = CacheRecord {
             population: Population::InScope,
             completeness: Completeness::Full,
             ingested_at: ingested_at.to_string(),
             data: SpellData {
-                key: entry.key.to_string(),
+                key: out_key,
                 school: format!("{:?}", entry.school),
                 level: entry.level,
                 description: Some(stored_desc),
@@ -530,8 +579,14 @@ fn generate_spells(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name: key_is_pi,
         };
-        let slug = slugify(entry.key, &mut used);
+        // `class_feature.rs`'s own directory-placement fix precedent: the
+        // slug feeds the ON-DISK FILE PATH, so a name-PI record must use
+        // the ALREADY-neutral `out_key`/`record.data.key`, never the
+        // original `entry.key` -- using the original here would ship the
+        // PI content in the file path even though the JSON body is clean.
+        let slug = slugify(&record.data.key, &mut used);
         write_json(&spell_dir, &slug, &record)?;
         report.spells_written += 1;
     }
@@ -620,16 +675,31 @@ fn generate_equipment(
         } else {
             Completeness::ChassisOnly
         };
-        let (license, pi_field, pi_marker, stored_desc) =
+        let (mut license, mut pi_field, pi_marker, stored_desc) =
             pi_screening::classify_optional_field("description", entry.description);
+        let name_is_pi = name_or_key_is_pi(&[entry.key, entry.name]);
+        let (out_key, out_name) = if name_is_pi {
+            license = crate::rules_core::shape_b_v1::License::PiRedacted;
+            let mut fields: Vec<&str> = Vec::new();
+            if pi_field.as_deref() == Some("description") {
+                fields.push("description");
+            }
+            fields.push("name");
+            pi_field = Some(fields.join(","));
+            let codex_key = neutral_key("equipment", WIRING_CLASS_BOOK_ID, category_file, line);
+            let codex_name = neutral_name("equipment", WIRING_CLASS_BOOK_ID, category_file, line);
+            (codex_key, codex_name)
+        } else {
+            (entry.key.to_string(), entry.name.to_string())
+        };
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
             ingested_at: ingested_at.to_string(),
             data: EquipmentData {
-                key: entry.key.to_string(),
+                key: out_key,
                 category: format!("{:?}", entry.category),
-                name: entry.name.to_string(),
+                name: out_name,
                 cost_gp: entry.cost_gp,
                 weight: entry.weight_lbs,
                 description: stored_desc,
@@ -640,8 +710,12 @@ fn generate_equipment(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name: name_is_pi,
         };
-        let slug = slugify(entry.key, &mut used);
+        // `class_feature.rs`'s directory-placement-fix precedent: slug from
+        // the (possibly-renamed) `record.data.key`, never `entry.key`
+        // directly -- see the identical comment in `generate_spells` above.
+        let slug = slugify(&record.data.key, &mut used);
         write_json(&equipment_dir, &slug, &record)?;
         report.equipment_written += 1;
     }
@@ -672,6 +746,49 @@ pub fn generate(corpus_root: &Path, out_dir: &Path, ingested_at: &str) -> Result
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    // --- t9-onboarding-pi-final-leaks-and-generators: `name`/`key`
+    // screening (this cycle's own gap-close; the generator's compiled Rust
+    // tables never carry a live hit today, but the code path must exist and
+    // be provably wired). Never a literal blacklist term -- indexes into
+    // `pi_screening::PI_BLACKLIST_TERMS`, per `decisions.md §24b`-2.
+
+    #[test]
+    fn name_or_key_is_pi_is_false_for_an_ordinary_clean_value() {
+        assert!(!name_or_key_is_pi(&["Longsword", "Cure Light Wounds"]));
+    }
+
+    #[test]
+    fn name_or_key_is_pi_catches_a_blacklisted_key() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[8];
+        assert!(name_or_key_is_pi(&[term, "clean"]));
+    }
+
+    #[test]
+    fn name_or_key_is_pi_catches_a_blacklisted_name_even_when_key_is_clean() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[20];
+        assert!(name_or_key_is_pi(&["clean_key", term]));
+    }
+
+    /// End-to-end: `generate_equipment`'s own record-building shape, proven
+    /// directly against a synthetic entry rather than the real compiled
+    /// table (which carries no live hit today) -- this is the RED->GREEN
+    /// proof that the wiring is real, not just the helper function in
+    /// isolation.
+    #[test]
+    fn a_name_pi_equipment_entry_is_renamed_never_shipped_under_its_own_identity() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[21];
+        let pi_key_is_pi = name_or_key_is_pi(&[term, "Ordinary Item"]);
+        assert!(pi_key_is_pi, "the helper this generator calls must flag the PI key");
+        // The record-construction branch itself (mirrors `generate_equipment`'s
+        // `if name_is_pi { ... }` arm): the OUTPUT key/name must never equal
+        // the original PI-bearing input.
+        let codex_key = neutral_key("equipment", WIRING_CLASS_BOOK_ID, "acg_equip.lst", 42);
+        let codex_name = neutral_name("equipment", WIRING_CLASS_BOOK_ID, "acg_equip.lst", 42);
+        assert_ne!(codex_key, term);
+        assert_ne!(codex_name, term);
+        assert!(codex_name.starts_with("Codex-Named Unit"));
+    }
 
     #[test]
     fn slugify_handles_parens_and_collisions() {
@@ -731,6 +848,7 @@ mod tests {
             license: crate::rules_core::shape_b_v1::License::Ogl,
             pi_field: None,
             pi_marker: None,
+            codex_generated_name: false,
         };
         write_json(&dir, "foo", &record).expect("write_json must succeed");
 

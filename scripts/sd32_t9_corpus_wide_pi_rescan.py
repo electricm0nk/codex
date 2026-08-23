@@ -58,9 +58,17 @@ def iter_strings(value, path):
 
 
 def kind_from_path(rel: Path) -> str:
-    # data/corpus/<book>/<kind>/... -- kind is the second path component.
+    # rel is REPO-rooted (`data/corpus/<book>/<kind>/...`), so `kind` is the
+    # FOURTH path component (0=data, 1=corpus, 2=book, 3=kind) -- NOT the
+    # second, which is always the literal string "corpus". `parts[1]` was
+    # this instrument's own bug (found by this cycle, `decisions.md §17a`:
+    # validate an instrument before trusting a confident claim it produces):
+    # every per-kind row this script ever printed read `kind=corpus`, which
+    # collapsed every kind into one bucket and was silently worked around by
+    # every prior reader piping the script's own path list through
+    # `awk -F'/' '{print $4}'` instead of trusting this function's output.
     parts = rel.parts
-    return parts[1] if len(parts) > 1 else "?"
+    return parts[3] if len(parts) > 3 else "?"
 
 
 def main() -> int:

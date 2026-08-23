@@ -1,10 +1,10 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-23T22:08:29Z",
   "data": {
-    "key": "Varisian Pilgrim Domain ~ Chaos",
-    "name": "Chaos",
+    "key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_217)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_217)",
     "class": "Cleric",
     "description": null,
     "raw_tokens": [
@@ -26,7 +26,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Forbidden Rites Domain ~ Chaos Domain"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
@@ -47,14 +47,18 @@
     "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
     "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
     "line": 217,
-    "record_key": "Varisian Pilgrim Domain ~ Chaos"
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_217)"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "raw_tokens",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_magic:ism_abilities_class.lst:217"
+  }
 }
