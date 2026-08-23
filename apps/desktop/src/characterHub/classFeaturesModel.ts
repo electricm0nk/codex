@@ -221,6 +221,50 @@ function findCorpusDescription(
   return match?.description ?? null;
 }
 
+/**
+ * Every real corpus `class_feature` description for a class the character
+ * holds that {@link buildClassFeatureSurface} does NOT already attach to a
+ * grounded row (T4 / `epic-breakdown.md` Epic 2, "built-but-unreachable
+ * render surface").
+ *
+ * `class_feature_descriptions.rs` (and the disjoint feat-bridge population,
+ * `class_feature_feat_bridge.rs`, concatenated by the caller into the same
+ * `descriptions` array) transcribe real, PI-screened, leak-checked corpus
+ * text into `ClassFeatureDescriptionDto` — but `buildClassFeatureSurface`
+ * only ever attaches `corpusDescription` as enrichment onto a row an
+ * `ExplanationDto` already created (`findCorpusDescription`, above). A corpus
+ * feature the engine emits no explanation for — grounded or `.unsupported`
+ * — never reaches `features`/`notComputed` at all, so its real rulebook text
+ * is never shown anywhere, no matter how many such records exist. This is
+ * the cause T4 names: content exists and is fully verified, but no code path
+ * ever puts it on screen.
+ *
+ * The fix is a browsable REFERENCE list, the same shape
+ * `ClassFeaturePoolReferenceSection` (`CharacterSheet.tsx`) already uses for
+ * option-pool members: every real description for a class the character
+ * holds, shown independent of whether the engine also emits a computed row
+ * for it. **Only grounded (non-`.unsupported`) explanation ids count as
+ * "already shown"** — a `.unsupported` notice never carries a
+ * `corpusDescription` either (`buildClassFeatureSurface` only sets it inside
+ * the `features` loop), so a description matching only an `.unsupported` id
+ * is still unreachable today and must still appear here, not be excluded as
+ * a false duplicate.
+ */
+export function unmatchedClassFeatureDescriptions(
+  explanations: readonly ExplanationDto[],
+  heldClasses: readonly HeldClass[],
+  descriptions: readonly ClassFeatureDescriptionDto[]
+): ClassFeatureDescriptionDto[] {
+  const heldTokens = new Set(heldClasses.map((held) => classIdToken(held.classId)));
+  const heldDescriptions = descriptions.filter((d) => heldTokens.has(d.classSlug));
+  const groundedIds = explanations
+    .filter((e) => isClassRecord(e.id) && !e.id.endsWith(UNSUPPORTED_SUFFIX))
+    .map((e) => e.id);
+  return heldDescriptions.filter(
+    (d) => !groundedIds.some((id) => matchesCorpusFeature(id, d.classSlug, d.featureSlug))
+  );
+}
+
 export function buildClassFeatureSurface(
   explanations: readonly ExplanationDto[],
   heldClasses: readonly HeldClass[],

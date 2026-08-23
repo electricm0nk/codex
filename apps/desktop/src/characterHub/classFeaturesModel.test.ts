@@ -1,4 +1,8 @@
-import { buildClassFeatureSurface, matchesCorpusFeature } from './classFeaturesModel';
+import {
+  buildClassFeatureSurface,
+  matchesCorpusFeature,
+  unmatchedClassFeatureDescriptions,
+} from './classFeaturesModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
 import type { ClassFeatureDescriptionDto } from '../boundary/loadClassFeatureDescriptions';
@@ -440,6 +444,63 @@ function verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardle
   );
 }
 
+/**
+ * T4 closure (`epic-breakdown.md` Epic 2, "built-but-unreachable render
+ * surface"). This is the OTHER half of the test directly above:
+ * `buildClassFeatureSurface` alone still produces zero rows for an
+ * unmatched description (unchanged, correctly), but
+ * `unmatchedClassFeatureDescriptions` is the new reference-list surface
+ * that DOES surface it — the fix site the comment above named as missing.
+ */
+function verifiesAnUnmatchedDescriptionForAHeldClassIsReturnedByTheReferenceSurface() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [], // no engine explanations at all -- exactly the shape above
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+  assertEqual(unmatched.length, 1, 'a real corpus description for a held class with no explanation must surface');
+  assertEqual(unmatched[0].description, SNEAK_ATTACK_DESC, 'the real corpus text, verbatim');
+}
+
+/** A description already attached to a grounded feature row must not also appear in the reference list -- no duplicate display. */
+function verifiesADescriptionAlreadyAttachedToAGroundedRowIsNotDuplicatedInTheReferenceSurface() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [explanation('class_chassis.rogue.sneak_attack', 6)],
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+  assertEqual(unmatched.length, 0, 'already-shown-as-enrichment descriptions must not duplicate in the reference list');
+}
+
+/**
+ * A description matching only an `.unsupported` explanation is STILL
+ * unreachable today (`buildClassFeatureSurface` never attaches
+ * `corpusDescription` inside the `notComputed` loop) -- it must still
+ * surface here, not be wrongly excluded as though it were already shown.
+ */
+function verifiesADescriptionMatchingOnlyAnUnsupportedNoticeStillSurfaces() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [explanation('class_chassis.rogue.sneak_attack.unsupported', 0, 'not grounded for this posture')],
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+  assertEqual(
+    unmatched.length,
+    1,
+    'an .unsupported match never attaches a description anywhere else, so it must still surface here'
+  );
+}
+
+/** A description for a class this build does not hold must never surface. */
+function verifiesADescriptionForAnUnheldClassNeverSurfaces() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [],
+    ROGUE,
+    [descriptionDto('barbarian', 'rage', 'A barbarian feature this build does not hold.')]
+  );
+  assertEqual(unmatched.length, 0, 'an unheld class must never surface a reference row');
+}
+
 async function main() {
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
   verifiesTheDetailTextIsNeverRewritten();
@@ -461,6 +522,10 @@ async function main() {
   verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug();
   verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription();
   verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardlessOfHowManyDescriptionsExist();
+  verifiesAnUnmatchedDescriptionForAHeldClassIsReturnedByTheReferenceSurface();
+  verifiesADescriptionAlreadyAttachedToAGroundedRowIsNotDuplicatedInTheReferenceSurface();
+  verifiesADescriptionMatchingOnlyAnUnsupportedNoticeStillSurfaces();
+  verifiesADescriptionForAnUnheldClassNeverSurfaces();
 }
 
 main().catch((error: unknown) => {
